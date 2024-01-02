@@ -1,8 +1,8 @@
-import { Features } from "@/components/layout/features";
-import { Footer } from "@/components/layout/footer";
-import { Hero } from "@/components/layout/hero";
-import { Sponsors } from "@/components/layout/sponsors";
-import { Team } from "@/components/layout/team";
+import { Features } from "@/app/features";
+import { Footer } from "@/app/footer";
+import { Hero } from "@/app/hero";
+import { Sponsors } from "@/app/sponsors";
+import { Team } from "@/app/team";
 
 export default function Home() {
   return (

@@ -1,30 +1,25 @@
+import Image from "next/image";
+
 const people = [
   {
     name: "Rudy Baer",
-    role: "Front-end Developer",
+    role: "CEO, CTO",
     imageUrl:
       "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
-    twitterUrl: "#",
-    linkedinUrl: "#",
   },
   {
     name: "Ivan Dalmet",
     role: "Lead Design, Front-end Developer",
     imageUrl:
       "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
-    twitterUrl: "#",
-    linkedinUrl: "#",
   },
   {
     name: "Yoann Fleury",
     role: "Lead Front-end Developer",
     imageUrl:
       "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
-    twitterUrl: "#",
-    linkedinUrl: "#",
   },
-  // More people...
-];
+] as const;
 
 export function Team() {
   return (
@@ -39,15 +34,14 @@ export function Team() {
             organizers are here to provide you with the best developer events.
           </p>
         </div>
-        <ul
-          role="list"
-          className="mx-auto mt-10 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3 lg:mx-0 lg:max-w-none lg:grid-cols-3"
-        >
+        <ul className="mx-auto mt-10 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           {people.map((person) => (
             <li key={person.name}>
-              <img
+              <Image
                 className="aspect-square w-full rounded-2xl object-cover"
                 src={person.imageUrl}
+                width={300}
+                height={300}
                 alt=""
               />
               <h3 className="mt-6 text-sm font-semibold leading-6 tracking-tight ">
