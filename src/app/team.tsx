@@ -1,27 +1,10 @@
+import { zTeamMember } from "@/lib/team.schema";
 import Image from "next/image";
+import { getAll } from "@/lib/typed-mdx-next";
 
-const people = [
-  {
-    name: "Rudy Baer",
-    role: "CEO, CTO",
-    imageUrl:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
-  },
-  {
-    name: "Ivan Dalmet",
-    role: "Lead Design, Front-end Developer",
-    imageUrl:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
-  },
-  {
-    name: "Yoann Fleury",
-    role: "Lead Front-end Developer",
-    imageUrl:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
-  },
-] as const;
+export async function Team() {
+  const members = await getAll("team", zTeamMember());
 
-export function Team() {
   return (
     <div className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -35,21 +18,23 @@ export function Team() {
           </p>
         </div>
         <ul className="mx-auto mt-10 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-          {people.map((person) => (
-            <li key={person.name}>
+          {members.map((member) => (
+            <li key={member.name}>
               <Image
                 className="aspect-square w-full rounded-2xl object-cover"
-                src={person.imageUrl}
+                src={member.imageUrl}
                 width={300}
                 height={300}
                 alt=""
               />
               <h3 className="mt-6 text-sm font-semibold leading-6 tracking-tight ">
-                {person.name}
+                {member.name}
               </h3>
-              <p className="text-xs leading-5 text-neutral-300">
-                {person.role}
-              </p>
+              {member.role && (
+                <p className="text-xs leading-5 text-neutral-300">
+                  {member.role}
+                </p>
+              )}
             </li>
           ))}
         </ul>
