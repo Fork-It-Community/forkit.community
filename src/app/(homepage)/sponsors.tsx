@@ -2,7 +2,7 @@ import sponsor from "@/content/sponsor";
 import Image from "next/image";
 
 export async function Sponsors() {
-  const sponsors = await sponsor.getCollection();
+  const sponsors = await sponsor.getAll();
 
   return (
     <div className="bg-white py-24 sm:py-32">

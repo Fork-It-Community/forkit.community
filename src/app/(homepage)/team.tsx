@@ -2,7 +2,7 @@ import teamMember from "@/content/teamMember";
 import Image from "next/image";
 
 export async function Team() {
-  const members = await teamMember.getCollection();
+  const members = await teamMember.getAll();
 
   return (
     <div className="py-24 sm:py-32">

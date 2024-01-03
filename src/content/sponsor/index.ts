@@ -1,4 +1,4 @@
-import defineCollection from "@/lib/typed-mdx";
+import { defineCollection } from "@/lib/typed-mdx";
 import { z } from "zod";
 
 export type Sponsor = z.infer<typeof Sponsor>;
