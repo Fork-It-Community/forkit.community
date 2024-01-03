@@ -5,6 +5,7 @@ import matter from "gray-matter";
 
 const CONTENT_FOLDER = "src/content";
 
+/** Method to get the frontmatter as a JavaScript object */
 function parseFrontmatter(fileContents: matter.Input) {
   try {
     // `matter` is empty string on cache results
@@ -61,15 +62,19 @@ async function getBySlug<Z extends z.AnyZodObject>(
   slug: string
 ) {
   const folder = path.resolve(CONTENT_FOLDER, name);
-  const mdxFile = path.extname(slug).toLowerCase() === ".mdx";
+  const file = `${folder}/${slug}.mdx`;
 
-  const data = await parseMdxFile(`${folder}/${mdxFile}`, schema);
-
-  if (!data) {
-    throw new Error("File not found");
+  try {
+    await fs.stat(file);
+  } catch {
+    throw new Error(`File ${file} not found`);
   }
 
-  return schema.parse(data);
+  const data = await parseMdxFile(file, schema);
+
+  // Trick to make zod infer the schema, else it doesn't infer if we do not put
+  // the z.object({}) before. Maybe the generic is not small enough ?
+  return z.object({}).merge(schema).parse(data);
 }
 
 export function defineCollection<Z extends z.AnyZodObject>(
