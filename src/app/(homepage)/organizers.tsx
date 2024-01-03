@@ -1,8 +1,8 @@
-import teamMember from "@/content/teamMember";
+import organizers from "@/content/organizers";
 import Image from "next/image";
 
-export async function Team() {
-  const members = await teamMember.getAll();
+export async function Organizers() {
+  const allOrganizers = await organizers.getAll();
 
   return (
     <div className="py-24 sm:py-32">
@@ -17,21 +17,21 @@ export async function Team() {
           </p>
         </div>
         <ul className="mx-auto mt-10 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-          {members.map((member) => (
-            <li key={member.name}>
+          {allOrganizers.map((organizer) => (
+            <li key={organizer.name}>
               <Image
                 className="aspect-square w-full rounded-2xl object-cover"
-                src={member.imageUrl}
+                src={organizer.imageUrl}
                 width={300}
                 height={300}
                 alt=""
               />
               <h3 className="mt-6 text-sm font-semibold leading-6 tracking-tight ">
-                {member.name}
+                {organizer.name}
               </h3>
-              {member.role && (
+              {organizer.role && (
                 <p className="text-xs leading-5 text-neutral-300">
-                  {member.role}
+                  {organizer.role}
                 </p>
               )}
             </li>
