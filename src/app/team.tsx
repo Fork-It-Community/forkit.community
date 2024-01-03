@@ -1,9 +1,8 @@
-import { zTeamMember } from "@/lib/team.schema";
+import teamMember from "@/content/teamMember";
 import Image from "next/image";
-import { getAll } from "@/lib/typed-mdx-next";
 
 export async function Team() {
-  const members = await getAll("team", zTeamMember());
+  const members = await teamMember.getCollection();
 
   return (
     <div className="py-24 sm:py-32">
