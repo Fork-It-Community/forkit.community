@@ -27,23 +27,15 @@ async function getCollection<Z extends z.AnyZodObject>(
     (postFilePath) => path.extname(postFilePath).toLowerCase() === ".mdx"
   );
 
-  const mdxFilesPaths = mdxFiles.map((mdxFile) =>
-    path.resolve(folder, mdxFile)
-  );
+  const data = await Promise.all(
+    mdxFiles.map(async (mdxFile) => {
+      const filePath = path.resolve(folder, mdxFile);
+      const frontmatter = parseFrontmatter(await fs.readFile(filePath));
 
-  const frontmatters = await Promise.all(
-    mdxFilesPaths.map(async (filePath) => ({
-      frontmatter: parseFrontmatter(await fs.readFile(filePath)),
-      file: filePath,
-    }))
-  );
-
-  const data = frontmatters
-    .filter((f) => {
-      const result = schema.safeParse(f.frontmatter.data);
+      const result = schema.safeParse(frontmatter.data);
 
       if (!result.success) {
-        console.group(`Errors in ${f.file}`);
+        console.group(`Errors in ${folder}/${mdxFile}`);
         Object.entries(result.error.formErrors.fieldErrors).forEach(
           ([path, errors]) => {
             console.group(`👉 Field \`${path}\``);
@@ -52,13 +44,14 @@ async function getCollection<Z extends z.AnyZodObject>(
           }
         );
         console.groupEnd();
+        return null;
       }
 
-      return result.success;
+      return frontmatter.data;
     })
-    .map((content) => content.frontmatter.data);
+  );
 
-  return z.array(schema).parse(data);
+  return z.array(schema).parse(data.filter(Boolean));
 }
 
 function defineCollection<Z extends z.AnyZodObject>(name: string, schema: Z) {
