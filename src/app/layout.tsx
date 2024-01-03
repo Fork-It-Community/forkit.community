@@ -3,6 +3,7 @@ import { Inter, Tomorrow } from "next/font/google";
 
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Footer } from "@/app/footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,7 +29,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={cn(tomorrow.variable, inter.variable)}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
