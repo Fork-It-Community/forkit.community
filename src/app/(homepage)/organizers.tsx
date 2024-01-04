@@ -1,8 +1,8 @@
-import organizers from "@/content/organizers";
+import collections from "@/content/collections";
 import Image from "next/image";
 
 export async function Organizers() {
-  const allOrganizers = await organizers.getAll();
+  const allOrganizers = await collections.organizer.getAll();
 
   return (
     <div className="py-24 sm:py-32">

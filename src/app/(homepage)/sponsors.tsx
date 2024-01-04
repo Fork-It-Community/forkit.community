@@ -1,8 +1,8 @@
-import sponsor from "@/content/sponsor";
+import collections from "@/content/collections";
 import Image from "next/image";
 
 export async function Sponsors() {
-  const sponsors = await sponsor.getAll();
+  const sponsors = await collections.sponsor.getAll();
 
   return (
     <div className="bg-white py-24 sm:py-32">

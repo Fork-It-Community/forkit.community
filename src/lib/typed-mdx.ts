@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import z from "zod";
 import matter from "gray-matter";
+import collections from "@/content/collections";
 
 const CONTENT_FOLDER = "src/content";
 
@@ -39,50 +40,66 @@ async function parseMdxFile(mdxPath: string, schema: z.AnyZodObject) {
   return frontmatter.data;
 }
 
-async function getAll<Z extends z.AnyZodObject>(name: string, schema: Z) {
-  const folder = path.resolve(CONTENT_FOLDER, name);
-  const postFilePaths = await fs.readdir(folder);
+async function getAll<Z extends z.AnyZodObject>({
+  folder,
+  schema,
+}: {
+  folder: string;
+  schema: Z;
+}) {
+  const postFilePaths = await fs.readdir(path.resolve(CONTENT_FOLDER, folder));
 
-  const mdxFiles = postFilePaths.filter(
+  const mdxFileNames = postFilePaths.filter(
     (postFilePath) => path.extname(postFilePath).toLowerCase() === ".mdx"
   );
 
   const data = await Promise.all(
-    mdxFiles.map(async (mdxFile) => {
-      return parseMdxFile(`${folder}/${mdxFile}`, schema);
+    mdxFileNames.map(async (mdxFileName) => {
+      return parseMdxFile(`${CONTENT_FOLDER}/${folder}/${mdxFileName}`, schema);
     })
   );
 
   return z.array(schema).parse(data.filter(Boolean));
 }
 
-async function getBySlug<Z extends z.AnyZodObject>(
-  name: string,
-  schema: Z,
-  slug: string
-) {
-  const folder = path.resolve(CONTENT_FOLDER, name);
-  const file = `${folder}/${slug}.mdx`;
+async function getBySlug<Z extends z.AnyZodObject>({
+  folder,
+  slug,
+  schema,
+}: {
+  folder: string;
+  schema: Z;
+  slug: string;
+}) {
+  const filePath = `${CONTENT_FOLDER}/${folder}/${slug}.mdx`;
 
   try {
-    await fs.stat(file);
+    await fs.stat(path.resolve(filePath));
   } catch {
-    throw new Error(`File ${file} not found`);
+    throw new Error(`File ${filePath} not found`);
   }
 
-  const data = await parseMdxFile(file, schema);
+  const data = await parseMdxFile(filePath, schema);
 
   // Trick to make zod infer the schema, else it doesn't infer if we do not put
   // the z.object({}) before. Maybe the generic is not small enough ?
   return z.object({}).merge(schema).parse(data);
 }
 
-export function defineCollection<Z extends z.AnyZodObject>(
-  name: string,
-  schema: Z
-) {
+export function defineCollection<Z extends z.AnyZodObject>({
+  folder,
+  schema,
+}: {
+  folder: string;
+  schema: Z;
+}) {
   return {
-    getAll: () => getAll(name, schema),
-    getBySlug: (slug: string) => getBySlug(name, schema, slug),
+    getAll: () => getAll({ folder, schema }),
+    getBySlug: (slug: string) => getBySlug({ folder, schema, slug }),
+    schema,
   } as const;
 }
+
+export type CollectionEntry<Name extends keyof typeof collections> = z.infer<
+  (typeof collections)[Name]["schema"]
+>;
