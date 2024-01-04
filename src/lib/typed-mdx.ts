@@ -26,6 +26,9 @@ async function parseMdxFile(mdxPath: string, schema: z.AnyZodObject) {
 
   if (!result.success) {
     console.group(`Errors in ${mdxPath}`);
+    result.error.formErrors.formErrors.forEach((error) => {
+      console.error("❌", error);
+    });
     Object.entries(result.error.formErrors.fieldErrors).forEach(
       ([path, errors]) => {
         console.group(`👉 Field \`${path}\``);
@@ -86,16 +89,17 @@ async function getBySlug<Z extends z.AnyZodObject>({
   return z.object({}).merge(schema).parse(data);
 }
 
-export function defineCollection<Z extends z.AnyZodObject>({
-  folder,
-  schema,
-}: {
+export function defineCollection<Z extends z.AnyZodObject>(options: {
   folder: string;
   schema: Z;
+  strict?: boolean;
 }) {
+  const schema =
+    options.strict === false ? options.schema : options.schema.strict();
   return {
-    getAll: () => getAll({ folder, schema }),
-    getBySlug: (slug: string) => getBySlug({ folder, schema, slug }),
+    getAll: () => getAll({ folder: options.folder, schema }),
+    getBySlug: (slug: string) =>
+      getBySlug({ folder: options.folder, schema, slug }),
     schema,
   } as const;
 }
