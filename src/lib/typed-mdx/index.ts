@@ -50,7 +50,8 @@ async function getAll<Z extends z.AnyZodObject>({
   folder: string;
   schema: Z;
 }) {
-  const postFilePaths = await fs.readdir(path.resolve(CONTENT_FOLDER, folder));
+  const folderPath = `${CONTENT_FOLDER}/${folder}`;
+  const postFilePaths = await fs.readdir(path.resolve(folderPath));
 
   const mdxFileNames = postFilePaths.filter(
     (postFilePath) => path.extname(postFilePath).toLowerCase() === ".mdx"
@@ -58,7 +59,7 @@ async function getAll<Z extends z.AnyZodObject>({
 
   const data = await Promise.all(
     mdxFileNames.map(async (mdxFileName) => {
-      return parseMdxFile(`${CONTENT_FOLDER}/${folder}/${mdxFileName}`, schema);
+      return parseMdxFile(`${folderPath}/${mdxFileName}`, schema);
     })
   );
 
@@ -107,3 +108,13 @@ export function defineCollection<Z extends z.AnyZodObject>(options: {
 export type CollectionEntry<Name extends keyof typeof collections> = z.infer<
   (typeof collections)[Name]["schema"]
 >;
+
+export const checkAll = async () => {
+  for (const name in collections) {
+    console.group(`[Typed MDX]: Checking ${name} collection`);
+    await collections[name as keyof typeof collections].getAll();
+    console.groupEnd();
+  }
+
+  console.groupEnd();
+};
