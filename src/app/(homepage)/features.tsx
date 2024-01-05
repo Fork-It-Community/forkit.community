@@ -26,25 +26,25 @@ const features = [
 
 export function Features() {
   return (
-    <div className="bg-neutral-950 py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl lg:text-center">
+    <div className="py-24 sm:py-32">
+      <div className="mx-auto max-w-2xl lg:max-w-5xl px-6 lg:px-8 flex flex-col gap-10 md:gap-16">
+        <div className="lg:mx-auto lg:text-center">
           <h2 className="text-base font-semibold leading-7 text-primary font-heading">
             Real-life experiences
           </h2>
-          <p className="text-xl font-bold tracking-tight sm:text-4xl font-heading">
+          <p className="text-2xl font-bold sm:text-4xl font-heading">
             WorldWide Connections
           </p>
         </div>
-        <div className="mx-auto mt-10 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-          <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-8 lg:max-w-none lg:grid-cols-3">
+        <div className="mx-auto ">
+          <dl className="grid sm:grid-cols-2 gap-x-8 gap-y-8 lg:grid-cols-3">
             {features.map((feature) => (
               <div key={feature.name} className="flex flex-col">
-                <dt className="flex items-center text-base font-semibold leading-7 font-heading">
+                <dt className="flex items-center text-xl font-semibold leading-7 font-heading">
                   Fork it!&nbsp;
                   <span className="text-primary">{feature.name}</span>
                 </dt>
-                <dd className="flex flex-auto flex-col text-sm">
+                <dd className="flex flex-auto flex-col text-sm text-gray-400 text-balance">
                   <p className="flex-auto">{feature.description}</p>
                 </dd>
               </div>

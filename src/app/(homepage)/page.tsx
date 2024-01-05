@@ -1,15 +1,17 @@
-import { Features } from "@/app/(homepage)/features";
-import { Hero } from "@/app/(homepage)/hero";
-import { Sponsors } from "@/app/(homepage)/sponsors";
-import { Organizers } from "@/app/(homepage)/organizers";
+import { Features } from "./features";
+import { Hero } from "./hero";
+// import { Sponsors } from "./sponsors";
+import { Organizers } from "./organizers";
+import { About } from "./about";
 
 export default function Home() {
   return (
     <>
       <Hero />
+      <About />
       <Features />
       <Organizers />
-      <Sponsors />
+      {/* <Sponsors /> */}
     </>
   );
 }
