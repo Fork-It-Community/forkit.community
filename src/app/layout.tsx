@@ -19,6 +19,7 @@ const tomorrow = Tomorrow({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.forkit.community"),
   title: "Fork it! Community",
   description:
     "Fork it! Community’s mission is to share computer science knowledge through worldwide events.",
