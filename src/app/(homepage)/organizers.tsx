@@ -35,7 +35,7 @@ export async function Organizers() {
                 alt={`Picture of ${organizer.name}, organizer of Fork it!`}
               />
               <div className="flex flex-col gap-1">
-                <h4 className="text-sm font-semibold">{organizer.name}</h4>
+                <p className="text-sm font-semibold">{organizer.name}</p>
                 {organizer.role && (
                   <p className="text-xs text-gray-300">{organizer.role}</p>
                 )}
