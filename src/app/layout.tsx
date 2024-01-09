@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   title: "Fork it! Community",
   description:
     "Fork it! Community’s mission is to share computer science knowledge through worldwide events.",
+  openGraph: {
+    url: "https://www.forkit.community",
+  },
 };
 
 export default function RootLayout({
