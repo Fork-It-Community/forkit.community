@@ -31,6 +31,7 @@ export async function Organizers() {
                 src={organizer.imageUrl}
                 width={300}
                 height={300}
+                sizes="300px"
                 alt=""
               />
               <div className="flex flex-col gap-1">
