@@ -12,7 +12,7 @@ const inter = Inter({
 });
 
 const tomorrow = Tomorrow({
-  subsets: ["latin-ext"],
+  subsets: ["latin"],
   variable: "--font-heading",
   weight: ["500"],
   display: "swap",
