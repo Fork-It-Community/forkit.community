@@ -23,7 +23,7 @@ export async function Organizers() {
             and connect creative minds.
           </p>
         </div>
-        <ul className="mx-auto mt-10 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+        <ul className="mx-auto mt-10 grid max-w-2xl grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-4">
           {allOrganizers.map((organizer) => (
             <li key={organizer.name} className="flex flex-col gap-4">
               <Image
