@@ -31,8 +31,8 @@ export async function Organizers() {
                 src={organizer.imageUrl}
                 width={300}
                 height={300}
-                sizes="300px"
-                alt=""
+                sizes="(max-width: 640px) 50vw, (max-width: 768px) 150px, 300px"
+                alt={`Picture of ${organizer.name}, organizer of Fork it!`}
               />
               <div className="flex flex-col gap-1">
                 <h4 className="text-sm font-semibold">{organizer.name}</h4>
