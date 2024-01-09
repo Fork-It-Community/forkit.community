@@ -54,9 +54,11 @@ export function Hero() {
         </div>
         <div className="relative m-auto lg:absolute lg:inset-0 lg:left-1/2 lg:mr-0 logo-mask">
           <Image
+            priority
             className="aspect-[3/2] w-full bg-primary text-gray-900 object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
             src={HeroImage}
             alt="Speaker giving a tech talk in from of attendees"
+            sizes="(max-width: 1024px) 100vw, 50vw"
           />
         </div>
       </div>
