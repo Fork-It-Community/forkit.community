@@ -1,4 +1,4 @@
-import { defineCollection } from "@/lib/typed-mdx";
+import { defineCollection } from "typed-mdx";
 import { z } from "zod";
 
 const collections = {
@@ -8,6 +8,14 @@ const collections = {
       name: z.string(),
       imageUrl: z.string(),
       role: z.string().optional(),
+      socials: z
+        .array(
+          z.object({
+            type: z.enum(["x", "linkedin"]),
+            href: z.string().url(),
+          })
+        )
+        .optional(),
     }),
   }),
   sponsor: defineCollection({

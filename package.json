@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "run-p lint:*",
@@ -22,6 +22,7 @@
     "react-dom": "18.2.0",
     "sharp": "0.33.1",
     "tailwind-merge": "2.2.0",
+    "typed-mdx": "0.0.1",
     "zod": "3.22.4"
   },
   "devDependencies": {
