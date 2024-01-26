@@ -1,4 +1,5 @@
 import { IconX } from "@/components/icons/IconX";
+import Link from "next/link";
 import { SVGProps } from "react";
 
 const navigation = [
@@ -65,11 +66,18 @@ export function Footer() {
             </a>
           ))}
         </div>
-        <div className="mt-8 md:order-1 md:mt-0">
+        <div className="mt-8 md:order-1 md:mt-0 space-y-1">
           <p className="text-center text-xs leading-5">
             &copy; {new Date().getFullYear()} Fork it! Community. All rights
             reserved.
           </p>
+
+          <Link
+            className="text-center text-xs leading-5 md:text-left"
+            href="code-of-conduct"
+          >
+            Code of Conduct
+          </Link>
         </div>
       </div>
     </footer>
