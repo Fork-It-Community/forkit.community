@@ -25,6 +25,22 @@ const collections = {
       imageUrl: z.string(),
     }),
   }),
+  event: defineCollection({
+    folder: "event",
+    schema: z.object({
+      name: z.string(),
+      date: z.date().optional(),
+      location: z.string().optional(),
+      excerpt: z.string().optional(),
+      image: z
+        .object({
+          src: z.string(),
+          alt: z.string(),
+        })
+        .optional(),
+      cfp: z.object({ href: z.string().url() }).optional(),
+    }),
+  }),
 } as const;
 
 export default collections;
