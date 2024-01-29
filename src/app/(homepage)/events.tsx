@@ -13,26 +13,34 @@ export const Events = async () => {
           events
         </h2>
         {events.map((event) => (
-          <article
-            className="rounded-md border border-solid border-gray-800 flex flex-col"
-            key={event.name}
-          >
+          <article className="rounded-md flex flex-col" key={event.name}>
             <div className="flex flex-col sm:flex-row">
-              <div className="p-4">
-                <h3 className="text-4xl text-primary font-heading">
-                  {event.name}
-                </h3>
-                {event.date && (
-                  <time
-                    className="text-gray-300"
-                    dateTime={event.date.toISOString()}
-                  >
-                    {new Intl.DateTimeFormat("en-US", {
-                      dateStyle: "full",
-                    }).format(event.date)}
-                  </time>
+              <div className="p-4 flex flex-col gap-4">
+                <h4 className="flex flex-col">
+                  {event.date && (
+                    <time
+                      className="text-3xl text-primary font-heading"
+                      dateTime={event.date.toISOString()}
+                    >
+                      {new Intl.DateTimeFormat("en-US", {
+                        dateStyle: "full",
+                      }).format(event.date)}
+                    </time>
+                  )}
+                  <span className="text-white text-lg font-bold ">
+                    {event.name}
+                  </span>
+                </h4>
+                {event.excerpt && (
+                  <p className="text-gray-300 text-sm">{event.excerpt}</p>
                 )}
-                {event.excerpt && <p className="mt-4">{event.excerpt}</p>}
+                {event.cfp && (
+                  <div>
+                    <Button asChild>
+                      <a href={event.cfp.href}>Submit your talk (CFP)</a>
+                    </Button>
+                  </div>
+                )}
               </div>
 
               {event.image && (
@@ -48,13 +56,6 @@ export const Events = async () => {
                 </div>
               )}
             </div>
-            {event.cfp && (
-              <footer className="p-4">
-                <Button asChild>
-                  <a href={event.cfp.href}>CFP</a>
-                </Button>
-              </footer>
-            )}
           </article>
         ))}
       </div>
