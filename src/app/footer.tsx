@@ -66,18 +66,26 @@ export function Footer() {
             </a>
           ))}
         </div>
-        <div className="mt-8 md:order-1 md:mt-0 space-y-1">
-          <p className="text-center text-xs leading-5">
+        <div className="mt-8 md:order-1 md:mt-0 space-y-1 gap-0 flex flex-col">
+          <div className="flex gap-2 justify-center md:justify-start items-center">
+            <Link
+              className="text-xs hover:text-primary"
+              href="https://drive.google.com/drive/folders/1JkxgD0f6fetVdzsjGLLMexTRwRdb3Euv?usp=sharing"
+            >
+              Media Kit
+            </Link>
+            ·
+            <Link
+              className="text-xs hover:text-primary"
+              href="/code-of-conduct"
+            >
+              Code of Conduct
+            </Link>
+          </div>
+          <p className="text-center text-xs leading-5 text-gray-400">
             &copy; {new Date().getFullYear()} Fork it! Community. All rights
             reserved.
           </p>
-
-          <Link
-            className="text-center text-xs leading-5 md:text-left"
-            href="code-of-conduct"
-          >
-            Code of Conduct
-          </Link>
         </div>
       </div>
     </footer>
