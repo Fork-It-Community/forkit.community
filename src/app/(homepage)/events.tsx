@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import collections from "@/content/collections";
 import Image from "next/image";
+import Link from "next/link";
 
 export const Events = async () => {
   const events = await collections.event.getAll();
@@ -35,9 +36,14 @@ export const Events = async () => {
                   <p className="text-gray-300 text-sm">{event.excerpt}</p>
                 )}
                 {event.cfp && (
-                  <div>
+                  <div className="flex flex-row gap-4">
                     <Button asChild>
                       <a href={event.cfp.href}>Submit your talk (CFP)</a>
+                    </Button>
+                    <Button asChild variant="secondary">
+                      <Link href={`/events/${event.metadata.slug}`}>
+                        Learn more
+                      </Link>
                     </Button>
                   </div>
                 )}

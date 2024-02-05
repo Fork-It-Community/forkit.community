@@ -1,5 +1,6 @@
 // Only support ESM so next.config.mjs
 import remarkFrontmatter from "remark-frontmatter";
+import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import createMDX from "@next/mdx";
 
 /** @type {import('next').NextConfig} */
@@ -10,8 +11,12 @@ const nextConfig = {
 
 const withMDX = createMDX({
   options: {
-    // To remove frontmatter from rendering
-    remarkPlugins: [remarkFrontmatter],
+    remarkPlugins: [
+      // To remove frontmatter from rendering
+      remarkFrontmatter,
+      // To put frontmatter as export IN MDX
+      remarkMdxFrontmatter,
+    ],
   },
 });
 
