@@ -1,4 +1,4 @@
-import { Menu } from "lucide-react";
+import { ExternalLink, Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -63,14 +63,16 @@ export function Header(props: { event: Event }) {
                         </a>
                       ))}
                     </div>
-                    <div className="py-6">
-                      <a
-                        href="#"
-                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white hover:bg-gray-900"
-                      >
-                        Log in
-                      </a>
-                    </div>
+                    {props.event.tickets && (
+                      <div className="py-6 flex gap-x-6">
+                        <Button asChild>
+                          <a href={props.event.tickets.href}>
+                            Get tickets{" "}
+                            <ExternalLink className="ml-2 w-4 h-4" />
+                          </a>
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </SheetDescription>

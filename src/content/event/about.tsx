@@ -23,7 +23,7 @@ export function About(
         </div>
         <div className="px-6 lg:contents">
           <div className="mx-auto max-w-2xl pb-24 pt-16 sm:pb-32 sm:pt-20 lg:ml-8 lg:mr-0 lg:w-full lg:max-w-lg lg:flex-none lg:pt-32 xl:w-1/2">
-            <h2 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <h2 className="mt-2 text-3xl font-heading font-bold tracking-tight text-white sm:text-4xl">
               When? Where?
             </h2>
             <div className="mt-10 max-w-xl text-base leading-7 lg:max-w-none">

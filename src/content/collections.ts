@@ -46,6 +46,9 @@ const collections = {
         .optional(),
       cfp: z.object({ href: z.string().url() }).optional(),
       tickets: z.object({ href: z.string().url() }).optional(),
+      prospectus: z
+        .object({ href: z.string().url(), title: z.string().optional() })
+        .optional(),
     }),
   }),
 } as const;
