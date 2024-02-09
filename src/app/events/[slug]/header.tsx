@@ -1,6 +1,9 @@
+"use client";
+
 import { ExternalLink, Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useDisclosure } from "react-use-disclosure";
 import {
   Sheet,
   SheetContent,
@@ -13,13 +16,15 @@ import { Button } from "@/components/ui/button";
 import { Event } from "@/content/collections";
 
 const navigation = [
-  { name: "About", href: "#about" },
+  // { name: "About", href: "#about" },
   { name: "Venue", href: "#venue" },
   { name: "Sponsors", href: "#sponsors" },
   // { name: "Join us", href: "#socials" },
 ];
 
 export function Header(props: { event: Event }) {
+  const sheet = useDisclosure();
+
   return (
     <header>
       <nav
@@ -33,9 +38,9 @@ export function Header(props: { event: Event }) {
           </Link>
         </div>
         <div className="flex lg:hidden">
-          <Sheet>
+          <Sheet open={sheet.isOpen} onOpenChange={sheet.toggle}>
             <SheetTrigger asChild>
-              <Button size="icon" variant="ghost">
+              <Button size="icon" variant="ghost" onClick={sheet.open}>
                 <span className="sr-only">Open main menu</span>
                 <Menu className="h-6 w-6" aria-hidden="true" />
               </Button>
@@ -57,6 +62,10 @@ export function Header(props: { event: Event }) {
                         <a
                           key={item.name}
                           href={item.href}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            sheet.close();
+                          }}
                           className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-900"
                         >
                           {item.name}

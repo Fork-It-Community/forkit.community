@@ -4,9 +4,9 @@ import { ExternalLink } from "lucide-react";
 
 export function Sponsorship(props: { event: Event }) {
   return (
-    <div className="bg-gray-950">
+    <div id="sponsors" className="bg-gray-950">
       <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:flex lg:items-center lg:justify-between lg:px-8">
-        <h2 className="text-3xl font-bold font-heading tracking-tight text-white sm:text-4xl">
+        <h2 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
           Want to become a sponsor?
         </h2>
         <div className="mt-10 flex items-center gap-x-6 lg:mt-0 lg:flex-shrink-0">
@@ -17,7 +17,7 @@ export function Sponsorship(props: { event: Event }) {
                 title={props.event.prospectus?.title}
               >
                 Sponsoring Prospectus
-                <ExternalLink className="ml-2 w-4 h-4" />
+                <ExternalLink className="ml-2 h-4 w-4" />
               </a>
             </Button>
           )}
