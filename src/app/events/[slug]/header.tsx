@@ -16,7 +16,7 @@ const navigation = [
   { name: "About", href: "#about" },
   { name: "Venue", href: "#venue" },
   { name: "Sponsors", href: "#sponsors" },
-  { name: "Join us", href: "#join-us" },
+  // { name: "Join us", href: "#socials" },
 ];
 
 export function Header(props: { event: Event }) {
@@ -64,11 +64,11 @@ export function Header(props: { event: Event }) {
                       ))}
                     </div>
                     {props.event.tickets && (
-                      <div className="py-6 flex gap-x-6">
+                      <div className="flex gap-x-6 py-6">
                         <Button asChild>
                           <a href={props.event.tickets.href}>
                             Get tickets{" "}
-                            <ExternalLink className="ml-2 w-4 h-4" />
+                            <ExternalLink className="ml-2 h-4 w-4" />
                           </a>
                         </Button>
                       </div>
