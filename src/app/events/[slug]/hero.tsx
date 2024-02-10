@@ -3,7 +3,7 @@ import { Event } from "@/content/collections";
 import Image from "next/image";
 
 export function Hero(
-  props: Readonly<{ event: Omit<Event, "date"> & { date?: string } }>
+  props: Readonly<{ event: Omit<Event, "date"> & { date?: string } }>,
 ) {
   return (
     <div className="relative isolate overflow-hidden pt-14">
@@ -36,17 +36,24 @@ export function Hero(
             Conference sharing real feedbacks for real people
           </div>
         </div>
-        <div className="text-center mx-8">
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl font-heading">
+        <div className="mx-8 text-center">
+          <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-6xl">
             <span className="text-primary">{props.event.date}</span>{" "}
             {props.event.name}
           </h1>
-          <p className="mt-6 text-md text-gray-400">{props.event.excerpt}</p>
-          {props.event.tickets && (
+          <p className="text-md mt-6 text-gray-400">{props.event.excerpt}</p>
+          {(props.event.tickets || props.event.cfp) && (
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Button asChild>
-                <a href={props.event.tickets.href}>Get tickets</a>
-              </Button>
+              {props.event.cfp && (
+                <Button asChild>
+                  <a href={props.event.cfp.href}>Call For Paper</a>
+                </Button>
+              )}
+              {props.event.tickets && (
+                <Button asChild>
+                  <a href={props.event.tickets.href}>Get tickets</a>
+                </Button>
+              )}
             </div>
           )}
         </div>

@@ -13,7 +13,7 @@ export function About(
         <div className="lg:flex lg:w-1/2 lg:shrink lg:grow-0 xl:absolute xl:inset-y-0 xl:right-1/2 xl:w-1/2">
           <div className="relative h-80 lg:-ml-8 lg:h-auto lg:w-full lg:grow xl:ml-0">
             <Image
-              className="absolute inset-0 h-full w-full bg-gray-950 object-cover"
+              className="absolute inset-0 h-full w-full bg-gray-950 object-cover object-left"
               src={LeVillageByCA}
               width={1000}
               height={500}
