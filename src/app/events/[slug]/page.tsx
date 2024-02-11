@@ -4,6 +4,14 @@ import { Sponsorship } from "@/app/events/[slug]/sponsorship";
 import collections from "@/content/collections";
 import { formatDateTime } from "@/lib/utils";
 
+export async function generateStaticParams() {
+  const events = await collections.event.getAll();
+
+  return events.map((event) => ({
+    slug: event.metadata.slug,
+  }));
+}
+
 export default async function EventPage({
   params,
 }: Readonly<{
