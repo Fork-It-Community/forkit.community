@@ -13,7 +13,7 @@ const collections = {
           z.object({
             type: z.enum(["x", "linkedin"]),
             href: z.string().url(),
-          })
+          }),
         )
         .optional(),
     }),
@@ -49,6 +49,7 @@ const collections = {
       prospectus: z
         .object({ href: z.string().url(), title: z.string().optional() })
         .optional(),
+      published: z.boolean().optional(),
     }),
   }),
 } as const;
