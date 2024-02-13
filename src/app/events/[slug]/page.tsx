@@ -46,12 +46,24 @@ export default async function EventPage({ params }: EventPageProps) {
 
   const date = event.date ? formatDateTime(event.date) : undefined;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: `${event.date ? formatDateTime(event.date) + " " : ""}${event.name}`,
+    startDate: event.date,
+    description: event.excerpt,
+  };
+
   return (
     <>
       <Header event={event} />
       <Hero event={{ ...event, date }} />
       <Content />
       <Sponsorship event={event} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </>
   );
 }
