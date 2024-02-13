@@ -3,7 +3,12 @@ import { Hero } from "@/app/events/[slug]/hero";
 import { Sponsorship } from "@/app/events/[slug]/sponsorship";
 import collections from "@/content/collections";
 import { formatDateTime } from "@/lib/utils";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
+
+type EventPageProps = Readonly<{
+  params: { slug: string };
+}>;
 
 export async function generateStaticParams() {
   const events = await collections.event.getAll();
@@ -15,11 +20,21 @@ export async function generateStaticParams() {
     }));
 }
 
-export default async function EventPage({
+export async function generateMetadata({
   params,
-}: Readonly<{
-  params: { slug: string };
-}>) {
+}: EventPageProps): Promise<Metadata> {
+  const event = await collections.event.getBySlug(params.slug);
+
+  return {
+    title: event.name,
+    description: event.excerpt,
+    alternates: {
+      canonical: `/events/${event.metadata.slug}`,
+    },
+  };
+}
+
+export default async function EventPage({ params }: EventPageProps) {
   const event = await collections.event.getBySlug(params.slug);
 
   if (!event.published) {

@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   openGraph: {
     url: "https://www.forkit.community",
   },
+  alternates: {
+    canonical: new URL("https://www.forkit.community"),
+  },
 };
 
 export default function RootLayout({
