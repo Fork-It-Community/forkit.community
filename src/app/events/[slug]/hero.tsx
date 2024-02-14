@@ -10,7 +10,7 @@ export function Hero(
       {props.event.image && (
         <Image
           priority
-          className="absolute inset-0 -z-10 h-full w-full object-cover opacity-10"
+          className="absolute inset-0 -z-10 h-full w-full object-cover opacity-5"
           src={props.event.image?.src ?? ""}
           width={1000}
           height={1000}
