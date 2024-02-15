@@ -28,7 +28,6 @@ const collections = {
           alt: z.string(),
         })
         .optional(),
-      events: z.array(z.string()).optional(),
     }),
   }),
   event: defineCollection({
@@ -50,6 +49,15 @@ const collections = {
         .object({ href: z.string().url(), title: z.string().optional() })
         .optional(),
       published: z.boolean().optional(),
+      sponsoringLevels: z.array(z.string()),
+      sponsors: z
+        .array(
+          z.object({
+            slug: z.string(), // <- the slug of the sponsor
+            level: z.string(), // <- the level of sponsoring
+          }),
+        )
+        .optional(),
     }),
   }),
 } as const;

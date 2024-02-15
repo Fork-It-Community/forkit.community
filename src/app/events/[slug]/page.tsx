@@ -5,6 +5,7 @@ import collections from "@/content/collections";
 import { formatDateTime } from "@/lib/utils";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Sponsors from "./sponsors";
 
 type EventPageProps = Readonly<{
   params: { slug: string };
@@ -62,6 +63,7 @@ export default async function EventPage({ params }: EventPageProps) {
       <Hero event={{ ...event, date }} />
       <Content />
       <Sponsorship event={event} />
+      <Sponsors event={event} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
