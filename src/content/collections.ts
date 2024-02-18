@@ -22,12 +22,10 @@ const collections = {
     folder: "sponsor",
     schema: z.object({
       name: z.string(),
-      image: z
-        .object({
-          src: z.string(),
-          alt: z.string(),
-        })
-        .optional(),
+      image: z.object({
+        src: z.string(),
+        alt: z.string(),
+      }),
     }),
   }),
   event: defineCollection({
@@ -65,3 +63,4 @@ const collections = {
 export default collections;
 
 export type Event = z.infer<typeof collections.event.schema>;
+export type Sponsor = z.infer<typeof collections.sponsor.schema>;

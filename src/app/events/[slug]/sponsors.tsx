@@ -1,41 +1,36 @@
-import { Event } from "@/content/collections";
+import collections, { Event, Sponsor } from "@/content/collections";
 import Image from "next/image";
 
-function SponsorsCol(props: {
+function SponsorsRow(props: {
   level: string;
-  sponsors?: Array<{ slug: string; level: string }>;
+  sponsorsInfo?: Array<{ slug: string; level: string }>;
 }) {
+  let sponsor;
   return (
-    <div className="bg-gray-900 py-24 sm:py-32">
+    <div className="border-t border-t-gray-800 bg-gray-900 py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-x-8 gap-y-16 lg:grid-cols-2">
-          <div className="mx-auto w-full max-w-xl lg:mx-0">
-            <h2 className="text-3xl font-bold tracking-tight text-white">
-              {props.level}
-            </h2>
-            <p className="mt-6 text-lg leading-8 text-gray-300">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et,
-              egestas tempus tellus etiam sed. Quam a scelerisque amet
-              ullamcorper eu enim et fermentum, augue.
-            </p>
-          </div>
-          <div className="mx-auto grid w-full max-w-xl grid-cols-2 items-center gap-y-12 sm:gap-y-14 lg:mx-0 lg:max-w-none lg:pl-8">
-            {props.sponsors?.map((sponsorInfo, index) => (
-              <>
-                {sponsorInfo.level === props.level && (
-                  <div key={index}>
+        <h2 className="mb-8 text-center font-heading text-3xl font-bold tracking-tight text-white">
+          {props.level}
+        </h2>
+        <div className="-mx-6 grid grid-cols-2 gap-0.5 overflow-hidden sm:mx-0 sm:rounded-2xl md:grid-cols-3">
+          {props.sponsorsInfo?.map(async (sponsorInfo, index) => (
+            <>
+              {sponsorInfo.level === props.level &&
+                (sponsor = await collections.sponsor.getBySlug(
+                  sponsorInfo.slug,
+                )) && (
+                  <div key={index} className="bg-white/5 p-8 sm:p-10">
                     <Image
-                      className="max-h-12 w-full object-contain"
-                      src="https://tailwindui.com/img/logos/158x48/transistor-logo-white.svg"
-                      alt="Transistor"
+                      className="h-auto max-h-12 w-auto object-contain"
+                      src={sponsor.image.src}
+                      alt={sponsor.image.alt}
                       width={158}
                       height={48}
                     />
                   </div>
                 )}
-              </>
-            ))}
-          </div>
+            </>
+          ))}
         </div>
       </div>
     </div>
@@ -55,10 +50,10 @@ export default function Sponsors(props: { event: Event }) {
           </p>
         </div>
         {props.event.sponsoringLevels.map((level, index) => (
-          <SponsorsCol
+          <SponsorsRow
             key={index}
             level={level}
-            sponsors={props.event.sponsors}
+            sponsorsInfo={props.event.sponsors}
           />
         ))}
       </div>
