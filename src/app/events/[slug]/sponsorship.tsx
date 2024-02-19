@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Event } from "@/content/collections";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Mail } from "lucide-react";
 
-export function Sponsorship(props: { event: Event }) {
+export function Sponsorship(props: Readonly<{ event: Event }>) {
   return (
     <div id="sponsors" className="bg-gray-950">
       <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:flex lg:items-center lg:justify-between lg:px-8">
@@ -21,14 +21,15 @@ export function Sponsorship(props: { event: Event }) {
               </a>
             </Button>
           )}
-          <a
-            href={`mailto:rudy@forkit.community?subject=${props.event.date?.getFullYear()} ${
-              props.event.name
-            } Sponsorship`}
-            className="text-sm font-semibold leading-6 text-white"
-          >
-            Contact Us <span aria-hidden="true">→</span>
-          </a>
+          <Button variant="link" asChild>
+            <a
+              href={`mailto:rudy@forkit.community?subject=${props.event.date?.getFullYear()} ${
+                props.event.name
+              } Sponsorship`}
+            >
+              Contact Us <Mail className="ml-2 h-4 w-4" />
+            </a>
+          </Button>
         </div>
       </div>
     </div>

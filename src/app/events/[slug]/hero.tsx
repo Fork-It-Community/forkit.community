@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Event } from "@/content/collections";
+import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 
 export function Hero(
@@ -48,17 +49,24 @@ export function Hero(
                 <Button asChild>
                   <a href={props.event.prospectus.href}>
                     {props.event.prospectus.title ?? "Sponsoring prospectus"}
+                    <ExternalLink className="ml-2 h-4 w-4" />
                   </a>
                 </Button>
               )}
               {props.event.cfp && (
                 <Button asChild>
-                  <a href={props.event.cfp.href}>Call For Paper</a>
+                  <a href={props.event.cfp.href}>
+                    Call For Paper
+                    <ExternalLink className="ml-2 h-4 w-4" />
+                  </a>
                 </Button>
               )}
               {props.event.tickets && (
                 <Button asChild>
-                  <a href={props.event.tickets.href}>Get tickets</a>
+                  <a href={props.event.tickets.href}>
+                    Get tickets
+                    <ExternalLink className="ml-2 h-4 w-4" />
+                  </a>
                 </Button>
               )}
             </div>
