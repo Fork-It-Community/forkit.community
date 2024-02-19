@@ -44,6 +44,13 @@ export function Hero(
           <p className="text-md mt-6 text-gray-400">{props.event.excerpt}</p>
           {(props.event.tickets || props.event.cfp) && (
             <div className="mt-10 flex items-center justify-center gap-x-6">
+              {props.event.prospectus && (
+                <Button asChild>
+                  <a href={props.event.prospectus.href}>
+                    {props.event.prospectus.title ?? "Sponsoring prospectus"}
+                  </a>
+                </Button>
+              )}
               {props.event.cfp && (
                 <Button asChild>
                   <a href={props.event.cfp.href}>Call For Paper</a>
