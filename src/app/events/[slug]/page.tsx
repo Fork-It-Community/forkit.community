@@ -52,6 +52,8 @@ export default async function EventPage({ params }: EventPageProps) {
     name: `${event.date ? formatDateTime(event.date) + " " : ""}${event.name}`,
     startDate: event.date,
     description: event.excerpt,
+    location: event.location,
+    offers: event.tickets?.href,
   };
 
   return (
