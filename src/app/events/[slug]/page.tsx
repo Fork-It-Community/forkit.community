@@ -62,8 +62,11 @@ export default async function EventPage({ params }: EventPageProps) {
       <Header event={event} />
       <Hero event={{ ...event, date }} />
       <Content />
-      <Sponsorship event={event} />
+      <div id="sponsors">
+        <Sponsorship event={event} />
+      </div>
       <Sponsors event={event} />
+      <Sponsorship event={event} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

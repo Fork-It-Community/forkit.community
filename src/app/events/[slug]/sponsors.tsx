@@ -1,35 +1,39 @@
 import collections, { Event } from "@/content/collections";
 import Image from "next/image";
 
-function SponsorsRow(props: {
-  level: string;
-  sponsorsInfo?: Array<{ slug: string; level: string }>;
-}) {
-  let sponsor;
+async function SponsorImage(
+  props: Readonly<{ sponsor: { slug: string; level: string } }>,
+) {
+  const sponsor = await collections.sponsor.getBySlug(props.sponsor.slug);
+
   return (
-    <div className="border-t border-t-gray-800 bg-white py-16">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <h2 className="mb-8 text-center font-heading text-3xl font-bold tracking-tight text-gray-800">
-          {props.level}
+    <div className="overflow-hidden rounded-md border-2 border-gray-100">
+      <Image
+        className="w-full object-contain"
+        src={sponsor.image.src}
+        alt={sponsor.image.alt}
+        width={1000}
+        height={500}
+      />
+    </div>
+  );
+}
+
+async function SponsorsRow(
+  props: Readonly<{
+    level: string;
+    sponsors?: Event["sponsors"];
+  }>,
+) {
+  return (
+    <div className="bg-white py-16">
+      <div className="mx-auto max-w-7xl">
+        <h2 className="mb-4 font-heading text-3xl font-bold capitalize tracking-tight text-gray-800">
+          {props.level.toLocaleLowerCase()}
         </h2>
-        <div className="-mx-6 grid grid-cols-2 gap-0.5 overflow-hidden sm:mx-0 sm:rounded-2xl md:grid-cols-3">
-          {props.sponsorsInfo?.map(async (sponsorInfo) => (
-            <>
-              {sponsorInfo.level === props.level &&
-                (sponsor = await collections.sponsor.getBySlug(
-                  sponsorInfo.slug,
-                )) && (
-                  <div key={sponsorInfo.slug} className="bg-white p-8 sm:p-10">
-                    <Image
-                      className="h-auto max-h-12 w-auto object-contain"
-                      src={sponsor.image.src}
-                      alt={sponsor.image.alt}
-                      width={158}
-                      height={48}
-                    />
-                  </div>
-                )}
-            </>
+        <div className="grid grid-cols-2 gap-2 sm:mx-0 md:grid-cols-3">
+          {props.sponsors?.map((sponsor) => (
+            <SponsorImage key={sponsor.slug} sponsor={sponsor} />
           ))}
         </div>
       </div>
@@ -37,7 +41,7 @@ function SponsorsRow(props: {
   );
 }
 
-export function Sponsors(props: { event: Event }) {
+export function Sponsors(props: Readonly<{ event: Event }>) {
   const sponsorsMap = new Map();
 
   if (props.event.sponsors) {
@@ -55,15 +59,15 @@ export function Sponsors(props: { event: Event }) {
   }
 
   return (
-    <div className="bg-white py-24">
+    <div className="bg-white py-20">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl pb-16 text-center">
-          <h2 className="font-heading text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl">
-            Meet our sponsors
+        <div className="mx-auto pb-4">
+          <h2 className="font-heading text-4xl font-bold tracking-tight text-gray-800 sm:text-4xl md:text-4xl">
+            Sponsors
           </h2>
         </div>
-        {[...sponsorsMap.entries()].map(([key, value]) => (
-          <SponsorsRow key={key} level={key} sponsorsInfo={value} />
+        {[...sponsorsMap.entries()].map(([level, sponsors]) => (
+          <SponsorsRow key={level} level={level} sponsors={sponsors} />
         ))}
       </div>
     </div>
