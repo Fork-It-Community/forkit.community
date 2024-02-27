@@ -1,4 +1,4 @@
-import collections, { Event, Sponsor } from "@/content/collections";
+import collections, { Event } from "@/content/collections";
 import Image from "next/image";
 
 function SponsorsRow(props: {
@@ -38,6 +38,22 @@ function SponsorsRow(props: {
 }
 
 export default function Sponsors(props: { event: Event }) {
+  const sponsorsMap = new Map();
+
+  if (props.event.sponsors) {
+    for (let sponsor of props.event.sponsors) {
+      if (!props.event.sponsoringLevels.includes(sponsor.level)) {
+        return;
+      }
+
+      const previous = sponsorsMap.has(sponsor.level)
+        ? sponsorsMap.get(sponsor.level)
+        : [];
+
+      sponsorsMap.set(sponsor.level, [...previous, sponsor]);
+    }
+  }
+
   return (
     <div className="bg-white py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -49,12 +65,8 @@ export default function Sponsors(props: { event: Event }) {
             Highlighting the supporters that make our events possible.
           </p>
         </div>
-        {props.event.sponsoringLevels.map((level, index) => (
-          <SponsorsRow
-            key={index}
-            level={level}
-            sponsorsInfo={props.event.sponsors}
-          />
+        {[...sponsorsMap.entries()].map(([key, value]) => (
+          <SponsorsRow key={key} level={key} sponsorsInfo={value} />
         ))}
       </div>
     </div>
