@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Tomorrow } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -61,6 +62,7 @@ export default function RootLayout({
       <body>
         {children}
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
