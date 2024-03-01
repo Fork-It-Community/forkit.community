@@ -26,6 +26,16 @@ const collections = {
         src: z.string(),
         alt: z.string(),
       }),
+      href: z.string().url().optional(),
+      socials: z
+        .array(
+          z.object({
+            type: z.enum(["x", "linkedin"]),
+            href: z.string().url(),
+          }),
+        )
+        .optional(),
+      desciption: z.string().optional(),
     }),
   }),
   event: defineCollection({
