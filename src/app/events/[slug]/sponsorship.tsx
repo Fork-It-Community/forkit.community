@@ -9,7 +9,7 @@ export function Sponsorship(props: Readonly<{ event: Event }>) {
         <h2 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
           Want to become a sponsor?
         </h2>
-        <div className="mt-10 flex items-center gap-x-6 lg:mt-0 lg:flex-shrink-0">
+        <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4 lg:mt-0 lg:flex-shrink-0">
           {props.event.prospectus && (
             <Button asChild>
               <a

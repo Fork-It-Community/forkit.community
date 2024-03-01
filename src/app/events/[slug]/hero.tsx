@@ -44,7 +44,7 @@ export function Hero(
           </h1>
           <p className="text-md mt-6 text-gray-400">{props.event.excerpt}</p>
           {(props.event.tickets || props.event.cfp) && (
-            <div className="mt-10 flex items-center justify-center gap-x-6">
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
               {props.event.prospectus && (
                 <Button asChild>
                   <a href={props.event.prospectus.href}>
