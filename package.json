@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "run-p lint:*",
     "lint:next": "next lint",
+    "lint:ts": "tsc --noEmit",
     "lint:mdx": "npx tsx ./src/lib/typed-mdx/cli/check.ts"
   },
   "dependencies": {

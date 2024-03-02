@@ -35,7 +35,6 @@ const collections = {
           }),
         )
         .optional(),
-      desciption: z.string().optional(),
     }),
   }),
   event: defineCollection({
@@ -43,7 +42,12 @@ const collections = {
     schema: z.object({
       name: z.string(),
       date: z.date().optional(),
-      location: z.string().optional(),
+      location: z
+        .object({
+          name: z.string().optional(),
+          address: z.string(),
+        })
+        .optional(),
       excerpt: z.string().optional(),
       image: z
         .object({

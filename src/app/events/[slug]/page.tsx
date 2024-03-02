@@ -47,13 +47,20 @@ export default async function EventPage({ params }: EventPageProps) {
 
   const date = event.date ? formatDateTime(event.date) : undefined;
 
+  const location = event.location
+    ? {
+        "@type": "Place",
+        address: event.location.address,
+      }
+    : undefined;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Event",
     name: `${event.date ? formatDateTime(event.date) + " " : ""}${event.name}`,
     startDate: event.date,
     description: event.excerpt,
-    location: event.location,
+    location,
     offers: event.tickets?.href,
   };
 
