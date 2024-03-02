@@ -22,13 +22,19 @@ const collections = {
     folder: "sponsor",
     schema: z.object({
       name: z.string(),
-      image: z
-        .object({
-          src: z.string(),
-          alt: z.string(),
-        })
+      image: z.object({
+        src: z.string(),
+        alt: z.string(),
+      }),
+      href: z.string().url().optional(),
+      socials: z
+        .array(
+          z.object({
+            type: z.enum(["x", "linkedin"]),
+            href: z.string().url(),
+          }),
+        )
         .optional(),
-      events: z.array(z.string()).optional(),
     }),
   }),
   event: defineCollection({
@@ -36,7 +42,12 @@ const collections = {
     schema: z.object({
       name: z.string(),
       date: z.date().optional(),
-      location: z.string().optional(),
+      location: z
+        .object({
+          name: z.string().optional(),
+          address: z.string(),
+        })
+        .optional(),
       excerpt: z.string().optional(),
       image: z
         .object({
@@ -50,6 +61,15 @@ const collections = {
         .object({ href: z.string().url(), title: z.string().optional() })
         .optional(),
       published: z.boolean().optional(),
+      sponsoringLevels: z.array(z.string()),
+      sponsors: z
+        .array(
+          z.object({
+            slug: z.string(), // <- the slug of the sponsor
+            level: z.string(), // <- the level of sponsoring
+          }),
+        )
+        .optional(),
     }),
   }),
 } as const;
@@ -57,3 +77,4 @@ const collections = {
 export default collections;
 
 export type Event = z.infer<typeof collections.event.schema>;
+export type Sponsor = z.infer<typeof collections.sponsor.schema>;

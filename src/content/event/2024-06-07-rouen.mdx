@@ -1,7 +1,9 @@
 ---
 name: Rouen, France
 date: 2024-06-07
-location: Le Village By Ca Rouen Vallée De Seine 107 All. François Mitterrand, 76100 Rouen
+location:
+  name: Le Village By Ca Rouen Vallée De Seine
+  address: 107 All. François Mitterrand, 76100, Rouen
 excerpt:
   Come meet more than 200 people sharing their real professional lives and
   feedback. No nonsense, no divas, just genuine individuals discussing real
@@ -9,15 +11,26 @@ excerpt:
   wanting to share their experiences, come enjoy a fulfilling day with a dozen
   conferences in the heart of Rouen.
 image:
-  src: '/events/2024-06-07-rouen.jpg'
-  alt: 'Gros Horloge, Rouen, France'
+  src: "/events/2024-06-07-rouen.jpg"
+  alt: "Gros Horloge, Rouen, France"
 cfp:
   href: https://conference-hall.io/public/event/1GyOS8KvW02suD6jQmjz
 prospectus:
   href: https://drive.google.com/drive/folders/1ZIwH4J9gDbBXbG10a_Q4fSGwx0DFqXpk?usp=sharing
 published: true
+sponsoringLevels:
+  - SILVER
+  - BRONZE
+  - LOGISTIC
+sponsors:
+  - slug: bearstudio
+    level: SILVER
+  - slug: oneprepaid
+    level: BRONZE
+  - slug: village-by-ca
+    level: LOGISTIC
 ---
 
-import { About } from './about';
+import { About } from "./about";
 
 <About event={frontmatter} />

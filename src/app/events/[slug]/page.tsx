@@ -5,6 +5,7 @@ import collections from "@/content/collections";
 import { formatDateTime } from "@/lib/utils";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Sponsors } from "./sponsors";
 
 type EventPageProps = Readonly<{
   params: { slug: string };
@@ -46,13 +47,20 @@ export default async function EventPage({ params }: EventPageProps) {
 
   const date = event.date ? formatDateTime(event.date) : undefined;
 
+  const location = event.location
+    ? {
+        "@type": "Place",
+        address: event.location.address,
+      }
+    : undefined;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Event",
     name: `${event.date ? formatDateTime(event.date) + " " : ""}${event.name}`,
     startDate: event.date,
     description: event.excerpt,
-    location: event.location,
+    location,
     offers: event.tickets?.href,
   };
 
@@ -61,6 +69,10 @@ export default async function EventPage({ params }: EventPageProps) {
       <Header event={event} />
       <Hero event={{ ...event, date }} />
       <Content />
+      <div id="sponsors">
+        <Sponsorship event={event} />
+      </div>
+      <Sponsors event={event} />
       <Sponsorship event={event} />
       <script
         type="application/ld+json"

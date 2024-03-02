@@ -36,7 +36,8 @@ export function About(
                     />
                     <span>
                       <strong className="font-semibold text-primary">
-                        {props.event.location}.
+                        {props.event.location.name},{" "}
+                        {props.event.location.address}.
                       </strong>{" "}
                       Join us in that awesome location. Enjoy the Seine river
                       from the heart of Rouen.
