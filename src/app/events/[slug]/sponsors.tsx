@@ -1,5 +1,7 @@
 import collections, { Event } from "@/content/collections";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
 
 async function SponsorImage(
   props: Readonly<{ sponsor: { slug: string; level: string } }>,
@@ -9,7 +11,7 @@ async function SponsorImage(
   return (
     <div className="overflow-hidden rounded-md border-2 border-gray-100">
       <Image
-        className="w-full object-contain"
+        className="w-full"
         src={sponsor.image.src}
         alt={sponsor.image.alt}
         width={1000}
@@ -19,56 +21,59 @@ async function SponsorImage(
   );
 }
 
-async function SponsorsRow(
-  props: Readonly<{
-    level: string;
-    sponsors?: Event["sponsors"];
-  }>,
-) {
+function SponsorImagePlaceholder(props: { prospectus: Event["prospectus"] }) {
   return (
-    <div className="bg-white py-16">
-      <div className="mx-auto max-w-7xl">
-        <h2 className="mb-4 font-heading text-3xl font-bold capitalize tracking-tight text-gray-800">
-          {props.level.toLocaleLowerCase()}
-        </h2>
-        <div className="grid grid-cols-2 gap-2 sm:mx-0 md:grid-cols-3">
-          {props.sponsors?.map((sponsor) => (
-            <SponsorImage key={sponsor.slug} sponsor={sponsor} />
-          ))}
-        </div>
-      </div>
-    </div>
+    <Link
+      href={props.prospectus?.href ?? "#"}
+      title={props.prospectus?.title}
+      target="_blank"
+      rel="noreferer"
+      className="flex w-full items-center justify-center overflow-hidden rounded-md border-2 border-gray-100 bg-gray-50 p-4 text-center text-sm font-medium text-gray-500 hover:text-gray-800"
+    >
+      <div>Become sponsor</div>
+    </Link>
   );
 }
 
 export function Sponsors(props: Readonly<{ event: Event }>) {
-  const sponsorsMap = new Map();
-
-  if (props.event.sponsors) {
-    for (let sponsor of props.event.sponsors) {
-      if (!props.event.sponsoringLevels.includes(sponsor.level)) {
-        return;
-      }
-
-      const previous = sponsorsMap.has(sponsor.level)
-        ? sponsorsMap.get(sponsor.level)
-        : [];
-
-      sponsorsMap.set(sponsor.level, [...previous, sponsor]);
-    }
-  }
-
   return (
-    <div className="bg-white py-20">
+    <div className="bg-white py-20 text-gray-900">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto pb-4">
           <h2 className="font-heading text-4xl font-bold tracking-tight text-gray-800 sm:text-4xl md:text-4xl">
             Sponsors
           </h2>
         </div>
-        {[...sponsorsMap.entries()].map(([level, sponsors]) => (
-          <SponsorsRow key={level} level={level} sponsors={sponsors} />
-        ))}
+        {props.event.sponsoringLevels.map((level) => {
+          const levelSponsors =
+            props.event.sponsors?.filter(
+              (sponsor) => sponsor.level === level,
+            ) ?? [];
+          return (
+            <div key={level} className="bg-white py-8">
+              <div className="mx-auto max-w-7xl">
+                <h3 className="mb-4 font-heading text-2xl font-bold capitalize tracking-tight text-gray-800">
+                  {level.toLocaleLowerCase()}
+                </h3>
+                <div
+                  className={cn(
+                    "grid grid-cols-2 gap-2 sm:mx-0 sm:grid-cols-3 lg:grid-cols-4",
+                    level === "SILVER" && "sm:grid-cols-2 lg:grid-cols-3",
+                  )}
+                >
+                  {levelSponsors.map((sponsor) => (
+                    <SponsorImage key={sponsor.slug} sponsor={sponsor} />
+                  ))}
+                  {levelSponsors.length <= 1 && (
+                    <SponsorImagePlaceholder
+                      prospectus={props.event.prospectus}
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

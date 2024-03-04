@@ -15,6 +15,8 @@ export function Sponsorship(props: Readonly<{ event: Event }>) {
               <a
                 href={props.event.prospectus?.href}
                 title={props.event.prospectus?.title}
+                target="_blank"
+                rel="noreferer"
               >
                 Sponsoring Prospectus
                 <ExternalLink className="ml-2 h-4 w-4" />
