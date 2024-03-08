@@ -8,8 +8,12 @@ async function SponsorImage(
 ) {
   const sponsor = await collections.sponsor.getBySlug(props.sponsor.slug);
 
-  return (
-    <div className="overflow-hidden rounded-md border-2 border-gray-100">
+  const content = (
+    <div
+      className={cn("overflow-hidden rounded-md border-2 border-gray-100", {
+        "hover:border-gray-200": !!sponsor.href,
+      })}
+    >
       <Image
         className="w-full"
         src={sponsor.image.src}
@@ -19,9 +23,26 @@ async function SponsorImage(
       />
     </div>
   );
+
+  if (!sponsor.href) {
+    return content;
+  }
+
+  return (
+    <Link
+      href={sponsor.href ?? "#"}
+      title={sponsor.name}
+      target="_blank"
+      rel="noreferer"
+    >
+      {content}
+    </Link>
+  );
 }
 
-function SponsorImagePlaceholder(props: { prospectus: Event["prospectus"] }) {
+function SponsorImagePlaceholder(
+  props: Readonly<{ prospectus: Event["prospectus"] }>,
+) {
   return (
     <Link
       href={props.prospectus?.href ?? "#"}
