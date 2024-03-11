@@ -30,7 +30,7 @@ const collections = {
       socials: z
         .array(
           z.object({
-            type: z.enum(["x", "linkedin"]),
+            type: z.enum(["x", "linkedin", "instagram"]),
             href: z.string().url(),
           }),
         )
@@ -67,6 +67,7 @@ const collections = {
           z.object({
             slug: z.string(), // <- the slug of the sponsor
             level: z.string(), // <- the level of sponsoring
+            option: z.enum(["lunch"]).optional(), // <- if the sponsor has an option
           }),
         )
         .optional(),
