@@ -67,7 +67,7 @@ const collections = {
           z.object({
             slug: z.string(), // <- the slug of the sponsor
             level: z.string(), // <- the level of sponsoring
-            option: z.enum(["lunch"]).optional(), // <- if the sponsor has an option
+            options: z.array(z.enum(["lunch"])).optional(), // <- if the sponsor has an option
           }),
         )
         .optional(),
