@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Event } from "@/content/collections";
-import dayjs from "dayjs";
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 
@@ -56,7 +55,8 @@ export function Hero(
               )}
               {props.event.cfp &&
                 !props.event.tickets &&
-                !dayjs().isAfter(dayjs(props.event.cfp.endDate), "day") && (
+                new Date().getDay() <=
+                  new Date(props.event.cfp?.endDate).getDay() && (
                   <Button asChild>
                     <a href={props.event.cfp.href}>
                       Call For Paper
