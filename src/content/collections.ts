@@ -58,7 +58,7 @@ const collections = {
       cfp: z
         .object({
           href: z.string().url(),
-          endDate: z.string(),
+          endDate: z.date().optional(),
         })
         .optional(),
       tickets: z.object({ href: z.string().url() }).optional(),
