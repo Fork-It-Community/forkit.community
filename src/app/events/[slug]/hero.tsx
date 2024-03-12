@@ -55,8 +55,8 @@ export function Hero(
               )}
               {props.event.cfp &&
                 !props.event.tickets &&
-                new Date().getDay() <=
-                  new Date(props.event.cfp?.endDate).getDay() && (
+                new Date().getTime() <=
+                  new Date(props.event.cfp?.endDate).getTime() && (
                   <Button asChild>
                     <a href={props.event.cfp.href}>
                       Call For Paper

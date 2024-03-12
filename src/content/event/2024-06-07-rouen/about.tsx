@@ -77,8 +77,8 @@ export function About(
                 our discussions.
               </p>
               {props.event.cfp &&
-                new Date().getDay() <=
-                  new Date(props.event.cfp?.endDate).getDay() && (
+                new Date().getTime() <=
+                  new Date(props.event.cfp?.endDate).getTime() && (
                   <Button asChild className="mt-10 bg-white">
                     <a href={props.event.cfp.href}>
                       Call For Paper
