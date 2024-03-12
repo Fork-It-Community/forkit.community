@@ -55,7 +55,12 @@ const collections = {
           alt: z.string(),
         })
         .optional(),
-      cfp: z.object({ href: z.string().url() }).optional(),
+      cfp: z
+        .object({
+          href: z.string().url(),
+          endDate: z.string(),
+        })
+        .optional(),
       tickets: z.object({ href: z.string().url() }).optional(),
       prospectus: z
         .object({ href: z.string().url(), title: z.string().optional() })

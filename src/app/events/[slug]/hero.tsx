@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Event } from "@/content/collections";
+import dayjs from "dayjs";
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 
@@ -53,14 +54,16 @@ export function Hero(
                   </a>
                 </Button>
               )}
-              {props.event.cfp && !props.event.tickets && (
-                <Button asChild>
-                  <a href={props.event.cfp.href}>
-                    Call For Paper
-                    <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-              )}
+              {props.event.cfp &&
+                !props.event.tickets &&
+                !dayjs().isAfter(dayjs(props.event.cfp.endDate), "day") && (
+                  <Button asChild>
+                    <a href={props.event.cfp.href}>
+                      Call For Paper
+                      <ExternalLink className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
+                )}
               {props.event.tickets && (
                 <Button asChild>
                   <a href={props.event.tickets.href}>

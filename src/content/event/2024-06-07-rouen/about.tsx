@@ -4,6 +4,7 @@ import { Calendar, ExternalLink, MapPin } from "lucide-react";
 import Image from "next/image";
 import LeVillageByCA from "./le-village-by-ca.jpg";
 import { Button } from "@/components/ui/button";
+import dayjs from "dayjs";
 
 export function About(
   props: Readonly<{ event: Omit<Event, "date"> & { date?: string } }>,
@@ -76,14 +77,15 @@ export function About(
                 audience and enhancing the accessibility and inclusiveness of
                 our discussions.
               </p>
-              {props.event.cfp && (
-                <Button asChild className="mt-10 bg-white">
-                  <a href={props.event.cfp.href}>
-                    Call For Paper
-                    <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-              )}
+              {props.event.cfp &&
+                !dayjs().isAfter(dayjs(props.event.cfp.endDate), "day") && (
+                  <Button asChild className="mt-10 bg-white">
+                    <a href={props.event.cfp.href}>
+                      Call For Paper
+                      <ExternalLink className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
+                )}
             </div>
           </div>
         </div>
