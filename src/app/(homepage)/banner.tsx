@@ -1,5 +1,5 @@
 import collections from "@/content/collections";
-import { formatDateTime } from "@/lib/utils";
+import { cn, formatDateTime } from "@/lib/utils";
 import Link from "next/link";
 
 export async function Banner() {
@@ -15,14 +15,32 @@ export async function Banner() {
         event.date.valueOf() > new Date().valueOf(),
     );
 
+  if (!nextEvent) {
+    return null;
+  }
+
   return (
-    <div className="gap-x-6 bg-gray-950 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
-      <p className="text-sm leading-6 text-white">
+    <div
+      className={cn(
+        "gap-x-6 px-6 py-2.5 sm:px-3.5 sm:before:flex-1",
+        !nextEvent?.tickets && "bg-gray-950 text-white",
+        !!nextEvent?.tickets && "bg-primary text-gray-950",
+      )}
+    >
+      <p className="text-sm leading-6">
         <Link href={`/events/${nextEvent?.metadata.slug}`}>
+          {nextEvent?.tickets && (
+            <>
+              <span role="img" aria-label="ticket">
+                🎟️
+              </span>{" "}
+              Tickets available:{" "}
+            </>
+          )}
           <strong className="font-semibold">{nextEvent?.name}</strong>
           <svg
             viewBox="0 0 2 2"
-            className="mx-2 inline h-0.5 w-0.5 fill-white"
+            className="fill-current mx-2 inline h-0.5 w-0.5"
             aria-hidden="true"
           >
             <circle cx={1} cy={1} r={1} />
