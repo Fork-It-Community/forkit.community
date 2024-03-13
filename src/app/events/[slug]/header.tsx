@@ -101,7 +101,7 @@ export function Header(props: { event: Event }) {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           {props.event.tickets && (
-            <div className="mt-10 flex items-center justify-center gap-x-6">
+            <div className="flex items-center justify-center gap-x-6">
               <Button asChild>
                 <a href={props.event.tickets.href}>Get tickets</a>
               </Button>

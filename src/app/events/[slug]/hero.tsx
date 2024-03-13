@@ -53,7 +53,7 @@ export function Hero(
                   </a>
                 </Button>
               )}
-              {props.event.cfp && (
+              {props.event.cfp && !props.event.tickets && (
                 <Button asChild>
                   <a href={props.event.cfp.href}>
                     Call For Paper
