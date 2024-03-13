@@ -5,6 +5,7 @@ import { Organizers } from "./organizers";
 import { About } from "./about";
 import { Events } from "@/app/(homepage)/events";
 import { Banner } from "@/app/(homepage)/banner";
+import { Partners } from "@/app/(homepage)/partners";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <Events />
       <Features />
       <Organizers />
+      <Partners />
       {/* <Sponsors /> */}
     </>
   );
