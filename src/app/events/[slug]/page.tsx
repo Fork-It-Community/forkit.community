@@ -6,7 +6,7 @@ import { formatDateTime } from "@/lib/utils";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Sponsors } from "./sponsors";
-import { Speakers } from "./speaker";
+import { Speakers } from "./speakers";
 
 type EventPageProps = Readonly<{
   params: { slug: string };
