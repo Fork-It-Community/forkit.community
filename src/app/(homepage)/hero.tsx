@@ -69,26 +69,34 @@ export async function Hero() {
               </Button>
             </div>
             {nextEvent?.tickets && (
-              <div className="py-12">
+              <div className="pt-12">
                 <Link
                   href={nextEvent?.tickets.href}
                   target="_blank"
                   rel="noreferer"
                 >
                   <div className="group relative max-w-lg rounded-xl border-2 border-gray-800 p-5 hover:border-gray-700">
-                    <h2 className="font-heading text-3xl tracking-tight text-primary sm:text-4xl">
-                      TICKETS AVAILABLE
+                    <h2 className="font-heading text-3xl uppercase tracking-tight text-primary sm:text-4xl">
+                      Tickets available
                     </h2>
-                    {nextEvent?.date ? (
-                      <p className="text-indigo-200 mx-auto mt-6 max-w-xl text-lg leading-8">
-                        🎟️ Get your tickets for the {nextEvent.name} conference{" "}
-                        {formatDateTime(nextEvent?.date)}!
-                      </p>
-                    ) : (
-                      <p className="text-indigo-200 mx-auto mt-6 max-w-xl text-lg leading-8">
-                        🎟️ Get your tickets for the {nextEvent.name} conference!
-                      </p>
-                    )}
+                    <p className="mx-auto mt-6 max-w-xl text-lg">
+                      {nextEvent?.date ? (
+                        <>
+                          <span role="img" aria-label="ticket">
+                            🎟️
+                          </span>{" "}
+                          Get your tickets for the {nextEvent.name} conference{" "}
+                          {formatDateTime(nextEvent?.date)}!
+                        </>
+                      ) : (
+                        <>
+                          <span role="img" aria-label="ticket">
+                            🎟️
+                          </span>{" "}
+                          Get your tickets for the {nextEvent.name} conference!
+                        </>
+                      )}
+                    </p>
                     <div className="mt-4 flex items-center justify-end gap-x-6">
                       <Button
                         variant={"link"}
