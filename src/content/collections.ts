@@ -103,7 +103,7 @@ const collections = {
       socials: z
         .array(
           z.object({
-            type: z.enum(["x", "linkedin", "instagram"]),
+            type: z.enum(["x", "linkedin", "instagram", "github"]),
             href: z.string().url(),
           }),
         )
