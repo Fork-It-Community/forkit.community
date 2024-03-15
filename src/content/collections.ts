@@ -91,6 +91,23 @@ const collections = {
           }),
         )
         .optional(),
+      speakers: z.array(z.string()).optional(),
+    }),
+  }),
+  speaker: defineCollection({
+    folder: "speaker",
+    schema: z.object({
+      name: z.string(),
+      imageUrl: z.string(),
+      job: z.string().optional(),
+      socials: z
+        .array(
+          z.object({
+            type: z.enum(["x", "linkedin", "instagram"]),
+            href: z.string().url(),
+          }),
+        )
+        .optional(),
     }),
   }),
 } as const;
