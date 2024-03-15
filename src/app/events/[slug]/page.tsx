@@ -6,6 +6,7 @@ import { formatDateTime } from "@/lib/utils";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Sponsors } from "./sponsors";
+import { Speakers } from "./speaker";
 
 type EventPageProps = Readonly<{
   params: { slug: string };
@@ -73,6 +74,7 @@ export default async function EventPage({ params }: EventPageProps) {
         <Sponsorship event={event} />
       </div>
       <Sponsors event={event} />
+      {!!event.speakers && <Speakers event={event} />}
       <Sponsorship event={event} />
       <script
         type="application/ld+json"
