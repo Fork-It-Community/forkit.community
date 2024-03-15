@@ -17,7 +17,6 @@ export default function Home() {
       <Features />
       <Organizers />
       <Partners />
-      {/* <Sponsors /> */}
     </>
   );
 }
