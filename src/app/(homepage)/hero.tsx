@@ -3,22 +3,12 @@ import Image from "next/image";
 import ImgForkItLogo from "@/../public/forkit-medium.svg";
 import HeroImage from "./hero.jpg";
 import { ExternalLink, MailIcon } from "lucide-react";
-import collections from "@/content/collections";
 import { formatDateTime } from "@/lib/utils";
 import Link from "next/link";
+import { getNextEvent } from "@/lib/server";
 
 export async function Hero() {
-  const nextEvent = (await collections.event.getAll())
-    .sort(
-      (event1, event2) =>
-        (event1.date?.valueOf() ?? 0) - (event2.date?.valueOf() ?? 0),
-    )
-    .find(
-      (event) =>
-        event.published &&
-        event.date &&
-        event.date.valueOf() > new Date().valueOf(),
-    );
+  const nextEvent = await getNextEvent();
 
   return (
     <div className="relative">
