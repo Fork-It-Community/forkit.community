@@ -7,20 +7,20 @@ export const Events = async () => {
   const events = await collections.event.getAll();
 
   return (
-    <section className="bg-gray-950 py-24 sm:py-32 relative overflow-hidden">
-      <div className="relative mx-auto max-w-5xl flex flex-col gap-12 px-6">
-        <h2 className="text-3xl font-bold sm:text-4xl text-center font-heading">
+    <section className="relative overflow-hidden bg-gray-950 py-24 sm:py-32">
+      <div className="relative mx-auto flex max-w-5xl flex-col gap-12 px-6">
+        <h2 className="text-center font-heading text-3xl font-bold sm:text-4xl">
           <span className="text-primary">Fork it! Community</span> upcoming
           events
         </h2>
         {events.map((event) => (
-          <article className="rounded-md flex flex-col" key={event.name}>
+          <article className="flex flex-col rounded-md" key={event.name}>
             <div className="flex flex-col sm:flex-row">
-              <div className="p-4 flex flex-col gap-4">
-                <h4 className="flex flex-col">
+              <div className="flex flex-col gap-4 p-4">
+                <h3 className="flex flex-col">
                   {event.date && (
                     <time
-                      className="text-3xl text-primary font-heading"
+                      className="font-heading text-3xl text-primary"
                       dateTime={event.date.toISOString()}
                     >
                       {new Intl.DateTimeFormat("en-US", {
@@ -28,12 +28,12 @@ export const Events = async () => {
                       }).format(event.date)}
                     </time>
                   )}
-                  <span className="text-white text-lg font-bold ">
+                  <span className="text-lg font-bold text-white ">
                     {event.name}
                   </span>
-                </h4>
+                </h3>
                 {event.excerpt && (
-                  <p className="text-gray-300 text-sm">{event.excerpt}</p>
+                  <p className="text-sm text-gray-300">{event.excerpt}</p>
                 )}
                 {event.cfp && (
                   <div className="flex flex-row gap-4">
@@ -41,7 +41,10 @@ export const Events = async () => {
                       <a href={event.cfp.href}>Submit your talk (CFP)</a>
                     </Button>
                     <Button asChild variant="secondary">
-                      <Link href={`/events/${event.metadata.slug}`}>
+                      <Link
+                        href={`/events/${event.metadata.slug}`}
+                        title="Homepage of the event"
+                      >
                         Learn more
                       </Link>
                     </Button>
@@ -50,10 +53,10 @@ export const Events = async () => {
               </div>
 
               {event.image && (
-                <div className="m-auto logo-mask sm:min-w-48">
+                <div className="logo-mask m-auto sm:min-w-48">
                   <Image
                     priority
-                    className="aspect-[3/2] w-full bg-primary text-gray-900 object-cover"
+                    className="aspect-[3/2] w-full bg-primary object-cover text-gray-900"
                     src={event.image?.src ?? ""}
                     width={1000}
                     height={1000}

@@ -1,19 +1,9 @@
-import collections from "@/content/collections";
+import { getNextEvent } from "@/lib/server";
 import { cn, formatDateTime } from "@/lib/utils";
 import Link from "next/link";
 
 export async function Banner() {
-  const nextEvent = (await collections.event.getAll())
-    .sort(
-      (event1, event2) =>
-        (event1.date?.valueOf() ?? 0) - (event2.date?.valueOf() ?? 0),
-    )
-    .find(
-      (event) =>
-        event.published &&
-        event.date &&
-        event.date.valueOf() > new Date().valueOf(),
-    );
+  const nextEvent = await getNextEvent();
 
   if (!nextEvent) {
     return null;
