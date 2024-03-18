@@ -85,11 +85,15 @@ export function Sponsors(props: Readonly<{ event: Event }>) {
                   {levelSponsors.map((sponsor) => (
                     <SponsorImage key={sponsor.slug} sponsor={sponsor} />
                   ))}
-                  {levelSponsors.length <= 1 && (
-                    <SponsorImagePlaceholder
-                      prospectus={props.event.prospectus}
-                    />
-                  )}
+                  {levelSponsors.length <= 1 &&
+                    props.event.prospectus &&
+                    props.event.prospectus.endDate &&
+                    new Date().getTime() <=
+                      props.event.prospectus.endDate.getTime() && (
+                      <SponsorImagePlaceholder
+                        prospectus={props.event.prospectus}
+                      />
+                    )}
                 </div>
               </div>
             </div>

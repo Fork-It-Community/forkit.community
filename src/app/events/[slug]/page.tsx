@@ -69,11 +69,19 @@ export default async function EventPage({ params }: EventPageProps) {
       <Header event={event} />
       <Hero event={{ ...event, date }} />
       <Content />
-      <div id="sponsors">
-        <Sponsorship event={event} />
-      </div>
+      {event.prospectus &&
+        event.prospectus.endDate &&
+        new Date().getTime() <= event.prospectus.endDate.getTime() && (
+          <div id="sponsors">
+            <Sponsorship event={event} />
+          </div>
+        )}
       <Sponsors event={event} />
-      <Sponsorship event={event} />
+      {event.prospectus &&
+        event.prospectus.endDate &&
+        new Date().getTime() <= event.prospectus.endDate.getTime() && (
+          <Sponsorship event={event} />
+        )}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

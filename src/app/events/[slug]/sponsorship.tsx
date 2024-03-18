@@ -10,19 +10,18 @@ export function Sponsorship(props: Readonly<{ event: Event }>) {
           Want to become a sponsor?
         </h2>
         <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4 lg:mt-0 lg:flex-shrink-0">
-          {props.event.prospectus && (
-            <Button asChild>
-              <a
-                href={props.event.prospectus?.href}
-                title={props.event.prospectus?.title}
-                target="_blank"
-                rel="noreferer"
-              >
-                Sponsoring Prospectus
-                <ExternalLink className="ml-2 h-4 w-4" />
-              </a>
-            </Button>
-          )}
+          <Button asChild>
+            <a
+              href={props.event.prospectus?.href}
+              title={props.event.prospectus?.title}
+              target="_blank"
+              rel="noreferer"
+            >
+              Sponsoring Prospectus
+              <ExternalLink className="ml-2 h-4 w-4" />
+            </a>
+          </Button>
+
           <Button variant="link" asChild>
             <a
               href={`mailto:rudy@forkit.community?subject=${props.event.date?.getFullYear()} ${
