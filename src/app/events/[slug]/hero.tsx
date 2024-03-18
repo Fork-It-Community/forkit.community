@@ -45,14 +45,17 @@ export function Hero(
           <p className="text-md mt-6 text-gray-400">{props.event.excerpt}</p>
           {(props.event.tickets || props.event.cfp) && (
             <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
-              {props.event.prospectus && (
-                <Button asChild>
-                  <a href={props.event.prospectus.href}>
-                    {props.event.prospectus.title ?? "Sponsoring prospectus"}
-                    <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-              )}
+              {props.event.prospectus &&
+                props.event.prospectus.endDate &&
+                new Date().getTime() <=
+                  props.event.prospectus.endDate.getTime() && (
+                  <Button asChild>
+                    <a href={props.event.prospectus.href}>
+                      {props.event.prospectus.title ?? "Sponsoring prospectus"}
+                      <ExternalLink className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
+                )}
               {props.event.cfp && !props.event.tickets && (
                 <Button asChild>
                   <a href={props.event.cfp.href}>
