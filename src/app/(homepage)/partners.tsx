@@ -13,7 +13,7 @@ export async function Partners() {
           </h2>
           <ul className="mx-auto mt-10 grid max-w-2xl grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-4">
             {allPartners.map((partner) => (
-              <li key={partner.name} className="flex flex-col gap-4">
+              <li key={partner.name} className="gap-4">
                 {partner.href ? (
                   <Link
                     href={partner.href}
