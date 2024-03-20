@@ -75,7 +75,7 @@ export default async function EventPage({ params }: EventPageProps) {
       </div>
       <Sponsors event={event} />
       <Sponsorship event={event} />
-      <Faq event={event} />
+      {event.faq && <Faq event={event} />}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
