@@ -85,7 +85,7 @@ export default async function EventPage({ params }: EventPageProps) {
         new Date().getTime() <= event.prospectus.endDate.getTime() && (
           <Sponsorship event={event} />
         )}
-      <Faq event={event} />
+      {event.faq && <Faq event={event} />}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
