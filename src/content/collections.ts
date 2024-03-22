@@ -1,6 +1,8 @@
 import { defineCollection } from "typed-mdx";
 import { z } from "zod";
 
+const zSocialTypes = () => z.enum(["x", "linkedin", "instagram", "github"]);
+
 const collections = {
   organizer: defineCollection({
     folder: "organizer",
@@ -11,7 +13,7 @@ const collections = {
       socials: z
         .array(
           z.object({
-            type: z.enum(["x", "linkedin"]),
+            type: zSocialTypes(),
             href: z.string().url(),
           }),
         )
@@ -41,7 +43,7 @@ const collections = {
       socials: z
         .array(
           z.object({
-            type: z.enum(["x", "linkedin", "instagram"]),
+            type: zSocialTypes(),
             href: z.string().url(),
           }),
         )
@@ -103,7 +105,7 @@ const collections = {
       socials: z
         .array(
           z.object({
-            type: z.enum(["x", "linkedin", "instagram", "github"]),
+            type: zSocialTypes(),
             href: z.string().url(),
           }),
         )
@@ -117,3 +119,4 @@ export default collections;
 export type Event = z.infer<typeof collections.event.schema>;
 export type Sponsor = z.infer<typeof collections.sponsor.schema>;
 export type Partner = z.infer<typeof collections.partner.schema>;
+export type Speaker = z.infer<typeof collections.speaker.schema>;
