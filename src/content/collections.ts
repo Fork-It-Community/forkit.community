@@ -18,6 +18,17 @@ const collections = {
         .optional(),
     }),
   }),
+  partner: defineCollection({
+    folder: "partner",
+    schema: z.object({
+      name: z.string(),
+      image: z.object({
+        src: z.string(),
+        alt: z.string(),
+      }),
+      href: z.string().url().optional(),
+    }),
+  }),
   sponsor: defineCollection({
     folder: "sponsor",
     schema: z.object({
@@ -88,3 +99,4 @@ export default collections;
 
 export type Event = z.infer<typeof collections.event.schema>;
 export type Sponsor = z.infer<typeof collections.sponsor.schema>;
+export type Partner = z.infer<typeof collections.partner.schema>;
