@@ -4,6 +4,8 @@ import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 
 const MAX_PRIMARY_BUTTONS = 2;
+const buttonPrimaryClassName = "w-full min-w-[20ch] sm:w-auto";
+const buttonSecondaryClassName = "-mx-4";
 export function Hero(
   props: Readonly<{ event: Omit<Event, "date"> & { date?: string } }>,
 ) {
@@ -62,7 +64,7 @@ export function Hero(
                   href={props.event.prospectus?.href}
                   target="_blank"
                   rel="noreferer"
-                  className="min-w-[20ch]"
+                  className={buttonPrimaryClassName}
                 >
                   {props.event.prospectus?.title || "Sponsoring prospectus"}
                   <ExternalLink className="ml-2 h-4 w-4" />
@@ -75,7 +77,7 @@ export function Hero(
                   href={props.event.tickets?.href}
                   target="_blank"
                   rel="noreferer"
-                  className="min-w-[20ch]"
+                  className={buttonPrimaryClassName}
                 >
                   Get tickets
                   <ExternalLink className="ml-2 h-4 w-4" />
@@ -99,8 +101,8 @@ export function Hero(
                   className={
                     [isProspectusActive, isTicketsActive].filter(Boolean)
                       .length < MAX_PRIMARY_BUTTONS
-                      ? "min-w-[20ch]"
-                      : "-mx-4"
+                      ? buttonPrimaryClassName
+                      : buttonSecondaryClassName
                   }
                 >
                   Call For Paper
