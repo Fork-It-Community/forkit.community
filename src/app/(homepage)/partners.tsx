@@ -1,7 +1,40 @@
-import collections from "@/content/collections";
+import collections, { Partner } from "@/content/collections";
 import Link from "next/link";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
+async function PartnerImage({ partner }: { partner: Partner }) {
+  const content = (
+    <div
+      className={cn("overflow-hidden rounded-md border-2 border-gray-100", {
+        "hover:border-gray-200": !!partner.href,
+      })}
+    >
+      <Image
+        className="w-full"
+        src={partner.image.src}
+        alt={partner.image.alt}
+        width={1000}
+        height={500}
+      />
+    </div>
+  );
+
+  if (!partner.href) {
+    return content;
+  }
+
+  return (
+    <Link
+      href={partner.href ?? "#"}
+      title={partner.name}
+      target="_blank"
+      rel="noreferer"
+    >
+      {content}
+    </Link>
+  );
+}
 export async function Partners() {
   const allPartners = await collections.partner.getAll();
   return (
@@ -14,28 +47,7 @@ export async function Partners() {
           <ul className="mx-auto mt-10 grid max-w-2xl grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-4">
             {allPartners.map((partner) => (
               <li key={partner.name} className="gap-4">
-                {partner.href ? (
-                  <Link
-                    href={partner.href}
-                    title={partner.name}
-                    target="_blank"
-                    rel="noreferer"
-                  >
-                    <Image
-                      src={partner.image.src}
-                      alt={partner.image.alt}
-                      width={1000}
-                      height={500}
-                    />
-                  </Link>
-                ) : (
-                  <Image
-                    src={partner.image.src}
-                    alt={partner.image.alt}
-                    width={1000}
-                    height={500}
-                  />
-                )}
+                <PartnerImage partner={partner} />
               </li>
             ))}
           </ul>

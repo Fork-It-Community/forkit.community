@@ -99,3 +99,4 @@ export default collections;
 
 export type Event = z.infer<typeof collections.event.schema>;
 export type Sponsor = z.infer<typeof collections.sponsor.schema>;
+export type Partner = z.infer<typeof collections.partner.schema>;
