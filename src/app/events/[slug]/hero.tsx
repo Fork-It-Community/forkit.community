@@ -44,32 +44,65 @@ export function Hero(
           </h1>
           <p className="text-md mt-6 text-gray-400">{props.event.excerpt}</p>
           {(props.event.tickets || props.event.cfp) && (
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
-              {props.event.prospectus && (
-                <Button asChild>
-                  <a href={props.event.prospectus.href}>
-                    {props.event.prospectus.title ?? "Sponsoring prospectus"}
+            <>
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
+                {props.event.prospectus && (
+                  <Button asChild>
+                    <a
+                      href={props.event.prospectus.href}
+                      target="_blank"
+                      rel="noreferer"
+                    >
+                      {props.event.prospectus.title ?? "Sponsoring prospectus"}
+                      <ExternalLink className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
+                )}
+                {props.event.cfp &&
+                  !props.event.tickets &&
+                  props.event.cfp.endDate &&
+                  new Date().getTime() <=
+                    props.event.cfp?.endDate.getTime() && (
+                    <Button asChild>
+                      <a
+                        href={props.event.cfp.href}
+                        target="_blank"
+                        rel="noreferer"
+                      >
+                        Call For Paper
+                        <ExternalLink className="ml-2 h-4 w-4" />
+                      </a>
+                    </Button>
+                  )}
+                {props.event.tickets && (
+                  <Button asChild>
+                    <a
+                      href={props.event.tickets.href}
+                      target="_blank"
+                      rel="noreferer"
+                    >
+                      Get tickets
+                      <ExternalLink className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
+                )}
+              </div>
+              {props.event.cfp &&
+                props.event.tickets &&
+                props.event.cfp.endDate &&
+                new Date().getTime() <= props.event.cfp?.endDate.getTime() && (
+                  <Button variant="link" className="mt-5 text-white ">
+                    <a
+                      href={props.event.cfp.href}
+                      target="_blank"
+                      rel="noreferer"
+                    >
+                      Call For Paper
+                    </a>
                     <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-              )}
-              {props.event.cfp && !props.event.tickets && (
-                <Button asChild>
-                  <a href={props.event.cfp.href}>
-                    Call For Paper
-                    <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-              )}
-              {props.event.tickets && (
-                <Button asChild>
-                  <a href={props.event.tickets.href}>
-                    Get tickets
-                    <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-              )}
-            </div>
+                  </Button>
+                )}
+            </>
           )}
         </div>
       </div>

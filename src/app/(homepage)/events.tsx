@@ -35,21 +35,16 @@ export const Events = async () => {
                 {event.excerpt && (
                   <p className="text-sm text-gray-300">{event.excerpt}</p>
                 )}
-                {event.cfp && (
-                  <div className="flex flex-row gap-4">
-                    <Button asChild>
-                      <a href={event.cfp.href}>Submit your talk (CFP)</a>
-                    </Button>
-                    <Button asChild variant="secondary">
-                      <Link
-                        href={`/events/${event.metadata.slug}`}
-                        title="Homepage of the event"
-                      >
-                        Learn more
-                      </Link>
-                    </Button>
-                  </div>
-                )}
+                <div className="flex flex-row gap-4">
+                  <Button asChild>
+                    <Link
+                      href={`/events/${event.metadata.slug}`}
+                      title="Homepage of the event"
+                    >
+                      Learn more
+                    </Link>
+                  </Button>
+                </div>
               </div>
 
               {event.image && (
