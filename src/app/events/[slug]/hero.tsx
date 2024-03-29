@@ -3,9 +3,23 @@ import { Event } from "@/content/collections";
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 
+const MAX_PRIMARY_BUTTONS = 2;
+const buttonPrimaryClassName = "w-full min-w-[20ch] sm:w-auto";
+const buttonSecondaryClassName = "-mx-4";
 export function Hero(
   props: Readonly<{ event: Omit<Event, "date"> & { date?: string } }>,
 ) {
+  const isProspectusActive = !!(
+    props.event.prospectus?.href &&
+    (!props.event.prospectus.endDate ||
+      new Date().getTime() <= props.event.prospectus.endDate.getTime())
+  );
+  const isTicketsActive = !!props.event.tickets?.href;
+  const isCfpActive = !!(
+    props.event.cfp?.href &&
+    (!props.event.cfp.endDate ||
+      new Date().getTime() <= props.event.cfp.endDate.getTime())
+  );
   return (
     <div className="relative isolate overflow-hidden pt-14">
       {props.event.image && (
@@ -43,71 +57,60 @@ export function Hero(
             {props.event.name}
           </h1>
           <p className="text-md mt-6 text-gray-400">{props.event.excerpt}</p>
-          {(props.event.tickets || props.event.cfp) && (
-            <>
-              <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
-                {props.event.prospectus &&
-                  props.event.prospectus.endDate &&
-                  new Date().getTime() <=
-                    props.event.prospectus.endDate.getTime() && (
-                    <Button asChild>
-                      <a
-                        href={props.event.prospectus.href}
-                        target="_blank"
-                        rel="noreferer"
-                      >
-                        {props.event.prospectus.title ??
-                          "Sponsoring prospectus"}
-                        <ExternalLink className="ml-2 h-4 w-4" />
-                      </a>
-                    </Button>
-                  )}
-                {props.event.cfp &&
-                  !props.event.tickets &&
-                  props.event.cfp.endDate &&
-                  new Date().getTime() <=
-                    props.event.cfp?.endDate.getTime() && (
-                    <Button asChild>
-                      <a
-                        href={props.event.cfp.href}
-                        target="_blank"
-                        rel="noreferer"
-                      >
-                        Call For Paper
-                        <ExternalLink className="ml-2 h-4 w-4" />
-                      </a>
-                    </Button>
-                  )}
-                {props.event.tickets && (
-                  <Button asChild>
-                    <a
-                      href={props.event.tickets.href}
-                      target="_blank"
-                      rel="noreferer"
-                    >
-                      Get tickets
-                      <ExternalLink className="ml-2 h-4 w-4" />
-                    </a>
-                  </Button>
-                )}
-              </div>
-              {props.event.cfp &&
-                props.event.tickets &&
-                props.event.cfp.endDate &&
-                new Date().getTime() <= props.event.cfp?.endDate.getTime() && (
-                  <Button variant="link" className="mt-5 text-white ">
-                    <a
-                      href={props.event.cfp.href}
-                      target="_blank"
-                      rel="noreferer"
-                    >
-                      Call For Paper
-                    </a>
-                    <ExternalLink className="ml-2 h-4 w-4" />
-                  </Button>
-                )}
-            </>
-          )}
+          <div className="mx-8 mt-10 flex  flex-wrap items-center justify-center gap-x-6 gap-y-4">
+            {isProspectusActive && (
+              <Button asChild>
+                <a
+                  href={props.event.prospectus?.href}
+                  target="_blank"
+                  rel="noreferer"
+                  className={buttonPrimaryClassName}
+                >
+                  {props.event.prospectus?.title || "Sponsoring prospectus"}
+                  <ExternalLink className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+            )}
+            {isTicketsActive && (
+              <Button asChild>
+                <a
+                  href={props.event.tickets?.href}
+                  target="_blank"
+                  rel="noreferer"
+                  className={buttonPrimaryClassName}
+                >
+                  Get tickets
+                  <ExternalLink className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+            )}
+            {isCfpActive && (
+              <Button
+                asChild
+                variant={
+                  [isProspectusActive, isTicketsActive].filter(Boolean)
+                    .length >= MAX_PRIMARY_BUTTONS
+                    ? "linkWhite"
+                    : undefined
+                }
+              >
+                <a
+                  href={props.event.cfp?.href}
+                  target="_blank"
+                  rel="noreferer"
+                  className={
+                    [isProspectusActive, isTicketsActive].filter(Boolean)
+                      .length < MAX_PRIMARY_BUTTONS
+                      ? buttonPrimaryClassName
+                      : buttonSecondaryClassName
+                  }
+                >
+                  Call For Paper
+                  <ExternalLink className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+            )}
+          </div>
         </div>
       </div>
       <div
