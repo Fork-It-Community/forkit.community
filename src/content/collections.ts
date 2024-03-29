@@ -63,7 +63,11 @@ const collections = {
         .optional(),
       tickets: z.object({ href: z.string().url() }).optional(),
       prospectus: z
-        .object({ href: z.string().url(), title: z.string().optional() })
+        .object({
+          href: z.string().url(),
+          endDate: z.date().optional(),
+          title: z.string().optional(),
+        })
         .optional(),
       published: z.boolean().optional(),
       sponsoringLevels: z.array(z.string()),
