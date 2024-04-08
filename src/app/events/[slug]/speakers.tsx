@@ -2,29 +2,45 @@ import Image from "next/image";
 import collections, { Event } from "@/content/collections";
 import { ICONS } from "@/components/icons";
 
-async function SpeakerImage(props: Readonly<{ speaker: { slug: string } }>) {
+async function Speaker(props: Readonly<{ speaker: { slug: string } }>) {
   const speaker = await collections.speaker.getBySlug(props.speaker.slug);
 
   const content = (
-    <li key={speaker.name} className="rounded-2xl bg-gray-800 px-8 py-10">
+    <div key={speaker.name} className="flex flex-col gap-3">
       <Image
-        className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
+        className="mx-auto aspect-square w-48 rounded-2xl md:w-56"
         src={speaker.imageUrl}
         alt={speaker.name}
-        width={1000}
-        height={500}
+        width={600}
+        height={600}
       />
-      <h3 className="mt-6 text-2xl font-semibold leading-7 tracking-tight text-white">
-        {speaker.name}
-      </h3>
-      <p className="mt-4 text-xl leading-6 text-gray-400">{speaker.job}</p>
+      <div className="flex flex-col gap-1">
+        <h3 className="text-lg font-semibold leading-6 tracking-tight text-white md:text-xl">
+          {speaker.name}
+        </h3>
+        {!!speaker.job && (
+          <p className="text-md leading-5 text-gray-400">{speaker.job}</p>
+        )}
+        {!!speaker.company &&
+          (speaker.companyHref ? (
+            <a
+              href={speaker.companyHref}
+              target="_blank"
+              className="text-sm leading-5 text-gray-400 underline hover:text-primary"
+            >
+              {speaker.company}
+            </a>
+          ) : (
+            <p className="text-sm leading-5 text-gray-400">{speaker.company}</p>
+          ))}
+      </div>
       {speaker.socials && (
-        <ul className="mt-6 flex justify-center gap-x-6">
+        <ul className="flex gap-x-4">
           {speaker.socials.map((social) => (
             <li key={social.type}>
               <a
                 href={social.href}
-                className=" text-gray-400 hover:text-gray-300"
+                className=" text-gray-400 transition hover:text-primary"
                 target="_blank"
               >
                 <span className="sr-only">{social.type}</span>
@@ -34,7 +50,7 @@ async function SpeakerImage(props: Readonly<{ speaker: { slug: string } }>) {
           ))}
         </ul>
       )}
-    </li>
+    </div>
   );
 
   return content;
@@ -42,23 +58,23 @@ async function SpeakerImage(props: Readonly<{ speaker: { slug: string } }>) {
 
 export function Speakers(props: Readonly<{ event: Event }>) {
   return (
-    <div className="bg-gray-900 py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6 text-center lg:px-8">
-        <div className="mx-auto max-w-2xl">
+    <div className="bg-gray-950 py-24 sm:py-32" id="speakers">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center">
           <h2 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Meet our speakers
+            Speakers
           </h2>
         </div>
-        <ul className="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-8">
+        <div className="mx-auto mt-12 grid grid-cols-[repeat(auto-fit,minmax(7rem,12rem))] justify-center gap-6 md:grid-cols-[repeat(auto-fit,minmax(12rem,14rem))] lg:mx-0 lg:max-w-none lg:gap-8">
           {props.event.speakers?.map((speaker) => (
-            <SpeakerImage
+            <Speaker
               speaker={{
                 slug: speaker,
               }}
               key={speaker}
             />
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );

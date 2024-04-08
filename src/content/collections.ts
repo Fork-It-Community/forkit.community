@@ -102,6 +102,8 @@ const collections = {
       name: z.string(),
       imageUrl: z.string(),
       job: z.string().optional(),
+      company: z.string().optional(),
+      companyHref: z.string().url().optional(),
       socials: z
         .array(
           z.object({
