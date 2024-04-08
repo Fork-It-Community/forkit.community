@@ -22,16 +22,18 @@ async function Speaker(props: Readonly<{ speaker: { slug: string } }>) {
           <p className="text-md leading-5 text-gray-400">{speaker.job}</p>
         )}
         {!!speaker.company &&
-          (speaker.companyHref ? (
+          (speaker.company.href ? (
             <a
-              href={speaker.companyHref}
+              href={speaker.company.href}
               target="_blank"
               className="text-sm leading-5 text-gray-400 underline hover:text-primary"
             >
-              {speaker.company}
+              {speaker.company.title}
             </a>
           ) : (
-            <p className="text-sm leading-5 text-gray-400">{speaker.company}</p>
+            <p className="text-sm leading-5 text-gray-400">
+              {speaker.company.href}
+            </p>
           ))}
       </div>
       {speaker.socials && (

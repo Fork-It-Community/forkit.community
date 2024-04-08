@@ -102,7 +102,12 @@ const collections = {
       name: z.string(),
       imageUrl: z.string(),
       job: z.string().optional(),
-      company: z.string().optional(),
+      company: z
+        .object({
+          title: z.string(),
+          href: z.string().url().optional(),
+        })
+        .optional(),
       companyHref: z.string().url().optional(),
       socials: z
         .array(
