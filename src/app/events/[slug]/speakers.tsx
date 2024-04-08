@@ -32,7 +32,7 @@ async function Speaker(props: Readonly<{ speaker: { slug: string } }>) {
             </a>
           ) : (
             <p className="text-sm leading-5 text-gray-400">
-              {speaker.company.href}
+              {speaker.company.title}
             </p>
           ))}
       </div>
