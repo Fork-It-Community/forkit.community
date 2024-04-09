@@ -51,6 +51,7 @@ const collections = {
   event: defineCollection({
     folder: "event",
     schema: z.object({
+      title: z.string(),
       name: z.string(),
       date: z.date().optional(),
       location: z
