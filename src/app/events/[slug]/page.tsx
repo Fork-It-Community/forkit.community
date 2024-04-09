@@ -27,7 +27,7 @@ export async function generateMetadata({
   const event = await collections.event.getBySlug(params.slug);
 
   return {
-    title: event.name,
+    title: event.title,
     description: event.excerpt,
     alternates: {
       canonical: `/events/${event.metadata.slug}`,
