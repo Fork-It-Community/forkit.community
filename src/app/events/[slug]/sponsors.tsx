@@ -67,9 +67,9 @@ export function Sponsors(props: Readonly<{ event: Event }>) {
         </div>
         {props.event.sponsoringLevels.map((level) => {
           const levelSponsors =
-            props.event.sponsors?.filter(
-              (sponsor) => sponsor.level === level,
-            ) ?? [];
+            props.event.sponsors
+              ?.filter((sponsor) => sponsor.level === level)
+              .sort((a, b) => a.slug.localeCompare(b.slug)) ?? [];
           return (
             <div key={level} className="bg-white py-8">
               <div className="mx-auto max-w-7xl">
@@ -86,8 +86,7 @@ export function Sponsors(props: Readonly<{ event: Event }>) {
                     <SponsorImage key={sponsor.slug} sponsor={sponsor} />
                   ))}
                   {levelSponsors.length <= 1 &&
-                    props.event.prospectus &&
-                    props.event.prospectus.endDate &&
+                    props.event.prospectus?.endDate &&
                     new Date().getTime() <=
                       props.event.prospectus.endDate.getTime() && (
                       <SponsorImagePlaceholder
