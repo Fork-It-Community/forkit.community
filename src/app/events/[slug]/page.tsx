@@ -31,6 +31,9 @@ export async function generateMetadata({
   return {
     title: event.title,
     description: event.excerpt,
+    openGraph: {
+      url: `https://www.forkit.community/event/${event.metadata.slug}`,
+    },
     alternates: {
       canonical: `/events/${event.metadata.slug}`,
     },
