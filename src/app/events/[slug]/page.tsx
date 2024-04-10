@@ -6,6 +6,7 @@ import { formatDateTime } from "@/lib/utils";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Sponsors } from "./sponsors";
+import { Speakers } from "./speakers";
 
 type EventPageProps = Readonly<{
   params: { slug: string };
@@ -69,6 +70,7 @@ export default async function EventPage({ params }: EventPageProps) {
       <Header event={event} />
       <Hero event={{ ...event, date }} />
       <Content />
+      {!!event.speakers && <Speakers event={event} />}
       {event.prospectus &&
         event.prospectus.endDate &&
         new Date().getTime() <= event.prospectus.endDate.getTime() && (
