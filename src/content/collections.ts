@@ -95,6 +95,9 @@ const collections = {
         )
         .optional(),
       speakers: z.array(z.string()).optional(),
+      faq: z
+        .array(z.object({ question: z.string(), answer: z.string() }))
+        .optional(),
     }),
   }),
   speaker: defineCollection({
