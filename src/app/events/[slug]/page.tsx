@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import { Sponsors } from "./sponsors";
 import { Speakers } from "./speakers";
 import { Faq } from "./faq";
+import { Schedule } from "./schedule";
 
 type EventPageProps = Readonly<{
   params: { slug: string };
@@ -71,6 +72,7 @@ export default async function EventPage({ params }: EventPageProps) {
       <Header event={event} />
       <Hero event={{ ...event, date }} />
       <Content />
+      <Schedule event={event} />
       {!!event.speakers && <Speakers event={event} />}
       {event.prospectus &&
         event.prospectus.endDate &&
