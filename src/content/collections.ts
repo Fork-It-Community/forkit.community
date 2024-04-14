@@ -75,7 +75,18 @@ const collections = {
           endDate: z.date().optional(),
         })
         .optional(),
-      tickets: z.object({ href: z.string().url() }).optional(),
+      tickets: z
+        .object({
+          href: z.string().url(),
+          offers: z.array(
+            z.object({
+              name: z.string(),
+              price: z.number().positive(),
+              priceCurrency: z.string(),
+            }),
+          ),
+        })
+        .optional(),
       prospectus: z
         .object({
           href: z.string().url(),

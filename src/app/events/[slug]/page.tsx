@@ -66,7 +66,12 @@ export default async function EventPage({ params }: EventPageProps) {
     startDate: event.date,
     description: event.excerpt,
     location,
-    offers: event.tickets?.href,
+    offers: event.tickets?.offers.map((offer) => ({
+      "@type": "Offer",
+      price: offer.price,
+      priceCurrency: offer.priceCurrency,
+      url: event.tickets?.href,
+    })),
   };
 
   return (
