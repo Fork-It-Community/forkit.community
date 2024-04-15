@@ -9,6 +9,7 @@ import { Sponsors } from "./sponsors";
 import { Speakers } from "./speakers";
 import { Faq } from "./faq";
 import { Schedule } from "./schedule";
+import { Talks } from "./talks";
 
 type EventPageProps = Readonly<{
   params: { slug: string };
@@ -82,6 +83,7 @@ export default async function EventPage({ params }: EventPageProps) {
       <Content />
       <Schedule event={event} />
       {!!event.speakers && <Speakers event={event} />}
+      {!!event.talks && <Talks event={event} />}
       {event.prospectus &&
         event.prospectus.endDate &&
         new Date().getTime() <= event.prospectus.endDate.getTime() && (

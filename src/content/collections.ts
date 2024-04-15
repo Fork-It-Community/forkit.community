@@ -106,6 +106,7 @@ const collections = {
         )
         .optional(),
       speakers: z.array(z.string()).optional(),
+      talks: z.array(z.string()).optional(),
       faq: z
         .array(z.object({ question: z.string(), answer: z.string() }))
         .optional(),
@@ -134,6 +135,14 @@ const collections = {
         .optional(),
     }),
   }),
+  talk: defineCollection({
+    folder: "talk",
+    schema: z.object({
+      title: z.string(),
+      description: z.string().nullish(),
+      speakers: z.string().array(),
+    }),
+  }),
 } as const;
 
 export default collections;
@@ -142,3 +151,4 @@ export type Event = z.infer<typeof collections.event.schema>;
 export type Sponsor = z.infer<typeof collections.sponsor.schema>;
 export type Partner = z.infer<typeof collections.partner.schema>;
 export type Speaker = z.infer<typeof collections.speaker.schema>;
+export type Talk = z.infer<typeof collections.talk.schema>;
