@@ -13,7 +13,7 @@ async function Speaker(props: Readonly<{ speaker: { slug: string } }>) {
     <div className="flex flex-col gap-3">
       <Image
         className="mx-auto aspect-square rounded-2xl"
-        src={speaker.imageUrl || DefaultImg}
+        src={speaker.imageUrl ?? DefaultImg}
         alt={speaker.name}
         width={600}
         height={600}
@@ -103,7 +103,7 @@ export function Speakers(props: Readonly<{ event: Event }>) {
               key={speaker}
             />
           ))}
-          <OtherSpeaker />
+          {/* <OtherSpeaker /> */}
         </div>
       </div>
     </div>
