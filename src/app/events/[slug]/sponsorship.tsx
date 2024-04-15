@@ -4,7 +4,7 @@ import { ExternalLink, Mail } from "lucide-react";
 
 export function Sponsorship(props: Readonly<{ event: Event }>) {
   return (
-    <div className="bg-gray-900">
+    <div className="bg-gray-950">
       <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:flex lg:items-center lg:justify-between lg:px-8">
         <h2 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
           Want to become a sponsor?

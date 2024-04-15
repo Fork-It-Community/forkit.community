@@ -58,19 +58,6 @@ export function Hero(
           </h1>
           <p className="text-md mt-6 text-gray-400">{props.event.excerpt}</p>
           <div className="mx-8 mt-10 flex  flex-wrap items-center justify-center gap-x-6 gap-y-4">
-            {isProspectusActive && (
-              <Button asChild>
-                <a
-                  href={props.event.prospectus?.href}
-                  target="_blank"
-                  rel="noreferer"
-                  className={buttonPrimaryClassName}
-                >
-                  {props.event.prospectus?.title || "Sponsoring prospectus"}
-                  <ExternalLink className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
-            )}
             {isTicketsActive && (
               <Button asChild>
                 <a
@@ -80,6 +67,19 @@ export function Hero(
                   className={buttonPrimaryClassName}
                 >
                   Get tickets
+                  <ExternalLink className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+            )}
+            {isProspectusActive && (
+              <Button variant="outline" asChild>
+                <a
+                  href={props.event.prospectus?.href}
+                  target="_blank"
+                  rel="noreferer"
+                  className={buttonPrimaryClassName}
+                >
+                  {props.event.prospectus?.title ?? "Sponsoring prospectus"}
                   <ExternalLink className="ml-2 h-4 w-4" />
                 </a>
               </Button>

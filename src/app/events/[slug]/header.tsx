@@ -7,7 +7,6 @@ import { useDisclosure } from "react-use-disclosure";
 import {
   Sheet,
   SheetContent,
-  SheetClose,
   SheetDescription,
   SheetHeader,
   SheetTrigger,
@@ -17,14 +16,14 @@ import { Button } from "@/components/ui/button";
 import { Event } from "@/content/collections";
 
 const navigation = [
-  // { name: "About", href: "#about" },
   { name: "Venue", href: "#venue" },
   { name: "Speakers", href: "#speakers" },
+  { name: "Talks", href: "#talks" },
   { name: "Sponsors", href: "#sponsors" },
-  // { name: "Join us", href: "#socials" },
+  { name: "FAQ", href: "#faq" },
 ];
 
-export function Header(props: { event: Event }) {
+export function Header(props: Readonly<{ event: Event }>) {
   const sheet = useDisclosure();
 
   return (

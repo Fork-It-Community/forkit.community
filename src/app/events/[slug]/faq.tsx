@@ -8,7 +8,7 @@ import { Event } from "@/content/collections";
 
 export function Faq(props: Readonly<{ event: Event }>) {
   return (
-    <div className="bg-gray-950 py-16">
+    <div className="bg-gray-950 py-16" id="faq">
       <article className="mx-auto max-w-3xl px-6 lg:px-8">
         <h2 className="text-center font-heading text-3xl font-bold sm:text-4xl">
           Frequently asked questions

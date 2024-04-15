@@ -2,6 +2,7 @@ import Image from "next/image";
 import collections, { Event } from "@/content/collections";
 import { ICONS } from "@/components/icons";
 import ImgForkItLogo from "@/../public/forkit-medium.svg";
+import DefaultImg from "@/../public/speakers/speaker-default.jpg";
 import { Button } from "@/components/ui/button";
 import { NEWSLETTER_HREF } from "@/lib/constants";
 
@@ -12,10 +13,11 @@ async function Speaker(props: Readonly<{ speaker: { slug: string } }>) {
     <div className="flex flex-col gap-3">
       <Image
         className="mx-auto aspect-square rounded-2xl"
-        src={speaker.imageUrl}
+        src={speaker.imageUrl ?? DefaultImg}
         alt={speaker.name}
         width={600}
         height={600}
+        sizes="600px"
       />
       <div className="flex flex-col gap-3 px-2">
         <div className="flex flex-col gap-1">
@@ -101,7 +103,7 @@ export function Speakers(props: Readonly<{ event: Event }>) {
               key={speaker}
             />
           ))}
-          <OtherSpeaker />
+          {/* <OtherSpeaker /> */}
         </div>
       </div>
     </div>
