@@ -1,6 +1,6 @@
 import collections, { Event } from "@/content/collections";
 import Image from "next/image";
-import ImgForkItLogo from "@/../public/forkit-medium.svg";
+import DefaultImg from "@/../public/speakers/speaker-default.jpg";
 
 async function Talk(props: Readonly<{ talk: { slug: string } }>) {
   const talk = await collections.talk.getBySlug(props.talk.slug);
@@ -9,22 +9,25 @@ async function Talk(props: Readonly<{ talk: { slug: string } }>) {
     speakers[i] = await collections.speaker.getBySlug(talk.speakers[i]);
   }
   const content = (
-    <div className="mx-auto flex w-full max-w-[60ch]  gap-4">
+    <div className="mx-auto flex w-full max-w-[60ch] gap-4">
       <div className="flex gap-2">
         {speakers.map((speaker) => (
           <Image
             key={speaker.name}
             className="  aspect-square h-12 w-12 rounded-lg"
-            src={speaker.imageUrl || ImgForkItLogo}
+            src={speaker.imageUrl || DefaultImg}
             alt={speaker.name}
             width={600}
             height={600}
+            sizes="600px"
           />
         ))}
       </div>
       <div className="flex flex-1 flex-col text-balance">
         <h3 className="text-xl font-bold">{talk.title}</h3>
-        <p>by {speakers.map((speaker) => speaker.name).join(", ")}</p>
+        <p className="text-sm text-gray-300">
+          by {speakers.map((speaker) => speaker.name).join(", ")}
+        </p>
       </div>
     </div>
   );
@@ -34,12 +37,16 @@ async function Talk(props: Readonly<{ talk: { slug: string } }>) {
 
 export function Talks(props: Readonly<{ event: Event }>) {
   return (
-    <div className="bg-gray-950 py-24 sm:py-32" id="talks">
+    <div className="bg-gray-900 py-24 sm:py-32" id="talks">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="mx-auto flex max-w-2xl flex-col gap-2 text-center">
           <h2 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Talks
           </h2>
+          <p className="text-sm text-gray-300">
+            All talks will be in 🇬🇧 English (with French subtitles) <br />
+            or in 🇫🇷 French (with English subtitles)
+          </p>
         </div>
         <div className="mx-auto mt-12 flex flex-col gap-10 lg:grid lg:grid-cols-2">
           {props.event.talks?.map((talk) => (
