@@ -1,9 +1,33 @@
 import collections, { Event } from "@/content/collections";
+import Image from "next/image";
+import ImgForkItLogo from "@/../public/forkit-medium.svg";
 
 async function Talk(props: Readonly<{ talk: { slug: string } }>) {
   const talk = await collections.talk.getBySlug(props.talk.slug);
-
-  const content = <div className="flex gap-3">{talk.title}</div>;
+  const speakers = [];
+  for (let i = 0; i < talk.speakers.length; i++) {
+    speakers[i] = await collections.speaker.getBySlug(talk.speakers[i]);
+  }
+  const content = (
+    <div className="mx-auto flex w-full max-w-[60ch]  gap-4">
+      <div className="flex gap-2">
+        {speakers.map((speaker) => (
+          <Image
+            key={speaker.name}
+            className="  aspect-square h-12 w-12 rounded-lg"
+            src={speaker.imageUrl || ImgForkItLogo}
+            alt={speaker.name}
+            width={600}
+            height={600}
+          />
+        ))}
+      </div>
+      <div className="flex flex-1 flex-col text-balance">
+        <h3 className="text-xl font-bold">{talk.title}</h3>
+        <p>by {speakers.map((speaker) => speaker.name).join(", ")}</p>
+      </div>
+    </div>
+  );
 
   return content;
 }
@@ -17,7 +41,7 @@ export function Talks(props: Readonly<{ event: Event }>) {
             Talks
           </h2>
         </div>
-        <div className="mx-auto mt-12 flex flex-col">
+        <div className="mx-auto mt-12 flex flex-col gap-10 lg:grid lg:grid-cols-2">
           {props.event.talks?.map((talk) => (
             <Talk
               talk={{

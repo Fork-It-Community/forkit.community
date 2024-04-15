@@ -1,0 +1,25 @@
+---
+kind: conference
+title: "Microservices, maxi supplice"
+speakers:
+  - alexis-stefanski
+  - yann-jacquot
+---
+
+Sur notre projet, comme souvent, la dette technique a commencé au jour 1.
+
+Après 2 ans avec une dizaine de développeurs, l’application, découpée depuis son commencement en micro-services (7 puis 4), souffre de problèmes de couplages entre services, et donc, de gros problèmes de performances, comme des requêtes essentielles qui répondaient en plus de 44sec (p95).
+
+Elle est déjà utilisée en production par de gros clients et cet enjeu de performance freine son développement.
+
+Dans ce contexte, nous allons orchestrer une task force de 4 développeurs et Ops sur environ 3 mois pour fusionner ces micro-services en un monolithe. Cette fusion doit s’inscrire dans la roadmap d’un projet en évolution constante et gêner le moins possible les ajouts fonctionnels.
+
+Dans ce talk, nous parlerons de pourquoi et comment détruire une archi micro services pour retourner vers un majestueux monolithe :
+
+- Pourquoi un découpage en micro-services nécessite une maturité technique et métier que nous n’avions pas
+- Comment nous avons commencé par instrumenter pour détecter les bugs ou variations de performances
+- Comment nous avons analysé l’existant pour en déduire un plan avec des itérations régulières et moins risquées
+- Comment nous avons utilisé des outils visuels pour embarquer et synchroniser les autres équipes
+- Comment nous avons géré les problèmes rencontrés en cours de route
+
+Avec ce talk nous espérons vous montrer qu’il est toujours possible de résorber ce genre de dette technique. Si nous l’avons fait, vous pouvez y arriver sur votre projet et bénéficier de notre retour d’expérience.

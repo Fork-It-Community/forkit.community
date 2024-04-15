@@ -12,7 +12,7 @@ async function Speaker(props: Readonly<{ speaker: { slug: string } }>) {
     <div className="flex flex-col gap-3">
       <Image
         className="mx-auto aspect-square rounded-2xl"
-        src={speaker.imageUrl}
+        src={speaker.imageUrl || ImgForkItLogo}
         alt={speaker.name}
         width={600}
         height={600}

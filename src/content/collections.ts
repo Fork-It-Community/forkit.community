@@ -116,7 +116,7 @@ const collections = {
     folder: "speaker",
     schema: z.object({
       name: z.string(),
-      imageUrl: z.string(),
+      imageUrl: z.string().optional(),
       job: z.string().optional(),
       company: z
         .object({
@@ -138,6 +138,7 @@ const collections = {
   talk: defineCollection({
     folder: "talk",
     schema: z.object({
+      kind: z.string(),
       title: z.string(),
       description: z.string().nullish(),
       speakers: z.string().array(),
