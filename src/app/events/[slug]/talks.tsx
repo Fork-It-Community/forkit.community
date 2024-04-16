@@ -26,7 +26,7 @@ async function Talk(props: Readonly<{ talk: { slug: string } }>) {
               />
             ))}
           </div>
-          <p className="text-sm text-gray-300">
+          <p className="flex-1 text-sm text-gray-300">
             by {speakers.map((speaker) => speaker.name).join(", ")}
           </p>
         </div>
