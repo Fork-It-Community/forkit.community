@@ -9,14 +9,14 @@ export const Events = async () => {
 
   return (
     <section className="relative overflow-hidden bg-gray-950 py-24 sm:py-32">
-      <div className="relative mx-auto flex max-w-5xl flex-col gap-12 px-6">
+      <div className="relative mx-auto flex max-w-5xl flex-col gap-16 px-6">
         <h2 className="text-center font-heading text-3xl font-bold sm:text-4xl">
           <span className="text-primary">Fork it! Community</span> upcoming
           events
         </h2>
         {events.map((event) => (
           <article
-            className="flex flex-col rounded-lg bg-gray-900 p-6"
+            className="flex flex-col rounded-lg border border-white border-opacity-70 bg-gray-900 p-6"
             key={event.name}
           >
             <div className="flex flex-col justify-between gap-6 sm:flex-row">
