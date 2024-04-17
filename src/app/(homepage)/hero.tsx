@@ -60,8 +60,9 @@ export async function Hero() {
               <div className="pt-12">
                 <div className="relative max-w-lg rounded-xl border-2 border-gray-800 p-5">
                   <h2 className="font-heading text-3xl uppercase tracking-tight text-primary sm:text-4xl">
-                    Tickets available
+                    {nextEvent.title}
                   </h2>
+                  <small className="text-lg">Tickets available</small>
                   <p className="mx-auto mt-6 max-w-xl text-lg">
                     {nextEvent?.date ? (
                       <>

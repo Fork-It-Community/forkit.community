@@ -49,5 +49,5 @@
   mask-image: url(/forkit-small.png);
   mask-repeat: no-repeat;
   mask-size: contain;
-  mask-position: right;
+  mask-position: center;
 }
