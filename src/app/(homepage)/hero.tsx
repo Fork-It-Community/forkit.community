@@ -58,44 +58,50 @@ export async function Hero() {
             </div>
             {nextEvent?.tickets && (
               <div className="pt-12">
-                <Link
-                  href={nextEvent?.tickets.href}
-                  target="_blank"
-                  rel="noreferer"
-                >
-                  <div className="group relative max-w-lg rounded-xl border-2 border-gray-800 p-5 hover:border-gray-700">
-                    <h2 className="font-heading text-3xl uppercase tracking-tight text-primary sm:text-4xl">
-                      Tickets available
-                    </h2>
-                    <p className="mx-auto mt-6 max-w-xl text-lg">
-                      {nextEvent?.date ? (
-                        <>
-                          <span role="img" aria-label="ticket">
-                            🎟️
-                          </span>{" "}
-                          Get your tickets for the {nextEvent.name} conference{" "}
-                          {formatDateTime(nextEvent?.date)}!
-                        </>
-                      ) : (
-                        <>
-                          <span role="img" aria-label="ticket">
-                            🎟️
-                          </span>{" "}
-                          Get your tickets for the {nextEvent.name} conference!
-                        </>
-                      )}
-                    </p>
-                    <div className="mt-4 flex items-center justify-end gap-x-6">
-                      <Button
-                        variant={"link"}
-                        className=" text-white group-hover:underline"
+                <div className="relative max-w-lg rounded-xl border-2 border-gray-800 p-5">
+                  <h2 className="font-heading text-3xl uppercase tracking-tight text-primary sm:text-4xl">
+                    {nextEvent.title}
+                  </h2>
+                  <small className="text-lg">Tickets available</small>
+                  <p className="mx-auto mt-6 max-w-xl text-lg">
+                    {nextEvent?.date ? (
+                      <>
+                        <span role="img" aria-label="ticket">
+                          🎟️
+                        </span>{" "}
+                        Get your tickets for the {nextEvent.name} conference{" "}
+                        {formatDateTime(nextEvent?.date)}!
+                      </>
+                    ) : (
+                      <>
+                        <span role="img" aria-label="ticket">
+                          🎟️
+                        </span>{" "}
+                        Get your tickets for the {nextEvent.name} conference!
+                      </>
+                    )}
+                  </p>
+                  <div className="mt-4 flex items-center justify-between ">
+                    <Button asChild size="sm">
+                      <Link
+                        href={`/events/${nextEvent.metadata.slug}`}
+                        title="Homepage of the event"
+                      >
+                        Learn more
+                      </Link>
+                    </Button>
+                    <Button variant={"link"} className=" text-white">
+                      <a
+                        href={nextEvent.tickets.href}
+                        target="_blank"
+                        rel="noreferer"
                       >
                         Get tickets
-                        <ExternalLink className="ml-2 h-4 w-4" />
-                      </Button>
-                    </div>
+                      </a>
+                      <ExternalLink className="ml-2 h-4 w-4" />
+                    </Button>
                   </div>
-                </Link>
+                </div>
               </div>
             )}
           </div>
