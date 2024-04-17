@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import collections from "@/content/collections";
 import Image from "next/image";
 import Link from "next/link";
+import { Calendar, MapPin } from "lucide-react";
 
 export const Events = async () => {
   const events = await collections.event.getAll();
@@ -14,27 +15,39 @@ export const Events = async () => {
           events
         </h2>
         {events.map((event) => (
-          <article className="flex flex-col rounded-md" key={event.name}>
-            <div className="flex flex-col sm:flex-row">
-              <div className="flex flex-col gap-4 p-4">
-                <h3 className="flex flex-col">
-                  {event.date && (
-                    <time
-                      className="font-heading text-3xl text-primary"
-                      dateTime={event.date.toISOString()}
-                    >
-                      {new Intl.DateTimeFormat("en-US", {
-                        dateStyle: "full",
-                      }).format(event.date)}
-                    </time>
-                  )}
-                  <span className="text-lg font-bold text-white ">
-                    {event.name}
-                  </span>
+          <article
+            className="flex flex-col rounded-lg bg-gray-900 p-6"
+            key={event.name}
+          >
+            <div className="flex flex-col justify-between gap-6 sm:flex-row">
+              <div className="flex flex-col gap-6 p-4">
+                <h3 className="flex flex-col font-heading text-3xl text-primary">
+                  {event.title}
                 </h3>
-                {event.excerpt && (
-                  <p className="text-sm text-gray-300">{event.excerpt}</p>
-                )}
+                <div className="flex flex-col gap-4">
+                  {event.date && (
+                    <div className="flex gap-2">
+                      <Calendar
+                        className="mt-1 h-5 w-5 flex-none"
+                        aria-hidden="true"
+                      />
+                      <time dateTime={event.date.toISOString()}>
+                        {new Intl.DateTimeFormat("en-US", {
+                          dateStyle: "full",
+                        }).format(event.date)}
+                      </time>
+                    </div>
+                  )}
+                  {event.location && (
+                    <div className="flex gap-2">
+                      <MapPin
+                        className="mt-1 h-5 w-5 flex-none "
+                        aria-hidden="true"
+                      />
+                      {event.location?.name}
+                    </div>
+                  )}
+                </div>
                 <div className="flex flex-row gap-4">
                   <Button asChild>
                     <Link
@@ -48,13 +61,13 @@ export const Events = async () => {
               </div>
 
               {event.image && (
-                <div className="logo-mask m-auto sm:min-w-48">
+                <div className="logo-mask my-auto sm:min-w-48">
                   <Image
                     priority
                     className="aspect-[3/2] w-full bg-primary object-cover text-gray-900"
                     src={event.image?.src ?? ""}
-                    width={1000}
-                    height={1000}
+                    width={100}
+                    height={100}
                     alt={event.image?.alt}
                   />
                 </div>
