@@ -2,6 +2,8 @@ import collections, { Event } from "@/content/collections";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { SponsorModal } from "./sponsorModal";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 
 async function SponsorImage(
   props: Readonly<{ sponsor: { slug: string; level: string } }>,
@@ -29,14 +31,11 @@ async function SponsorImage(
   }
 
   return (
-    <Link
-      href={sponsor.href ?? "#"}
-      title={sponsor.name}
-      target="_blank"
-      rel="noreferer"
-    >
-      {content}
-    </Link>
+    <Dialog>
+      <DialogTrigger> {content}</DialogTrigger>
+
+      <SponsorModal sponsor={{ slug: props.sponsor.slug }} />
+    </Dialog>
   );
 }
 
