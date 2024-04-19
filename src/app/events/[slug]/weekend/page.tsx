@@ -1,20 +1,47 @@
+import rouenImage from "/public/events/weekend-rouen.png";
+import {
+  CarFront,
+  BusFront,
+  TramFront,
+  BedDouble,
+  Home,
+  Landmark,
+  Drama,
+  Trees,
+  ShoppingBag,
+  BadgeAlert,
+  Music,
+  PartyPopper,
+  Wine,
+  Utensils,
+} from "lucide-react";
+import Image from "next/image";
 export default function WeekendPage() {
   return (
-    <div className="prose prose-sm prose-invert mx-auto w-full p-6 text-white md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-headings:text-primary prose-h3:font-bold prose-h3:text-white">
+    <div className="prose prose-sm prose-invert mx-auto p-6 text-white md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-headings:text-primary prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white">
       <h1>
         Rouen, <span className="text-white">France</span>
       </h1>
       <div>
         <h2>A Weekend Guide</h2>
-        <p>
-          Rouen perfectly captures the essence of
-          <strong> Norman charm and modern vibrancy</strong>, offering an array
-          of cool spots to explore. Whether you prefer trendy cocktails or
-          chilled beers on a terrace, the city&apos;s lively bars and clubs
-          cater to every taste. Culturally, Rouen is{" "}
-          <strong>always buzzing</strong> with events, from art exhibitions to
-          live concerts.
-        </p>
+        <div className="gap-4 md:flex md:flex-row-reverse">
+          <Image
+            src={rouenImage}
+            alt="Rouen"
+            className="h-full"
+            width={225}
+            height={129}
+          />
+          <p>
+            Rouen perfectly captures the essence of
+            <strong> Norman charm and modern vibrancy</strong>, offering an
+            array of cool spots to explore. Whether you prefer trendy cocktails
+            or chilled beers on a terrace, the city&apos;s lively bars and clubs
+            cater to every taste. Culturally, Rouen is{" "}
+            <strong>always buzzing</strong> with events, from art exhibitions to
+            live concerts.
+          </p>
+        </div>
         <p>
           Looking for some fresh air? <strong>The Seine riverbanks</strong> are
           perfect for a leisurely stroll or simply relaxing. Food enthusiasts
@@ -26,7 +53,11 @@ export default function WeekendPage() {
       <div>
         <h2>Getting to Rouen ?</h2>
         <div>
-          <h3>By train</h3>
+          <h3>
+            <TramFront />
+            By train
+          </h3>
+
           <p>
             Over <strong>25 trains</strong> daily from
             <strong> Paris Saint-Lazare</strong>.
@@ -36,7 +67,10 @@ export default function WeekendPage() {
           </p>
         </div>
         <div>
-          <h3>By car</h3>
+          <h3>
+            <CarFront />
+            By car
+          </h3>
           <p>
             <strong>A13, A28, A29, A150 </strong> all lead you straight to Rouen
             from various directions.
@@ -47,7 +81,10 @@ export default function WeekendPage() {
           </p>
         </div>
         <div>
-          <h3>By bus</h3>
+          <h3>
+            <BusFront />
+            By bus
+          </h3>
           <p>
             From <strong>Paris, Caen, Lille,</strong> and many other French
             cities, companies like{" "}
@@ -64,8 +101,11 @@ export default function WeekendPage() {
       </div>
       <div>
         <h2>Where to stay</h2>
-        <div className="flex flex-col gap-2">
-          <h3>Hotels</h3>
+        <div className="flex flex-col">
+          <h3>
+            <BedDouble />
+            Hotels
+          </h3>
           <div>
             <a
               href="https://www.booking.com/searchresults.fr.html?aid=2311236&label=fr-fr-booking-desktop-DCpBIW3k2%2AWIo8XuzMdB9AS652796013276%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-65526620%3Alp9056148%3Ali%3Adec%3Adm&no_rooms=1&srpvid=359f3faa1ff200d2&highlighted_hotels=51151&checkin=2024-06-07&redirected=1&city=-1462807&hlrd=with_av&group_adults=2&source=hotel&group_children=0&checkout=2024-06-08&keep_landing=1&sid=47eee62d2a27250225c94332f4328564#hotelTmpl"
@@ -108,7 +148,10 @@ export default function WeekendPage() {
           </div>
         </div>
         <div>
-          <h3>Airbnb</h3>
+          <h3>
+            <Home />
+            Airbnb
+          </h3>
           <p>
             Airbnb options are also available but book up fast.
             <br />
@@ -122,7 +165,10 @@ export default function WeekendPage() {
         <h2>What to do in Rouen</h2>
         <div className="md:grid md:grid-cols-2">
           <div>
-            <h3>Historic Sites</h3>
+            <h3>
+              <Landmark />
+              Historic Sites
+            </h3>
             <ul>
               <li>Notre-Dame Cathedral</li>
               <li>Le Gros-Horloge</li>
@@ -130,21 +176,30 @@ export default function WeekendPage() {
             </ul>
           </div>
           <div>
-            <h3>Museums and Culture</h3>
+            <h3>
+              <Drama />
+              Museums and Culture
+            </h3>
             <ul>
               <li>Museum of Fine Arts</li>
               <li>Pierre Corneille&apos;s birthplace</li>
             </ul>
           </div>
           <div>
-            <h3>Outdoor Activities</h3>
+            <h3>
+              <Trees />
+              Outdoor Activities
+            </h3>
             <ul>
               <li>Walk along the Seine riverbanks</li>
               <li>Natural park of the Seine loops</li>
             </ul>
           </div>
           <div>
-            <h3>Shopping and Gastronomy</h3>
+            <h3>
+              <ShoppingBag />
+              Shopping and Gastronomy
+            </h3>
             <ul>
               <li>Main shopping streets</li>
               <li>Restaurants to savor Normandy&apos;s cuisine</li>
@@ -152,7 +207,10 @@ export default function WeekendPage() {
           </div>
         </div>
         <div>
-          <h3>Practical Tips</h3>
+          <h3>
+            <BadgeAlert />
+            Practical Tips
+          </h3>
           <p>
             The city center is <strong>pedestrian-friendly</strong>. Good
             walking shoes are a must!
@@ -169,6 +227,7 @@ export default function WeekendPage() {
         <h2>Local events and festivals for the weekend</h2>
         <div>
           <h3>
+            <Music />
             <a
               href="https://www.visiterouen.com/patrimoines/art/festivals-au-coeur-du-patrimoine/festival-rush/"
               target="_blank"
@@ -186,6 +245,7 @@ export default function WeekendPage() {
         </div>
         <div>
           <h3>
+            <PartyPopper />
             <a
               href="https://www.normandie-tourisme.fr/partenaires/d-day-festival-normandy/programme/"
               target="_blank"
@@ -206,7 +266,10 @@ export default function WeekendPage() {
         <h2>Dining and Bars</h2>
         <div className="grid grid-cols-2">
           <div>
-            <h3>Bars</h3>
+            <h3>
+              <Wine />
+              Bars
+            </h3>
             <ul>
               <li>Le Petit BAR Cocktails</li>
               <li>L’Absinthe (Cocktail)</li>
@@ -216,7 +279,10 @@ export default function WeekendPage() {
             </ul>
           </div>
           <div>
-            <h3>Restaurants</h3>
+            <h3>
+              <Utensils />
+              Restaurants
+            </h3>
             <ul className="md:grid md:grid-cols-2">
               <li>Café Hamlet</li>
               <li>Pasta Tinto</li>
