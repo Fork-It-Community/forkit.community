@@ -22,20 +22,20 @@ export async function SponsorModal(
   const Content = (await import(`@/content/sponsor/${props.sponsor.slug}.mdx`))
     .default;
   return (
-    <DialogContent className="sm:max-w-[800px]">
+    <DialogContent className="h-1/2 w-full overflow-y-auto">
       <DialogHeader className="flex flex-col gap-4">
         <DialogTitle className="font-heading text-2xl font-bold">
           {sponsor.name}
         </DialogTitle>
-        <DialogDescription className="flex flex-col gap-4 md:flex-row">
+        <DialogDescription className="flex flex-col gap-4">
           <Image
-            className="hidden max-w-sm sm:flex"
+            className="max-w-sm"
             src={sponsor.image.src}
             alt={sponsor.image.alt}
             width={270}
             height={162}
           />
-          <div className="flex flex-col gap-2 text-xs md:text-sm">
+          <div className="flex flex-col gap-2 text-left text-xs md:text-sm">
             <Content />
           </div>
         </DialogDescription>
