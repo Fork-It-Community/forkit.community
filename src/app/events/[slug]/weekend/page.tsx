@@ -106,46 +106,48 @@ export default function WeekendPage() {
             <BedDouble />
             Hotels
           </h3>
-          <div>
-            <a
-              href="https://www.booking.com/searchresults.fr.html?aid=2311236&label=fr-fr-booking-desktop-DCpBIW3k2%2AWIo8XuzMdB9AS652796013276%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-65526620%3Alp9056148%3Ali%3Adec%3Adm&no_rooms=1&srpvid=359f3faa1ff200d2&highlighted_hotels=51151&checkin=2024-06-07&redirected=1&city=-1462807&hlrd=with_av&group_adults=2&source=hotel&group_children=0&checkout=2024-06-08&keep_landing=1&sid=47eee62d2a27250225c94332f4328564#hotelTmpl"
-              target="_blank"
-              rel="noreferer"
-            >
-              Hôtel Littéraire Gustave Flaubert, BW Signature Collection
-            </a>
-            <strong> (170 €/night)</strong>
-          </div>
-          <div>
-            <a
-              href="https://www.booking.com/searchresults.fr.html?aid=2311236&label=fr-fr-booking-desktop-DCpBIW3k2%2AWIo8XuzMdB9AS652796013276%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-65526620%3Alp9056148%3Ali%3Adec%3Adm&no_rooms=1&srpvid=c0b53e98332501a2&highlighted_hotels=1756314&checkin=2024-06-07&redirected=1&city=-1462807&hlrd=with_av&group_adults=2&source=hotel&group_children=0&checkout=2024-06-08&keep_landing=1&sid=47eee62d2a27250225c94332f4328564#map_closed"
-              target="_blank"
-              rel="noreferer"
-            >
-              Ibis Styles Rouen Centre Cathédrale
-            </a>
-            <strong> (117 €/night)</strong>
-          </div>
-          <div>
-            <a
-              href="https://www.booking.com/searchresults.fr.html?aid=2311236&label=fr-fr-booking-desktop-DCpBIW3k2%2AWIo8XuzMdB9AS652796013276%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-65526620%3Alp9056148%3Ali%3Adec%3Adm&no_rooms=1&srpvid=c0b53e98332501a2&highlighted_hotels=55271&checkin=2024-06-07&redirected=1&city=-1462807&hlrd=with_av&group_adults=2&source=hotel&group_children=0&checkout=2024-06-08&keep_landing=1&sid=47eee62d2a27250225c94332f4328564#hotelTmpl"
-              target="_blank"
-              rel="noreferer"
-            >
-              Hotel Dandy Rouen Centre
-            </a>
-            <strong> (105 €/night)</strong>
-          </div>
-          <div>
-            <a
-              href="https://www.booking.com/searchresults.fr.html?aid=2311236&label=fr-fr-booking-desktop-DCpBIW3k2%2AWIo8XuzMdB9AS652796013276%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-65526620%3Alp9056148%3Ali%3Adec%3Adm&no_rooms=1&srpvid=a42d3ff8223a000d&highlighted_hotels=263600&checkin=2024-06-07&redirected=1&city=-1462807&hlrd=with_av&group_adults=2&source=hotel&group_children=0&checkout=2024-06-08&keep_landing=1&sid=47eee62d2a27250225c94332f4328564#hotelTmpl"
-              target="_blank"
-              rel="noreferer"
-            >
-              Les Initiés
-            </a>
-            <strong> (80 €/night)</strong>
-          </div>
+          <ul>
+            <li>
+              <a
+                href="https://www.booking.com/searchresults.fr.html?aid=2311236&label=fr-fr-booking-desktop-DCpBIW3k2%2AWIo8XuzMdB9AS652796013276%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-65526620%3Alp9056148%3Ali%3Adec%3Adm&no_rooms=1&srpvid=359f3faa1ff200d2&highlighted_hotels=51151&checkin=2024-06-07&redirected=1&city=-1462807&hlrd=with_av&group_adults=2&source=hotel&group_children=0&checkout=2024-06-08&keep_landing=1&sid=47eee62d2a27250225c94332f4328564#hotelTmpl"
+                target="_blank"
+                rel="noreferer"
+              >
+                Hôtel Littéraire Gustave Flaubert, BW Signature Collection
+              </a>
+              <strong> (170 €/night)</strong>
+            </li>
+            <li>
+              <a
+                href="https://www.booking.com/searchresults.fr.html?aid=2311236&label=fr-fr-booking-desktop-DCpBIW3k2%2AWIo8XuzMdB9AS652796013276%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-65526620%3Alp9056148%3Ali%3Adec%3Adm&no_rooms=1&srpvid=c0b53e98332501a2&highlighted_hotels=1756314&checkin=2024-06-07&redirected=1&city=-1462807&hlrd=with_av&group_adults=2&source=hotel&group_children=0&checkout=2024-06-08&keep_landing=1&sid=47eee62d2a27250225c94332f4328564#map_closed"
+                target="_blank"
+                rel="noreferer"
+              >
+                Ibis Styles Rouen Centre Cathédrale
+              </a>
+              <strong> (117 €/night)</strong>
+            </li>
+            <li>
+              <a
+                href="https://www.booking.com/searchresults.fr.html?aid=2311236&label=fr-fr-booking-desktop-DCpBIW3k2%2AWIo8XuzMdB9AS652796013276%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-65526620%3Alp9056148%3Ali%3Adec%3Adm&no_rooms=1&srpvid=c0b53e98332501a2&highlighted_hotels=55271&checkin=2024-06-07&redirected=1&city=-1462807&hlrd=with_av&group_adults=2&source=hotel&group_children=0&checkout=2024-06-08&keep_landing=1&sid=47eee62d2a27250225c94332f4328564#hotelTmpl"
+                target="_blank"
+                rel="noreferer"
+              >
+                Hotel Dandy Rouen Centre
+              </a>
+              <strong> (105 €/night)</strong>
+            </li>
+            <li>
+              <a
+                href="https://www.booking.com/searchresults.fr.html?aid=2311236&label=fr-fr-booking-desktop-DCpBIW3k2%2AWIo8XuzMdB9AS652796013276%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-65526620%3Alp9056148%3Ali%3Adec%3Adm&no_rooms=1&srpvid=a42d3ff8223a000d&highlighted_hotels=263600&checkin=2024-06-07&redirected=1&city=-1462807&hlrd=with_av&group_adults=2&source=hotel&group_children=0&checkout=2024-06-08&keep_landing=1&sid=47eee62d2a27250225c94332f4328564#hotelTmpl"
+                target="_blank"
+                rel="noreferer"
+              >
+                Les Initiés
+              </a>
+              <strong> (80 €/night)</strong>
+            </li>
+          </ul>
         </div>
         <div>
           <h3>
@@ -264,7 +266,7 @@ export default function WeekendPage() {
       </div>
       <div>
         <h2>Dining and Bars</h2>
-        <div className="grid grid-cols-2">
+        <div className="md:grid md:grid-cols-2">
           <div>
             <h3>
               <Wine />

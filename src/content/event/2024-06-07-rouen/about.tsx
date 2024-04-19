@@ -1,8 +1,9 @@
 import { Event } from "@/content/collections";
 import { formatDateTime } from "@/lib/utils";
-import { Calendar, ExternalLink, MapPin } from "lucide-react";
+import { Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
 import LeVillageByCA from "./le-village-by-ca.jpg";
+import Link from "next/link";
 
 export function About(
   props: Readonly<{ event: Omit<Event, "date"> & { date?: string } }>,
@@ -22,12 +23,12 @@ export function About(
           </div>
         </div>
         <div className="px-6 lg:contents">
-          <div className="mx-auto max-w-2xl pb-24 pt-16 sm:pb-32 sm:pt-20 lg:ml-8 lg:mr-0 lg:w-full lg:max-w-lg lg:flex-none lg:pt-32 xl:w-1/2">
-            <h2 className="mt-2 font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          <div className="mx-auto flex max-w-2xl flex-col gap-8 pb-24 pt-16 sm:pb-32 sm:pt-20 lg:ml-8 lg:mr-0 lg:w-full lg:max-w-lg lg:flex-none lg:pt-32 xl:w-1/2">
+            <h2 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
               When? Where?
             </h2>
-            <div className="mt-10 max-w-xl text-base leading-7 lg:max-w-none">
-              <ul className="mt-8 space-y-8 text-gray-200">
+            <div className=" flex max-w-xl flex-col gap-8 text-base leading-7 lg:max-w-none">
+              <ul className=" space-y-8 text-gray-200">
                 {props.event.location && (
                   <li className="flex gap-x-3">
                     <MapPin
@@ -63,7 +64,7 @@ export function About(
                   </li>
                 )}
               </ul>
-              <p className="mt-8">
+              <p>
                 The Rouen 2024 conference, set at Le Village By CA Vallée de
                 Seine in Rouen, will bring together around 200 participants and
                 a dozen speakers. This event is designed to facilitate the
@@ -75,6 +76,19 @@ export function About(
                 audience and enhancing the accessibility and inclusiveness of
                 our discussions.
               </p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <h4 className="font-heading text-lg font-semibold ">
+                Practical information
+              </h4>
+              <div>
+                <Link
+                  href="/events/2024-06-07-rouen/weekend"
+                  className="underline"
+                >
+                  Plan your weekend!
+                </Link>
+              </div>
             </div>
           </div>
         </div>
