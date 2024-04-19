@@ -16,11 +16,11 @@ import { Button } from "@/components/ui/button";
 import { Event } from "@/content/collections";
 
 const navigation = [
-  { name: "Venue", href: "#venue" },
-  { name: "Speakers", href: "#speakers" },
-  { name: "Talks", href: "#talks" },
-  { name: "Sponsors", href: "#sponsors" },
-  { name: "FAQ", href: "#faq" },
+  { name: "Venue", href: "/events/2024-06-07-rouen#venue" },
+  { name: "Speakers", href: "/events/2024-06-07-rouen#speakers" },
+  { name: "Talks", href: "/events/2024-06-07-rouen#talks" },
+  { name: "Sponsors", href: "/events/2024-06-07-rouen#sponsors" },
+  { name: "FAQ", href: "/events/2024-06-07-rouen#faq" },
 ];
 
 export function Header(props: Readonly<{ event: Event }>) {

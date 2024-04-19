@@ -59,7 +59,7 @@ export default function RootLayout({
         />
         <meta name="theme-color" content="#171717" />
       </head>
-      <body>
+      <body className="flex min-h-screen flex-col">
         {children}
         <Footer />
         <Analytics />
