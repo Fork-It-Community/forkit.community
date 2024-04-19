@@ -78,7 +78,6 @@ export default async function EventPage({ params }: EventPageProps) {
 
   return (
     <>
-      <Header event={event} />
       <Hero event={{ ...event, date }} />
       <Content />
       <Schedule event={event} />
