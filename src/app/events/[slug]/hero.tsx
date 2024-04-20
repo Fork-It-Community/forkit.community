@@ -7,7 +7,9 @@ const MAX_PRIMARY_BUTTONS = 2;
 const buttonPrimaryClassName = "w-full min-w-[20ch] sm:w-auto";
 const buttonSecondaryClassName = "-mx-4";
 export function Hero(
-  props: Readonly<{ event: Omit<Event, "date"> & { date?: string } }>,
+  props: Readonly<{
+    event: Omit<Event, "date"> & { date?: string };
+  }>,
 ) {
   const isProspectusActive = !!(
     props.event.prospectus?.href &&
@@ -21,7 +23,7 @@ export function Hero(
       new Date().getTime() <= props.event.cfp.endDate.getTime())
   );
   return (
-    <div className="relative isolate overflow-hidden pt-14">
+    <div className="relative isolate overflow-hidden">
       {props.event.image && (
         <Image
           priority

@@ -16,11 +16,11 @@ import { Button } from "@/components/ui/button";
 import { Event } from "@/content/collections";
 
 const navigation = [
-  { name: "Venue", href: "/events/2024-06-07-rouen#venue" },
-  { name: "Speakers", href: "/events/2024-06-07-rouen#speakers" },
-  { name: "Talks", href: "/events/2024-06-07-rouen#talks" },
-  { name: "Sponsors", href: "/events/2024-06-07-rouen#sponsors" },
-  { name: "FAQ", href: "/events/2024-06-07-rouen#faq" },
+  { name: "Venue", href: "#venue" },
+  { name: "Speakers", href: "#speakers" },
+  { name: "Talks", href: "#talks" },
+  { name: "Sponsors", href: "#sponsors" },
+  { name: "FAQ", href: "#faq" },
 ];
 
 export function Header(props: Readonly<{ event: Event }>) {
@@ -34,7 +34,7 @@ export function Header(props: Readonly<{ event: Event }>) {
           aria-label="Global"
         >
           <div className="flex-1">
-            <Link href="/">
+            <Link href={`/events/${props.event.metadata.slug}`}>
               <span className="sr-only">Fork it! Community</span>
               <Image className="w-32 sm:w-40" src={ImgForkItLogo} alt="" />
             </Link>
@@ -70,7 +70,7 @@ export function Header(props: Readonly<{ event: Event }>) {
                         {navigation.map((item) => (
                           <a
                             key={item.name}
-                            href={item.href}
+                            href={`/events/${props.event.metadata.slug}${item.href}`}
                             onClick={(e) => {
                               e.stopPropagation();
                               sheet.close();

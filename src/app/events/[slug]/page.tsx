@@ -1,4 +1,3 @@
-import { Header } from "@/app/events/[slug]/header";
 import { Hero } from "@/app/events/[slug]/hero";
 import { Sponsorship } from "@/app/events/[slug]/sponsorship";
 import collections from "@/content/collections";

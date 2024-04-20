@@ -1,4 +1,4 @@
-import { Event } from "@/content/collections";
+import { EventFrontmatter } from "@/content/collections";
 import { formatDateTime } from "@/lib/utils";
 import { Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
@@ -6,7 +6,9 @@ import LeVillageByCA from "./le-village-by-ca.jpg";
 import Link from "next/link";
 
 export function About(
-  props: Readonly<{ event: Omit<Event, "date"> & { date?: string } }>,
+  props: Readonly<{
+    event: Omit<EventFrontmatter, "date"> & { date?: string };
+  }>,
 ) {
   return (
     <div id="venue" className="relative bg-gray-900">

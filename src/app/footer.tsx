@@ -39,6 +39,10 @@ export function Footer() {
         </div>
         <div className="mt-8 flex flex-col gap-0 space-y-1 md:order-1 md:mt-0">
           <div className="flex items-center justify-center gap-2 md:justify-start">
+            <Link className="text-xs hover:text-primary" href="/">
+              Home
+            </Link>
+            ·
             <Link
               className="text-xs hover:text-primary"
               href="https://drive.google.com/drive/folders/1JkxgD0f6fetVdzsjGLLMexTRwRdb3Euv?usp=sharing"

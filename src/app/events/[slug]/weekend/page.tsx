@@ -1,3 +1,4 @@
+import collections from "@/content/collections";
 import rouenImage from "/public/events/weekend-rouen.jpg";
 import {
   CarFront,
@@ -16,6 +17,19 @@ import {
   Utensils,
 } from "lucide-react";
 import Image from "next/image";
+
+// Just want to build that page statically to avoid a file resolve issue with
+// ISR. Need to improve `typed-mdx`.
+export async function generateStaticParams() {
+  const events = await collections.event.getAll();
+
+  return events
+    .filter((event) => event.published)
+    .map((event) => ({
+      slug: event.metadata.slug,
+    }));
+}
+
 export default function WeekendPage() {
   return (
     <div className="prose prose-sm prose-invert mx-auto p-6 text-white md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-headings:text-primary prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white">
@@ -33,10 +47,10 @@ export default function WeekendPage() {
             height={150}
           />
           <p>
-            Rouen perfectly captures the essence of
-            <strong> Norman charm and modern vibrancy</strong>, offering an
-            array of cool spots to explore. Whether you prefer trendy cocktails
-            or chilled beers on a terrace, the city&apos;s lively bars and clubs
+            Rouen perfectly captures the essence of{" "}
+            <strong>Norman charm and modern vibrancy</strong>, offering an array
+            of cool spots to explore. Whether you prefer trendy cocktails or
+            chilled beers on a terrace, the city&apos;s lively bars and clubs
             cater to every taste. Culturally, Rouen is{" "}
             <strong>always buzzing</strong> with events, from art exhibitions to
             live concerts.
@@ -59,11 +73,11 @@ export default function WeekendPage() {
           </h3>
 
           <p>
-            Over <strong>25 trains</strong> daily from
-            <strong> Paris Saint-Lazare</strong>.
+            Over <strong>25 trains</strong> daily from{" "}
+            <strong>Paris Saint-Lazare</strong>.
             <br />
-            Average journey time : <strong>1h20</strong> for around
-            <strong> 20</strong> euros.
+            Average journey time : <strong>1h20</strong> for around{" "}
+            <strong>20</strong> euros.
           </p>
         </div>
         <div>

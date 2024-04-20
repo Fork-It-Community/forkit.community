@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Event } from "@/content/collections";
-import { ExternalLink, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 
 function ScheduleComingSoon(props: Readonly<{ event: Event }>) {
   return (

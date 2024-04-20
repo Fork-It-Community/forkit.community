@@ -5,7 +5,9 @@ import useMeasure from "react-use-measure";
 import { Event } from "@/content/collections";
 
 export function Banner(
-  props: Readonly<{ nextEvent: Event & { metadata: { slug: string } } }>,
+  props: Readonly<{
+    nextEvent: Event;
+  }>,
 ) {
   const [ref, { height }] = useMeasure();
   return (
