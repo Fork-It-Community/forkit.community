@@ -1,4 +1,4 @@
-import rouenImage from "/public/events/weekend-rouen.png";
+import rouenImage from "/public/events/weekend-rouen.jpg";
 import {
   CarFront,
   BusFront,
@@ -28,9 +28,9 @@ export default function WeekendPage() {
           <Image
             src={rouenImage}
             alt="Rouen"
-            className="h-full"
-            width={225}
-            height={129}
+            className="h-full rounded-md"
+            width={300}
+            height={150}
           />
           <p>
             Rouen perfectly captures the essence of
