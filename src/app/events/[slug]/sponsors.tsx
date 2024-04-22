@@ -67,9 +67,9 @@ export function Sponsors(props: Readonly<{ event: Event }>) {
         </div>
         {props.event.sponsoringLevels.map((level) => {
           const levelSponsors =
-            props.event.sponsors
-              ?.filter((sponsor) => sponsor.level === level)
-              .sort((a, b) => a.slug.localeCompare(b.slug)) ?? [];
+            props.event.sponsors?.filter(
+              (sponsor) => sponsor.level === level,
+            ) ?? [];
           return (
             <div key={level} className="bg-white py-8">
               <div className="mx-auto max-w-7xl">
