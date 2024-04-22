@@ -61,7 +61,7 @@ async function SponsorImage(
         </DialogHeader>
 
         {sponsor.href && (
-          <DialogFooter className="items-center p-4 text-white">
+          <DialogFooter className="items-center gap-4 p-4 text-white">
             {!!sponsor.socials && (
               <div className="flex gap-4">
                 <ul className="flex gap-x-4">
