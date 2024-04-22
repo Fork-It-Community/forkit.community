@@ -57,6 +57,7 @@ export default async function EventPage({ params }: EventPageProps) {
     ? {
         "@type": "Place",
         address: event.location.address,
+        name: event.location.name,
       }
     : undefined;
 
@@ -65,6 +66,7 @@ export default async function EventPage({ params }: EventPageProps) {
     "@type": "Event",
     name: `${event.date ? formatDateTime(event.date) + " " : ""}${event.name}`,
     startDate: event.date,
+    endDate: event.date,
     description: event.excerpt,
     location,
     offers: event.tickets?.offers.map((offer) => ({
@@ -72,7 +74,20 @@ export default async function EventPage({ params }: EventPageProps) {
       price: offer.price,
       priceCurrency: offer.priceCurrency,
       url: event.tickets?.href,
+      availability: `https://schema.org/${offer.availability}`,
+      validFrom: offer.validFrom,
     })),
+    eventStatus: `https://schema.org/${event.status}`,
+    image: event.image?.src,
+    organizer: {
+      name: "Fork it! Community",
+      url: "https://www.forkit.community",
+    },
+    performer: event.speakers?.map((speaker) => ({
+      "@type": "PerformingGroup",
+      name: speaker,
+    })),
+    eventAttendanceMode: event.attendanceMode,
   };
 
   return (
