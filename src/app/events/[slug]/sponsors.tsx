@@ -41,7 +41,7 @@ async function SponsorImage(
   return (
     <Dialog>
       <DialogTrigger> {content}</DialogTrigger>
-      <DialogContent className="max-h-[80vh] w-full overflow-y-auto p-0">
+      <DialogContent className="max-h-[80vh] w-full overflow-y-auto p-0 text-black">
         <DialogHeader>
           <Image
             className="aspect-video w-full"
@@ -61,7 +61,7 @@ async function SponsorImage(
         </DialogHeader>
 
         {sponsor.href && (
-          <DialogFooter className="items-center p-4">
+          <DialogFooter className="items-center p-4 text-white">
             {!!sponsor.socials && (
               <div className="flex gap-4">
                 <ul className="flex gap-x-4">
