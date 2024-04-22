@@ -34,6 +34,7 @@
     "sharp": "0.33.3",
     "tailwind-merge": "2.2.2",
     "typed-mdx": "0.1.1",
+    "vaul": "0.9.0",
     "zod": "3.22.4"
   },
   "devDependencies": {

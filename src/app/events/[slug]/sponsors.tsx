@@ -3,10 +3,24 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { ICONS } from "@/components/icons";
+import { Button } from "@/components/ui/button";
+
 async function SponsorImage(
   props: Readonly<{ sponsor: { slug: string; level: string } }>,
 ) {
   const sponsor = await collections.sponsor.getBySlug(props.sponsor.slug);
+  const Content = (await import(`@/content/sponsor/${props.sponsor.slug}.mdx`))
+    .default;
 
   const content = (
     <div
@@ -24,19 +38,57 @@ async function SponsorImage(
     </div>
   );
 
-  if (!sponsor.href) {
-    return content;
-  }
-
   return (
-    <Link
-      href={sponsor.href ?? "#"}
-      title={sponsor.name}
-      target="_blank"
-      rel="noreferer"
-    >
-      {content}
-    </Link>
+    <Dialog>
+      <DialogTrigger> {content}</DialogTrigger>
+      <DialogContent className="max-h-[80vh] w-full overflow-y-auto p-0 text-black">
+        <DialogHeader>
+          <Image
+            className="aspect-video w-full"
+            src={sponsor.image.src}
+            alt={sponsor.image.alt}
+            width={320}
+            height={192}
+          />
+          <div className="relative flex min-h-[25vh] flex-1 flex-col overflow-hidden">
+            <DialogDescription className="absolute inset-0 overflow-y-auto px-4 py-2">
+              <div className="prose prose-invert text-left prose-headings:font-heading">
+                <h3>{sponsor.name}</h3>
+                <Content />
+              </div>
+            </DialogDescription>
+          </div>
+        </DialogHeader>
+
+        {sponsor.href && (
+          <DialogFooter className="items-center p-4 text-white">
+            {!!sponsor.socials && (
+              <div className="flex gap-4">
+                <ul className="flex gap-x-4">
+                  {sponsor.socials.map((social) => (
+                    <li key={social.type}>
+                      <a
+                        href={social.href}
+                        className=" transition hover:text-primary"
+                        target="_blank"
+                      >
+                        <span className="sr-only">{social.type}</span>
+                        {ICONS[social.type]}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <Button asChild>
+              <Link href={sponsor.href} target="_blank" rel="noreferer">
+                Visit {sponsor.name} website
+              </Link>
+            </Button>
+          </DialogFooter>
+        )}
+      </DialogContent>
+    </Dialog>
   );
 }
 
