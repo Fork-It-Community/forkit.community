@@ -9,6 +9,7 @@ import { Speakers } from "./speakers";
 import { Faq } from "./faq";
 import { Schedule } from "./schedule";
 import { Talks } from "./talks";
+import type { WithContext, Event, Place } from "schema-dts";
 
 type EventPageProps = Readonly<{
   params: { slug: string };
@@ -53,7 +54,7 @@ export default async function EventPage({ params }: EventPageProps) {
 
   const date = event.date ? formatDateTime(event.date) : undefined;
 
-  const location = event.location
+  const location: Place | undefined = event.location
     ? {
         "@type": "Place",
         address: event.location.address,
@@ -61,12 +62,12 @@ export default async function EventPage({ params }: EventPageProps) {
       }
     : undefined;
 
-  const jsonLd = {
+  const jsonLd: WithContext<Event> = {
     "@context": "https://schema.org",
     "@type": "Event",
     name: `${event.date ? formatDateTime(event.date) + " " : ""}${event.name}`,
-    startDate: event.date,
-    endDate: event.date,
+    startDate: event.date?.toISOString(),
+    endDate: event.date?.toISOString(),
     description: event.excerpt,
     location,
     offers: event.tickets?.offers.map((offer) => ({
@@ -75,11 +76,12 @@ export default async function EventPage({ params }: EventPageProps) {
       priceCurrency: offer.priceCurrency,
       url: event.tickets?.href,
       availability: `https://schema.org/${offer.availability}`,
-      validFrom: offer.validFrom,
+      validFrom: offer.validFrom.toISOString(),
     })),
     eventStatus: `https://schema.org/${event.status}`,
     image: event.image?.src,
     organizer: {
+      "@type": "Organization",
       name: "Fork it! Community",
       url: "https://www.forkit.community",
     },
