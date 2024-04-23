@@ -58,7 +58,7 @@ function SponsorImagePlaceholder(
 
 export function Sponsors(props: Readonly<{ event: Event }>) {
   return (
-    <div className="bg-white py-20 text-gray-900">
+    <div className="bg-white pt-20 text-gray-900">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto pb-4">
           <h2 className="font-heading text-4xl font-bold tracking-tight text-gray-800 sm:text-4xl md:text-4xl">
