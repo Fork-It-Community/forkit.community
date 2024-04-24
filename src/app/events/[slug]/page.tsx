@@ -85,12 +85,19 @@ export default async function EventPage({ params }: EventPageProps) {
       name: "Fork it! Community",
       url: "https://www.forkit.community",
     },
-    performer: event.speakers?.map((speaker) => ({
-      "@type": "PerformingGroup",
-      name: speaker,
-    })),
     eventAttendanceMode: event.attendanceMode,
   };
+
+  const speakers = [];
+  if (event.speakers) {
+    for (let i = 0; i < event.speakers.length; i++) {
+      speakers[i] = await collections.speaker.getBySlug(event.speakers[i]);
+    }
+    jsonLd.performer = speakers?.map((speaker) => ({
+      "@type": "PerformingGroup",
+      name: speaker.name,
+    }));
+  }
 
   return (
     <>
