@@ -9,7 +9,7 @@ import { Speakers } from "./speakers";
 import { Faq } from "./faq";
 import { Schedule } from "./schedule";
 import { Talks } from "./talks";
-import type { WithContext, Event, Place } from "schema-dts";
+import type { WithContext, Event, Place, Person } from "schema-dts";
 
 type EventPageProps = Readonly<{
   params: { slug: string };
@@ -62,6 +62,15 @@ export default async function EventPage({ params }: EventPageProps) {
       }
     : undefined;
 
+  const speakers = event.speakers
+    ? await Promise.all(
+        event.speakers.map(
+          async (speakerSlug) =>
+            await collections.speaker.getBySlug(speakerSlug),
+        ),
+      )
+    : undefined;
+
   const jsonLd: WithContext<Event> = {
     "@context": "https://schema.org",
     "@type": "Event",
@@ -86,18 +95,11 @@ export default async function EventPage({ params }: EventPageProps) {
       url: "https://www.forkit.community",
     },
     eventAttendanceMode: event.attendanceMode,
-  };
-
-  const speakers = [];
-  if (event.speakers) {
-    for (let i = 0; i < event.speakers.length; i++) {
-      speakers[i] = await collections.speaker.getBySlug(event.speakers[i]);
-    }
-    jsonLd.performer = speakers?.map((speaker) => ({
-      "@type": "PerformingGroup",
+    performer: speakers?.map((speaker) => ({
+      "@type": "Person",
       name: speaker.name,
-    }));
-  }
+    })),
+  };
 
   return (
     <>
@@ -106,16 +108,14 @@ export default async function EventPage({ params }: EventPageProps) {
       <Schedule event={event} />
       {!!event.speakers && <Speakers event={event} />}
       {!!event.talks && <Talks event={event} />}
-      {event.prospectus &&
-        event.prospectus.endDate &&
+      {event.prospectus?.endDate &&
         new Date().getTime() <= event.prospectus.endDate.getTime() && (
           <div id="sponsors">
             <Sponsorship event={event} />
           </div>
         )}
       <Sponsors event={event} />
-      {event.prospectus &&
-        event.prospectus.endDate &&
+      {event.prospectus?.endDate &&
         new Date().getTime() <= event.prospectus.endDate.getTime() && (
           <Sponsorship event={event} />
         )}
