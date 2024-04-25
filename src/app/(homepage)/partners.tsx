@@ -38,13 +38,13 @@ async function PartnerImage({ partner }: { partner: Partner }) {
 export async function Partners() {
   const allPartners = await collections.partner.getAll();
   return (
-    <div className="bg-white py-20">
+    <div className="bg-gray-900 pb-12 pt-6">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl lg:max-w-none">
-          <h2 className="font-heading text-3xl font-bold uppercase text-gray-900 sm:text-4xl">
+        <div className="mx-auto flex max-w-2xl flex-col gap-10 lg:max-w-none">
+          <h2 className="text-center font-heading text-3xl font-bold text-white sm:text-4xl">
             Partners
           </h2>
-          <ul className="mx-auto mt-10 grid max-w-2xl grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-4">
+          <ul className="mx-auto grid max-w-2xl grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-4 lg:gap-x-8">
             {allPartners.map((partner) => (
               <li key={partner.name} className="gap-4">
                 <PartnerImage partner={partner} />
