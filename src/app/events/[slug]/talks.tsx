@@ -11,9 +11,12 @@ async function Talk(props: Readonly<{ talk: { slug: string }; event: Event }>) {
   }
   const content = (
     <div className="mx-auto flex w-full max-w-[60ch] gap-4">
-      <div className="flex flex-1 flex-col gap-1 text-balance">
-        <Link href={`${props.event.metadata.slug}/talks/${talk.metadata.slug}`}>
-          <h3 className="text-xl font-semibold">{talk.title}</h3>
+      <div className="flex flex-1 flex-col gap-1">
+        <Link
+          className="text-lg hover:underline"
+          href={`${props.event.metadata.slug}/talks/${talk.metadata.slug}`}
+        >
+          <h3 className="font-semibold">{talk.title}</h3>
         </Link>
         <div className="flex flex-row gap-2">
           <div className="flex gap-2">
@@ -53,7 +56,7 @@ export function Talks(props: Readonly<{ event: Event }>) {
             or in 🇫🇷 French (with English subtitles)
           </p>
         </div>
-        <div className="mx-auto mt-12 flex flex-col gap-10 lg:grid lg:grid-cols-2">
+        <div className="mx-auto mt-12 flex flex-col gap-10 lg:grid lg:grid-cols-2 xl:grid-cols-3">
           {props.event.talks?.map((talk) => (
             <Talk
               talk={{
