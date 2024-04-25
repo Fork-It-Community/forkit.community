@@ -9,6 +9,7 @@ import { Speakers } from "./speakers";
 import { Faq } from "./faq";
 import { Schedule } from "./schedule";
 import { Talks } from "./talks";
+import type { WithContext, Event, Place, Person } from "schema-dts";
 
 type EventPageProps = Readonly<{
   params: { slug: string };
@@ -53,18 +54,29 @@ export default async function EventPage({ params }: EventPageProps) {
 
   const date = event.date ? formatDateTime(event.date) : undefined;
 
-  const location = event.location
+  const location: Place | undefined = event.location
     ? {
         "@type": "Place",
         address: event.location.address,
+        name: event.location.name,
       }
     : undefined;
 
-  const jsonLd = {
+  const speakers = event.speakers
+    ? await Promise.all(
+        event.speakers.map(
+          async (speakerSlug) =>
+            await collections.speaker.getBySlug(speakerSlug),
+        ),
+      )
+    : undefined;
+
+  const jsonLd: WithContext<Event> = {
     "@context": "https://schema.org",
     "@type": "Event",
     name: `${event.date ? formatDateTime(event.date) + " " : ""}${event.name}`,
-    startDate: event.date,
+    startDate: event.date?.toISOString(),
+    endDate: event.date?.toISOString(),
     description: event.excerpt,
     location,
     offers: event.tickets?.offers.map((offer) => ({
@@ -72,6 +84,20 @@ export default async function EventPage({ params }: EventPageProps) {
       price: offer.price,
       priceCurrency: offer.priceCurrency,
       url: event.tickets?.href,
+      availability: `https://schema.org/${offer.availability}`,
+      validFrom: offer.validFrom.toISOString(),
+    })),
+    eventStatus: `https://schema.org/${event.status}`,
+    image: event.image?.src,
+    organizer: {
+      "@type": "Organization",
+      name: "Fork it! Community",
+      url: "https://www.forkit.community",
+    },
+    eventAttendanceMode: event.attendanceMode,
+    performer: speakers?.map((speaker) => ({
+      "@type": "Person",
+      name: speaker.name,
     })),
   };
 
@@ -82,16 +108,14 @@ export default async function EventPage({ params }: EventPageProps) {
       <Schedule event={event} />
       {!!event.speakers && <Speakers event={event} />}
       {!!event.talks && <Talks event={event} />}
-      {event.prospectus &&
-        event.prospectus.endDate &&
+      {event.prospectus?.endDate &&
         new Date().getTime() <= event.prospectus.endDate.getTime() && (
           <div id="sponsors">
             <Sponsorship event={event} />
           </div>
         )}
       <Sponsors event={event} />
-      {event.prospectus &&
-        event.prospectus.endDate &&
+      {event.prospectus?.endDate &&
         new Date().getTime() <= event.prospectus.endDate.getTime() && (
           <Sponsorship event={event} />
         )}

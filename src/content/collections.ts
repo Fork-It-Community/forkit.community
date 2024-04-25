@@ -83,6 +83,8 @@ const collections = {
               name: z.string(),
               price: z.number().positive(),
               priceCurrency: z.string(),
+              availability: z.enum(["InStock", "SoldOut", "PreOrder"]),
+              validFrom: z.date(),
             }),
           ),
         })
@@ -110,6 +112,18 @@ const collections = {
       faq: z
         .array(z.object({ question: z.string(), answer: z.string() }))
         .optional(),
+      status: z.enum([
+        "EventCancelled",
+        "EventMovedOnline",
+        "EventPostponed",
+        "EventRescheduled",
+        "EventScheduled",
+      ]),
+      attendanceMode: z.enum([
+        "OfflineEventAttendanceMode",
+        "OnlineEventAttendanceMode",
+        "MixedEventAttendanceMode",
+      ]),
     }),
   }),
   speaker: defineCollection({
