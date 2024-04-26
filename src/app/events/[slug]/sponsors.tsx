@@ -9,7 +9,6 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { ICONS } from "@/components/icons";
@@ -40,7 +39,7 @@ async function SponsorImage(
 
   return (
     <Dialog>
-      <DialogTrigger> {content}</DialogTrigger>
+      <DialogTrigger>{content}</DialogTrigger>
       <DialogContent className="max-h-[80vh] w-full overflow-y-auto p-0 text-black">
         <DialogHeader>
           <Image
@@ -49,6 +48,7 @@ async function SponsorImage(
             alt={sponsor.image.alt}
             width={320}
             height={192}
+            quality={100}
           />
           <div className="relative flex min-h-[25vh] flex-1 flex-col overflow-hidden">
             <DialogDescription className="absolute inset-0 overflow-y-auto px-4 py-2">
