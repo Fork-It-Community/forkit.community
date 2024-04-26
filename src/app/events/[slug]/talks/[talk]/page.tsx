@@ -9,11 +9,16 @@ type TalkPageProps = Readonly<{
 }>;
 
 export async function generateStaticParams() {
-  const talks = await collections.talk.getAll();
+  const events = await collections.event.getAll();
 
-  return talks.map((talk) => ({
-    talk: talk.metadata.slug,
-  }));
+  return events
+    .filter((event) => event.published)
+    .flatMap((event) =>
+      event.talks?.map((talk) => ({
+        slug: event.metadata.slug,
+        talk: talk,
+      })),
+    );
 }
 
 export default async function TalkPage({ params }: TalkPageProps) {
