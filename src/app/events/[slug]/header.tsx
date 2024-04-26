@@ -101,7 +101,7 @@ export function Header(props: Readonly<{ event: Event }>) {
             {navigation.map((item) => (
               <a
                 key={item.name}
-                href={item.href}
+                href={`/events/${props.event.metadata.slug}${item.href}`}
                 className="text-sm font-semibold leading-6 text-white"
               >
                 {item.name}
