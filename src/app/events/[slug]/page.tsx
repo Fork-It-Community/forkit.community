@@ -10,6 +10,7 @@ import { Faq } from "./faq";
 import { Schedule } from "./schedule";
 import { Talks } from "./talks";
 import type { WithContext, Event, Place, Person } from "schema-dts";
+import { Partners } from "@/app/(homepage)/partners";
 
 type EventPageProps = Readonly<{
   params: { slug: string };
@@ -108,13 +109,8 @@ export default async function EventPage({ params }: EventPageProps) {
       <Schedule event={event} />
       {!!event.speakers && <Speakers event={event} />}
       {!!event.talks && <Talks event={event} />}
-      {event.prospectus?.endDate &&
-        new Date().getTime() <= event.prospectus.endDate.getTime() && (
-          <div id="sponsors">
-            <Sponsorship event={event} />
-          </div>
-        )}
       <Sponsors event={event} />
+      <Partners />
       {event.prospectus?.endDate &&
         new Date().getTime() <= event.prospectus.endDate.getTime() && (
           <Sponsorship event={event} />

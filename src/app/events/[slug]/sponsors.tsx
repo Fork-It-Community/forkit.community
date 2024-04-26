@@ -101,7 +101,7 @@ function SponsorImagePlaceholder(
       title={props.prospectus?.title}
       target="_blank"
       rel="noreferer"
-      className="flex w-full items-center justify-center overflow-hidden rounded-md border-2 border-gray-100 bg-gray-50 p-4 text-center text-sm font-medium text-gray-500 hover:text-gray-800"
+      className="flex w-full items-center justify-center overflow-hidden rounded-md border-2 border-gray-100 bg-gray-950 p-4 text-center text-sm font-medium text-white hover:text-gray-300"
     >
       <div>Become sponsor</div>
     </Link>
@@ -110,10 +110,10 @@ function SponsorImagePlaceholder(
 
 export function Sponsors(props: Readonly<{ event: Event }>) {
   return (
-    <div className="bg-white py-20 text-gray-900">
+    <div className="bg-gray-950 py-20 text-gray-900">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto pb-4">
-          <h2 className="font-heading text-4xl font-bold tracking-tight text-gray-800 sm:text-4xl md:text-4xl">
+          <h2 className="text-center font-heading text-4xl font-bold tracking-tight text-white sm:text-4xl md:text-4xl">
             Sponsors
           </h2>
         </div>
@@ -123,14 +123,14 @@ export function Sponsors(props: Readonly<{ event: Event }>) {
               (sponsor) => sponsor.level === level,
             ) ?? [];
           return (
-            <div key={level} className="bg-white py-8">
+            <div key={level} className="bg-gray-950 py-8">
               <div className="mx-auto max-w-7xl">
-                <h3 className="mb-4 font-heading text-2xl font-bold capitalize tracking-tight text-gray-800">
+                <h3 className="mb-4 font-heading text-2xl font-bold capitalize tracking-tight text-white">
                   {level.toLocaleLowerCase()}
                 </h3>
                 <div
                   className={cn(
-                    "grid grid-cols-2 gap-2 sm:mx-0 sm:grid-cols-3 lg:grid-cols-4",
+                    "grid grid-cols-2 gap-4 sm:mx-0 sm:grid-cols-3 lg:grid-cols-4 lg:gap-8",
                     level === "SILVER" && "sm:grid-cols-2 lg:grid-cols-3",
                   )}
                 >
