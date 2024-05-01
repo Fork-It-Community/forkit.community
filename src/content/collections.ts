@@ -169,6 +169,7 @@ export type EventFrontmatter = z.infer<typeof collections.event.schema>;
 export type Sponsor = z.infer<typeof collections.sponsor.schema>;
 export type Partner = z.infer<typeof collections.partner.schema>;
 export type Speaker = z.infer<typeof collections.speaker.schema>;
-export type Talk = z.infer<typeof collections.talk.schema>;
+export type TalkFrontmatter = z.infer<typeof collections.talk.schema>;
 
 export type Event = Awaited<ReturnType<typeof collections.event.getBySlug>>;
+export type Talk = Awaited<ReturnType<typeof collections.talk.getBySlug>>;

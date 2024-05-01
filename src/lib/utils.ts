@@ -11,7 +11,7 @@ export function formatDateTime(date: string | number | Date) {
   }).format(new Date(date));
 }
 
-export function formatConfTime(date: string | number | Date) {
+export function formatTime(date: string | number | Date) {
   return new Intl.DateTimeFormat("en-US", {
     hour: "2-digit",
     minute: "2-digit",

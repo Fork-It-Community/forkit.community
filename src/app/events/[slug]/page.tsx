@@ -9,7 +9,7 @@ import { Speakers } from "./speakers";
 import { Faq } from "./faq";
 import { Schedule } from "./schedule";
 import { Talks } from "./talks";
-import type { WithContext, Event, Place, Person } from "schema-dts";
+import type { WithContext, Event, Place } from "schema-dts";
 import { Partners } from "@/app/(homepage)/partners";
 
 type EventPageProps = Readonly<{
