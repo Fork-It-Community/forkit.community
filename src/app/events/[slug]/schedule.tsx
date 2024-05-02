@@ -138,7 +138,7 @@ async function CardBreak(
         startTime={props.break.startTime}
         className="hidden flex-1 md:block"
       />
-      <div className="flex w-full flex-[4] flex-col gap-2 rounded-lg border-2 border-gray-600 bg-gray-700 px-6 py-4">
+      <div className="flex w-full flex-[4] flex-col gap-2 rounded-lg border-2 border-gray-600 bg-gray-800 px-6 py-4">
         <TimeAndDuration
           duration={props.break.duration}
           startTime={props.break.startTime}
