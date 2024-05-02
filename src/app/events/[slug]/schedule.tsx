@@ -63,7 +63,7 @@ async function CardConference(props: Readonly<{ talk: Talk; event: Event }>) {
         className="hidden flex-1 md:block"
       />
       <Link
-        href={`${props.event.metadata.slug}/talks/${props.talk.metadata.slug}`}
+        href={`/events/${props.event.metadata.slug}/talks/${props.talk.metadata.slug}`}
         className={
           "flex w-full flex-[4] gap-2 rounded-lg border-2 border-gray-600 bg-gray-900 p-2 hover:border-gray-500 hover:bg-gray-800"
         }
