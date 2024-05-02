@@ -119,7 +119,10 @@ export async function Schedule(props: Readonly<{ event: Event }>) {
   }
 
   return (
-    <div className="mx-auto flex max-w-7xl flex-col gap-4 bg-gray-950 px-6 py-24 sm:py-32 lg:px-8">
+    <div
+      className="mx-auto flex max-w-7xl flex-col gap-4 bg-gray-950 px-6 py-24 sm:py-32 lg:px-8"
+      id="schedule"
+    >
       <h2 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
         Schedule
       </h2>
