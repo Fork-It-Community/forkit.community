@@ -55,6 +55,7 @@ async function CardConference(
     activity: {
       type: string;
       sponsorSlug?: string;
+      description?: string;
       name?: string;
       slug?: string;
       startTime?: Date;
@@ -119,6 +120,7 @@ async function CardBreak(
     break: {
       type: string;
       sponsorSlug?: string;
+      description?: string;
       name?: string;
       slug?: string;
       startTime?: Date;
@@ -143,11 +145,11 @@ async function CardBreak(
           className="md:hidden"
         />
         <p className="text-xl font-semibold">{props.break.name}</p>
-        {props.break.name === "Lunch" && sponsor && (
-          <div className="flex justify-between">
-            <p>The perfect time to eat something!</p>
-            <div className="">
-              <p className="text-sm">Lunch sponsored by</p>
+        <div className="flex flex-col justify-between gap-4 md:flex-row">
+          {props.break.description && <p>{props.break.description}</p>}
+          {sponsor && (
+            <div className="flex flex-col gap-2">
+              <p className="text-sm">{props.break.name} sponsored by</p>
               <div
                 className={cn(
                   "w-40 overflow-hidden rounded-md border-2 border-gray-100",
@@ -165,8 +167,8 @@ async function CardBreak(
                 />
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

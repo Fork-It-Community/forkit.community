@@ -128,6 +128,7 @@ const collections = {
         z.object({
           type: z.enum(["conference", "roundtable", "break", "lunch"]),
           sponsorSlug: z.string().optional(),
+          description: z.string().optional(),
           name: z.string().optional(),
           slug: z.string().optional(),
           startTime: z.date().optional(),
