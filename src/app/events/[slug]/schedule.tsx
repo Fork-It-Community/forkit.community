@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import collections, { Event, Talk } from "@/content/collections";
+import collections, { Event } from "@/content/collections";
 import { cn, formatTime } from "@/lib/utils";
 import { Mail } from "lucide-react";
 import Image from "next/image";
@@ -27,9 +27,11 @@ function ScheduleComingSoon(props: Readonly<{ event: Event }>) {
   );
 }
 
-function TimeAndDuration(
-  props: Pick<Talk, "startTime" | "duration"> & { className?: string },
-) {
+function TimeAndDuration(props: {
+  startTime?: Date;
+  duration?: number;
+  className?: string;
+}) {
   return (
     props.startTime && (
       <div
@@ -48,9 +50,25 @@ function TimeAndDuration(
   );
 }
 
-async function CardConference(props: Readonly<{ talk: Talk; event: Event }>) {
+async function CardConference(
+  props: Readonly<{
+    activity: {
+      type: string;
+      sponsorSlug?: string;
+      name?: string;
+      slug?: string;
+      startTime?: Date;
+      duration?: number;
+    };
+    event: Event;
+  }>,
+) {
+  if (!props.activity.slug) {
+    return;
+  }
+  const talk = await collections.talk.getBySlug(props.activity.slug);
   const speakers = await Promise.all(
-    props.talk.speakers.map(
+    talk.speakers.map(
       async (speaker) => await collections.speaker.getBySlug(speaker),
     ),
   );
@@ -58,23 +76,23 @@ async function CardConference(props: Readonly<{ talk: Talk; event: Event }>) {
   return (
     <div className="flex flex-row gap-4 lg:gap-10">
       <TimeAndDuration
-        duration={props.talk.duration}
-        startTime={props.talk.startTime}
+        duration={props.activity.duration}
+        startTime={props.activity.startTime}
         className="hidden flex-1 md:block"
       />
       <Link
-        href={`/events/${props.event.metadata.slug}/talks/${props.talk.metadata.slug}`}
+        href={`/events/${props.event.metadata.slug}/talks/${talk.metadata.slug}`}
         className={
-          "flex w-full flex-[4] gap-2 rounded-lg border-2 border-gray-600 bg-gray-900 p-2 hover:border-gray-500 hover:bg-gray-800"
+          "flex w-full flex-[4] gap-2 rounded-lg border-2 border-gray-600 bg-gray-900 p-2 px-6 py-4 hover:border-gray-500 hover:bg-gray-800"
         }
       >
         <div className="flex flex-col gap-2">
           <TimeAndDuration
-            duration={props.talk.duration}
-            startTime={props.talk.startTime}
+            duration={props.activity.duration}
+            startTime={props.activity.startTime}
             className="md:hidden"
           />
-          <p className="text-xl font-semibold">{props.talk.title}</p>
+          <p className="text-xl font-semibold">{talk.title}</p>
           <div className="flex flex-col gap-2">
             {speakers.map((speaker) => (
               <div className="flex flex-row gap-2" key={speaker.name}>
@@ -96,27 +114,78 @@ async function CardConference(props: Readonly<{ talk: Talk; event: Event }>) {
   );
 }
 
-export async function Schedule(props: Readonly<{ event: Event }>) {
-  const talks = props.event.talks
-    ? (
-        await Promise.all(
-          props.event.talks.map(
-            async (talkSlug) => await collections.talk.getBySlug(talkSlug),
-          ),
-        )
-      ).sort(
-        (talk1, talk2) =>
-          (talk1.startTime?.valueOf() ?? 0) - (talk2.startTime?.valueOf() ?? 0),
-      )
+async function CardBreak(
+  props: Readonly<{
+    break: {
+      type: string;
+      sponsorSlug?: string;
+      name?: string;
+      slug?: string;
+      startTime?: Date;
+      duration?: number;
+    };
+  }>,
+) {
+  const sponsor = props.break.sponsorSlug
+    ? await collections.sponsor.getBySlug(props.break.sponsorSlug)
     : undefined;
+  return (
+    <div className="flex flex-row gap-4 lg:gap-10">
+      <TimeAndDuration
+        duration={props.break.duration}
+        startTime={props.break.startTime}
+        className="hidden flex-1 md:block"
+      />
+      <div className="flex w-full flex-[4] flex-col gap-2 rounded-lg border-2 border-gray-600 bg-gray-700 px-6 py-4">
+        <TimeAndDuration
+          duration={props.break.duration}
+          startTime={props.break.startTime}
+          className="md:hidden"
+        />
+        <p className="text-xl font-semibold">{props.break.name}</p>
+        {props.break.name === "Lunch" && sponsor && (
+          <div className="flex justify-between">
+            <p>The perfect time to eat something!</p>
+            <div className="">
+              <p className="text-sm">Lunch sponsored by</p>
+              <div
+                className={cn(
+                  "w-40 overflow-hidden rounded-md border-2 border-gray-100",
+                  {
+                    "hover:border-gray-200": !!sponsor.href,
+                  },
+                )}
+              >
+                <Image
+                  className="w-full"
+                  src={sponsor.image.src}
+                  alt={sponsor.image.alt}
+                  width={1000}
+                  height={500}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
-  if (!props.event.schedulePublished || !talks) {
+export async function Schedule(props: Readonly<{ event: Event }>) {
+  if (!props.event.schedule) {
     return (
       <div className="bg-gray-950">
         <ScheduleComingSoon event={props.event} />
       </div>
     );
   }
+  const activities = props.event.schedule
+    .map((activity) => activity)
+    .sort(
+      (talk1, talk2) =>
+        (talk1.startTime?.valueOf() ?? 0) - (talk2.startTime?.valueOf() ?? 0),
+    );
 
   return (
     <div
@@ -127,13 +196,17 @@ export async function Schedule(props: Readonly<{ event: Event }>) {
         Schedule
       </h2>
       <div className="flex flex-col gap-4">
-        {talks.map((talk) => (
-          <CardConference
-            talk={talk}
-            event={props.event}
-            key={talk.metadata.slug}
-          />
-        ))}
+        {activities.map((activity) =>
+          activity.type === "conference" ? (
+            <CardConference
+              activity={activity}
+              event={props.event}
+              key={activity.slug}
+            />
+          ) : activity.type === "break" ? (
+            <CardBreak break={activity} key={activity.name} />
+          ) : undefined,
+        )}
       </div>
     </div>
   );

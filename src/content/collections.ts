@@ -124,7 +124,16 @@ const collections = {
         "OnlineEventAttendanceMode",
         "MixedEventAttendanceMode",
       ]),
-      schedulePublished: z.boolean(),
+      schedule: z.array(
+        z.object({
+          type: z.enum(["conference", "roundtable", "break", "lunch"]),
+          sponsorSlug: z.string().optional(),
+          name: z.string().optional(),
+          slug: z.string().optional(),
+          startTime: z.date().optional(),
+          duration: z.number().optional(),
+        }),
+      ),
     }),
   }),
   speaker: defineCollection({
@@ -153,12 +162,9 @@ const collections = {
   talk: defineCollection({
     folder: "talk",
     schema: z.object({
-      kind: z.enum(["conference", "roundtable"]),
       title: z.string(),
       description: z.string().nullish(),
       speakers: z.string().array(),
-      startTime: z.date().optional(),
-      duration: z.number().optional(),
     }),
   }),
 } as const;
