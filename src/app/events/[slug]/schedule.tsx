@@ -5,6 +5,7 @@ import { Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import DefaultImg from "@/../public/speakers/speaker-default.jpg";
+import { match } from "ts-pattern";
 
 function ScheduleComingSoon(props: Readonly<{ event: Event }>) {
   return (
@@ -149,7 +150,7 @@ async function CardBreak(
           {props.break.description && <p>{props.break.description}</p>}
           {sponsor && (
             <div className="flex flex-col gap-2">
-              <p className="text-sm">{props.break.name} sponsored by</p>
+              <p className="text-sm">Sponsored by</p>
               <div
                 className={cn(
                   "w-40 overflow-hidden rounded-md border-2 border-gray-100",
@@ -182,33 +183,37 @@ export async function Schedule(props: Readonly<{ event: Event }>) {
       </div>
     );
   }
-  const activities = props.event.schedule
-    .map((activity) => activity)
-    .sort(
-      (talk1, talk2) =>
-        (talk1.startTime?.valueOf() ?? 0) - (talk2.startTime?.valueOf() ?? 0),
-    );
+
+  const activities = [...props.event.schedule].sort(
+    (talk1, talk2) =>
+      (talk1.startTime?.valueOf() ?? 0) - (talk2.startTime?.valueOf() ?? 0),
+  );
 
   return (
-    <div
-      className="mx-auto flex max-w-7xl flex-col gap-4 bg-gray-950 px-6 py-24 sm:py-32 lg:px-8"
-      id="schedule"
-    >
-      <h2 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
-        Schedule
-      </h2>
-      <div className="flex flex-col gap-4">
-        {activities.map((activity) =>
-          activity.type === "conference" ? (
-            <CardConference
-              activity={activity}
-              event={props.event}
-              key={activity.slug}
-            />
-          ) : activity.type === "break" ? (
-            <CardBreak break={activity} key={activity.name} />
-          ) : undefined,
-        )}
+    <div className="bg-gray-950">
+      <div
+        className="mx-auto flex max-w-4xl flex-col gap-8 px-6 py-24 sm:py-32 lg:px-8"
+        id="schedule"
+      >
+        <h2 className="text-center font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          Schedule
+        </h2>
+        <div className="flex flex-col gap-4">
+          {activities.map((activity) =>
+            match(activity.type)
+              .with("conference", () => (
+                <CardConference
+                  activity={activity}
+                  event={props.event}
+                  key={activity.slug}
+                />
+              ))
+              .with("break", () => (
+                <CardBreak break={activity} key={activity.name} />
+              ))
+              .otherwise(() => null),
+          )}
+        </div>
       </div>
     </div>
   );
