@@ -17,6 +17,7 @@ import { Event } from "@/content/collections";
 
 const navigation = [
   { name: "Venue", href: "#venue" },
+  { name: "Schedule", href: "#schedule" },
   { name: "Speakers", href: "#speakers" },
   { name: "Talks", href: "#talks" },
   { name: "Sponsors", href: "#sponsors" },

@@ -124,6 +124,17 @@ const collections = {
         "OnlineEventAttendanceMode",
         "MixedEventAttendanceMode",
       ]),
+      schedule: z.array(
+        z.object({
+          type: z.enum(["conference", "roundtable", "break", "lunch"]),
+          sponsorSlug: z.string().optional(),
+          description: z.string().optional(),
+          name: z.string().optional(),
+          slug: z.string().optional(),
+          startTime: z.date().optional(),
+          duration: z.number().optional(),
+        }),
+      ),
     }),
   }),
   speaker: defineCollection({
@@ -152,7 +163,6 @@ const collections = {
   talk: defineCollection({
     folder: "talk",
     schema: z.object({
-      kind: z.string(),
       title: z.string(),
       description: z.string().nullish(),
       speakers: z.string().array(),
@@ -166,6 +176,7 @@ export type EventFrontmatter = z.infer<typeof collections.event.schema>;
 export type Sponsor = z.infer<typeof collections.sponsor.schema>;
 export type Partner = z.infer<typeof collections.partner.schema>;
 export type Speaker = z.infer<typeof collections.speaker.schema>;
-export type Talk = z.infer<typeof collections.talk.schema>;
+export type TalkFrontmatter = z.infer<typeof collections.talk.schema>;
 
 export type Event = Awaited<ReturnType<typeof collections.event.getBySlug>>;
+export type Talk = Awaited<ReturnType<typeof collections.talk.getBySlug>>;
