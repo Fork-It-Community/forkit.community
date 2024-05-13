@@ -16,9 +16,7 @@ async function Talk(props: Readonly<{ talk: { slug: string }; event: Event }>) {
           className="text-lg hover:underline"
           href={`${props.event.metadata.slug}/talks/${talk.metadata.slug}`}
         >
-          <h3 className="font-semibold">
-            {talk.title} {talk.language}
-          </h3>
+          <h3 className="font-semibold">{talk.title}</h3>
         </Link>
         <div className="flex flex-row gap-2">
           <div className="flex gap-2">
@@ -38,6 +36,9 @@ async function Talk(props: Readonly<{ talk: { slug: string }; event: Event }>) {
             by {speakers.map((speaker) => speaker.name).join(", ")}
           </p>
         </div>
+        <p className="text-sm text-gray-300">
+          Talk will be given in {talk.language}
+        </p>
       </div>
     </div>
   );

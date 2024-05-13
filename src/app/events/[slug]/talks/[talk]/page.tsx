@@ -3,6 +3,7 @@ import Image from "next/image";
 import DefaultImg from "@/../public/speakers/speaker-default.jpg";
 import { formatDateTime } from "@/lib/utils";
 import { ICONS } from "@/components/icons";
+import { Languages } from "lucide-react";
 
 type TalkPageProps = Readonly<{
   params: { talk: string; slug: string };
@@ -43,9 +44,11 @@ export default async function TalkPage({ params }: TalkPageProps) {
 
       <div className="mx-auto flex max-w-5xl flex-col gap-8 p-4">
         <div className="prose prose-sm prose-invert">
-          <h2>
-            {talk.title} {talk.language}
-          </h2>
+          <h2>{talk.title}</h2>
+          <div className="flex items-center gap-2 border border-gray-700 px-4">
+            <Languages />
+            <p className="text-white">Talk will be given in {talk.language}</p>
+          </div>
           <Content />
         </div>
         <div className="flex flex-col gap-4  pb-8">

@@ -94,9 +94,7 @@ async function CardConference(
             startTime={props.activity.startTime}
             className="md:hidden"
           />
-          <p className="text-xl font-semibold">
-            {talk.title} {talk.language}
-          </p>
+          <p className="text-xl font-semibold">{talk.title}</p>
           <div className="flex flex-col gap-2">
             {speakers.map((speaker) => (
               <div className="flex flex-row gap-2" key={speaker.name}>
@@ -112,6 +110,9 @@ async function CardConference(
               </div>
             ))}
           </div>
+          <p className="text-sm text-gray-300">
+            Talk will be given in {talk.language}
+          </p>
         </div>
       </Link>
     </div>
