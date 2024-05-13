@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "TZ='etc/UTC' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "run-p lint:*",
