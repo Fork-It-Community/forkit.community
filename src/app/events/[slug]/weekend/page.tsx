@@ -286,7 +286,7 @@ export default function WeekendPage() {
               <Wine />
               Bars
             </h3>
-            <ul>
+            <ul className="md:pt-0.5">
               <li>Le Petit BAR Cocktails</li>
               <li>L’Absinthe (Cocktail)</li>
               <li>L’Antre du Malt (Bières craft)</li>
