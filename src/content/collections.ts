@@ -166,6 +166,7 @@ const collections = {
       title: z.string(),
       description: z.string().nullish(),
       speakers: z.string().array(),
+      language: z.enum(["🇫🇷", "🇬🇧"]),
     }),
   }),
 } as const;

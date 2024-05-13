@@ -43,7 +43,9 @@ export default async function TalkPage({ params }: TalkPageProps) {
 
       <div className="mx-auto flex max-w-5xl flex-col gap-8 p-4">
         <div className="prose prose-sm prose-invert">
-          <h2>{talk.title}</h2>
+          <h2>
+            {talk.title} {talk.language}
+          </h2>
           <Content />
         </div>
         <div className="flex flex-col gap-4  pb-8">

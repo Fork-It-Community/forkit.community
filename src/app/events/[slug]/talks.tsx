@@ -16,7 +16,9 @@ async function Talk(props: Readonly<{ talk: { slug: string }; event: Event }>) {
           className="text-lg hover:underline"
           href={`${props.event.metadata.slug}/talks/${talk.metadata.slug}`}
         >
-          <h3 className="font-semibold">{talk.title}</h3>
+          <h3 className="font-semibold">
+            {talk.title} {talk.language}
+          </h3>
         </Link>
         <div className="flex flex-row gap-2">
           <div className="flex gap-2">
