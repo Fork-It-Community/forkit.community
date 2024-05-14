@@ -12,16 +12,16 @@ export function Banner(
   const [ref, { height }] = useMeasure();
   return (
     <>
-      <div
-        ref={ref}
-        className={cn(
-          "fixed z-10 w-full gap-x-6 px-6 py-2.5 sm:px-3.5 sm:before:flex-1",
-          !props.nextEvent.tickets && "bg-gray-950 text-white",
-          !!props.nextEvent.tickets && "bg-primary text-gray-950",
-        )}
-      >
-        <p className="text-sm leading-6">
-          <Link href={`/events/${props.nextEvent.metadata.slug}`}>
+      <Link href={`/events/${props.nextEvent.metadata.slug}`}>
+        <div
+          ref={ref}
+          className={cn(
+            "fixed z-10 w-full gap-x-6 px-6 py-2.5 sm:px-3.5 sm:before:flex-1",
+            !props.nextEvent.tickets && "bg-gray-950 text-white",
+            !!props.nextEvent.tickets && "bg-primary text-gray-950",
+          )}
+        >
+          <p className="text-sm leading-6">
             {props.nextEvent.tickets && (
               <>
                 <span role="img" aria-label="ticket">
@@ -48,9 +48,9 @@ export function Banner(
                 <span aria-hidden="true">&rarr;</span>
               </>
             )}
-          </Link>
-        </p>
-      </div>
+          </p>
+        </div>
+      </Link>
       <div style={{ height: height + "px" }} />
     </>
   );
