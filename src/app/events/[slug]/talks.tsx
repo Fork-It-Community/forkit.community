@@ -2,6 +2,7 @@ import collections, { Event } from "@/content/collections";
 import Image from "next/image";
 import DefaultImg from "@/../public/speakers/speaker-default.jpg";
 import Link from "next/link";
+import { LanguageBadge } from "@/components/language-badge";
 
 async function Talk(props: Readonly<{ talk: { slug: string }; event: Event }>) {
   const talk = await collections.talk.getBySlug(props.talk.slug);
@@ -11,34 +12,34 @@ async function Talk(props: Readonly<{ talk: { slug: string }; event: Event }>) {
   }
   const content = (
     <div className="mx-auto flex w-full max-w-[60ch] gap-4">
-      <div className="flex flex-1 flex-col gap-1">
-        <Link
-          className="text-lg hover:underline"
-          href={`${props.event.metadata.slug}/talks/${talk.metadata.slug}`}
-        >
-          <h3 className="font-semibold">{talk.title}</h3>
-        </Link>
-        <div className="flex flex-row gap-2">
-          <div className="flex gap-2">
-            {speakers.map((speaker) => (
-              <Image
-                key={speaker.name}
-                className="aspect-square h-12 w-12 rounded-lg"
-                src={speaker.imageUrl ?? DefaultImg}
-                alt={speaker.name}
-                width={600}
-                height={600}
-                sizes="600px"
-              />
-            ))}
+      <div className="flex flex-1 flex-col gap-4">
+        <div className="flex flex-col gap-1">
+          <Link
+            className="text-lg underline hover:no-underline"
+            href={`${props.event.metadata.slug}/talks/${talk.metadata.slug}`}
+          >
+            <h3 className="font-semibold">{talk.title}</h3>
+          </Link>
+          <div className="flex flex-row gap-2">
+            <div className="flex gap-2">
+              {speakers.map((speaker) => (
+                <Image
+                  key={speaker.name}
+                  className="aspect-square h-12 w-12 rounded-lg"
+                  src={speaker.imageUrl ?? DefaultImg}
+                  alt={speaker.name}
+                  width={600}
+                  height={600}
+                  sizes="600px"
+                />
+              ))}
+            </div>
+            <p className="flex-1 text-sm text-gray-300">
+              by {speakers.map((speaker) => speaker.name).join(", ")}
+            </p>
           </div>
-          <p className="flex-1 text-sm text-gray-300">
-            by {speakers.map((speaker) => speaker.name).join(", ")}
-          </p>
         </div>
-        <p className="text-sm text-gray-300">
-          Talk will be given in {talk.language}
-        </p>
+        <LanguageBadge language={talk.language} />
       </div>
     </div>
   );

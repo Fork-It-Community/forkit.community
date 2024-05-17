@@ -4,6 +4,8 @@ import DefaultImg from "@/../public/speakers/speaker-default.jpg";
 import { formatDateTime } from "@/lib/utils";
 import { ICONS } from "@/components/icons";
 import { Languages } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { LanguageBadge } from "@/components/language-badge";
 
 type TalkPageProps = Readonly<{
   params: { talk: string; slug: string };
@@ -37,20 +39,21 @@ export default async function TalkPage({ params }: TalkPageProps) {
     <div className="flex flex-col gap-6">
       <h1 className="m-4 my-8 text-center font-heading text-3xl font-bold tracking-tight text-white sm:text-3xl">
         {event.date && (
-          <span className="text-primary">{formatDateTime(event.date)}</span>
-        )}{" "}
+          <>
+            <span className="text-primary">{formatDateTime(event.date)}</span>{" "}
+          </>
+        )}
         {event.name}
       </h1>
 
       <div className="mx-auto flex max-w-5xl flex-col gap-8 p-4">
         <div className="prose prose-sm prose-invert">
           <h2>{talk.title}</h2>
-          <div className="flex items-center gap-2 border border-gray-700 px-4">
-            <Languages />
-            <p className="text-white">Talk will be given in {talk.language}</p>
-          </div>
           <Content />
         </div>
+
+        <LanguageBadge language={talk.language} />
+
         <div className="flex flex-col gap-4  pb-8">
           {speakers.map((speaker) => (
             <div className="flex flex-row gap-4" key={speaker.metadata.slug}>
