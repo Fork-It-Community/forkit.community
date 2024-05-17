@@ -1,11 +1,13 @@
 import { Button } from "@/components/ui/button";
 import collections, { Event } from "@/content/collections";
 import { cn, formatTime } from "@/lib/utils";
-import { Mail } from "lucide-react";
+import { Languages, Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import DefaultImg from "@/../public/speakers/speaker-default.jpg";
 import { match } from "ts-pattern";
+import { Badge } from "@/components/ui/badge";
+import { LanguageBadge } from "@/components/language-badge";
 
 function ScheduleComingSoon(props: Readonly<{ event: Event }>) {
   return (
@@ -88,28 +90,31 @@ async function CardConference(
           "flex w-full flex-[4] gap-2 rounded-lg border-2 border-gray-600 bg-gray-900 p-2 px-6 py-4 hover:border-gray-500 hover:bg-gray-800"
         }
       >
-        <div className="flex flex-col gap-2">
-          <TimeAndDuration
-            duration={props.activity.duration}
-            startTime={props.activity.startTime}
-            className="md:hidden"
-          />
-          <p className="text-xl font-semibold">{talk.title}</p>
+        <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            {speakers.map((speaker) => (
-              <div className="flex flex-row gap-2" key={speaker.name}>
-                <Image
-                  className="aspect-square rounded-sm"
-                  src={speaker.imageUrl ?? DefaultImg}
-                  alt={speaker.name}
-                  width={40}
-                  height={40}
-                  sizes="40px"
-                />
-                <p className="font-heading">{speaker.name}</p>
-              </div>
-            ))}
+            <TimeAndDuration
+              duration={props.activity.duration}
+              startTime={props.activity.startTime}
+              className="md:hidden"
+            />
+            <p className="text-xl font-semibold">{talk.title}</p>
+            <div className="flex flex-col gap-2">
+              {speakers.map((speaker) => (
+                <div className="flex flex-row gap-2" key={speaker.name}>
+                  <Image
+                    className="aspect-square rounded-sm"
+                    src={speaker.imageUrl ?? DefaultImg}
+                    alt={speaker.name}
+                    width={40}
+                    height={40}
+                    sizes="40px"
+                  />
+                  <p className="font-heading">{speaker.name}</p>
+                </div>
+              ))}
+            </div>
           </div>
+          <LanguageBadge language={talk.language} />
         </div>
       </Link>
     </div>
