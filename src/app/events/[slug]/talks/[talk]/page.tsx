@@ -55,7 +55,15 @@ export default async function TalkPage({ params }: TalkPageProps) {
 
           <div className="flex flex-row items-center justify-between">
             <LanguageBadge language={talk.language} />
-            <FavoriteButton talkSlug={talk.metadata.slug} />
+            <FavoriteButton
+              talkSlug={talk.metadata.slug}
+              className="hidden sm:flex"
+            />
+            <FavoriteButton
+              talkSlug={talk.metadata.slug}
+              isIconButton
+              className="sm:hidden"
+            />
           </div>
 
           <div className="flex flex-col gap-4  pb-8">

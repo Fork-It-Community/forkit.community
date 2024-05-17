@@ -200,20 +200,22 @@ export async function Schedule(props: Readonly<{ event: Event }>) {
 
   return (
     <div className="flex flex-col gap-4">
-      {activities.map((activity) =>
-        match(activity.type)
-          .with("conference", () => (
-            <CardConference
-              activity={activity}
-              event={props.event}
-              key={activity.slug}
-            />
-          ))
-          .with("break", () => (
-            <CardBreak break={activity} key={activity.name} />
-          ))
-          .otherwise(() => null),
-      )}
+      <FavoritesContextProvider eventSlug={props.event.metadata.slug}>
+        {activities.map((activity) =>
+          match(activity.type)
+            .with("conference", () => (
+              <CardConference
+                activity={activity}
+                event={props.event}
+                key={activity.slug}
+              />
+            ))
+            .with("break", () => (
+              <CardBreak break={activity} key={activity.name} />
+            ))
+            .otherwise(() => null),
+        )}
+      </FavoritesContextProvider>
     </div>
   );
 }
@@ -231,7 +233,7 @@ export const ScheduleSection = (props: Readonly<{ event: Event }>) => {
         <Schedule event={props.event} />
         <Link
           href={`/events/${props.event.metadata.slug}/schedule`}
-          className="text-red justify-end text-right underline"
+          className="justify-end text-right underline"
         >
           Dedicated schedule page
         </Link>
