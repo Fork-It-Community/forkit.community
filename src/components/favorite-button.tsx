@@ -11,9 +11,11 @@ import { Talk } from "@/content/collections";
 
 type FavoriteButtonProps = ButtonProps & {
   talkSlug: Talk["metadata"]["slug"];
+  isIconButton?: boolean;
 };
 
 export const FavoriteButton: FC<FavoriteButtonProps> = ({
+  isIconButton,
   talkSlug,
   ...rest
 }) => {
@@ -40,8 +42,11 @@ export const FavoriteButton: FC<FavoriteButtonProps> = ({
       onClick={handleOnClick}
       {...rest}
     >
-      <Heart />
-      {/* {isFavorite ? "Remove from favorites" : "Add to favorites"} */}
+      <div className="flex items-center gap-2">
+        <Heart />
+        {!isIconButton &&
+          (isFavorite ? "Remove from favorites" : "Add to favorites")}
+      </div>
     </Button>
   );
 };

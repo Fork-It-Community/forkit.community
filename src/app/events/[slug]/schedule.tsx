@@ -115,9 +115,9 @@ async function CardConference(
               ))}
             </div>
           </div>
-          <div className="flex  flex-row justify-between">
+          <div className="flex flex-row items-center justify-between">
             <LanguageBadge language={talk.language} />
-            <FavoriteButton talkSlug={talk.metadata.slug} />
+            <FavoriteButton talkSlug={talk.metadata.slug} isIconButton />
           </div>
         </div>
       </Link>
