@@ -1,57 +1,80 @@
+"use client";
+
 import React, {
-  FC,
   PropsWithChildren,
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from "react";
 
-import Favorite, { Favorites } from "@/app/events/[slug]/services/Favorite";
-import { Talk } from "@/content/collections";
+import Favorite, { Favorites } from "@/app/events/services/Favorite";
+import { Event, Talk } from "@/content/collections";
 
 type FavoritesContextType = {
   favorites: Favorites;
-  addFavorite: (talk: Talk) => void;
-  removeFavorite: (talk: Talk) => void;
+  addFavorite: (talkSlug: Talk["metadata"]["slug"]) => void;
+  removeFavorite: (talkSlug: Talk["metadata"]["slug"]) => void;
+  eventSlug: Event["metadata"]["slug"];
 };
 
 const FavoritesContext = createContext<FavoritesContextType>({
   favorites: [],
   addFavorite: () => {},
   removeFavorite: () => {},
+  eventSlug: "",
 });
-export const useFavoriteContext = () => useContext(FavoritesContext);
 
-export const FavoritesContextProvider: FC<PropsWithChildren> = ({
+export const useFavoriteContext = () => {
+  const ctx = useContext(FavoritesContext);
+
+  if (!ctx) {
+    throw new Error(
+      "useFavoritesContext should be in a FavoritesContextProvider",
+    );
+  }
+
+  return ctx;
+};
+
+export const FavoritesContextProvider = ({
+  eventSlug,
   children,
-}) => {
+}: PropsWithChildren & { eventSlug: Event["metadata"]["slug"] }) => {
   const [favorites, setFavorites] = useState<Favorites>([]);
 
   useEffect(() => {
-    setFavorites(Favorite.getFavorites());
-  }, [setFavorites]);
+    setFavorites(Favorite.getFavorites(eventSlug));
+  }, [eventSlug, setFavorites]);
 
-  const addFavorite = (talk: Talk) => {
-    Favorite.addFavorite(talk);
+  const addFavorite = useCallback(
+    (talkSlug: Talk["metadata"]["slug"]) => {
+      Favorite.addFavorite(eventSlug, talkSlug);
 
-    setFavorites(Favorite.getFavorites());
-  };
+      setFavorites(Favorite.getFavorites(eventSlug));
+    },
+    [eventSlug],
+  );
 
-  const removeFavorite = (talk: Talk) => {
-    Favorite.removeFavorite(talk);
+  const removeFavorite = useCallback(
+    (talkSlug: Talk["metadata"]["slug"]) => {
+      Favorite.removeFavorite(eventSlug, talkSlug);
 
-    setFavorites(Favorite.getFavorites());
-  };
+      setFavorites(Favorite.getFavorites(eventSlug));
+    },
+    [eventSlug],
+  );
 
   const value = useMemo(
     () => ({
       favorites,
       addFavorite,
       removeFavorite,
+      eventSlug,
     }),
-    [favorites],
+    [addFavorite, eventSlug, favorites, removeFavorite],
   );
 
   return (
