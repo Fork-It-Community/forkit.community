@@ -195,6 +195,27 @@ export async function Schedule(props: Readonly<{ event: Event }>) {
   );
 
   return (
+    <div className="flex flex-col gap-4">
+      {activities.map((activity) =>
+        match(activity.type)
+          .with("conference", () => (
+            <CardConference
+              activity={activity}
+              event={props.event}
+              key={activity.slug}
+            />
+          ))
+          .with("break", () => (
+            <CardBreak break={activity} key={activity.name} />
+          ))
+          .otherwise(() => null),
+      )}
+    </div>
+  );
+}
+
+export const ScheduleSection = (props: Readonly<{ event: Event }>) => {
+  return (
     <div className="bg-gray-950">
       <div
         className="mx-auto flex max-w-4xl flex-col gap-8 px-6 py-24 sm:py-32 lg:px-8"
@@ -203,23 +224,14 @@ export async function Schedule(props: Readonly<{ event: Event }>) {
         <h2 className="text-center font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
           Schedule
         </h2>
-        <div className="flex flex-col gap-4">
-          {activities.map((activity) =>
-            match(activity.type)
-              .with("conference", () => (
-                <CardConference
-                  activity={activity}
-                  event={props.event}
-                  key={activity.slug}
-                />
-              ))
-              .with("break", () => (
-                <CardBreak break={activity} key={activity.name} />
-              ))
-              .otherwise(() => null),
-          )}
-        </div>
+        <Schedule event={props.event} />
+        <Link
+          href={`/events/${props.event.metadata.slug}/schedule`}
+          className="text-red justify-end text-right underline"
+        >
+          Dedicated schedule page
+        </Link>
       </div>
     </div>
   );
-}
+};

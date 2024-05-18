@@ -7,7 +7,7 @@ import { notFound } from "next/navigation";
 import { Sponsors } from "./sponsors";
 import { Speakers } from "./speakers";
 import { Faq } from "./faq";
-import { Schedule } from "./schedule";
+import { ScheduleSection } from "./schedule";
 import { Talks } from "./talks";
 import type { WithContext, Event, Place } from "schema-dts";
 import { Partners } from "@/app/(homepage)/partners";
@@ -106,7 +106,8 @@ export default async function EventPage({ params }: EventPageProps) {
     <>
       <Hero event={{ ...event, date }} />
       <Content />
-      <Schedule event={event} />
+      <ScheduleSection event={event} />
+
       {!!event.speakers && <Speakers event={event} />}
       {!!event.talks && <Talks event={event} />}
       <Sponsors event={event} />

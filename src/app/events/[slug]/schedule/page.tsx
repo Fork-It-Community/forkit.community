@@ -26,7 +26,11 @@ export default async function SchedulePage({ params }: SchedulePageProps) {
         )}{" "}
         {event.name}
       </h1>
-      <Schedule event={event} />
+      <div className="bg-gray-950">
+        <div className="mx-auto flex max-w-4xl flex-col gap-8 px-6 py-24 sm:py-32 lg:px-8">
+          <Schedule event={event} />
+        </div>
+      </div>
     </div>
   );
 }
