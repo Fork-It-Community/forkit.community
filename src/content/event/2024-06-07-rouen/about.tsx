@@ -85,11 +85,21 @@ export function About(
               </h4>
               <div>
                 <Link
+                  href="/events/2024-06-07-rouen/informations"
+                  className="underline"
+                >
+                  Get there
+                </Link>{" "}
+                (all the information you need to know to come to the event).
+              </div>
+              <div>
+                <Link
                   href="/events/2024-06-07-rouen/weekend"
                   className="underline"
                 >
-                  Plan your weekend!
-                </Link>
+                  Plan your weekend
+                </Link>{" "}
+                to enjoy your stay in Rouen.
               </div>
             </div>
           </div>

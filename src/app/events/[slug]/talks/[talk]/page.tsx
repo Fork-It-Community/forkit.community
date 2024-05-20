@@ -3,8 +3,6 @@ import Image from "next/image";
 import DefaultImg from "@/../public/speakers/speaker-default.jpg";
 import { formatDateTime } from "@/lib/utils";
 import { ICONS } from "@/components/icons";
-import { Languages } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { LanguageBadge } from "@/components/language-badge";
 
 type TalkPageProps = Readonly<{
