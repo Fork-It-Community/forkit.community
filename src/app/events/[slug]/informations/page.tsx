@@ -1,3 +1,4 @@
+import { Prose } from "@/components/prose";
 import collections from "@/content/collections";
 import { notFound } from "next/navigation";
 
@@ -27,8 +28,8 @@ export default async function EventPage({ params }: EventPageProps) {
   ).default;
 
   return (
-    <div className="prose prose-sm prose-invert mx-auto p-6 md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-headings:text-primary prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white">
+    <Prose>
       <Content />
-    </div>
+    </Prose>
   );
 }

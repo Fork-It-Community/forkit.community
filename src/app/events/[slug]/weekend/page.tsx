@@ -17,6 +17,7 @@ import {
   Utensils,
 } from "lucide-react";
 import Image from "next/image";
+import { Prose } from "@/components/prose";
 
 // Just want to build that page statically to avoid a file resolve issue with
 // ISR. Need to improve `typed-mdx`.
@@ -32,7 +33,7 @@ export async function generateStaticParams() {
 
 export default function WeekendPage() {
   return (
-    <div className="prose prose-sm prose-invert mx-auto p-6 text-white md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-headings:text-primary prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white">
+    <Prose>
       <h1>
         Rouen, <span className="text-white">France</span>
       </h1>
@@ -323,6 +324,6 @@ export default function WeekendPage() {
           Tourist attraction prices : <strong>10€</strong>
         </p>
       </div>
-    </div>
+    </Prose>
   );
 }
