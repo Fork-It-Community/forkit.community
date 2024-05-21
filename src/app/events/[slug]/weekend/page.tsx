@@ -2,6 +2,7 @@ import collections from "@/content/collections";
 
 import { Prose } from "@/components/prose";
 import { notFound } from "next/navigation";
+import { getMDXContent } from "@/lib/mdx";
 
 type EventPageProps = Readonly<{
   params: { slug: string };
@@ -26,9 +27,15 @@ export default async function WeekendPage({ params }: EventPageProps) {
     return notFound();
   }
 
-  const Content = (
-    await import(`@/content/event/${event.metadata.slug}/weekend.mdx`)
-  ).default;
+  const mdxContent = await getMDXContent(
+    import(`@/content/event/${event.metadata.slug}/weekend.mdx`),
+  );
+
+  if (mdxContent.isError()) {
+    return notFound();
+  }
+
+  const Content = mdxContent.get();
 
   return (
     <Prose>
