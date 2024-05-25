@@ -1,13 +1,14 @@
 import { Button } from "@/components/ui/button";
 import collections, { Event } from "@/content/collections";
 import { cn, formatTime } from "@/lib/utils";
-import { Languages, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import DefaultImg from "@/../public/speakers/speaker-default.jpg";
 import { match } from "ts-pattern";
-import { Badge } from "@/components/ui/badge";
 import { LanguageBadge } from "@/components/language-badge";
+import { FavoritesContextProvider } from "@/app/events/[slug]/contexts/FavoritesContext";
+import { FavoriteButton } from "@/components/favorite-button";
 
 function ScheduleComingSoon(props: Readonly<{ event: Event }>) {
   return (
@@ -90,7 +91,7 @@ async function CardConference(
           "flex w-full flex-[4] gap-2 rounded-lg border-2 border-gray-600 bg-gray-900 p-2 px-6 py-4 hover:border-gray-500 hover:bg-gray-800"
         }
       >
-        <div className="flex flex-col gap-4">
+        <div className="flex w-full flex-col gap-4">
           <div className="flex flex-col gap-2">
             <TimeAndDuration
               duration={props.activity.duration}
@@ -114,7 +115,14 @@ async function CardConference(
               ))}
             </div>
           </div>
-          <LanguageBadge language={talk.language} />
+          <div className="flex flex-row items-center justify-between">
+            <LanguageBadge language={talk.language} />
+            <FavoriteButton
+              talkSlug={talk.metadata.slug}
+              isIconButton
+              size="sm"
+            />
+          </div>
         </div>
       </Link>
     </div>
@@ -196,20 +204,22 @@ export async function Schedule(props: Readonly<{ event: Event }>) {
 
   return (
     <div className="flex flex-col gap-4">
-      {activities.map((activity) =>
-        match(activity.type)
-          .with("conference", () => (
-            <CardConference
-              activity={activity}
-              event={props.event}
-              key={activity.slug}
-            />
-          ))
-          .with("break", () => (
-            <CardBreak break={activity} key={activity.name} />
-          ))
-          .otherwise(() => null),
-      )}
+      <FavoritesContextProvider eventSlug={props.event.metadata.slug}>
+        {activities.map((activity) =>
+          match(activity.type)
+            .with("conference", () => (
+              <CardConference
+                activity={activity}
+                event={props.event}
+                key={activity.slug}
+              />
+            ))
+            .with("break", () => (
+              <CardBreak break={activity} key={activity.name} />
+            ))
+            .otherwise(() => null),
+        )}
+      </FavoritesContextProvider>
     </div>
   );
 }
@@ -227,7 +237,7 @@ export const ScheduleSection = (props: Readonly<{ event: Event }>) => {
         <Schedule event={props.event} />
         <Link
           href={`/events/${props.event.metadata.slug}/schedule`}
-          className="text-red justify-end text-right underline"
+          className="justify-end text-right underline"
         >
           Dedicated schedule page
         </Link>
