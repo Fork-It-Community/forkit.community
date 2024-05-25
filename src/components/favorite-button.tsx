@@ -1,9 +1,9 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { FC, MouseEvent, useEffect, useState } from "react";
 
 import { Button, ButtonProps } from "@/components/ui/button";
-import { Heart } from "lucide-react";
+import { Heart, HeartOff } from "lucide-react";
 
 import { useFavoriteContext } from "@/app/events/[slug]/contexts/FavoritesContext";
 import Favorite from "@/app/events/services/Favorite";
@@ -26,7 +26,10 @@ export const FavoriteButton: FC<FavoriteButtonProps> = ({
     setIsFavorite(Favorite.isFavorite(eventSlug, talkSlug));
   }, [eventSlug, talkSlug]);
 
-  const handleOnClick = () => {
+  const handleOnClick = (e: MouseEvent<HTMLButtonElement>) => {
+    // We in a link such as a card or else
+    e.stopPropagation();
+    e.preventDefault();
     if (isFavorite) {
       removeFavorite(talkSlug);
       setIsFavorite(false);
@@ -43,7 +46,11 @@ export const FavoriteButton: FC<FavoriteButtonProps> = ({
       {...rest}
     >
       <div className="flex items-center gap-2">
-        <Heart />
+        {isFavorite ? (
+          <HeartOff className="h-6 w-6" />
+        ) : (
+          <Heart className="h-6 w-6" />
+        )}
         {!isIconButton &&
           (isFavorite ? "Remove from favorites" : "Add to favorites")}
       </div>

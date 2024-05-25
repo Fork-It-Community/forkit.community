@@ -57,11 +57,13 @@ export default async function TalkPage({ params }: TalkPageProps) {
             <LanguageBadge language={talk.language} />
             <FavoriteButton
               talkSlug={talk.metadata.slug}
+              size="sm"
               className="hidden sm:flex"
             />
             <FavoriteButton
               talkSlug={talk.metadata.slug}
               isIconButton
+              size="sm"
               className="sm:hidden"
             />
           </div>
