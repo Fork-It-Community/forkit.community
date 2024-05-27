@@ -38,7 +38,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={cn(tomorrow.variable, inter.variable)}>
+    <html
+      lang="en"
+      className={cn(tomorrow.variable, inter.variable, "scroll-smooth")}
+    >
       <head>
         <link
           rel="apple-touch-icon"
