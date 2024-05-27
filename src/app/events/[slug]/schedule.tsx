@@ -235,16 +235,7 @@ export const ScheduleSection = (props: Readonly<{ event: Event }>) => {
           Schedule
         </h2>
         <Schedule event={props.event} />
-        <div className="flex flex-col items-end gap-2 md:flex-row md:justify-between">
-          {props.event.openfeedbackLink && (
-            <Link
-              href={props.event.openfeedbackLink}
-              className="underline"
-              target="_blank"
-            >
-              Give us feedback!
-            </Link>
-          )}
+        <div className="flex flex-col items-end justify-end gap-2">
           <Link
             href={`/events/${props.event.metadata.slug}/schedule`}
             className="underline"
