@@ -6,6 +6,9 @@ import { ICONS } from "@/components/icons";
 import { LanguageBadge } from "@/components/language-badge";
 import { FavoritesContextProvider } from "../../contexts/FavoritesContext";
 import { FavoriteButton } from "@/components/favorite-button";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { MessageCircleMore } from "lucide-react";
 
 type TalkPageProps = Readonly<{
   params: { talk: string; slug: string };
@@ -55,6 +58,30 @@ export default async function TalkPage({ params }: TalkPageProps) {
 
           <div className="flex flex-row items-center justify-between">
             <LanguageBadge language={talk.language} />
+            {talk.openfeedbackLink && (
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                className="hidden sm:flex"
+              >
+                <Link
+                  href={talk.openfeedbackLink}
+                  className="flex gap-2"
+                  target="_blank"
+                >
+                  <MessageCircleMore />
+                  Give us feedback!
+                </Link>
+              </Button>
+            )}
+            {talk.openfeedbackLink && (
+              <Button asChild variant="outline" size="sm" className="sm:hidden">
+                <Link href={talk.openfeedbackLink} target="_blank">
+                  <MessageCircleMore />
+                </Link>
+              </Button>
+            )}
             <FavoriteButton
               talkSlug={talk.metadata.slug}
               size="sm"

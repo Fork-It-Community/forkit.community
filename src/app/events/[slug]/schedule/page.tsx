@@ -1,6 +1,7 @@
 import collections from "@/content/collections";
 import { Schedule } from "../schedule";
 import { formatDateTime } from "@/lib/utils";
+import Link from "next/link";
 
 type SchedulePageProps = Readonly<{
   params: { slug: string };
@@ -29,6 +30,15 @@ export default async function SchedulePage({ params }: SchedulePageProps) {
       <div className="bg-gray-950">
         <div className="mx-auto flex max-w-4xl flex-col gap-8 px-6 py-24 sm:py-32 lg:px-8">
           <Schedule event={event} />
+          {event.openfeedbackLink && (
+            <Link
+              href={event.openfeedbackLink}
+              className="underline"
+              target="_blank"
+            >
+              Give us feedback!
+            </Link>
+          )}
         </div>
       </div>
     </div>
