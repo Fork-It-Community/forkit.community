@@ -69,7 +69,7 @@ export function Header(props: Readonly<{ event: Event }>) {
                     <div className="-my-6 divide-y divide-gray-500/10">
                       <div className="space-y-2 py-6">
                         {navigation.map((item) => (
-                          <a
+                          <Link
                             key={item.name}
                             href={`/events/${props.event.metadata.slug}${item.href}`}
                             onClick={(e) => {
@@ -79,7 +79,7 @@ export function Header(props: Readonly<{ event: Event }>) {
                             className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-900"
                           >
                             {item.name}
-                          </a>
+                          </Link>
                         ))}
                       </div>
                       {props.event.tickets && (
@@ -100,13 +100,13 @@ export function Header(props: Readonly<{ event: Event }>) {
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
             {navigation.map((item) => (
-              <a
+              <Link
                 key={item.name}
                 href={`/events/${props.event.metadata.slug}${item.href}`}
                 className="text-sm font-semibold leading-6 text-white"
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
