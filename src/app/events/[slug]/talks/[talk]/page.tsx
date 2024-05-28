@@ -8,7 +8,7 @@ import { FavoritesContextProvider } from "../../contexts/FavoritesContext";
 import { FavoriteButton } from "@/components/favorite-button";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ExternalLink, MessageCircleMore } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 type TalkPageProps = Readonly<{
   params: { talk: string; slug: string };
@@ -56,24 +56,35 @@ export default async function TalkPage({ params }: TalkPageProps) {
             <Content />
           </div>
 
-          <div className="flex flex-row items-center justify-between">
+          <div className="flex flex-col justify-between gap-8 sm:flex-row sm:items-center">
             <LanguageBadge language={talk.language} />
-
-            {talk.feedback && (
-              <Button asChild variant="linkWhite" size="sm">
-                <Link
-                  href={talk.feedback.link}
-                  className="flex gap-2"
-                  target="_blank"
+            <div className="flex flex-row items-center justify-between gap-4">
+              {talk.feedback && (
+                <Button
+                  asChild
+                  variant="outline"
+                  size="sm"
+                  className="w-full sm:w-fit"
                 >
-                  Give talk feedback!
-                  <ExternalLink className="h-4 w-4" />
-                </Link>
-              </Button>
-            )}
+                  <Link
+                    href={talk.feedback.link}
+                    className="flex gap-2"
+                    target="_blank"
+                  >
+                    Give feedback!
+                    <ExternalLink className="h-4 w-4" />
+                  </Link>
+                </Button>
+              )}
+              <FavoriteButton
+                talkSlug={talk.metadata.slug}
+                size="sm"
+                className="w-full sm:w-fit"
+              />
+            </div>
           </div>
 
-          <div className="flex flex-col gap-4 pb-8">
+          <div className="flex flex-col gap-4 pb-16">
             {speakers.map((speaker) => (
               <div className="flex flex-row gap-4" key={speaker.metadata.slug}>
                 <Image
@@ -113,19 +124,6 @@ export default async function TalkPage({ params }: TalkPageProps) {
                 </div>
               </div>
             ))}
-          </div>
-          <div className="flex flex-row items-center justify-end">
-            <FavoriteButton
-              talkSlug={talk.metadata.slug}
-              size="sm"
-              className="hidden sm:flex"
-            />
-            <FavoriteButton
-              talkSlug={talk.metadata.slug}
-              isIconButton
-              size="sm"
-              className="sm:hidden"
-            />
           </div>
         </div>
       </div>

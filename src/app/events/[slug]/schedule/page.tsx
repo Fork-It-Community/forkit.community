@@ -28,7 +28,7 @@ export default async function SchedulePage({ params }: SchedulePageProps) {
         {event.name}
       </h1>
       <div className="bg-gray-950">
-        <div className="mx-auto flex max-w-4xl flex-col gap-8 px-6 py-24 sm:py-32 lg:px-8">
+        <div className="mx-auto flex max-w-4xl flex-col gap-16 px-6 py-24 sm:py-32 lg:px-8">
           <Schedule event={event} />
           {event.feedback && <FeedbackCTA href={event.feedback.link} />}
         </div>
