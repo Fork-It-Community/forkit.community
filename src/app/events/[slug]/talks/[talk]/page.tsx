@@ -37,14 +37,11 @@ export default async function TalkPage({ params }: TalkPageProps) {
       async (speaker) => await collections.speaker.getBySlug(speaker),
     ),
   );
-  let animators = undefined;
-  if (talk.animators) {
-    animators = await Promise.all(
-      talk.animators.map(
-        async (animator) => await collections.speaker.getBySlug(animator),
-      ),
-    );
-  }
+  const hosts = await Promise.all(
+    (talk.hosts ?? []).map(
+      async (host) => await collections.speaker.getBySlug(host),
+    ),
+  );
   return (
     <FavoritesContextProvider eventSlug={event.metadata.slug}>
       <div className="flex flex-col gap-6">
@@ -92,51 +89,45 @@ export default async function TalkPage({ params }: TalkPageProps) {
           </div>
 
           <div className="flex flex-col gap-4 pb-16">
-            {animators &&
-              animators.map((animators) => (
-                <div
-                  className="flex flex-row gap-4"
-                  key={animators.metadata.slug}
-                >
-                  <Image
-                    className="aspect-square h-28 w-28 rounded-lg"
-                    src={animators.imageUrl ?? DefaultImg}
-                    alt={animators.name}
-                    width={200}
-                    height={200}
-                    sizes="200px"
-                  />
-                  <div className="flex flex-col">
-                    <p className="font-heading text-lg font-semibold leading-6 text-primary">
-                      {animators.name}
-                    </p>
-                    {animators.job && (
-                      <p className="text-sm text-gray-300">{animators.job}</p>
-                    )}
-                    {animators.company && (
-                      <p className="mt-1 font-medium">
-                        {animators.company.title}
-                      </p>
-                    )}
-                    {animators.socials && (
-                      <ul className="mt-2 flex gap-x-2">
-                        {animators.socials.map((social) => (
-                          <li key={social.type}>
-                            <a
-                              href={social.href}
-                              className=" text-gray-400 transition hover:text-primary"
-                              target="_blank"
-                            >
-                              <span className="sr-only">{social.type}</span>
-                              {ICONS[social.type]}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
+            {hosts?.map((host) => (
+              <div className="flex flex-row gap-4" key={host.metadata.slug}>
+                <Image
+                  className="aspect-square h-28 w-28 rounded-lg"
+                  src={host.imageUrl ?? DefaultImg}
+                  alt={host.name}
+                  width={200}
+                  height={200}
+                  sizes="200px"
+                />
+                <div className="flex flex-col">
+                  <p className="font-heading text-lg font-semibold leading-6 text-primary">
+                    {host.name}
+                  </p>
+                  {host.job && (
+                    <p className="text-sm text-gray-300">{host.job}</p>
+                  )}
+                  {host.company && (
+                    <p className="mt-1 font-medium">{host.company.title}</p>
+                  )}
+                  {host.socials && (
+                    <ul className="mt-2 flex gap-x-2">
+                      {host.socials.map((social) => (
+                        <li key={social.type}>
+                          <a
+                            href={social.href}
+                            className=" text-gray-400 transition hover:text-primary"
+                            target="_blank"
+                          >
+                            <span className="sr-only">{social.type}</span>
+                            {ICONS[social.type]}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
-              ))}
+              </div>
+            ))}
             {speakers.map((speaker) => (
               <div className="flex flex-row gap-4" key={speaker.metadata.slug}>
                 <Image

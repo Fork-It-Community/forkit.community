@@ -212,14 +212,11 @@ async function CardRoundtables(
       async (speaker) => await collections.speaker.getBySlug(speaker),
     ),
   );
-  let animators = undefined;
-  if (talk.animators) {
-    animators = await Promise.all(
-      talk.animators.map(
-        async (animator) => await collections.speaker.getBySlug(animator),
-      ),
-    );
-  }
+  const hosts = await Promise.all(
+    (talk.hosts ?? []).map(
+      async (host) => await collections.speaker.getBySlug(host),
+    ),
+  );
 
   return (
     <div className="flex flex-row gap-4 lg:gap-10">
@@ -249,20 +246,19 @@ async function CardRoundtables(
             )}
             <p className="text-xl font-semibold">{talk.title}</p>
             <div className="flex flex-col gap-2">
-              {animators &&
-                animators.map((animator) => (
-                  <div className="flex flex-row gap-2" key={animator.name}>
-                    <Image
-                      className="aspect-square rounded-sm"
-                      src={animator.imageUrl ?? DefaultImg}
-                      alt={animator.name}
-                      width={40}
-                      height={40}
-                      sizes="40px"
-                    />
-                    <p className="font-heading">{animator.name}</p>
-                  </div>
-                ))}
+              {hosts?.map((host) => (
+                <div className="flex flex-row gap-2" key={host.name}>
+                  <Image
+                    className="aspect-square rounded-sm"
+                    src={host.imageUrl ?? DefaultImg}
+                    alt={host.name}
+                    width={40}
+                    height={40}
+                    sizes="40px"
+                  />
+                  <p className="font-heading">{host.name}</p>
+                </div>
+              ))}
               {speakers.map((speaker) => (
                 <div className="flex flex-row gap-2" key={speaker.name}>
                   <Image

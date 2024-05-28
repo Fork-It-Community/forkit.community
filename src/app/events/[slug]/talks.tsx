@@ -11,14 +11,11 @@ async function Talk(props: Readonly<{ talk: { slug: string }; event: Event }>) {
       async (speaker) => await collections.speaker.getBySlug(speaker),
     ),
   );
-  let animators = undefined;
-  if (talk.animators) {
-    animators = await Promise.all(
-      talk.animators.map(
-        async (animator) => await collections.speaker.getBySlug(animator),
-      ),
-    );
-  }
+  const hosts = await Promise.all(
+    (talk.hosts ?? []).map(
+      async (host) => await collections.speaker.getBySlug(host),
+    ),
+  );
   const content = (
     <div className="mx-auto flex w-full max-w-[60ch] gap-4">
       <div className="flex flex-1 flex-col gap-4">
@@ -31,18 +28,17 @@ async function Talk(props: Readonly<{ talk: { slug: string }; event: Event }>) {
           </Link>
           <div className="flex flex-row gap-2">
             <div className="flex gap-2">
-              {animators &&
-                animators.map((speaker) => (
-                  <Image
-                    key={speaker.name}
-                    className="aspect-square h-12 w-12 rounded-lg"
-                    src={speaker.imageUrl ?? DefaultImg}
-                    alt={speaker.name}
-                    width={600}
-                    height={600}
-                    sizes="600px"
-                  />
-                ))}
+              {hosts.map((host) => (
+                <Image
+                  key={host.name}
+                  className="aspect-square h-12 w-12 rounded-lg"
+                  src={host.imageUrl ?? DefaultImg}
+                  alt={host.name}
+                  width={600}
+                  height={600}
+                  sizes="600px"
+                />
+              ))}
               {speakers.map((speaker) => (
                 <Image
                   key={speaker.name}
@@ -55,9 +51,9 @@ async function Talk(props: Readonly<{ talk: { slug: string }; event: Event }>) {
                 />
               ))}
             </div>
-            {animators ? (
+            {hosts ? (
               <p className="flex-1 text-sm text-gray-300">
-                by {animators.map((animator) => animator.name).join(", ")} with{" "}
+                hosted by {hosts.map((host) => host.name).join(", ")} with{" "}
                 {speakers.map((speaker) => speaker.name).join(", ")}
               </p>
             ) : (
