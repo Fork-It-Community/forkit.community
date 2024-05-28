@@ -177,6 +177,7 @@ const collections = {
           link: z.string().url(),
         })
         .optional(),
+      animators: z.string().array().optional(),
     }),
   }),
 } as const;
