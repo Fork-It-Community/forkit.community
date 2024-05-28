@@ -135,6 +135,11 @@ const collections = {
           duration: z.number().optional(),
         }),
       ),
+      feedback: z
+        .object({
+          link: z.string().url(),
+        })
+        .optional(),
     }),
   }),
   speaker: defineCollection({
@@ -167,6 +172,11 @@ const collections = {
       description: z.string().nullish(),
       speakers: z.string().array(),
       language: z.enum(["french", "english"]),
+      feedback: z
+        .object({
+          link: z.string().url(),
+        })
+        .optional(),
     }),
   }),
 } as const;

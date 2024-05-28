@@ -9,6 +9,7 @@ import { match } from "ts-pattern";
 import { LanguageBadge } from "@/components/language-badge";
 import { FavoritesContextProvider } from "@/app/events/[slug]/contexts/FavoritesContext";
 import { FavoriteButton } from "@/components/favorite-button";
+import { FeedbackCTA } from "@/components/feedback-cta";
 
 function ScheduleComingSoon(props: Readonly<{ event: Event }>) {
   return (
@@ -228,19 +229,27 @@ export const ScheduleSection = (props: Readonly<{ event: Event }>) => {
   return (
     <div className="bg-gray-950">
       <div
-        className="mx-auto flex max-w-4xl flex-col gap-8 px-6 py-24 sm:py-32 lg:px-8"
+        className="mx-auto flex max-w-4xl flex-col gap-16 px-6 py-24 sm:py-32 lg:px-8"
         id="schedule"
       >
         <h2 className="text-center font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
           Schedule
         </h2>
         <Schedule event={props.event} />
-        <Link
-          href={`/events/${props.event.metadata.slug}/schedule`}
-          className="justify-end text-right underline"
-        >
-          Dedicated schedule page
-        </Link>
+
+        <p className="text-center">
+          You can find a{" "}
+          <Link
+            href={`/events/${props.event.metadata.slug}/schedule`}
+            className="underline hover:no-underline"
+          >
+            dedicated schedule page
+          </Link>{" "}
+          for easier consultation for the big day.
+        </p>
+        {props.event.feedback && (
+          <FeedbackCTA href={props.event.feedback.link} />
+        )}
       </div>
     </div>
   );

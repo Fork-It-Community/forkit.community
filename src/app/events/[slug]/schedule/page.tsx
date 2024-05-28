@@ -1,6 +1,7 @@
 import collections from "@/content/collections";
 import { Schedule } from "../schedule";
 import { formatDateTime } from "@/lib/utils";
+import { FeedbackCTA } from "@/components/feedback-cta";
 
 type SchedulePageProps = Readonly<{
   params: { slug: string };
@@ -27,8 +28,9 @@ export default async function SchedulePage({ params }: SchedulePageProps) {
         {event.name}
       </h1>
       <div className="bg-gray-950">
-        <div className="mx-auto flex max-w-4xl flex-col gap-8 px-6 py-24 sm:py-32 lg:px-8">
+        <div className="mx-auto flex max-w-4xl flex-col gap-16 px-6 py-24 sm:py-32 lg:px-8">
           <Schedule event={event} />
+          {event.feedback && <FeedbackCTA href={event.feedback.link} />}
         </div>
       </div>
     </div>
