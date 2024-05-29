@@ -78,29 +78,72 @@ async function CardConference(
       async (speaker) => await collections.speaker.getBySlug(speaker),
     ),
   );
+  const hosts = await Promise.all(
+    (talk.hosts ?? []).map(
+      async (host) => await collections.speaker.getBySlug(host),
+    ),
+  );
 
   return (
     <div className="flex flex-row gap-4 lg:gap-10">
-      <TimeAndDuration
-        duration={props.activity.duration}
-        startTime={props.activity.startTime}
-        className="hidden flex-1 md:block"
-      />
+      {props.activity.type === "roundtable" ? (
+        props.activity.startTime && (
+          <div className="hidden flex-1 flex-col text-sm text-gray-300 md:flex">
+            <time dateTime={props.activity.startTime.toISOString()}>
+              {formatTime(props.activity.startTime)}
+            </time>
+            Roundtable
+          </div>
+        )
+      ) : (
+        <TimeAndDuration
+          duration={props.activity.duration}
+          startTime={props.activity.startTime}
+          className="hidden flex-1 md:block"
+        />
+      )}
       <Link
         href={`/events/${props.event.metadata.slug}/talks/${talk.metadata.slug}`}
-        className={
-          "flex w-full flex-[4] gap-2 rounded-lg border-2 border-gray-600 bg-gray-900 p-2 px-6 py-4 hover:border-gray-500 hover:bg-gray-800"
-        }
+        className={cn(
+          "flex w-full flex-[4] gap-2 rounded-lg border-2 border-gray-600 bg-gray-900 p-2 px-6 py-4 hover:border-gray-500 hover:bg-gray-800",
+          props.activity.type === "roundtable" &&
+            "bg-gray-950 hover:bg-gray-900",
+        )}
       >
         <div className="flex w-full flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <TimeAndDuration
-              duration={props.activity.duration}
-              startTime={props.activity.startTime}
-              className="md:hidden"
-            />
+            {props.activity.type === "roundtable" ? (
+              props.activity.startTime && (
+                <div className="flex-1 flex-row gap-2 text-sm text-gray-300 md:hidden">
+                  <time dateTime={props.activity.startTime.toISOString()}>
+                    {formatTime(props.activity.startTime)}
+                  </time>
+                  <span className="md:hidden"> ·</span> Roundtable
+                </div>
+              )
+            ) : (
+              <TimeAndDuration
+                duration={props.activity.duration}
+                startTime={props.activity.startTime}
+                className="md:hidden"
+              />
+            )}
+
             <p className="text-xl font-semibold">{talk.title}</p>
             <div className="flex flex-col gap-2">
+              {hosts?.map((host) => (
+                <div className="flex flex-row gap-2" key={host.name}>
+                  <Image
+                    className="aspect-square rounded-sm"
+                    src={host.imageUrl ?? DefaultImg}
+                    alt={host.name}
+                    width={40}
+                    height={40}
+                    sizes="40px"
+                  />
+                  <p className="font-heading">{host.name}</p>
+                </div>
+              ))}
               {speakers.map((speaker) => (
                 <div className="flex flex-row gap-2" key={speaker.name}>
                   <Image
@@ -189,105 +232,6 @@ async function CardBreak(
   );
 }
 
-async function CardRoundtables(
-  props: Readonly<{
-    activity: {
-      type: string;
-      sponsorSlug?: string;
-      description?: string;
-      name?: string;
-      slug?: string;
-      startTime?: Date;
-      duration?: number;
-    };
-    event: Event;
-  }>,
-) {
-  if (!props.activity.slug) {
-    return;
-  }
-  const talk = await collections.talk.getBySlug(props.activity.slug);
-  const speakers = await Promise.all(
-    talk.speakers.map(
-      async (speaker) => await collections.speaker.getBySlug(speaker),
-    ),
-  );
-  const hosts = await Promise.all(
-    (talk.hosts ?? []).map(
-      async (host) => await collections.speaker.getBySlug(host),
-    ),
-  );
-
-  return (
-    <div className="flex flex-row gap-4 lg:gap-10">
-      {props.activity.startTime && (
-        <div className="hidden flex-1 flex-col text-sm text-gray-300 md:flex">
-          <time dateTime={props.activity.startTime.toISOString()}>
-            {formatTime(props.activity.startTime)}
-          </time>
-          Roundtable
-        </div>
-      )}
-      <Link
-        href={`/events/${props.event.metadata.slug}/talks/${talk.metadata.slug}`}
-        className={
-          "flex w-full flex-[4] gap-2 rounded-lg border-2 border-gray-600 bg-gray-950 p-2 px-6 py-4 hover:border-gray-500 hover:bg-gray-900"
-        }
-      >
-        <div className="flex w-full flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            {props.activity.startTime && (
-              <div className="flex-1 flex-row gap-2 text-sm text-gray-300 md:hidden">
-                <time dateTime={props.activity.startTime.toISOString()}>
-                  {formatTime(props.activity.startTime)}
-                </time>
-                <span className="md:hidden"> ·</span> Roundtable
-              </div>
-            )}
-            <p className="text-xl font-semibold">{talk.title}</p>
-            <div className="flex flex-col gap-2">
-              {hosts?.map((host) => (
-                <div className="flex flex-row gap-2" key={host.name}>
-                  <Image
-                    className="aspect-square rounded-sm"
-                    src={host.imageUrl ?? DefaultImg}
-                    alt={host.name}
-                    width={40}
-                    height={40}
-                    sizes="40px"
-                  />
-                  <p className="font-heading">{host.name}</p>
-                </div>
-              ))}
-              {speakers.map((speaker) => (
-                <div className="flex flex-row gap-2" key={speaker.name}>
-                  <Image
-                    className="aspect-square rounded-sm"
-                    src={speaker.imageUrl ?? DefaultImg}
-                    alt={speaker.name}
-                    width={40}
-                    height={40}
-                    sizes="40px"
-                  />
-                  <p className="font-heading">{speaker.name}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="flex flex-row items-center justify-between">
-            <LanguageBadge language={talk.language} />
-            <FavoriteButton
-              talkSlug={talk.metadata.slug}
-              isIconButton
-              size="sm"
-            />
-          </div>
-        </div>
-      </Link>
-    </div>
-  );
-}
-
 export async function Schedule(props: Readonly<{ event: Event }>) {
   if (!props.event.schedule) {
     return (
@@ -307,7 +251,7 @@ export async function Schedule(props: Readonly<{ event: Event }>) {
       <FavoritesContextProvider eventSlug={props.event.metadata.slug}>
         {activities.map((activity) =>
           match(activity.type)
-            .with("conference", () => (
+            .with("conference", "roundtable", () => (
               <CardConference
                 activity={activity}
                 event={props.event}
@@ -316,13 +260,6 @@ export async function Schedule(props: Readonly<{ event: Event }>) {
             ))
             .with("break", () => (
               <CardBreak break={activity} key={activity.name} />
-            ))
-            .with("roundtable", () => (
-              <CardRoundtables
-                activity={activity}
-                event={props.event}
-                key={activity.slug}
-              />
             ))
             .otherwise(() => null),
         )}
