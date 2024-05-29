@@ -221,11 +221,11 @@ async function CardRoundtables(
   return (
     <div className="flex flex-row gap-4 lg:gap-10">
       {props.activity.startTime && (
-        <div className="hidden flex-1 flex-row gap-2 text-sm text-gray-300 md:block">
+        <div className="hidden flex-1 flex-col text-sm text-gray-300 md:flex">
           <time dateTime={props.activity.startTime.toISOString()}>
             {formatTime(props.activity.startTime)}
           </time>
-          <span className="md:hidden">·</span> Roundtable
+          Roundtable
         </div>
       )}
       <Link
