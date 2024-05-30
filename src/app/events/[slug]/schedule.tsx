@@ -10,6 +10,7 @@ import { LanguageBadge } from "@/components/language-badge";
 import { FavoritesContextProvider } from "@/app/events/[slug]/contexts/FavoritesContext";
 import { FavoriteButton } from "@/components/favorite-button";
 import { FeedbackCTA } from "@/components/feedback-cta";
+import { ReactNode } from "react";
 
 function ScheduleComingSoon(props: Readonly<{ event: Event }>) {
   return (
@@ -36,6 +37,7 @@ function TimeAndDuration(props: {
   startTime?: Date;
   duration?: number;
   className?: string;
+  children?: ReactNode;
 }) {
   return (
     props.startTime && (
@@ -50,6 +52,7 @@ function TimeAndDuration(props: {
         </time>
         <span className="md:hidden">·</span>{" "}
         {props.duration && <p>{props.duration} minutes</p>}
+        {props.children}
       </div>
     )
   );
@@ -57,15 +60,7 @@ function TimeAndDuration(props: {
 
 async function CardConference(
   props: Readonly<{
-    activity: {
-      type: string;
-      sponsorSlug?: string;
-      description?: string;
-      name?: string;
-      slug?: string;
-      startTime?: Date;
-      duration?: number;
-    };
+    activity: Event["schedule"][number];
     event: Event;
   }>,
 ) {
@@ -78,6 +73,11 @@ async function CardConference(
       async (speaker) => await collections.speaker.getBySlug(speaker),
     ),
   );
+  const hosts = await Promise.all(
+    (talk.hosts ?? []).map(
+      async (host) => await collections.speaker.getBySlug(host),
+    ),
+  );
 
   return (
     <div className="flex flex-row gap-4 lg:gap-10">
@@ -85,12 +85,16 @@ async function CardConference(
         duration={props.activity.duration}
         startTime={props.activity.startTime}
         className="hidden flex-1 md:block"
-      />
+      >
+        {props.activity.type === "roundtable" && <p>Roundtable</p>}
+      </TimeAndDuration>
       <Link
         href={`/events/${props.event.metadata.slug}/talks/${talk.metadata.slug}`}
-        className={
-          "flex w-full flex-[4] gap-2 rounded-lg border-2 border-gray-600 bg-gray-900 p-2 px-6 py-4 hover:border-gray-500 hover:bg-gray-800"
-        }
+        className={cn(
+          "flex w-full flex-[4] gap-2 rounded-lg border-2 border-gray-600 bg-gray-900 p-2 px-6 py-4 hover:border-gray-500 hover:bg-gray-800",
+          props.activity.type === "roundtable" &&
+            "bg-gray-950 hover:bg-gray-900",
+        )}
       >
         <div className="flex w-full flex-col gap-4">
           <div className="flex flex-col gap-2">
@@ -98,9 +102,32 @@ async function CardConference(
               duration={props.activity.duration}
               startTime={props.activity.startTime}
               className="md:hidden"
-            />
+            >
+              {props.activity.type === "roundtable" && (
+                <>
+                  <span className="md:hidden"> ·</span> Roundtable
+                </>
+              )}
+            </TimeAndDuration>
+
             <p className="text-xl font-semibold">{talk.title}</p>
             <div className="flex flex-col gap-2">
+              {hosts?.map((host) => (
+                <div className="flex flex-row gap-2" key={host.name}>
+                  <Image
+                    className="aspect-square rounded-sm"
+                    src={host.imageUrl ?? DefaultImg}
+                    alt={host.name}
+                    width={40}
+                    height={40}
+                    sizes="40px"
+                  />
+                  <div className="flex flex-col">
+                    <p className="font-heading">{host.name}</p>
+                    <p className="text-xs font-semibold">Roundtable host</p>
+                  </div>
+                </div>
+              ))}
               {speakers.map((speaker) => (
                 <div className="flex flex-row gap-2" key={speaker.name}>
                   <Image
@@ -208,7 +235,7 @@ export async function Schedule(props: Readonly<{ event: Event }>) {
       <FavoritesContextProvider eventSlug={props.event.metadata.slug}>
         {activities.map((activity) =>
           match(activity.type)
-            .with("conference", () => (
+            .with("conference", "roundtable", () => (
               <CardConference
                 activity={activity}
                 event={props.event}

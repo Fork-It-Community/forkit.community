@@ -177,6 +177,7 @@ const collections = {
           link: z.string().url(),
         })
         .optional(),
+      hosts: z.string().array().optional(),
     }),
   }),
 } as const;

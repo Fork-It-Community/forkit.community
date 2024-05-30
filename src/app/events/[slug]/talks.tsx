@@ -6,10 +6,17 @@ import { LanguageBadge } from "@/components/language-badge";
 
 async function Talk(props: Readonly<{ talk: { slug: string }; event: Event }>) {
   const talk = await collections.talk.getBySlug(props.talk.slug);
-  const speakers = [];
-  for (let i = 0; i < talk.speakers.length; i++) {
-    speakers[i] = await collections.speaker.getBySlug(talk.speakers[i]);
-  }
+  const speakers = await Promise.all(
+    talk.speakers.map(
+      async (speaker) => await collections.speaker.getBySlug(speaker),
+    ),
+  );
+  const hosts = await Promise.all(
+    (talk.hosts ?? []).map(
+      async (host) => await collections.speaker.getBySlug(host),
+    ),
+  );
+
   const content = (
     <div className="mx-auto flex w-full max-w-[60ch] gap-4">
       <div className="flex flex-1 flex-col gap-4">
@@ -22,7 +29,7 @@ async function Talk(props: Readonly<{ talk: { slug: string }; event: Event }>) {
           </Link>
           <div className="flex flex-row gap-2">
             <div className="flex gap-2">
-              {speakers.map((speaker) => (
+              {[...hosts, ...speakers].map((speaker) => (
                 <Image
                   key={speaker.name}
                   className="aspect-square h-12 w-12 rounded-lg"
@@ -35,7 +42,14 @@ async function Talk(props: Readonly<{ talk: { slug: string }; event: Event }>) {
               ))}
             </div>
             <p className="flex-1 text-sm text-gray-300">
-              by {speakers.map((speaker) => speaker.name).join(", ")}
+              {hosts.length ? (
+                <>
+                  hosted by {hosts.map((host) => host.name).join(", ")} with{" "}
+                  {speakers.map((speaker) => speaker.name).join(", ")}
+                </>
+              ) : (
+                <>by {speakers.map((speaker) => speaker.name).join(", ")}</>
+              )}
             </p>
           </div>
         </div>
@@ -56,8 +70,8 @@ export function Talks(props: Readonly<{ event: Event }>) {
             Talks
           </h2>
           <p className="text-balance text-sm text-gray-300">
-            All talks will be in 🇬🇧 English (with French subtitles) <br />
-            or in 🇫🇷 French (with English subtitles)
+            All talks will be in English (with French subtitles) <br />
+            or in French (with English subtitles)
           </p>
         </div>
         <div className="mx-auto mt-12 flex flex-col gap-10 lg:grid lg:grid-cols-2 xl:grid-cols-3">

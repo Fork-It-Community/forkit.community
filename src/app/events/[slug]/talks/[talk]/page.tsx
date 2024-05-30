@@ -30,13 +30,23 @@ export async function generateStaticParams() {
 export default async function TalkPage({ params }: TalkPageProps) {
   const event = await collections.event.getBySlug(params.slug);
   const talk = await collections.talk.getBySlug(params.talk);
+
   const Content = (await import(`@/content/${talk.metadata.filePath}`)).default;
 
-  const speakers = await Promise.all(
-    talk.speakers.map(
-      async (speaker) => await collections.speaker.getBySlug(speaker),
-    ),
-  );
+  const speakers = (
+    await Promise.all(
+      talk.speakers.map(
+        async (speaker) => await collections.speaker.getBySlug(speaker),
+      ),
+    )
+  ).map((host) => ({ ...host, type: "speaker" }) as const);
+  const hosts = (
+    await Promise.all(
+      (talk.hosts ?? []).map(
+        async (host) => await collections.speaker.getBySlug(host),
+      ),
+    )
+  ).map((host) => ({ ...host, type: "host" }) as const);
 
   return (
     <FavoritesContextProvider eventSlug={event.metadata.slug}>
@@ -85,7 +95,7 @@ export default async function TalkPage({ params }: TalkPageProps) {
           </div>
 
           <div className="flex flex-col gap-4 pb-16">
-            {speakers.map((speaker) => (
+            {[...hosts, ...speakers].map((speaker) => (
               <div className="flex flex-row gap-4" key={speaker.metadata.slug}>
                 <Image
                   className="aspect-square h-28 w-28 rounded-lg"
@@ -99,6 +109,11 @@ export default async function TalkPage({ params }: TalkPageProps) {
                   <p className="font-heading text-lg font-semibold leading-6 text-primary">
                     {speaker.name}
                   </p>
+                  {speaker.type === "host" && (
+                    <p className="text-sm font-semibold text-gray-300">
+                      Roundtable host
+                    </p>
+                  )}
                   {speaker.job && (
                     <p className="text-sm text-gray-300">{speaker.job}</p>
                   )}
