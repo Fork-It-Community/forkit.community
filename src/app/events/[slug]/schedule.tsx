@@ -10,6 +10,7 @@ import { LanguageBadge } from "@/components/language-badge";
 import { FavoritesContextProvider } from "@/app/events/[slug]/contexts/FavoritesContext";
 import { FavoriteButton } from "@/components/favorite-button";
 import { FeedbackCTA } from "@/components/feedback-cta";
+import { ReactNode } from "react";
 
 function ScheduleComingSoon(props: Readonly<{ event: Event }>) {
   return (
@@ -36,6 +37,7 @@ function TimeAndDuration(props: {
   startTime?: Date;
   duration?: number;
   className?: string;
+  children?: ReactNode;
 }) {
   return (
     props.startTime && (
@@ -50,6 +52,7 @@ function TimeAndDuration(props: {
         </time>
         <span className="md:hidden">·</span>{" "}
         {props.duration && <p>{props.duration} minutes</p>}
+        {props.children}
       </div>
     )
   );
@@ -57,15 +60,7 @@ function TimeAndDuration(props: {
 
 async function CardConference(
   props: Readonly<{
-    activity: {
-      type: string;
-      sponsorSlug?: string;
-      description?: string;
-      name?: string;
-      slug?: string;
-      startTime?: Date;
-      duration?: number;
-    };
+    activity: Event["schedule"][number];
     event: Event;
   }>,
 ) {
@@ -86,22 +81,13 @@ async function CardConference(
 
   return (
     <div className="flex flex-row gap-4 lg:gap-10">
-      {props.activity.type === "roundtable" ? (
-        props.activity.startTime && (
-          <div className="hidden flex-1 flex-col text-sm text-gray-300 md:flex">
-            <time dateTime={props.activity.startTime.toISOString()}>
-              {formatTime(props.activity.startTime)}
-            </time>
-            Roundtable
-          </div>
-        )
-      ) : (
-        <TimeAndDuration
-          duration={props.activity.duration}
-          startTime={props.activity.startTime}
-          className="hidden flex-1 md:block"
-        />
-      )}
+      <TimeAndDuration
+        duration={props.activity.duration}
+        startTime={props.activity.startTime}
+        className="hidden flex-1 md:block"
+      >
+        {props.activity.type === "roundtable" && <p>Roundtable</p>}
+      </TimeAndDuration>
       <Link
         href={`/events/${props.event.metadata.slug}/talks/${talk.metadata.slug}`}
         className={cn(
@@ -112,22 +98,17 @@ async function CardConference(
       >
         <div className="flex w-full flex-col gap-4">
           <div className="flex flex-col gap-2">
-            {props.activity.type === "roundtable" ? (
-              props.activity.startTime && (
-                <div className="flex-1 flex-row gap-2 text-sm text-gray-300 md:hidden">
-                  <time dateTime={props.activity.startTime.toISOString()}>
-                    {formatTime(props.activity.startTime)}
-                  </time>
+            <TimeAndDuration
+              duration={props.activity.duration}
+              startTime={props.activity.startTime}
+              className="md:hidden"
+            >
+              {props.activity.type === "roundtable" && (
+                <>
                   <span className="md:hidden"> ·</span> Roundtable
-                </div>
-              )
-            ) : (
-              <TimeAndDuration
-                duration={props.activity.duration}
-                startTime={props.activity.startTime}
-                className="md:hidden"
-              />
-            )}
+                </>
+              )}
+            </TimeAndDuration>
 
             <p className="text-xl font-semibold">{talk.title}</p>
             <div className="flex flex-col gap-2">
@@ -141,7 +122,10 @@ async function CardConference(
                     height={40}
                     sizes="40px"
                   />
-                  <p className="font-heading">{host.name}</p>
+                  <div className="flex flex-col">
+                    <p className="font-heading">{host.name}</p>
+                    <p className="text-xs font-semibold">Roundtable host</p>
+                  </div>
                 </div>
               ))}
               {speakers.map((speaker) => (

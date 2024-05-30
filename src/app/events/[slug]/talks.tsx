@@ -16,6 +16,7 @@ async function Talk(props: Readonly<{ talk: { slug: string }; event: Event }>) {
       async (host) => await collections.speaker.getBySlug(host),
     ),
   );
+
   const content = (
     <div className="mx-auto flex w-full max-w-[60ch] gap-4">
       <div className="flex flex-1 flex-col gap-4">
@@ -28,18 +29,7 @@ async function Talk(props: Readonly<{ talk: { slug: string }; event: Event }>) {
           </Link>
           <div className="flex flex-row gap-2">
             <div className="flex gap-2">
-              {hosts.map((host) => (
-                <Image
-                  key={host.name}
-                  className="aspect-square h-12 w-12 rounded-lg"
-                  src={host.imageUrl ?? DefaultImg}
-                  alt={host.name}
-                  width={600}
-                  height={600}
-                  sizes="600px"
-                />
-              ))}
-              {speakers.map((speaker) => (
+              {[...hosts, ...speakers].map((speaker) => (
                 <Image
                   key={speaker.name}
                   className="aspect-square h-12 w-12 rounded-lg"
@@ -51,16 +41,16 @@ async function Talk(props: Readonly<{ talk: { slug: string }; event: Event }>) {
                 />
               ))}
             </div>
-            {hosts ? (
-              <p className="flex-1 text-sm text-gray-300">
-                hosted by {hosts.map((host) => host.name).join(", ")} with{" "}
-                {speakers.map((speaker) => speaker.name).join(", ")}
-              </p>
-            ) : (
-              <p className="flex-1 text-sm text-gray-300">
-                by {speakers.map((speaker) => speaker.name).join(", ")}
-              </p>
-            )}
+            <p className="flex-1 text-sm text-gray-300">
+              {hosts.length ? (
+                <>
+                  hosted by {hosts.map((host) => host.name).join(", ")} with{" "}
+                  {speakers.map((speaker) => speaker.name).join(", ")}
+                </>
+              ) : (
+                <>by {speakers.map((speaker) => speaker.name).join(", ")}</>
+              )}
+            </p>
           </div>
         </div>
         <LanguageBadge language={talk.language} />
@@ -80,8 +70,8 @@ export function Talks(props: Readonly<{ event: Event }>) {
             Talks
           </h2>
           <p className="text-balance text-sm text-gray-300">
-            All talks will be in 🇬🇧 English (with French subtitles) <br />
-            or in 🇫🇷 French (with English subtitles)
+            All talks will be in English (with French subtitles) <br />
+            or in French (with English subtitles)
           </p>
         </div>
         <div className="mx-auto mt-12 flex flex-col gap-10 lg:grid lg:grid-cols-2 xl:grid-cols-3">

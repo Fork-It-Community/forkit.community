@@ -30,18 +30,24 @@ export async function generateStaticParams() {
 export default async function TalkPage({ params }: TalkPageProps) {
   const event = await collections.event.getBySlug(params.slug);
   const talk = await collections.talk.getBySlug(params.talk);
+
   const Content = (await import(`@/content/${talk.metadata.filePath}`)).default;
 
-  const speakers = await Promise.all(
-    talk.speakers.map(
-      async (speaker) => await collections.speaker.getBySlug(speaker),
-    ),
-  );
-  const hosts = await Promise.all(
-    (talk.hosts ?? []).map(
-      async (host) => await collections.speaker.getBySlug(host),
-    ),
-  );
+  const speakers = (
+    await Promise.all(
+      talk.speakers.map(
+        async (speaker) => await collections.speaker.getBySlug(speaker),
+      ),
+    )
+  ).map((host) => ({ ...host, type: "speaker" }) as const);
+  const hosts = (
+    await Promise.all(
+      (talk.hosts ?? []).map(
+        async (host) => await collections.speaker.getBySlug(host),
+      ),
+    )
+  ).map((host) => ({ ...host, type: "host" }) as const);
+
   return (
     <FavoritesContextProvider eventSlug={event.metadata.slug}>
       <div className="flex flex-col gap-6">
@@ -89,46 +95,7 @@ export default async function TalkPage({ params }: TalkPageProps) {
           </div>
 
           <div className="flex flex-col gap-4 pb-16">
-            {hosts?.map((host) => (
-              <div className="flex flex-row gap-4" key={host.metadata.slug}>
-                <Image
-                  className="aspect-square h-28 w-28 rounded-lg"
-                  src={host.imageUrl ?? DefaultImg}
-                  alt={host.name}
-                  width={200}
-                  height={200}
-                  sizes="200px"
-                />
-                <div className="flex flex-col">
-                  <p className="font-heading text-lg font-semibold leading-6 text-primary">
-                    {host.name}
-                  </p>
-                  {host.job && (
-                    <p className="text-sm text-gray-300">{host.job}</p>
-                  )}
-                  {host.company && (
-                    <p className="mt-1 font-medium">{host.company.title}</p>
-                  )}
-                  {host.socials && (
-                    <ul className="mt-2 flex gap-x-2">
-                      {host.socials.map((social) => (
-                        <li key={social.type}>
-                          <a
-                            href={social.href}
-                            className=" text-gray-400 transition hover:text-primary"
-                            target="_blank"
-                          >
-                            <span className="sr-only">{social.type}</span>
-                            {ICONS[social.type]}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              </div>
-            ))}
-            {speakers.map((speaker) => (
+            {[...hosts, ...speakers].map((speaker) => (
               <div className="flex flex-row gap-4" key={speaker.metadata.slug}>
                 <Image
                   className="aspect-square h-28 w-28 rounded-lg"
@@ -142,6 +109,11 @@ export default async function TalkPage({ params }: TalkPageProps) {
                   <p className="font-heading text-lg font-semibold leading-6 text-primary">
                     {speaker.name}
                   </p>
+                  {speaker.type === "host" && (
+                    <p className="text-sm font-semibold text-gray-300">
+                      Roundtable host
+                    </p>
+                  )}
                   {speaker.job && (
                     <p className="text-sm text-gray-300">{speaker.job}</p>
                   )}
