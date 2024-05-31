@@ -35,18 +35,35 @@ export default async function TalkPage({ params }: TalkPageProps) {
 
   const speakers = (
     await Promise.all(
-      talk.speakers.map(
-        async (speaker) => await collections.speaker.getBySlug(speaker),
-      ),
+      talk.speakers.map(async (speaker) => {
+        const json = await collections.speaker.getBySlug(speaker);
+        const bio = (await import(`@/content/speaker/${speaker}.mdx`)).default;
+        return { ...json, bio };
+      }),
     )
-  ).map((host) => ({ ...host, type: "speaker" }) as const);
+  ).map(
+    (host) =>
+      ({
+        ...host,
+        type: "speaker",
+      }) as const,
+  );
+
   const hosts = (
     await Promise.all(
-      (talk.hosts ?? []).map(
-        async (host) => await collections.speaker.getBySlug(host),
-      ),
+      (talk.hosts ?? []).map(async (host) => {
+        const json = await collections.speaker.getBySlug(host);
+        const bio = (await import(`@/content/speaker/${host}.mdx`)).default;
+        return { ...json, bio };
+      }),
     )
-  ).map((host) => ({ ...host, type: "host" }) as const);
+  ).map(
+    (host) =>
+      ({
+        ...host,
+        type: "host",
+      }) as const,
+  );
 
   return (
     <FavoritesContextProvider eventSlug={event.metadata.slug}>
@@ -96,46 +113,53 @@ export default async function TalkPage({ params }: TalkPageProps) {
 
           <div className="flex flex-col gap-4 pb-16">
             {[...hosts, ...speakers].map((speaker) => (
-              <div className="flex flex-row gap-4" key={speaker.metadata.slug}>
-                <Image
-                  className="aspect-square h-28 w-28 rounded-lg"
-                  src={speaker.imageUrl ?? DefaultImg}
-                  alt={speaker.name}
-                  width={200}
-                  height={200}
-                  sizes="200px"
-                />
-                <div className="flex flex-col">
-                  <p className="font-heading text-lg font-semibold leading-6 text-primary">
-                    {speaker.name}
-                  </p>
-                  {speaker.type === "host" && (
-                    <p className="text-sm font-semibold text-gray-300">
-                      Roundtable host
+              <div key={speaker.metadata.slug} className="flex flex-col gap-4">
+                <div className="flex flex-row gap-4">
+                  <Image
+                    className="aspect-square h-28 w-28 rounded-lg"
+                    src={speaker.imageUrl ?? DefaultImg}
+                    alt={speaker.name}
+                    width={200}
+                    height={200}
+                    sizes="200px"
+                  />
+                  <div className="flex flex-col">
+                    <p className="font-heading text-lg font-semibold leading-6 text-primary">
+                      {speaker.name}
                     </p>
-                  )}
-                  {speaker.job && (
-                    <p className="text-sm text-gray-300">{speaker.job}</p>
-                  )}
-                  {speaker.company && (
-                    <p className="mt-1 font-medium">{speaker.company.title}</p>
-                  )}
-                  {speaker.socials && (
-                    <ul className="mt-2 flex gap-x-2">
-                      {speaker.socials.map((social) => (
-                        <li key={social.type}>
-                          <a
-                            href={social.href}
-                            className=" text-gray-400 transition hover:text-primary"
-                            target="_blank"
-                          >
-                            <span className="sr-only">{social.type}</span>
-                            {ICONS[social.type]}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                    {speaker.type === "host" && (
+                      <p className="text-sm font-semibold text-gray-300">
+                        Roundtable host
+                      </p>
+                    )}
+                    {speaker.job && (
+                      <p className="text-sm text-gray-300">{speaker.job}</p>
+                    )}
+                    {speaker.company && (
+                      <p className="mt-1 font-medium">
+                        {speaker.company.title}
+                      </p>
+                    )}
+                    {speaker.socials && (
+                      <ul className="mt-2 flex gap-x-2">
+                        {speaker.socials.map((social) => (
+                          <li key={social.type}>
+                            <a
+                              href={social.href}
+                              className=" text-gray-400 transition hover:text-primary"
+                              target="_blank"
+                            >
+                              <span className="sr-only">{social.type}</span>
+                              {ICONS[social.type]}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </div>
+                <div className="prose prose-sm prose-invert m-auto md:prose-base prose-headings:scroll-m-10">
+                  <speaker.bio />
                 </div>
               </div>
             ))}
