@@ -103,11 +103,7 @@ async function CardConference(
               startTime={props.activity.startTime}
               className="md:hidden"
             >
-              {props.activity.type === "roundtable" && (
-                <>
-                  <span className="md:hidden"> ·</span> Roundtable
-                </>
-              )}
+              {props.activity.type === "roundtable" && <>Roundtable</>}
             </TimeAndDuration>
 
             <p className="text-xl font-semibold">{talk.title}</p>
