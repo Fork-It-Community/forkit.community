@@ -4,6 +4,7 @@ import { Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
 import LeVillageByCA from "./le-village-by-ca.jpg";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export function About(
   props: Readonly<{
@@ -84,21 +85,19 @@ export function About(
                 Practical information
               </h4>
               <div>
-                <Link
-                  href="/events/2024-06-07-rouen/informations"
-                  className="underline"
-                >
-                  Get there
-                </Link>{" "}
+                <Button asChild>
+                  <Link href="/events/2024-06-07-rouen/informations">
+                    Get there
+                  </Link>
+                </Button>{" "}
                 (all the information you need to know to come to the event).
               </div>
               <div>
-                <Link
-                  href="/events/2024-06-07-rouen/weekend"
-                  className="underline"
-                >
-                  Plan your weekend
-                </Link>{" "}
+                <Button asChild>
+                  <Link href="/events/2024-06-07-rouen/weekend">
+                    Plan your weekend
+                  </Link>
+                </Button>{" "}
                 to enjoy your stay in Rouen.
               </div>
             </div>
