@@ -33,36 +33,20 @@ export default async function TalkPage({ params }: TalkPageProps) {
 
   const Content = (await import(`@/content/${talk.metadata.filePath}`)).default;
 
-  const speakers = (
-    await Promise.all(
-      talk.speakers.map(async (speaker) => {
-        const json = await collections.speaker.getBySlug(speaker);
-        const bio = (await import(`@/content/speaker/${speaker}.mdx`)).default;
-        return { ...json, bio };
-      }),
-    )
-  ).map(
-    (host) =>
-      ({
-        ...host,
-        type: "speaker",
-      }) as const,
+  const speakers = await Promise.all(
+    talk.speakers.map(async (speaker) => {
+      const json = await collections.speaker.getBySlug(speaker);
+      const bio = (await import(`@/content/speaker/${speaker}.mdx`)).default;
+      return { ...json, bio, type: "speaker" };
+    }),
   );
 
-  const hosts = (
-    await Promise.all(
-      (talk.hosts ?? []).map(async (host) => {
-        const json = await collections.speaker.getBySlug(host);
-        const bio = (await import(`@/content/speaker/${host}.mdx`)).default;
-        return { ...json, bio };
-      }),
-    )
-  ).map(
-    (host) =>
-      ({
-        ...host,
-        type: "host",
-      }) as const,
+  const hosts = await Promise.all(
+    (talk.hosts ?? []).map(async (host) => {
+      const json = await collections.speaker.getBySlug(host);
+      const bio = (await import(`@/content/speaker/${host}.mdx`)).default;
+      return { ...json, bio, type: "host" };
+    }),
   );
 
   return (
