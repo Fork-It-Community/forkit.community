@@ -27,7 +27,7 @@ async function Talk(props: Readonly<{ talk: { slug: string }; event: Event }>) {
           >
             <h3 className="font-semibold">{talk.title}</h3>
           </Link>
-          <div className="flex flex-row gap-2">
+          <div className="flex flex-wrap gap-2">
             <div className="flex gap-2">
               {[...hosts, ...speakers].map((speaker) => (
                 <Image
