@@ -41,7 +41,7 @@ async function Talk(props: Readonly<{ talk: { slug: string }; event: Event }>) {
                 />
               ))}
             </div>
-            <p className="flex-1 text-sm text-gray-300">
+            <p className="min-w-48 max-w-full flex-1 text-sm text-gray-300">
               {hosts.length ? (
                 <>
                   hosted by {hosts.map((host) => host.name).join(", ")} with{" "}
