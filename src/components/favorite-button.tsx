@@ -47,9 +47,9 @@ export const FavoriteButton: FC<FavoriteButtonProps> = ({
     >
       <div className="flex items-center gap-2">
         {isFavorite ? (
-          <HeartOff className="h-4 w-4" />
+          <HeartOff className="h-4 w-4" aria-label="Remove from favorites" />
         ) : (
-          <Heart className="h-4 w-4" />
+          <Heart className="h-4 w-4" aria-label="Add to favorites" />
         )}
         {!isIconButton &&
           (isFavorite ? "Remove from favorites" : "Add to favorites")}
