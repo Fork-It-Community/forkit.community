@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import collections, { Event } from "@/content/collections";
 import { cn, formatTime } from "@/lib/utils";
-import { Mail, MapPinIcon } from "lucide-react";
+import { Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import DefaultImg from "@/../public/speakers/speaker-default.jpg";
@@ -12,7 +12,6 @@ import { FavoritesContextProvider } from "@/app/events/[slug]/contexts/Favorites
 import { FavoriteButton } from "@/components/favorite-button";
 import { FeedbackCTA } from "@/components/feedback-cta";
 import { ReactNode } from "react";
-import { Badge } from "@/components/ui/badge";
 
 function ScheduleComingSoon(props: Readonly<{ event: Event }>) {
   return (
