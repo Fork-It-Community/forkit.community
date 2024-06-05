@@ -1,16 +1,18 @@
 import { Button } from "@/components/ui/button";
 import collections, { Event } from "@/content/collections";
 import { cn, formatTime } from "@/lib/utils";
-import { Mail } from "lucide-react";
+import { Mail, MapPinIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import DefaultImg from "@/../public/speakers/speaker-default.jpg";
 import { match } from "ts-pattern";
 import { LanguageBadge } from "@/components/language-badge";
+import { LocationBadge } from "@/components/location-badge";
 import { FavoritesContextProvider } from "@/app/events/[slug]/contexts/FavoritesContext";
 import { FavoriteButton } from "@/components/favorite-button";
 import { FeedbackCTA } from "@/components/feedback-cta";
 import { ReactNode } from "react";
+import { Badge } from "@/components/ui/badge";
 
 function ScheduleComingSoon(props: Readonly<{ event: Event }>) {
   return (
@@ -36,6 +38,7 @@ function ScheduleComingSoon(props: Readonly<{ event: Event }>) {
 function TimeAndDuration(props: {
   startTime?: Date;
   duration?: number;
+  location: string;
   className?: string;
   children?: ReactNode;
 }) {
@@ -53,6 +56,7 @@ function TimeAndDuration(props: {
         <span className="md:hidden">·</span>{" "}
         {props.duration && <p>{props.duration} minutes</p>}
         {props.children}
+        <LocationBadge location={props.location} />
       </div>
     )
   );
@@ -84,9 +88,10 @@ async function CardConference(
       <TimeAndDuration
         duration={props.activity.duration}
         startTime={props.activity.startTime}
-        className="hidden flex-1 md:block"
+        location={props.activity.location}
+        className="hidden md:flex md:flex-1 md:flex-col"
       >
-        {props.activity.type === "roundtable" && <p>Roundtable</p>}
+        {props.activity.type === "roundtable" && <>Roundtable</>}
       </TimeAndDuration>
       <Link
         href={`/events/${props.event.metadata.slug}/talks/${talk.metadata.slug}`}
@@ -101,7 +106,8 @@ async function CardConference(
             <TimeAndDuration
               duration={props.activity.duration}
               startTime={props.activity.startTime}
-              className="md:hidden"
+              location={props.activity.location}
+              className="flex flex-wrap md:hidden"
             >
               {props.activity.type === "roundtable" && <>Roundtable</>}
             </TimeAndDuration>
@@ -155,15 +161,7 @@ async function CardConference(
 
 async function CardBreak(
   props: Readonly<{
-    break: {
-      type: string;
-      sponsorSlug?: string;
-      description?: string;
-      name?: string;
-      slug?: string;
-      startTime?: Date;
-      duration?: number;
-    };
+    break: Event["schedule"][number];
   }>,
 ) {
   const sponsor = props.break.sponsorSlug
@@ -174,13 +172,15 @@ async function CardBreak(
       <TimeAndDuration
         duration={props.break.duration}
         startTime={props.break.startTime}
-        className="hidden flex-1 md:block"
+        location={props.break.location}
+        className="hidden md:flex md:flex-1 md:flex-col"
       />
       <div className="flex w-full flex-[4] flex-col gap-2 rounded-lg border-2 border-gray-600 bg-gray-800 px-6 py-4">
         <TimeAndDuration
           duration={props.break.duration}
           startTime={props.break.startTime}
-          className="md:hidden"
+          location={props.break.location}
+          className="flex flex-wrap md:hidden"
         />
         <p className="text-xl font-semibold">{props.break.name}</p>
         <div className="flex flex-col justify-between gap-4 md:flex-row">

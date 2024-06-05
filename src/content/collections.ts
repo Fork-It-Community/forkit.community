@@ -133,6 +133,7 @@ const collections = {
           slug: z.string().optional(),
           startTime: z.date().optional(),
           duration: z.number().optional(),
+          location: z.string(),
         }),
       ),
       feedback: z
