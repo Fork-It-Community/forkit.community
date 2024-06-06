@@ -44,7 +44,7 @@ export async function Partners() {
           <h2 className="text-center font-heading text-3xl font-bold text-white sm:text-4xl">
             Partners
           </h2>
-          <ul className="mx-auto grid max-w-2xl grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-4 lg:gap-x-8">
+          <ul className="mx-auto grid max-w-2xl grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-4 lg:gap-x-8">
             {allPartners.map((partner) => (
               <li key={partner.name} className="gap-4">
                 <PartnerImage partner={partner} />
