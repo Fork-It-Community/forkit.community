@@ -13,25 +13,24 @@ export function Faq(props: Readonly<{ event: Event }>) {
         <h2 className="text-center font-heading text-3xl font-bold sm:text-4xl">
           Frequently asked questions
         </h2>
-        <dl className="mt-10">
-          {props.event.faq?.map((item) => (
-            <Accordion
-              type="single"
-              collapsible
-              className="w-full"
-              key={item.question}
-            >
-              <AccordionItem value={item.question}>
-                <AccordionTrigger className=" text-xl font-semibold">
-                  {item.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-base text-gray-300">
-                  {item.answer}
-                </AccordionContent>
+        <Accordion type="single" collapsible className="w-full">
+          <dl className="mt-10">
+            {props.event.faq?.map((item) => (
+              <AccordionItem key={item.question} value={item.question}>
+                <dt>
+                  <AccordionTrigger className="text-xl font-semibold">
+                    {item.question}
+                  </AccordionTrigger>
+                </dt>
+                <dd>
+                  <AccordionContent className="text-base text-gray-300">
+                    {item.answer}
+                  </AccordionContent>
+                </dd>
               </AccordionItem>
-            </Accordion>
-          ))}
-        </dl>
+            ))}
+          </dl>
+        </Accordion>
       </article>
     </div>
   );
