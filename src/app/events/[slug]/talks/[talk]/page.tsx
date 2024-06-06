@@ -32,12 +32,16 @@ export async function generateMetadata(
   { params }: TalkPageProps,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
+  const event = await collections.event.getBySlug(params.slug);
   const talk = await collections.talk.getBySlug(params.talk);
 
   const title = (await parent).title?.absolute ?? "";
 
   return {
     title: `${talk.title} | ${title}`,
+    alternates: {
+      canonical: `/events/${event.metadata.slug}/talks/${talk.metadata.slug}`,
+    },
   };
 }
 
