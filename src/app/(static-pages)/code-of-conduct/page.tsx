@@ -1,3 +1,18 @@
+import { Metadata, ResolvingMetadata } from "next";
+
+export async function generateMetadata(
+  _: unknown,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const title = (await parent).title?.absolute ?? "";
+
+  return {
+    title: `Code Of Conduct | ${title}`,
+    openGraph: {
+      url: `https://www.forkit.community/code-of-conduct`,
+    },
+  };
+}
 export default function CodeOfConduct() {
   return (
     <section className="m-auto max-w-7xl px-4 py-16">
@@ -140,7 +155,7 @@ export default function CodeOfConduct() {
           This anti-harassment policy is based on the example policy from the{" "}
           <a href="https://geekfeminism.fandom.com/wiki/Conference_anti-harassment">
             Geek Feminism wiki,
-          </a>
+          </a>{" "}
           created by the Ada Initiative and other volunteers.
         </p>
       </div>
