@@ -43,7 +43,7 @@ export const Events = async () => {
                     {event.location && (
                       <div className="flex items-center gap-2">
                         <MapPin
-                          className="h-5 w-5 flex-none "
+                          className="h-5 w-5 flex-none"
                           aria-hidden="true"
                         />
                         {event.location?.name}
@@ -58,7 +58,7 @@ export const Events = async () => {
                 </div>
 
                 {event.image && (
-                  <div className="logo-mask my-auto sm:min-w-48 ">
+                  <div className="logo-mask my-auto sm:min-w-48">
                     <Image
                       priority
                       className="aspect-[3/2] h-[200px] w-[300px] bg-primary object-cover text-gray-900"

@@ -27,24 +27,24 @@ const features = [
 export function Features() {
   return (
     <div className="py-24 sm:py-32">
-      <div className="mx-auto max-w-2xl lg:max-w-5xl px-6 lg:px-8 flex flex-col gap-10 md:gap-16">
+      <div className="mx-auto flex max-w-2xl flex-col gap-10 px-6 md:gap-16 lg:max-w-5xl lg:px-8">
         <div className="lg:mx-auto lg:text-center">
-          <h2 className="text-base font-semibold leading-7 text-primary font-heading">
+          <h2 className="font-heading text-base font-semibold leading-7 text-primary">
             Real-life experiences
           </h2>
-          <p className="text-2xl font-bold sm:text-4xl font-heading">
+          <p className="font-heading text-2xl font-bold sm:text-4xl">
             WorldWide Connections
           </p>
         </div>
-        <div className="mx-auto ">
-          <dl className="grid sm:grid-cols-2 gap-x-8 gap-y-8 lg:grid-cols-3">
+        <div className="mx-auto">
+          <dl className="grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((feature) => (
               <div key={feature.name} className="flex flex-col">
-                <dt className="flex items-center text-xl font-semibold leading-7 font-heading">
+                <dt className="flex items-center font-heading text-xl font-semibold leading-7">
                   Fork it!&nbsp;
                   <span className="text-primary">{feature.name}</span>
                 </dt>
-                <dd className="flex flex-auto flex-col text-sm text-gray-400 text-balance">
+                <dd className="flex flex-auto flex-col text-balance text-sm text-gray-400">
                   <p className="flex-auto">{feature.description}</p>
                 </dd>
               </div>

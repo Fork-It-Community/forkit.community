@@ -185,7 +185,7 @@ async function CardBreak(
           <TimeAndDuration
             duration={props.break.duration}
             startTime={props.break.startTime}
-            className="flex flex-wrap "
+            className="flex flex-wrap"
           />
           <LocationBadge>{props.break.location}</LocationBadge>
         </div>

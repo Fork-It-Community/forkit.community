@@ -81,7 +81,7 @@ export async function Hero() {
                       </>
                     )}
                   </p>
-                  <div className="mt-4 flex items-center justify-between ">
+                  <div className="mt-4 flex items-center justify-between">
                     <Button asChild size="sm">
                       <Link
                         href={`/events/${nextEvent.metadata.slug}`}
@@ -90,7 +90,7 @@ export async function Hero() {
                         Learn more
                       </Link>
                     </Button>
-                    <Button variant={"link"} className=" text-white">
+                    <Button variant={"link"} className="text-white">
                       <a
                         href={nextEvent.tickets.href}
                         target="_blank"

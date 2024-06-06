@@ -59,7 +59,7 @@ export function Hero(
             {props.event.name}
           </h1>
           <p className="text-md mt-6 text-gray-400">{props.event.excerpt}</p>
-          <div className="mx-8 mt-10 flex  flex-wrap items-center justify-center gap-x-6 gap-y-4">
+          <div className="mx-8 mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
             {isTicketsActive && (
               <Button asChild>
                 <a

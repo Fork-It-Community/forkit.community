@@ -31,7 +31,7 @@ export function Header(props: Readonly<{ event: Event }>) {
     <>
       <header className="fixed left-0 right-0 top-0 z-10 bg-gray-950">
         <nav
-          className=" mx-auto flex h-16 max-w-7xl items-center justify-between gap-4  pl-6 pr-4 lg:px-8"
+          className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 pl-6 pr-4 lg:px-8"
           aria-label="Global"
         >
           <div className="flex-1">

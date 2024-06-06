@@ -1,7 +1,7 @@
 export default function CodeOfConduct() {
   return (
-    <section className="px-4 py-16 m-auto max-w-7xl">
-      <div className="prose prose-invert m-auto prose-headings:scroll-m-10 prose-sm md:prose-base">
+    <section className="m-auto max-w-7xl px-4 py-16">
+      <div className="prose prose-sm prose-invert m-auto md:prose-base prose-headings:scroll-m-10">
         <h1>Code of Conduct</h1>
         <h2 id="short-version">Short version</h2>
         <p>

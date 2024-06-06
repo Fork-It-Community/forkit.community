@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "run-p lint:*",
     "lint:next": "next lint",
-    "lint:ts": "tsc --noEmit"
+    "lint:ts": "tsc --noEmit",
+    "pretty": "prettier --write src/"
   },
   "dependencies": {
     "@mdx-js/loader": "3.0.1",

@@ -69,7 +69,7 @@ async function SponsorImage(
                     <li key={social.type}>
                       <a
                         href={social.href}
-                        className=" transition hover:text-primary"
+                        className="transition hover:text-primary"
                         target="_blank"
                       >
                         <span className="sr-only">{social.type}</span>
