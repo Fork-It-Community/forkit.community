@@ -1,14 +1,12 @@
 import { Badge } from "@/components/ui/badge";
-import { Event } from "@/content/collections";
 import { MapPinIcon } from "lucide-react";
+import { ReactNode } from "react";
 
-export const LocationBadge = (
-  props: Pick<Event["schedule"][number], "location">,
-) => {
+export const LocationBadge = (props: { children: ReactNode }) => {
   return (
     <Badge variant="outline" className="w-fit">
-      <MapPinIcon className="mr-2 h-4 w-4" />
-      {props.location}
+      <MapPinIcon className="mr-2 h-3 w-3" />
+      {props.children}
     </Badge>
   );
 };

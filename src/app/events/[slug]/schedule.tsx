@@ -37,7 +37,6 @@ function ScheduleComingSoon(props: Readonly<{ event: Event }>) {
 function TimeAndDuration(props: {
   startTime?: Date;
   duration?: number;
-  location: string;
   className?: string;
   children?: ReactNode;
 }) {
@@ -55,7 +54,6 @@ function TimeAndDuration(props: {
         <span className="md:hidden">·</span>{" "}
         {props.duration && <p>{props.duration} minutes</p>}
         {props.children}
-        <LocationBadge location={props.location} />
       </div>
     )
   );
@@ -83,15 +81,18 @@ async function CardConference(
   );
 
   return (
-    <div className="flex flex-row gap-4 lg:gap-10">
-      <TimeAndDuration
-        duration={props.activity.duration}
-        startTime={props.activity.startTime}
-        location={props.activity.location}
-        className="hidden md:flex md:flex-1 md:flex-col"
-      >
-        {props.activity.type === "roundtable" && <>Roundtable</>}
-      </TimeAndDuration>
+    <div className="flex flex-row gap-4 lg:gap-8">
+      <div className="hidden gap-2 md:flex md:flex-1 md:flex-col">
+        <TimeAndDuration
+          duration={props.activity.duration}
+          startTime={props.activity.startTime}
+          className="flex flex-col"
+        >
+          {props.activity.type === "roundtable" && <>Roundtable</>}
+        </TimeAndDuration>
+        <LocationBadge>{props.activity.location}</LocationBadge>
+      </div>
+
       <Link
         href={`/events/${props.event.metadata.slug}/talks/${talk.metadata.slug}`}
         className={cn(
@@ -102,14 +103,16 @@ async function CardConference(
       >
         <div className="flex w-full flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <TimeAndDuration
-              duration={props.activity.duration}
-              startTime={props.activity.startTime}
-              location={props.activity.location}
-              className="flex flex-wrap md:hidden"
-            >
-              {props.activity.type === "roundtable" && <>Roundtable</>}
-            </TimeAndDuration>
+            <div className="flex flex-1 flex-col gap-2 md:hidden">
+              <TimeAndDuration
+                duration={props.activity.duration}
+                startTime={props.activity.startTime}
+                className="flex flex-wrap md:hidden"
+              >
+                <>{props.activity.type === "roundtable" && <>Roundtable</>}</>
+              </TimeAndDuration>
+              <LocationBadge>{props.activity.location}</LocationBadge>
+            </div>
 
             <p className="text-xl font-semibold">{talk.title}</p>
             <div className="flex flex-col gap-2">
@@ -167,20 +170,25 @@ async function CardBreak(
     ? await collections.sponsor.getBySlug(props.break.sponsorSlug)
     : undefined;
   return (
-    <div className="flex flex-row gap-4 lg:gap-10">
-      <TimeAndDuration
-        duration={props.break.duration}
-        startTime={props.break.startTime}
-        location={props.break.location}
-        className="hidden md:flex md:flex-1 md:flex-col"
-      />
-      <div className="flex w-full flex-[4] flex-col gap-2 rounded-lg border-2 border-gray-600 bg-gray-800 px-6 py-4">
+    <div className="flex flex-row gap-4 lg:gap-8">
+      <div className="hidden md:flex md:flex-1 md:flex-col md:gap-2">
         <TimeAndDuration
           duration={props.break.duration}
           startTime={props.break.startTime}
-          location={props.break.location}
-          className="flex flex-wrap md:hidden"
+          className="hidden md:flex md:flex-col"
         />
+        <LocationBadge>{props.break.location}</LocationBadge>
+      </div>
+
+      <div className="flex w-full flex-[4] flex-col gap-2 rounded-lg border-2 border-gray-600 bg-gray-800 px-6 py-4">
+        <div className="flex flex-col gap-1 md:hidden">
+          <TimeAndDuration
+            duration={props.break.duration}
+            startTime={props.break.startTime}
+            className="flex flex-wrap "
+          />
+          <LocationBadge>{props.break.location}</LocationBadge>
+        </div>
         <p className="text-xl font-semibold">{props.break.name}</p>
         <div className="flex flex-col justify-between gap-4 md:flex-row">
           {props.break.description && <p>{props.break.description}</p>}
