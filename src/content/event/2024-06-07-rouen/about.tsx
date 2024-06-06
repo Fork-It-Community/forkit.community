@@ -30,8 +30,8 @@ export function About(
             <h2 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
               When? Where?
             </h2>
-            <div className=" flex max-w-xl flex-col gap-8 text-base leading-7 lg:max-w-none">
-              <ul className=" space-y-8 text-gray-200">
+            <div className="flex max-w-xl flex-col gap-8 text-base leading-7 lg:max-w-none">
+              <ul className="space-y-8 text-gray-200">
                 {props.event.location && (
                   <li className="flex gap-x-3">
                     <MapPin
@@ -81,9 +81,9 @@ export function About(
               </p>
             </div>
             <div className="flex flex-col gap-2">
-              <h4 className="font-heading text-lg font-semibold ">
+              <h3 className="font-heading text-lg font-semibold">
                 Practical information
-              </h4>
+              </h3>
               <div>
                 <Button asChild>
                   <Link href="/events/2024-06-07-rouen/informations">
