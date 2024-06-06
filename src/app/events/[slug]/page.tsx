@@ -2,7 +2,7 @@ import { Hero } from "@/app/events/[slug]/hero";
 import { Sponsorship } from "@/app/events/[slug]/sponsorship";
 import collections from "@/content/collections";
 import { formatDateTime } from "@/lib/utils";
-import { Metadata } from "next";
+
 import { notFound } from "next/navigation";
 import { Sponsors } from "./sponsors";
 import { Speakers } from "./speakers";
@@ -12,7 +12,7 @@ import { Talks } from "./talks";
 import type { WithContext, Event, Place } from "schema-dts";
 import { Partners } from "@/app/(homepage)/partners";
 
-type EventPageProps = Readonly<{
+export type EventPageProps = Readonly<{
   params: { slug: string };
 }>;
 
@@ -24,23 +24,6 @@ export async function generateStaticParams() {
     .map((event) => ({
       slug: event.metadata.slug,
     }));
-}
-
-export async function generateMetadata({
-  params,
-}: EventPageProps): Promise<Metadata> {
-  const event = await collections.event.getBySlug(params.slug);
-
-  return {
-    title: event.title,
-    description: event.excerpt,
-    openGraph: {
-      url: `https://www.forkit.community/events/${event.metadata.slug}`,
-    },
-    alternates: {
-      canonical: `/events/${event.metadata.slug}`,
-    },
-  };
 }
 
 export default async function EventPage({ params }: EventPageProps) {

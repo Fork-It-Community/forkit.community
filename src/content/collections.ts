@@ -170,7 +170,6 @@ const collections = {
     folder: "talk",
     schema: z.object({
       title: z.string(),
-      description: z.string().nullish(),
       speakers: z.string().array(),
       language: z.enum(["french", "english"]),
       feedback: z

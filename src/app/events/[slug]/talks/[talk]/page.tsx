@@ -9,6 +9,7 @@ import { FavoriteButton } from "@/components/favorite-button";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
+import { Metadata, ResolvingMetadata } from "next";
 
 type TalkPageProps = Readonly<{
   params: { talk: string; slug: string };
@@ -25,6 +26,19 @@ export async function generateStaticParams() {
         talk: talk,
       })),
     );
+}
+
+export async function generateMetadata(
+  { params }: TalkPageProps,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const talk = await collections.talk.getBySlug(params.talk);
+
+  const title = (await parent).title?.absolute ?? "";
+
+  return {
+    title: `${talk.title} | ${title}`,
+  };
 }
 
 export default async function TalkPage({ params }: TalkPageProps) {
@@ -130,7 +144,7 @@ export default async function TalkPage({ params }: TalkPageProps) {
                           <li key={social.type}>
                             <a
                               href={social.href}
-                              className=" text-gray-400 transition hover:text-primary"
+                              className="text-gray-400 transition hover:text-primary"
                               target="_blank"
                             >
                               <span className="sr-only">{social.type}</span>
