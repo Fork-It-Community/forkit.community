@@ -2,6 +2,7 @@ import collections from "@/content/collections";
 import { Schedule } from "../schedule";
 import { formatDateTime } from "@/lib/utils";
 import { FeedbackCTA } from "@/components/feedback-cta";
+import { Metadata, ResolvingMetadata } from "next";
 
 type SchedulePageProps = Readonly<{
   params: { slug: string };
@@ -15,6 +16,25 @@ export async function generateStaticParams() {
     .map((event) => ({
       slug: event.metadata.slug,
     }));
+}
+
+export async function generateMetadata(
+  { params }: SchedulePageProps,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const event = await collections.event.getBySlug(params.slug);
+
+  const title = (await parent).title?.absolute ?? "";
+
+  return {
+    title: `${event.title} | ${title}`,
+    openGraph: {
+      url: `/events/${event.metadata.slug}/schedule`,
+    },
+    alternates: {
+      canonical: `/events/${event.metadata.slug}/schedule`,
+    },
+  };
 }
 
 export default async function SchedulePage({ params }: SchedulePageProps) {
