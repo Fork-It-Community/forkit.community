@@ -56,8 +56,12 @@ export function Footer() {
             >
               Code of Conduct
             </Link>
+            ·
+            <Link className="text-xs hover:text-primary" href="/sitemap.xml">
+              Sitemap
+            </Link>
           </div>
-          <p className="text-center text-xs leading-5 text-gray-400">
+          <p className="text-center text-xs leading-5 text-gray-400 md:text-left">
             &copy; {new Date().getFullYear()} Fork it! Community. All rights
             reserved.
           </p>
