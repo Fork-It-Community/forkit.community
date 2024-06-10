@@ -4,17 +4,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { Calendar, MapPin } from "lucide-react";
 
-export const Events = async () => {
+export const PastEvents = async () => {
   const events = await collections.event.getAll();
-
+  const pastEvents = events.filter(
+    (event) => (event.date?.getTime() ?? 0) < new Date().getTime(),
+  );
   return (
     <section className="relative overflow-hidden bg-gray-950 py-24 sm:py-32">
       <div className="relative mx-auto flex max-w-4xl flex-col gap-16 px-6">
         <h2 className="text-center font-heading text-3xl font-bold sm:text-4xl">
-          <span className="text-primary">Fork it! Community</span> upcoming
-          events
+          <span className="text-primary">Fork it! Community</span> past events
         </h2>
-        {events.map((event) => (
+        {pastEvents.map((event) => (
           <Link
             href={`/events/${event.metadata.slug}`}
             title="Homepage of the event"

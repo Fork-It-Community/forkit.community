@@ -26,6 +26,8 @@ const navigation = [
 
 export function Header(props: Readonly<{ event: Event }>) {
   const sheet = useDisclosure();
+  const isEventPassed =
+    (props.event.date?.getTime() ?? 0) < new Date().getTime();
 
   return (
     <>
@@ -41,7 +43,7 @@ export function Header(props: Readonly<{ event: Event }>) {
             </Link>
           </div>
           <div className="flex gap-3 lg:hidden">
-            {props.event.tickets && (
+            {props.event.tickets && !isEventPassed && (
               <div className="flex items-center justify-center gap-x-6">
                 <Button asChild size="sm">
                   <a href={props.event.tickets.href}>Get tickets</a>
@@ -82,7 +84,7 @@ export function Header(props: Readonly<{ event: Event }>) {
                           </Link>
                         ))}
                       </div>
-                      {props.event.tickets && (
+                      {props.event.tickets && !isEventPassed && (
                         <div className="flex gap-x-6 py-6">
                           <Button asChild>
                             <a href={props.event.tickets.href}>
@@ -110,7 +112,7 @@ export function Header(props: Readonly<{ event: Event }>) {
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            {props.event.tickets && (
+            {props.event.tickets && !isEventPassed && (
               <div className="flex items-center justify-center gap-x-6">
                 <Button asChild>
                   <a href={props.event.tickets.href}>Get tickets</a>

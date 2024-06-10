@@ -5,7 +5,7 @@ export async function Organizers() {
   const allOrganizers = await collections.organizer.getAll();
 
   return (
-    <div className="bg-gray-950 py-24 sm:py-32">
+    <div className="bg-gray-900 py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto flex max-w-2xl flex-col gap-4 lg:mx-0">
           <h2 className="font-heading text-3xl font-bold uppercase sm:text-4xl">
