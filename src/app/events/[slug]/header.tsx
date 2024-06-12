@@ -14,6 +14,7 @@ import {
 import ImgForkItLogo from "@/../public/forkit-medium.svg";
 import { Button } from "@/components/ui/button";
 import { Event } from "@/content/collections";
+import { shouldDisplayTicketButton } from "@/lib/utils";
 
 const navigation = [
   { name: "Venue", href: "#venue" },
@@ -26,9 +27,6 @@ const navigation = [
 
 export function Header(props: Readonly<{ event: Event }>) {
   const sheet = useDisclosure();
-  const isEventPassed =
-    (props.event.date?.getTime() ?? 0) < new Date().getTime();
-
   return (
     <>
       <header className="fixed left-0 right-0 top-0 z-10 bg-gray-950">
@@ -43,10 +41,10 @@ export function Header(props: Readonly<{ event: Event }>) {
             </Link>
           </div>
           <div className="flex gap-3 lg:hidden">
-            {props.event.tickets && !isEventPassed && (
+            {shouldDisplayTicketButton(props.event) && (
               <div className="flex items-center justify-center gap-x-6">
                 <Button asChild size="sm">
-                  <a href={props.event.tickets.href}>Get tickets</a>
+                  <a href={props.event.tickets?.href}>Get tickets</a>
                 </Button>
               </div>
             )}
@@ -84,10 +82,10 @@ export function Header(props: Readonly<{ event: Event }>) {
                           </Link>
                         ))}
                       </div>
-                      {props.event.tickets && !isEventPassed && (
+                      {shouldDisplayTicketButton(props.event) && (
                         <div className="flex gap-x-6 py-6">
                           <Button asChild>
-                            <a href={props.event.tickets.href}>
+                            <a href={props.event.tickets?.href}>
                               Get tickets{" "}
                               <ExternalLink className="ml-2 h-4 w-4" />
                             </a>
@@ -112,10 +110,10 @@ export function Header(props: Readonly<{ event: Event }>) {
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            {props.event.tickets && !isEventPassed && (
+            {shouldDisplayTicketButton(props.event) && (
               <div className="flex items-center justify-center gap-x-6">
                 <Button asChild>
-                  <a href={props.event.tickets.href}>Get tickets</a>
+                  <a href={props.event.tickets?.href}>Get tickets</a>
                 </Button>
               </div>
             )}

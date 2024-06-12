@@ -3,12 +3,11 @@ import collections from "@/content/collections";
 import Image from "next/image";
 import Link from "next/link";
 import { Calendar, MapPin } from "lucide-react";
+import { hasEventPassed } from "@/lib/utils";
 
 export const UpcomingEvents = async () => {
   const events = await collections.event.getAll();
-  const upcomingEvents = events.filter(
-    (event) => (event.date?.getTime() ?? 0) >= new Date().getTime(),
-  );
+  const upcomingEvents = events.filter((event) => !hasEventPassed(event));
   return (
     <section className="relative overflow-hidden bg-gray-950 py-24 sm:py-32">
       <div className="relative mx-auto flex max-w-4xl flex-col gap-16 px-6">

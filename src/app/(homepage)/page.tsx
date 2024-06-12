@@ -15,7 +15,7 @@ export default async function Home() {
       {nextEvent && <Banner nextEvent={nextEvent} />}
       <Hero />
       <About />
-      <UpcomingEvents />
+      {nextEvent && <UpcomingEvents />}
       <Features />
       <PastEvents />
       <Organizers />
