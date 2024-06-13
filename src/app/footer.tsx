@@ -23,6 +23,11 @@ const navigation = [
     href: "https://github.com/Fork-It-Community",
     icon: (props: SVGProps<SVGSVGElement>) => ICONS["github"],
   },
+  {
+    name: "Youtube",
+    href: "https://www.youtube.com/channel/UCgV5zuiFWCMl7IvuZ5KbJOw",
+    icon: (props: SVGProps<SVGSVGElement>) => ICONS["youtube"],
+  },
 ];
 
 export function Footer() {
@@ -31,7 +36,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl border-t border-t-gray-800 px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
         <div className="flex justify-center space-x-6 md:order-2">
           {navigation.map((item) => (
-            <a key={item.name} href={item.href}>
+            <a key={item.name} href={item.href} target="_blank">
               <span className="sr-only">{item.name}</span>
               <item.icon className="h-6 w-6" aria-hidden="true" />
             </a>
