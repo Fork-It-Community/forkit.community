@@ -38,7 +38,7 @@ async function PartnerImage({ partner }: { partner: Partner }) {
 export async function Partners() {
   const allPartners = await collections.partner.getAll();
   return (
-    <div className="bg-gray-900 pb-12 pt-6">
+    <div className="bg-gray-950 pb-12 pt-6">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto flex max-w-2xl flex-col gap-10 lg:max-w-none">
           <h2 className="text-center font-heading text-3xl font-bold text-white sm:text-4xl">

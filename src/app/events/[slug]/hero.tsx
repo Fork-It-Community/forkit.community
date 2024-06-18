@@ -1,14 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Event } from "@/content/collections";
+import { formatDateTime, shouldDisplayTicketButton } from "@/lib/utils";
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 
 const MAX_PRIMARY_BUTTONS = 2;
-const buttonPrimaryClassName = "w-full min-w-[20ch] sm:w-auto";
+
 const buttonSecondaryClassName = "-mx-4";
+
 export function Hero(
   props: Readonly<{
-    event: Omit<Event, "date"> & { date?: string };
+    event: Event;
   }>,
 ) {
   const isProspectusActive = !!(
@@ -22,6 +24,7 @@ export function Hero(
     (!props.event.cfp.endDate ||
       new Date().getTime() <= props.event.cfp.endDate.getTime())
   );
+  const date = props.event.date ? formatDateTime(props.event.date) : undefined;
   return (
     <div className="relative isolate overflow-hidden">
       {props.event.image && (
@@ -55,18 +58,16 @@ export function Hero(
         </div>
         <div className="mx-8 text-center">
           <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-6xl">
-            <span className="text-primary">{props.event.date}</span>{" "}
-            {props.event.name}
+            <span className="text-primary">{date}</span> {props.event.name}
           </h1>
           <p className="text-md mt-6 text-gray-400">{props.event.excerpt}</p>
           <div className="mx-8 mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
-            {isTicketsActive && (
-              <Button asChild>
+            {shouldDisplayTicketButton(props.event) && (
+              <Button asChild variant="default">
                 <a
                   href={props.event.tickets?.href}
                   target="_blank"
                   rel="noreferer"
-                  className={buttonPrimaryClassName}
                 >
                   Get tickets
                   <ExternalLink className="ml-2 h-4 w-4" />
@@ -74,12 +75,11 @@ export function Hero(
               </Button>
             )}
             {isProspectusActive && (
-              <Button variant="outline" asChild>
+              <Button variant="default" asChild>
                 <a
                   href={props.event.prospectus?.href}
                   target="_blank"
                   rel="noreferer"
-                  className={buttonPrimaryClassName}
                 >
                   {props.event.prospectus?.title ?? "Sponsoring prospectus"}
                   <ExternalLink className="ml-2 h-4 w-4" />
@@ -93,20 +93,10 @@ export function Hero(
                   [isProspectusActive, isTicketsActive].filter(Boolean)
                     .length >= MAX_PRIMARY_BUTTONS
                     ? "linkWhite"
-                    : undefined
+                    : "default"
                 }
               >
-                <a
-                  href={props.event.cfp?.href}
-                  target="_blank"
-                  rel="noreferer"
-                  className={
-                    [isProspectusActive, isTicketsActive].filter(Boolean)
-                      .length < MAX_PRIMARY_BUTTONS
-                      ? buttonPrimaryClassName
-                      : buttonSecondaryClassName
-                  }
-                >
+                <a href={props.event.cfp?.href} target="_blank" rel="noreferer">
                   Call For Paper
                   <ExternalLink className="ml-2 h-4 w-4" />
                 </a>

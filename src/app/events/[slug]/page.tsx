@@ -36,8 +36,6 @@ export default async function EventPage({ params }: EventPageProps) {
   const Content = (await import(`@/content/${event.metadata.filePath}`))
     .default;
 
-  const date = event.date ? formatDateTime(event.date) : undefined;
-
   const location: Place | undefined = event.location
     ? {
         "@type": "Place",
@@ -87,7 +85,7 @@ export default async function EventPage({ params }: EventPageProps) {
 
   return (
     <>
-      <Hero event={{ ...event, date }} />
+      <Hero event={event} />
       <Content />
       <ScheduleSection event={event} />
 
