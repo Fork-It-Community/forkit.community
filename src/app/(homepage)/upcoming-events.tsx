@@ -1,11 +1,13 @@
 import collections from "@/content/collections";
 import Link from "next/link";
-import { hasEventPassed } from "@/lib/utils";
+import { isEventInThePast } from "@/lib/utils";
 import { EventCard } from "@/components/event-card";
 
 export const UpcomingEvents = async () => {
-  const events = await collections.event.getAll();
-  const upcomingEvents = events.filter((event) => !hasEventPassed(event));
+  const upcomingEvents = (await collections.event.getAll()).filter(
+    (event) => !isEventInThePast(event),
+  );
+
   return (
     <section className="relative overflow-hidden bg-gray-950 py-24 sm:py-32">
       <div className="relative mx-auto flex max-w-4xl flex-col gap-16 px-6">

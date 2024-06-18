@@ -1,11 +1,11 @@
 import collections from "@/content/collections";
 import Link from "next/link";
-import { hasEventPassed } from "@/lib/utils";
+import { isEventInThePast } from "@/lib/utils";
 import { EventCard } from "@/components/event-card";
 
 export const PastEvents = async () => {
   const pastEvents = (await collections.event.getAll()).filter((event) =>
-    hasEventPassed(event),
+    isEventInThePast(event),
   );
 
   return (

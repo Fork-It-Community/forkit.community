@@ -18,9 +18,11 @@ export function formatTime(date: string | number | Date) {
     minute: "2-digit",
   }).format(new Date(date));
 }
-export function hasEventPassed(event: Event) {
+
+export function isEventInThePast(event: Event) {
   return (event.date?.getTime() ?? 0) < new Date().getTime();
 }
+
 export function shouldDisplayTicketButton(event: Event) {
-  return event.tickets && !hasEventPassed(event);
+  return event.tickets && !isEventInThePast(event);
 }
