@@ -141,6 +141,7 @@ const collections = {
           link: z.string().url(),
         })
         .optional(),
+      postEventPictures: z.array(z.string()).optional(),
     }),
   }),
   speaker: defineCollection({
