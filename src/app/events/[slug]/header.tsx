@@ -17,6 +17,7 @@ import { Event } from "@/content/collections";
 import { shouldDisplayTicketButton } from "@/lib/utils";
 
 const navigation = [
+  { name: "Event Summary", href: "#post-event" },
   { name: "Venue", href: "#venue" },
   { name: "Schedule", href: "#schedule" },
   { name: "Speakers", href: "#speakers" },
