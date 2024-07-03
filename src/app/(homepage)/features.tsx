@@ -7,7 +7,7 @@ const features = [
   {
     name: "Meetups",
     description:
-      "Relaxed moments for exchanging ideas, building connections, and collaborating",
+      "Relaxed moments for exchanging ideas, building connections, and collaborating.",
   },
   {
     name: "Workshops",
