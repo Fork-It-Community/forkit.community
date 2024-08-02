@@ -97,7 +97,7 @@ const collections = {
         })
         .optional(),
       published: z.boolean().optional(),
-      sponsoringLevels: z.array(z.string()),
+      sponsoringLevels: z.array(z.string()).optional(),
       sponsors: z
         .array(
           z.object({
@@ -124,18 +124,20 @@ const collections = {
         "OnlineEventAttendanceMode",
         "MixedEventAttendanceMode",
       ]),
-      schedule: z.array(
-        z.object({
-          type: z.enum(["conference", "roundtable", "break", "lunch"]),
-          sponsorSlug: z.string().optional(),
-          description: z.string().optional(),
-          name: z.string().optional(),
-          slug: z.string().optional(),
-          startTime: z.date().optional(),
-          duration: z.number().optional(),
-          location: z.string(),
-        }),
-      ),
+      schedule: z
+        .array(
+          z.object({
+            type: z.enum(["conference", "roundtable", "break", "lunch"]),
+            sponsorSlug: z.string().optional(),
+            description: z.string().optional(),
+            name: z.string().optional(),
+            slug: z.string().optional(),
+            startTime: z.date().optional(),
+            duration: z.number().optional(),
+            location: z.string().optional(),
+          }),
+        )
+        .optional(),
       feedback: z
         .object({
           link: z.string().url(),
