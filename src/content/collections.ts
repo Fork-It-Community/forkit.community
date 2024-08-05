@@ -145,6 +145,86 @@ const collections = {
         .optional(),
     }),
   }),
+  meetup: defineCollection({
+    folder: "meetup",
+    schema: z.object({
+      title: z.string(),
+      name: z.string(),
+      date: z.date(),
+      location: z.object({
+        name: z.string().optional(),
+        address: z.string(),
+      }),
+      excerpt: z.string().optional(),
+      image: z
+        .object({
+          src: z.string(),
+          alt: z.string(),
+        })
+        .optional(),
+      tickets: z
+        .object({
+          href: z.string().url(),
+          offers: z.array(
+            z.object({
+              name: z.string(),
+              price: z.number().positive(),
+              priceCurrency: z.string(),
+              availability: z.enum(["InStock", "SoldOut", "PreOrder"]),
+              validFrom: z.date(),
+            }),
+          ),
+        })
+        .optional(),
+      published: z.boolean().optional(),
+      sponsoringLevels: z.array(z.string()).optional(),
+      sponsors: z
+        .array(
+          z.object({
+            slug: z.string(), // <- the slug of the sponsor
+            level: z.string(), // <- the level of sponsoring
+            options: z.array(z.enum(["lunch"])).optional(), // <- if the sponsor has an option
+          }),
+        )
+        .optional(),
+      speakers: z.array(z.string()).optional(),
+      talks: z.array(z.string()).optional(),
+      faq: z
+        .array(z.object({ question: z.string(), answer: z.string() }))
+        .optional(),
+      status: z.enum([
+        "EventCancelled",
+        "EventMovedOnline",
+        "EventPostponed",
+        "EventRescheduled",
+        "EventScheduled",
+      ]),
+      attendanceMode: z.enum([
+        "OfflineEventAttendanceMode",
+        "OnlineEventAttendanceMode",
+        "MixedEventAttendanceMode",
+      ]),
+      schedule: z
+        .array(
+          z.object({
+            type: z.enum(["conference", "roundtable", "break", "lunch"]),
+            sponsorSlug: z.string().optional(),
+            description: z.string().optional(),
+            name: z.string().optional(),
+            slug: z.string().optional(),
+            startTime: z.date().optional(),
+            duration: z.number().optional(),
+            location: z.string().optional(),
+          }),
+        )
+        .optional(),
+      feedback: z
+        .object({
+          link: z.string().url(),
+        })
+        .optional(),
+    }),
+  }),
   speaker: defineCollection({
     folder: "speaker",
     schema: z.object({
@@ -187,10 +267,12 @@ const collections = {
 export default collections;
 
 export type EventFrontmatter = z.infer<typeof collections.event.schema>;
+export type MeetupFrontmatter = z.infer<typeof collections.meetup.schema>;
 export type Sponsor = z.infer<typeof collections.sponsor.schema>;
 export type Partner = z.infer<typeof collections.partner.schema>;
 export type Speaker = z.infer<typeof collections.speaker.schema>;
 export type TalkFrontmatter = z.infer<typeof collections.talk.schema>;
 
 export type Event = Awaited<ReturnType<typeof collections.event.getBySlug>>;
+export type Meetup = Awaited<ReturnType<typeof collections.meetup.getBySlug>>;
 export type Talk = Awaited<ReturnType<typeof collections.talk.getBySlug>>;

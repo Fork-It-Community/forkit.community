@@ -1,14 +1,12 @@
-import { EventFrontmatter } from "@/content/collections";
+import { MeetupFrontmatter } from "@/content/collections";
 import { formatDateTime } from "@/lib/utils";
 import { Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
-import LeVillageByCA from "/public/events/2024-09-24-tunis.jpg";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import LocationImage from "/public/meetups/2024-09-24-tunis.jpg";
 
 export function About(
   props: Readonly<{
-    event: Omit<EventFrontmatter, "date"> & { date?: string };
+    meetup: Omit<MeetupFrontmatter, "date"> & { date?: string };
   }>,
 ) {
   return (
@@ -18,7 +16,7 @@ export function About(
           <div className="relative h-80 lg:-ml-8 lg:h-auto lg:w-full lg:grow xl:ml-0">
             <Image
               className="absolute inset-0 h-full w-full bg-gray-950 object-cover object-left"
-              src={LeVillageByCA}
+              src={LocationImage}
               width={1000}
               height={500}
               alt=""
@@ -32,7 +30,7 @@ export function About(
             </h2>
             <div className="flex max-w-xl flex-col gap-8 text-base leading-7 lg:max-w-none">
               <ul className="space-y-8 text-gray-200">
-                {props.event.location && (
+                {props.meetup.location && (
                   <li className="flex gap-x-3">
                     <MapPin
                       className="mt-1 h-5 w-5 flex-none text-primary"
@@ -40,14 +38,14 @@ export function About(
                     />
                     <span>
                       <strong className="font-semibold text-primary">
-                        {props.event.location.name},{" "}
-                        {props.event.location.address}.
+                        {props.meetup.location.name},{" "}
+                        {props.meetup.location.address}.
                       </strong>{" "}
-                      {/* Phrase sur le comwork qui acceuil l'event */}
+                      {/* Phrase sur le comwork qui acceuil le meetup */}
                     </span>
                   </li>
                 )}
-                {props.event.date && (
+                {props.meetup.date && (
                   <li className="flex gap-x-3">
                     <Calendar
                       className="mt-1 h-5 w-5 flex-none text-primary"
@@ -55,10 +53,10 @@ export function About(
                     />
                     <span>
                       <time
-                        dateTime={props.event.date}
+                        dateTime={props.meetup.date}
                         className="font-semibold text-primary"
                       >
-                        {formatDateTime(props.event.date)}.
+                        {formatDateTime(props.meetup.date)}.
                       </time>{" "}
                       Come enjoy two conferences and a networking cocktail to
                       end September.

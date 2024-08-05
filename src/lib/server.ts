@@ -22,3 +22,21 @@ export async function getNextEvent() {
       )
   );
 }
+export async function getNextMeetup() {
+  return (
+    (await collections.meetup.getAll())
+      // Sorting, so we making sure they are correclty sorted by date
+      .sort(
+        (meetup1, meetup2) =>
+          (meetup1.date?.valueOf() ?? 0) - (meetup2.date?.valueOf() ?? 0),
+      )
+      // Finding the first one that is published, has a date and the date of the
+      // meetup is not passed
+      .find(
+        (meetup) =>
+          meetup.published &&
+          meetup.date &&
+          meetup.date.valueOf() > new Date().valueOf(),
+      )
+  );
+}

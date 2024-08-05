@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { Event } from "@/content/collections";
+import { Event, Meetup } from "@/content/collections";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -21,6 +21,9 @@ export function formatTime(date: string | number | Date) {
 
 export function isEventInThePast(event: Event) {
   return (event.date?.getTime() ?? 0) < new Date().getTime();
+}
+export function isMeetupInThePast(meetup: Meetup) {
+  return (meetup.date?.getTime() ?? 0) < new Date().getTime();
 }
 
 export function shouldDisplayTicketButton(event: Event) {
