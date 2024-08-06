@@ -9,12 +9,12 @@ type SchedulePageProps = Readonly<{
 }>;
 
 export async function generateStaticParams() {
-  const events = await collections.event.getAll();
+  const meetups = await collections.meetup.getAll();
 
-  return events
-    .filter((event) => event.published)
-    .map((event) => ({
-      slug: event.metadata.slug,
+  return meetups
+    .filter((meetup) => meetup.published)
+    .map((meetup) => ({
+      slug: meetup.metadata.slug,
     }));
 }
 
@@ -22,35 +22,35 @@ export async function generateMetadata(
   { params }: SchedulePageProps,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const event = await collections.event.getBySlug(params.slug);
+  const meetup = await collections.meetup.getBySlug(params.slug);
 
   const title = (await parent).title?.absolute ?? "";
 
   return {
-    title: `${event.title} | ${title}`,
+    title: `${meetup.title} | ${title}`,
     openGraph: {
-      url: `/events/${event.metadata.slug}/schedule`,
+      url: `/meetups/${meetup.metadata.slug}/schedule`,
     },
     alternates: {
-      canonical: `/events/${event.metadata.slug}/schedule`,
+      canonical: `/meetups/${meetup.metadata.slug}/schedule`,
     },
   };
 }
 
 export default async function SchedulePage({ params }: SchedulePageProps) {
-  const event = await collections.event.getBySlug(params.slug);
+  const meetup = await collections.meetup.getBySlug(params.slug);
   return (
     <div className="bg-gray-950">
       <h1 className="mt-8 text-center font-heading text-3xl font-bold tracking-tight text-white sm:text-3xl">
-        {event.date && (
-          <span className="text-primary">{formatDateTime(event.date)}</span>
+        {meetup.date && (
+          <span className="text-primary">{formatDateTime(meetup.date)}</span>
         )}{" "}
-        {event.name}
+        {meetup.name}
       </h1>
       <div className="bg-gray-950">
         <div className="mx-auto flex max-w-4xl flex-col gap-16 px-6 py-24 sm:py-32 lg:px-8">
-          <Schedule meetup={event} />
-          {event.feedback && <FeedbackCTA href={event.feedback.link} />}
+          <Schedule meetup={meetup} />
+          {meetup.feedback && <FeedbackCTA href={meetup.feedback.link} />}
         </div>
       </div>
     </div>

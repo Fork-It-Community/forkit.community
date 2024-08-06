@@ -8,8 +8,6 @@ import DefaultImg from "@/../public/speakers/speaker-default.jpg";
 import { match } from "ts-pattern";
 import { LanguageBadge } from "@/components/language-badge";
 import { LocationBadge } from "@/components/location-badge";
-import { FavoritesContextProvider } from "@/app/meetups/[slug]/contexts/FavoritesContext";
-import { FavoriteButton } from "@/components/favorite-button";
 import { FeedbackCTA } from "@/components/feedback-cta";
 import { ReactNode } from "react";
 
@@ -153,11 +151,6 @@ async function CardConference(
           </div>
           <div className="flex flex-row items-center justify-between">
             <LanguageBadge language={talk.language} />
-            <FavoriteButton
-              talkSlug={talk.metadata.slug}
-              isIconButton
-              size="sm"
-            />
           </div>
         </div>
       </Link>
@@ -243,22 +236,20 @@ export async function Schedule(props: Readonly<{ meetup: Meetup }>) {
 
   return (
     <div className="flex flex-col gap-4">
-      <FavoritesContextProvider eventSlug={props.meetup.metadata.slug}>
-        {activities.map((activity) =>
-          match(activity.type)
-            .with("conference", "roundtable", () => (
-              <CardConference
-                activity={activity}
-                meetup={props.meetup}
-                key={activity.slug}
-              />
-            ))
-            .with("break", () => (
-              <CardBreak break={activity} key={activity.name} />
-            ))
-            .otherwise(() => null),
-        )}
-      </FavoritesContextProvider>
+      {activities.map((activity) =>
+        match(activity.type)
+          .with("conference", "roundtable", () => (
+            <CardConference
+              activity={activity}
+              meetup={props.meetup}
+              key={activity.slug}
+            />
+          ))
+          .with("break", () => (
+            <CardBreak break={activity} key={activity.name} />
+          ))
+          .otherwise(() => null),
+      )}
     </div>
   );
 }
