@@ -59,7 +59,7 @@ function TimeAndDuration(props: {
 
 async function CardConference(
   props: Readonly<{
-    activity: Meetup["schedule"][number];
+    activity: NonNullable<Meetup["schedule"]>[number];
     meetup: Meetup;
   }>,
 ) {
@@ -160,7 +160,7 @@ async function CardConference(
 
 async function CardBreak(
   props: Readonly<{
-    break: Meetup["schedule"][number];
+    break: NonNullable<Meetup["schedule"]>[number];
   }>,
 ) {
   const sponsor = props.break.sponsorSlug

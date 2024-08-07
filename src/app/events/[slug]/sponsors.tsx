@@ -117,7 +117,7 @@ export function Sponsors(props: Readonly<{ event: Event }>) {
             Sponsors
           </h2>
         </div>
-        {props.event.sponsoringLevels.map((level) => {
+        {props.event.sponsoringLevels?.map((level) => {
           const levelSponsors =
             props.event.sponsors?.filter(
               (sponsor) => sponsor.level === level,
