@@ -1,4 +1,4 @@
-import collections, { Event } from "@/content/collections";
+import collections, { Meetup } from "@/content/collections";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -92,23 +92,7 @@ async function SponsorImage(
   );
 }
 
-function SponsorImagePlaceholder(
-  props: Readonly<{ prospectus: Event["prospectus"] }>,
-) {
-  return (
-    <Link
-      href={props.prospectus?.href ?? "#"}
-      title={props.prospectus?.title}
-      target="_blank"
-      rel="noreferer"
-      className="flex w-full items-center justify-center overflow-hidden rounded-md border-2 border-gray-100 bg-gray-950 p-4 text-center text-sm font-medium text-white hover:text-gray-300"
-    >
-      <div>Become sponsor</div>
-    </Link>
-  );
-}
-
-export function Sponsors(props: Readonly<{ event: Event }>) {
+export function Sponsors(props: Readonly<{ meetup: Meetup }>) {
   return (
     <div className="bg-gray-950 py-20 text-gray-900" id="sponsors">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -117,9 +101,9 @@ export function Sponsors(props: Readonly<{ event: Event }>) {
             Sponsors
           </h2>
         </div>
-        {props.event.sponsoringLevels?.map((level) => {
+        {props.meetup.sponsoringLevels?.map((level) => {
           const levelSponsors =
-            props.event.sponsors?.filter(
+            props.meetup.sponsors?.filter(
               (sponsor) => sponsor.level === level,
             ) ?? [];
           return (
@@ -137,14 +121,6 @@ export function Sponsors(props: Readonly<{ event: Event }>) {
                   {levelSponsors.map((sponsor) => (
                     <SponsorImage key={sponsor.slug} sponsor={sponsor} />
                   ))}
-                  {levelSponsors.length <= 1 &&
-                    props.event.prospectus?.endDate &&
-                    new Date().getTime() <=
-                      props.event.prospectus.endDate.getTime() && (
-                      <SponsorImagePlaceholder
-                        prospectus={props.event.prospectus}
-                      />
-                    )}
                 </div>
               </div>
             </div>

@@ -91,7 +91,9 @@ export default async function EventPage({ params }: EventPageProps) {
 
       {!!event.speakers && <Speakers event={event} />}
       {!!event.talks && <Talks event={event} />}
-      <Sponsors event={event} />
+      {!!event.sponsoringLevels && !!event.sponsors && (
+        <Sponsors event={event} />
+      )}
       <Partners />
       {event.prospectus?.endDate &&
         new Date().getTime() <= event.prospectus.endDate.getTime() && (
