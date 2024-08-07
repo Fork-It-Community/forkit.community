@@ -16,16 +16,25 @@ import { Button } from "@/components/ui/button";
 import { Meetup } from "@/content/collections";
 import { shouldDisplayTicketButton } from "@/lib/utils";
 
-const navigation = [
-  { name: "Venue", href: "#venue" },
-  { name: "Schedule", href: "#schedule" },
-  { name: "Speakers", href: "#speakers" },
-  { name: "Talks", href: "#talks" },
-  { name: "Sponsors", href: "#sponsors" },
-  { name: "FAQ", href: "#faq" },
-];
-
 export function Header(props: Readonly<{ meetup: Meetup }>) {
+  const navigation = [
+    { name: "Venue", href: "#venue", shouldDisplayItem: true },
+    { name: "Schedule", href: "#schedule", shouldDisplayItem: true },
+    {
+      name: "Speakers",
+      href: "#speakers",
+      shouldDisplayItem: !!props.meetup.speakers,
+    },
+    { name: "Talks", href: "#talks", shouldDisplayItem: !!props.meetup.talks },
+    {
+      name: "Sponsors",
+      href: "#sponsors",
+      shouldDisplayItem:
+        !!props.meetup.sponsors && !!props.meetup.sponsoringLevels,
+    },
+    { name: "FAQ", href: "#faq", shouldDisplayItem: !!props.meetup.faq },
+  ];
+
   const sheet = useDisclosure();
   return (
     <>
@@ -68,19 +77,22 @@ export function Header(props: Readonly<{ meetup: Meetup }>) {
                   <div className="mt-6 flow-root">
                     <div className="-my-6 divide-y divide-gray-500/10">
                       <div className="space-y-2 py-6">
-                        {navigation.map((item) => (
-                          <Link
-                            key={item.name}
-                            href={`/meetups/${props.meetup.metadata.slug}${item.href}`}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              sheet.close();
-                            }}
-                            className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-900"
-                          >
-                            {item.name}
-                          </Link>
-                        ))}
+                        {navigation.map(
+                          (item) =>
+                            item.shouldDisplayItem && (
+                              <Link
+                                key={item.name}
+                                href={`/meetups/${props.meetup.metadata.slug}${item.href}`}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  sheet.close();
+                                }}
+                                className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-900"
+                              >
+                                {item.name}
+                              </Link>
+                            ),
+                        )}
                       </div>
                       {shouldDisplayTicketButton(props.meetup) && (
                         <div className="flex gap-x-6 py-6">
@@ -99,15 +111,18 @@ export function Header(props: Readonly<{ meetup: Meetup }>) {
             </Sheet>
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={`/meetups/${props.meetup.metadata.slug}${item.href}`}
-                className="text-sm font-semibold leading-6 text-white"
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navigation.map(
+              (item) =>
+                item.shouldDisplayItem && (
+                  <Link
+                    key={item.name}
+                    href={`/meetups/${props.meetup.metadata.slug}${item.href}`}
+                    className="text-sm font-semibold leading-6 text-white"
+                  >
+                    {item.name}
+                  </Link>
+                ),
+            )}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             {shouldDisplayTicketButton(props.meetup) && (
