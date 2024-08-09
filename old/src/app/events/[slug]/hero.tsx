@@ -117,6 +117,14 @@ export function Hero(
           }}
         />
       </div>
+      {props.event.content?.afterMovie && (
+        <iframe
+          src={props.event.content.afterMovie.href}
+          className="border-none"
+          allowFullScreen
+          title={`${props.event.name} after movie`}
+        />
+      )}
     </div>
   );
 }
