@@ -1,7 +1,7 @@
 import collections from "@/content/collections";
 import Link from "next/link";
 import { isMeetupInThePast } from "@/lib/utils";
-import { EventCard } from "@/components/event-card";
+import { MeetupCard } from "@/components/meetup-card";
 
 export const UpcomingMeetups = async () => {
   const upcomingMeetups = (await collections.meetup.getAll()).filter(
@@ -21,7 +21,7 @@ export const UpcomingMeetups = async () => {
             title={`Homepage of the ${meetup.name} meetup`}
             key={meetup.name}
           >
-            <EventCard event={meetup} />
+            <MeetupCard meetup={meetup} />
           </Link>
         ))}
       </div>

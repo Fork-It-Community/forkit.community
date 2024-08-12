@@ -3,6 +3,8 @@ import { formatDateTime } from "@/lib/utils";
 import { Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
 import LocationImage from "/public/meetups/2024-09-24-tunis.jpg";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export function About(
   props: Readonly<{
@@ -41,7 +43,8 @@ export function About(
                         {props.meetup.location.name},{" "}
                         {props.meetup.location.address}.
                       </strong>{" "}
-                      {/* Phrase sur le comwork qui acceuil le meetup */}
+                      Join us on Comwork&apos;s offices to share experiences and
+                      network.
                     </span>
                   </li>
                 )}
@@ -65,14 +68,17 @@ export function About(
                 )}
               </ul>
               <p>
-                For the first time in Tunisia, Fork It! is organizing a meetup!
-                The goal is to bring together all enthusiasts of web development
-                and UX for meetings focused on sharing experiences and
-                constructive exchanges. Our community is growing and has chosen
-                Tunisia to host its first conference day in Africa. Follow us
-                and sign up for the meetup to get a taste of this unique
-                experience!
+                Comwork is a service company specialized in application
+                development and consulting for cloud deployment automation / SRE
+                / DevOps and production infrastructure outsourcing, and
+                publisher of software solutions to accelerate the automation of
+                these deployments in a host-agnostic way.
               </p>
+              <Button variant="default" asChild className="w-fit">
+                <Link href="https://www.comwork.io" target="_blank">
+                  Visit Comwork website
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
