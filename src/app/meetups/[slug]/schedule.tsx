@@ -13,7 +13,7 @@ import { ReactNode } from "react";
 
 function ScheduleComingSoon(props: Readonly<{ meetup: Meetup }>) {
   return (
-    <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:flex lg:items-center lg:justify-between lg:px-8">
+    <div className="mx-auto max-w-7xl px-6 py-24 lg:flex lg:items-center lg:justify-between lg:px-8">
       <h2 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
         Schedule is coming soon !
       </h2>
@@ -266,16 +266,18 @@ export const ScheduleSection = (props: Readonly<{ meetup: Meetup }>) => {
         </h2>
         <Schedule meetup={props.meetup} />
 
-        <p className="text-center">
-          You can find a{" "}
-          <Link
-            href={`/meetups/${props.meetup.metadata.slug}/schedule`}
-            className="underline hover:no-underline"
-          >
-            dedicated schedule page
-          </Link>{" "}
-          for easier consultation for the big day.
-        </p>
+        {props.meetup.schedule && (
+          <p className="text-center">
+            You can find a{" "}
+            <Link
+              href={`/meetups/${props.meetup.metadata.slug}/schedule`}
+              className="underline hover:no-underline"
+            >
+              dedicated schedule page
+            </Link>{" "}
+            for easier consultation for the big day.
+          </p>
+        )}
         {props.meetup.feedback && (
           <FeedbackCTA href={props.meetup.feedback.link} />
         )}

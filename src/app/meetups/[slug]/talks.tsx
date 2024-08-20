@@ -71,10 +71,6 @@ export function Talks(props: Readonly<{ meetup: Meetup }>) {
           <h2 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Talks
           </h2>
-          <p className="text-balance text-sm text-gray-300">
-            All talks will be in English (with French subtitles) <br />
-            or in French (with English subtitles)
-          </p>
         </div>
         <div className="mx-auto mt-12 flex flex-col gap-10 lg:grid lg:grid-cols-2 xl:grid-cols-3">
           {props.meetup.talks?.map((talk) => (
