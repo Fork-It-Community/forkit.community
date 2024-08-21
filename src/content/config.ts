@@ -2,7 +2,7 @@ import { z } from "astro:content";
 import { talksCollection } from "./talks/talks";
 import { eventsCollection } from "./events/events";
 import { organizersCollection } from "./organizers/organizers";
-import { partnersCollection } from "./partners";
+import { partnersCollection } from "./partners/partners";
 import { speakersCollection } from "./speakers/speaker";
 import { sponsorsCollection } from "./sponsors/sponsors";
 
