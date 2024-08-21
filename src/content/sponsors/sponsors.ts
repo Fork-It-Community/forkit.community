@@ -1,5 +1,5 @@
 import { z, defineCollection } from "astro:content";
-import { zSocialTypes } from "./config";
+import { zSocialTypes } from "../config";
 
 export type Sponsor = z.infer<ReturnType<typeof zSponsor>>;
 const zSponsor = () =>
@@ -13,7 +13,7 @@ const zSponsor = () =>
     socials: z
       .array(
         z.object({
-          type: zSocialTypes(),
+          type: zSocialTypes,
           href: z.string().url(),
         }),
       )
