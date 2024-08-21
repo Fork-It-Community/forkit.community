@@ -115,7 +115,7 @@ async function CardConference(
               </TimeAndDuration>
               {!!props.activity.location && (
                 <LocationBadge>{props.activity.location}</LocationBadge>
-              )}{" "}
+              )}
             </div>
 
             <p className="text-xl font-semibold">{talk.title}</p>

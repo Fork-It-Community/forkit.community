@@ -1,11 +1,12 @@
 import collections from "@/content/collections";
 import Link from "next/link";
-import { isMeetupInThePast } from "@/lib/utils";
+import { isDateInThePast } from "@/lib/utils";
 import { MeetupCard } from "@/components/meetup-card";
 
 export const UpcomingMeetups = async () => {
-  const upcomingMeetups = (await collections.meetup.getAll()).filter(
-    (meetup) => !isMeetupInThePast(meetup),
+  const allMeetups = await collections.meetup.getAll();
+  const upcomingMeetups = allMeetups.filter(
+    (meetup) => !isDateInThePast(meetup.date),
   );
 
   return (

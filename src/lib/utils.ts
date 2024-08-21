@@ -19,13 +19,10 @@ export function formatTime(date: string | number | Date) {
   }).format(new Date(date));
 }
 
-export function isEventInThePast(event: Event) {
-  return (event.date?.getTime() ?? 0) < new Date().getTime();
-}
-export function isMeetupInThePast(meetup: Meetup) {
-  return (meetup.date?.getTime() ?? 0) < new Date().getTime();
+export function isDateInThePast(date?: Date) {
+  return (date?.getTime() ?? 0) < new Date().getTime();
 }
 
 export function shouldDisplayTicketButton(event: Event) {
-  return event.tickets && !isEventInThePast(event);
+  return event.tickets && !isDateInThePast(event.date);
 }

@@ -43,7 +43,7 @@ export function About(
                         {props.meetup.location.name},{" "}
                         {props.meetup.location.address}.
                       </strong>{" "}
-                      Join us on Comwork&apos;s offices to share experiences and
+                      Join us in Comwork&apos;s offices to share experiences and
                       network.
                     </span>
                   </li>
@@ -62,7 +62,7 @@ export function About(
                         {formatDateTime(props.meetup.date)}.
                       </time>{" "}
                       Come enjoy two conferences and a networking cocktail to
-                      end September.
+                      wrap up September on a high note.
                     </span>
                   </li>
                 )}
