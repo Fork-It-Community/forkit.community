@@ -1,4 +1,4 @@
-import type { Event } from "@/content/events";
+import type { Event } from "../events";
 import { formatDateTime } from "@/lib/utils";
 import { Calendar, MapPin } from "lucide-react";
 import LeVillageByCA from "./le-village-by-ca.jpg";
