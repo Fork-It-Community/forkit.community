@@ -1,12 +1,11 @@
 import collections from "@/content/collections";
 import Link from "next/link";
-import { isEventInThePast } from "@/lib/utils";
+import { isDateInThePast } from "@/lib/utils";
 import { EventCard } from "@/components/event-card";
 
 export const PastEvents = async () => {
-  const pastEvents = (await collections.event.getAll()).filter((event) =>
-    isEventInThePast(event),
-  );
+  const allEvents = await collections.event.getAll();
+  const pastEvents = allEvents.filter((event) => isDateInThePast(event.date));
 
   return (
     <section className="relative overflow-hidden bg-gray-950 py-24 sm:py-32">

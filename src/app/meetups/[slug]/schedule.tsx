@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import collections, { Event } from "@/content/collections";
+import collections, { Meetup } from "@/content/collections";
 import { cn, formatTime } from "@/lib/utils";
 import { Mail } from "lucide-react";
 import Image from "next/image";
@@ -8,22 +8,20 @@ import DefaultImg from "@/../public/speakers/speaker-default.jpg";
 import { match } from "ts-pattern";
 import { LanguageBadge } from "@/components/language-badge";
 import { LocationBadge } from "@/components/location-badge";
-import { FavoritesContextProvider } from "@/app/events/[slug]/contexts/FavoritesContext";
-import { FavoriteButton } from "@/components/favorite-button";
 import { FeedbackCTA } from "@/components/feedback-cta";
 import { ReactNode } from "react";
 
-function ScheduleComingSoon(props: Readonly<{ event: Event }>) {
+function ScheduleComingSoon(props: Readonly<{ meetup: Meetup }>) {
   return (
-    <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:flex lg:items-center lg:justify-between lg:px-8">
+    <div className="mx-auto max-w-7xl px-6 py-24 lg:flex lg:items-center lg:justify-between lg:px-8">
       <h2 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
         Schedule is coming soon !
       </h2>
 
       <Button asChild>
         <a
-          href={`mailto:rudy@forkit.community?subject=${props.event.date?.getFullYear()} ${
-            props.event.name
+          href={`mailto:rudy@forkit.community?subject=${props.meetup.date?.getFullYear()} ${
+            props.meetup.name
           } Sponsorship`}
           className="mt-6"
         >
@@ -61,8 +59,8 @@ function TimeAndDuration(props: {
 
 async function CardConference(
   props: Readonly<{
-    activity: NonNullable<Event["schedule"]>[number];
-    event: Event;
+    activity: NonNullable<Meetup["schedule"]>[number];
+    meetup: Meetup;
   }>,
 ) {
   if (!props.activity.slug) {
@@ -96,7 +94,7 @@ async function CardConference(
       </div>
 
       <Link
-        href={`/events/${props.event.metadata.slug}/talks/${talk.metadata.slug}`}
+        href={`/meetups/${props.meetup.metadata.slug}/talks/${talk.metadata.slug}`}
         className={cn(
           "flex w-full flex-[4] gap-2 rounded-lg border-2 border-gray-600 bg-gray-900 p-2 px-6 py-4 hover:border-gray-500 hover:bg-gray-800",
           props.activity.type === "roundtable" &&
@@ -115,7 +113,7 @@ async function CardConference(
               </TimeAndDuration>
               {!!props.activity.location && (
                 <LocationBadge>{props.activity.location}</LocationBadge>
-              )}
+              )}{" "}
             </div>
 
             <p className="text-xl font-semibold">{talk.title}</p>
@@ -153,11 +151,6 @@ async function CardConference(
           </div>
           <div className="flex flex-row items-center justify-between">
             <LanguageBadge language={talk.language} />
-            <FavoriteButton
-              talkSlug={talk.metadata.slug}
-              isIconButton
-              size="sm"
-            />
           </div>
         </div>
       </Link>
@@ -167,7 +160,7 @@ async function CardConference(
 
 async function CardBreak(
   props: Readonly<{
-    break: NonNullable<Event["schedule"]>[number];
+    break: NonNullable<Meetup["schedule"]>[number];
   }>,
 ) {
   const sponsor = props.break.sponsorSlug
@@ -227,43 +220,41 @@ async function CardBreak(
   );
 }
 
-export async function Schedule(props: Readonly<{ event: Event }>) {
-  if (!props.event.schedule) {
+export async function Schedule(props: Readonly<{ meetup: Meetup }>) {
+  if (!props.meetup.schedule) {
     return (
       <div className="bg-gray-950">
-        <ScheduleComingSoon event={props.event} />
+        <ScheduleComingSoon meetup={props.meetup} />
       </div>
     );
   }
 
-  const activities = [...props.event.schedule].sort(
+  const activities = [...props.meetup.schedule].sort(
     (talk1, talk2) =>
       (talk1.startTime?.valueOf() ?? 0) - (talk2.startTime?.valueOf() ?? 0),
   );
 
   return (
     <div className="flex flex-col gap-4">
-      <FavoritesContextProvider eventSlug={props.event.metadata.slug}>
-        {activities.map((activity) =>
-          match(activity.type)
-            .with("conference", "roundtable", () => (
-              <CardConference
-                activity={activity}
-                event={props.event}
-                key={activity.slug}
-              />
-            ))
-            .with("break", () => (
-              <CardBreak break={activity} key={activity.name} />
-            ))
-            .otherwise(() => null),
-        )}
-      </FavoritesContextProvider>
+      {activities.map((activity) =>
+        match(activity.type)
+          .with("conference", "roundtable", () => (
+            <CardConference
+              activity={activity}
+              meetup={props.meetup}
+              key={activity.slug}
+            />
+          ))
+          .with("break", () => (
+            <CardBreak break={activity} key={activity.name} />
+          ))
+          .otherwise(() => null),
+      )}
     </div>
   );
 }
 
-export const ScheduleSection = (props: Readonly<{ event: Event }>) => {
+export const ScheduleSection = (props: Readonly<{ meetup: Meetup }>) => {
   return (
     <div className="bg-gray-950">
       <div
@@ -273,20 +264,22 @@ export const ScheduleSection = (props: Readonly<{ event: Event }>) => {
         <h2 className="text-center font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
           Schedule
         </h2>
-        <Schedule event={props.event} />
+        <Schedule meetup={props.meetup} />
 
-        <p className="text-center">
-          You can find a{" "}
-          <Link
-            href={`/events/${props.event.metadata.slug}/schedule`}
-            className="underline hover:no-underline"
-          >
-            dedicated schedule page
-          </Link>{" "}
-          for easier consultation for the big day.
-        </p>
-        {props.event.feedback && (
-          <FeedbackCTA href={props.event.feedback.link} />
+        {props.meetup.schedule && (
+          <p className="text-center">
+            You can find a{" "}
+            <Link
+              href={`/meetups/${props.meetup.metadata.slug}/schedule`}
+              className="underline hover:no-underline"
+            >
+              dedicated schedule page
+            </Link>{" "}
+            for easier consultation for the big day.
+          </p>
+        )}
+        {props.meetup.feedback && (
+          <FeedbackCTA href={props.meetup.feedback.link} />
         )}
       </div>
     </div>
