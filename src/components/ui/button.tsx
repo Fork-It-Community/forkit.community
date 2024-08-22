@@ -17,7 +17,7 @@ const buttonVariants = cva(
         secondary:
           "bg-black text-primary hover:bg-neutral-900 border border-neutral-700",
         ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary text-sm underline-offset-4 underline p-0",
+        link: "text-primary text-sm underline-offset-4 underline p-0 hover:no-underline",
       },
       size: {
         default: "h-10 px-4 py-2",
@@ -26,6 +26,12 @@ const buttonVariants = cva(
         icon: "h-10 w-10",
       },
     },
+    compoundVariants: [
+      {
+        variant: "link",
+        className: "p-0 h-auto",
+      },
+    ],
     defaultVariants: {
       variant: "default",
       size: "default",
