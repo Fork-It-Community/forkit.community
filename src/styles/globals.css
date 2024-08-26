@@ -36,12 +36,20 @@
   }
 }
 
+/* Shadcn config */
 @layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Custom config */
+@layer base {
+  h2 {
+    @apply text-xl text-foreground font-heading
   }
 }
 
