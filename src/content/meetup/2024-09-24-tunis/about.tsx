@@ -14,7 +14,7 @@ export function About(
   return (
     <div id="venue" className="relative bg-gray-900">
       <div className="mx-auto max-w-7xl lg:flex lg:justify-between lg:px-8 xl:justify-end">
-        <div className="lg:flex lg:w-1/2 lg:shrink lg:grow-0 xl:absolute xl:inset-y-0 xl:right-1/2 xl:w-1/2">
+        <div className="flex-col lg:flex lg:w-1/2 lg:shrink lg:grow-0 xl:absolute xl:inset-y-0 xl:right-1/2 xl:w-1/2">
           <div className="relative h-80 lg:-ml-8 lg:h-auto lg:w-full lg:grow xl:ml-0">
             <Image
               className="absolute inset-0 h-full w-full bg-gray-950 object-cover object-left"
@@ -24,6 +24,7 @@ export function About(
               alt=""
             />
           </div>
+          <p className="py-4 text-center text-sm">@ghaziihammami</p>
         </div>
         <div className="px-6 lg:contents">
           <div className="mx-auto flex max-w-2xl flex-col gap-8 pb-24 pt-16 sm:pb-32 sm:pt-20 lg:ml-8 lg:mr-0 lg:w-full lg:max-w-lg lg:flex-none lg:pt-32 xl:w-1/2">
