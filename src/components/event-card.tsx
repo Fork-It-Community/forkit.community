@@ -1,5 +1,5 @@
 import type { Event } from "@/content/events/events";
-import { formatTime } from "@/lib/utils";
+import { cn, formatTime } from "@/lib/utils";
 import { MapPin } from "lucide-react";
 
 type EventCardProps = {
@@ -14,25 +14,29 @@ type EventCardProps = {
 export const EventCard = (props: EventCardProps) => {
   return (
     <article
-      className={`relative flex flex-col rounded-lg p-4 md:p-6
-        ${props.eventType === 'conference' ? '' : 'border border-neutral-700 bg-neutral-900'}
-        ${props.eventType === 'conference' ? 'bg-cover bg-center' : ''}
-      `}
+      className={cn(
+        "relative flex flex-col rounded-lg p-4 md:p-6",
+        props.eventType === "conference"
+          ? "bg-cover bg-center"
+          : "border border-neutral-700 bg-neutral-900",
+      )}
       style={{
-        backgroundImage: props.eventType === 'conference' ?
-          `linear-gradient(270deg, rgba(0, 0, 0, 0) 39.76%, rgba(0, 0, 0, 0.8) 100%), url(${props.image?.src})`
-          : "none",
+        backgroundImage:
+          props.eventType === "conference"
+            ? `linear-gradient(270deg, rgba(0, 0, 0, 0) 39.76%, rgba(0, 0, 0, 0.8) 100%), url(${props.image?.src})`
+            : "none",
       }}
     >
-      {props.eventType === 'conference' && (
+      {props.eventType === "conference" && (
         <div
-          className="absolute inset-0 left-0 w-full h-full rounded-lg"
+          className="absolute inset-0 left-0 h-full w-full rounded-lg"
           style={{
-            background: 'linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 50%)',
-            backdropFilter: 'blur(10px)',
-            maskImage: 'linear-gradient(90deg, black 30%, transparent 70%)',
+            background:
+              "linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 50%)",
+            backdropFilter: "blur(10px)",
+            maskImage: "linear-gradient(90deg, black 30%, transparent 70%)",
           }}
-        ></div>
+        />
       )}
 
       <div className="relative z-10 flex flex-col justify-between gap-6 sm:flex-row">
@@ -88,5 +92,5 @@ export const EventCard = (props: EventCardProps) => {
         )}
       </div>
     </article>
-  )
-}
+  );
+};
