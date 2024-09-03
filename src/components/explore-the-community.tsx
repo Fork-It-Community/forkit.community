@@ -1,19 +1,23 @@
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 
-export const ExploreTheCommunity = (props: Readonly<{ title: string }>) => {
+export const ExploreTheCommunity = (
+  props: Readonly<{ title?: string; href?: string }>,
+) => {
   return (
-    <div className="flex flex-row justify-between items-center min-h-10 gap-1 p-2 pl-4 bg-[#171717] bg-opacity-40 rounded-md">
+    <div className="flex min-h-10 flex-row items-center justify-between gap-1 rounded-md bg-[#171717] bg-opacity-40 p-2 pl-4">
       <p className="text-xs font-medium">
-        {props.title}
+        {props?.title || "Fork it! Community"}
       </p>
-      <Button size="sm" className="max-h-6 text-xs">
-        Explore the community
-        <ArrowUpRight
-          className="w-3.5 h-3.5 ml-1 inline-block"
-          aria-hidden="true"
-        />
+      <Button asChild size="sm" className="max-h-6 text-xs">
+        <a href={props?.href || "/"}>
+          Explore the community
+          <ArrowUpRight
+            className="ml-1 inline-block h-3.5 w-3.5"
+            aria-hidden="true"
+          />
+        </a>
       </Button>
     </div>
   );
-}
+};
