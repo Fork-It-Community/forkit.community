@@ -9,7 +9,7 @@ export const Speakers = (props: Readonly<{ speaker: Speaker }>) => {
       >
         <img
           src={props.speaker.imageUrl}
-          alt={`${props.speaker.name}-profile-picture`}
+          alt={`${props.speaker.name} profile picture`}
         />
       </div>
       <div className="flex flex-col gap-3">
