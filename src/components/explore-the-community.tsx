@@ -5,11 +5,11 @@ export const ExploreTheCommunity = (
   props: Readonly<{ title?: string; href?: string }>,
 ) => {
   return (
-    <div className="flex min-h-10 flex-row items-center justify-between gap-1 rounded-md bg-[#171717] bg-opacity-40 p-2 pl-4">
+    <div className="flex min-h-10 flex-row items-center justify-between gap-1 rounded-md bg-neutral-900 bg-opacity-40 p-2 pl-4">
       <p className="text-xs font-medium">
         {props?.title || "Fork it! Community"}
       </p>
-      <Button asChild size="sm" className="max-h-6 text-xs">
+      <Button asChild size="sm" className="max-h-6 text-xs px-2">
         <a href={props?.href || "/"}>
           Explore the community
           <ArrowUpRight
