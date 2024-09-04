@@ -4,7 +4,7 @@ import { MapPinIcon } from "lucide-react";
 
 export const LocationBadge = (props: { children: ReactNode }) => {
   return (
-    <Badge variant="outline" className="w-fit">
+    <Badge variant="ghost" className="w-fit text-neutral-400">
       <MapPinIcon className="mr-2 h-3 w-3" />
       {props.children}
     </Badge>
