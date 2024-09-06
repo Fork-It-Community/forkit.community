@@ -1,7 +1,13 @@
 ---
 import HTMLLayout from "@/layouts/HTMLLayout.astro";
+import { getEventsCollection } from "@/lib/collections";
+
+const events = await getEventsCollection();
 ---
 
 <HTMLLayout>
   <h1 class="font-heading">Fork it! Community</h1>
+  <ul>
+    {events.map((event) => <li>{event.data.name}</li>)}
+  </ul>
 </HTMLLayout>
