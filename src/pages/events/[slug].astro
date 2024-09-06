@@ -1,0 +1,20 @@
+---
+import HTMLLayout from "@/layouts/HTMLLayout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const events = await getCollection("events");
+
+  return events.map((event) => ({
+    params: { slug: event.slug },
+  }));
+}
+const { slug } = Astro.params;
+const { Content } = await import(
+  `./../../content/event-sub-pages/${slug}/informations.mdx`
+);
+---
+
+<HTMLLayout>
+  <Content />
+</HTMLLayout>
