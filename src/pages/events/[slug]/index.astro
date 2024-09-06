@@ -1,0 +1,33 @@
+---
+import { getEventsCollection } from "@/lib/collections";
+import { getEntries } from "astro:content";
+
+export async function getStaticPaths() {
+  const events = await getEventsCollection();
+
+  return Promise.all(
+    events.map(async (event) => ({
+      params: { slug: event.slug },
+      props: {
+        name: event.data.name,
+        subpages: await getEntries(event.data.subpages),
+      },
+    })),
+  );
+}
+
+const { slug } = Astro.params;
+const { name, subpages } = Astro.props;
+---
+
+<h1>{name}</h1>
+<p>{slug}</p>
+<ul>
+  {
+    subpages.map((subpage) => (
+      <li>
+        <a href={`/events/${subpage.slug}`}>{subpage.slug}</a>
+      </li>
+    ))
+  }
+</ul>

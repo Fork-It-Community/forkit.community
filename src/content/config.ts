@@ -1,5 +1,5 @@
 import { talksCollection } from "./talks/talks";
-import { eventsCollection } from "./events/events";
+import { eventsCollection } from "./events_rename/events";
 import { organizersCollection } from "./organizers/organizers";
 import { partnersCollection } from "./partners/partners";
 import { speakersCollection } from "./speakers/speaker";

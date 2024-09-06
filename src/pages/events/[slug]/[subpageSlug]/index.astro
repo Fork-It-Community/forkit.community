@@ -1,0 +1,29 @@
+---
+import {
+  getEventsCollection,
+  getEventsSubpagesCollection,
+} from "@/lib/collections";
+
+export async function getStaticPaths() {
+  const events = await getEventsCollection();
+
+  const subPages = (
+    await Promise.all(
+      events.map(async (event) => await getEventsSubpagesCollection(event)),
+    )
+  )
+    .flat()
+    .map((subpage) => ({ slugs: subpage.slug.split("/"), subpage }));
+
+  return subPages.map(({ slugs: [slug, subpageSlug], subpage }) => ({
+    params: { slug, subpageSlug },
+    props: {
+      subpage,
+    },
+  }));
+}
+
+const { subpage } = Astro.props;
+---
+
+<h1>{subpage.data.title}</h1>
