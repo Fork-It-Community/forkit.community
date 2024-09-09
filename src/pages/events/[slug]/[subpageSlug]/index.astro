@@ -9,7 +9,9 @@ export async function getStaticPaths() {
 
   const subPages = (
     await Promise.all(
-      events.map(async (event) => await getEventsSubpagesCollection(event)),
+      events.map(
+        async (event) => await getEventsSubpagesCollection(event.data),
+      ),
     )
   )
     .flat()
