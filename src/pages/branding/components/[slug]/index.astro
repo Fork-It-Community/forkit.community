@@ -1,0 +1,25 @@
+---
+import HTMLLayout from "@/layouts/HTMLLayout.astro";
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+
+export const getStaticPaths = (async () => {
+  const components = await getCollection("components");
+
+  return components.map((component) => ({
+    params: { slug: component.slug },
+    props: component,
+  }));
+}) satisfies GetStaticPaths;
+
+const { data, render } = Astro.props;
+const { Content } = await render();
+---
+
+<!-- TODO replace the layout when the good one is available -->
+<HTMLLayout>
+  <h1>{data.name}</h1>
+  <div class="prose prose-invert p-8 prose-h1:mt-14">
+    <Content />
+  </div>
+</HTMLLayout>

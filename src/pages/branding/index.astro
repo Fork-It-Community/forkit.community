@@ -1,0 +1,25 @@
+---
+import HTMLLayout from "@/layouts/HTMLLayout.astro";
+import { getCollection } from "astro:content";
+
+const components = await getCollection("components");
+---
+
+<!-- TODO update the layout when we have the good one -->
+<HTMLLayout>
+  <h1>Branding</h1>
+  <ul>
+    {
+      components.map((component) => (
+        <li>
+          <a
+            href={`/branding/components/${component.slug}`}
+            title={component.data.name}
+          >
+            {component.data.name}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</HTMLLayout>
