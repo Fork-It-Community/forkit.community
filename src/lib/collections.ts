@@ -1,9 +1,10 @@
-import { getCollection, getEntries, type CollectionEntry } from "astro:content";
+import { Event } from "@/content/events/events";
+import { getCollection, getEntries } from "astro:content";
 
 export function getEventsCollection() {
   return getCollection("events");
 }
 
-export function getEventsSubpagesCollection(event: CollectionEntry<"events">) {
-  return getEntries(event.data.subpages);
+export function getEventsSubpagesCollection(event: Event) {
+  return getEntries(event.subpages);
 }
