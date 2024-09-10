@@ -1,5 +1,5 @@
 import { z, defineCollection } from "astro:content";
-import { zSocialTypes } from "../config";
+import { zSocialTypes } from "@/content/utils";
 
 export type Organizer = z.infer<ReturnType<typeof zOrganizer>>;
 const zOrganizer = () =>
