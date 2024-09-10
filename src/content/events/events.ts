@@ -100,7 +100,7 @@ const zEvent = () =>
           .optional(),
       })
       .optional(),
-    subpages: z.array(reference("eventsSubPages")),
+    subPages: z.array(reference("eventsSubPages")),
   });
 
 export const eventsCollection = defineCollection({
