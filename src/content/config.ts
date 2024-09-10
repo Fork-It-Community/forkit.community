@@ -1,4 +1,4 @@
-import { defineCollection, reference, z } from "astro:content";
+import { z } from "astro:content";
 import { talksCollection } from "./talks/talks";
 import { eventsCollection } from "./events/events";
 import { organizersCollection } from "./organizers/organizers";
@@ -16,5 +16,5 @@ export const collections = {
   events: eventsCollection,
   speaker: speakersCollection,
   talk: talksCollection,
-  eventsSubpages: eventsSubPagesCollection,
+  eventsSubPages: eventsSubPagesCollection,
 };
