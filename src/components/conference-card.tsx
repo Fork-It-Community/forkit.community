@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import type { Key, ReactNode } from "react";
+import type { ReactNode } from "react";
 import type { Event } from "@/content/events/events";
+import type { Talk } from "@/content/talks/talks";
+import type { Speaker } from "@/content/speakers/speaker";
+import type { Sponsor } from "@/content/sponsors/sponsors";
 import { cn, formatTime } from "@/lib/utils";
 import { LocationBadge } from "@/components/location-badge";
 import { LanguageBadge } from "@/components/language-badge";
 import { FavoriteButton } from "@/components/favorite-button";
-import { getCollection, getEntries, getEntry } from "astro:content";
-import DefaultImg from "@/../public/speakers/speaker-default.jpg";
+import { getEntry } from "astro:content";
 
 type ConferenceCardProps = {
   activities: Event["schedule"][number];
@@ -19,27 +21,35 @@ type BreakCardProps = {
 };
 
 function TimeAndDuration(props: {
-  startTime?: Date;
-  duration?: number;
+  startTime?: Date | string | undefined;
+  duration?: number | undefined;
   className?: string;
   children?: ReactNode;
 }) {
+  let startTime: Date | undefined;
+
+  if (typeof props.startTime === "string") {
+    startTime = new Date(props.startTime);
+  } else if (props.startTime instanceof Date) {
+    startTime = props.startTime
+  }
+
   return (
-    props.startTime instanceof Date && (
+    props.startTime && (
       <div
         className={cn(
           "flex flex-row gap-2 text-sm text-gray-300",
           props.className,
         )}
       >
-        <time dateTime={props.startTime.toISOString()}>
-          {props.startTime.toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true,
-          })}
+        <time dateTime={startTime?.toISOString()}>
+          {formatTime(props.startTime)}
         </time>
-        {props.duration && <p className="font-heading text-sm text-neutral-400">{props.duration} minutes</p>}
+        {props.duration && (
+          <p className="font-heading text-sm text-neutral-400">
+            {props.duration} minutes
+          </p>
+        )}
         {props.children}
       </div>
     )
@@ -47,9 +57,25 @@ function TimeAndDuration(props: {
 }
 
 
+type TalkStateProps = {
+  id: string;
+  collection: string;
+  body: string;
+  slug: string;
+  data: Talk;
+}
+
+type SpeakerStateProps = {
+  id: string;
+  collection: string;
+  body: string;
+  slug: string;
+  data: Speaker;
+}
+
 const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
-  const [talk, setTalk] = useState<Record<string, unknown>>();
-  const [speakers, setSpeakers] = useState<Record<string, unknown>[]>([]);
+  const [talk, setTalk] = useState<TalkStateProps>();
+  const [speakers, setSpeakers] = useState<SpeakerStateProps[]>([]);
 
   if (!props.activities.slug) {
     return;
@@ -59,7 +85,7 @@ const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
     try {
       if (props?.activities?.slug) {
         const fetchedTalk = await getEntry("talks", props?.activities?.slug);
-        setTalk(fetchedTalk);
+        setTalk(fetchedTalk as TalkStateProps);
 
         if (fetchedTalk?.data?.speakers) {
           const fetchedSpeakers = await Promise.all(
@@ -97,9 +123,9 @@ const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
                 </p>
                 {talk?.data?.speakers && (
                   <div className="text-sm font-semibold text-gray-300">
-                    {talk.data.speakers.map((speakerSlug, index) => (
+                    {talk?.data?.speakers.map((speakerSlug, index) => (
                       <p key={index}>
-                        {speakers.find(
+                        {speakers?.find(
                           (speaker) => speaker.slug === speakerSlug,
                         )?.data?.name || "Unknown Speaker"}
                       </p>
@@ -141,7 +167,9 @@ const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
             <div>
               <div className="flex flex-row justify-between">
                 <div className="flex self-end">
-                  <LanguageBadge language={talk?.data?.language} />
+                  <LanguageBadge  
+                    language={talk?.data?.language as "french" | "english"}
+                  />
                 </div>
                 <div>
                   <FavoriteButton
@@ -160,27 +188,27 @@ const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
 };
 
 const BreakCard = (props: Readonly<BreakCardProps>) => {
-  const [sponsor, setSponsor] = useState<Record<string, unknown>>();
+  const [sponsor, setSponsor] = useState<Sponsor>();
 
-  const fetchSponsor = async () => {
-    try {
-      if (props?.break?.sponsorSlug) {
-        const fetchedSponsor = await getEntry(
-          "sponsors",
-          props?.break?.sponsorSlug,
-        );
-        setSponsor(fetchedSponsor);
-      }
-    } catch (error) {
-      console.error("Failed to fetch sponsor data:", error);
-    }
-  };
+  // const fetchSponsor = async () => {
+  //   try {
+  //     if (props?.break?.sponsorSlug) {
+  //       const fetchedSponsor = await getEntry(
+  //         "sponsors",
+  //         props?.break?.sponsorSlug,
+  //       );
+  //       setSponsor(fetchedSponsor?.data);
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed to fetch sponsor data:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (props?.break?.sponsorSlug) {
-      fetchSponsor();
-    }
-  }, [props?.break?.sponsorSlug]);
+  // useEffect(() => {
+  //   if (props?.break?.sponsorSlug) {
+  //     fetchSponsor();
+  //   }
+  // }, [props?.break?.sponsorSlug]);
 
   if (!props?.break) {
     return;
@@ -205,8 +233,8 @@ const BreakCard = (props: Readonly<BreakCardProps>) => {
               )}
             >
               <img
-                src={sponsor?.data?.image?.src}
-                alt={sponsor?.data?.image?.alt}
+                src={sponsor?.image?.src}
+                alt={sponsor?.image?.alt}
                 className="h-full w-full object-cover"
               />
             </div>
@@ -229,7 +257,7 @@ export const EventProgram = (props: Readonly<{ event: Event }>) => {
           <div className="flex flex-col gap-4">
             <div className="flex flex-row justify-between">
               <TimeAndDuration
-                startTime={new Date(activities?.startTime)}
+                startTime={activities?.startTime}
                 duration={activities?.duration}
                 className="flex flex-wrap font-heading text-sm"
               />

@@ -1,7 +1,13 @@
 ---
 import HTMLLayout from "@/layouts/HTMLLayout.astro";
+import { EventProgram } from "@/components/conference-card";
+import * as event from "@/content/events/rouen-france-2024.mdx";
 ---
 
 <HTMLLayout>
   <h1 class="font-heading">Fork it! Community</h1>
+  <EventProgram
+    event={event.frontmatter}
+    client:load
+  />
 </HTMLLayout>
