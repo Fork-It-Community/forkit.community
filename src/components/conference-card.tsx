@@ -173,7 +173,7 @@ const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
                 </div>
                 <div>
                   <FavoriteButton
-                    talkSlug={talk?.slug}
+                    // talkSlug={talk?.slug}
                     isIconButton
                     size="sm"
                   />
@@ -190,25 +190,25 @@ const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
 const BreakCard = (props: Readonly<BreakCardProps>) => {
   const [sponsor, setSponsor] = useState<Sponsor>();
 
-  // const fetchSponsor = async () => {
-  //   try {
-  //     if (props?.break?.sponsorSlug) {
-  //       const fetchedSponsor = await getEntry(
-  //         "sponsors",
-  //         props?.break?.sponsorSlug,
-  //       );
-  //       setSponsor(fetchedSponsor?.data);
-  //     }
-  //   } catch (error) {
-  //     console.error("Failed to fetch sponsor data:", error);
-  //   }
-  // };
+  const fetchSponsor = async () => {
+    try {
+      if (props?.break?.sponsorSlug) {
+        const fetchedSponsor = await getEntry(
+          "sponsors",
+          props?.break?.sponsorSlug,
+        );
+        setSponsor(fetchedSponsor?.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch sponsor data:", error);
+    }
+  };
 
-  // useEffect(() => {
-  //   if (props?.break?.sponsorSlug) {
-  //     fetchSponsor();
-  //   }
-  // }, [props?.break?.sponsorSlug]);
+  useEffect(() => {
+    if (props?.break?.sponsorSlug) {
+      fetchSponsor();
+    }
+  }, [props?.break?.sponsorSlug]);
 
   if (!props?.break) {
     return;
