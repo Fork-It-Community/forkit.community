@@ -119,7 +119,7 @@ const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
             <div className="flex flex-row justify-between gap-4">
               <div className="flex flex-col gap-1">
                 <p className="font-heading text-lg font-medium leading-6">
-                  {props.activities.name || "Conference Name"}
+                  {talk?.data?.title || "Conference Name"}
                 </p>
                 {talk?.data?.speakers && (
                   <div className="text-sm font-semibold text-gray-300">
