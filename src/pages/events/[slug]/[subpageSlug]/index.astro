@@ -3,6 +3,7 @@ import {
   getEventsCollection,
   getEventsSubpagesCollection,
 } from "@/lib/collections";
+import SubPagesLayout from "@/layouts/SubPagesLayout.astro";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -26,6 +27,10 @@ export async function getStaticPaths() {
 }
 
 const { subpage } = Astro.props;
+const { Content } = await subpage?.render();
 ---
 
-<h1>{subpage.data.title}</h1>
+<SubPagesLayout>
+  <h1>{subpage.data.title}</h1>
+  <Content />
+</SubPagesLayout>

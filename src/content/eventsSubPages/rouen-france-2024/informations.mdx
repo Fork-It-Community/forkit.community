@@ -1,23 +1,24 @@
 ---
 title: "Information - Rouen France 2024"
 ---
-# How to get there ?
+import { Calendar, MapPin } from "lucide-react";
 
-<address>107 All. François Mitterrand, 76100 Rouen</address>
-<div className="flex flex-row gap-2">
-  <a href="https://maps.app.goo.gl/vesniFrPmvanVWws5" className="text-center" target="_blank">
-    Google Maps
-  </a>
-  <a href="https://maps.apple.com/?address=107%20All%C3%A9e%20Fran%C3%A7ois%20Mitterrand,%2076100%20Rouen,%20France&auid=9214719264377813284&ll=49.441092,1.072884&lsp=9902&q=Le%20Village%20by%20CA%20Rouen%20Vall%C3%A9e%20de%20Seine" target="_blank">
-    Apple Maps
-  </a>
+# How to get there ?
+<div className="flex space-y-0 items-baseline gap-1 text-white ">
+  <MapPin className="mt-1 h-4 w-4 flex-none" aria-hidden="true"/> 
+  <div className="flex flex-col">
+    <p className="my-0">Le Village By Ca Rouen Vallée De Seine<br/>
+        107 All. François Mitterrand</p>
+    <p className="text-neutral-400 my-0">76100 Rouen, France</p>
+  </div>
 </div>
 
 <iframe
   width="100%"
-  height="350"
+  height="172"
   src="https://www.openstreetmap.org/export/embed.html?bbox=1.0703516006469729%2C49.43943835958661%2C1.075565814971924%2C49.44246952953406&amp;layer=mapnik&amp;marker=49.44095396798119%2C1.0729587078094482"
   style={{ border: "1px solid black" }}
+  className="rounded-lg"
 />
 
 ## Come by bike
