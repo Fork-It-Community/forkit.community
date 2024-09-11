@@ -18,7 +18,7 @@ export const FaqComponent = (props: Readonly<{ event: Event }>) => {
             {props.event.faq?.map((item) => (
               <AccordionItem key={item.question} value={item.question}>
                 <dt>
-                  <AccordionTrigger className="transition text-xl font-semibold hover:no-underline hover:text-neutral-400">
+                  <AccordionTrigger className="transition text-xl font-semibold hover:no-underline hover:text-neutral-400 text-left">
                     {item.question}
                   </AccordionTrigger>
                 </dt>
