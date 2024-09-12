@@ -30,7 +30,7 @@ const { subpage } = Astro.props;
 const { Content } = await subpage?.render();
 ---
 
-<SubPagesLayout>
+<SubPagesLayout title={subpage.data.title} description={subpage.data.description}>
   <h1>{subpage.data.title}</h1>
   <Content />
 </SubPagesLayout>

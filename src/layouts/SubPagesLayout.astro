@@ -2,11 +2,14 @@
 import "@fontsource/tomorrow";
 import "@fontsource-variable/inter";
 import "@/styles/globals.css";
+const {title, description} = Astro.props
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="description" content={description}/>
   </head>
   <body
     class="prose-headings::font-heading prose prose-invert mx-auto my-8 space-y-8 bg-black prose-h1:mt-6 prose-h1:text-2xl prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
