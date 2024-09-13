@@ -1,0 +1,13 @@
+---
+import "@fontsource/tomorrow";
+import "@fontsource-variable/inter";
+import "@/styles/globals.css";
+import Layout from "@/layouts/Layout.astro";
+const {event} = Astro.props
+---
+
+<Layout title={event.data.name} description?={event.data.excerpt}>
+  <div class="flex flex-col gap-8" >
+    <slot />
+  </div>
+</Layout>
