@@ -9,6 +9,7 @@ import { LocationBadge } from "@/components/location-badge";
 import { LanguageBadge } from "@/components/language-badge";
 import { FavoriteButton } from "@/components/favorite-button";
 import { getEntry } from "astro:content";
+import { FavoritesContextProvider } from "@/context/FavoritesContext";
 
 type ConferenceCardProps = {
   activities: Event["schedule"][number];
@@ -173,7 +174,7 @@ const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
                 </div>
                 <div>
                   <FavoriteButton
-                    // talkSlug={talk?.slug}
+                    talkSlug={talk?.data}
                     isIconButton
                     size="sm"
                   />
@@ -252,37 +253,39 @@ export const EventProgram = (props: Readonly<{ event: Event }>) => {
 
   return (
     <div className="flex flex-col gap-8">
-      {activities.map((activities) => {
-        return (
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-row justify-between">
-              <TimeAndDuration
-                startTime={activities?.startTime}
-                duration={activities?.duration}
-                className="flex flex-wrap font-heading text-sm"
-              />
-              <LocationBadge>{activities.location}</LocationBadge>
-            </div>
-            <div>
-              {(activities.type === "conference" ||
-                activities.type === "roundtable") && (
-                <ConferenceCard
-                  activities={activities}
-                  event={props.event}
-                  key={activities.slug}
+      <FavoritesContextProvider eventSlug={props.event} >
+        {activities.map((activities) => {
+          return (
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-row justify-between">
+                <TimeAndDuration
+                  startTime={activities?.startTime}
+                  duration={activities?.duration}
+                  className="flex flex-wrap font-heading text-sm"
                 />
-              )}
-              {activities.type === "break" && (
-                <BreakCard
-                  break={activities}
-                  event={props.event}
-                  key={activities.slug}
-                />
-              )}
+                <LocationBadge>{activities.location}</LocationBadge>
+              </div>
+              <div>
+                {(activities.type === "conference" ||
+                  activities.type === "roundtable") && (
+                  <ConferenceCard
+                    activities={activities}
+                    event={props.event}
+                    key={activities.slug}
+                  />
+                )}
+                {activities.type === "break" && (
+                  <BreakCard
+                    break={activities}
+                    event={props.event}
+                    key={activities.slug}
+                  />
+                )}
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </FavoritesContextProvider>
     </div>
   );
 };

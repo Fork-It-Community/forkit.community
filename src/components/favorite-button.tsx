@@ -1,26 +1,41 @@
 
-import { type FC, type MouseEvent, useState } from "react";
+import { type FC, type MouseEvent, useState, useEffect } from "react";
 
 import { Button, type ButtonProps } from "@/components/ui/button";
 import { Heart, HeartOff } from "lucide-react";
 
+import { useFavoriteContext } from "@/context/FavoritesContext";
+import Favorite from "@/services/Favorite";
+import type { Talk } from "@/content/talks/talks";
+
 type FavoriteButtonProps = ButtonProps & {
+  talkSlug: Talk | undefined
   isIconButton?: boolean;
 };
 
 export const FavoriteButton: FC<FavoriteButtonProps> = ({
+  talkSlug,
   isIconButton,
   ...rest
 }) => {
-  // const { addFavorite, removeFavorite, eventSlug } = useFavoriteContext();
+  const { addFavorite, removeFavorite, eventSlug } = useFavoriteContext();
   const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    if (!talkSlug) return;
+    setIsFavorite(Favorite.isFavorite(eventSlug, talkSlug));
+  }, [eventSlug, talkSlug]);
 
   const handleOnClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     e.preventDefault();
+    if (!talkSlug) return;
+
     if (isFavorite) {
+      removeFavorite(talkSlug);
       setIsFavorite(false);
     } else {
+      addFavorite(talkSlug);
       setIsFavorite(true);
     }
   };
