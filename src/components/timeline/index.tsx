@@ -50,9 +50,7 @@ const TimelineConnector = React.forwardRef<
       background:
         "repeating-linear-gradient(to bottom, #737373 0, #737373 1px , transparent 1px, transparent 2px) ",
       ...(isLast && {
-        mask: "linear-gradient(to bottom, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 0.5) 75%, rgba(0, 0, 0, 0) 100%)",
-        WebkitMask:
-          "linear-gradient(to bottom, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 0.3) 20%, rgba(0, 0, 0, 0) 55%)", // For Webkit browsers
+        mask: "linear-gradient(to bottom, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 0.3) 20%, rgba(0, 0, 0, 0) 55%)",
       }),
     }}
     {...props}
