@@ -6,14 +6,15 @@ import { calculateTimeLeft } from "@/lib/utils";
 export const Countdown = (props: Readonly<{ event: Event }>) => {
   const { event } = props;
 
-  if (!event.date) return null;
+  if (!event.date) return;
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(event?.date));
 
   useEffect(() => {
-    if (!event.date) return;
     const updateTimer = () => {
-      const formattedTime = calculateTimeLeft(event?.date as Date);
-      setTimeLeft(formattedTime);
+      if (event.date) {
+        const formattedTime = calculateTimeLeft(event.date);
+        setTimeLeft(formattedTime);
+      }
     };
     const timer = setInterval(updateTimer, 1000);
     updateTimer();
