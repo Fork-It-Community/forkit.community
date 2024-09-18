@@ -21,43 +21,32 @@ export const Countdown = (props: Readonly<{ event: Event }>) => {
     return () => clearInterval(timer);
   }, [event]);
 
+  const TimerDisplay = ({value, unit} : {value: string | number, unit: "Days" | "Hours" | "Minutes" | "Seconds"}) => {
+    return (
+      <div className="flex h-[66px] w-[66px] flex-col items-center rounded-md bg-neutral-900 bg-opacity-40 p-2">
+        <MotionNumber
+          value={value}
+          format={{ minimumIntegerDigits: 2 }}
+          className="font-heading text-2xl"
+        />
+        <p className="font-sans text-xs">{unit}</p>
+      </div>
+    )
+  }
+
   return (
     <div>
       <div className="flex items-center justify-center gap-1">
-        <div className="flex h-[66px] w-[66px] flex-col items-center rounded-md bg-neutral-900 bg-opacity-40 p-2">
-          <MotionNumber
-            value={timeLeft.days}
-            className="font-heading text-2xl"
-          />
-          <p className="font-sans text-xs">Days</p>
-        </div>
+        {TimerDisplay({value: timeLeft.days, unit: "Days"})}
         <div className="font-heading text-2xl">:</div>
 
-        <div className="flex h-[66px] w-[66px] flex-col items-center rounded-md bg-neutral-900 bg-opacity-40 p-2">
-          <MotionNumber
-            value={timeLeft.hours}
-            className="font-heading text-2xl"
-          />
-          <p className="font-sans text-xs">Hours</p>
-        </div>
+        {TimerDisplay({value: timeLeft.hours, unit: "Hours"})}
         <div className="font-heading text-2xl">:</div>
 
-        <div className="flex h-[66px] w-[66px] flex-col items-center rounded-md bg-neutral-900 bg-opacity-40 p-2">
-          <MotionNumber
-            value={timeLeft.minutes}
-            className="font-heading text-2xl"
-          />
-          <p className="font-sans text-xs">Minutes</p>
-        </div>
+        {TimerDisplay({value: timeLeft.minutes, unit: "Minutes"})}
         <div className="font-heading text-2xl">:</div>
 
-        <div className="flex h-[66px] w-[66px] flex-col items-center rounded-md bg-neutral-900 bg-opacity-40 p-2">
-          <MotionNumber
-            value={timeLeft.seconds}
-            className="font-heading text-2xl"
-          />
-          <p className="font-sans text-xs">Seconds</p>
-        </div>
+        {TimerDisplay({value: timeLeft.seconds, unit: "Seconds"})}
       </div>
     </div>
   );
