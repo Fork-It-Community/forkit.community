@@ -41,7 +41,7 @@ export const EventCard = (props: EventCardProps) => {
         {eventType === "event" ? (
           <div className="flex flex-col gap-2">
             <div className="flex flex-row gap-4">
-              <div className="flex items-center gap-2 text-sm text-neutral-400">
+              <div className="flex items-center gap-1 text-sm text-neutral-400">
                 {props.event.date && (
                   <time dateTime={props.event.date.toISOString()}>
                     {formatTime(props.event.date)}
@@ -54,7 +54,7 @@ export const EventCard = (props: EventCardProps) => {
                 )}
               </div>
             </div>
-            <div className="flex flex-col font-heading text-base text-secondary">
+            <div className="flex flex-col font-heading text-base text-secondary font-medium">
               {props.event.title}
             </div>
             <div>
@@ -83,9 +83,9 @@ export const EventCard = (props: EventCardProps) => {
                 </div>
               )}
             </div>
-            <div className="flex flex-col font-heading text-base text-secondary">
+            <p className="flex flex-col font-heading text-base text-secondary font-medium">
               {props.event.title}
-            </div>
+            </p>
           </div>
         )}
       </div>
