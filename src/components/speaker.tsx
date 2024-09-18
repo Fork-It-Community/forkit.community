@@ -1,7 +1,7 @@
 import type { Speaker } from "@/content/speakers/speaker"
 import { ICONS } from "./icons"
 
-export const Speakers = (props: Readonly<{ speaker: Speaker }>) => {
+export const SpeakerDetail = (props: Readonly<{ speaker: Speaker }>) => {
   return (
     <div className="flex flex-col gap-2">
       <div
