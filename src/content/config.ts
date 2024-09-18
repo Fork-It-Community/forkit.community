@@ -5,6 +5,7 @@ import { partnersCollection } from "./partners/partners";
 import { speakersCollection } from "./speakers/speaker";
 import { sponsorsCollection } from "./sponsors/sponsors";
 import { meetupsCollection } from "./meetups/meetups";
+import { podcastsCollection } from "./podcasts/podcasts";
 import { peopleCollection } from "./people/people";
 
 export const collections = {
@@ -16,4 +17,5 @@ export const collections = {
   speaker: speakersCollection,
   talk: talksCollection,
   people: peopleCollection,
+  podcasts: podcastsCollection,
 };
