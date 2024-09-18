@@ -12,7 +12,7 @@ import { getEntry } from "astro:content";
 import { FavoritesContextProvider } from "@/context/FavoritesContext";
 
 type ConferenceCardProps = {
-  activities: Event["schedule"][number];
+  activity: Event["schedule"][number];
   event: Event;
 };
 
@@ -22,19 +22,11 @@ type BreakCardProps = {
 };
 
 function TimeAndDuration(props: {
-  startTime?: Date | string | undefined;
-  duration?: number | undefined;
+  startTime?: Date | undefined;
+  duration?: number;
   className?: string;
   children?: ReactNode;
 }) {
-  let startTime: Date | undefined;
-
-  if (typeof props.startTime === "string") {
-    startTime = new Date(props.startTime);
-  } else if (props.startTime instanceof Date) {
-    startTime = props.startTime
-  }
-
   return (
     props.startTime && (
       <div
@@ -43,7 +35,7 @@ function TimeAndDuration(props: {
           props.className,
         )}
       >
-        <time dateTime={startTime?.toISOString()}>
+        <time dateTime={props.startTime?.toISOString()}>
           {formatTime(props.startTime)}
         </time>
         {props.duration && (
@@ -57,15 +49,6 @@ function TimeAndDuration(props: {
   );
 }
 
-
-type TalkStateProps = {
-  id: string;
-  collection: string;
-  body: string;
-  slug: string;
-  data: Talk;
-}
-
 type SpeakerStateProps = {
   id: string;
   collection: string;
@@ -75,22 +58,23 @@ type SpeakerStateProps = {
 }
 
 const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
-  const [talk, setTalk] = useState<TalkStateProps>();
+  const [talk, setTalk] = useState<Talk>();
   const [speakers, setSpeakers] = useState<SpeakerStateProps[]>([]);
+  
 
-  if (!props.activities.slug) {
+  if (!props.activity.slug) {
     return;
   }
 
   const fetchTalk = async () => {
     try {
-      if (props?.activities?.slug) {
-        const fetchedTalk = await getEntry("talks", props?.activities?.slug);
-        setTalk(fetchedTalk as TalkStateProps);
+      if (props?.activity?.slug) {
+        const fetchedTalk = await getEntry("talks", props?.activity?.slug);
+        setTalk(fetchedTalk?.data);
 
         if (fetchedTalk?.data?.speakers) {
           const fetchedSpeakers = await Promise.all(
-            fetchedTalk?.data?.speakers.map(async (speaker: any) => {
+            fetchedTalk?.data?.speakers.map(async (speaker: string) => {
               return await getEntry("speakers", speaker);
             }),
           );
@@ -104,7 +88,7 @@ const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
 
   useEffect(() => {
     fetchTalk();
-  }, [props.activities.slug]);
+  }, [props.activity.slug]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -112,7 +96,7 @@ const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
         href="/"
         className={cn(
           "flex w-full flex-[4] gap-2 rounded-lg border-2 border-neutral-600 bg-neutral-900 p-4",
-          props.activities.type === "break" && "bg-neutral-800",
+          props.activity.type === "break" && "bg-neutral-800",
         )}
       >
         <div className="flex w-full">
@@ -120,11 +104,11 @@ const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
             <div className="flex flex-row justify-between gap-4">
               <div className="flex flex-col gap-1">
                 <p className="font-heading text-lg font-medium leading-6">
-                  {talk?.data?.title || "Conference Name"}
+                  {talk?.title || "Conference Name"}
                 </p>
-                {talk?.data?.speakers && (
+                {talk?.speakers && (
                   <div className="text-sm font-semibold text-gray-300">
-                    {talk?.data?.speakers.map((speakerSlug, index) => (
+                    {talk?.speakers.map((speakerSlug, index) => (
                       <p key={index}>
                         {speakers?.find(
                           (speaker) => speaker.slug === speakerSlug,
@@ -134,18 +118,18 @@ const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
                   </div>
                 )}
               </div>
-              {(props.activities.type === "conference" ||
-                props.activities.type === "roundtable") &&
+              {(props.activity.type === "conference" ||
+                props.activity.type === "roundtable") &&
                 speakers.length > 0 && (
                   <div className="grid grid-cols-2 gap-2">
-                    {talk?.data?.speakers.map(
-                      (speakerSlug: unknown, index: number) => {
+                    {talk?.speakers.map(
+                      (speakerSlug: string, index: number) => {
                         const speaker = speakers.find(
                           (s) => s.slug === speakerSlug,
                         );
                         return speaker ? (
                           <div
-                            key={speaker.id || index}
+                            key={speaker.id}
                             className={cn(
                               "h-12 w-12 overflow-hidden rounded-sm bg-gray-200",
                               speakers.length % 2 !== 0 &&
@@ -168,13 +152,15 @@ const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
             <div>
               <div className="flex flex-row justify-between">
                 <div className="flex self-end">
-                  <LanguageBadge  
-                    language={talk?.data?.language as "french" | "english"}
-                  />
+                  {talk?.language && (
+                    <LanguageBadge  
+                      language={talk?.language}
+                    />
+                  )}
                 </div>
                 <div>
                   <FavoriteButton
-                    talkSlug={talk?.data}
+                    talkSlug={talk}
                     isIconButton
                     size="sm"
                   />
@@ -260,7 +246,7 @@ export const EventProgram = (props: Readonly<{ event: Event }>) => {
               <div className="flex flex-row justify-between">
                 <TimeAndDuration
                   startTime={activities?.startTime}
-                  duration={activities?.duration}
+                  duration={Number(activities?.duration)}
                   className="flex flex-wrap font-heading text-sm"
                 />
                 <LocationBadge>{activities.location}</LocationBadge>
@@ -269,7 +255,7 @@ export const EventProgram = (props: Readonly<{ event: Event }>) => {
                 {(activities.type === "conference" ||
                   activities.type === "roundtable") && (
                   <ConferenceCard
-                    activities={activities}
+                    activity={activities}
                     event={props.event}
                     key={activities.slug}
                   />
