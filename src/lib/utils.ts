@@ -18,7 +18,7 @@ export function formatTime(date: string | number | Date) {
   }).format(new Date(date));
 }
 
-export function calculateTimeLeft(date: string | number | Date) {
+export function calculateTimeLeft(date: Date) {
   const countdownDate = new Date(date).getTime();
   const now = new Date().getTime();
   const distance = countdownDate - now;
