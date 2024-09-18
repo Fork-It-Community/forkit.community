@@ -73,12 +73,8 @@ export default class Favorite {
     eventSlug: Event,
     talkSlug: Talk
   ) => {
-    console.log('remove talkSlug', talkSlug);
     const favorites = Favorite.getFavorites(eventSlug);
-    console.log('remove favorites', favorites);
-
     const newFavorites = favorites.filter((favorite) => favorite?.title !== talkSlug?.title);
-    console.log('newFavorites', newFavorites);
 
     Favorite.setFavorites(eventSlug, newFavorites);
   };
