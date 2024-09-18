@@ -45,13 +45,13 @@ importers:
         specifier: 2.1.1
         version: 2.1.1
       framer-motion:
-        specifier: ^11.5.4
+        specifier: 11.5.4
         version: 11.5.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       lucide-react:
         specifier: 0.427.0
         version: 0.427.0(react@18.3.1)
       motion-number:
-        specifier: ^0.1.7
+        specifier: 0.1.7
         version: 0.1.7(framer-motion@11.5.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
         specifier: 18.3.1
