@@ -1,14 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Event } from "@/content/collections";
-import { formatDateTime } from "@/lib/utils";
+import { cn, formatDateTime } from "@/lib/utils";
 import { Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
 
-type EventCardProps = { event: Event };
+type EventCardProps = { event: Event; className?: string };
 
-export const EventCard = (props: EventCardProps) => {
+export const EventCard = ({ className, ...props }: EventCardProps) => {
   return (
-    <article className="flex flex-col rounded-lg border-2 border-gray-700 bg-gray-900 p-6 md:p-8">
+    <article
+      className={cn(
+        "flex flex-col rounded-lg border-2 border-gray-700 bg-gray-900 p-6 md:p-8",
+        className,
+      )}
+    >
       <div className="flex flex-col justify-between gap-6 sm:flex-row">
         <div className="flex flex-col gap-6">
           <h3 className="flex flex-col font-heading text-3xl text-primary">
