@@ -6,7 +6,7 @@ const zBlog = () =>
     title: z.string(),
     // Preview text
     description: z.string().optional(),
-    BlogImage: z
+    featuredImage: z
       .object({
         src: z.string(),
         alt: z.string(),
@@ -18,10 +18,7 @@ const zBlog = () =>
       image: z.string().optional(),
     }),
     date: z.date(),
-    readingTime: z.number().optional(),
     tags: z.array(z.string()).optional(),
-    //  This attribute is used to select certain blogs to be featured on the homepage
-    isTopPost: z.boolean(),
   });
 
 export const blogsCollection = defineCollection({
