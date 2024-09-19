@@ -1,13 +1,12 @@
-import { EventFrontmatter } from "@/content/collections";
 import { formatDateTime } from "@/lib/utils";
 import Image from "next/image";
 import { YouTubeEmbed } from "@next/third-parties/google";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Event } from "@/content/collections";
 
 export function PostEvent(
   props: Readonly<{
-    event: Omit<EventFrontmatter, "date"> & { date?: string };
+    event: Omit<Event, "date"> & { date?: string };
   }>,
 ) {
   return (

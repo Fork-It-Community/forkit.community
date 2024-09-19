@@ -143,6 +143,14 @@ const collections = {
           link: z.string().url(),
         })
         .optional(),
+      postEventPictures: z
+        .array(
+          z.object({
+            src: z.string(),
+            alt: z.string(),
+          }),
+        )
+        .optional(),
     }),
   }),
   meetup: defineCollection({
