@@ -15,6 +15,7 @@ const zBlog = () =>
     author: z.object({
       name: z.string(),
       Linkedin: z.string().optional(),
+      image: z.string().optional(),
     }),
     date: z.date(),
     readingTime: z.number().optional(),
