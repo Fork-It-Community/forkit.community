@@ -18,8 +18,16 @@ const zPodcast = () =>
       .optional(),
     coverImageUrl: z.string().optional(),
     tags: z.array(z.string()).optional(),
-    host: z.string(),
-    guests: z.array(z.string()),
+    host: z.object({
+      name: z.string(),
+      image: z.string().optional(),
+    }),
+    guests: z.array(
+      z.object({
+        name: z.string(),
+        image: z.string().optional(),
+      }),
+    ),
     language: z.enum(["french", "english"]),
     notes: z
       .array(
