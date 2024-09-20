@@ -1,4 +1,4 @@
-import { z, defineCollection } from "astro:content";
+import { z, defineCollection, reference } from "astro:content";
 
 export type Podcast = z.infer<ReturnType<typeof zPodcast>>;
 const zPodcast = () =>
@@ -16,18 +16,10 @@ const zPodcast = () =>
         }),
       )
       .optional(),
-    coverImageUrl: z.string().optional(),
+    featuredImage: z.string().optional(),
     tags: z.array(z.string()).optional(),
-    host: z.object({
-      name: z.string(),
-      image: z.string().optional(),
-    }),
-    guests: z.array(
-      z.object({
-        name: z.string(),
-        image: z.string().optional(),
-      }),
-    ),
+    hosts: z.array(reference("people")),
+    guests: z.array(reference("people")).optional(),
     language: z.enum(["french", "english"]),
     notes: z
       .array(
