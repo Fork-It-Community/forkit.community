@@ -1,4 +1,4 @@
-import { z, defineCollection } from "astro:content";
+import { z, defineCollection, reference } from "astro:content";
 
 export type Blog = z.infer<ReturnType<typeof zBlog>>;
 const zBlog = () =>
@@ -12,11 +12,7 @@ const zBlog = () =>
         alt: z.string(),
       })
       .optional(),
-    author: z.object({
-      name: z.string(),
-      Linkedin: z.string().optional(),
-      image: z.string().optional(),
-    }),
+    author: reference("people"),
     date: z.date(),
     tags: z.array(z.string()).optional(),
   });
