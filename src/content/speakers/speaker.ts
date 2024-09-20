@@ -13,7 +13,6 @@ const zSpeaker = () =>
         href: z.string().url().optional(),
       })
       .optional(),
-    companyHref: z.string().url().optional(),
     socials: z
       .array(
         z.object({
