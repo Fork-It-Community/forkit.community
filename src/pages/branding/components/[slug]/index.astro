@@ -1,6 +1,5 @@
 ---
-import HTMLLayout from "@/layouts/HTMLLayout.astro";
-
+import BrandingLayout from "@/layouts/BrandingLayout.astro";
 import { getCollection } from "astro:content";
 
 export const getStaticPaths = async () => {
@@ -16,10 +15,8 @@ const { data, render } = Astro.props;
 const { Content } = await render();
 ---
 
-<!-- TODO replace the layout when the good one is available -->
-<HTMLLayout>
-  <h1>{data.name}</h1>
-  <div class="prose prose-invert p-8 prose-h1:mt-14">
+<BrandingLayout name={data.name}>
+  <div class="prose prose-invert prose-h1:mt-14 prose-h1:text-lg">
     <Content />
   </div>
-</HTMLLayout>
+</BrandingLayout>

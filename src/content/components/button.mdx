@@ -2,18 +2,23 @@
 name: Button
 ---
 
-import {Button} from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
+import { Demo } from '@/components/demo'
 
 # Default
 
-<Button>Click me</Button>
+<Demo>
+  <Button>Click me</Button>
+</Demo>
 
 # Variants
 
-<div className='flex flex-row gap-4'>
-  <Button variant="destructive">Click me</Button>
-  <Button variant="ghost">Click me</Button>
-  <Button variant="link">Click me</Button>
-  <Button variant="outline">Click me</Button>
-  <Button variant="secondary">Click me</Button>
-</div>
+<Demo>
+  <div className='flex flex-row gap-4'>
+    <Button variant="destructive">Click me</Button>
+    <Button variant="ghost">Click me</Button>
+    <Button variant="link">Click me</Button>
+    <Button variant="outline">Click me</Button>
+    <Button variant="secondary">Click me</Button>
+  </div>
+</Demo>

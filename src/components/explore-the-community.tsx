@@ -9,7 +9,7 @@ export const ExploreTheCommunity = (
       <p className="text-xs font-medium">
         {props?.title || "Fork it! Community"}
       </p>
-      <Button asChild size="sm" className="max-h-6 text-xs px-2">
+      <Button asChild size="sm" className="max-h-6 px-2 text-xs">
         <a href={props?.href || "/"}>
           Explore the community
           <ArrowUpRight
