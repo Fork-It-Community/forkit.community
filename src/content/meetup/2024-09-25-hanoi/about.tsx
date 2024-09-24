@@ -44,8 +44,7 @@ export function About(
                         {props.meetup.location.name},{" "}
                         {props.meetup.location.address}.
                       </strong>{" "}
-                      Join us in Comwork&apos;s offices to share experiences and
-                      network.
+                      Join us
                     </span>
                   </li>
                 )}
@@ -62,19 +61,13 @@ export function About(
                       >
                         {formatDateTime(props.meetup.date)}.
                       </time>{" "}
-                      Come enjoy two conferences and a networking cocktail to
-                      wrap up September on a high note.
+                      Come enjoy conferences and a networking cocktail to wrap
+                      up September on a high note.
                     </span>
                   </li>
                 )}
               </ul>
-              <p>
-                Comwork is a service company specialized in application
-                development and consulting for cloud deployment automation / SRE
-                / DevOps and production infrastructure outsourcing, and
-                publisher of software solutions to accelerate the automation of
-                these deployments in a host-agnostic way.
-              </p>
+              <p>Description for the location&apos;s meetup</p>
               <Button variant="default" asChild className="w-fit">
                 <Link href="https://www.comwork.io" target="_blank">
                   Visit Comwork website
