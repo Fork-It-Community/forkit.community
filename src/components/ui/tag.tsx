@@ -8,10 +8,8 @@ const tagVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          "bg-neutral-900/40 text-neutral-100",
-        primary:
-          "border-transparent bg-primary/40 text-primary-foreground",
+        default: "bg-neutral-900/40 text-neutral-100",
+        primary: "border-transparent bg-primary/40 text-primary-foreground",
         secondary:
           "border-transparent bg-secondary/40 text-secondary-foreground",
         destructive:
@@ -29,10 +27,8 @@ export interface TagProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof tagVariants> {}
 
-  function Tag({ className, variant, ...props }: TagProps) {
-    return (
-      <div className={cn(tagVariants({ variant }), className)} {...props} />
-    );
-  }
+function Tag({ className, variant, ...props }: TagProps) {
+  return <div className={cn(tagVariants({ variant }), className)} {...props} />;
+}
 
 export { Tag, tagVariants };
