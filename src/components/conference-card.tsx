@@ -35,7 +35,7 @@ function TimeAndDuration(props: {
           props.className,
         )}
       >
-        <time dateTime={props.startTime?.toISOString()}>
+        <time dateTime={props.startTime.toISOString()}>
           {formatTime(props.startTime)}
         </time>
         {props.duration && (
@@ -68,13 +68,13 @@ const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
 
   const fetchTalk = async () => {
     try {
-      if (props?.activity?.slug) {
-        const fetchedTalk = await getEntry("talks", props?.activity?.slug);
+      if (props.activity.slug) {
+        const fetchedTalk = await getEntry("talks", props.activity.slug);
         setTalk(fetchedTalk?.data);
 
-        if (fetchedTalk?.data?.speakers) {
+        if (fetchedTalk?.data.speakers) {
           const fetchedSpeakers = await Promise.all(
-            fetchedTalk?.data?.speakers.map(async (speaker: string) => {
+            fetchedTalk.data.speakers.map(async (speaker: string) => {
               return await getEntry("speakers", speaker);
             }),
           );
@@ -182,7 +182,7 @@ const BreakCard = (props: Readonly<BreakCardProps>) => {
       if (props?.break?.sponsorSlug) {
         const fetchedSponsor = await getEntry(
           "sponsors",
-          props?.break?.sponsorSlug,
+          props.break.sponsorSlug,
         );
         setSponsor(fetchedSponsor?.data);
       }

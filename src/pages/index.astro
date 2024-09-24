@@ -1,7 +1,11 @@
 ---
 import HTMLLayout from "@/layouts/HTMLLayout.astro";
+import { getEntry } from "astro:content";
+import { EventProgram } from "@/components/conference-card";
+const event = await getEntry("events", "rouen-france-2024")
 ---
 
 <HTMLLayout>
   <h1 class="font-heading">Fork it! Community</h1>
+  <EventProgram event={event?.data} client:load/>
 </HTMLLayout>
