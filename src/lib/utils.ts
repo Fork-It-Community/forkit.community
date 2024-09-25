@@ -23,6 +23,6 @@ export function isDateInThePast(date?: Date) {
   return (date?.getTime() ?? 0) < new Date().getTime();
 }
 
-export function shouldDisplayTicketButton(event: Event) {
+export function shouldDisplayTicketButton(event: Event | Meetup) {
   return event.tickets && !isDateInThePast(event.date);
 }
