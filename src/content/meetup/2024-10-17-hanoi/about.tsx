@@ -66,13 +66,13 @@ export function About(
                   </li>
                 )}
               </ul>
-              {/*               <p>Description for the location&apos;s meetup</p>
-               */}{" "}
-              {/*  <Button variant="default" asChild className="w-fit">
-                <Link href="" target="_blank">
-                  Visit Location Website
-                </Link>
-              </Button> */}
+              {
+                <Button variant="default" asChild className="w-fit">
+                  <Link href="https://standingbarhanoi.com/" target="_blank">
+                    Visit Location Website
+                  </Link>
+                </Button>
+              }
             </div>
           </div>
         </div>
