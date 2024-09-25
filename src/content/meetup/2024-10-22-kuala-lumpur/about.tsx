@@ -2,7 +2,7 @@ import { MeetupFrontmatter } from "@/content/collections";
 import { formatDateTime } from "@/lib/utils";
 import { Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
-import LocationImage from "/public/meetups/2024-09-26-kuala-lumpur.jpg";
+import LocationImage from "/public/meetups/2024-10-22-kuala-lumpur.jpg";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -66,12 +66,12 @@ export function About(
                   </li>
                 )}
               </ul>
-              <p>Description for the location&apos;s meetup</p>
+              {/* <p>Description for the location&apos;s meetup</p>
               <Button variant="default" asChild className="w-fit">
                 <Link href="" target="_blank">
                   Visit Location Website
                 </Link>
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>
