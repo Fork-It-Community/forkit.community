@@ -2,7 +2,7 @@ import { MeetupFrontmatter } from "@/content/collections";
 import { formatDateTime } from "@/lib/utils";
 import { Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
-import LocationImage from "/public/meetups/2024-09-25-hanoi.jpg";
+import LocationImage from "/public/meetups/2024-10-17-hanoi.jpg";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -61,18 +61,18 @@ export function About(
                       >
                         {formatDateTime(props.meetup.date)}.
                       </time>{" "}
-                      Come enjoy conferences and a networking cocktail to wrap
-                      up September on a high note.
+                      Come enjoy conferences and a networking cocktail.
                     </span>
                   </li>
                 )}
               </ul>
-              <p>Description for the location&apos;s meetup</p>
-              <Button variant="default" asChild className="w-fit">
+              {/*               <p>Description for the location&apos;s meetup</p>
+               */}{" "}
+              {/*  <Button variant="default" asChild className="w-fit">
                 <Link href="" target="_blank">
                   Visit Location Website
                 </Link>
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>
