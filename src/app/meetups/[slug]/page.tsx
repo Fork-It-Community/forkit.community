@@ -9,7 +9,6 @@ import { Faq } from "./faq";
 import { ScheduleSection } from "./schedule";
 import { Talks } from "./talks";
 import type { WithContext, Event, Place } from "schema-dts";
-import { Partners } from "@/app/(homepage)/partners";
 
 export type MeetupPageProps = Readonly<{
   params: { slug: string };
@@ -60,14 +59,15 @@ export default async function MeetupPage({ params }: MeetupPageProps) {
     endDate: meetup.date?.toISOString(),
     description: meetup.excerpt,
     location,
-    offers: meetup.tickets?.offers.map((offer) => ({
-      "@type": "Offer",
-      price: offer.price,
-      priceCurrency: offer.priceCurrency,
-      url: meetup.tickets?.href,
-      availability: `https://schema.org/${offer.availability}`,
-      validFrom: offer.validFrom.toISOString(),
-    })),
+    offers:
+      meetup.tickets?.offers?.map((offer) => ({
+        "@type": "Offer",
+        price: offer?.price,
+        priceCurrency: offer?.priceCurrency,
+        url: meetup.tickets?.href,
+        availability: `https://schema.org/${offer?.availability}`,
+        validFrom: offer?.validFrom.toISOString(),
+      })) ?? [],
     eventStatus: `https://schema.org/${meetup.status}`,
     image: meetup.image?.src,
     organizer: {
@@ -92,7 +92,6 @@ export default async function MeetupPage({ params }: MeetupPageProps) {
       {!!meetup.sponsoringLevels && !!meetup.sponsors && (
         <Sponsors meetup={meetup} />
       )}
-      <Partners />
       {meetup.faq && <Faq meetup={meetup} />}
       <script
         type="application/ld+json"
