@@ -92,7 +92,6 @@ export default async function MeetupPage({ params }: MeetupPageProps) {
       {!!meetup.sponsoringLevels && !!meetup.sponsors && (
         <Sponsors meetup={meetup} />
       )}
-      <Partners />
       {meetup.faq && <Faq meetup={meetup} />}
       <script
         type="application/ld+json"
