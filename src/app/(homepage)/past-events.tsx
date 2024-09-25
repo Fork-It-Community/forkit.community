@@ -3,10 +3,15 @@ import Link from "next/link";
 import { isDateInThePast } from "@/lib/utils";
 import { EventCard } from "@/components/event-card";
 import { Button } from "@/components/ui/button";
+import { MeetupCard } from "@/components/meetup-card";
 
 export const PastEvents = async () => {
   const allEvents = await collections.event.getAll();
+  const allMeetups = await collections.meetup.getAll();
   const pastEvents = allEvents.filter((event) => isDateInThePast(event.date));
+  const pastMeetups = allMeetups.filter((meetup) =>
+    isDateInThePast(meetup.date),
+  );
 
   return (
     <section
@@ -43,6 +48,16 @@ export const PastEvents = async () => {
                 </a>
               </Button>
             </div>
+          </div>
+        ))}
+        {pastMeetups.map((meetup) => (
+          <div key={meetup.name} className="gap-0">
+            <Link
+              href={`/meetups/${meetup.metadata.slug}`}
+              title="Homepage of the event"
+            >
+              <MeetupCard meetup={meetup} />
+            </Link>
           </div>
         ))}
       </div>
