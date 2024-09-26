@@ -66,13 +66,13 @@ export function About(
                   </li>
                 )}
               </ul>
-              {
+              {props.meetup.tickets?.href && (
                 <Button variant="default" asChild className="w-fit">
-                  <Link href="https://standingbarhanoi.com/" target="_blank">
-                    Visit Location Website
+                  <Link href={props.meetup.tickets?.href} target="_blank">
+                    Get tickets
                   </Link>
                 </Button>
-              }
+              )}
             </div>
           </div>
         </div>
