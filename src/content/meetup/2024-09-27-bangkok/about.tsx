@@ -21,7 +21,7 @@ export function About(
               src={LocationImage}
               width={1000}
               height={500}
-              alt=""
+              alt="Bangkok"
             />
           </div>
           <p className="py-4 text-center text-sm">@cartayen</p>
@@ -66,12 +66,13 @@ export function About(
                   </li>
                 )}
               </ul>
-              <p>Description for the location&apos;s meetup</p>
-              <Button variant="default" asChild className="w-fit">
-                <Link href="" target="_blank">
-                  Visit Location Website
-                </Link>
-              </Button>
+              {props.meetup.tickets?.href && (
+                <Button variant="default" asChild className="w-fit">
+                  <Link href={props.meetup.tickets?.href} target="_blank">
+                    Get tickets
+                  </Link>
+                </Button>
+              )}
             </div>
           </div>
         </div>
