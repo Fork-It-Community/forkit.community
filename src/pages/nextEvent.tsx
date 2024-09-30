@@ -1,0 +1,23 @@
+import { Button } from "@/components/ui/button";
+import type { Event } from "@/content/events/events";
+import { formatDateTimeShort } from "@/lib/utils";
+
+export const NextEvent = (
+  props: Readonly<{
+    event: Event;
+  }>,
+) => {
+  return (
+    <div className="flex flex-col">
+      {/* Todo : add tag */}
+      {props.event.date && (
+        <p className="my-0 font-heading text-3xl font-medium text-white">
+          {formatDateTimeShort(props.event.date)}
+        </p>
+      )}
+      <p className="my-0 font-heading text-2xl font-medium text-white">
+        {props.event.name}
+      </p>
+    </div>
+  );
+};
