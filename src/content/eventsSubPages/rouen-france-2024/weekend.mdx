@@ -19,9 +19,7 @@ import {
   Wine,
   Utensils,
 } from "lucide-react";
-
-import rouenImage from "/public/events/weekend-rouen.jpg";
-
+import {Image} from "astro:assets"
 
 # Rouen, <span className="text-white">France</span>
 
@@ -29,8 +27,8 @@ import rouenImage from "/public/events/weekend-rouen.jpg";
 ## A Weekend Guide
 
 <div className="gap-4 md:flex md:flex-row-reverse">
-  <img
-    src={rouenImage.src}
+  <Image
+    src={"/events/weekend-rouen.jpg"}
     alt="Rouen"
     className="h-full rounded-md"
     width={300}
