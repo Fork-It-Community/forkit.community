@@ -10,7 +10,7 @@ async function PartnerImage({ partner }: { partner: Partner }) {
         "hover:border-gray-200": !!partner.href,
       })}
     >
-      <Image
+       <Image
         className="w-full"
         src={partner.image.src}
         alt={partner.image.alt}
@@ -35,8 +35,14 @@ async function PartnerImage({ partner }: { partner: Partner }) {
     </Link>
   );
 }
-export async function Partners() {
-  const allPartners = await collections.partner.getAll();
+export async function Partners({PartnersSlugs}: {PartnersSlugs : string[] }) {
+  const allPartners : Partner[] =  
+   await Promise.all(
+    PartnersSlugs.map(
+        async (partnerSLug) =>
+          await collections.partner.getBySlug(partnerSLug),
+      ),
+    )
   return (
     <div className="bg-gray-950 pb-12 pt-6">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
