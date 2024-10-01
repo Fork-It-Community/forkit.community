@@ -35,8 +35,10 @@ async function PartnerImage({ partner }: { partner: Partner }) {
     </Link>
   );
 }
-export async function Partners() {
-  const allPartners = await collections.partner.getAll();
+export async function Partners({ slugs }: { slugs: string[] }) {
+  const allPartners: Partner[] = await Promise.all(
+    slugs.map(async (slug) => await collections.partner.getBySlug(slug)),
+  );
   return (
     <div className="bg-gray-950 pb-12 pt-6">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
