@@ -9,6 +9,7 @@ import { Faq } from "./faq";
 import { ScheduleSection } from "./schedule";
 import { Talks } from "./talks";
 import type { WithContext, Event, Place } from "schema-dts";
+import { Partners } from "@/app/(homepage)/partners";
 
 export type MeetupPageProps = Readonly<{
   params: { slug: string };
@@ -93,6 +94,7 @@ export default async function MeetupPage({ params }: MeetupPageProps) {
         <Sponsors meetup={meetup} />
       )}
       {meetup.faq && <Faq meetup={meetup} />}
+      {!!meetup.partners && <Partners PartnersSlugs={meetup.partners}/>}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
