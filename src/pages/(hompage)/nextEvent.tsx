@@ -23,7 +23,7 @@ export const NextEvent = (
           <a
             href={props.event.tickets?.href}
             target="_blank"
-            className="text-black"
+            className="text-black no-underline"
           >
             Tickets Available
           </a>
