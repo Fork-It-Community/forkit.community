@@ -94,7 +94,7 @@ export default async function MeetupPage({ params }: MeetupPageProps) {
         <Sponsors meetup={meetup} />
       )}
       {meetup.faq && <Faq meetup={meetup} />}
-      {!!meetup.partners && <Partners PartnersSlugs={meetup.partners}/>}
+      {!!meetup.partners && <Partners slugs={meetup.partners} />}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
