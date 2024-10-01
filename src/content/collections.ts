@@ -199,6 +199,7 @@ const collections = {
         .optional(),
       speakers: z.array(z.string()).optional(),
       talks: z.array(z.string()).optional(),
+      partners:z.array(z.string()).optional(),
       faq: z
         .array(z.object({ question: z.string(), answer: z.string() }))
         .optional(),
