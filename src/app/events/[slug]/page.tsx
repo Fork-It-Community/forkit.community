@@ -11,7 +11,6 @@ import { ScheduleSection } from "./schedule";
 import { Talks } from "./talks";
 import type { WithContext, Event, Place } from "schema-dts";
 import { Partners } from "@/app/(homepage)/partners";
-import { GLOBALPARTNERSSLUGS } from "@/lib/constants";
 
 export type EventPageProps = Readonly<{
   params: { slug: string };
@@ -95,7 +94,7 @@ export default async function EventPage({ params }: EventPageProps) {
       {!!event.sponsoringLevels && !!event.sponsors && (
         <Sponsors event={event} />
       )}
-      <Partners PartnersSlugs={GLOBALPARTNERSSLUGS} />
+      {!!event.partners && <Partners slugs={event.partners} />}
       {event.prospectus?.endDate &&
         new Date().getTime() <= event.prospectus.endDate.getTime() && (
           <Sponsorship event={event} />
