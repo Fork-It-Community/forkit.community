@@ -8,7 +8,7 @@ import { Partners } from "@/app/(homepage)/partners";
 import { getNextEvent, getNextMeetup } from "@/lib/server";
 import { PastEvents } from "@/app/(homepage)/past-events";
 import { UpcomingMeetups } from "./upcoming-meetups";
-import { GLOBAL_PARTNERS_SLUGS } from "@/lib/constants";
+import { HOMEPAGE_PARTNERS_SLUGS } from "@/lib/constants";
 
 export default async function Home() {
   const nextEvent = await getNextEvent();
@@ -23,7 +23,7 @@ export default async function Home() {
       <Features />
       <PastEvents />
       <Organizers />
-      <Partners slugs={GLOBAL_PARTNERS_SLUGS} />
+      <Partners slugs={HOMEPAGE_PARTNERS_SLUGS} />
     </>
   );
 }
