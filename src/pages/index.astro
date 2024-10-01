@@ -4,6 +4,8 @@ import { getEventsCollection } from "@/lib/collections";
 import { Image } from "astro:assets";
 import { NextEvent } from "./(hompage)/nextEvent";
 import { isDateInThePast } from "@/lib/utils";
+import { InputField } from "@/components/Input";
+import { Button } from "@/components/ui/button";
 
 const events = await getEventsCollection();
 const upcomingEvents = events
@@ -27,11 +29,11 @@ const nextEvent = upcomingEvents.length > 0 ? upcomingEvents[0] : null;
           height={610}
           class="absolute inset-0 -z-10 h-2/3 w-full object-cover object-center opacity-30"
         />
-        <div class="absolute inset-0 -z-10 h-2/3 bg-gradient-to-b from-transparent to-black" />
+        <div class="absolute inset-0 -z-10 h-2/3 bg-gradient-to-b from-transparent via-black/30 to-black" />
       </>
     )
   }
-  <div class="gap flex flex-col gap-20">
+  <main class="flex flex-col gap-20">
     <div class="mt-24 flex justify-center">
       <Image
         src="/forkit-medium.svg"
@@ -41,5 +43,16 @@ const nextEvent = upcomingEvents.length > 0 ? upcomingEvents[0] : null;
       />
     </div>
     {nextEvent && <NextEvent event={nextEvent.data} />}
-  </div>
+    <div>
+      <!-- Todo : Add the timeline with all the eventCards when it's ready -->
+      <form class="flex items-end gap-2">
+        <InputField
+          placeholder="email@email.fr"
+          label="Keep in touch"
+          className="border border-neutral-700"
+        />
+        <Button type="submit" variant="secondary">Subscribe</Button>
+      </form>
+    </div>
+  </main>
 </Layout>
