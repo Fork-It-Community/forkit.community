@@ -7,7 +7,11 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,json,astro}": "prettier --write src/"
   },
   "dependencies": {
     "@astrojs/check": "0.9.3",
@@ -33,6 +37,8 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "0.5.14",
+    "husky": "9.1.6",
+    "lint-staged": "15.2.10",
     "prettier": "3.3.3",
     "prettier-plugin-astro": "0.14.1",
     "prettier-plugin-tailwindcss": "0.6.5"
