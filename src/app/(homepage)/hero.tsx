@@ -3,13 +3,14 @@ import Image from "next/image";
 import ImgForkItLogo from "@/../public/forkit-medium.svg";
 import HeroImage from "./hero.jpg";
 import { ExternalLink, MailIcon } from "lucide-react";
-import { formatDateTime } from "@/lib/utils";
+import { formatDateTime, getHref } from "@/lib/utils";
 import Link from "next/link";
-import { getNextEvent } from "@/lib/server";
+import { getNextEvent, getNextMeetup } from "@/lib/server";
 import { NEWSLETTER_HREF } from "@/lib/constants";
 
 export async function Hero() {
   const nextEvent = await getNextEvent();
+  const nextMeetup = await getNextMeetup();
 
   return (
     <div className="relative">
@@ -32,7 +33,9 @@ export async function Hero() {
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Button size="lg" asChild className="w-full sm:w-auto">
-                <a href="#past-events">Past events</a>
+                <a href={getHref(nextMeetup, nextEvent)}>
+                  {nextEvent || nextMeetup ? "Next events" : "Past events"}
+                </a>
               </Button>
               <Button
                 size="lg"
