@@ -1,4 +1,3 @@
-
 import { type FC, type MouseEvent, useState, useEffect } from "react";
 
 import { Button, type ButtonProps } from "@/components/ui/button";
@@ -9,7 +8,7 @@ import Favorite from "@/services/Favorite";
 import type { Talk } from "@/content/talks/talks";
 
 type FavoriteButtonProps = ButtonProps & {
-  talkSlug: Talk | undefined
+  talkSlug: Talk | undefined;
   isIconButton?: boolean;
 };
 
@@ -44,7 +43,7 @@ export const FavoriteButton: FC<FavoriteButtonProps> = ({
     <Button
       variant={isFavorite ? "default" : "outline"}
       onClick={handleOnClick}
-      className="max-w-8 max-h-8"
+      className="max-h-8 max-w-8"
       {...rest}
     >
       <div className="flex items-center gap-2">

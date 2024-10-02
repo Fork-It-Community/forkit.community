@@ -4,7 +4,7 @@ const isBrowser: boolean = typeof window !== "undefined";
 
 const FORK_IT_FAVORITE_KEY = "forkit-";
 
-export type Favorites = Array<Talk>
+export type Favorites = Array<Talk>;
 
 export default class Favorite {
   /**
@@ -25,7 +25,7 @@ export default class Favorite {
 
     return [];
   };
-  
+
   /**
    * Save a the list of favorites.
    *
@@ -38,10 +38,7 @@ export default class Favorite {
     );
   };
 
-  static addFavorite = (
-    eventSlug: Event,
-    talkSlug: Talk
-  ) => {
+  static addFavorite = (eventSlug: Event, talkSlug: Talk) => {
     const favorites = Favorite.getFavorites(eventSlug);
 
     // If it is already a favorite, we do not add it again.
@@ -53,28 +50,24 @@ export default class Favorite {
 
     Favorite.setFavorites(eventSlug, favorites);
   };
-  
+
   /**
    * Check if the conference matching the identifier is a favorite.
    */
-  static isFavorite = (
-    eventSlug: Event,
-    talkSlug: Talk
-  ) => {
+  static isFavorite = (eventSlug: Event, talkSlug: Talk) => {
     const favorites = Favorite.getFavorites(eventSlug);
-  
+
     const favoriteTitles = favorites.map((favorite) => favorite?.title);
     const talkTitles = talkSlug?.title;
 
     return favoriteTitles.includes(talkTitles);
   };
 
-  static removeFavorite = (
-    eventSlug: Event,
-    talkSlug: Talk
-  ) => {
+  static removeFavorite = (eventSlug: Event, talkSlug: Talk) => {
     const favorites = Favorite.getFavorites(eventSlug);
-    const newFavorites = favorites.filter((favorite) => favorite?.title !== talkSlug?.title);
+    const newFavorites = favorites.filter(
+      (favorite) => favorite?.title !== talkSlug?.title,
+    );
 
     Favorite.setFavorites(eventSlug, newFavorites);
   };

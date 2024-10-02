@@ -6,11 +6,11 @@ import {
   useCallback,
   useMemo,
   type PropsWithChildren,
-} from 'react';
+} from "react";
 
-import Favorite, { type Favorites } from '@/services/Favorite';
-import type { Event } from '@/content/events/events';
-import type { Talk } from '@/content/talks/talks';
+import Favorite, { type Favorites } from "@/services/Favorite";
+import type { Event } from "@/content/events/events";
+import type { Talk } from "@/content/talks/talks";
 
 type FavoritesContextType = {
   favorites: Favorites;
@@ -27,10 +27,10 @@ const initEventSlug: Event = {
     name: "",
     address: "",
   },
-  status: 'EventCancelled',
+  status: "EventCancelled",
   sponsoringLevels: [],
-  attendanceMode: 'OfflineEventAttendanceMode',
-  schedule: []
+  attendanceMode: "OfflineEventAttendanceMode",
+  schedule: [],
 };
 
 const FavoritesContext = createContext<FavoritesContextType>({
@@ -67,7 +67,8 @@ export const FavoritesContextProvider = ({
       Favorite.addFavorite(eventSlug, talkSlug);
 
       setFavorites(Favorite.getFavorites(eventSlug));
-    }, [eventSlug],
+    },
+    [eventSlug],
   );
 
   const removeFavorite = useCallback(
@@ -75,7 +76,8 @@ export const FavoritesContextProvider = ({
       Favorite.removeFavorite(eventSlug, talkSlug);
 
       setFavorites(Favorite.getFavorites(eventSlug));
-    }, [eventSlug],
+    },
+    [eventSlug],
   );
 
   const value = useMemo(
@@ -92,5 +94,5 @@ export const FavoritesContextProvider = ({
     <FavoritesContext.Provider value={value}>
       {children}
     </FavoritesContext.Provider>
-  )
-}
+  );
+};
