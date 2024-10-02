@@ -56,7 +56,7 @@ export function Hero(
           <p className="text-md mt-6 text-gray-400">{props.meetup.excerpt}</p>
           <div className="mx-8 mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
             {shouldDisplayTicketButton(props.meetup) && (
-              <div className="flex flex-col items-center gap-y-2">
+              <div className="flex flex-col items-center gap-y-8">
                 <Button asChild variant="default">
                   <a
                     href={props.meetup.tickets?.href}
