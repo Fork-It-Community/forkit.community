@@ -53,7 +53,9 @@ export function Header(props: Readonly<{ meetup: Meetup }>) {
             {shouldDisplayTicketButton(props.meetup) && (
               <div className="flex items-center justify-center gap-x-6">
                 <Button asChild size="sm">
-                  <a href={props.meetup.tickets?.href}>Get tickets</a>
+                  <a href={props.meetup.tickets?.href}>
+                    {props.meetup.isFree ? "Register for free" : "Get tickets"}
+                  </a>
                 </Button>
               </div>
             )}
@@ -98,7 +100,9 @@ export function Header(props: Readonly<{ meetup: Meetup }>) {
                         <div className="flex gap-x-6 py-6">
                           <Button asChild>
                             <a href={props.meetup.tickets?.href}>
-                              Get tickets{" "}
+                              {props.meetup.isFree
+                                ? "Register for free"
+                                : "Get tickets"}
                               <ExternalLink className="ml-2 h-4 w-4" />
                             </a>
                           </Button>
@@ -128,7 +132,9 @@ export function Header(props: Readonly<{ meetup: Meetup }>) {
             {shouldDisplayTicketButton(props.meetup) && (
               <div className="flex items-center justify-center gap-x-6">
                 <Button asChild>
-                  <a href={props.meetup.tickets?.href}>Get tickets</a>
+                  <a href={props.meetup.tickets?.href}>
+                    {props.meetup.isFree ? "Register for free" : "Get tickets"}
+                  </a>
                 </Button>
               </div>
             )}

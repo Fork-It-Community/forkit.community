@@ -56,16 +56,26 @@ export function Hero(
           <p className="text-md mt-6 text-gray-400">{props.meetup.excerpt}</p>
           <div className="mx-8 mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
             {shouldDisplayTicketButton(props.meetup) && (
-              <Button asChild variant="default">
-                <a
-                  href={props.meetup.tickets?.href}
-                  target="_blank"
-                  rel="noreferer"
-                >
-                  Get tickets
-                  <ExternalLink className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
+              <div className="flex flex-col items-center gap-y-2">
+                <Button asChild variant="default">
+                  <a
+                    href={props.meetup.tickets?.href}
+                    target="_blank"
+                    rel="noreferer"
+                  >
+                    {props.meetup.isFree ? "Register for free" : "Get tickets"}
+                    <ExternalLink className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+                {props.meetup.PartnerOrganizerLogo && (
+                  <Image
+                    src={props.meetup.PartnerOrganizerLogo}
+                    alt="French tech malaysia"
+                    width={100}
+                    height={100}
+                  />
+                )}
+              </div>
             )}
           </div>
         </div>
