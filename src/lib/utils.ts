@@ -26,12 +26,15 @@ export function isDateInThePast(date?: Date) {
 export function shouldDisplayTicketButton(event: Event | Meetup) {
   return event.tickets && !isDateInThePast(event.date);
 }
+
 export function getHref(meetup?: Meetup, event?: Event) {
-  if (!event && !meetup) {
-    return "#past-events";
+  if (event) {
+    return "#upcoming-events";
   }
-  if (meetup && !event) {
+
+  if (meetup) {
     return "#upcoming-meetups";
   }
-  return "#upcoming-events";
+
+  return "#past-events";
 }
