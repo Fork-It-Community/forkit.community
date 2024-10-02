@@ -2,7 +2,7 @@ import { MeetupFrontmatter } from "@/content/collections";
 import { formatDateTime } from "@/lib/utils";
 import { Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
-import LocationImage from "/public/meetups/2024-09-27-bangkok.jpg";
+import LocationImage from "/public/meetups/2024-11-05-bangkok.jpg";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -44,7 +44,7 @@ export function About(
                         {props.meetup.location.name},{" "}
                         {props.meetup.location.address}.
                       </strong>{" "}
-                      Join us .
+                      Join us.
                     </span>
                   </li>
                 )}
@@ -61,7 +61,7 @@ export function About(
                       >
                         {formatDateTime(props.meetup.date)}.
                       </time>{" "}
-                      Come enjoy conferences and a networking cocktail .
+                      Come enjoy conferences and a networking cocktail.
                     </span>
                   </li>
                 )}
@@ -69,7 +69,7 @@ export function About(
               {props.meetup.tickets?.href && (
                 <Button variant="default" asChild className="w-fit">
                   <Link href={props.meetup.tickets?.href} target="_blank">
-                    Get tickets
+                    {props.meetup.isFree ? "Register for free" : "Get tickets"}
                   </Link>
                 </Button>
               )}
