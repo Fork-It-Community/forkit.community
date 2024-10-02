@@ -69,7 +69,7 @@ export function About(
               {props.meetup.tickets?.href && (
                 <Button variant="default" asChild className="w-fit">
                   <Link href={props.meetup.tickets?.href} target="_blank">
-                    Get tickets
+                    {props.meetup.isFree ? "Register for free" : "Get tickets"}
                   </Link>
                 </Button>
               )}
