@@ -31,6 +31,7 @@ const initEventSlug: Event = {
   sponsoringLevels: [],
   attendanceMode: "OfflineEventAttendanceMode",
   schedule: [],
+  subPages: [],
 };
 
 const FavoritesContext = createContext<FavoritesContextType>({
