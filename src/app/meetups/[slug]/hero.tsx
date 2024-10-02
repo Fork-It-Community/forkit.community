@@ -67,9 +67,9 @@ export function Hero(
                     <ExternalLink className="ml-2 h-4 w-4" />
                   </a>
                 </Button>
-                {props.meetup.PartnerOrganizerLogo && (
+                {props.meetup.partnerOrganizerLogo && (
                   <Image
-                    src={props.meetup.PartnerOrganizerLogo}
+                    src={props.meetup.partnerOrganizerLogo}
                     alt="French tech malaysia"
                     width={100}
                     height={100}
