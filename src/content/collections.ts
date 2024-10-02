@@ -243,6 +243,8 @@ const collections = {
           }),
         )
         .optional(),
+      isFree: z.boolean().optional(),
+      PartnerOrganizerLogo: z.string().optional(),
     }),
   }),
   speaker: defineCollection({
