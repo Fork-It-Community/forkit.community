@@ -244,7 +244,13 @@ const collections = {
         )
         .optional(),
       isFree: z.boolean().optional(),
-      partnerOrganizerLogo: z.string().optional(),
+      partnerOrganizerLogo: z
+        .object({
+          src: z.string(),
+          alt: z.string(),
+          href: z.string().optional(),
+        })
+        .optional(),
     }),
   }),
   speaker: defineCollection({
