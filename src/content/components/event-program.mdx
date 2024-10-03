@@ -1,0 +1,254 @@
+---
+name: Event Program
+---
+
+import { EventProgram } from '@/components/event-program'
+import { Demo } from '@/components/demo'
+
+# Default
+
+<Demo>
+  <EventProgram
+    event={{
+      title: 'Fork it! Rouen 2024',
+      name: 'Rouen, France',
+      date: '2024-06-07T00:00:00.000Z',
+      location: {
+        name: 'Le Village By Ca Rouen Vallée De Seine',
+        address: '107 All. François Mitterrand, 76100, Rouen'
+      },
+      excerpt: 'Come meet more than 200 people sharing their real professional lives and feedback. No nonsense, no divas, just genuine individuals discussing real problems and solutions. From students eager to learn more to professionals wanting to share their experiences, come enjoy a fulfilling day with a dozen conferences in the heart of Rouen.',
+      image: {
+        src: '/events/2024-06-07-rouen.jpg',
+        alt: 'Gros Horloge, Rouen, France'
+      },
+      cfp: {
+        href: 'https://conference-hall.io/public/event/1GyOS8KvW02suD6jQmjz',
+        endDate: '2024-04-01T23:59:00.000Z'
+      },
+      tickets: {
+        href: 'https://my.weezevent.com/fork-it-rouen-2024',
+        offers: [
+          {
+            name: 'Early Birds',
+            price: 30,
+            priceCurrency: 'EUR',
+            availability: 'SoldOut',
+            validFrom: '2024-03-14T00:00:00.000Z'
+          },
+          {
+            name: 'Normal',
+            price: 50,
+            priceCurrency: 'EUR',
+            availability: 'InStock',
+            validFrom: '2024-03-14T00:00:00.000Z'
+          },
+        ]
+      },
+      prospectus: {
+        href: 'https://drive.google.com/drive/folders/1ZIwH4J9gDbBXbG10a_Q4fSGwx0DFqXpk?usp=sharing',
+        endDate: '2024-05-31T23:59:00.000Z'
+      },
+      published: true,
+      sponsoringLevels: [ 'SILVER', 'BRONZE', 'LOGISTIC' ],
+      sponsors: [],
+      speakers: [],
+      talks: [],
+      faq: [],
+      status: 'EventScheduled',
+      attendanceMode: 'OfflineEventAttendanceMode',
+      schedule: [
+        {
+          type: 'break',
+          description: 'Visitor welcome',
+          name: 'Reception',
+          startTime: '2024-06-07T08:00:00.000Z',
+          duration: 30,
+          location: 'La place du village'
+        },
+        {
+          type: 'break',
+          sponsorSlug: 'digit',
+          description: 'The perfect time to eat something!',
+          name: 'Lunch',
+          startTime: '2024-06-07T12:20:00.000Z',
+          duration: 60,
+          location: 'La place du village'
+        },
+        {
+          type: 'roundtable',
+          slug: 'eco-conception-contraintes-ou-opportunites',
+          startTime: '2024-06-07T16:10:00.000Z',
+          location: 'La place du village'
+        },
+        {
+          type: 'conference',
+          slug: 'tropical-software-developper-un-logiciel-pour-un-ministere-dasie-du-sud-est',
+          startTime: '2024-06-07T14:35:00.000Z',
+          duration: 30,
+          location: 'Main stage'
+        },
+      ],
+      feedback: {},
+      content: {},
+      subPages: []
+    }}
+    talks={[
+      {
+        id: 'tropical-software-developper-un-logiciel-pour-un-ministere-dasie-du-sud-est.mdx',
+        slug: 'tropical-software-developper-un-logiciel-pour-un-ministere-dasie-du-sud-est',
+        body: '\n' +
+          'De 2019 à maintenant, j’ai été impliqué dans le développement d’un système de gestion de la maintenance des ponts du Laos. C’est l’histoire de ce logiciel, dans ce contexte particulier de début de digitalisation d’un gouvernement et de collecte de données offline.\n' +
+          'Les challenges rencontrés: collecte sur le terrain sans connexion, un modèle de détérioration d’une université japonaise à implémenter, un hébergement sur un vieux serveur dans une salle d’archives.\n',
+        collection: 'talks',
+        data: {
+          title: 'Tropical software: développer un logiciel pour un ministère d’Asie du Sud-Est',
+          speakers: [ 'sylvain-dorey' ],
+          language: 'french',
+          feedback: {
+            link: 'https://openfeedback.io/fork-it-community-rouen-2024/2024-06-07/8ViXNyZN6x3Xi4OogAeC'
+          }
+        },
+      },
+      {
+        id: 'eco-conception-contraintes-ou-opportunites.mdx',
+        slug: 'eco-conception-contraintes-ou-opportunites',
+        body: '\n' +
+          "Let's discuss the subject that comes up in every tech brief. Real new approach\n" +
+          'or just another <span className="line-through">excuse</span> reason for failing\n' +
+          'a project?\n' +
+          '\n' +
+          'Around the table, Abdelkrim Marchiani, vice-president of Métropole Rouen Normandie, will\n' +
+          'set out his institutional vision to confront it with\n' +
+          '\n' +
+          '<span className="line-through">grumbling</span> real-life developers.\n',
+        collection: 'talks',
+        data: {
+          title: 'Eco design : constraints or opportunities ?',
+          speakers: [
+            'abdelkrim-marchani',
+            'francois-best',
+            'luis-rubiera',
+            'xavier-van-de-woestyne'
+          ],
+          language: 'french',
+          hosts: [ 'tony-godin' ]
+        },
+      },
+    ]}
+    speakers={[
+      {
+        id: 'sylvain-dorey.mdx',
+        slug: 'sylvain-dorey',
+        body: '',
+        collection: 'speakers',
+        data: {
+          name: 'Sylvain Dorey',
+          imageUrl: '/speakers/sylvain-dorey.jpg',
+          job: 'Independent software engineer and data scientist',
+          company: { title: 'Freelance', href: 'https://sylvaindorey.com/fr/' },
+          socials: [
+            {
+              type: 'linkedin',
+              href: 'https://www.linkedin.com/in/sylvaindorey/'
+            },
+            { type: 'github',
+              href: 'https://github.com/syldor/'
+            },
+          ]
+        },
+      },
+      {
+        id: 'abdelkrim-marchani.mdx',
+        slug: 'abdelkrim-marchani',
+        body: '',
+        collection: 'speakers',
+        data: {
+          name: 'Abdelkrim Marchani',
+          imageUrl: '/speakers/abdelkrim-marchani.jpg'
+        },
+      },
+      {
+        id: 'francois-best.mdx',
+        slug: 'francois-best',
+        body: '',
+        collection: 'speakers',
+        data: {
+          name: 'François Best',
+          imageUrl: '/speakers/francois-best.jpg',
+          job: 'Web developer and creator of nuqs',
+          company: [Object],
+          socials: [Array]
+        },
+      },
+      {
+        id: 'luis-rubiera.mdx',
+        slug: 'luis-rubiera',
+        body: '\n' +
+          "I'm a tech(geek) lead with over 10 years of experience working in different areas of software engineering, currently i'm diving into a big data\n" +
+          "sovereign project with a touch of AI. I'm passionate about new technologies and love thinking about how they'll shape our future. Building things\n" +
+          'and the startup environment really excite me.\n',
+        collection: 'speakers',
+        data: {
+          name: 'Luis Rubiera',
+          imageUrl: '/speakers/luis-rubiera.jpg',
+          job: 'Lead Developer',
+        },
+      },
+      {
+        id: 'xavier-van-de-woestyne.mdx',
+        slug: 'xavier-van-de-woestyne',
+        body: '\n' +
+          `J'aime beaucoup la programmation fonctionnelle statiquement typé et le web en règle général. Je m'occupais du Meetup "Lambda Nantes", un meetup dédié à la\n` +
+          'programmation fonctionnelle à Nantes.\n',
+        collection: 'speakers',
+        data: {
+          name: 'Xavier Van de Woestyne',
+          imageUrl: '/speakers/xavier-van-de-woestyne.jpg',
+          job: 'Web developer',
+        },
+      },
+    ]}
+    sponsors={[
+      {
+        id: 'digit.mdx',
+        slug: 'digit',
+        body: '\n' +
+          'Fruit d’une expérience de plus de 20 ans, DIGIT est une Entreprise de Services du Numérique (ESN) implantée en Normandie et en Ile de France.\n' +
+          '\n' +
+          'DIGIT accompagne les entreprises dans leurs projets informatiques en proposant des prestations intellectuelles de Développement Logiciel et de Business Intelligence.\n' +
+          '\n' +
+          'Ces Expertises sont déployées en mode Assistance Technique, au sein de vos équipes, ou en mode externalisation (Forfait et/ou Centre de Services) par le biais de notre Centre de Production basé à Rouen (1h de Paris)\n' +
+          '\n' +
+          'Reconnu comme un véritable acteur du numérique, DIGIT est bâtie sur 3 fondamentaux :\n' +
+          '\n' +
+          '1er – Privilégier le qualitatif au quantitatif\n' +
+          '« La qualité n’est pas une action, c’est une habitude qui augmente la satisfaction »\n' +
+          '\n' +
+          '2ème – Établir une relation de partenariat\n' +
+          '« Le partenaire accompagne aujourd’hui ET construit l’avenir à vos côtés »\n' +
+          '\n' +
+          '3ème – Être toujours transparent dans nos relations humaines\n' +
+          '\n' +
+          '« Les relations transparentes dénouent les problèmes et multiplient les solutions »\n' +
+          '\n',
+        collection: 'sponsors',
+        data: {
+          name: 'DIGIT',
+          image: { src: '/sponsors/digit@web.png', alt: 'DIGIT' },
+          href: 'https://www.groupedigit.com/',
+          socials: [
+            {
+              type: 'linkedin',
+              href: 'https://fr.linkedin.com/company/groupedigit/'
+            },
+            {
+              type: 'instagram',
+              href: 'https://www.instagram.com/groupedigit/'
+            }
+          ]
+        },
+      },
+    ]}
+  />
+</Demo>

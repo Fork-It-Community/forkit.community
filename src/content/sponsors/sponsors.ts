@@ -19,6 +19,14 @@ const zSponsor = () =>
       .optional(),
   });
 
+export type SponsorContent = {
+  id: string;
+  collection: string;
+  body: string;
+  slug: string;
+  data: Sponsor;
+};
+
 export const sponsorsCollection = defineCollection({
   type: "content",
   schema: zSponsor(),

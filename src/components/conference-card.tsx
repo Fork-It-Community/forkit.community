@@ -1,63 +1,45 @@
-import { useEffect, useState } from "react";
 import type { Event } from "@/content/events/events";
-import type { Talk } from "@/content/talks/talks";
-import type { Speaker } from "@/content/speakers/speaker";
+import type { Talk, TalkContent } from "@/content/talks/talks";
+import type { SpeakerContent } from "@/content/speakers/speaker";
 import { cn } from "@/lib/utils";
 import { LanguageBadge } from "@/components/language-badge";
 import { FavoriteButton } from "@/components/favorite-button";
 
 type ConferenceCardProps = {
   schedule: Event["schedule"][number];
-  talks: TalkStateProps[];
-  speakers: SpeakerStateProps[];
-};
-
-type SpeakerStateProps = {
-  id: string;
-  collection: string;
-  body: string;
-  slug: string;
-  data: Speaker;
-};
-type TalkStateProps = {
-  id: string;
-  collection: string;
-  body: string;
-  slug: string;
-  data: Talk;
+  talks: TalkContent[];
+  speakers: SpeakerContent[];
 };
 
 export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
-  const [talk, setTalk] = useState<Talk>();
-  const [speakers, setSpeakers] = useState<SpeakerStateProps[]>([]);
+  let talk = {} as Talk;
+  let speakers = [] as SpeakerContent[];
 
   if (!props.schedule) {
     return;
   }
 
-  useEffect(() => {
-    if (props.schedule.slug) {
-      const foundTalk = props.talks.find(
-        (talk) => talk.slug === props.schedule.slug,
-      );
-      if (foundTalk) {
-        setTalk(foundTalk.data);
-        if (foundTalk.data?.speakers.length > 0) {
-          const foundSpeakers: SpeakerStateProps[] = [];
-          foundTalk.data.speakers.map((talkSpeaker) => {
-            const foundSpeaker = props.speakers.find(
-              (speaker) => talkSpeaker === speaker.slug,
-            );
-            if (foundSpeaker) foundSpeakers.push(foundSpeaker);
-          });
-          setSpeakers(foundSpeakers);
-        }
+  if (props.schedule.slug) {
+    const foundTalk = props.talks.find(
+      (talk) => talk.slug === props.schedule.slug,
+    );
+    if (foundTalk) {
+      talk = foundTalk.data;
+      if (foundTalk.data?.speakers.length > 0) {
+        const foundSpeakers: SpeakerContent[] = [];
+        foundTalk.data.speakers.map((talkSpeaker) => {
+          const foundSpeaker = props.speakers.find(
+            (speaker) => talkSpeaker === speaker.slug,
+          );
+          if (foundSpeaker) foundSpeakers.push(foundSpeaker);
+        });
+        speakers = foundSpeakers;
       }
     }
-  }, [props.schedule.slug]);
+  }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div>
       <a
         href="/"
         className={cn(
@@ -66,8 +48,8 @@ export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
         )}
       >
         <div className="flex w-full flex-col gap-4">
-          <div className="flex justify-between gap-4">
-            <div className="flex flex-col gap-1">
+          <div className="flex-start flex justify-between gap-4">
+            <div className="flex w-8/12 flex-col gap-1">
               <p className="font-heading text-lg font-medium leading-6">
                 {talk?.title || "Conference Name"}
               </p>
@@ -88,7 +70,7 @@ export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
             {(props.schedule.type === "conference" ||
               props.schedule.type === "roundtable") &&
               speakers.length > 0 && (
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid h-fit w-fit grid-cols-2 gap-2">
                   {talk?.speakers.map((speakerSlug: string, index: number) => {
                     const speaker = speakers.find(
                       (s) => s.slug === speakerSlug,

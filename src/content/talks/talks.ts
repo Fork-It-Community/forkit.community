@@ -14,6 +14,14 @@ const zTalk = () =>
     hosts: z.string().array().optional(),
   });
 
+export type TalkContent = {
+  id: string;
+  collection: string;
+  body: string;
+  slug: string;
+  data: Talk;
+};
+
 export const talksCollection = defineCollection({
   type: "content",
   schema: zTalk(),
