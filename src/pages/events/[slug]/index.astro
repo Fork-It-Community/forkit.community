@@ -3,6 +3,13 @@ import EventLayout from "@/layouts/EventLayout.astro";
 import { getEventsCollection } from "@/lib/collections";
 import { getEntries } from "astro:content";
 import { SEO } from "astro-seo";
+import { Image } from "astro:assets";
+import { ExploreTheCommunity } from "@/components/explore-the-community";
+import { formatDateTimeShort, shouldDisplayTicketButton } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { ExternalLink } from "lucide-react";
+
+const MAX_PRIMARY_BUTTONS = 2;
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -18,21 +25,122 @@ export async function getStaticPaths() {
   );
 }
 
-const { slug } = Astro.params;
-const { subPages, event } = Astro.props;
+// const { slug } = Astro.params;
+// const { subPages, event } = Astro.props;
+const { event } = Astro.props;
+
+const isProspectusActive = !!(
+  event.data.prospectus?.href &&
+  (!event.data.prospectus.endDate ||
+    new Date().getTime() <= event.data.prospectus.endDate.getTime())
+);
+const isTicketsActive = !!event.data.tickets?.href;
+const isCfpActive = !!(
+  event.data.cfp?.href &&
+  (!event.data.cfp.endDate ||
+    new Date().getTime() <= event.data.cfp.endDate.getTime())
+);
 ---
 
 <EventLayout event={event}>
   <SEO slot="seo" />
-  <h1>{event.data.name}</h1>
-  <p>{slug}</p>
-  <ul>
-    {
-      subPages.map((subpage) => (
-        <li>
-          <a href={`/events/${subpage.slug}`}>{subpage.slug}</a>
-        </li>
-      ))
-    }
-  </ul>
+  {
+    event.data.image && (
+      <>
+        <Image
+          src={event.data.image?.src}
+          alt={event.data.image?.alt}
+          width={375}
+          height={610}
+          class="absolute inset-0 -z-10 my-0 h-2/3 w-full object-cover object-center"
+        />
+        <div
+          class="absolute inset-0 -z-10"
+          style={{
+            background: `linear-gradient(0deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.60) 100%),
+                   linear-gradient(0deg, rgba(0, 0, 0, 0.00) 60.87%, rgba(0, 0, 0, 0.50) 117.38%),
+                   linear-gradient(180deg, rgba(0, 0, 0, 0.00) 59.9%, #000 84.87%)`,
+          }}
+        />
+      </>
+    )
+  }
+  <div class="mt-12 flex flex-col gap-24">
+    <ExploreTheCommunity />
+    <div class="flex flex-col items-center gap-6">
+      <Image
+        src="/forkit-medium.svg"
+        alt="Fork it! logo"
+        width={168}
+        height={18}
+      />
+      <div>
+        {
+          event.data.date && (
+            <p class="my-0 font-heading text-3xl font-medium text-white">
+              {formatDateTimeShort(event.data.date)}
+            </p>
+          )
+        }
+        <p class="my-0 font-heading text-2xl font-medium text-white">
+          {event.data.name}
+        </p>
+      </div>
+      <!-- TODO : Add countdown when available -->
+      <div class="flex flex-wrap justify-center gap-3">
+        {
+          shouldDisplayTicketButton(event.data) && (
+            <Button>
+              <a
+                href={event.data.tickets?.href}
+                target="_blank"
+                rel="noreferer"
+                class="flex items-center"
+              >
+                Get tickets
+                <ExternalLink className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
+          )
+        }
+        {
+          isProspectusActive && (
+            <Button>
+              <a
+                href={event.data.prospectus?.href}
+                target="_blank"
+                rel="noreferer"
+                class="flex items-center"
+              >
+                {event.data.prospectus?.title ?? "Sponsoring prospectus"}
+                <ExternalLink className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
+          )
+        }
+        {
+          isCfpActive && (
+            <Button
+              variant={
+                [isProspectusActive, isTicketsActive].filter(Boolean).length >=
+                MAX_PRIMARY_BUTTONS
+                  ? "secondary"
+                  : "default"
+              }
+            >
+              <a
+                href={event.data.cfp?.href}
+                target="_blank"
+                rel="noreferer"
+                class="flex items-center"
+              >
+                Call For Paper
+                <ExternalLink className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
+          )
+        }
+      </div>
+    </div>
+  </div>
 </EventLayout>
