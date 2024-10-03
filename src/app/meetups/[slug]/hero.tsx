@@ -68,12 +68,18 @@ export function Hero(
                   </a>
                 </Button>
                 {props.meetup.partnerOrganizerLogo && (
-                  <Image
-                    src={props.meetup.partnerOrganizerLogo}
-                    alt="French tech malaysia"
-                    width={100}
-                    height={100}
-                  />
+                  <a
+                    href={props.meetup.partnerOrganizerLogo.href ?? "#"}
+                    target="_blank"
+                    rel="noreferer"
+                  >
+                    <Image
+                      src={props.meetup.partnerOrganizerLogo.src}
+                      alt={props.meetup.partnerOrganizerLogo.alt}
+                      width={100}
+                      height={100}
+                    />
+                  </a>
                 )}
               </div>
             )}
