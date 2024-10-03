@@ -21,7 +21,7 @@ export function About(
               src={LocationImage}
               width={1000}
               height={500}
-              alt="Bangkok"
+              alt="Brussels"
             />
           </div>
           <p className="py-4 text-center text-sm">@pierre9x6</p>
