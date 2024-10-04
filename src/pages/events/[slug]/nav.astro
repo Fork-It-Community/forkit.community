@@ -1,0 +1,38 @@
+---
+import { Button } from "@/components/ui/button";
+
+const { event } = Astro.props;
+
+const navigation = [
+  { name: "Venue", href: "#venue", shouldDisplayItem: true },
+  { name: "Schedule", href: "#schedule", shouldDisplayItem: true },
+  {
+    name: "Speakers",
+    href: "#speakers",
+    shouldDisplayItem: !!event.data.speakers,
+  },
+  { name: "Talks", href: "#talks", shouldDisplayItem: !!event.data.talks },
+  {
+    name: "Sponsors",
+    href: "#sponsors",
+    shouldDisplayItem: !!event.data.sponsoringLevels && !!event.data.sponsors,
+  },
+  { name: "FAQ", href: "#faq", shouldDisplayItem: !!event.data.faq },
+];
+---
+
+<div class="flex flex-col items-center gap-2 px-4">
+  <p class="text-xs">Quick acces</p>
+  <nav class="flex flex-wrap justify-center gap-4">
+    {
+      navigation.map(
+        (item) =>
+          item.shouldDisplayItem && (
+            <Button variant="link">
+              <a href={`/events/${event.slug}${item.href}`}>{item.name}</a>
+            </Button>
+          ),
+      )
+    }
+  </nav>
+</div>
