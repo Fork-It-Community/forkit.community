@@ -6,6 +6,8 @@ const zEvent = () =>
     title: z.string(),
     name: z.string(),
     date: z.date().optional(),
+    startTime: z.date().optional(),
+    endTime: z.date().optional(),
     location: z
       .object({
         name: z.string().optional(),
