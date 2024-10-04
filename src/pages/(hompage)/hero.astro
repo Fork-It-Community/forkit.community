@@ -1,0 +1,63 @@
+---
+import { formatDateTimeShort } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Image } from "astro:assets";
+
+const { event } = Astro.props;
+---
+
+<div class="relative flex h-[700px] flex-col gap-20">
+  {
+    event.data.image && (
+      <div class="absolute inset-0">
+        <Image
+          src={event.data.image?.src}
+          alt={event.data.image?.alt}
+          width={375}
+          height={610}
+          class="absolute inset-0 -z-10 my-0 h-full min-w-full object-cover object-center"
+        />
+        <div
+          class="absolute inset-0 -z-10"
+          style={{
+            background: `linear-gradient(0deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.60) 100%),
+          linear-gradient(0deg, rgba(0, 0, 0, 0.00) 60.87%, rgba(0, 0, 0, 0.50) 117.38%),
+          linear-gradient(180deg, rgba(0, 0, 0, 0.00) 59.9%, #000 84.87%)`,
+          }}
+        />
+      </div>
+    )
+  }
+  <div class="mt-24 flex justify-center">
+    <Image
+      src="/forkit-medium.svg"
+      alt="Fork it! logo"
+      width={168}
+      height={18}
+    />
+  </div>
+  <div class="flex flex-col px-4">
+    {/* Todo : add tag */}
+    {
+      event.data.date && (
+        <p class="my-0 font-heading text-3xl font-medium text-white">
+          {formatDateTimeShort(event.data.date)}
+        </p>
+      )
+    }
+    <p class="my-0 font-heading text-2xl font-medium text-white">
+      {event.data.name}
+    </p>
+    <div class="mt-6 flex items-center">
+      <Button>
+        <a
+          href={event.data.tickets?.href}
+          target="_blank"
+          class="text-black no-underline"
+        >
+          Tickets Available
+        </a>
+      </Button>
+    </div>
+  </div>
+</div>

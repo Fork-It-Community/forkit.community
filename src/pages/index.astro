@@ -1,11 +1,9 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import { getEventsCollection } from "@/lib/collections";
-import { Image } from "astro:assets";
-import { NextEvent } from "./(hompage)/nextEvent";
+import Hero from "./(hompage)/hero.astro";
 import { isDateInThePast } from "@/lib/utils";
-import { InputField } from "@/components/Input";
-import { Button } from "@/components/ui/button";
+import SubscribeForm from "./(hompage)/subscribeForm.astro";
 
 const events = await getEventsCollection();
 const upcomingEvents = events
@@ -19,40 +17,9 @@ const nextEvent = upcomingEvents.length > 0 ? upcomingEvents[0] : null;
 ---
 
 <Layout>
-  {
-    nextEvent?.data.image && (
-      <>
-        <Image
-          src={nextEvent?.data.image?.src}
-          alt={nextEvent?.data.image.alt}
-          width={375}
-          height={610}
-          class="absolute inset-0 -z-10 h-2/3 w-full object-cover object-center opacity-30"
-        />
-        <div class="absolute inset-0 -z-10 h-2/3 bg-gradient-to-b from-transparent via-black/30 to-black" />
-      </>
-    )
-  }
-  <main class="flex flex-col gap-20">
-    <div class="mt-24 flex justify-center">
-      <Image
-        src="/forkit-medium.svg"
-        alt="Fork it! logo"
-        width={168}
-        height={18}
-      />
-    </div>
-    {nextEvent && <NextEvent event={nextEvent.data} />}
-    <div>
-      <!-- Todo : Add the timeline with all the eventCards when it's ready -->
-      <form class="flex items-end gap-2">
-        <InputField
-          placeholder="email@email.fr"
-          label="Keep in touch"
-          className="border border-neutral-700"
-        />
-        <Button type="submit" variant="secondary">Subscribe</Button>
-      </form>
-    </div>
-  </main>
+  <Hero event={nextEvent} />
+  <div class="container">
+    <!-- Todo : Add the timeline with all the eventCards when it's ready -->
+    <SubscribeForm />
+  </div>
 </Layout>
