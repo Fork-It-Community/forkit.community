@@ -12,9 +12,10 @@ const zBlog = () =>
         alt: z.string(),
       })
       .optional(),
-    author: reference("people"),
+    authors: z.array(reference("people")),
     date: z.date(),
     tags: z.array(z.string()).optional(),
+    state: z.enum(["draft", "published"]).default("draft"),
   });
 
 export const blogsCollection = defineCollection({
