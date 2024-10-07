@@ -5,14 +5,13 @@ const zPodcast = () =>
   z.object({
     title: z.string(),
     description: z.string().optional(),
-    episodeNumber: z.number(),
     releaseDate: z.date(),
     duration: z.number(),
-    podcastUrls: z
+    urls: z
       .array(
         z.object({
-          platform: z.string(),
-          url: z.string(),
+          name: z.string(),
+          url: z.string().url(),
         }),
       )
       .optional(),
@@ -21,10 +20,13 @@ const zPodcast = () =>
     hosts: z.array(reference("people")),
     guests: z.array(reference("people")).optional(),
     language: z.enum(["french", "english"]),
+    // The "notes" field is an array of objects, where each object represents a topic
+    // discussed in the podcast and the time (in minutes and seconds) when it was mentioned.
+    // Example :  //   [{ time: "01:10", subject: "What is Fork It?" }],
     notes: z
       .array(
         z.object({
-          minute: z.string(),
+          time: z.string(),
           subject: z.string(),
         }),
       )
