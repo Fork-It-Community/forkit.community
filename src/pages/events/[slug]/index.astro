@@ -6,18 +6,28 @@ import { SEO } from "astro-seo";
 import Hero from "./hero.astro";
 import Nav from "./nav.astro";
 import Venue from "./venue.astro";
+import type { CollectionEntry } from "astro:content";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
 
   return Promise.all(
-    events.map(async (event) => ({
-      params: { slug: event.slug },
-      props: {
-        event,
-        subPages: await getEntries(event.data.subPages),
-      },
-    })),
+    events.map(async (event) => {
+      const subPages = event.data.subPages.map((subPage) => {
+        return {
+          collection:
+            "eventsSubPages" as CollectionEntry<"eventsSubPages">["collection"],
+          slug: subPage.slug,
+        };
+      });
+      return {
+        params: { slug: event.slug },
+        props: {
+          event,
+          subPages: await getEntries(subPages),
+        },
+      };
+    }),
   );
 }
 
@@ -31,6 +41,6 @@ const { event } = Astro.props;
   <Hero event={event} />
   <div class="container flex flex-col gap-8">
     <Nav event={event} />
-    <Venue event={event} />
+    <Venue event={event.data} />
   </div>
 </EventLayout>
