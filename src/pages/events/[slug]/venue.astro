@@ -1,23 +1,28 @@
 ---
+import { Button } from "@/components/ui/button";
 import { formatDateTime, formatTime } from "@/lib/utils";
+import type { CollectionEntry } from "astro:content";
 import { MapPin, Calendar } from "lucide-react";
 
+interface Props {
+  event: CollectionEntry<"events">["data"];
+}
 const { event } = Astro.props;
 ---
 
 <div id="venue">
   <h2>Venue</h2>
+  <hr class="mb-4 mt-2 border border-neutral-800" />
   <ul class="flex flex-col gap-2 text-gray-200">
     {
-      event.data.date && (
+      event.startDate && (
         <li class="flex gap-x-1 text-sm">
           <Calendar className="mt-1 h-5 w-5 flex-none" aria-hidden="true" />
           <span class="flex flex-col">
-            <time>{formatDateTime(event.data.date)}</time>
-            {event.data.startTime && event.data.endTime && (
+            <time>{formatDateTime(event.startDate)}</time>
+            {event.startDate && event.endDate && (
               <time class="text-neutral-400">
-                {formatTime(event.data.startTime)}-
-                {formatTime(event.data.endTime)}
+                {formatTime(event.startDate)}-{formatTime(event.endDate)}
               </time>
             )}
           </span>
@@ -25,20 +30,31 @@ const { event } = Astro.props;
       )
     }
     {
-      event.data.location && (
+      event.location && (
         <li class="flex gap-x-1 text-sm">
           <MapPin className="mt-1 h-5 w-5" aria-hidden="true" />
           <span class="flex flex-col">
-            <p>{event.data.location.name}</p>
-            <p class="text-neutral-400">{event.data.location.address}</p>
+            <p>{event.location.name}</p>
+            <p class="text-neutral-400">{event.location.address}</p>
           </span>
         </li>
       )
     }
     <li>
       <p>
-        {event.data.excerpt}
+        {event.excerpt}
       </p>
     </li>
   </ul>
+  <div class="flex flex-row gap-5 pt-5">
+    {
+      event.subPages.map((subPage) => (
+        <Button>
+          <a href={subPage.slug} class="flex flex-row items-center gap-2">
+            {subPage.name}
+          </a>
+        </Button>
+      ))
+    }
+  </div>
 </div>
