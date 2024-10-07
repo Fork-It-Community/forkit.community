@@ -28,7 +28,7 @@ export function formatDateTimeShort(date: string | number | Date) {
 }
 
 export function isEventInThePast(event: Event) {
-  return (event.date?.getTime() ?? 0) < new Date().getTime();
+  return (event.startDate?.getTime() ?? 0) < new Date().getTime();
 }
 
 export function shouldDisplayTicketButton(event: Event) {
