@@ -23,14 +23,6 @@ const zSpeaker = () =>
       .optional(),
   });
 
-export type SpeakerContent = {
-  id: string;
-  collection: string;
-  body: string;
-  slug: string;
-  data: Speaker;
-};
-
 export const speakersCollection = defineCollection({
   type: "content",
   schema: zSpeaker(),

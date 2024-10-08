@@ -1,8 +1,6 @@
 import type { ReactNode } from "react";
+import type { CollectionEntry } from "astro:content";
 import type { Event } from "@/content/events/events";
-import type { TalkContent } from "@/content/talks/talks";
-import type { SpeakerContent } from "@/content/speakers/speaker";
-import type { SponsorContent } from "@/content/sponsors/sponsors";
 import { cn, formatTime } from "@/lib/utils";
 import { LocationBadge } from "@/components/location-badge";
 import { BreakCard } from "@/components/break-card";
@@ -11,9 +9,9 @@ import { FavoritesContextProvider } from "@/context/FavoritesContext";
 
 type EventProgramProps = {
   event: Event;
-  talks: TalkContent[];
-  speakers: SpeakerContent[];
-  sponsors: SponsorContent[];
+  talks: CollectionEntry<"talks">[];
+  people: CollectionEntry<"people">[];
+  sponsors: CollectionEntry<"sponsors">[];
 };
 
 function TimeAndDuration(props: {
@@ -71,7 +69,7 @@ export const EventProgram = (props: EventProgramProps) => {
                   <ConferenceCard
                     schedule={schedule}
                     talks={props.talks}
-                    speakers={props.speakers}
+                    people={props.people}
                     key={schedule.slug}
                   />
                 )}

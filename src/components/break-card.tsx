@@ -1,24 +1,19 @@
+import type { CollectionEntry } from "astro:content";
 import type { Event } from "@/content/events/events";
-import type { Sponsor, SponsorContent } from "@/content/sponsors/sponsors";
 import { cn } from "@/lib/utils";
 
 type BreakCardProps = {
   schedule: Event["schedule"][number];
-  sponsors: SponsorContent[];
+  sponsors: CollectionEntry<"sponsors">[];
 };
 
 export const BreakCard = (props: Readonly<BreakCardProps>) => {
-  let sponsor = {} as Sponsor;
+  const sponsor = props.sponsors.find(
+    (s) => s.slug === props.schedule.sponsorSlug,
+  )?.data;
 
   if (!props?.schedule) {
     return;
-  }
-
-  if (props.schedule.sponsorSlug) {
-    const foundSponsor = props.sponsors.find(
-      (sponsor) => sponsor.slug === props.schedule.sponsorSlug,
-    );
-    if (foundSponsor?.data) sponsor = foundSponsor?.data;
   }
 
   return (
@@ -26,9 +21,7 @@ export const BreakCard = (props: Readonly<BreakCardProps>) => {
       <div className="flex w-full flex-[4] flex-row justify-between gap-2 rounded-lg border-2 border-neutral-700 bg-neutral-800 px-4 py-4">
         <div className="flex flex-col justify-center">
           <p className="text-xl font-semibold">{props?.schedule?.name}</p>
-          {props?.schedule?.description && (
-            <p>{props?.schedule?.description}</p>
-          )}
+          {props.schedule.description && <p>{props.schedule.description}</p>}
         </div>
         {sponsor?.image && (
           <div className="flex flex-col gap-2">

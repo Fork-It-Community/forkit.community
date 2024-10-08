@@ -1,41 +1,26 @@
+import type { CollectionEntry } from "astro:content";
 import type { Event } from "@/content/events/events";
-import type { Talk, TalkContent } from "@/content/talks/talks";
-import type { SpeakerContent } from "@/content/speakers/speaker";
+import type { Talk } from "@/content/talks/talks";
 import { cn } from "@/lib/utils";
 import { LanguageBadge } from "@/components/language-badge";
 import { FavoriteButton } from "@/components/favorite-button";
 
 type ConferenceCardProps = {
   schedule: Event["schedule"][number];
-  talks: TalkContent[];
-  speakers: SpeakerContent[];
+  talks: CollectionEntry<"talks">[];
+  people: CollectionEntry<"people">[];
 };
 
 export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
-  let talk = {} as Talk;
-  let speakers = [] as SpeakerContent[];
+  const talk: Talk = props.talks.find(
+    (talk) => talk.slug === props.schedule.slug,
+  )?.data;
+  const speakers = talk?.speakers.map((t) =>
+    props.people.find((s) => t === s.slug),
+  );
 
   if (!props.schedule) {
     return;
-  }
-
-  if (props.schedule.slug) {
-    const foundTalk = props.talks.find(
-      (talk) => talk.slug === props.schedule.slug,
-    );
-    if (foundTalk) {
-      talk = foundTalk.data;
-      if (foundTalk.data?.speakers.length > 0) {
-        const foundSpeakers: SpeakerContent[] = [];
-        foundTalk.data.speakers.map((talkSpeaker) => {
-          const foundSpeaker = props.speakers.find(
-            (speaker) => talkSpeaker === speaker.slug,
-          );
-          if (foundSpeaker) foundSpeakers.push(foundSpeaker);
-        });
-        speakers = foundSpeakers;
-      }
-    }
   }
 
   return (
@@ -60,8 +45,9 @@ export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
                       key={index}
                       className="text-sm font-semibold text-gray-300"
                     >
-                      {speakers?.find((speaker) => speaker.slug === speakerSlug)
-                        ?.data?.name || "Unknown Speaker"}
+                      {speakers?.find(
+                        (speaker) => speaker?.slug === speakerSlug,
+                      )?.data.name || "Unknown Speaker"}
                     </p>
                   ))}
                 </div>
@@ -69,30 +55,25 @@ export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
             </div>
             {(props.schedule.type === "conference" ||
               props.schedule.type === "roundtable") &&
-              speakers.length > 0 && (
+              speakers && (
                 <div className="grid h-fit w-fit grid-cols-2 gap-2">
-                  {talk?.speakers.map((speakerSlug: string, index: number) => {
-                    const speaker = speakers.find(
-                      (s) => s.slug === speakerSlug,
-                    );
-                    return speaker ? (
-                      <div
-                        key={speaker.id}
-                        className={cn(
-                          "h-12 w-12 overflow-hidden rounded-sm bg-gray-200",
-                          speakers.length % 2 !== 0 &&
-                            index === speakers.length - 1 &&
-                            "col-start-2",
-                        )}
-                      >
-                        <img
-                          src={speaker?.data?.imageUrl}
-                          alt={speaker?.data?.name}
-                          className="h-full w-full object-cover"
-                        />
-                      </div>
-                    ) : null;
-                  })}
+                  {speakers.map((speaker, index) => (
+                    <div
+                      key={speaker?.id}
+                      className={cn(
+                        "h-12 w-12 overflow-hidden rounded-sm bg-gray-200",
+                        speakers.length % 2 !== 0 &&
+                          index === speakers.length - 1 &&
+                          "col-start-2",
+                      )}
+                    >
+                      <img
+                        src={speaker?.data.avatar}
+                        alt={speaker?.data.name}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  ))}
                 </div>
               )}
           </div>
