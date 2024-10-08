@@ -7,6 +7,20 @@ import { formatDateTime, getHref } from "@/lib/utils";
 import Link from "next/link";
 import { getNextEvent, getNextMeetup } from "@/lib/server";
 import { NEWSLETTER_HREF } from "@/lib/constants";
+import { SVGProps } from "react";
+import { ICONS } from "@/components/icons";
+const navigation = [
+  {
+    name: "Linkedin",
+    href: "https://www.linkedin.com/company/fork-it-community",
+    icon: (props: SVGProps<SVGSVGElement>) => ICONS["linkedin"],
+  },
+  {
+    name: "Youtube",
+    href: "https://www.youtube.com/channel/UCgV5zuiFWCMl7IvuZ5KbJOw",
+    icon: (props: SVGProps<SVGSVGElement>) => ICONS["youtube"],
+  },
+];
 
 export async function Hero() {
   const nextEvent = await getNextEvent();
@@ -39,15 +53,25 @@ export async function Hero() {
               </Button>
               <Button
                 size="lg"
-                variant="outline"
+                variant="secondary"
                 asChild
                 className="w-full sm:w-auto"
               >
-                <a href={NEWSLETTER_HREF} target="_blank">
-                  <MailIcon size="1em" className="mr-2" />
-                  Keep in touch
-                </a>
+                <a href="#past-events">Explore past events</a>
               </Button>
+              <div className="w-full sm:w-auto lg:w-full xl:w-auto">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  asChild
+                  className="w-full sm:w-auto"
+                >
+                  <a href={NEWSLETTER_HREF} target="_blank">
+                    <MailIcon size="1em" className="mr-2" />
+                    Keep in touch
+                  </a>
+                </Button>
+              </div>
             </div>
             {nextEvent?.tickets && (
               <div className="pt-12">
@@ -97,6 +121,14 @@ export async function Hero() {
                 </div>
               </div>
             )}
+            <div className="mt-8 flex space-x-6 md:order-2 md:justify-start">
+              {navigation.map((item) => (
+                <a key={item.name} href={item.href} target="_blank">
+                  <span className="sr-only">{item.name}</span>
+                  <item.icon aria-hidden="true" />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
         <div className="logo-mask relative m-auto lg:absolute lg:inset-0 lg:left-1/2 lg:mr-0">
