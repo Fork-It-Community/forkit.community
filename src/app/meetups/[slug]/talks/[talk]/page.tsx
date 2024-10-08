@@ -150,7 +150,7 @@ export default async function TalkPage({ params }: TalkPageProps) {
                   )}
                 </div>
               </div>
-              <div className="prose prose-sm prose-invert m-auto md:prose-base prose-headings:scroll-m-10">
+              <div className="prose prose-sm prose-invert my-auto md:prose-base prose-headings:scroll-m-10">
                 <speaker.bio />
               </div>
             </div>
