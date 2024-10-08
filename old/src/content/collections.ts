@@ -141,11 +141,15 @@ const collections = {
           link: z.string().url(),
         })
         .optional(),
-      content: z.object({
-        afterMovie: z.object({
-          href: z.string().url(),
-        }).optional()
-      }).optional()
+      content: z
+        .object({
+          afterMovie: z
+            .object({
+              href: z.string().url(),
+            })
+            .optional(),
+        })
+        .optional(),
     }),
   }),
   speaker: defineCollection({
