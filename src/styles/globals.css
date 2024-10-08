@@ -49,7 +49,7 @@
 /* Custom config */
 @layer base {
   h2 {
-    @apply text-xl text-foreground font-heading
+    @apply font-heading text-xl text-foreground;
   }
 }
 
