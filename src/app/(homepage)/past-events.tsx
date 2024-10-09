@@ -47,6 +47,14 @@ export const PastEvents = async () => {
                   Explore all the photos
                 </a>
               </Button>
+              <Button asChild>
+                <a
+                  href="https://www.youtube.com/watch?v=HLGnkpZ-Q1Q"
+                  target="_blank"
+                >
+                  Watch the after-movie
+                </a>
+              </Button>
             </div>
           </div>
         ))}
