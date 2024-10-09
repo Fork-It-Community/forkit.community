@@ -1,9 +1,12 @@
-import type { Person } from "@/content/people/people";
+import type { CollectionEntry } from "astro:content";
 import { ICONS } from "./icons";
+import { cn } from "@/lib/utils";
 
-export const SpeakerDetail = (props: Readonly<{ speaker: Person }>) => {
+const SpeakerDetail = (
+  props: Readonly<{ speaker: CollectionEntry<"people">["data"] }>,
+) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex h-fit w-fit flex-col gap-2">
       <div className="mx-auto aspect-square overflow-hidden rounded-lg">
         <img
           src={props.speaker.avatar}
@@ -56,3 +59,20 @@ export const SpeakerDetail = (props: Readonly<{ speaker: Person }>) => {
     </div>
   );
 };
+
+const SpeakerGroup = (
+  props: Readonly<{
+    speakers: CollectionEntry<"people">[];
+    className?: string;
+  }>,
+) => {
+  return (
+    <div className={cn("grid grid-cols-2 gap-4 lg:gap-8", props.className)}>
+      {props.speakers.map((speaker) => (
+        <SpeakerDetail speaker={speaker.data} />
+      ))}
+    </div>
+  );
+};
+
+export { SpeakerDetail, SpeakerGroup };
