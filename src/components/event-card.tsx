@@ -8,7 +8,7 @@ type EventCardProps = {
 };
 
 export const EventCard = (props: EventCardProps) => {
-  const eventType = 'cfp' in props.event ? "event" : "meetup";
+  const eventType = "cfp" in props.event ? "event" : "meetup";
 
   return (
     <article
@@ -47,14 +47,14 @@ export const EventCard = (props: EventCardProps) => {
                     {formatTime(props.event.date)}
                   </time>
                 )}
-                {('cfp' in props.event) && props.event.cfp?.endDate && (
+                {"cfp" in props.event && props.event.cfp?.endDate && (
                   <time dateTime={props.event.cfp.endDate.toISOString()}>
                     - {formatTime(props.event.cfp.endDate)}
                   </time>
                 )}
               </div>
             </div>
-            <div className="flex flex-col font-heading text-base text-secondary font-medium">
+            <div className="flex flex-col font-heading text-base font-medium text-secondary">
               {props.event.title}
             </div>
             <div>
@@ -83,7 +83,7 @@ export const EventCard = (props: EventCardProps) => {
                 </div>
               )}
             </div>
-            <p className="flex flex-col font-heading text-base text-secondary font-medium">
+            <p className="flex flex-col font-heading text-base font-medium text-secondary">
               {props.event.title}
             </p>
           </div>
