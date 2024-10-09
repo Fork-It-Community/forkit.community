@@ -1,25 +1,23 @@
-import type { Speaker } from "@/content/speakers/speaker"
-import { ICONS } from "./icons"
+import type { Person } from "@/content/people/people";
+import { ICONS } from "./icons";
 
-export const SpeakerDetail = (props: Readonly<{ speaker: Speaker }>) => {
+export const SpeakerDetail = (props: Readonly<{ speaker: Person }>) => {
   return (
     <div className="flex flex-col gap-2">
-      <div
-        className="mx-auto aspect-square rounded-lg overflow-hidden"
-      >
+      <div className="mx-auto aspect-square overflow-hidden rounded-lg">
         <img
-          src={props.speaker.imageUrl}
+          src={props.speaker.avatar}
           alt={`${props.speaker.name} profile picture`}
         />
       </div>
       <div className="flex flex-col gap-3">
-        <div>  
+        <div>
           <h2 className="text-lg font-semibold leading-6 tracking-tight text-white md:text-xl">
             {props.speaker.name}
           </h2>
-          {!!props.speaker.job &&
+          {!!props.speaker.job && (
             <p className="text-neutral-400">{props.speaker.job}</p>
-          }
+          )}
           {!!props.speaker.company && (
             <div>
               {!!props.speaker.company.href ? (
@@ -56,5 +54,5 @@ export const SpeakerDetail = (props: Readonly<{ speaker: Speaker }>) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
