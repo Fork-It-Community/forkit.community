@@ -1,0 +1,32 @@
+---
+import "@fontsource/tomorrow";
+import "@fontsource-variable/inter";
+import "@/styles/globals.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <meta name="description" content={description || title} />
+    <link rel="icon" href="/favicon.png" sizes="32x32" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="canonical" href={Astro.url} />
+    <meta name="generator" content={Astro.generator} />
+    <slot name="seo" />
+  </head>
+  <body
+    class="prose prose-invert mx-auto px-4 prose-headings:font-heading prose-h2:text-xl"
+  >
+    <slot />
+  </body>
+</html>

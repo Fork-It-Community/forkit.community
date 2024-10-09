@@ -1,0 +1,16 @@
+---
+import HTMLLayout from "@/layouts/HTMLLayout.astro";
+// TODO: Placeholder paths; replace these with dynamic paths once we have content
+export async function getStaticPaths() {
+  return [
+    { params: { slug: "blog-1" } },
+    { params: { slug: "blog-2" } },
+    { params: { slug: "blog-3" } },
+  ];
+}
+const { slug } = Astro.params;
+---
+
+<HTMLLayout>
+  <h2>{slug}</h2>
+</HTMLLayout>
