@@ -7,7 +7,7 @@ type EventCardProps = {
   event: Event | Meetup;
 };
 
-export const EventCard = (props: EventCardProps) => {
+export const EventCard = (props: Readonly<EventCardProps>) => {
   const eventType = "cfp" in props.event ? "event" : "meetup";
 
   return (
