@@ -1,17 +1,19 @@
 import { talksCollection } from "./talks/talks";
 import { eventsCollection } from "./events/events";
-import { organizersCollection } from "./organizers/organizers";
 import { partnersCollection } from "./partners/partners";
-import { speakersCollection } from "./speakers/speaker";
 import { sponsorsCollection } from "./sponsors/sponsors";
+import { componentsCollection } from "@/content/components/components";
 import { meetupsCollection } from "./meetups/meetups";
+import { blogsCollection } from "./blogs/blogs";
+import { peopleCollection } from "./people/people";
 
 export const collections = {
-  organizers: organizersCollection,
   partners: partnersCollection,
   sponsors: sponsorsCollection,
   events: eventsCollection,
   meetups: meetupsCollection,
-  speaker: speakersCollection,
   talk: talksCollection,
+  people: peopleCollection,
+  components: componentsCollection,
+  blogs: blogsCollection,
 };

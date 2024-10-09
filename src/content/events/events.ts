@@ -1,4 +1,4 @@
-import { z, defineCollection } from "astro:content";
+import { z, defineCollection, reference } from "astro:content";
 
 export type Event = z.infer<ReturnType<typeof zEvent>>;
 const zEvent = () =>
@@ -100,6 +100,7 @@ const zEvent = () =>
           .optional(),
       })
       .optional(),
+    subPages: z.array(reference("eventsSubPages")),
   });
 
 export const eventsCollection = defineCollection({

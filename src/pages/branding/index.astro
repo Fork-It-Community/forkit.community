@@ -1,0 +1,27 @@
+---
+import HTMLLayout from "@/layouts/HTMLLayout.astro";
+import { getCollection } from "astro:content";
+
+const components = await getCollection("components");
+---
+
+<!-- TODO update the layout when we have the good one -->
+<HTMLLayout>
+  <main class="flex flex-col gap-8 p-8">
+    <h1>Branding</h1>
+    <ul class="flex flex-col gap-2">
+      {
+        components.map((component) => (
+          <li>
+            <a
+              href={`/branding/components/${component.slug}`}
+              title={component.data.name}
+            >
+              {component.data.name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</HTMLLayout>
