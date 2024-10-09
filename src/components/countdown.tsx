@@ -10,8 +10,10 @@ export const Countdown = (
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(props.date));
 
   const updateTimer = () => {
-    const formattedTime = calculateTimeLeft(props.date);
-    setTimeLeft(formattedTime);
+    if (props.date) {
+      const formattedTime = calculateTimeLeft(props.date);
+      setTimeLeft(formattedTime);
+    }
   };
 
   useEffect(() => {
