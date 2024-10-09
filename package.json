@@ -7,19 +7,27 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,json,astro}": "prettier --write src/"
   },
   "dependencies": {
-    "@astrojs/check": "0.9.2",
-    "@astrojs/mdx": "3.1.3",
-    "@astrojs/react": "3.6.1",
+    "@astrojs/check": "0.9.3",
+    "@astrojs/mdx": "3.1.5",
+    "@astrojs/react": "3.6.2",
+    "@astrojs/sitemap": "3.1.6",
     "@astrojs/tailwind": "5.1.0",
     "@fontsource-variable/inter": "5.0.20",
     "@fontsource/tomorrow": "5.0.20",
+    "@radix-ui/react-label": "2.1.0",
     "@radix-ui/react-slot": "1.1.0",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
-    "astro": "4.13.2",
+    "astro": "4.15.1",
+    "astro-robots-txt": "1.0.0",
+    "astro-seo": "0.8.4",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.1",
     "lucide-react": "0.427.0",
@@ -33,6 +41,8 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "0.5.14",
+    "husky": "9.1.6",
+    "lint-staged": "15.2.10",
     "prettier": "3.3.3",
     "prettier-plugin-astro": "0.14.1",
     "prettier-plugin-tailwindcss": "0.6.5"
