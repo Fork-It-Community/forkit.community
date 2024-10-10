@@ -6,19 +6,29 @@ import { ExternalLink, MailIcon } from "lucide-react";
 import { formatDateTime, getHref } from "@/lib/utils";
 import Link from "next/link";
 import { getNextEvent, getNextMeetup } from "@/lib/server";
-import { NEWSLETTER_HREF } from "@/lib/constants";
-import { SVGProps } from "react";
-import { ICONS } from "@/components/icons";
+import { FaLinkedin, FaSquareXTwitter, FaYoutube } from "react-icons/fa6";
+import { IoMdMail } from "react-icons/io";
+
 const navigation = [
   {
     name: "Linkedin",
     href: "https://www.linkedin.com/company/fork-it-community",
-    icon: (props: SVGProps<SVGSVGElement>) => ICONS["linkedin"],
+    icon: FaLinkedin,
+  },
+  {
+    name: "X",
+    href: "https://x.com/ForkitCommunity",
+    icon: FaSquareXTwitter,
   },
   {
     name: "Youtube",
     href: "https://www.youtube.com/channel/UCgV5zuiFWCMl7IvuZ5KbJOw",
-    icon: (props: SVGProps<SVGSVGElement>) => ICONS["youtube"],
+    icon: FaYoutube,
+  },
+  {
+    name: "Email",
+    href: "mailto:contact@forkit.community",
+    icon: IoMdMail,
   },
 ];
 
@@ -57,21 +67,8 @@ export async function Hero() {
                 asChild
                 className="w-full sm:w-auto"
               >
-                <a href="#past-events">Explore past events</a>
+                <a href="#past-events">Past events</a>
               </Button>
-              <div className="w-full sm:w-auto lg:w-full xl:w-auto">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  asChild
-                  className="w-full sm:w-auto"
-                >
-                  <a href={NEWSLETTER_HREF} target="_blank">
-                    <MailIcon size="1em" className="mr-2" />
-                    Keep in touch
-                  </a>
-                </Button>
-              </div>
             </div>
             {nextEvent?.tickets && (
               <div className="pt-12">
@@ -121,13 +118,16 @@ export async function Hero() {
                 </div>
               </div>
             )}
-            <div className="mt-8 flex space-x-6 md:order-2 md:justify-start">
-              {navigation.map((item) => (
-                <a key={item.name} href={item.href} target="_blank">
-                  <span className="sr-only">{item.name}</span>
-                  <item.icon aria-hidden="true" />
-                </a>
-              ))}
+            <div className="mt-14">
+              <p className="text-gray-400">Join the community</p>
+              <div className="mt-2 flex space-x-4 md:order-2">
+                {navigation.map((item) => (
+                  <a key={item.name} href={item.href} target="_blank">
+                    <span className="sr-only">{item.name}</span>
+                    <item.icon aria-hidden="true" size={32} />
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </div>
