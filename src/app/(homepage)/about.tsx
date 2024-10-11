@@ -26,10 +26,10 @@ export function About() {
             talk about real projects without lies for once.
           </p>
         </div>
-        <div className="h-70 relative aspect-[1134/640] w-2/3 md:w-3/5 lg:w-2/4 xl:w-[45%]">
+        <div className="h-70 relative aspect-[1134/640] w-full sm:w-2/3 md:w-3/5 lg:w-2/4 xl:w-[45%]">
           <a href="https://www.youtube.com/watch?v=HLGnkpZ-Q1Q" target="_blank">
             <Image
-              className="object-cover"
+              className="object-cover sm:rounded-lg"
               src={VideoThumbNail}
               alt="Fork it! Rouen After movie "
             />
