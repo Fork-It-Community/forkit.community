@@ -6,7 +6,31 @@ import { ExternalLink, MailIcon } from "lucide-react";
 import { formatDateTime, getHref } from "@/lib/utils";
 import Link from "next/link";
 import { getNextEvent, getNextMeetup } from "@/lib/server";
-import { NEWSLETTER_HREF } from "@/lib/constants";
+import { FaLinkedin, FaSquareXTwitter, FaYoutube } from "react-icons/fa6";
+import { IoMdMail } from "react-icons/io";
+
+const socials = [
+  {
+    name: "Linkedin",
+    href: "https://www.linkedin.com/company/fork-it-community",
+    icon: FaLinkedin,
+  },
+  {
+    name: "X",
+    href: "https://x.com/ForkitCommunity",
+    icon: FaSquareXTwitter,
+  },
+  {
+    name: "Youtube",
+    href: "https://www.youtube.com/channel/UCgV5zuiFWCMl7IvuZ5KbJOw",
+    icon: FaYoutube,
+  },
+  {
+    name: "Email",
+    href: "mailto:contact@forkit.community",
+    icon: IoMdMail,
+  },
+];
 
 export async function Hero() {
   const nextEvent = await getNextEvent();
@@ -39,14 +63,11 @@ export async function Hero() {
               </Button>
               <Button
                 size="lg"
-                variant="outline"
+                variant="secondary"
                 asChild
                 className="w-full sm:w-auto"
               >
-                <a href={NEWSLETTER_HREF} target="_blank">
-                  <MailIcon size="1em" className="mr-2" />
-                  Keep in touch
-                </a>
+                <a href="#past-events">Past events</a>
               </Button>
             </div>
             {nextEvent?.tickets && (
@@ -97,6 +118,17 @@ export async function Hero() {
                 </div>
               </div>
             )}
+            <div className="mt-14">
+              <p className="text-gray-400">Join the community</p>
+              <div className="mt-2 flex space-x-4 md:order-2">
+                {socials.map((item) => (
+                  <a key={item.name} href={item.href} target="_blank">
+                    <span className="sr-only">{item.name}</span>
+                    <item.icon aria-hidden="true" size={32} />
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
         <div className="logo-mask relative m-auto lg:absolute lg:inset-0 lg:left-1/2 lg:mr-0">
