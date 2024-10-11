@@ -9,7 +9,7 @@ import { getNextEvent, getNextMeetup } from "@/lib/server";
 import { FaLinkedin, FaSquareXTwitter, FaYoutube } from "react-icons/fa6";
 import { IoMdMail } from "react-icons/io";
 
-const navigation = [
+const socials = [
   {
     name: "Linkedin",
     href: "https://www.linkedin.com/company/fork-it-community",
@@ -121,7 +121,7 @@ export async function Hero() {
             <div className="mt-14">
               <p className="text-gray-400">Join the community</p>
               <div className="mt-2 flex space-x-4 md:order-2">
-                {navigation.map((item) => (
+                {socials.map((item) => (
                   <a key={item.name} href={item.href} target="_blank">
                     <span className="sr-only">{item.name}</span>
                     <item.icon aria-hidden="true" size={32} />
