@@ -9,7 +9,9 @@ export async function generateMetadata(
   { params }: MeetupPageProps,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const meetup = await collections.meetup.getBySlug(params.slug);
+  const meetup = await collections.meetup.getBySlug(params.slug).catch(() => {
+    return notFound();
+  });
 
   const title = (await parent).title?.absolute ?? "";
 
