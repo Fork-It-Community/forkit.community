@@ -26,7 +26,9 @@ export async function generateStaticParams() {
 }
 
 export default async function MeetupPage({ params }: MeetupPageProps) {
-  const meetup = await collections.meetup.getBySlug(params.slug);
+  const meetup = await collections.meetup.getBySlug(params.slug).catch(() => {
+    return notFound();
+  });
 
   if (!meetup.published) {
     return notFound();
