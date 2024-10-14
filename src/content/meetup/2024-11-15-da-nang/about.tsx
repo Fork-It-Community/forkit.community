@@ -24,7 +24,7 @@ export function About(
               alt="Da Nang"
             />
           </div>
-          <p className="py-4 text-center text-sm">@filipephotographs</p>
+          <p className="py-4 text-center text-sm">@jetjetdelacruz</p>
         </div>
         <div className="px-6 lg:contents">
           <div className="mx-auto flex max-w-2xl flex-col gap-8 pb-24 pt-16 sm:pb-32 sm:pt-20 lg:ml-8 lg:mr-0 lg:w-full lg:max-w-lg lg:flex-none lg:pt-32 xl:w-1/2">
