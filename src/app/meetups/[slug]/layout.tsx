@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { MeetupPageProps } from "@/app/meetups/[slug]/page";
 import { Metadata, ResolvingMetadata } from "next";
+import { stripHtmlTags } from "@/lib/utils";
 
 export async function generateMetadata(
   { params }: MeetupPageProps,
@@ -14,10 +15,10 @@ export async function generateMetadata(
   });
 
   const title = (await parent).title?.absolute ?? "";
-
+  const description = stripHtmlTags(meetup.excerpt ?? "") ;
   return {
     title: `${meetup.title} | ${title}`,
-    description: meetup.excerpt,
+    description: description,
     openGraph: {
       url: `https://www.forkit.community/meetups/${meetup.metadata.slug}`,
       title: `${meetup.name}`,
