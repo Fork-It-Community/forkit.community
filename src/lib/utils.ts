@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Event, Meetup } from "@/content/collections";
+import { match, P } from "ts-pattern";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -37,4 +38,12 @@ export function getHref(meetup?: Meetup, event?: Event) {
   }
 
   return "#past-events";
+}
+
+export const stripHtmlTags =(description : string)=> {
+  const regex = /(<([^>]+)>)/gi;
+  return match(description)
+  .with(P.string.regex(regex),()=>description.replace(regex,""))
+  .otherwise(()=>description)
+ 
 }
