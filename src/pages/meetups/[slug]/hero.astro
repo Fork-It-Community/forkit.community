@@ -1,0 +1,46 @@
+---
+import { Image } from "astro:assets";
+import { ExploreTheCommunity } from "@/components/explore-the-community";
+import { Button } from "@/components/ui/button";
+import { ArrowUpRight } from "lucide-react";
+
+const { meetup } = Astro.props;
+---
+
+<div class="relative h-[500px]">
+  {
+    meetup.data.image && (
+      <div class="absolute inset-0">
+        <Image
+          src={meetup.data.image?.src}
+          alt={meetup.data.image?.alt}
+          width={375}
+          height={610}
+          class="absolute inset-0 -z-10 my-0 h-full min-w-full object-cover object-center"
+        />
+        <div
+          class="absolute inset-0 -z-10"
+          style={{
+            background: `linear-gradient(0deg, rgba(0, 0, 0, 0.00) 60.87%, rgba(0, 0, 0, 0.50) 117.38%),
+             linear-gradient(180deg, rgba(0, 0, 0, 0.00) 49.9%, #000 100%)`,
+          }}
+        />
+      </div>
+    )
+  }
+  <div class="mt-12 flex flex-col gap-24 px-4">
+    <ExploreTheCommunity />
+  </div>
+  <div class="flex flex-col items-center px-2">
+    <Button className="w-full">
+      <a
+        href={meetup.data.tickets?.href}
+        target="_blank"
+        rel="noreferer"
+        class="flex items-center gap-1"
+      >
+        Get a ticket <ArrowUpRight size={18} />
+      </a>
+    </Button>
+  </div>
+</div>
