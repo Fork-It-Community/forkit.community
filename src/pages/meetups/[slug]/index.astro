@@ -1,0 +1,26 @@
+---
+import MeetupLayout from "@/layouts/MeetupLayout.astro";
+import { getMeetupsCollection } from "@/lib/collections";
+import { SEO } from "astro-seo";
+import Hero from "./hero.astro";
+
+export async function getStaticPaths() {
+  const meetups = await getMeetupsCollection();
+
+  return Promise.all(
+    meetups.map(async (meetup) => ({
+      params: { slug: meetup.slug },
+      props: {
+        meetup,
+      },
+    })),
+  );
+}
+
+const { meetup } = Astro.props;
+---
+
+<MeetupLayout meetup={meetup}>
+  <SEO slot="seo" />
+  <Hero meetup={meetup} />
+</MeetupLayout>

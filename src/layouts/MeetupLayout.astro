@@ -1,0 +1,14 @@
+---
+import "@fontsource/tomorrow";
+import "@fontsource-variable/inter";
+import "@/styles/globals.css";
+import Layout from "@/layouts/Layout.astro";
+const { meetup } = Astro.props;
+---
+
+<Layout title={meetup.data.name} description?={meetup.data.excerpt}>
+  <slot name="seo" slot="seo" />
+  <div class="flex flex-col gap-8">
+    <slot />
+  </div>
+</Layout>
