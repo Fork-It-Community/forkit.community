@@ -20,6 +20,12 @@ export async function generateMetadata(
     description: meetup.excerpt,
     openGraph: {
       url: `https://www.forkit.community/meetups/${meetup.metadata.slug}`,
+      title: `${meetup.name}`,
+      images: [`https://www.forkit.community/opengraph-image.jpg`],
+    },
+    twitter: {
+      images: [`https://www.forkit.community/opengraph-image.jpg`],
+      title: `${meetup.name}`,
     },
     alternates: {
       canonical: `/meetups/${meetup.metadata.slug}`,
