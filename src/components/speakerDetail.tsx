@@ -75,4 +75,26 @@ const SpeakerGroup = (
   );
 };
 
-export { SpeakerDetail, SpeakerGroup };
+const SpeakerGroupScroll = (
+  props: Readonly<{
+    speakers: CollectionEntry<"people">[];
+    className?: string;
+  }>,
+) => {
+  return (
+    <div
+      className={cn(
+        "relative z-0 grid auto-cols-[11.25rem] grid-flow-col gap-4 overflow-x-auto pt-2",
+        props.className,
+      )}
+    >
+      {props.speakers.map((speaker) => (
+        <div className="group col-span-1" key={speaker.slug}>
+          <SpeakerDetail speaker={speaker.data} />
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export { SpeakerDetail, SpeakerGroup, SpeakerGroupScroll };
