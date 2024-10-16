@@ -69,7 +69,7 @@ const SpeakerGroup = (
   return (
     <div className={cn("grid grid-cols-2 gap-4 lg:gap-8", props.className)}>
       {props.speakers.map((speaker) => (
-        <SpeakerDetail speaker={speaker.data} />
+        <SpeakerDetail speaker={speaker.data} key={speaker.slug} />
       ))}
     </div>
   );
