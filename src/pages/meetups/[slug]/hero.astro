@@ -2,7 +2,8 @@
 import { Image } from "astro:assets";
 import { ExploreTheCommunity } from "@/components/explore-the-community";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Calendar, MapPin } from "lucide-react";
+import { formatDateTime, formatTime } from "@/lib/utils";
 
 const { meetup } = Astro.props;
 ---
@@ -31,16 +32,58 @@ const { meetup } = Astro.props;
   <div class="mt-12 flex flex-col gap-24 px-4">
     <ExploreTheCommunity />
   </div>
-  <div class="flex flex-col items-center px-2">
-    <Button className="w-full">
-      <a
-        href={meetup.data.tickets?.href}
-        target="_blank"
-        rel="noreferer"
-        class="flex items-center gap-1"
-      >
-        Get a ticket <ArrowUpRight size={18} />
-      </a>
-    </Button>
+</div>
+<div class="-mt-24 flex w-full flex-col gap-8 px-4">
+  <div class="flex flex-col gap-2">
+    <h1 class="font-heading text-xl">{meetup.data.name}</h1>
+    <ul class="flex flex-col gap-2 text-gray-200">
+      {
+        meetup.data.startDate && (
+          <li class="flex gap-x-1 text-sm">
+            <Calendar className="mt-1 h-5 w-5 flex-none" aria-hidden="true" />
+            <span class="flex flex-col">
+              <time>{formatDateTime(meetup.data.startDate)}</time>
+              {meetup.data.startDate && meetup.data.endDate && (
+                <time class="text-neutral-400">
+                  {formatTime(meetup.data.startDate)}-
+                  {formatTime(meetup.data.endDate)}
+                </time>
+              )}
+            </span>
+          </li>
+        )
+      }
+      {
+        meetup.data.location && (
+          <li class="flex gap-x-1 text-sm">
+            <MapPin className="mt-1 h-5 w-5" aria-hidden="true" />
+            <span class="flex w-3/4 flex-col">
+              <p>{meetup.data.location.name}</p>
+              <p class="text-neutral-400">{meetup.data.location.address}</p>
+            </span>
+          </li>
+        )
+      }
+    </ul>
+  </div>
+  <Button className="w-full">
+    <a
+      href={meetup.data.tickets?.href}
+      target="_blank"
+      rel="noreferer"
+      class="flex items-center gap-1"
+    >
+      Get a ticket <ArrowUpRight size={18} />
+    </a>
+  </Button>
+  <div>
+    <h2>About the meetup</h2>
+    <hr class="mb-4 mt-2 border border-neutral-800" />
+    <p>{meetup.data.excerpt}</p>
+  </div>
+  <div>
+    <h2>Location</h2>
+    <hr class="mb-4 mt-2 border border-neutral-800" />
+    <!-- Add the location map when available -->
   </div>
 </div>
