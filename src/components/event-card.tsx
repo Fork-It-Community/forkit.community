@@ -5,27 +5,28 @@ import { MapPin } from "lucide-react";
 
 type EventCardProps = {
   event: Event | Meetup;
+  type: "event" | "meetup";
 };
 
 export const EventCard = (props: Readonly<EventCardProps>) => {
-  const eventType = "cfp" in props.event ? "event" : "meetup";
+  const isEvent = props.type === "event";
+  const event = props.event as Event;
 
   return (
     <article
       className={cn(
         "relative flex flex-col rounded-lg p-4 md:p-6",
-        eventType === "event"
+        isEvent
           ? "bg-cover bg-center"
           : "border border-neutral-700 bg-neutral-900",
       )}
       style={{
-        backgroundImage:
-          eventType === "event"
-            ? `linear-gradient(270deg, rgba(0, 0, 0, 0) 39.76%, rgba(0, 0, 0, 0.8) 100%), url(${props.event.image?.src})`
-            : "none",
+        backgroundImage: isEvent
+          ? `linear-gradient(270deg, rgba(0, 0, 0, 0) 39.76%, rgba(0, 0, 0, 0.8) 100%), url(${props.event.image?.src})`
+          : "none",
       }}
     >
-      {eventType === "event" && (
+      {isEvent && (
         <div
           className="absolute inset-0 left-0 h-full w-full rounded-lg"
           style={{
@@ -38,30 +39,30 @@ export const EventCard = (props: Readonly<EventCardProps>) => {
       )}
 
       <div className="relative z-10 flex flex-col justify-between gap-6 sm:flex-row">
-        {eventType === "event" ? (
+        {isEvent ? (
           <div className="flex flex-col gap-2">
             <div className="flex flex-row gap-4">
               <div className="flex items-center gap-1 text-sm text-neutral-400">
-                {props.event.date && (
-                  <time dateTime={props.event.date.toISOString()}>
-                    {formatTime(props.event.date)}
+                {event.date && (
+                  <time dateTime={event.date.toISOString()}>
+                    {formatTime(event.date)}
                   </time>
                 )}
-                {"cfp" in props.event && props.event.cfp?.endDate && (
-                  <time dateTime={props.event.cfp.endDate.toISOString()}>
-                    - {formatTime(props.event.cfp.endDate)}
+                {event.cfp?.endDate && (
+                  <time dateTime={event.cfp.endDate.toISOString()}>
+                    - {formatTime(event.cfp.endDate)}
                   </time>
                 )}
               </div>
             </div>
             <div className="flex flex-col font-heading text-base font-medium text-secondary">
-              {props.event.title}
+              {event.title}
             </div>
             <div>
-              {props.event.location && (
+              {event.location && (
                 <div className="flex items-center gap-2 text-sm text-neutral-400">
                   <MapPin className="h-5 w-5 flex-none" aria-hidden="true" />
-                  {props.event.location?.name}
+                  {event.location?.name}
                 </div>
               )}
             </div>
@@ -69,22 +70,22 @@ export const EventCard = (props: Readonly<EventCardProps>) => {
         ) : (
           <div className="flex flex-col gap-2">
             <div className="flex flex-row gap-4">
-              {props.event.date && (
+              {event.date && (
                 <div className="flex items-center gap-2 text-sm text-neutral-400">
-                  <time dateTime={props.event.date.toISOString()}>
-                    {formatTime(props.event.date)}
+                  <time dateTime={event.date.toISOString()}>
+                    {formatTime(event.date)}
                   </time>
                 </div>
               )}
-              {props.event.location && (
+              {event.location && (
                 <div className="flex items-center gap-2 text-sm text-neutral-400">
                   <MapPin className="h-5 w-5 flex-none" aria-hidden="true" />
-                  {props.event.location?.name}
+                  {event.location?.name}
                 </div>
               )}
             </div>
             <p className="flex flex-col font-heading text-base font-medium text-secondary">
-              {props.event.title}
+              {event.title}
             </p>
           </div>
         )}
