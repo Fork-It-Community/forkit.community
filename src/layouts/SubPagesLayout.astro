@@ -13,7 +13,7 @@ const { title, description } = Astro.props;
 <Layout title={title} description?={description}>
   <slot name="seo" slot="seo" />
   <div
-    class="prose prose-lg prose-invert mx-auto my-8 space-y-8 prose-h1:mt-6 prose-h1:text-2xl prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
+    class="container prose prose-lg prose-invert mx-auto my-8 space-y-8 prose-h1:mt-6 prose-h1:text-2xl prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
   >
     <slot />
   </div>
