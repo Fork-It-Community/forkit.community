@@ -12,7 +12,7 @@ export const BreakCard = (props: Readonly<BreakCardProps>) => {
     (s) => s.slug === props.schedule.sponsorSlug,
   )?.data;
 
-  if (!props?.schedule) {
+  if (!props.schedule) {
     return;
   }
 
@@ -20,7 +20,7 @@ export const BreakCard = (props: Readonly<BreakCardProps>) => {
     <div>
       <div className="flex w-full flex-[4] flex-row justify-between gap-2 rounded-lg border-2 border-neutral-700 bg-neutral-800 px-4 py-4">
         <div className="flex flex-col justify-center">
-          <p className="text-xl font-semibold">{props?.schedule?.name}</p>
+          <p className="text-xl font-semibold">{props.schedule.name}</p>
           {props.schedule.description && <p>{props.schedule.description}</p>}
         </div>
         {sponsor?.image && (
@@ -35,8 +35,8 @@ export const BreakCard = (props: Readonly<BreakCardProps>) => {
               )}
             >
               <img
-                src={sponsor?.image?.src}
-                alt={sponsor?.image?.alt}
+                src={sponsor.image.src}
+                alt={sponsor.image.alt}
                 className="h-full w-full object-cover"
               />
             </div>

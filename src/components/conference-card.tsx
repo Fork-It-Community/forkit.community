@@ -36,11 +36,11 @@ export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
           <div className="flex-start flex justify-between gap-4">
             <div className="flex w-8/12 flex-col gap-1">
               <p className="font-heading text-lg font-medium leading-6">
-                {talk?.title || "Conference Name"}
+                {talk.title || "Conference Name"}
               </p>
-              {talk?.speakers && (
+              {talk.speakers && (
                 <div>
-                  {talk?.speakers.map((speakerSlug, index) => (
+                  {talk.speakers.map((speakerSlug, index) => (
                     <p
                       key={index}
                       className="text-sm font-semibold text-gray-300"
@@ -80,7 +80,7 @@ export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
           <div>
             <div className="flex flex-row justify-between">
               <div className="flex self-end">
-                {talk?.language && <LanguageBadge language={talk?.language} />}
+                {talk.language && <LanguageBadge language={talk.language} />}
               </div>
               <div>
                 <FavoriteButton talkSlug={talk} isIconButton size="sm" />
