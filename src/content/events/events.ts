@@ -1,11 +1,12 @@
-import { z, defineCollection, reference } from "astro:content";
+import { z, defineCollection, type CollectionEntry } from "astro:content";
 
 export type Event = z.infer<ReturnType<typeof zEvent>>;
 const zEvent = () =>
   z.object({
     title: z.string(),
     name: z.string(),
-    date: z.date().optional(),
+    startDate: z.date().optional(),
+    endDate: z.date().optional(),
     location: z
       .object({
         name: z.string().optional(),
@@ -100,7 +101,12 @@ const zEvent = () =>
           .optional(),
       })
       .optional(),
-    subPages: z.array(reference("eventsSubPages")),
+    subPages: z.array(
+      z.object({
+        name: z.string(),
+        slug: z.custom<CollectionEntry<"eventsSubPages">["slug"]>(),
+      }),
+    ),
   });
 
 export const eventsCollection = defineCollection({

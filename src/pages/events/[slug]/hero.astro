@@ -1,0 +1,104 @@
+---
+import { Image } from "astro:assets";
+import { ExploreTheCommunity } from "@/components/explore-the-community";
+import { formatDateTimeShort, shouldDisplayTicketButton } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+
+const { event } = Astro.props;
+
+const isProspectusActive = !!(
+  event.data.prospectus?.href &&
+  (!event.data.prospectus.endDate ||
+    new Date().getTime() <= event.data.prospectus.endDate.getTime())
+);
+const isCfpActive = !!(
+  event.data.cfp?.href &&
+  (!event.data.cfp.endDate ||
+    new Date().getTime() <= event.data.cfp.endDate.getTime())
+);
+---
+
+<div class="relative h-[700px]">
+  {
+    event.data.image && (
+      <div class="absolute inset-0">
+        <Image
+          src={event.data.image?.src}
+          alt={event.data.image?.alt}
+          width={375}
+          height={610}
+          class="absolute inset-0 -z-10 my-0 h-full min-w-full object-cover object-center"
+        />
+        <div
+          class="absolute inset-0 -z-10"
+          style={{
+            background: `linear-gradient(0deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.60) 100%),
+          linear-gradient(0deg, rgba(0, 0, 0, 0.00) 60.87%, rgba(0, 0, 0, 0.50) 117.38%),
+          linear-gradient(180deg, rgba(0, 0, 0, 0.00) 59.9%, #000 84.87%)`,
+          }}
+        />
+      </div>
+    )
+  }
+  <div class="mt-12 flex flex-col gap-24 px-4">
+    <ExploreTheCommunity />
+    <div class="flex flex-col items-center gap-6">
+      <Image
+        src="/forkit-medium.svg"
+        alt="Fork it! logo"
+        width={168}
+        height={18}
+      />
+      <div>
+        {
+          event.data.date && (
+            <p class="my-0 font-heading text-3xl font-medium text-white">
+              {formatDateTimeShort(event.data.date)}
+            </p>
+          )
+        }
+        <p class="my-0 font-heading text-2xl font-medium text-white">
+          {event.data.name}
+        </p>
+      </div>
+      <!-- TODO : Add countdown when available -->
+      <div class="flex flex-wrap justify-center gap-3">
+        {
+          shouldDisplayTicketButton(event.data) && (
+            <Button>
+              <a
+                href={event.data.tickets?.href}
+                target="_blank"
+                rel="noreferer"
+              >
+                Get tickets
+              </a>
+            </Button>
+          )
+        }
+        {
+          isProspectusActive && (
+            <Button variant="secondary">
+              <a
+                href={event.data.prospectus?.href}
+                target="_blank"
+                rel="noreferer"
+              >
+                {event.data.prospectus?.title ?? "Sponsoring prospectus"}
+              </a>
+            </Button>
+          )
+        }
+        {
+          isCfpActive && (
+            <Button variant="secondary">
+              <a href={event.data.cfp?.href} target="_blank" rel="noreferer">
+                CFP
+              </a>
+            </Button>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</div>
