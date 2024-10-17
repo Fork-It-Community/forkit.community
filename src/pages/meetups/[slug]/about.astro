@@ -1,0 +1,9 @@
+---
+const { meetup } = Astro.props;
+---
+
+<div>
+  <h2>About the meetup</h2>
+  <hr class="mb-4 mt-2 border border-neutral-800" />
+  <p>{meetup.data.excerpt}</p>
+</div>

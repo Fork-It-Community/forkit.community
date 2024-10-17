@@ -3,6 +3,11 @@ import MeetupLayout from "@/layouts/MeetupLayout.astro";
 import { getMeetupsCollection } from "@/lib/collections";
 import { SEO } from "astro-seo";
 import Hero from "./hero.astro";
+import { Button } from "@/components/ui/button";
+import { ArrowUpRight } from "lucide-react";
+import Information from "./information.astro";
+import About from "./about.astro";
+import Location from "./location.astro";
 
 export async function getStaticPaths() {
   const meetups = await getMeetupsCollection();
@@ -23,4 +28,19 @@ const { meetup } = Astro.props;
 <MeetupLayout meetup={meetup}>
   <SEO slot="seo" />
   <Hero meetup={meetup} />
+  <div class="mx-auto -mt-24 flex w-full max-w-2xl flex-col gap-8 px-4">
+    <Information meetup={meetup} />
+    <Button className="w-full">
+      <a
+        href={meetup.data.tickets?.href}
+        target="_blank"
+        rel="noreferer"
+        class="flex items-center gap-1"
+      >
+        Get a ticket <ArrowUpRight size={18} />
+      </a>
+    </Button>
+    <About meetup={meetup} />
+    <Location meetup={meetup} />
+  </div>
 </MeetupLayout>
