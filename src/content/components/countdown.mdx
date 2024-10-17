@@ -2,7 +2,7 @@
 name: Countdown
 ---
 
-import { Countdown } from '@/components/countdown'
+import { Countdown, TimerDisplay } from '@/components/countdown'
 import { Demo } from '@/components/demo'
 
 # Default
@@ -11,3 +11,25 @@ import { Demo } from '@/components/demo'
   <Countdown date={new Date('2024-11-07')} client:only="react" />
 </Demo>
 
+# Timer Display
+
+<Demo>
+  <div className="grid grid-cols-2 gap-2">
+    <div className="flex items-center gap-2">
+      <p>Unit Days:</p>
+      <TimerDisplay value="10" unit="Days" />
+    </div>
+    <div className="flex items-center gap-2">
+      <p>Unit Hours:</p>
+      <TimerDisplay value="10" unit="Hours" />
+    </div>
+    <div className="flex items-center gap-2">
+      <p>Unit Minutes:</p>
+      <TimerDisplay value="10" unit="Minutes" />
+    </div>
+    <div className="flex items-center gap-2">
+      <p>Unit Seconds:</p>
+      <TimerDisplay value="10" unit="Seconds" />
+    </div>
+  </div>
+</Demo>
