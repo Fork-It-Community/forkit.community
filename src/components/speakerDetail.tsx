@@ -60,7 +60,7 @@ const SpeakerDetail = (
   );
 };
 
-const SpeakerGroup = (
+const Speakers = (
   props: Readonly<{
     speakers: CollectionEntry<"people">[];
     className?: string;
@@ -97,4 +97,4 @@ const SpeakerCarousel = (
   );
 };
 
-export { SpeakerDetail, SpeakerGroup, SpeakerCarousel };
+export { SpeakerDetail, Speakers, SpeakerCarousel };
