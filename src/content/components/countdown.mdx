@@ -17,19 +17,19 @@ import { Demo } from '@/components/demo'
   <div className="grid grid-cols-2 gap-2">
     <div className="flex items-center gap-2">
       <p>Unit Days:</p>
-      <TimerDisplay value="10" unit="Days" />
+      <TimerDisplay value="10" unit="Days" client:only="react" />
     </div>
     <div className="flex items-center gap-2">
       <p>Unit Hours:</p>
-      <TimerDisplay value="10" unit="Hours" />
+      <TimerDisplay value="10" unit="Hours" client:only="react" />
     </div>
     <div className="flex items-center gap-2">
       <p>Unit Minutes:</p>
-      <TimerDisplay value="10" unit="Minutes" />
+      <TimerDisplay value="10" unit="Minutes" client:only="react" />
     </div>
     <div className="flex items-center gap-2">
       <p>Unit Seconds:</p>
-      <TimerDisplay value="10" unit="Seconds" />
+      <TimerDisplay value="10" unit="Seconds" client:only="react" />
     </div>
   </div>
 </Demo>
