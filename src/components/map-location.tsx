@@ -15,14 +15,14 @@ const MapLocation = (
   const { hideIcon = false, mapUri, className } = props;
   return (
     <div className="flex h-full w-full flex-col gap-2">
-      <div className="flex flex-col">
-        <div className="flex gap-1">
-          {!hideIcon && <div className="pt-2">{ICONS.pin}</div>}
+      <div className="flex gap-1">
+        {!hideIcon && <div className="pt-2">{ICONS.pin}</div>}
+        <div className="flex flex-col">
           <p className="my-0">{props.detail.title}</p>
+          {props.detail.description && (
+            <p className="my-0 text-neutral-400">{props.detail.description}</p>
+          )}
         </div>
-        {props.detail.description && (
-          <p className="my-0 text-neutral-400">{props.detail.description}</p>
-        )}
       </div>
       <Map mapUri={mapUri} className={String(className)} />
     </div>
