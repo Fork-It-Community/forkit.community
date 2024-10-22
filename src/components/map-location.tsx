@@ -1,24 +1,30 @@
-import type { EventsSubPages } from "@/content/eventsSubPages/eventsSubPages";
 import { cn } from "@/lib/utils";
+import { ICONS } from "./icons";
 
 const MapLocation = (
   props: Readonly<{
-    eventsSubPages: EventsSubPages;
+    detail: {
+      title: string;
+      description?: string;
+    };
+    hideIcon?: boolean;
     mapUri: string;
     className?: string;
   }>,
 ) => {
+  const { hideIcon = false, mapUri, className } = props;
   return (
     <div className="flex h-full w-full flex-col gap-2">
       <div className="flex flex-col">
-        <p className="my-0">{props.eventsSubPages.title}</p>
-        {props.eventsSubPages.description && (
-          <p className="my-0 text-neutral-400">
-            {props.eventsSubPages.description}
-          </p>
+        <div className="flex gap-1">
+          {!hideIcon && <div className="pt-2">{ICONS.pin}</div>}
+          <p className="my-0">{props.detail.title}</p>
+        </div>
+        {props.detail.description && (
+          <p className="my-0 text-neutral-400">{props.detail.description}</p>
         )}
       </div>
-      <Map mapUri={props.mapUri} className={String(props.className)} />
+      <Map mapUri={mapUri} className={String(className)} />
     </div>
   );
 };
