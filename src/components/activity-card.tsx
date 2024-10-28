@@ -3,12 +3,8 @@ import type { Meetup } from "@/content/meetups/meetups";
 import { formatTime } from "@/lib/utils";
 import { MapPin } from "lucide-react";
 
-type ActivityCardProps = {
-  activity: Event | Meetup;
-};
-
-const EventCard = (props: Readonly<ActivityCardProps>) => {
-  const event = props.activity as Event;
+const EventCard = (props: Readonly<{ activity: Event }>) => {
+  const event = props.activity;
 
   return (
     <article
@@ -60,8 +56,8 @@ const EventCard = (props: Readonly<ActivityCardProps>) => {
   );
 };
 
-const MeetupCard = (props: Readonly<ActivityCardProps>) => {
-  const meetup = props.activity as Meetup;
+const MeetupCard = (props: Readonly<{ activity: Meetup }>) => {
+  const meetup = props.activity;
 
   return (
     <article
