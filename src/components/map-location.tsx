@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ICONS } from "./icons";
+import { MapPin } from "lucide-react";
 
 const MapLocation = (
   props: Readonly<{
@@ -7,16 +7,17 @@ const MapLocation = (
       title: string;
       description?: string;
     };
-    hideIcon?: boolean;
     mapUri: string;
     className?: string;
   }>,
 ) => {
-  const { hideIcon = false, mapUri, className } = props;
+  const { mapUri, className } = props;
   return (
     <div className="flex h-full w-full flex-col gap-2">
       <div className="flex gap-1">
-        {!hideIcon && <div className="pt-2">{ICONS.pin}</div>}
+        <div className="pt-2">
+          <MapPin className="h-3.5 w-3.5" />
+        </div>
         <div className="flex flex-col">
           <p className="my-0">{props.detail.title}</p>
           {props.detail.description && (
