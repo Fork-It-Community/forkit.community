@@ -3,7 +3,7 @@
     {
       "source": "/meetups/2024-11-19-brussels",
       "destination": "/meetups/2024-11-19-belgium",
-      "permanent": false
+      "statusCode": 301
     }
   ]
 }
