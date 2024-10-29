@@ -2,7 +2,7 @@ import { MeetupFrontmatter } from "@/content/collections";
 import { formatDateTime } from "@/lib/utils";
 import { Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
-import LocationImage from "/public/meetups/2024-11-19-brussels.jpg";
+import LocationImage from "/public/meetups/2024-11-19-ottignies-louvain-la-neuve.jpg";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -24,7 +24,22 @@ export function About(
               alt="Brussels"
             />
           </div>
-          <p className="py-4 text-center text-sm">@pierre9x6</p>
+          <div className="flex items-center justify-center gap-1">
+            <a
+              className="py-4 text-center text-sm underline"
+              href="https://commons.wikimedia.org/wiki/User:Trougnouf"
+              target="_blank"
+            >
+              Trougnouf,
+            </a>
+            <a
+              href="https://creativecommons.org/licenses/by/4.0/deed.fr"
+              className="underline"
+              target="_blank"
+            >
+              license
+            </a>
+          </div>
         </div>
         <div className="px-6 lg:contents">
           <div className="mx-auto flex max-w-2xl flex-col gap-8 pb-24 pt-16 sm:pb-32 sm:pt-20 lg:ml-8 lg:mr-0 lg:w-full lg:max-w-lg lg:flex-none lg:pt-32 xl:w-1/2">
