@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import { ExploreTheCommunity } from "@/components/explore-the-community";
 import { formatDateTimeShort, shouldDisplayTicketButton } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import Nav from "./nav.astro";
 
 const { event } = Astro.props;
 
@@ -98,6 +99,9 @@ const isCfpActive = !!(
             </Button>
           )
         }
+      </div>
+      <div class="z-20 mt-40">
+        <Nav event={event} />
       </div>
     </div>
   </div>

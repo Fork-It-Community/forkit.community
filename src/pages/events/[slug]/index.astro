@@ -4,9 +4,9 @@ import { getEventsCollection } from "@/lib/collections";
 import { getEntries } from "astro:content";
 import { SEO } from "astro-seo";
 import Hero from "./hero.astro";
-import Nav from "./nav.astro";
 import Venue from "./venue.astro";
 import type { CollectionEntry } from "astro:content";
+import Schedule from "./schedule.astro";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -40,7 +40,7 @@ const { event } = Astro.props;
   <SEO slot="seo" />
   <Hero event={event} />
   <div class="container flex flex-col gap-8">
-    <Nav event={event} />
     <Venue event={event.data} />
+    <Schedule event={event.data} />
   </div>
 </EventLayout>

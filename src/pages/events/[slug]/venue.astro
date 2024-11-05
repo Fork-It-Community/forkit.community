@@ -13,7 +13,7 @@ const { event } = Astro.props;
 <div id="venue">
   <h2>Venue</h2>
   <hr class="mb-4 mt-2 border border-neutral-800" />
-  <ul class="flex flex-col gap-2 text-gray-200">
+  <ul class="flex flex-row gap-2 pb-2 text-gray-200">
     {
       event.startDate && (
         <li class="flex gap-x-1 text-sm">
@@ -40,12 +40,11 @@ const { event } = Astro.props;
         </li>
       )
     }
-    <li>
-      <p>
-        {event.excerpt}
-      </p>
-    </li>
+    <li></li>
   </ul>
+  <p>
+    {event.excerpt}
+  </p>
   <div class="flex flex-row gap-5 pt-5">
     {
       event.subPages.map((subPage) => (
