@@ -16,45 +16,29 @@ import { Demo } from '@/components/demo'
       duration: 30,
       location: 'Main stage'
     }}
-    talks={[
-      {
-        id: 'tropical-software-developper-un-logiciel-pour-un-ministere-dasie-du-sud-est.mdx',
-        slug: 'tropical-software-developper-un-logiciel-pour-un-ministere-dasie-du-sud-est',
-        body: '\n' +
-          'De 2019 à maintenant, j’ai été impliqué dans le développement d’un système de gestion de la maintenance des ponts du Laos. C’est l’histoire de ce logiciel, dans ce contexte particulier de début de digitalisation d’un gouvernement et de collecte de données offline.\n' +
-          'Les challenges rencontrés: collecte sur le terrain sans connexion, un modèle de détérioration d’une université japonaise à implémenter, un hébergement sur un vieux serveur dans une salle d’archives.\n',
-        collection: 'talks',
-        data: {
-          title: 'Tropical software: développer un logiciel pour un ministère d’Asie du Sud-Est',
-          speakers: [ 'sylvain-dorey' ],
-          language: 'french',
-          feedback: {
-            link: 'https://openfeedback.io/fork-it-community-rouen-2024/2024-06-07/8ViXNyZN6x3Xi4OogAeC'
-          }
-        },
-      },
-    ]}
+    talk={{
+      title: 'Tropical software: développer un logiciel pour un ministère d’Asie du Sud-Est',
+      speakers: [ 'sylvain-dorey' ],
+      language: 'french',
+      feedback: {
+        link: 'https://openfeedback.io/fork-it-community-rouen-2024/2024-06-07/8ViXNyZN6x3Xi4OogAeC'
+      }
+    }}
     people={[
       {
-        id: 'sylvain-dorey.mdx',
-        slug: 'sylvain-dorey',
-        body: '',
-        collection: 'speakers',
-        data: {
-          name: 'Sylvain Dorey',
-          avatar: '/speakers/sylvain-dorey.jpg',
-          job: 'Independent software engineer and data scientist',
-          company: { title: 'Freelance', href: 'https://sylvaindorey.com/fr/' },
-          socials: [
-            {
-              type: 'linkedin',
-              href: 'https://www.linkedin.com/in/sylvaindorey/'
-            },
-            { type: 'github',
-              href: 'https://github.com/syldor/'
-            },
-          ]
-        },
+        name: 'Sylvain Dorey',
+        avatar: '/speakers/sylvain-dorey.jpg',
+        job: 'Independent software engineer and data scientist',
+        company: { title: 'Freelance', href: 'https://sylvaindorey.com/fr/' },
+        socials: [
+          {
+            type: 'linkedin',
+            href: 'https://www.linkedin.com/in/sylvaindorey/'
+          },
+          { type: 'github',
+            href: 'https://github.com/syldor/'
+          },
+        ]
       }
     ]}
   />
@@ -70,83 +54,38 @@ import { Demo } from '@/components/demo'
       startTime: '2024-06-07T16:10:00.000Z',
       location: 'La place du village'
     }}
-    talks={[
-      {
-        id: 'eco-conception-contraintes-ou-opportunites.mdx',
-        slug: 'eco-conception-contraintes-ou-opportunites',
-        body: '\n' +
-          "Let's discuss the subject that comes up in every tech brief. Real new approach\n" +
-          'or just another <span className="line-through">excuse</span> reason for failing\n' +
-          'a project?\n' +
-          '\n' +
-          'Around the table, Abdelkrim Marchiani, vice-president of Métropole Rouen Normandie, will\n' +
-          'set out his institutional vision to confront it with\n' +
-          '\n' +
-          '<span className="line-through">grumbling</span> real-life developers.\n',
-        collection: 'talks',
-        data: {
-          title: 'Eco design : constraints or opportunities ?',
-          speakers: [
-            'abdelkrim-marchani',
-            'francois-best',
-            'luis-rubiera',
-            'xavier-van-de-woestyne'
-          ],
-          language: 'french',
-          hosts: [ 'tony-godin' ]
-        },
-      },
-    ]}
+    talk={{
+      title: 'Eco design : constraints or opportunities ?',
+      speakers: [
+        'abdelkrim-marchani',
+        'francois-best',
+        'luis-rubiera',
+        'xavier-van-de-woestyne'
+      ],
+      language: 'french',
+      hosts: [ 'tony-godin' ]
+    }}
     people={[
       {
-        id: 'abdelkrim-marchani.mdx',
-        slug: 'abdelkrim-marchani',
-        body: '',
-        collection: 'speakers',
-        data: {
-          name: 'Abdelkrim Marchani',
-          avatar: '/speakers/abdelkrim-marchani.jpg'
-        },
+        name: 'Abdelkrim Marchani',
+        avatar: '/speakers/abdelkrim-marchani.jpg'
       },
       {
-        id: 'francois-best.mdx',
-        slug: 'francois-best',
-        body: '',
-        collection: 'speakers',
-        data: {
-          name: 'François Best',
-          avatar: '/speakers/francois-best.jpg',
-          job: 'Web developer and creator of nuqs',
-          company: [Object],
-          socials: [Array]
-        },
+        name: 'François Best',
+        avatar: '/speakers/francois-best.jpg',
+        job: 'Web developer and creator of nuqs',
+        company: [Object],
+        socials: [Array]
       },
       {
-        id: 'luis-rubiera.mdx',
-        slug: 'luis-rubiera',
-        body: '\n' +
-          "I'm a tech(geek) lead with over 10 years of experience working in different areas of software engineering, currently i'm diving into a big data\n" +
-          "sovereign project with a touch of AI. I'm passionate about new technologies and love thinking about how they'll shape our future. Building things\n" +
-          'and the startup environment really excite me.\n',
-        collection: 'speakers',
-        data: {
-          name: 'Luis Rubiera',
-          avatar: '/speakers/luis-rubiera.jpg',
-          job: 'Lead Developer',
-        },
+        name: 'Luis Rubiera',
+        avatar: '/speakers/luis-rubiera.jpg',
+        job: 'Lead Developer',
       },
       {
-        id: 'xavier-van-de-woestyne.mdx',
-        slug: 'xavier-van-de-woestyne',
-        body: '\n' +
-          `J'aime beaucoup la programmation fonctionnelle statiquement typé et le web en règle général. Je m'occupais du Meetup "Lambda Nantes", un meetup dédié à la\n` +
-          'programmation fonctionnelle à Nantes.\n',
-        collection: 'speakers',
-        data: {
-          name: 'Xavier Van de Woestyne',
-          avatar: '/speakers/xavier-van-de-woestyne.jpg',
-          job: 'Web developer',
-        },
+        name: 'Xavier Van de Woestyne',
+        avatar: '/speakers/xavier-van-de-woestyne.jpg',
+        job: 'Web developer',
       },
     ]}
   />

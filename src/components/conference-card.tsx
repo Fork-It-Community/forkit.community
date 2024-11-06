@@ -1,28 +1,18 @@
-import type { CollectionEntry } from "astro:content";
+// import type { CollectionEntry } from "astro:content";
 import type { Event } from "@/content/events/events";
 import type { Talk } from "@/content/talks/talks";
+import type { Person } from "@/content/people/people";
 import { cn } from "@/lib/utils";
 import { LanguageBadge } from "@/components/language-badge";
 import { FavoriteButton } from "@/components/favorite-button";
 
 type ConferenceCardProps = {
   schedule: Event["schedule"][number];
-  talks: CollectionEntry<"talks">[];
-  people: CollectionEntry<"people">[];
+  talk: Talk;
+  people: Person[];
 };
 
 export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
-  const talk: Talk = props.talks.find(
-    (talk) => talk.slug === props.schedule.slug,
-  )?.data;
-  const speakers = talk?.speakers.map((t) =>
-    props.people.find((s) => t === s.slug),
-  );
-
-  if (!props.schedule) {
-    return;
-  }
-
   return (
     <div>
       <a
@@ -36,18 +26,16 @@ export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
           <div className="flex-start flex justify-between gap-4">
             <div className="flex w-8/12 flex-col gap-1">
               <p className="font-heading text-lg font-medium leading-6">
-                {talk.title || "Conference Name"}
+                {props.talk.title || "Conference Name"}
               </p>
-              {talk.speakers && (
+              {props.people?.length > 0 && (
                 <div>
-                  {talk.speakers.map((speakerSlug, index) => (
+                  {props.people.map((person, index) => (
                     <p
                       key={index}
                       className="text-sm font-semibold text-gray-300"
                     >
-                      {speakers?.find(
-                        (speaker) => speaker?.slug === speakerSlug,
-                      )?.data.name || "Unknown Speaker"}
+                      {person.name || "Unknown Speaker"}
                     </p>
                   ))}
                 </div>
@@ -55,21 +43,21 @@ export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
             </div>
             {(props.schedule.type === "conference" ||
               props.schedule.type === "roundtable") &&
-              speakers && (
+              props.people?.length > 0 && (
                 <div className="grid h-fit w-fit grid-cols-2 gap-2">
-                  {speakers.map((speaker, index) => (
+                  {props.people.map((speaker, index) => (
                     <div
-                      key={speaker?.id}
+                      key={speaker.name}
                       className={cn(
                         "h-12 w-12 overflow-hidden rounded-sm bg-gray-200",
-                        speakers.length % 2 !== 0 &&
-                          index === speakers.length - 1 &&
+                        props.people.length % 2 !== 0 &&
+                          index === props.people.length - 1 &&
                           "col-start-2",
                       )}
                     >
                       <img
-                        src={speaker?.data.avatar}
-                        alt={speaker?.data.name}
+                        src={speaker.avatar}
+                        alt={speaker.name}
                         className="h-full w-full object-cover"
                       />
                     </div>
@@ -80,10 +68,12 @@ export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
           <div>
             <div className="flex flex-row justify-between">
               <div className="flex self-end">
-                {talk.language && <LanguageBadge language={talk.language} />}
+                {props.talk.language && (
+                  <LanguageBadge language={props.talk.language} />
+                )}
               </div>
               <div>
-                <FavoriteButton talkSlug={talk} isIconButton size="sm" />
+                <FavoriteButton talkSlug={props.talk} isIconButton size="sm" />
               </div>
             </div>
           </div>

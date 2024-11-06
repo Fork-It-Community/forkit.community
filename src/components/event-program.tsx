@@ -1,6 +1,9 @@
 import type { ReactNode } from "react";
 import type { CollectionEntry } from "astro:content";
+import type { Talk } from "@/content/talks/talks";
 import type { Event } from "@/content/events/events";
+import type { Person } from "@/content/people/people";
+import type { Sponsor } from "@/content/sponsors/sponsors";
 import { cn, formatTime } from "@/lib/utils";
 import { LocationBadge } from "@/components/location-badge";
 import { BreakCard } from "@/components/break-card";
@@ -46,6 +49,23 @@ export const EventProgram = (props: EventProgramProps) => {
     (a, b) => (a?.startTime?.valueOf() ?? 0) - (b?.startTime?.valueOf() ?? 0),
   );
 
+  const renderConferenceCard = (schedule: Event["schedule"][number]) => {
+    const talk = props.talks.find((talk) => talk.slug === schedule.slug)
+      ?.data as Talk;
+    const people = talk?.speakers.map(
+      (speakerSlug) =>
+        props.people.find((person) => person.slug === speakerSlug)?.data,
+    ) as Person[];
+    return (
+      <ConferenceCard
+        schedule={schedule}
+        talk={talk}
+        people={people}
+        key={schedule.slug}
+      />
+    );
+  };
+
   return (
     <div className="flex flex-col gap-8">
       <FavoritesContextProvider eventSlug={props.event}>
@@ -67,18 +87,15 @@ export const EventProgram = (props: EventProgramProps) => {
             </div>
             <div>
               {(schedule.type === "conference" ||
-                schedule.type === "roundtable") && (
-                <ConferenceCard
-                  schedule={schedule}
-                  talks={props.talks}
-                  people={props.people}
-                  key={schedule.slug}
-                />
-              )}
+                schedule.type === "roundtable") &&
+                renderConferenceCard(schedule)}
               {schedule.type === "break" && (
                 <BreakCard
                   schedule={schedule}
-                  sponsors={props.sponsors}
+                  sponsor={
+                    props.sponsors.find((s) => s.slug === schedule.sponsorSlug)
+                      ?.data as Sponsor
+                  }
                   key={schedule.slug}
                 />
               )}
