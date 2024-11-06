@@ -15,30 +15,28 @@ interface Props {
 const { event } = Astro.props;
 ---
 
-<div>
-  <Timeline>
-    {
-      event.schedule &&
-        event.schedule.map((item, index) => (
-          <TimelineItem key={index}>
-            <TimelineConnector isLast={index === event.schedule.length - 1} />
-            <TimelineHeader>
-              <TimelineIcon />
-              <TimelineTitle className="text-white">
-                {item.startTime && (
-                  <div class="flex gap-2">
-                    <div />
-                    <time datetime={item.startTime?.toISOString()}>
-                      {formatTime(item.startTime)}
-                    </time>
-                    <p class="text-neutral-400">{item.duration} minutes</p>
-                  </div>
-                )}
-              </TimelineTitle>
-            </TimelineHeader>
-            <TimelineContent />
-          </TimelineItem>
-        ))
-    }
-  </Timeline>
-</div>
+<Timeline>
+  {
+    event.schedule &&
+      event.schedule.map((item, index) => (
+        <TimelineItem key={index}>
+          <TimelineConnector isLast={index === event.schedule.length - 1} />
+          <TimelineHeader>
+            <TimelineIcon />
+            <TimelineTitle className="text-white">
+              {item.startTime && (
+                <div class="flex gap-2">
+                  <div />
+                  <time datetime={item.startTime?.toISOString()}>
+                    {formatTime(item.startTime)}
+                  </time>
+                  <p class="text-neutral-400">{item.duration} minutes</p>
+                </div>
+              )}
+            </TimelineTitle>
+          </TimelineHeader>
+          <TimelineContent />
+        </TimelineItem>
+      ))
+  }
+</Timeline>

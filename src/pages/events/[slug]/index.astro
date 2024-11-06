@@ -1,12 +1,13 @@
 ---
 import EventLayout from "@/layouts/EventLayout.astro";
-import { getEventsCollection } from "@/lib/collections";
 import { getEntries } from "astro:content";
 import { SEO } from "astro-seo";
 import Hero from "./hero.astro";
 import Venue from "./venue.astro";
 import type { CollectionEntry } from "astro:content";
 import Schedule from "./schedule.astro";
+import { getSpeakers, getEventsCollection } from "@/lib/collections";
+import { Speakers } from "@/components/speakerDetail";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -34,6 +35,7 @@ export async function getStaticPaths() {
 // const { slug } = Astro.params;
 // const { subPages, event } = Astro.props;
 const { event } = Astro.props;
+const speakers = await getSpeakers(event.data);
 ---
 
 <EventLayout event={event}>
@@ -41,6 +43,22 @@ const { event } = Astro.props;
   <Hero event={event} />
   <div class="container flex flex-col gap-8">
     <Venue event={event.data} />
-    <Schedule event={event.data} />
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+      <div class="sm:col-span-2 md:col-span-2">
+        <h2>Schedule</h2>
+        <hr class="mb-4 mt-2 w-full border border-neutral-800" />
+        <Schedule event={event.data} />
+      </div>
+
+      {
+        event.data.speakers && (
+          <div class="sm:col-span-1 md:col-span-1">
+            <h2>Speakers</h2>
+            <hr class="mb-4 mt-2 w-full border border-neutral-800" />
+            <Speakers speakers={speakers} />
+          </div>
+        )
+      }
+    </div>
   </div>
 </EventLayout>

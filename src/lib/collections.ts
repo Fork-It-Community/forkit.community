@@ -15,3 +15,12 @@ export function getEventsSubpagesCollection(event: Event) {
   });
   return getEntries(subPages);
 }
+export function getSpeakers(event: Event) {
+  const speakers = event.speakers.map((speaker) => {
+    return {
+      collection: "people" as CollectionEntry<"people">["collection"],
+      slug: speaker as CollectionEntry<"people">["slug"],
+    };
+  });
+  return getEntries(speakers);
+}
