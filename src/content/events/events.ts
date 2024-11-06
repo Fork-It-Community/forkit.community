@@ -58,7 +58,7 @@ const zEvent = () =>
         }),
       )
       .optional(),
-    speakers: z.array(z.string()).optional(),
+    speakers: z.array(z.string()),
     talks: z.array(z.string()).optional(),
     faq: z
       .array(z.object({ question: z.string(), answer: z.string() }))

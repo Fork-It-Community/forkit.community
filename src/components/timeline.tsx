@@ -15,7 +15,7 @@ const TimelineItem = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <li
     ref={ref}
-    className={cn("relative flex flex-col p-6 pt-0 [&>*]:mb-3", className)}
+    className={cn("relative flex flex-col pt-0 [&>*]:mb-3", className)}
     {...props}
   />
 ));
@@ -43,7 +43,7 @@ const TimelineConnector = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "absolute left-[26px] top-[5px] h-full w-px -translate-x-1/2 translate-y-1",
+      "absolute left-[2px] top-[5px] h-full w-px -translate-x-1/2 translate-y-1",
       className,
     )}
     style={{
