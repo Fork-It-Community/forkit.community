@@ -27,10 +27,10 @@ export function About(
           <div className="flex items-center justify-center gap-1">
             <a
               className="py-4 text-center text-sm underline"
-              href="https://commons.wikimedia.org/wiki/User:Trougnouf"
+              href="https://commons.wikimedia.org/wiki/User:EmDee"
               target="_blank"
             >
-              Trougnouf,
+              EmDee,
             </a>
             <a
               href="https://creativecommons.org/licenses/by/4.0/deed.fr"
