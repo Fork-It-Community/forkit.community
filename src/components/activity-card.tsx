@@ -69,10 +69,10 @@ const MeetupCard = (props: Readonly<{ activity: Meetup }>) => {
       <div className="relative z-10 flex flex-col justify-between gap-6 sm:flex-row">
         <div className="flex flex-col gap-2">
           <div className="flex flex-row gap-4">
-            {meetup.date && (
+            {meetup.startDate && (
               <div className="flex items-center gap-2 text-sm text-neutral-400">
-                <time dateTime={meetup.date.toISOString()}>
-                  {formatTime(meetup.date)}
+                <time dateTime={meetup.startDate.toISOString()}>
+                  {formatTime(meetup.startDate)}
                 </time>
               </div>
             )}

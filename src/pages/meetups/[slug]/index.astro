@@ -41,6 +41,6 @@ const { meetup } = Astro.props;
       </a>
     </Button>
     <About meetup={meetup} />
-    <Location meetup={meetup} />
+    <Location meetup={meetup.data} />
   </div>
 </MeetupLayout>

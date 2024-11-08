@@ -1,9 +1,15 @@
 ---
-// const { meetup } = Astro.props;
+import { Map } from "@/components/map-location";
+import type { Meetup } from "@/content/meetups/meetups";
+
+interface Props {
+  meetup: Meetup;
+}
+const { meetup } = Astro.props;
 ---
 
 <div>
   <h2>Location</h2>
   <hr class="mb-4 mt-2 border border-neutral-800" />
-  <!-- Add the location map when available -->
+  <Map mapUri={meetup.mapUri} />
 </div>

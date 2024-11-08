@@ -79,6 +79,7 @@ const zMeetup = () =>
         link: z.string().url(),
       })
       .optional(),
+    mapUri: z.string(),
   });
 
 export const meetupsCollection = defineCollection({
