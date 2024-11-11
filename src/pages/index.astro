@@ -19,7 +19,13 @@ const nextEvent = upcomingEvents.length > 0 ? upcomingEvents[0] : null;
 <Layout>
   <Hero event={nextEvent} />
   <div class="container">
-    <!-- Todo : Add the timeline with all the eventCards when it's ready -->
-    <SubscribeForm />
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+      <div class="sm:col-span-2 md:col-span-2">
+        <h1 class="font-heading text-xl font-medium">Upcoming events</h1>
+      </div>
+      <div class="pt-4 sm:col-span-1 md:col-span-1">
+        <SubscribeForm />
+      </div>
+    </div>
   </div>
 </Layout>
