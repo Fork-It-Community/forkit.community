@@ -1,8 +1,9 @@
 ---
 import HTMLLayout from "@/layouts/HTMLLayout.astro";
-import { getEventsCollection } from "@/lib/collections";
+import { getEventsCollection, getMeetupsCollection } from "@/lib/collections";
 
 const events = await getEventsCollection();
+const meetups = await getMeetupsCollection();
 ---
 
 <HTMLLayout>
@@ -12,6 +13,15 @@ const events = await getEventsCollection();
       events.map((event) => (
         <li>
           <a href={`events/${event.slug}`}>{event.data.name}</a>
+        </li>
+      ))
+    }
+  </ul>
+  <ul>
+    {
+      meetups.map((meetup) => (
+        <li>
+          <a href={`meetups/${meetup.slug}`}>{meetup.data.name}</a>
         </li>
       ))
     }
