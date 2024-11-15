@@ -53,9 +53,12 @@ export function Hero(
           <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-6xl">
             <span className="text-primary">{date}</span> {props.meetup.name}
           </h1>
-          {props.meetup.excerpt &&
-            <p className="text-md mt-6 text-gray-400" dangerouslySetInnerHTML={{__html:props.meetup.excerpt}}></p>
-          }
+          {props.meetup.excerpt && (
+            <p
+              className="text-md mt-6 text-gray-400"
+              dangerouslySetInnerHTML={{ __html: props.meetup.excerpt }}
+            ></p>
+          )}
           <div className="mx-8 mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
             {shouldDisplayTicketButton(props.meetup) && (
               <div className="flex flex-col items-center gap-y-8">
@@ -69,23 +72,25 @@ export function Hero(
                     <ExternalLink className="ml-2 h-4 w-4" />
                   </a>
                 </Button>
-                {props.meetup.partnerOrganizerLogo && (
-                  <a
-                    href={props.meetup.partnerOrganizerLogo.href ?? "#"}
-                    target="_blank"
-                    rel="noreferer"
-                  >
-                    <Image
-                      src={props.meetup.partnerOrganizerLogo.src}
-                      alt={props.meetup.partnerOrganizerLogo.alt}
-                      width={100}
-                      height={100}
-                    />
-                  </a>
-                )}
               </div>
             )}
           </div>
+          {props.meetup.partnerOrganizerLogo && (
+            <div className="mt-8 flex justify-center">
+              <a
+                href={props.meetup.partnerOrganizerLogo.href ?? "#"}
+                target="_blank"
+                rel="noreferer"
+              >
+                <Image
+                  src={props.meetup.partnerOrganizerLogo.src}
+                  alt={props.meetup.partnerOrganizerLogo.alt}
+                  width={100}
+                  height={100}
+                />
+              </a>
+            </div>
+          )}
         </div>
       </div>
       <div
