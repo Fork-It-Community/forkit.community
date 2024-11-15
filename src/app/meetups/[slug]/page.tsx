@@ -10,6 +10,7 @@ import { ScheduleSection } from "./schedule";
 import { Talks } from "./talks";
 import type { WithContext, Event, Place } from "schema-dts";
 import { Partners } from "@/app/(homepage)/partners";
+import { CanceledBanner } from "@/app/(homepage)/banner";
 
 export type MeetupPageProps = Readonly<{
   params: { slug: string };
@@ -87,6 +88,9 @@ export default async function MeetupPage({ params }: MeetupPageProps) {
 
   return (
     <>
+      {meetup.status === "EventCancelled" && (
+        <CanceledBanner cancelledEvent={meetup} />
+      )}
       <Hero meetup={meetup} />
       <Content />
       <ScheduleSection meetup={meetup} />

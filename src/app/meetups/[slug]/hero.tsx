@@ -51,7 +51,8 @@ export function Hero(
         </div>
         <div className="mx-8 text-center">
           <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-6xl">
-            <span className="text-primary">{date}</span> {props.meetup.name}
+            <span className="text-primary">{date}</span> {props.meetup.name}{" "}
+            {props.meetup.status === "EventCancelled" && "(Cancelled)"}
           </h1>
           {props.meetup.excerpt && (
             <p
@@ -74,6 +75,38 @@ export function Hero(
                 </Button>
               </div>
             )}
+
+            {shouldDisplayTicketButton(props.meetup) &&
+              props.meetup.status !== "EventCancelled" && (
+                <div className="flex flex-col items-center gap-y-8">
+                  <Button asChild variant="default">
+                    <a
+                      href={props.meetup.tickets?.href}
+                      target="_blank"
+                      rel="noreferer"
+                    >
+                      {props.meetup.isFree
+                        ? "Register for free"
+                        : "Get tickets"}
+                      <ExternalLink className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
+                  {props.meetup.partnerOrganizerLogo && (
+                    <a
+                      href={props.meetup.partnerOrganizerLogo.href ?? "#"}
+                      target="_blank"
+                      rel="noreferer"
+                    >
+                      <Image
+                        src={props.meetup.partnerOrganizerLogo.src}
+                        alt={props.meetup.partnerOrganizerLogo.alt}
+                        width={100}
+                        height={100}
+                      />
+                    </a>
+                  )}
+                </div>
+              )}
           </div>
           {props.meetup.partnerOrganizerLogo && (
             <div className="mt-8 flex justify-center">

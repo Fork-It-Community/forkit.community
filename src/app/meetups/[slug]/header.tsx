@@ -50,15 +50,18 @@ export function Header(props: Readonly<{ meetup: Meetup }>) {
             </Link>
           </div>
           <div className="flex gap-3 lg:hidden">
-            {shouldDisplayTicketButton(props.meetup) && (
-              <div className="flex items-center justify-center gap-x-6">
-                <Button asChild size="sm">
-                  <a href={props.meetup.tickets?.href}>
-                    {props.meetup.isFree ? "Register for free" : "Get tickets"}
-                  </a>
-                </Button>
-              </div>
-            )}
+            {shouldDisplayTicketButton(props.meetup) &&
+              props.meetup.status !== "EventCancelled" && (
+                <div className="flex items-center justify-center gap-x-6">
+                  <Button asChild size="sm">
+                    <a href={props.meetup.tickets?.href}>
+                      {props.meetup.isFree
+                        ? "Register for free"
+                        : "Get tickets"}
+                    </a>
+                  </Button>
+                </div>
+              )}
             <Sheet open={sheet.isOpen} onOpenChange={sheet.toggle}>
               <SheetTrigger asChild>
                 <Button size="icon" variant="ghost" onClick={sheet.open}>
@@ -96,18 +99,19 @@ export function Header(props: Readonly<{ meetup: Meetup }>) {
                             ),
                         )}
                       </div>
-                      {shouldDisplayTicketButton(props.meetup) && (
-                        <div className="flex gap-x-6 py-6">
-                          <Button asChild>
-                            <a href={props.meetup.tickets?.href}>
-                              {props.meetup.isFree
-                                ? "Register for free"
-                                : "Get tickets"}
-                              <ExternalLink className="ml-2 h-4 w-4" />
-                            </a>
-                          </Button>
-                        </div>
-                      )}
+                      {shouldDisplayTicketButton(props.meetup) &&
+                        props.meetup.status !== "EventCancelled" && (
+                          <div className="flex gap-x-6 py-6">
+                            <Button asChild>
+                              <a href={props.meetup.tickets?.href}>
+                                {props.meetup.isFree
+                                  ? "Register for free"
+                                  : "Get tickets"}
+                                <ExternalLink className="ml-2 h-4 w-4" />
+                              </a>
+                            </Button>
+                          </div>
+                        )}
                     </div>
                   </div>
                 </SheetDescription>
@@ -129,15 +133,18 @@ export function Header(props: Readonly<{ meetup: Meetup }>) {
             )}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            {shouldDisplayTicketButton(props.meetup) && (
-              <div className="flex items-center justify-center gap-x-6">
-                <Button asChild>
-                  <a href={props.meetup.tickets?.href}>
-                    {props.meetup.isFree ? "Register for free" : "Get tickets"}
-                  </a>
-                </Button>
-              </div>
-            )}
+            {shouldDisplayTicketButton(props.meetup) &&
+              props.meetup.status !== "EventCancelled" && (
+                <div className="flex items-center justify-center gap-x-6">
+                  <Button asChild>
+                    <a href={props.meetup.tickets?.href}>
+                      {props.meetup.isFree
+                        ? "Register for free"
+                        : "Get tickets"}
+                    </a>
+                  </Button>
+                </div>
+              )}
           </div>
         </nav>
       </header>
