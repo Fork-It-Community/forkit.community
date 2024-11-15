@@ -51,8 +51,7 @@ export function Hero(
         </div>
         <div className="mx-8 text-center">
           <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-6xl">
-            <span className="text-primary">{date}</span> {props.meetup.name}{" "}
-            {props.meetup.status === "EventCancelled" && "(Cancelled)"}
+            <span className="text-primary">{date}</span> {props.meetup.name}
           </h1>
           {props.meetup.excerpt && (
             <p
