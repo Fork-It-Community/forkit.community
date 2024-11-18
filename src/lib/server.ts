@@ -18,6 +18,7 @@ export async function getNextEvent() {
         (event) =>
           event.published &&
           event.date &&
+          event.status !== "EventCancelled" &&
           event.date.valueOf() > new Date().valueOf(),
       )
   );
@@ -36,6 +37,7 @@ export async function getNextMeetup() {
         (meetup) =>
           meetup.published &&
           meetup.date &&
+          meetup.status !== "EventCancelled" &&
           meetup.date.valueOf() > new Date().valueOf(),
       )
   );
