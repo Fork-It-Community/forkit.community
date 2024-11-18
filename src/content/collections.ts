@@ -244,12 +244,14 @@ const collections = {
         )
         .optional(),
       isFree: z.boolean().optional(),
-      partnerOrganizerLogo: z
-        .object({
-          src: z.string(),
-          alt: z.string(),
-          href: z.string().optional(),
-        })
+      partnersOrganizersLogos: z
+        .array(
+          z.object({
+            src: z.string(),
+            alt: z.string(),
+            href: z.string().optional(),
+          }),
+        )
         .optional(),
     }),
   }),
