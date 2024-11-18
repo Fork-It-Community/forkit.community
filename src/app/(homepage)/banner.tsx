@@ -85,7 +85,7 @@ export function CanceledBanner(
             </svg>
 
             <>
-              We’ll be back in next year! Follow Fork It! on social media for
+              We’ll be back next year! Follow Fork It! on social media for
               updates and announcements on our future events.
             </>
 
