@@ -6,7 +6,8 @@ import { MeetupCard } from "@/components/meetup-card";
 export const UpcomingMeetups = async () => {
   const allMeetups = await collections.meetup.getAll();
   const upcomingMeetups = allMeetups.filter(
-    (meetup) => !isDateInThePast(meetup.date),
+    (meetup) =>
+      !isDateInThePast(meetup.date) && meetup.status !== "EventCancelled",
   );
 
   return (
