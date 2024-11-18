@@ -75,20 +75,20 @@ export function Hero(
               </div>
             )}
           </div>
-          {props.meetup.partnerOrganizerLogo && (
-            <div className="mt-8 flex justify-center">
-              <a
-                href={props.meetup.partnerOrganizerLogo.href ?? "#"}
-                target="_blank"
-                rel="noreferer"
-              >
-                <Image
-                  src={props.meetup.partnerOrganizerLogo.src}
-                  alt={props.meetup.partnerOrganizerLogo.alt}
-                  width={100}
-                  height={100}
-                />
-              </a>
+          {props.meetup.partnersOrganizersLogos && (
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+              {props.meetup.partnersOrganizersLogos.map((logo, index) => (
+                <div key={index}>
+                  <a href={logo.href ?? "#"} target="_blank" rel="noreferer">
+                    <Image
+                      src={logo.src}
+                      alt={logo.alt}
+                      width={100}
+                      height={100}
+                    />
+                  </a>
+                </div>
+              ))}
             </div>
           )}
         </div>
