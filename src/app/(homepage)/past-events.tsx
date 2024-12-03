@@ -9,10 +9,12 @@ export const PastEvents = async () => {
   const allEvents = await collections.event.getAll();
   const allMeetups = await collections.meetup.getAll();
   const pastEvents = allEvents.filter((event) => isDateInThePast(event.date));
-  const pastMeetups = allMeetups.filter((meetup) =>
-    isDateInThePast(meetup.date),
-  );
-
+  const pastMeetups = allMeetups
+    .filter(
+      (meetup) =>
+        isDateInThePast(meetup.date) && meetup.status !== "EventCancelled",
+    )
+    .reverse();
   return (
     <section
       className="relative overflow-hidden bg-gray-950 py-24 sm:py-32"
@@ -22,6 +24,17 @@ export const PastEvents = async () => {
         <h2 className="text-center font-heading text-3xl font-bold sm:text-4xl">
           <span className="text-primary">Fork it! Community</span> past events
         </h2>
+
+        {pastMeetups.map((meetup) => (
+          <div key={meetup.name} className="gap-0">
+            <Link
+              href={`/meetups/${meetup.metadata.slug}`}
+              title="Homepage of the event"
+            >
+              <MeetupCard meetup={meetup} />
+            </Link>
+          </div>
+        ))}
         {pastEvents.map((event) => (
           <div key={event.name} className="gap-0">
             <Link
@@ -48,16 +61,6 @@ export const PastEvents = async () => {
                 </a>
               </Button>
             </div>
-          </div>
-        ))}
-        {pastMeetups.map((meetup) => (
-          <div key={meetup.name} className="gap-0">
-            <Link
-              href={`/meetups/${meetup.metadata.slug}`}
-              title="Homepage of the event"
-            >
-              <MeetupCard meetup={meetup} />
-            </Link>
           </div>
         ))}
       </div>
