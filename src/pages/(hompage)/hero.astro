@@ -3,6 +3,7 @@ import { formatDateTimeShort } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Image } from "astro:assets";
 import { Badge } from "@/components/ui/badge";
+import { HomeNavigation } from "@/components/home-navigation";
 
 const { event } = Astro.props;
 ---
@@ -35,8 +36,7 @@ const { event } = Astro.props;
       </div>
     )
   }
-  // TODO: add navigation Bar when merged
-
+  <HomeNavigation />
   <div class="z-10 ml-80 flex min-w-[325px] max-w-[375px] flex-col gap-6 px-4">
     <div>
       <Badge className="h-8 w-fit rounded-md px-3 font-medium">Next Event</Badge
@@ -53,13 +53,13 @@ const { event } = Astro.props;
       </p>
     </div>
     <div class="flex items-center">
-      <Button>
+      <Button className="px-3.5">
         <a
           href={event.data.tickets?.href}
           target="_blank"
           class="text-black no-underline"
         >
-          Tickets Available
+          Tickets available
         </a>
       </Button>
     </div>
