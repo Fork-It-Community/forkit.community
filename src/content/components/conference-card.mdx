@@ -1,0 +1,93 @@
+---
+name: Conference Card
+---
+
+import { ConferenceCard } from '@/components/conference-card'
+import { Demo } from '@/components/demo'
+
+# Default
+
+<Demo>
+  <ConferenceCard
+    schedule={{
+      type: 'conference',
+      slug: 'tropical-software-developper-un-logiciel-pour-un-ministere-dasie-du-sud-est',
+      startTime: '2024-06-07T14:35:00.000Z',
+      duration: 30,
+      location: 'Main stage'
+    }}
+    talk={{
+      title: 'Tropical software: développer un logiciel pour un ministère d’Asie du Sud-Est',
+      speakers: [ 'sylvain-dorey' ],
+      language: 'french',
+      feedback: {
+        link: 'https://openfeedback.io/fork-it-community-rouen-2024/2024-06-07/8ViXNyZN6x3Xi4OogAeC'
+      }
+    }}
+    people={[
+      {
+        name: 'Sylvain Dorey',
+        avatar: '/speakers/sylvain-dorey.jpg',
+        job: 'Independent software engineer and data scientist',
+        company: { title: 'Freelance', href: 'https://sylvaindorey.com/fr/' },
+        socials: [
+          {
+            type: 'linkedin',
+            href: 'https://www.linkedin.com/in/sylvaindorey/'
+          },
+          { type: 'github',
+            href: 'https://github.com/syldor/'
+          },
+        ]
+      }
+    ]}
+  />
+</Demo>
+
+# Conference card with Multiple speakers
+
+<Demo>
+  <ConferenceCard
+    schedule={{
+      type: 'roundtable',
+      slug: 'eco-conception-contraintes-ou-opportunites',
+      startTime: '2024-06-07T16:10:00.000Z',
+      location: 'La place du village'
+    }}
+    talk={{
+      title: 'Eco design : constraints or opportunities ?',
+      speakers: [
+        'abdelkrim-marchani',
+        'francois-best',
+        'luis-rubiera',
+        'xavier-van-de-woestyne'
+      ],
+      language: 'french',
+      hosts: [ 'tony-godin' ]
+    }}
+    people={[
+      {
+        name: 'Abdelkrim Marchani',
+        avatar: '/speakers/abdelkrim-marchani.jpg'
+      },
+      {
+        name: 'François Best',
+        avatar: '/speakers/francois-best.jpg',
+        job: 'Web developer and creator of nuqs',
+        company: [Object],
+        socials: [Array]
+      },
+      {
+        name: 'Luis Rubiera',
+        avatar: '/speakers/luis-rubiera.jpg',
+        job: 'Lead Developer',
+      },
+      {
+        name: 'Xavier Van de Woestyne',
+        avatar: '/speakers/xavier-van-de-woestyne.jpg',
+        job: 'Web developer',
+      },
+    ]}
+  />
+</Demo>
+
