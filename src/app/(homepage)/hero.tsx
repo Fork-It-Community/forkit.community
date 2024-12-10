@@ -61,7 +61,8 @@ export async function Hero() {
                   {nextEvent || nextMeetup ? "Next events" : "Past events"}
                 </a>
               </Button>
-              <Button
+              {! nextMeetup || nextMeetup && (
+                <Button
                 size="lg"
                 variant="secondary"
                 asChild
@@ -69,6 +70,7 @@ export async function Hero() {
               >
                 <a href="#past-events">Past events</a>
               </Button>
+              )}
             </div>
             {nextEvent?.tickets && (
               <div className="pt-12">
