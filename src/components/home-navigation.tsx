@@ -13,7 +13,7 @@ export const HomeNavigation = () => {
         <img src={ForktItYellow.src} alt="" width="168px" height="18px" />
         <div className="flex items-center justify-end gap-6 font-medium text-primary">
           {navigations.map((item) => (
-            <a href={item.href} key={item.name}>
+            <a href={item.href} key={item.name} className="px-4 py-2">
               {item.name}
             </a>
           ))}
