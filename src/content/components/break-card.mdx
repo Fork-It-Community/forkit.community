@@ -1,0 +1,54 @@
+---
+name: Break Card
+---
+
+import { BreakCard } from '@/components/break-card'
+import { Demo } from '@/components/demo'
+
+# Default
+
+<Demo>
+  <BreakCard
+    schedule={{
+      type: 'break',
+      description: 'Visitor welcome',
+      name: 'Reception',
+      startTime: '2024-06-07T08:00:00.000Z',
+      duration: 30,
+      location: 'La place du village'
+    }}
+  />
+</Demo>
+
+# Break card with Sponsor
+
+<Demo>
+  <BreakCard
+    schedule={{
+      type: 'break',
+      sponsorSlug: 'digit',
+      description: 'The perfect time to eat something!',
+      name: 'Lunch',
+      startTime: '2024-06-07T12:20:00.000Z',
+      duration: 60,
+      location: 'La place du village'
+    }}
+    sponsor={
+      {
+        name: 'DIGIT',
+        image: { src: '/sponsors/digit@web.png', alt: 'DIGIT' },
+        href: 'https://www.groupedigit.com/',
+        socials: [
+          {
+            type: 'linkedin',
+            href: 'https://fr.linkedin.com/company/groupedigit/'
+          },
+          {
+            type: 'instagram',
+            href: 'https://www.instagram.com/groupedigit/'
+          }
+        ]
+      }
+    }
+  />
+</Demo>
