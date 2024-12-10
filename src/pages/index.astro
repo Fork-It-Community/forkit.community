@@ -1,5 +1,4 @@
 ---
-import { HomeNavigation } from "@/components/home-navigation";
 import HTMLLayout from "@/layouts/HTMLLayout.astro";
 import { getEventsCollection } from "@/lib/collections";
 
@@ -8,7 +7,6 @@ const events = await getEventsCollection();
 
 <HTMLLayout>
   <h1 class="font-heading">Fork it! Community</h1>
-  <HomeNavigation />
   <ul>
     {
       events.map((event) => (
