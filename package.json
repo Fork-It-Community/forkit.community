@@ -29,6 +29,7 @@
     "astro": "4.15.1",
     "astro-robots-txt": "1.0.0",
     "astro-seo": "0.8.4",
+    "astrobook": "0.5.1",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.1",
     "lucide-react": "0.427.0",
