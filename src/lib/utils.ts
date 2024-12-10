@@ -18,6 +18,18 @@ export function formatTime(date: string | number | Date) {
   }).format(new Date(date));
 }
 
+export function formatDateTimeShort(date: string | number | Date) {
+  return new Intl.DateTimeFormat("en-US", {
+    month : "short",
+    day:"2-digit",
+    year:"numeric"
+  }).format(new Date(date));
+}
+
+export function isDateInThePast(date?: Date) {
+  return (date?.getTime() ?? 0) < new Date().getTime();
+}
+
 // TODO Uncomment when the Event type is available in the content config.
 // export function isEventInThePast(event: Event) {
 //   return (event.date?.getTime() ?? 0) < new Date().getTime();
