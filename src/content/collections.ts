@@ -253,7 +253,8 @@ const collections = {
           }),
         )
         .optional(),
-    }),
+        postMeetupPhotosUrl:z.string().url().optional(),
+   }),
   }),
   speaker: defineCollection({
     folder: "speaker",
@@ -290,6 +291,7 @@ const collections = {
         })
         .optional(),
       hosts: z.string().array().optional(),
+      replayUrl: z.string().optional(),
     }),
   }),
 } as const;
