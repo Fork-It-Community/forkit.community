@@ -84,7 +84,6 @@ export default async function TalkPage({ params }: TalkPageProps) {
 
         <div className="flex flex-col justify-between gap-8 sm:flex-row sm:items-center">
           <LanguageBadge language={talk.language} />
-          <div className="flex flex-row items-center justify-between gap-4">
               {talk.replayUrl && (
                 <Button
                   asChild
@@ -102,7 +101,6 @@ export default async function TalkPage({ params }: TalkPageProps) {
                   </Link>
                 </Button>
               )}
-            </div>
           <div className="flex flex-row items-center justify-between gap-4">
             {talk.feedback && (
               <Button
