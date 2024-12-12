@@ -4,7 +4,7 @@ import { cn, formatDateTime } from "@/lib/utils";
 import { Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
 
-type MeetupCardProps = { meetup: Meetup ,className : string};
+type MeetupCardProps = { meetup: Meetup ,className? : string};
 
 export const MeetupCard = ({className,...props}:MeetupCardProps) => {
   return (
