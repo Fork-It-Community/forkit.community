@@ -31,8 +31,17 @@ export const PastEvents = async () => {
               href={`/meetups/${meetup.metadata.slug}`}
               title="Homepage of the event"
             >
-              <MeetupCard meetup={meetup} />
+              <MeetupCard meetup={meetup} className="rounded-b-none" />
             </Link>
+            {meetup.postMeetupPhotosUrl && (
+              <div className="flex gap-4 rounded-b-lg border-2 border-t-0 border-gray-700 bg-gray-900 p-6">
+                <Button asChild>
+                  <a href={meetup.postMeetupPhotosUrl} target="_blank">
+                    Explore all the photos
+                  </a>
+                </Button>
+              </div>
+            )}
           </div>
         ))}
         {pastEvents.map((event) => (
