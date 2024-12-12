@@ -82,14 +82,14 @@ export default async function TalkPage({ params }: TalkPageProps) {
           <Content />
         </div>
 
-        <div className="flex flex-col justify-between gap-8 sm:flex-row sm:items-center">
+        <div className="flex flex-row justify-between gap-8 sm:items-center">
           <LanguageBadge language={talk.language} />
               {talk.replayUrl && (
                 <Button
                   asChild
                   variant="outline"
                   size="sm"
-                  className="w-full sm:w-fit"
+                  className="w-fit"
                 >
                   <Link
                     href={talk.replayUrl}
