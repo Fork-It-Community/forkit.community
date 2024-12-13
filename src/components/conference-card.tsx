@@ -1,14 +1,14 @@
 // import type { CollectionEntry } from "astro:content";
 import type { Event } from "@/content/events/events";
-import type { Talk } from "@/content/talks/talks";
 import type { Person } from "@/content/people/people";
 import { cn } from "@/lib/utils";
 import { LanguageBadge } from "@/components/language-badge";
 import { FavoriteButton } from "@/components/favorite-button";
+import type { CollectionEntry } from "astro:content";
 
 type ConferenceCardProps = {
   schedule: Event["schedule"][number];
-  talk: Talk;
+  talk: CollectionEntry<"talks">;
   people: Person[];
 };
 
@@ -23,7 +23,7 @@ export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
           <div className="flex-start flex justify-between gap-4">
             <div className="flex w-8/12 flex-col gap-1">
               <h1 className="font-heading text-lg font-medium leading-6 text-neutral-100">
-                {props.talk.title}
+                {props.talk.data.title}
               </h1>
               {props.people.map((person, index) => (
                 <p
@@ -57,10 +57,10 @@ export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
           <div>
             <div className="flex flex-row justify-between">
               <div className="flex self-end">
-                <LanguageBadge language={props.talk.language} />
+                <LanguageBadge language={props.talk.data.language} />
               </div>
               <FavoriteButton
-                talkSlug={props.talk}
+                talkSlug={props.talk.slug}
                 isIconButton
                 size="sm"
                 className="border-neutral-700"

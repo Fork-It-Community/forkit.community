@@ -16,15 +16,21 @@ import { Demo } from '@/components/demo'
       duration: 30,
       location: 'Main stage'
     }}
-    talk={{
-      title: 'Tropical software: développer un logiciel pour un ministère d’Asie du Sud-Est',
-      speakers: [ 'sylvain-dorey' ],
-      language: 'french',
-      feedback: {
-        link: 'https://openfeedback.io/fork-it-community-rouen-2024/2024-06-07/8ViXNyZN6x3Xi4OogAeC'
-      }
-    }}
-    people={[
+          talk={{
+        id: 'tropical-software-developper-un-logiciel-pour-un-ministere-dasie-du-sud-est.mdx',
+        slug: 'tropical-software-developper-un-logiciel-pour-un-ministere-dasie-du-sud-est',
+        body: "De 2019 à maintenant, j’ai été impliqué dans le développement d’un système de gestion de la maintenance des ponts du Laos. C’est l’histoire de ce logiciel, dans ce contexte particulier de début de digitalisation d’un gouvernement et de collecte de données offline. Les challenges rencontrés: collecte sur le terrain sans connexion, un modèle de détérioration d’une université japonaise à implémenter, un hébergement sur un vieux serveur dans une salle d’archives",
+        collection: 'talks',
+        data: {
+          title: 'Tropical software: développer un logiciel pour un ministère d’Asie du Sud-Est',
+          speakers: [ 'sylvain-dorey' ],
+          language: 'french',
+          feedback: {
+            link: 'https://openfeedback.io/fork-it-community-rouen-2024/2024-06-07/8ViXNyZN6x3Xi4OogAeC'
+          }
+        }}}
+
+   people={[
       {
         name: 'Sylvain Dorey',
         avatar: '/speakers/sylvain-dorey.jpg',
@@ -55,16 +61,31 @@ import { Demo } from '@/components/demo'
       location: 'La place du village'
     }}
     talk={{
-      title: 'Eco design : constraints or opportunities ?',
-      speakers: [
-        'abdelkrim-marchani',
-        'francois-best',
-        'luis-rubiera',
-        'xavier-van-de-woestyne'
-      ],
-      language: 'french',
-      hosts: [ 'tony-godin' ]
-    }}
+      id: "eco-conception-contraintes-ou-opportunites.mdx",
+      slug: "eco-conception-contraintes-ou-opportunites",
+      body: `
+        Let's discuss the subject that comes up in every tech brief. Real new approach
+        or just another <span className="line-through">excuse</span> reason for failing
+        a project?
+        Around the table, Abdelkrim Marchiani, vice-president of Métropole Rouen Normandie, will
+        set out his institutional vision to confront it with
+        <span className="line-through">grumbling</span> real-life developers.
+      `,
+      collection: "talks",
+      data: {
+        title: "Eco design : constraints or opportunities ?",
+        speakers: [
+          "abdelkrim-marchani",
+          "francois-best",
+          "luis-rubiera",
+          "xavier-van-de-woestyne",
+        ],
+        language: "french",
+        hosts: ["tony-godin"],
+  }
+  
+
+}}
     people={[
       {
         name: 'Abdelkrim Marchani',
