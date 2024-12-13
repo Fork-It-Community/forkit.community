@@ -4,11 +4,10 @@ import { Button, type ButtonProps } from "@/components/ui/button";
 import { Heart, HeartOff } from "lucide-react";
 
 import { useFavoriteContext } from "@/context/FavoritesContext";
-import Favorite from "@/services/Favorite";
-import type { Talk } from "@/content/talks/talks";
+import Favorite, { type TalkSlug } from "@/services/Favorite";
 
 type FavoriteButtonProps = ButtonProps & {
-  talkSlug: Talk | undefined;
+  talkSlug: TalkSlug;
   isIconButton?: boolean;
 };
 

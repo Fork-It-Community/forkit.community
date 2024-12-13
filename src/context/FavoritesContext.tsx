@@ -8,37 +8,24 @@ import {
   type PropsWithChildren,
 } from "react";
 
-import Favorite, { type Favorites } from "@/services/Favorite";
-import type { Event } from "@/content/events/events";
-import type { Talk } from "@/content/talks/talks";
+import Favorite, {
+  type Favorites,
+  type EventSlug,
+  type TalkSlug,
+} from "@/services/Favorite";
 
 type FavoritesContextType = {
   favorites: Favorites;
-  addFavorite: (talkSlug: Talk) => void;
-  removeFavorite: (talkSlug: Talk) => void;
-  eventSlug: Event;
-};
-
-const initEventSlug: Event = {
-  title: "",
-  name: "",
-  date: new Date(),
-  location: {
-    name: "",
-    address: "",
-  },
-  status: "EventCancelled",
-  sponsoringLevels: [],
-  attendanceMode: "OfflineEventAttendanceMode",
-  schedule: [],
-  subPages: [],
+  addFavorite: (talkSlug: TalkSlug) => void;
+  removeFavorite: (talkSlug: TalkSlug) => void;
+  eventSlug: EventSlug;
 };
 
 const FavoritesContext = createContext<FavoritesContextType>({
   favorites: [],
   addFavorite: () => {},
   removeFavorite: () => {},
-  eventSlug: initEventSlug,
+  eventSlug: "",
 });
 
 export const useFavoriteContext = () => {
@@ -56,7 +43,9 @@ export const useFavoriteContext = () => {
 export const FavoritesContextProvider = ({
   eventSlug,
   children,
-}: PropsWithChildren & { eventSlug: Event }) => {
+}: PropsWithChildren & {
+  eventSlug: EventSlug;
+}) => {
   const [favorites, setFavorites] = useState<Favorites>([]);
 
   useEffect(() => {
@@ -64,7 +53,7 @@ export const FavoritesContextProvider = ({
   }, [eventSlug, setFavorites]);
 
   const addFavorite = useCallback(
-    (talkSlug: Talk) => {
+    (talkSlug: TalkSlug) => {
       Favorite.addFavorite(eventSlug, talkSlug);
 
       setFavorites(Favorite.getFavorites(eventSlug));
@@ -73,7 +62,7 @@ export const FavoritesContextProvider = ({
   );
 
   const removeFavorite = useCallback(
-    (talkSlug: Talk) => {
+    (talkSlug: TalkSlug) => {
       Favorite.removeFavorite(eventSlug, talkSlug);
 
       setFavorites(Favorite.getFavorites(eventSlug));
