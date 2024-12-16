@@ -1,0 +1,20 @@
+import { SpeakerDetail } from "@/components/speakerDetail";
+import "@/styles/globals.css";
+
+export default {
+  component: SpeakerDetail,
+};
+export const Default = {
+  args: {
+    speaker: {
+      name: "Andrey Sitnik",
+      avatar: "/speakers/andrey-sitnik.jpg",
+      job: "Creator of Autoprefixer, PostCSS, Browserslist",
+      socials: [
+        { type: "x", href: "https://twitter.com/sitnikcode" },
+        { type: "github", href: "https://github.com/ai" },
+      ],
+      company: { title: "Evil Martians", href: "https://evilmartians.com/" },
+    },
+  },
+};

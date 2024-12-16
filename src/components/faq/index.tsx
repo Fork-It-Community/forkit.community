@@ -6,6 +6,8 @@ import {
 } from "@/components/ui/accordion";
 import type { CollectionEntry } from "astro:content";
 
+import "@/styles/globals.css";
+
 export const FAQ = (
   props: Readonly<{ faq: CollectionEntry<"events">["data"]["faq"] }>,
 ) => {
