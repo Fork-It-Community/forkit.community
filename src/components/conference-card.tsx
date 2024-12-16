@@ -15,13 +15,14 @@ type ConferenceCardProps = {
 export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
   return (
     <div>
+      {/* // TODO: Update the href attribute once the target redirect page is finalized. */}
       <a
         href="/"
-        className="flex w-full flex-[4] gap-2 rounded-lg border-2 border-neutral-600 bg-neutral-900 p-4"
+        className="flex w-full gap-2 rounded-lg border-2 border-neutral-600 bg-neutral-900 p-4"
       >
         <div className="flex w-full flex-col gap-4">
           <div className="flex-start flex justify-between gap-4">
-            <div className="flex w-8/12 flex-col gap-1">
+            <div className="flex w-2/3 flex-col gap-1">
               <h1 className="font-heading text-lg font-medium leading-6 text-neutral-100">
                 {props.talk.data.title}
               </h1>
