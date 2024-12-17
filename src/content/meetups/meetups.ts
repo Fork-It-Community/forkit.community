@@ -5,7 +5,8 @@ const zMeetup = () =>
   z.object({
     title: z.string(),
     name: z.string(),
-    date: z.date(),
+    startDate: z.date().optional(),
+    endDate: z.date().optional(),
     location: z.object({
       name: z.string().optional(),
       address: z.string(),
@@ -78,6 +79,7 @@ const zMeetup = () =>
         link: z.string().url(),
       })
       .optional(),
+    mapUri: z.string(),
   });
 
 export const meetupsCollection = defineCollection({
