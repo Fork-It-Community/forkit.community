@@ -13,11 +13,11 @@ const { event } = Astro.props;
 <div id="venue">
   <h2>Venue</h2>
   <hr class="mb-4 mt-2 border border-neutral-800" />
-  <ul class="flex flex-row gap-2 pb-2 text-gray-200">
+  <ul class="flex flex-row items-center gap-8 pb-2 text-gray-200">
     {
       event.startDate && (
         <li class="flex gap-x-1 text-sm">
-          <Calendar className="mt-1 h-5 w-5 flex-none" aria-hidden="true" />
+          <Calendar className=" h-4 w-4 flex-none" aria-hidden="true" />
           <span class="flex flex-col">
             <time>{formatDateTime(event.startDate)}</time>
             {event.startDate && event.endDate && (
@@ -32,7 +32,7 @@ const { event } = Astro.props;
     {
       event.location && (
         <li class="flex gap-x-1 text-sm">
-          <MapPin className="mt-1 h-5 w-5" aria-hidden="true" />
+          <MapPin className=" h-4 w-4" aria-hidden="true" />
           <span class="flex flex-col">
             <p>{event.location.name}</p>
             <p class="text-neutral-400">{event.location.address}</p>
