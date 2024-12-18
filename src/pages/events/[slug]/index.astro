@@ -51,21 +51,8 @@ const partners = await getPartners(event.data);
   <div class="container flex flex-col gap-8">
     <Venue event={event.data} />
     <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-      <div class="sm:col-span-2 md:col-span-2">
-        <h2>Schedule</h2>
-        <hr class="mb-4 mt-2 w-full border border-neutral-800" />
-        <Schedule event={event.data} />
-      </div>
-
-      {
-        !!event.data.speakers && (
-          <div class="sm:col-span-1 md:col-span-1">
-            <h2>Speakers</h2>
-            <hr class="mb-4 mt-2 w-full border border-neutral-800" />
-            <Speakers speakers={speakers} />
-          </div>
-        )
-      }
+      <Schedule event={event.data} />
+      {!!speakers && <Speakers speakers={speakers} />}
     </div>
     {!!sponsors && <Sponsors meetup={event.data} sponsors={sponsors} />}
     {!!partners && <Partners allPartners={partners} />}

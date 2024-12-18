@@ -67,10 +67,14 @@ const Speakers = (
   }>,
 ) => {
   return (
-    <div className={cn("grid grid-cols-2 gap-4 lg:gap-8", props.className)}>
-      {props.speakers.map((speaker) => (
-        <SpeakerDetail speaker={speaker.data} key={speaker.slug} />
-      ))}
+    <div className="sm:col-span-1 md:col-span-1">
+      <h2>Speakers</h2>
+      <hr className="mb-4 mt-2 w-full border border-neutral-800" />
+      <div className={cn("grid grid-cols-2 gap-4 lg:gap-8", props.className)}>
+        {props.speakers.map((speaker) => (
+          <SpeakerDetail speaker={speaker.data} key={speaker.slug} />
+        ))}
+      </div>
     </div>
   );
 };
