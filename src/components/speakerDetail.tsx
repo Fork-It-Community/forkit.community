@@ -67,7 +67,7 @@ const Speakers = (
   }>,
 ) => {
   return (
-    <div className="sm:col-span-1 md:col-span-1">
+    <div className="sm:col-span-1 md:col-span-1" id="speakers">
       <h2>Speakers</h2>
       <hr className="mb-4 mt-2 w-full border border-neutral-800" />
       <div className={cn("grid grid-cols-2 gap-4 lg:gap-8", props.className)}>
