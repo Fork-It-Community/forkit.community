@@ -1,38 +1,60 @@
 ---
 import EventLayout from "@/layouts/EventLayout.astro";
-import { getEventsCollection } from "@/lib/collections";
 import { getEntries } from "astro:content";
 import { SEO } from "astro-seo";
+import Hero from "./hero.astro";
+import Venue from "./venue.astro";
+import type { CollectionEntry } from "astro:content";
+import Schedule from "./schedule.astro";
+import {
+  getSpeakers,
+  getEventsCollection,
+  getSponsors,
+  getPartners,
+} from "@/lib/collections";
+import { Speakers } from "@/components/speakerDetail";
+import { Sponsors } from "@/components/sponsors";
+import { Partners } from "@/components/partners";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
 
   return Promise.all(
-    events.map(async (event) => ({
-      params: { slug: event.slug },
-      props: {
-        event,
-        subPages: await getEntries(event.data.subPages),
-      },
-    })),
+    events.map(async (event) => {
+      const subPages = event.data.subPages.map((subPage) => {
+        return {
+          collection:
+            "eventsSubPages" as CollectionEntry<"eventsSubPages">["collection"],
+          slug: subPage.slug,
+        };
+      });
+      return {
+        params: { slug: event.slug },
+        props: {
+          event,
+          subPages: await getEntries(subPages),
+        },
+      };
+    }),
   );
 }
 
-const { slug } = Astro.params;
-const { subPages, event } = Astro.props;
+const { event } = Astro.props;
+const speakers = await getSpeakers(event.data);
+const sponsors = await getSponsors(event.data);
+const partners = await getPartners(event.data);
 ---
 
 <EventLayout event={event}>
   <SEO slot="seo" />
-  <h1>{event.data.name}</h1>
-  <p>{slug}</p>
-  <ul>
-    {
-      subPages.map((subpage) => (
-        <li>
-          <a href={`/events/${subpage.slug}`}>{subpage.slug}</a>
-        </li>
-      ))
-    }
-  </ul>
+  <Hero event={event} />
+  <div class="container flex flex-col gap-8">
+    <Venue event={event.data} />
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+      <Schedule event={event.data} />
+      {!!speakers && <Speakers speakers={speakers} />}
+    </div>
+    {!!sponsors && <Sponsors meetup={event.data} sponsors={sponsors} />}
+    {!!partners && <Partners allPartners={partners} />}
+  </div>
 </EventLayout>

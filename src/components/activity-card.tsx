@@ -26,9 +26,9 @@ const EventCard = (props: Readonly<{ activity: Event }>) => {
         <div className="flex flex-col gap-2">
           <div className="flex flex-row gap-4">
             <div className="flex items-center gap-1 text-sm text-neutral-400">
-              {event.date && (
-                <time dateTime={event.date.toISOString()}>
-                  {formatTime(event.date)}
+              {event.startDate && (
+                <time dateTime={event.startDate.toISOString()}>
+                  {formatTime(event.startDate)}
                 </time>
               )}
               {/* TODO : update when we have event.endDate */}
