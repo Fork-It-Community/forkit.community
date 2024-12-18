@@ -1,0 +1,31 @@
+---
+import { BreakCard } from "@/components/break-card";
+import { ConferenceCard } from "@/components/conference-card";
+import { TimelineContent } from "@/components/timeline";
+import type { Event } from "@/content/events/events";
+import { getEntry } from "astro:content";
+import { match } from "ts-pattern";
+import { getTalkSpeakers } from "@/lib/collections";
+
+interface Props {
+  event: NonNullable<Event["schedule"]>[number];
+}
+
+const { event } = Astro.props;
+const talk = event.slug ? await getEntry("talks", event.slug) : undefined;
+const speakers = await getTalkSpeakers(talk?.data);
+const sponsor = event.sponsorSlug
+  ? await getEntry("sponsors", event.sponsorSlug)
+  : undefined;
+---
+
+<TimelineContent className="w-full pr-0 pt-4">
+  {
+    match(event.type)
+      .with("conference", "roundtable", () => (
+        <ConferenceCard people={speakers} talk={talk} />
+      ))
+      .with("break", () => <BreakCard break={event} sponsor={sponsor} />)
+      .otherwise(() => null)
+  }
+</TimelineContent>

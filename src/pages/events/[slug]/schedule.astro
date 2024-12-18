@@ -1,17 +1,18 @@
 ---
+import { LocationBadge } from "@/components/location-badge";
 import { TimelineItem } from "@/components/timeline";
 import { TimelineHeader } from "@/components/timeline";
 import { TimelineIcon } from "@/components/timeline";
-import { TimelineContent } from "@/components/timeline";
 import { TimelineConnector } from "@/components/timeline";
 import { TimelineTitle } from "@/components/timeline";
 import { Timeline } from "@/components/timeline";
 import { formatTime } from "@/lib/utils";
+import ScheduleCard from "@/pages/events/[slug]/scheduleCard.astro";
 import type { CollectionEntry } from "astro:content";
 
-interface Props {
+type Props = {
   event: CollectionEntry<"events">["data"];
-}
+};
 const { event } = Astro.props;
 ---
 
@@ -23,19 +24,19 @@ const { event } = Astro.props;
           <TimelineConnector isLast={index === event.schedule.length - 1} />
           <TimelineHeader>
             <TimelineIcon />
-            <TimelineTitle className="text-white">
+            <TimelineTitle className="text-white flex w-full justify-between">
               {item.startTime && (
-                <div class="flex gap-2">
-                  <div />
+                <div class="flex w-full gap-2">
                   <time datetime={item.startTime?.toISOString()}>
                     {formatTime(item.startTime)}
                   </time>
                   <p class="text-neutral-400">{item.duration} minutes</p>
                 </div>
               )}
+              <LocationBadge>{item.location}</LocationBadge>
             </TimelineTitle>
           </TimelineHeader>
-          <TimelineContent />
+          <ScheduleCard event={item} />
         </TimelineItem>
       ))
   }

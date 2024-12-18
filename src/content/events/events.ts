@@ -107,6 +107,7 @@ const zEvent = () =>
         slug: z.custom<CollectionEntry<"eventsSubPages">["slug"]>(),
       }),
     ),
+    partners: z.array(z.string()).optional(),
   });
 
 export const eventsCollection = defineCollection({

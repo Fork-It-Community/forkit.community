@@ -6,8 +6,15 @@ import Hero from "./hero.astro";
 import Venue from "./venue.astro";
 import type { CollectionEntry } from "astro:content";
 import Schedule from "./schedule.astro";
-import { getSpeakers, getEventsCollection } from "@/lib/collections";
+import {
+  getSpeakers,
+  getEventsCollection,
+  getSponsors,
+  getPartners,
+} from "@/lib/collections";
 import { Speakers } from "@/components/speakerDetail";
+import { Sponsors } from "@/components/sponsors";
+import { Partners } from "@/components/partners";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -32,10 +39,10 @@ export async function getStaticPaths() {
   );
 }
 
-// const { slug } = Astro.params;
-// const { subPages, event } = Astro.props;
 const { event } = Astro.props;
 const speakers = await getSpeakers(event.data);
+const sponsors = await getSponsors(event.data);
+const partners = await getPartners(event.data);
 ---
 
 <EventLayout event={event}>
@@ -51,7 +58,7 @@ const speakers = await getSpeakers(event.data);
       </div>
 
       {
-        event.data.speakers && (
+        !!event.data.speakers && (
           <div class="sm:col-span-1 md:col-span-1">
             <h2>Speakers</h2>
             <hr class="mb-4 mt-2 w-full border border-neutral-800" />
@@ -60,5 +67,7 @@ const speakers = await getSpeakers(event.data);
         )
       }
     </div>
+    {!!sponsors && <Sponsors meetup={event.data} sponsors={sponsors} />}
+    {!!partners && <Partners allPartners={partners} />}
   </div>
 </EventLayout>
