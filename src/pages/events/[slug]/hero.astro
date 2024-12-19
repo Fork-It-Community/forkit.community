@@ -4,6 +4,7 @@ import { ExploreTheCommunity } from "@/components/explore-the-community";
 import { formatDateTimeShort, shouldDisplayTicketButton } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Nav from "./nav.astro";
+import { Countdown } from "@/components/countdown";
 
 const { event } = Astro.props;
 
@@ -64,8 +65,10 @@ const isCfpActive = !!(
             {event.data.name}
           </p>
         </div>
-        <!-- TODO : Add countdown when available -->
-        <div class="flex flex-wrap justify-center gap-3">
+        <div class="py-6">
+          <Countdown date={event.data.startDate} client:only="react" />
+        </div>
+        <div class="flex flex-wrap justify-start gap-3">
           {
             shouldDisplayTicketButton(event.data) && (
               <Button>

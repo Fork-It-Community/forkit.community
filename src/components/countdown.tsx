@@ -4,7 +4,7 @@ import MotionNumber from "motion-number";
 import { calculateTimeLeft } from "@/lib/utils";
 
 const Countdown = (
-  props: Readonly<{ date: CollectionEntry<"events">["data"]["date"] }>,
+  props: Readonly<{ date: CollectionEntry<"events">["data"]["startDate"] }>,
 ) => {
   if (!props.date) return;
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(props.date));
