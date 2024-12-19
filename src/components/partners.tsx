@@ -40,7 +40,7 @@ export function Partners(
   }>,
 ) {
   return (
-    <div className="pb-60 pt-2">
+    <div className="pb-30 pt-2">
       <div className="max-w-7xl">
         <h3 className="mb-4 font-heading text-2xl font-bold tracking-tight text-white">
           Partners
