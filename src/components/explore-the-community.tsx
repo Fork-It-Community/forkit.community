@@ -5,7 +5,7 @@ export const ExploreTheCommunity = (
   props: Readonly<{ title?: string; href?: string }>,
 ) => {
   return (
-    <div className="flex min-h-10 flex-row items-center justify-between gap-1 rounded-lg bg-neutral-900 bg-opacity-40 p-2 pl-4">
+    <div className="z-10 mx-6 flex min-h-10 flex-row items-center justify-between gap-1 rounded-lg bg-neutral-900 bg-opacity-40 p-2 pl-4 lg:mx-32">
       <p className="text-xs font-medium">
         {props?.title || "Fork it! Community"}
       </p>
