@@ -1,7 +1,9 @@
+import { decorators } from "@/components/astrobook.config";
 import { FAQ } from "@/components/Faq";
 
 export default {
   component: FAQ,
+  decorators,
 };
 export const Default = {
   args: {

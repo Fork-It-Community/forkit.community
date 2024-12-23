@@ -1,7 +1,9 @@
+import { decorators } from "@/components/astrobook.config";
 import { EventCard } from "@/components/EventCard";
 
 export default {
   component: EventCard,
+  decorators,
 };
 
 export const Default = {

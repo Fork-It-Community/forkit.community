@@ -1,8 +1,11 @@
+import { decorators } from "@/components/astrobook.config";
 import { MeetupCard } from "@/components/MeetupCard";
 
 export default {
   component: MeetupCard,
+  decorators,
 };
+
 export const Default = {
   args: {
     activity: {

@@ -17,6 +17,9 @@ export default defineConfig({
     mdx(),
     sitemap(),
     robotsTxt(),
-    astrobook({ subpath: "/astrobook", directory: "src/components" }),
+    astrobook({
+      subpath: "/astrobook",
+      directory: "src/components",
+    }),
   ],
 });

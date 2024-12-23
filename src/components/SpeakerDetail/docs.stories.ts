@@ -1,8 +1,11 @@
+import { decorators } from "@/components/astrobook.config";
 import { SpeakerDetail } from "@/components/SpeakerDetail";
 
 export default {
   component: SpeakerDetail,
+  decorators,
 };
+
 export const Default = {
   args: {
     speaker: {

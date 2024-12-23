@@ -1,8 +1,11 @@
+import { decorators } from "@/components/astrobook.config";
 import { MapLocation } from "@/components/MapLocation";
 
 export default {
   component: MapLocation,
+  decorators,
 };
+
 export const Default = {
   args: {
     detail: {
