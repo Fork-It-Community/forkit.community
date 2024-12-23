@@ -1,4 +1,4 @@
-import { SpeakerDetail } from "@/components/speakerDetail";
+import { SpeakerDetail } from "@/components/SpeakerDetail";
 
 export default {
   component: SpeakerDetail,

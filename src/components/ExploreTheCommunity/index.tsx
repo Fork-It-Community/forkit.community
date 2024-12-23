@@ -1,4 +1,4 @@
-import { Button } from "@/oldcomponents/ui/button";
+import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 
 export const ExploreTheCommunity = (

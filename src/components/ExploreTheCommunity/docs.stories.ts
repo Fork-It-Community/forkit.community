@@ -1,4 +1,4 @@
-import { ExploreTheCommunity } from "@/oldcomponents/ExploreTheCommunity";
+import { ExploreTheCommunity } from "@/components/ExploreTheCommunity";
 
 export default {
   component: ExploreTheCommunity,

@@ -1,4 +1,4 @@
-import { EventCard } from "@/oldcomponents/EventCard";
+import { EventCard } from "@/components/EventCard";
 
 export default {
   component: EventCard,

@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/oldcomponents/ui/accordion";
+} from "@/components/ui/accordion";
 import type { CollectionEntry } from "astro:content";
 
 export const FAQ = (

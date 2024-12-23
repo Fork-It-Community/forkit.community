@@ -1,5 +1,5 @@
 import type { CollectionEntry } from "astro:content";
-import { ICONS } from "@/oldcomponents/icons";
+import { ICONS } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 const SpeakerDetail = (

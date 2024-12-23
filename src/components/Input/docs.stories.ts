@@ -1,4 +1,4 @@
-import { InputField } from "@/oldcomponents/Input";
+import { InputField } from "@/components/Input";
 
 export default {
   component: InputField,

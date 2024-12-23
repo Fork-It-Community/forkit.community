@@ -1,4 +1,4 @@
-import { MapLocation } from "@/oldcomponents/MapLocation";
+import { MapLocation } from "@/components/MapLocation";
 
 export default {
   component: MapLocation,

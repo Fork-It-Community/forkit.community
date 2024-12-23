@@ -1,5 +1,5 @@
-import { Label } from "@/oldcomponents/ui/label";
-import { Input, type InputProps } from "@/oldcomponents/ui/input";
+import { Label } from "@/components/ui/label";
+import { Input, type InputProps } from "@/components/ui/input";
 
 export const InputField = ({
   label,

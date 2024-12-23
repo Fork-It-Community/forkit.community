@@ -1,4 +1,4 @@
-import { MeetupCard } from "@/oldcomponents/MeetupCard";
+import { MeetupCard } from "@/components/MeetupCard";
 
 export default {
   component: MeetupCard,
