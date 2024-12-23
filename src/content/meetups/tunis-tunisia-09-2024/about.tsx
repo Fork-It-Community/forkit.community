@@ -2,7 +2,7 @@ import type { Meetup } from "@/content/meetups/meetups";
 import { formatDateTime } from "@/lib/utils";
 import { Calendar, MapPin } from "lucide-react";
 import LocationImage from "/public/meetups/tunis-tunisia-09-2024.jpg";
-import { Button } from "@/oldcomponents/ui/button";
+import { Button } from "@/components/ui/button";
 
 export function About(
   props: Readonly<{
