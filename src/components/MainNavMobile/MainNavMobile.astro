@@ -1,0 +1,20 @@
+---
+import MainNavMobileItem from "./MainNavMobileItem.astro";
+import MainNavMobileItemMore from "./MainNavMobileItemMore";
+import { MdHomeFilled, MdEvent, MdFeed, MdPodcasts } from "react-icons/md";
+---
+
+<div class="md:hidden">
+  <div class="h-14"></div>
+  <div class="fixed bottom-0 left-0 right-0 flex h-14 bg-background">
+    <MainNavMobileItem icon={MdHomeFilled} href="/" exact>
+      Home
+    </MainNavMobileItem>
+    <MainNavMobileItem icon={MdEvent} href="/events">Events</MainNavMobileItem>
+    <MainNavMobileItem icon={MdFeed} href="/news">News</MainNavMobileItem>
+    <MainNavMobileItem icon={MdPodcasts} href="/podcasts">
+      Podcasts
+    </MainNavMobileItem>
+    <MainNavMobileItemMore client:load currentPathname={Astro.url.pathname} />
+  </div>
+</div>

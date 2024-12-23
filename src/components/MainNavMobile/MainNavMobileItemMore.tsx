@@ -71,8 +71,8 @@ const MoreNavItem = (props: {
       href={props.href}
       className={cn(
         "flex items-center gap-3 px-8 py-3",
-        !isActive && "opacity-60",
-        isActive && "text-primary",
+        !isActive && "opacity-50",
+        isActive && "text-white",
       )}
     >
       <span className="text-2xl">
