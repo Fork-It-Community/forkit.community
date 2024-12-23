@@ -1,6 +1,6 @@
 import type { Meetup } from "@/content/meetups/meetups";
 import { formatDateTime } from "@/lib/utils";
-import { Calendar, MapPin } from "lucide-react";
+import { LuCalendar, LuMapPin } from "react-icons/lu";
 import LocationImage from "/public/meetups/tunis-tunisia-09-2024.jpg";
 import { Button } from "@/components/ui/button";
 
@@ -33,7 +33,7 @@ export function About(
               <ul className="space-y-8 text-gray-200">
                 {props.meetup.location && (
                   <li className="flex gap-x-3">
-                    <MapPin
+                    <LuMapPin
                       className="mt-1 h-5 w-5 flex-none text-primary"
                       aria-hidden="true"
                     />
@@ -49,7 +49,7 @@ export function About(
                 )}
                 {props.meetup.date && (
                   <li className="flex gap-x-3">
-                    <Calendar
+                    <LuCalendar
                       className="mt-1 h-5 w-5 flex-none text-primary"
                       aria-hidden="true"
                     />

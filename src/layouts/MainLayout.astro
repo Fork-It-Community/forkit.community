@@ -1,0 +1,17 @@
+---
+import MainNavMobile from "@/components/MainNav/MainNavMobile.astro";
+import RootLayout from "@/layouts/RootLayout.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<RootLayout title?={title} description?={description}>
+  <slot name="seo" slot="seo" />
+  <MainNavMobile />
+  <slot />
+</RootLayout>

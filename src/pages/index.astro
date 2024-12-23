@@ -1,13 +1,14 @@
 ---
-import RootLayout from "@/layouts/RootLayout.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
+
 import { getNextEvent } from "@/lib/events";
 
 const nextEvent = await getNextEvent();
 ---
 
-<RootLayout>
-  <div>
+<MainLayout>
+  <div class="flex-1">
     <h1>Upcoming events</h1>
     {nextEvent?.data.title}
   </div>
-</RootLayout>
+</MainLayout>

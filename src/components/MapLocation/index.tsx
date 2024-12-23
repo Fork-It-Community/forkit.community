@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { MapPin } from "lucide-react";
+import { LuMapPin } from "react-icons/lu";
 
 const MapLocation = (
   props: Readonly<{
@@ -16,7 +16,7 @@ const MapLocation = (
     <div className="flex h-full w-full flex-col gap-2">
       <div className="flex gap-1">
         <div className="pt-2">
-          <MapPin className="h-3.5 w-3.5" />
+          <LuMapPin className="h-3.5 w-3.5" />
         </div>
         <div className="flex flex-col">
           <p className="my-0">{props.detail.title}</p>

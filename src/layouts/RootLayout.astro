@@ -29,7 +29,9 @@ const { title, description } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <slot name="seo" />
   </head>
-  <body>
+  <body
+    class="flex min-h-svh flex-col overflow-x-hidden bg-black text-foreground"
+  >
     <slot />
   </body>
 </html>

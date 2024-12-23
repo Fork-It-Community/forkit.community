@@ -1,6 +1,6 @@
 import type { Event } from "../events";
 import { formatDateTime } from "@/lib/utils";
-import { Calendar, MapPin } from "lucide-react";
+import { LuCalendar, LuMapPin } from "react-icons/lu";
 import LeVillageByCA from "./le-village-by-ca.jpg";
 
 export function About(
@@ -31,7 +31,7 @@ export function About(
               <ul className="space-y-8 text-gray-200">
                 {props.event.location && (
                   <li className="flex gap-x-3">
-                    <MapPin
+                    <LuMapPin
                       className="mt-1 h-5 w-5 flex-none text-primary"
                       aria-hidden="true"
                     />
@@ -47,7 +47,7 @@ export function About(
                 )}
                 {props.event.date && (
                   <li className="flex gap-x-3">
-                    <Calendar
+                    <LuCalendar
                       className="mt-1 h-5 w-5 flex-none text-primary"
                       aria-hidden="true"
                     />

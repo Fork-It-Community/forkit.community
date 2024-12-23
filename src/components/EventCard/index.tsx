@@ -1,6 +1,6 @@
 import type { Event } from "@/content/events/events";
 import { formatTime } from "@/lib/utils";
-import { MapPin } from "lucide-react";
+import { LuMapPin } from "react-icons/lu";
 
 export const EventCard = (props: Readonly<{ activity: Event }>) => {
   const event = props.activity;
@@ -44,7 +44,7 @@ export const EventCard = (props: Readonly<{ activity: Event }>) => {
           <div>
             {event.location && (
               <div className="flex items-center gap-2 text-sm text-neutral-400">
-                <MapPin className="h-5 w-5 flex-none" aria-hidden="true" />
+                <LuMapPin className="h-5 w-5 flex-none" aria-hidden="true" />
                 {event.location?.name}
               </div>
             )}

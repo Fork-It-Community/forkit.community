@@ -1,0 +1,27 @@
+---
+import { cn } from "@/lib/utils";
+import type { FC } from "react";
+
+interface Props {
+  icon: FC;
+  href: string;
+  exact?: boolean;
+}
+
+const { icon: Icon, href, exact } = Astro.props;
+const isActive = exact
+  ? href === Astro.url.pathname
+  : Astro.url.pathname.startsWith(href);
+---
+
+<a
+  href={href}
+  class={cn(
+    "flex flex-1 flex-col items-center justify-center py-3",
+    !isActive && "opacity-60",
+    isActive && "text-primary",
+  )}
+>
+  <span class="text-2xl"><Icon /></span>
+  <span class="text-[0.6rem] tracking-wide"><slot /></span>
+</a>

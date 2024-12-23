@@ -1,6 +1,6 @@
 import type { Meetup } from "@/content/meetups/meetups";
 import { formatTime } from "@/lib/utils";
-import { MapPin } from "lucide-react";
+import { LuMapPin } from "react-icons/lu";
 
 export const MeetupCard = (props: Readonly<{ activity: Meetup }>) => {
   const meetup = props.activity;
@@ -24,7 +24,7 @@ export const MeetupCard = (props: Readonly<{ activity: Meetup }>) => {
             )}
             {meetup.location && (
               <div className="flex items-center gap-2 text-sm text-neutral-400">
-                <MapPin className="h-5 w-5 flex-none" aria-hidden="true" />
+                <LuMapPin className="h-5 w-5 flex-none" aria-hidden="true" />
                 {meetup.location?.name}
               </div>
             )}
