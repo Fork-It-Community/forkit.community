@@ -1,5 +1,4 @@
 import type { Event } from "@/content/events/events";
-import type { Meetup } from "@/content/meetups/meetups";
 import { formatTime } from "@/lib/utils";
 import { MapPin } from "lucide-react";
 
