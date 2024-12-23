@@ -1,9 +1,6 @@
 ---
-import {
-  getEventsCollection,
-  getEventsSubpagesCollection,
-} from "@/lib/collections";
-import SubPagesLayout from "@/layouts/SubPagesLayout.astro";
+import { getEventsCollection, getEventsSubpagesCollection } from "@/lib/events";
+import RootLayout from "@/layouts/RootLayout.astro";
 import { SEO } from "astro-seo";
 
 export async function getStaticPaths() {
@@ -31,12 +28,9 @@ const { subpage } = Astro.props;
 const { Content } = await subpage?.render();
 ---
 
-<SubPagesLayout
-  title={subpage.data.title}
-  description?={subpage.data.description}
->
+<RootLayout title={subpage.data.title} description?={subpage.data.description}>
   <SEO slot="seo" />
 
   <h1>{subpage.data.title}</h1>
   <Content />
-</SubPagesLayout>
+</RootLayout>

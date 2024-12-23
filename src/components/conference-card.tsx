@@ -3,7 +3,6 @@ import type { Event } from "@/content/events/events";
 import type { Person } from "@/content/people/people";
 import { cn } from "@/lib/utils";
 import { LanguageBadge } from "@/components/language-badge";
-import { FavoriteButton } from "@/components/favorite-button";
 import type { CollectionEntry } from "astro:content";
 
 type ConferenceCardProps = {
@@ -60,12 +59,12 @@ export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
               <div className="flex self-end">
                 <LanguageBadge language={props.talk.data.language} />
               </div>
-              <FavoriteButton
+              {/* <FavoriteButton
                 talkSlug={props.talk.slug}
                 isIconButton
                 size="sm"
                 className="border-neutral-700"
-              />
+              /> */}
             </div>
           </div>
         </div>

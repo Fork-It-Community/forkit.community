@@ -1,6 +1,6 @@
 ---
-import EventLayout from "@/layouts/EventLayout.astro";
-import { getEventsCollection } from "@/lib/collections";
+import RootLayout from "@/layouts/RootLayout.astro";
+import { getEventsCollection } from "@/lib/events";
 import { getEntries } from "astro:content";
 import { SEO } from "astro-seo";
 
@@ -22,7 +22,7 @@ const { slug } = Astro.params;
 const { subPages, event } = Astro.props;
 ---
 
-<EventLayout event={event}>
+<RootLayout>
   <SEO slot="seo" />
   <h1>{event.data.name}</h1>
   <p>{slug}</p>
@@ -35,4 +35,4 @@ const { subPages, event } = Astro.props;
       ))
     }
   </ul>
-</EventLayout>
+</RootLayout>

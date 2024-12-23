@@ -1,31 +1,13 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-import { getEventsCollection } from "@/lib/collections";
-import Hero from "./(hompage)/hero.astro";
-import { isDateInThePast } from "@/lib/utils";
-import SubscribeForm from "./(hompage)/subscribeForm.astro";
+import RootLayout from "@/layouts/RootLayout.astro";
+import { getNextEvent } from "@/lib/events";
 
-const events = await getEventsCollection();
-const upcomingEvents = events
-  .filter((event) => !isDateInThePast(event.data.date))
-  .sort(
-    (event1, event2) =>
-      (event1.data.date?.valueOf() ?? 0) - (event2.data.date?.valueOf() ?? 0),
-  );
-
-const nextEvent = upcomingEvents.length > 0 ? upcomingEvents[0] : null;
+const nextEvent = await getNextEvent();
 ---
 
-<Layout>
-  <Hero event={nextEvent} />
-  <div class="container">
-    <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-      <div class="sm:col-span-2 md:col-span-2">
-        <h1 class="font-heading text-xl font-medium">Upcoming events</h1>
-      </div>
-      <div class="pt-4 sm:col-span-1 md:col-span-1">
-        <SubscribeForm />
-      </div>
-    </div>
+<RootLayout>
+  <div>
+    <h1>Upcoming events</h1>
+    {nextEvent?.data.title}
   </div>
-</Layout>
+</RootLayout>

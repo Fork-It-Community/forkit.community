@@ -11,24 +11,25 @@ interface Props {
 const { title, description } = Astro.props;
 ---
 
-<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, interactive-widget=resizes-content"
+    />
     <title>{title || "Fork it! Community"}</title>
     <meta
       name="description"
       content={description ||
         "Fork it! Community’s mission is to share computer science knowledge through worldwide events."}
     />
-    <link rel="icon" href="/favicon.png" sizes="32x32" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="canonical" href={Astro.url} />
     <meta name="generator" content={Astro.generator} />
     <slot name="seo" />
   </head>
-  <body class="mx-auto bg-black prose-headings:font-heading prose-h2:text-xl">
+  <body>
     <slot />
   </body>
 </html>

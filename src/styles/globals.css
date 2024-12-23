@@ -54,7 +54,7 @@
 }
 
 .logo-mask {
-  mask-image: url(/forkit-small.png);
+  mask-image: url("/forkit-small.png");
   mask-repeat: no-repeat;
   mask-size: contain;
   mask-position: center;

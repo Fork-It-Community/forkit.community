@@ -1,5 +1,5 @@
 ---
-import HTMLLayout from "@/layouts/HTMLLayout.astro";
+import RootLayout from "@/layouts/RootLayout.astro";
 // TODO: Placeholder paths; replace these with dynamic paths once we have content
 export async function getStaticPaths() {
   return [
@@ -11,6 +11,6 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 ---
 
-<HTMLLayout>
+<RootLayout>
   <h2>{slug}</h2>
-</HTMLLayout>
+</RootLayout>
