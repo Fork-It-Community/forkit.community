@@ -13,5 +13,5 @@ import { MdHomeFilled, MdEvent, MdFeed, MdPodcasts } from "react-icons/md";
   <MainNavMobileItem icon={MdPodcasts} href="/podcasts">
     Podcasts
   </MainNavMobileItem>
-  <MainNavMobileItemMore />
+  <MainNavMobileItemMore client:load currentPathname={Astro.url.pathname} />
 </div>
