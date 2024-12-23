@@ -1,5 +1,4 @@
-import { InputField } from "@/components/input";
-import "@/styles/globals.css";
+import { InputField } from "@/oldcomponents/Input";
 
 export default {
   component: InputField,

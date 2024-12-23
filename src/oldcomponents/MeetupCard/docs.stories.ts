@@ -1,5 +1,4 @@
-import { MeetupCard } from "@/components/activity Card";
-import "@/styles/globals.css";
+import { MeetupCard } from "@/oldcomponents/MeetupCard";
 
 export default {
   component: MeetupCard,

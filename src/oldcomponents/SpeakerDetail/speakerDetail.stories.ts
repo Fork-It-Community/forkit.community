@@ -1,5 +1,4 @@
 import { SpeakerDetail } from "@/components/speakerDetail";
-import "@/styles/globals.css";
 
 export default {
   component: SpeakerDetail,

@@ -3,10 +3,8 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "@/oldcomponents/ui/accordion";
 import type { CollectionEntry } from "astro:content";
-
-import "@/styles/globals.css";
 
 export const FAQ = (
   props: Readonly<{ faq: CollectionEntry<"events">["data"]["faq"] }>,

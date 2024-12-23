@@ -1,5 +1,4 @@
-import { MapLocation } from "@/components/map-location";
-import "@/styles/globals.css";
+import { MapLocation } from "@/oldcomponents/MapLocation";
 
 export default {
   component: MapLocation,

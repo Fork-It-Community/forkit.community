@@ -1,9 +1,9 @@
-import { ExploreTheCommunity } from "@/components/exploreTheCommunity";
-import "@/styles/globals.css";
+import { ExploreTheCommunity } from "@/oldcomponents/ExploreTheCommunity";
 
 export default {
   component: ExploreTheCommunity,
 };
+
 export const Default = {
   args: {
     title: "Home",

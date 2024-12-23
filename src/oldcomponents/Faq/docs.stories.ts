@@ -1,4 +1,4 @@
-import { FAQ } from "@/components/faq";
+import { FAQ } from "@/oldcomponents/Faq";
 
 export default {
   component: FAQ,

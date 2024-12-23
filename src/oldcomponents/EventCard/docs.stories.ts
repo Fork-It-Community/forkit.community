@@ -1,9 +1,9 @@
-import { MeetupCard } from "@/components/activity Card";
-import "@/styles/globals.css";
+import { EventCard } from "@/oldcomponents/EventCard";
 
 export default {
-  component: MeetupCard,
+  component: EventCard,
 };
+
 export const Default = {
   args: {
     activity: {
