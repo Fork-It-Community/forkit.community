@@ -11,7 +11,7 @@ export function getEventsCollection() {
 export function getEventSubPagesCollection(
   event: CollectionEntry<"events"> | null | undefined,
 ) {
-  if (!event) {
+  if (!event || event.data.type !== "event") {
     return [];
   }
 
