@@ -1,7 +1,7 @@
 ---
 import EventLayout from "@/layouts/EventLayout.astro";
 import { getEventsCollection, getEventSubPagesCollection } from "@/lib/events";
-import { Image } from "astro:assets";
+import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -23,12 +23,9 @@ const { event, subPages } = Astro.props;
 <EventLayout>
   {
     !!event?.data.image?.src && (
-      <Image
+      <ImageBackgroundHero
         src={event.data.image.src}
-        alt={event.data.image?.alt}
-        width={1000}
-        height={1000}
-        class="absolute inset-0 -z-10 my-0 h-full min-w-full object-cover object-center"
+        alt={event.data.image.alt}
       />
     )
   }

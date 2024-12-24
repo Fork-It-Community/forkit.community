@@ -1,0 +1,34 @@
+---
+import { cn } from "@/lib/utils";
+import { Image } from "astro:assets";
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  className?: string;
+}
+
+const { src, alt, className } = Astro.props;
+---
+
+<div
+  class={cn(
+    "pointer-events-none absolute left-0 right-0 top-0 -z-10 h-screen overflow-hidden",
+    className,
+  )}
+>
+  <Image
+    src={src}
+    alt={alt}
+    class="absolute size-full object-cover object-center"
+  />
+  <div class="absolute size-full bg-gradient-to-b from-black/50 to-black"></div>
+  <div
+    class="absolute h-full w-full"
+    style={{
+      backdropFilter: "blur(32px)",
+      maskImage: "linear-gradient(0deg, black 30%, transparent 70%)",
+    }}
+  >
+  </div>
+</div>

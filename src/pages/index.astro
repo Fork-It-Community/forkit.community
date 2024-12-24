@@ -1,6 +1,6 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
-import { Image } from "astro:assets";
+import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import { getNextEvent } from "@/lib/events";
 
 const nextEvent = await getNextEvent();
@@ -9,12 +9,10 @@ const nextEvent = await getNextEvent();
 <MainLayout>
   {
     !!nextEvent?.data.image?.src && (
-      <Image
+      <ImageBackgroundHero
         src={nextEvent.data.image.src}
-        alt={nextEvent.data.image?.alt}
-        width={1000}
-        height={1000}
-        class="absolute inset-0 -z-10 my-0 h-full min-w-full object-cover object-center"
+        alt={nextEvent.data.image.alt}
+        className="h-[50vh]"
       />
     )
   }
