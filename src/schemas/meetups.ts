@@ -20,15 +20,17 @@ export const zMeetup = ({ image }: SchemaContext) =>
     tickets: z
       .object({
         href: z.string().url(),
-        offers: z.array(
-          z.object({
-            name: z.string(),
-            price: z.number().positive(),
-            priceCurrency: z.string(),
-            availability: z.enum(["InStock", "SoldOut", "PreOrder"]),
-            validFrom: z.date(),
-          }),
-        ),
+        offers: z
+          .array(
+            z.object({
+              name: z.string(),
+              price: z.number().positive(),
+              priceCurrency: z.string(),
+              availability: z.enum(["InStock", "SoldOut", "PreOrder"]),
+              validFrom: z.date(),
+            }),
+          )
+          .optional(),
       })
       .optional(),
     published: z.boolean().optional(),
