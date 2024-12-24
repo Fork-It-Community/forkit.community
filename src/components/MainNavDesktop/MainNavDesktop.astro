@@ -1,7 +1,7 @@
 ---
+import { Logo } from "@/components/Logo/Logo";
 import MainNavDesktopItem from "./MainNavDesktopItem.astro";
 import MainNavDesktopItemMore from "./MainNavDesktopItemMore";
-import ForktItYellow from "/public/forkit-medium.svg";
 import { getMainMenuDesktopItems } from "@/content/menus";
 ---
 
@@ -12,7 +12,7 @@ import { getMainMenuDesktopItems } from "@/content/menus";
       class="bg-background-blur mx-auto flex w-full max-w-screen-lg flex-1 items-center justify-between rounded-md px-5"
     >
       <a href="/" class="py-2">
-        <img src={ForktItYellow.src} alt="" width={120} />
+        <Logo className="w-28" />
       </a>
       <div class="flex items-center gap-2">
         {

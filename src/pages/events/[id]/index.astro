@@ -1,7 +1,7 @@
 ---
-// import RootLayout from "@/layouts/RootLayout.astro";
+import EventLayout from "@/layouts/EventLayout.astro";
 import { getEventsCollection } from "@/lib/events";
-// import { SEO } from "astro-seo";
+import { Image } from "astro:assets";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -11,28 +11,25 @@ export async function getStaticPaths() {
       params: { id: event.id },
       props: {
         event,
-        // subPages: await getEventsSubpagesCollection(event.data.subPages),
       },
     })),
   );
 }
 
-// const { id } = Astro.params;
 const { event } = Astro.props;
 ---
 
-<!-- <RootLayout>
-  <SEO slot="seo" />
-  <h1>{event.data.name}</h1>
-  <p>{id}</p>
-  <ul>
-    {
-      subPages.map((subpage) => (
-        <li>
-          <a href={`/events/${subpage.id}`}>{subpage.id}</a>
-        </li>
-      ))
-    }
-  </ul>
-</RootLayout> -->
-<div>Event page {event.data.name}</div>
+<EventLayout>
+  {
+    !!event?.data.image?.src && (
+      <Image
+        src={event.data.image.src}
+        alt={event.data.image?.alt}
+        width={375}
+        height={610}
+        class="absolute inset-0 -z-10 my-0 h-full min-w-full object-cover object-center"
+      />
+    )
+  }
+  <div>Event page {event.data.name}</div>
+</EventLayout>

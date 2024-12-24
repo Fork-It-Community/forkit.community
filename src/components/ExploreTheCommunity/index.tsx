@@ -1,21 +1,20 @@
+import { LogoIcon } from "@/components/Logo/LogoIcon";
 import { Button } from "@/components/ui/button";
 import { LuArrowUpRight } from "react-icons/lu";
 
-export const ExploreTheCommunity = (
-  props: Readonly<{ title?: string; href?: string }>,
-) => {
+export const ExploreTheCommunity = () => {
   return (
-    <div className="flex min-h-10 flex-row items-center justify-between gap-1 rounded-lg bg-neutral-900 bg-opacity-40 p-2 pl-4">
-      <p className="text-xs font-medium">
-        {props?.title || "Fork it! Community"}
-      </p>
-      <Button asChild size="sm" className="max-h-6 px-2 text-xs">
-        <a href={props?.href || "/"}>
+    <div className="bg-background-blur mx-auto flex h-12 max-w-screen-lg justify-between rounded-md">
+      <a
+        href="/"
+        className="0 flex items-center justify-center px-5 text-sm tracking-wide"
+      >
+        <LogoIcon className="w-[18px] text-primary" />
+      </a>
+      <Button asChild size="xs" className="m-3">
+        <a href="/" className="flex gap-1">
           Explore the community
-          <LuArrowUpRight
-            className="ml-1 inline-block h-3.5 w-3.5"
-            aria-hidden="true"
-          />
+          <LuArrowUpRight className="text-lg" aria-hidden="true" />
         </a>
       </Button>
     </div>

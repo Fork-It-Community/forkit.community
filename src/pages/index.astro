@@ -24,15 +24,6 @@ console.log(subPages);
 
   <div class="flex-1">
     <h1>Upcoming events</h1>
-    {nextEvent?.data.title}
-    <!-- {
-      subPages.map((subpage) => (
-        <div>
-          <a href={`/events/${nextEvent?.id}/${subpage.id}`}>
-            {subpage.data.title}
-          </a>
-        </div>
-      ))
-    } -->
+    <a href={`/events/${nextEvent?.id}`}>{nextEvent?.data.title}</a>
   </div>
 </MainLayout>
