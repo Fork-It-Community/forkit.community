@@ -14,7 +14,7 @@ import { getMainMenuDesktopItems } from "@/content/menus";
       <a href="/" class="py-2">
         <Logo className="w-28" />
       </a>
-      <div class="flex items-center gap-2">
+      <nav class="flex items-center gap-2">
         {
           getMainMenuDesktopItems("primary").map((item) => (
             <MainNavDesktopItem
@@ -30,7 +30,7 @@ import { getMainMenuDesktopItems } from "@/content/menus";
           client:load
           currentPathname={Astro.url.pathname}
         />
-      </div>
+      </nav>
     </div>
   </div>
 </div>

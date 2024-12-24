@@ -23,8 +23,8 @@ const { event, subPages } = Astro.props;
 ---
 
 <EventLayout event={event}>
-  <div class="flex h-[80svh] flex-col items-center justify-center">
-    <div class="flex flex-col items-center justify-center gap-8 p-4">
+  <div class="flex h-[90svh] flex-col items-center justify-center">
+    <div class="flex flex-1 flex-col items-center justify-center gap-8 p-4">
       <Logo className="w-48" />
       <h1 class="flex flex-col gap-2 text-balance text-center font-heading">
         <span class="text-4xl font-medium md:text-6xl">
@@ -39,16 +39,44 @@ const { event, subPages } = Astro.props;
         <a href="#" class={buttonVariants({ variant: "ghost" })}> CFP </a>
       </div>
     </div>
+
+    <div class="flex flex-col items-center justify-center gap-2 p-6">
+      <h4 class="text-xs uppercase tracking-widest opacity-40">Quick Access</h4>
+      <nav class="flex gap-4">
+        <a
+          href="#venue"
+          class="underline decoration-foreground/40 underline-offset-4 opacity-60 hover:text-primary hover:decoration-current hover:opacity-100"
+          >Venue</a
+        >
+        <a
+          href="#schedule"
+          class="underline decoration-foreground/40 underline-offset-4 opacity-60 hover:text-primary hover:decoration-current hover:opacity-100"
+          >Schedule</a
+        >
+        <a
+          href="#schedule"
+          class="underline decoration-foreground/40 underline-offset-4 opacity-60 hover:text-primary hover:decoration-current hover:opacity-100"
+          >Speakers</a
+        >
+        <a
+          href="#sponsors"
+          class="underline decoration-foreground/40 underline-offset-4 opacity-60 hover:text-primary hover:decoration-current hover:opacity-100"
+          >Sponsors</a
+        >
+      </nav>
+    </div>
   </div>
 
-  <div>Event page {event.data.name}</div>
-  <ul>
-    {
-      subPages.map((subPage) => (
-        <li>
-          <a href={`/events/${subPage.id}`}>{subPage.data.title}</a>
-        </li>
-      ))
-    }
-  </ul>
+  <div class="mx-auto w-full max-w-screen-lg px-6 py-24">
+    <div>Event page {event.data.name}</div>
+    <ul>
+      {
+        subPages.map((subPage) => (
+          <li>
+            <a href={`/events/${subPage.id}`}>{subPage.data.title}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </EventLayout>

@@ -7,7 +7,7 @@ import { getMainMenuMobileItems } from "@/content/menus";
 <div class="md:hidden">
   <div class="h-16"></div>
   {/* bottom-[-2px] to fix little gap on some devices  */}
-  <div
+  <nav
     class="bg-background-blur fixed bottom-[-2px] left-0 right-0 z-20 flex h-16"
   >
     {
@@ -22,5 +22,5 @@ import { getMainMenuMobileItems } from "@/content/menus";
       ))
     }
     <MainNavMobileItemMore client:load currentPathname={Astro.url.pathname} />
-  </div>
+  </nav>
 </div>
