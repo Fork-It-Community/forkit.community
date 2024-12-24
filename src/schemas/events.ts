@@ -2,7 +2,6 @@ import { z, reference, type SchemaContext } from "astro:content";
 
 const zEventBase = ({ image }: SchemaContext) =>
   z.object({
-    type: z.enum(["event", "meetup"]).default("meetup"),
     city: z.string(),
     country: z.string(),
     date: z.date().optional(),
@@ -51,14 +50,14 @@ const zEventBase = ({ image }: SchemaContext) =>
     sponsors: z
       .array(
         z.object({
-          slug: z.string(), // <- the slug of the sponsor
+          slug: reference("sponsors"), // <- the slug of the sponsor
           level: z.string(), // <- the level of sponsoring
           options: z.array(z.enum(["lunch"])).optional(), // <- if the sponsor has an option
         }),
       )
       .optional(),
-    speakers: z.array(z.string()).optional(),
-    talks: z.array(z.string()).optional(),
+    speakers: z.array(reference("people")).optional(),
+    talks: z.array(reference("talks")).optional(),
     faq: z
       .array(z.object({ question: z.string(), answer: z.string() }))
       .optional(),
@@ -77,7 +76,7 @@ const zEventBase = ({ image }: SchemaContext) =>
     schedule: z.array(
       z.object({
         type: z.enum(["conference", "roundtable", "break", "lunch"]),
-        sponsorSlug: z.string().optional(),
+        sponsors: z.array(reference("sponsors")).optional(),
         description: z.string().optional(),
         name: z.string().optional(),
         slug: z.string().optional(),
