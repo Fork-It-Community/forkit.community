@@ -1,13 +1,19 @@
 import dayjs from "dayjs";
-import type { Event } from "@/schemas/events";
-import { getCollection, getEntries } from "astro:content";
+
+import { getCollection, getEntries, type CollectionEntry } from "astro:content";
 
 export function getEventsCollection() {
   return getCollection("events");
 }
 
-export function getEventsSubpagesCollection(event: Event) {
-  return getEntries(event.subPages);
+export function getEventSubPagesCollection(
+  event: CollectionEntry<"events"> | null | undefined,
+) {
+  if (!event) {
+    return [];
+  }
+
+  return getEntries(event.data.subPages);
 }
 
 export async function getNextEvent() {

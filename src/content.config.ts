@@ -7,6 +7,7 @@ import { zSponsor } from "@/schemas/sponsors";
 import { zPartner } from "@/schemas/partners";
 import { zMeetup } from "@/schemas/meetups";
 import { zTalk } from "@/schemas/talks";
+import { zEventsSubPages } from "@/schemas/eventsSubPages";
 
 export const collections = {
   partners: defineCollection({
@@ -18,8 +19,18 @@ export const collections = {
     schema: zSponsor(),
   }),
   events: defineCollection({
-    loader: glob({ pattern: "**/*.mdx", base: "./src/content/events" }),
+    loader: glob({
+      pattern: ["**/*.mdx", "!**/pages/*.mdx"],
+      base: "./src/content/events",
+    }),
     schema: zEvent(),
+  }),
+  eventsSubPages: defineCollection({
+    loader: glob({
+      pattern: "**/pages/*.mdx",
+      base: "./src/content/events",
+    }),
+    schema: zEventsSubPages(),
   }),
   meetups: defineCollection({
     loader: glob({ pattern: "**/*.mdx", base: "./src/content/meetups" }),

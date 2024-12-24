@@ -1,9 +1,12 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
 import { Image } from "astro:assets";
-import { getNextEvent } from "@/lib/events";
+import { getNextEvent, getEventSubPagesCollection } from "@/lib/events";
 
 const nextEvent = await getNextEvent();
+const subPages = await getEventSubPagesCollection(nextEvent);
+
+console.log(subPages);
 ---
 
 <MainLayout>
@@ -22,5 +25,14 @@ const nextEvent = await getNextEvent();
   <div class="flex-1">
     <h1>Upcoming events</h1>
     {nextEvent?.data.title}
+    <!-- {
+      subPages.map((subpage) => (
+        <div>
+          <a href={`/events/${nextEvent?.id}/${subpage.id}`}>
+            {subpage.data.title}
+          </a>
+        </div>
+      ))
+    } -->
   </div>
 </MainLayout>
