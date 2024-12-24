@@ -4,31 +4,24 @@ import {
   MdLocalActivity,
   MdMoreHoriz,
 } from "react-icons/md";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
 import type { FC, ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const MainNavMobileItemMore = (props: { currentPathname: string }) => {
   return (
-    <Drawer autoFocus>
-      <DrawerTrigger className="flex items-center justify-center gap-2 py-3 opacity-60">
+    <Popover>
+      <PopoverTrigger className="flex items-center justify-center gap-2 py-3 opacity-60">
         <span className="text-lg">
           <MdMoreHoriz />
         </span>
-        <span className="text-base tracking-wide">More</span>
-      </DrawerTrigger>
-      <DrawerContent className="pb-8">
-        <DrawerHeader>
-          <DrawerTitle className="sr-only">More</DrawerTitle>
-          <DrawerDescription className="sr-only"></DrawerDescription>
-        </DrawerHeader>
+        <span className="text-sm tracking-wide">More</span>
+      </PopoverTrigger>
+      <PopoverContent className="w-56 px-0 py-2" align="end" alignOffset={-8}>
         <MoreNavItem
           href="/speakers"
           currentPathname={props.currentPathname}
@@ -50,8 +43,8 @@ const MainNavMobileItemMore = (props: { currentPathname: string }) => {
         >
           Organize an event
         </MoreNavItem>
-      </DrawerContent>
-    </Drawer>
+      </PopoverContent>
+    </Popover>
   );
 };
 
@@ -70,15 +63,15 @@ const MoreNavItem = (props: {
     <a
       href={props.href}
       className={cn(
-        "flex items-center gap-3 px-8 py-3",
-        !isActive && "opacity-50",
+        "flex items-center gap-3 px-4 py-2",
+        !isActive && "opacity-50 transition hover:bg-black/60",
         isActive && "text-white",
       )}
     >
-      <span className="text-2xl">
+      <span className="text-xl">
         <Icon />
       </span>
-      <span>{props.children}</span>
+      <span className="text-sm tracking-wide">{props.children}</span>
     </a>
   );
 };

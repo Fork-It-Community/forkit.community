@@ -78,7 +78,7 @@ const MoreNavItem = (props: {
       <span className="text-2xl">
         <Icon />
       </span>
-      <span>{props.children}</span>
+      <span className="tracking-wide">{props.children}</span>
     </a>
   );
 };
