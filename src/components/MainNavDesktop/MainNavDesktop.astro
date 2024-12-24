@@ -7,15 +7,17 @@ import ForktItYellow from "/public/forkit-medium.svg";
 
 <div class="hidden md:block">
   <div class="h-16"></div>
-  <div class="fixed left-0 right-0 top-0 flex h-16 flex-col">
+  <div class="fixed left-0 right-0 top-0 z-20 flex h-16 flex-col p-2">
     <div
-      class="mx-auto flex w-full max-w-screen-xl flex-1 items-center justify-between px-8"
+      class="bg-background-blur mx-auto flex w-full max-w-screen-lg flex-1 items-center justify-between rounded-md px-5"
     >
-      <a href="/"> <img src={ForktItYellow.src} alt="" width={120} /></a>
-      <div class="flex gap-8">
-        <MainNavDesktopItem icon={MdEvent} href="/events"
-          >Events</MainNavDesktopItem
-        >
+      <a href="/" class="py-2">
+        <img src={ForktItYellow.src} alt="" width={120} />
+      </a>
+      <div class="flex items-center gap-2">
+        <MainNavDesktopItem icon={MdEvent} href="/events">
+          Events
+        </MainNavDesktopItem>
         <MainNavDesktopItem icon={MdFeed} href="/news">News</MainNavDesktopItem>
         <MainNavDesktopItem icon={MdPodcasts} href="/podcasts">
           Podcasts

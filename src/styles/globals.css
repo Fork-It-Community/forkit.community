@@ -36,6 +36,19 @@
   }
 }
 
+@layer utilities {
+  .forkit-image-mask {
+    mask-image: url("/forkit-small.png");
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    mask-position: center;
+  }
+
+  .bg-background-blur {
+    @apply bg-background/80 backdrop-blur-md;
+  }
+}
+
 /* Shadcn config */
 @layer base {
   * {
@@ -44,11 +57,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-.logo-mask {
-  mask-image: url("/forkit-small.png");
-  mask-repeat: no-repeat;
-  mask-size: contain;
-  mask-position: center;
 }

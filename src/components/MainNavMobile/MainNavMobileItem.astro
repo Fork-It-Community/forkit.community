@@ -17,9 +17,8 @@ const isActive = exact
 <a
   href={href}
   class={cn(
-    "flex flex-1 flex-col items-center justify-center py-3",
-    !isActive && "opacity-50",
-    isActive && "text-white",
+    "flex flex-1 flex-col items-center justify-center py-3 opacity-50",
+    isActive && "opacity-100",
   )}
 >
   <span class="text-2xl"><Icon /></span>

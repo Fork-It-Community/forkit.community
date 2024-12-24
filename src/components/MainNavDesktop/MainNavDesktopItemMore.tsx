@@ -15,13 +15,18 @@ import {
 const MainNavMobileItemMore = (props: { currentPathname: string }) => {
   return (
     <Popover>
-      <PopoverTrigger className="flex items-center justify-center gap-2 py-3 opacity-60">
+      <PopoverTrigger className="flex items-center justify-center gap-2 rounded p-2 opacity-50 transition hover:bg-black/30 hover:opacity-100">
         <span className="text-lg">
           <MdMoreHoriz />
         </span>
         <span className="text-sm tracking-wide">More</span>
       </PopoverTrigger>
-      <PopoverContent className="w-56 px-0 py-2" align="end" alignOffset={-8}>
+      <PopoverContent
+        className="w-56 px-2 py-2"
+        align="end"
+        alignOffset={-20}
+        sideOffset={8}
+      >
         <MoreNavItem
           href="/speakers"
           currentPathname={props.currentPathname}
@@ -63,9 +68,8 @@ const MoreNavItem = (props: {
     <a
       href={props.href}
       className={cn(
-        "flex items-center gap-3 px-4 py-2",
-        !isActive && "opacity-50 transition hover:bg-black/60",
-        isActive && "text-white",
+        "flex items-center gap-3 rounded px-3 py-2.5 text-white opacity-50 transition hover:bg-black/30 hover:opacity-100",
+        isActive && "opacity-100",
       )}
     >
       <span className="text-xl">

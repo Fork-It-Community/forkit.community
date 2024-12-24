@@ -1,12 +1,24 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
-
+import { Image } from "astro:assets";
 import { getNextEvent } from "@/lib/events";
 
 const nextEvent = await getNextEvent();
 ---
 
 <MainLayout>
+  {
+    !!nextEvent?.data.image?.src && (
+      <Image
+        src={nextEvent.data.image.src}
+        alt={nextEvent.data.image?.alt}
+        width={375}
+        height={610}
+        class="absolute inset-0 my-0 h-full min-w-full object-cover object-center"
+      />
+    )
+  }
+
   <div class="flex-1">
     <h1>Upcoming events</h1>
     {nextEvent?.data.title}
