@@ -1,6 +1,8 @@
 ---
+import { buttonVariants } from "@/components/ui/button";
 import MeetupLayout from "@/layouts/MeetupLayout.astro";
 import { getMeetupsCollection } from "@/lib/events";
+import { LuArrowLeft } from "react-icons/lu";
 
 export async function getStaticPaths() {
   const meetups = await getMeetupsCollection();
@@ -19,5 +21,17 @@ const { meetup } = Astro.props;
 ---
 
 <MeetupLayout meetup={meetup}>
-  <div>meetup page {meetup.data.name}</div>
+  <div class="mx-auto w-full max-w-screen-lg p-4 md:p-8">
+    <a
+      href={`/events`}
+      class={buttonVariants({ variant: "ghost", size: "xs" })}
+    >
+      <LuArrowLeft className="mr-2" /> Back
+    </a>
+    <div
+      class="prose prose-sm prose-invert md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
+    >
+      <h1>{meetup.data.name}</h1>
+    </div>
+  </div>
 </MeetupLayout>
