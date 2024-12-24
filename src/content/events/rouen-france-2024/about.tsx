@@ -1,4 +1,4 @@
-import type { Event } from "../events";
+import type { Event } from "../../../schemas/events";
 import { formatDateTime } from "@/lib/utils";
 import { LuCalendar, LuMapPin } from "react-icons/lu";
 import LeVillageByCA from "./le-village-by-ca.jpg";

@@ -1,4 +1,4 @@
-import type { Meetup } from "@/content/meetups/meetups";
+import type { Meetup } from "@/schemas/meetups";
 import { formatDateTime } from "@/lib/utils";
 import { LuCalendar, LuMapPin } from "react-icons/lu";
 import LocationImage from "/public/meetups/tunis-tunisia-09-2024.jpg";

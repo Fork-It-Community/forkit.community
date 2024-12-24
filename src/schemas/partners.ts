@@ -1,7 +1,7 @@
-import { z, defineCollection } from "astro:content";
+import { z } from "astro:content";
 
 export type Partner = z.infer<ReturnType<typeof zPartner>>;
-const zPartner = () =>
+export const zPartner = () =>
   z.object({
     name: z.string(),
     image: z.object({
@@ -10,8 +10,3 @@ const zPartner = () =>
     }),
     href: z.string().url().optional(),
   });
-
-export const partnersCollection = defineCollection({
-  type: "content",
-  schema: zPartner(),
-});

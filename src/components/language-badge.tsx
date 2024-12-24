@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import type { Talk } from "@/content/talks/talks";
+import type { Talk } from "@/schemas/talks";
 import { LuLanguages } from "react-icons/lu";
 
 export const LanguageBadge = (props?: Pick<Talk, "language">) => {

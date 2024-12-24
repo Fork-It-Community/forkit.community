@@ -1,7 +1,7 @@
-import { z, defineCollection, reference } from "astro:content";
+import { z, reference } from "astro:content";
 
-export type Blog = z.infer<ReturnType<typeof zBlog>>;
-const zBlog = () =>
+export type News = z.infer<ReturnType<typeof zNews>>;
+export const zNews = () =>
   z.object({
     title: z.string(),
     // Preview text
@@ -17,8 +17,3 @@ const zBlog = () =>
     tags: z.array(z.string()).optional(),
     state: z.enum(["draft", "published"]).default("draft"),
   });
-
-export const blogsCollection = defineCollection({
-  type: "content",
-  schema: zBlog(),
-});

@@ -1,14 +1,14 @@
 // import type { CollectionEntry } from "astro:content";
-import type { Event } from "@/content/events/events";
-import type { Person } from "@/content/people/people";
+import type { Event } from "@/schemas/events";
+
 import { cn } from "@/lib/utils";
 import { LanguageBadge } from "@/components/language-badge";
 import type { CollectionEntry } from "astro:content";
 
 type ConferenceCardProps = {
   schedule: Event["schedule"][number];
-  talk: CollectionEntry<"talks">;
-  people: Person[];
+  talk: CollectionEntry<"talk">;
+  people: Array<CollectionEntry<"people">["data"]>;
 };
 
 export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
@@ -60,7 +60,7 @@ export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
                 <LanguageBadge language={props.talk.data.language} />
               </div>
               {/* <FavoriteButton
-                talkSlug={props.talk.slug}
+                talkSlug={props.talk.id}
                 isIconButton
                 size="sm"
                 className="border-neutral-700"

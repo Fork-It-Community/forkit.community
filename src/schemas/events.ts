@@ -1,20 +1,28 @@
-import { z, defineCollection } from "astro:content";
+import { z, reference } from "astro:content";
 
-export type Meetup = z.infer<ReturnType<typeof zMeetup>>;
-const zMeetup = () =>
+export type Event = z.infer<ReturnType<typeof zEvent>>;
+export const zEvent = () =>
   z.object({
     title: z.string(),
     name: z.string(),
-    date: z.date(),
-    location: z.object({
-      name: z.string().optional(),
-      address: z.string(),
-    }),
+    date: z.date().optional(),
+    location: z
+      .object({
+        name: z.string().optional(),
+        address: z.string(),
+      })
+      .optional(),
     excerpt: z.string().optional(),
     image: z
       .object({
         src: z.string(),
         alt: z.string(),
+      })
+      .optional(),
+    cfp: z
+      .object({
+        href: z.string().url(),
+        endDate: z.date().optional(),
       })
       .optional(),
     tickets: z
@@ -31,8 +39,15 @@ const zMeetup = () =>
         ),
       })
       .optional(),
+    prospectus: z
+      .object({
+        href: z.string().url(),
+        endDate: z.date().optional(),
+        title: z.string().optional(),
+      })
+      .optional(),
     published: z.boolean().optional(),
-    sponsoringLevels: z.array(z.string()).optional(),
+    sponsoringLevels: z.array(z.string()),
     sponsors: z
       .array(
         z.object({
@@ -59,28 +74,31 @@ const zMeetup = () =>
       "OnlineEventAttendanceMode",
       "MixedEventAttendanceMode",
     ]),
-    schedule: z
-      .array(
-        z.object({
-          type: z.enum(["conference", "roundtable", "break", "lunch"]),
-          sponsorSlug: z.string().optional(),
-          description: z.string().optional(),
-          name: z.string().optional(),
-          slug: z.string().optional(),
-          startTime: z.date().optional(),
-          duration: z.number().optional(),
-          location: z.string().optional(),
-        }),
-      )
-      .optional(),
+    schedule: z.array(
+      z.object({
+        type: z.enum(["conference", "roundtable", "break", "lunch"]),
+        sponsorSlug: z.string().optional(),
+        description: z.string().optional(),
+        name: z.string().optional(),
+        slug: z.string().optional(),
+        startTime: z.date().optional(),
+        duration: z.number().optional(),
+        location: z.string(),
+      }),
+    ),
     feedback: z
       .object({
         link: z.string().url(),
       })
       .optional(),
+    content: z
+      .object({
+        afterMovie: z
+          .object({
+            href: z.string().url(),
+          })
+          .optional(),
+      })
+      .optional(),
+    subPages: z.array(reference("eventsSubPages")),
   });
-
-export const meetupsCollection = defineCollection({
-  type: "content",
-  schema: zMeetup(),
-});

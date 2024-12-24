@@ -1,0 +1,38 @@
+---
+// import RootLayout from "@/layouts/RootLayout.astro";
+import { getEventsCollection } from "@/lib/events";
+// import { SEO } from "astro-seo";
+
+export async function getStaticPaths() {
+  const events = await getEventsCollection();
+
+  return Promise.all(
+    events.map(async (event) => ({
+      params: { id: event.id },
+      props: {
+        event,
+        // subPages: await getEventsSubpagesCollection(event.data.subPages),
+      },
+    })),
+  );
+}
+
+// const { id } = Astro.params;
+const { event } = Astro.props;
+---
+
+<!-- <RootLayout>
+  <SEO slot="seo" />
+  <h1>{event.data.name}</h1>
+  <p>{id}</p>
+  <ul>
+    {
+      subPages.map((subpage) => (
+        <li>
+          <a href={`/events/${subpage.id}`}>{subpage.id}</a>
+        </li>
+      ))
+    }
+  </ul>
+</RootLayout> -->
+<div>Event page {event.data.name}</div>

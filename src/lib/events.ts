@@ -1,6 +1,6 @@
-import type { Event } from "@/content/events/events";
-import { getCollection, getEntries } from "astro:content";
 import dayjs from "dayjs";
+import type { Event } from "@/schemas/events";
+import { getCollection, getEntries } from "astro:content";
 
 export function getEventsCollection() {
   return getCollection("events");

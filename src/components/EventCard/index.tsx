@@ -1,4 +1,4 @@
-import type { Event } from "@/content/events/events";
+import type { Event } from "@/schemas/events";
 import { formatTime } from "@/lib/utils";
 import { LuMapPin } from "react-icons/lu";
 

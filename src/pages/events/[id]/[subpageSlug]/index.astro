@@ -1,0 +1,38 @@
+---
+// import RootLayout from "@/layouts/RootLayout.astro";
+// import { getEventsCollection, getEventsSubpagesCollection } from "@/lib/events";
+// import { SEO } from "astro-seo";
+// import { render } from "astro:content";
+
+// export async function getStaticPaths() {
+//   const events = await getEventsCollection();
+
+//   const subPages = (
+//     await Promise.all(
+//       events.map(
+//         async (event) => await getEventsSubpagesCollection(event.data),
+//       ),
+//     )
+//   )
+//     .flat()
+//     .map((subpage) => ({ slugs: subpage.id.split("/"), subpage }));
+
+//   return subPages.map(({ slugs: [id, subpageSlug], subpage }) => ({
+//     params: { id, subpageSlug },
+//     props: {
+//       subpage,
+//     },
+//   }));
+// }
+
+// const { subpage } = Astro.props;
+// const { Content } = await render(subpage);
+---
+
+<!-- <RootLayout title={subpage.data.title} description?={subpage.data.description}>
+  <SEO slot="seo" />
+
+  <h1>{subpage.data.title}</h1>
+  <Content />
+</RootLayout> -->
+<div>Subpage</div>

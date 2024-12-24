@@ -69,7 +69,7 @@ const Speakers = (
   return (
     <div className={cn("grid grid-cols-2 gap-4 lg:gap-8", props.className)}>
       {props.speakers.map((speaker) => (
-        <SpeakerDetail speaker={speaker.data} key={speaker.slug} />
+        <SpeakerDetail speaker={speaker.data} key={speaker.id} />
       ))}
     </div>
   );
@@ -89,7 +89,7 @@ const SpeakerCarousel = (
       )}
     >
       {props.speakers.map((speaker) => (
-        <div className="group col-span-1" key={speaker.slug}>
+        <div className="group col-span-1" key={speaker.id}>
           <SpeakerDetail speaker={speaker.data} />
         </div>
       ))}

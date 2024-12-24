@@ -1,7 +1,7 @@
-import { z, defineCollection } from "astro:content";
+import { z } from "astro:content";
 
 export type Talk = z.infer<ReturnType<typeof zTalk>>;
-const zTalk = () =>
+export const zTalk = () =>
   z.object({
     title: z.string(),
     speakers: z.string().array(),
@@ -13,8 +13,3 @@ const zTalk = () =>
       .optional(),
     hosts: z.string().array().optional(),
   });
-
-export const talksCollection = defineCollection({
-  type: "content",
-  schema: zTalk(),
-});

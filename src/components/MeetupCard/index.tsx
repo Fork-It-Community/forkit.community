@@ -1,4 +1,4 @@
-import type { Meetup } from "@/content/meetups/meetups";
+import type { Meetup } from "@/schemas/meetups";
 import { formatTime } from "@/lib/utils";
 import { LuMapPin } from "react-icons/lu";
 

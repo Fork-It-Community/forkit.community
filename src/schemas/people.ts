@@ -1,8 +1,8 @@
-import { z, defineCollection } from "astro:content";
-import { zSocialTypes } from "../utils";
+import { zSocialTypes } from "@/schemas/utils";
+import { z } from "astro:content";
 
 export type Person = z.infer<ReturnType<typeof zPerson>>;
-const zPerson = () =>
+export const zPerson = () =>
   z.object({
     name: z.string(),
     avatar: z.string().optional(),
@@ -22,8 +22,3 @@ const zPerson = () =>
       })
       .optional(),
   });
-
-export const peopleCollection = defineCollection({
-  type: "content",
-  schema: zPerson(),
-});

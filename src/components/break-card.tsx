@@ -1,10 +1,11 @@
-import type { Event } from "@/content/events/events";
-import type { Sponsor } from "@/content/sponsors/sponsors";
+import type { Event } from "@/schemas/events";
+
 import { cn } from "@/lib/utils";
+import type { CollectionEntry } from "astro:content";
 
 type BreakCardProps = {
   schedule: Event["schedule"][number];
-  sponsor?: Sponsor;
+  sponsor?: CollectionEntry<"sponsors">["data"];
 };
 
 export const BreakCard = (props: Readonly<BreakCardProps>) => {

@@ -1,7 +1,8 @@
-import { z, defineCollection } from "astro:content";
-import { zSocialTypes } from "@/content/utils";
+import { zSocialTypes } from "@/schemas/utils";
+import { z } from "astro:content";
+
 export type Sponsor = z.infer<ReturnType<typeof zSponsor>>;
-const zSponsor = () =>
+export const zSponsor = () =>
   z.object({
     name: z.string(),
     image: z.object({
@@ -18,8 +19,3 @@ const zSponsor = () =>
       )
       .optional(),
   });
-
-export const sponsorsCollection = defineCollection({
-  type: "content",
-  schema: zSponsor(),
-});
