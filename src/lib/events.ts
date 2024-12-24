@@ -16,7 +16,7 @@ export function getEventSubPagesCollection(
   return getEntries(event.data.subPages);
 }
 
-export async function getNextEvent() {
+export async function getUpcomingEvents() {
   const events = await getEventsCollection();
   const upcomingEvents = events
     .filter((event) => dayjs().isBefore(event.data.date))
@@ -24,6 +24,13 @@ export async function getNextEvent() {
       (event1, event2) =>
         (event1.data.date?.valueOf() ?? 0) - (event2.data.date?.valueOf() ?? 0),
     );
+
+  return upcomingEvents ?? [];
+}
+
+export async function getNextEvent() {
+  const upcomingEvents = await getUpcomingEvents();
+
   const nextEvent = upcomingEvents.length > 0 ? upcomingEvents[0] : null;
   return nextEvent;
 }

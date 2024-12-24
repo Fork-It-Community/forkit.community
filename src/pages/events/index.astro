@@ -1,0 +1,21 @@
+---
+import RootLayout from "@/layouts/RootLayout.astro";
+import { getUpcomingEvents } from "@/lib/events";
+
+const upcoming = await getUpcomingEvents();
+---
+
+<RootLayout>
+  <h1>Upcoming Events</h1>
+  <ul>
+    {
+      upcoming.map((event) => (
+        <li>
+          <h2>{event.data.name}</h2>
+          <p>{event.data.date}</p>
+          <p>{event.data.location?.name}</p>
+        </li>
+      ))
+    }
+  </ul>
+</RootLayout>
