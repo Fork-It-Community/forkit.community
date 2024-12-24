@@ -7,25 +7,24 @@ import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 interface Props {
   title?: string;
   description?: string;
-  event: CollectionEntry<"events">;
+  meetup: CollectionEntry<"meetups">;
 }
 
-const { title, description, event } = Astro.props;
+const { title, description, meetup } = Astro.props;
 ---
 
 <RootLayout title?={title} description?={description}>
   <slot name="seo" slot="seo" />
   {
-    !!event.data.image?.src && (
+    !!meetup?.data.image?.src && (
       <ImageBackgroundHero
-        src={event.data.image.src}
-        alt={event.data.image.alt}
-        blur
+        src={meetup.data.image.src}
+        alt={meetup.data.image.alt}
       />
     )
   }
   <div class="p-2">
-    <ExploreTheCommunity event={event} logoUrl={`/events/${event.id}`} />
+    <ExploreTheCommunity logoUrl="/" />
   </div>
   <slot />
 </RootLayout>

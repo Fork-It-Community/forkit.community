@@ -9,27 +9,27 @@ const upcomingMeetups = await getUpcomingMeetups();
 
 <MainLayout>
   <h1>Upcoming Events</h1>
-  <ul>
+  <div>
     {
       upcoming.map((event) => (
-        <li>
+        <a href={`/events/${event.id}`}>
           <h2>{event.data.name}</h2>
           <p>{event.data.date}</p>
           <p>{event.data.location?.name}</p>
-        </li>
+        </a>
       ))
     }
-  </ul>
+  </div>
   <h1>Upcoming Meetups</h1>
-  <ul>
+  <div>
     {
       upcomingMeetups.map((meetup) => (
-        <li>
+        <a href={`/meetups/${meetup.id}`}>
           <h2>{meetup.data.name}</h2>
           <p>{meetup.data.date}</p>
           <p>{meetup.data.location?.name}</p>
-        </li>
+        </a>
       ))
     }
-  </ul>
+  </div>
 </MainLayout>

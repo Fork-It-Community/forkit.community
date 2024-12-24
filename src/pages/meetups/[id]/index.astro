@@ -1,0 +1,23 @@
+---
+import MeetupLayout from "@/layouts/MeetupLayout.astro";
+import { getMeetupsCollection } from "@/lib/events";
+
+export async function getStaticPaths() {
+  const meetups = await getMeetupsCollection();
+
+  return Promise.all(
+    meetups.map(async (meetup) => ({
+      params: { id: meetup.id },
+      props: {
+        meetup,
+      },
+    })),
+  );
+}
+
+const { meetup } = Astro.props;
+---
+
+<MeetupLayout meetup={meetup}>
+  <div>meetup page {meetup.data.name}</div>
+</MeetupLayout>
