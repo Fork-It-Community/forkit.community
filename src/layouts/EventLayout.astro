@@ -3,6 +3,7 @@ import { ExploreTheCommunity } from "@/components/ExploreTheCommunity";
 import RootLayout from "@/layouts/RootLayout.astro";
 import type { CollectionEntry } from "astro:content";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
+import { EventNav } from "@/components/EventNav";
 
 interface Props {
   title?: string;
@@ -26,5 +27,6 @@ const { title, description, event } = Astro.props;
   <div class="p-2">
     <ExploreTheCommunity event={event} logoUrl={`/events/${event.id}`} />
   </div>
+  <EventNav event={event} client:load />
   <slot />
 </RootLayout>
