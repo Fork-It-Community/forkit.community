@@ -7,7 +7,7 @@ import type { CollectionEntry } from "astro:content";
 
 type ConferenceCardProps = {
   schedule: Event["schedule"][number];
-  talk: CollectionEntry<"talk">;
+  talk: CollectionEntry<"talks">;
   people: Array<CollectionEntry<"people">["data"]>;
 };
 
