@@ -3,7 +3,9 @@ import dayjs from "dayjs";
 import { getCollection, getEntries, type CollectionEntry } from "astro:content";
 
 export function getEventsCollection() {
-  return getCollection("events");
+  return getCollection("events", ({ data }) =>
+    import.meta.env.PROD ? data.published === true : true,
+  );
 }
 
 export function getEventSubPagesCollection(
@@ -33,4 +35,23 @@ export async function getNextEvent() {
 
   const nextEvent = upcomingEvents.length > 0 ? upcomingEvents[0] : null;
   return nextEvent;
+}
+
+export async function getMeetupsCollection() {
+  return getCollection("meetups", ({ data }) =>
+    import.meta.env.PROD ? data.published === true : true,
+  );
+}
+
+export async function getUpcomingMeetups() {
+  const meetups = getMeetupsCollection();
+
+  const upcomingMeetups = (await meetups)
+    .filter((meetup) => dayjs().isBefore(meetup.data.date))
+    .sort(
+      (event1, event2) =>
+        (event1.data.date?.valueOf() ?? 0) - (event2.data.date?.valueOf() ?? 0),
+    );
+
+  return upcomingMeetups ?? [];
 }

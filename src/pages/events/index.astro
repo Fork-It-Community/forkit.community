@@ -1,11 +1,13 @@
 ---
-import RootLayout from "@/layouts/RootLayout.astro";
-import { getUpcomingEvents } from "@/lib/events";
+import MainLayout from "@/layouts/MainLayout.astro";
+
+import { getUpcomingEvents, getUpcomingMeetups } from "@/lib/events";
 
 const upcoming = await getUpcomingEvents();
+const upcomingMeetups = await getUpcomingMeetups();
 ---
 
-<RootLayout>
+<MainLayout>
   <h1>Upcoming Events</h1>
   <ul>
     {
@@ -18,4 +20,16 @@ const upcoming = await getUpcomingEvents();
       ))
     }
   </ul>
-</RootLayout>
+  <h1>Upcoming Meetups</h1>
+  <ul>
+    {
+      upcomingMeetups.map((meetup) => (
+        <li>
+          <h2>{meetup.data.name}</h2>
+          <p>{meetup.data.date}</p>
+          <p>{meetup.data.location?.name}</p>
+        </li>
+      ))
+    }
+  </ul>
+</MainLayout>

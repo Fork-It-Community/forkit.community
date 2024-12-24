@@ -1,7 +1,7 @@
-import { z } from "astro:content";
+import { z, type SchemaContext } from "astro:content";
 
 export type Meetup = z.infer<ReturnType<typeof zMeetup>>;
-export const zMeetup = () =>
+export const zMeetup = ({ image }: SchemaContext) =>
   z.object({
     title: z.string(),
     name: z.string(),
@@ -13,7 +13,7 @@ export const zMeetup = () =>
     excerpt: z.string().optional(),
     image: z
       .object({
-        src: z.string(),
+        src: image(),
         alt: z.string(),
       })
       .optional(),

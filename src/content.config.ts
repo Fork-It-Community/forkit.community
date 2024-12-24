@@ -35,7 +35,7 @@ export const collections = {
   }),
   meetups: defineCollection({
     loader: glob({ pattern: "**/*.mdx", base: "./src/content/meetups" }),
-    schema: zMeetup(),
+    schema: ({ image }) => zMeetup({ image }),
   }),
   talks: defineCollection({
     loader: glob({ pattern: "**/*.mdx", base: "./src/content/talks" }),
