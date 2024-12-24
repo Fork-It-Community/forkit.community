@@ -4,6 +4,7 @@ export type Event = z.infer<ReturnType<typeof zEvent>>;
 export const zEvent = ({ image }: SchemaContext) =>
   z
     .object({
+      type: z.enum(["event", "meetup"]).default("meetup"),
       city: z.string(),
       country: z.string(),
       date: z.date().optional(),
@@ -47,7 +48,7 @@ export const zEvent = ({ image }: SchemaContext) =>
           title: z.string().optional(),
         })
         .optional(),
-      published: z.boolean().optional(),
+      published: z.boolean().optional().default(false),
       sponsoringLevels: z.array(z.string()),
       sponsors: z
         .array(
@@ -84,7 +85,7 @@ export const zEvent = ({ image }: SchemaContext) =>
           slug: z.string().optional(),
           startTime: z.date().optional(),
           duration: z.number().optional(),
-          location: z.string(),
+          location: z.string().optional(),
         }),
       ),
       feedback: z
@@ -101,7 +102,7 @@ export const zEvent = ({ image }: SchemaContext) =>
             .optional(),
         })
         .optional(),
-      subPages: z.array(reference("eventsSubPages")),
+      subPages: z.array(reference("eventsSubPages")).optional(),
     })
     .transform((event) => ({
       ...event,

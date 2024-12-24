@@ -1,10 +1,8 @@
-import type { Meetup } from "@/schemas/meetups";
 import { formatTime } from "@/lib/utils";
+import type { Event } from "@/schemas/events";
 import { LuMapPin } from "react-icons/lu";
 
-export const MeetupCard = (props: Readonly<{ activity: Meetup }>) => {
-  const meetup = props.activity;
-
+export const MeetupCard = (props: Readonly<{ event: Event }>) => {
   return (
     <article
       className="relative flex flex-col rounded-lg border border-neutral-700 bg-neutral-900 p-4 md:p-6"
@@ -15,22 +13,22 @@ export const MeetupCard = (props: Readonly<{ activity: Meetup }>) => {
       <div className="relative z-10 flex flex-col justify-between gap-6 sm:flex-row">
         <div className="flex flex-col gap-2">
           <div className="flex flex-row gap-4">
-            {meetup.date && (
+            {props.event.date && (
               <div className="flex items-center gap-2 text-sm text-neutral-400">
-                <time dateTime={meetup.date.toISOString()}>
-                  {formatTime(meetup.date)}
+                <time dateTime={props.event.date.toISOString()}>
+                  {formatTime(props.event.date)}
                 </time>
               </div>
             )}
-            {meetup.location && (
+            {props.event.location && (
               <div className="flex items-center gap-2 text-sm text-neutral-400">
                 <LuMapPin className="h-5 w-5 flex-none" aria-hidden="true" />
-                {meetup.location?.name}
+                {props.event.location?.name}
               </div>
             )}
           </div>
           <p className="flex flex-col font-heading text-base font-medium text-secondary">
-            {meetup.title}
+            {props.event.name}
           </p>
         </div>
       </div>

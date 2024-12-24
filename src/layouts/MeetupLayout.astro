@@ -7,7 +7,7 @@ import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 interface Props {
   title?: string;
   description?: string;
-  meetup: CollectionEntry<"meetups">;
+  meetup: CollectionEntry<"events">;
 }
 
 const { title, description, meetup } = Astro.props;

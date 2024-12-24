@@ -5,7 +5,6 @@ import { zNews } from "@/schemas/news";
 import { zPerson } from "@/schemas/people";
 import { zSponsor } from "@/schemas/sponsors";
 import { zPartner } from "@/schemas/partners";
-import { zMeetup } from "@/schemas/meetups";
 import { zTalk } from "@/schemas/talks";
 import { zEventSubPage } from "@/schemas/eventsSubPages";
 import { zPodcast } from "@/schemas/podcasts";
@@ -32,10 +31,6 @@ export const collections = {
       base: "./src/content/events",
     }),
     schema: zEventSubPage(),
-  }),
-  meetups: defineCollection({
-    loader: glob({ pattern: "**/*.mdx", base: "./src/content/meetups" }),
-    schema: ({ image }) => zMeetup({ image }),
   }),
   talks: defineCollection({
     loader: glob({ pattern: "**/*.mdx", base: "./src/content/talks" }),

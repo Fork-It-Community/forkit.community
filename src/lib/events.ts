@@ -15,7 +15,7 @@ export function getEventSubPagesCollection(
     return [];
   }
 
-  return getEntries(event.data.subPages);
+  return getEntries(event.data.subPages ?? []);
 }
 
 export async function getUpcomingEvents() {
@@ -38,20 +38,9 @@ export async function getNextEvent() {
 }
 
 export async function getMeetupsCollection() {
-  return getCollection("meetups", ({ data }) =>
-    import.meta.env.PROD ? data.published === true : true,
-  );
-}
+  return getCollection("events", ({ data }) => {
+    const isPublished = import.meta.env.PROD ? data.published === true : true;
 
-export async function getUpcomingMeetups() {
-  const meetups = getMeetupsCollection();
-
-  const upcomingMeetups = (await meetups)
-    .filter((meetup) => dayjs().isBefore(meetup.data.date))
-    .sort(
-      (event1, event2) =>
-        (event1.data.date?.valueOf() ?? 0) - (event2.data.date?.valueOf() ?? 0),
-    );
-
-  return upcomingMeetups ?? [];
+    return isPublished && data.type === "meetup";
+  });
 }

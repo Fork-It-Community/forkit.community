@@ -1,6 +1,7 @@
 ---
-title: Fork it! Meetup Tunis 2024
-name: Meetup Tunis, Tunisia
+type: "meetup"
+city: Tunis
+country: Tunisia
 date: 2025-09-24
 location:
   name: COMWORK
@@ -12,7 +13,7 @@ excerpt:
         Tunisia to host its first conference day in Africa. Follow us
         and sign up for the meetup to be part of this unique experience!
 image:
-  src: "./cover.jpg"
+  src: "./cover.png"
   alt: "Habib Bourguiba Avenue, Tunis, Tunisia"
 published: true
 sponsoringLevels:
@@ -51,3 +52,8 @@ status: EventScheduled
 attendanceMode: OfflineEventAttendanceMode
 postMeetupPhotosUrl: https://photos.app.goo.gl/bpwJ45YH3QKrt5hj6
 ---
+
+import { About } from "./2024-09-24-tunis/about";
+
+<About meetup={frontmatter} />
+

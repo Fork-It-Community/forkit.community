@@ -1,10 +1,9 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
 
-import { getUpcomingEvents, getUpcomingMeetups } from "@/lib/events";
+import { getUpcomingEvents } from "@/lib/events";
 
 const upcoming = await getUpcomingEvents();
-const upcomingMeetups = await getUpcomingMeetups();
 ---
 
 <MainLayout>
@@ -16,18 +15,6 @@ const upcomingMeetups = await getUpcomingMeetups();
           <h2>{event.data.name}</h2>
           <p>{event.data.date}</p>
           <p>{event.data.location?.name}</p>
-        </a>
-      ))
-    }
-  </div>
-  <h1>Upcoming Meetups</h1>
-  <div>
-    {
-      upcomingMeetups.map((meetup) => (
-        <a href={`/meetups/${meetup.id}`}>
-          <h2>{meetup.data.name}</h2>
-          <p>{meetup.data.date}</p>
-          <p>{meetup.data.location?.name}</p>
         </a>
       ))
     }
