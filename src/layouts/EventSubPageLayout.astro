@@ -1,7 +1,10 @@
 ---
 import { ExploreTheCommunity } from "@/components/ExploreTheCommunity";
+import { buttonVariants } from "@/components/ui/button";
 import RootLayout from "@/layouts/RootLayout.astro";
 import type { CollectionEntry } from "astro:content";
+import { LuArrowLeft } from "react-icons/lu";
+import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 
 interface Props {
   title?: string;
@@ -14,8 +17,25 @@ const { title, description, event } = Astro.props;
 
 <RootLayout title?={title} description?={description}>
   <slot name="seo" slot="seo" />
+  {
+    !!event.data.image?.src && (
+      <ImageBackgroundHero
+        src={event.data.image.src}
+        alt={event.data.image.alt}
+        blur
+      />
+    )
+  }
   <div class="p-2">
     <ExploreTheCommunity event={event} logoUrl={`/events/${event.id}`} />
+  </div>
+  <div class="mx-auto w-full max-w-screen-sm px-6 pt-6 sm:px-14 md:px-4">
+    <a
+      href={`/events/${event.id}`}
+      class={buttonVariants({ variant: "ghost", size: "xs" })}
+    >
+      <LuArrowLeft className="mr-2" /> Back
+    </a>
   </div>
   <slot />
 </RootLayout>

@@ -2,7 +2,6 @@
 import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
 import { getEventsCollection, getEventSubPagesCollection } from "@/lib/events";
 import { render } from "astro:content";
-import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -41,17 +40,8 @@ const { Content } = await render(subpage);
   description?={subpage.data.description}
   event={event}
 >
-  {
-    !!event.data.image?.src && (
-      <ImageBackgroundHero
-        src={event.data.image.src}
-        alt={event.data.image.alt}
-        className="blur-md -top-10 -left-10 -right-10"
-      />
-    )
-  }
   <div
-    class="prose prose-sm prose-invert mx-auto p-6 md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-headings:text-primary prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
+    class="prose prose-sm prose-invert mx-auto px-6 md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-headings:text-primary prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
   >
     <Content />
   </div>

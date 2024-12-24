@@ -6,9 +6,10 @@ interface Props {
   src: ImageMetadata;
   alt: string;
   className?: string;
+  blur?: boolean;
 }
 
-const { src, alt, className } = Astro.props;
+const { src, alt, className, blur } = Astro.props;
 ---
 
 <div
@@ -17,18 +18,21 @@ const { src, alt, className } = Astro.props;
     className,
   )}
 >
-  <Image
-    src={src}
-    alt={alt}
-    class="absolute size-full object-cover object-center"
-  />
-  <div class="absolute size-full bg-gradient-to-b from-black/40 to-black"></div>
-  <div
-    class="absolute h-full w-full"
-    style={{
-      backdropFilter: "blur(32px)",
-      maskImage: "linear-gradient(0deg, black 30%, transparent 70%)",
-    }}
-  >
+  <div class={cn(blur && "blur-md absolute size-full scale-125")}>
+    <Image
+      src={src}
+      alt={alt}
+      class="absolute size-full object-cover object-center"
+    />
+    <div class="absolute size-full bg-gradient-to-b from-black/40 to-black">
+    </div>
+    <div
+      class="absolute h-full w-full"
+      style={{
+        backdropFilter: "blur(32px)",
+        maskImage: "linear-gradient(0deg, black 30%, transparent 70%)",
+      }}
+    >
+    </div>
   </div>
 </div>
