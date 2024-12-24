@@ -23,7 +23,7 @@ export const collections = {
       pattern: ["**/*.mdx", "!**/pages/*.mdx"],
       base: "./src/content/events",
     }),
-    schema: zEvent(),
+    schema: ({ image }) => zEvent({ image }),
   }),
   eventsSubPages: defineCollection({
     loader: glob({

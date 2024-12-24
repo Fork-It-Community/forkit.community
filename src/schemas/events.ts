@@ -1,7 +1,7 @@
-import { z, reference } from "astro:content";
+import { z, reference, type SchemaContext } from "astro:content";
 
 export type Event = z.infer<ReturnType<typeof zEvent>>;
-export const zEvent = () =>
+export const zEvent = ({ image }: SchemaContext) =>
   z.object({
     title: z.string(),
     name: z.string(),
@@ -15,7 +15,7 @@ export const zEvent = () =>
     excerpt: z.string().optional(),
     image: z
       .object({
-        src: z.string(),
+        src: image(),
         alt: z.string(),
       })
       .optional(),
