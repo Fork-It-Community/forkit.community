@@ -1,6 +1,6 @@
 ---
 import EventLayout from "@/layouts/EventLayout.astro";
-import { getEventsCollection } from "@/lib/events";
+import { getEventsCollection, getEventSubPagesCollection } from "@/lib/events";
 import { Image } from "astro:assets";
 
 export async function getStaticPaths() {
@@ -11,12 +11,13 @@ export async function getStaticPaths() {
       params: { id: event.id },
       props: {
         event,
+        subPages: await getEventSubPagesCollection(event),
       },
     })),
   );
 }
 
-const { event } = Astro.props;
+const { event, subPages } = Astro.props;
 ---
 
 <EventLayout>
@@ -32,4 +33,13 @@ const { event } = Astro.props;
     )
   }
   <div>Event page {event.data.name}</div>
+  <ul>
+    {
+      subPages.map((subPage) => (
+        <li>
+          <a href={`/events/${subPage.id}`}>{subPage.data.title}</a>
+        </li>
+      ))
+    }
+  </ul>
 </EventLayout>

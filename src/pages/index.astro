@@ -1,12 +1,9 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
 import { Image } from "astro:assets";
-import { getNextEvent, getEventSubPagesCollection } from "@/lib/events";
+import { getNextEvent } from "@/lib/events";
 
 const nextEvent = await getNextEvent();
-const subPages = await getEventSubPagesCollection(nextEvent);
-
-console.log(subPages);
 ---
 
 <MainLayout>
