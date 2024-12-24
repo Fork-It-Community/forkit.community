@@ -1,8 +1,8 @@
 ---
 import MainNavDesktopItem from "./MainNavDesktopItem.astro";
 import MainNavDesktopItemMore from "./MainNavDesktopItemMore";
-import { MdEvent, MdFeed, MdPodcasts } from "react-icons/md";
 import ForktItYellow from "/public/forkit-medium.svg";
+import { getMainMenuDesktopItems } from "@/content/menus";
 ---
 
 <div class="hidden md:block">
@@ -15,13 +15,17 @@ import ForktItYellow from "/public/forkit-medium.svg";
         <img src={ForktItYellow.src} alt="" width={120} />
       </a>
       <div class="flex items-center gap-2">
-        <MainNavDesktopItem icon={MdEvent} href="/events">
-          Events
-        </MainNavDesktopItem>
-        <MainNavDesktopItem icon={MdFeed} href="/news">News</MainNavDesktopItem>
-        <MainNavDesktopItem icon={MdPodcasts} href="/podcasts">
-          Podcasts
-        </MainNavDesktopItem>
+        {
+          getMainMenuDesktopItems("primary").map((item) => (
+            <MainNavDesktopItem
+              icon={item.icon}
+              href={item.href}
+              exact={item.exact ?? false}
+            >
+              {item.label}
+            </MainNavDesktopItem>
+          ))
+        }
         <MainNavDesktopItemMore
           client:load
           currentPathname={Astro.url.pathname}

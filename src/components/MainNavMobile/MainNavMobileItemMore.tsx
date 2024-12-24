@@ -1,9 +1,4 @@
-import {
-  MdBadge,
-  MdHandshake,
-  MdLocalActivity,
-  MdMoreHoriz,
-} from "react-icons/md";
+import { MdMoreHoriz } from "react-icons/md";
 import {
   Drawer,
   DrawerContent,
@@ -14,6 +9,7 @@ import {
 } from "@/components/ui/drawer";
 import type { FC, ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { getMainMenuMobileItems } from "@/content/menus";
 
 const MainNavMobileItemMore = (props: { currentPathname: string }) => {
   return (
@@ -29,27 +25,17 @@ const MainNavMobileItemMore = (props: { currentPathname: string }) => {
           <DrawerTitle className="sr-only">More</DrawerTitle>
           <DrawerDescription className="sr-only"></DrawerDescription>
         </DrawerHeader>
-        <MoreNavItem
-          href="/speakers"
-          currentPathname={props.currentPathname}
-          icon={MdBadge}
-        >
-          Speakers
-        </MoreNavItem>
-        <MoreNavItem
-          href="/partners"
-          currentPathname={props.currentPathname}
-          icon={MdHandshake}
-        >
-          Partners
-        </MoreNavItem>
-        <MoreNavItem
-          href="/organize-event"
-          currentPathname={props.currentPathname}
-          icon={MdLocalActivity}
-        >
-          Organize an event
-        </MoreNavItem>
+        {getMainMenuMobileItems("secondary").map((item, index) => (
+          <MoreNavItem
+            key={index}
+            icon={item.icon}
+            href={item.href}
+            exact={item.exact ?? false}
+            currentPathname={props.currentPathname}
+          >
+            {item.label}
+          </MoreNavItem>
+        ))}
       </DrawerContent>
     </Drawer>
   );
