@@ -45,7 +45,7 @@
   }
 
   .bg-background-blur {
-    @apply bg-background/80 backdrop-blur-md;
+    @apply bg-background/60 backdrop-blur-md;
   }
 }
 

@@ -6,7 +6,10 @@ import { getMainMenuMobileItems } from "@/content/menus";
 
 <div class="md:hidden">
   <div class="h-16"></div>
-  <div class="bg-background-blur fixed bottom-0 left-0 right-0 z-20 flex h-16">
+  {/* bottom-[-2px] to fix little gap on some devices  */}
+  <div
+    class="bg-background-blur fixed bottom-[-2px] left-0 right-0 z-20 flex h-16"
+  >
     {
       getMainMenuMobileItems("primary").map((item) => (
         <MainNavMobileItem
