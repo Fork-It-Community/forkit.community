@@ -39,7 +39,7 @@ export const EventCard = (props: Readonly<{ activity: Event }>) => {
             </div>
           </div>
           <div className="flex flex-col font-heading text-base font-medium text-secondary">
-            {event.title}
+            {event.name}
           </div>
           <div>
             {event.location && (

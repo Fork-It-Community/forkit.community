@@ -1,37 +1,58 @@
 ---
-import RootLayout from "@/layouts/RootLayout.astro";
+import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
 import { getEventsCollection, getEventSubPagesCollection } from "@/lib/events";
-import { SEO } from "astro-seo";
 import { render } from "astro:content";
+import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
 
   const subPages = (
     await Promise.all(
-      events.map(async (event) => await getEventSubPagesCollection(event)),
+      events.map(async (event) => {
+        const subpages = await getEventSubPagesCollection(event);
+        return subpages.map((s) => ({ ...s, __event: event }));
+      }),
     )
   )
     .flat()
     .map((subpage) => ({ slugs: subpage.id.split("/"), subpage }));
 
-  console.log(subPages);
-
-  return subPages.map(({ slugs: [id, _, subpageId], subpage }) => ({
-    params: { id, subpageId },
-    props: {
-      subpage,
-    },
-  }));
+  return subPages.map(
+    ({
+      slugs: [id, _, subpageId],
+      subpage: { __event: event, ...subpage },
+    }) => ({
+      params: { id, subpageId },
+      props: {
+        subpage,
+        event,
+      },
+    }),
+  );
 }
 
-const { subpage } = Astro.props;
+const { subpage, event } = Astro.props;
 const { Content } = await render(subpage);
 ---
 
-<RootLayout title={subpage.data.title} description?={subpage.data.description}>
-  <SEO slot="seo" />
-
-  <h1>{subpage.data.title}</h1>
-  <Content />
-</RootLayout>
+<EventSubPageLayout
+  title={subpage.data.title}
+  description?={subpage.data.description}
+  event={event}
+>
+  {
+    !!event.data.image?.src && (
+      <ImageBackgroundHero
+        src={event.data.image.src}
+        alt={event.data.image.alt}
+        className="blur-md -top-10 -left-10 -right-10"
+      />
+    )
+  }
+  <div
+    class="prose prose-sm prose-invert mx-auto p-6 md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-headings:text-primary prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
+  >
+    <Content />
+  </div>
+</EventSubPageLayout>

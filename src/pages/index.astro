@@ -19,6 +19,6 @@ const nextEvent = await getNextEvent();
 
   <div class="flex-1">
     <h1>Upcoming events</h1>
-    <a href={`/events/${nextEvent?.id}`}>{nextEvent?.data.title}</a>
+    <a href={`/events/${nextEvent?.id}`}>{nextEvent?.data.name}</a>
   </div>
 </MainLayout>
