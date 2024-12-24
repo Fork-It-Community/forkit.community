@@ -21,21 +21,23 @@ const MainNavMobileItemMore = (props: { currentPathname: string }) => {
         <span className="text-[0.6rem] tracking-wide">More</span>
       </DrawerTrigger>
       <DrawerContent className="pb-8">
-        <DrawerHeader>
-          <DrawerTitle className="sr-only">More</DrawerTitle>
-          <DrawerDescription className="sr-only"></DrawerDescription>
+        <DrawerHeader className="sr-only">
+          <DrawerTitle>More</DrawerTitle>
+          <DrawerDescription></DrawerDescription>
         </DrawerHeader>
-        {getMainMenuMobileItems("secondary").map((item, index) => (
-          <MoreNavItem
-            key={index}
-            icon={item.icon}
-            href={item.href}
-            exact={item.exact ?? false}
-            currentPathname={props.currentPathname}
-          >
-            {item.label}
-          </MoreNavItem>
-        ))}
+        <div className="pt-4">
+          {getMainMenuMobileItems("secondary").map((item, index) => (
+            <MoreNavItem
+              key={index}
+              icon={item.icon}
+              href={item.href}
+              exact={item.exact ?? false}
+              currentPathname={props.currentPathname}
+            >
+              {item.label}
+            </MoreNavItem>
+          ))}
+        </div>
       </DrawerContent>
     </Drawer>
   );
@@ -56,14 +58,14 @@ const MoreNavItem = (props: {
     <a
       href={props.href}
       className={cn(
-        "flex items-center gap-3 px-8 py-3 opacity-50",
+        "flex items-center gap-3 px-6 py-3 opacity-50",
         isActive && "opacity-100",
       )}
     >
-      <span className="text-2xl">
+      <span className="text-xl">
         <Icon />
       </span>
-      <span className="tracking-wide">{props.children}</span>
+      <span className="text-sm tracking-wide">{props.children}</span>
     </a>
   );
 };
