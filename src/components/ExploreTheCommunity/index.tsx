@@ -11,7 +11,7 @@ export const ExploreTheCommunity = () => {
       >
         <LogoIcon className="w-[18px] text-primary" />
       </a>
-      <Button asChild size="xs" className="m-3">
+      <Button asChild size="xs" className="m-3" variant="ghost">
         <a href="/" className="flex gap-1">
           Explore the community
           <LuArrowUpRight className="text-lg" aria-hidden="true" />
