@@ -22,7 +22,7 @@ const isUpcomingEvent = dayjs().isBefore(event.data.date);
 
 <a
   href={`/events/${event.id}`}
-  class="group relative z-10 flex flex-col gap-4 overflow-hidden rounded-lg border border-black/10 bg-background px-4 py-4 md:px-6"
+  class="group relative z-10 flex flex-col gap-4 overflow-hidden rounded-lg bg-background px-4 py-4 md:px-6"
 >
   {
     !!event.data.image?.src && (
@@ -31,7 +31,7 @@ const isUpcomingEvent = dayjs().isBefore(event.data.date);
           src={event.data.image.src}
           alt=""
           class={cn(
-            "absolute size-full object-cover object-center transition duration-500 group-hover:scale-105",
+            "absolute size-full bg-white/20 object-cover object-center transition duration-500 group-hover:scale-110",
           )}
           width={600}
         />

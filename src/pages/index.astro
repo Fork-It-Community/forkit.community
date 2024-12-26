@@ -20,11 +20,18 @@ const podcasts = await getPodcastsCollection();
     )
   }
 
-  <div class="flex w-full items-center justify-center py-24 md:hidden">
-    <Logo className="w-56" />
-  </div>
+  <div class="mx-auto w-full max-w-screen-lg px-4">
+    <div
+      class="flex w-full pb-4 pt-24 md:hidden md:items-center md:justify-center"
+    >
+      <Logo className="w-48" />
+    </div>
+    <h1
+      class="text-balance py-8 font-heading text-4xl font-medium uppercase sm:text-6xl"
+    >
+      Global<br /> Developer<br /> Community
+    </h1>
 
-  <div class="mx-auto w-full max-w-screen-sm px-4">
     <div class="flex-1">
       <h1>Upcoming events</h1>
       <a href={`/events/${nextEvent?.id}`}>{nextEvent?.data.name}</a>
