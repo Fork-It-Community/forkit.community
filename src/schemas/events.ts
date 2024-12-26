@@ -62,6 +62,7 @@ const zEventBase = ({ image }: SchemaContext) =>
         }),
       )
       .optional(),
+    partners: z.array(reference("partners")).optional(),
     speakers: z.array(reference("people")).optional(),
     talks: z.array(reference("talks")).optional(),
     faq: z
