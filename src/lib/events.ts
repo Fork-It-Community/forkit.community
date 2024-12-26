@@ -30,28 +30,48 @@ export function getEventSubPagesCollection(
   return getEntries(event.data.subPages ?? []);
 }
 
-export async function getUpcomingEvents() {
-  const events = await getEventsCollection();
-  const upcomingEvents = events
-    .filter((event) => dayjs().isBefore(event.data.date))
-    .sort(
-      (event1, event2) =>
-        (event1.data.date?.valueOf() ?? 0) - (event2.data.date?.valueOf() ?? 0),
-    );
+type GetEventsParams = {
+  limit?: number;
+};
 
-  return upcomingEvents ?? [];
+export async function getUpcomingEvents({
+  limit = undefined,
+}: GetEventsParams = {}) {
+  const events = await getEventsCollection();
+  const upcomingEvents =
+    events
+      .filter((event) => dayjs().isBefore(event.data.date))
+      .sort(
+        (event1, event2) =>
+          (event1.data.date?.valueOf() ?? 0) -
+          (event2.data.date?.valueOf() ?? 0),
+      ) ?? [];
+
+  if (limit) {
+    return upcomingEvents.slice(0, limit);
+  }
+
+  return upcomingEvents;
 }
 
-export async function getPastEvents() {
+export async function getPastEvents({
+  limit = undefined,
+}: GetEventsParams = {}) {
   const events = await getEventsCollection();
-  const pastEvents = events
-    .filter((event) => dayjs().isAfter(event.data.date))
-    .sort(
-      (event1, event2) =>
-        (event1.data.date?.valueOf() ?? 0) - (event2.data.date?.valueOf() ?? 0),
-    );
+  const pastEvents =
+    events
+      .filter((event) => dayjs().isAfter(event.data.date))
+      .sort(
+        (event1, event2) =>
+          (event2.data.date?.valueOf() ?? 0) -
+          (event1.data.date?.valueOf() ?? 0),
+      ) ?? [];
 
-  return pastEvents ?? [];
+  if (limit) {
+    return pastEvents.slice(0, limit);
+  }
+
+  return pastEvents;
 }
 
 export async function getNextEvent() {

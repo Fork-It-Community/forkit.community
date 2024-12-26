@@ -1,5 +1,20 @@
 ---
+import { getPodcastsCollection } from "@/lib/podcasts";
 
+export async function getStaticPaths() {
+  const podcasts = await getPodcastsCollection();
+
+  return podcasts.map((podcast) => ({
+    params: {
+      id: podcast.id,
+    },
+    props: {
+      podcast,
+    },
+  }));
+}
+
+const { podcast } = Astro.props;
 ---
 
-<div>Podcast item</div>
+<div>{podcast.data.title}</div>

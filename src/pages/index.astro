@@ -2,9 +2,11 @@
 import MainLayout from "@/layouts/MainLayout.astro";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import { getNextEvent } from "@/lib/events";
+import { getPodcastsCollection } from "@/lib/podcasts";
 import { Logo } from "@/components/Logo";
 
 const nextEvent = await getNextEvent();
+const podcasts = await getPodcastsCollection();
 ---
 
 <MainLayout>
@@ -140,5 +142,17 @@ const nextEvent = await getNextEvent();
       reprehenderit nisi officia ea Lorem Lorem. Est in cillum dolor occaecat ad
       elit.
     </p>
+  </div>
+  <div>
+    <h2>Podcasts</h2>
+    <ul>
+      {
+        podcasts.map((podcast) => (
+          <li>
+            <a href={`/podcasts/${podcast.id}`}>{podcast.data.title}</a>
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </MainLayout>
