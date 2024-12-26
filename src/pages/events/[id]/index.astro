@@ -23,12 +23,22 @@ export async function getStaticPaths() {
         speakers: await getEntries(event.data.speakers ?? []),
         talks: await getEntries(event.data.talks ?? []),
         partners: await getEntries(event.data.partners ?? []),
+        sponsors: await getEntries(
+          (event.data.sponsors ?? []).map((s) => s.slug),
+        ),
       },
     })),
   );
 }
 
-const { event, subPages, speakers, talks, partners: _partners } = Astro.props;
+const {
+  event,
+  subPages,
+  speakers,
+  talks,
+  partners: _partners,
+  sponsors,
+} = Astro.props;
 const partners = _partners.filter((p) => !!p);
 const navItems = await getEventNavItems(event.id);
 ---
@@ -234,5 +244,9 @@ const navItems = await getEventNavItems(event.id);
       reprehenderit nisi officia ea Lorem Lorem. Est in cillum dolor occaecat ad
       elit.
     </p>
+    <div>Sponsors</div>
+    <ul>
+      {sponsors.map((sponsor) => <li>{sponsor.data.name}</li>)}
+    </ul>
   </div>
 </EventLayout>
