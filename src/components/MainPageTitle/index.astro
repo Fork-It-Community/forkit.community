@@ -1,0 +1,29 @@
+---
+import { Logo } from "@/components/Logo";
+import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
+import type { ReactNode } from "react";
+import defaultImage from "@/assets/images/events.jpeg";
+
+interface Props {
+  title: ReactNode;
+  imageSrc?: ImageMetadata;
+}
+
+const { title, imageSrc } = Astro.props;
+---
+
+<ImageBackgroundHero
+  src={imageSrc ?? defaultImage}
+  alt=""
+  className="h-[80vh] opacity-80"
+/>
+
+<div class="flex w-full flex-col gap-4 pb-8 pt-12">
+  <a href="/" class="md:hidden"><Logo className="w-28" /></a>
+  <div class="flex items-center gap-4">
+    <h1 class="font-heading text-3xl font-medium max-md:flex-1">
+      {title}
+    </h1>
+    <slot />
+  </div>
+</div>

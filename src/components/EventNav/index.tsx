@@ -1,4 +1,4 @@
-import { Logo } from "@/components/Logo/Logo";
+import { Logo } from "@/components/Logo";
 import { useWindowScroll, useWindowSize } from "@uidotdev/usehooks";
 import { cn } from "@/lib/utils";
 import {

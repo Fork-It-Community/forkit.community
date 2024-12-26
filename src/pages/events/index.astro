@@ -1,6 +1,7 @@
 ---
+import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
-
+import bgImage from "@/assets/images/events.jpeg";
 import { getPastEvents, getUpcomingEvents } from "@/lib/events";
 
 const upcoming = await getUpcomingEvents();
@@ -8,28 +9,32 @@ const past = await getPastEvents();
 ---
 
 <MainLayout>
-  <h1>Upcoming Events</h1>
-  <div>
-    {
-      upcoming.map((event) => (
-        <a href={`/events/${event.id}`}>
-          <h2>{event.data.name}</h2>
-          <p>{event.data.date}</p>
-          <p>{event.data.location?.name}</p>
-        </a>
-      ))
-    }
-  </div>
-  <h1>Past Events</h1>
-  <div>
-    {
-      past.map((event) => (
-        <a href={`/events/${event.id}`}>
-          <h2>{event.data.name}</h2>
-          <p>{event.data.date}</p>
-          <p>{event.data.location?.name}</p>
-        </a>
-      ))
-    }
+  <div class="mx-auto w-full max-w-screen-lg px-6">
+    <MainPageTitle title="Events" imageSrc={bgImage} />
+
+    <h2>Upcoming Events</h2>
+    <div>
+      {
+        upcoming.map((event) => (
+          <a href={`/events/${event.id}`}>
+            <h2>{event.data.name}</h2>
+            <p>{event.data.date}</p>
+            <p>{event.data.location?.name}</p>
+          </a>
+        ))
+      }
+    </div>
+    <h2>Past Events</h2>
+    <div>
+      {
+        past.map((event) => (
+          <a href={`/events/${event.id}`}>
+            <h2>{event.data.name}</h2>
+            <p>{event.data.date}</p>
+            <p>{event.data.location?.name}</p>
+          </a>
+        ))
+      }
+    </div>
   </div>
 </MainLayout>

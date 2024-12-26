@@ -25,7 +25,7 @@ const MainNavMobileItemMore = (props: { currentPathname: string }) => {
           <DrawerTitle>More</DrawerTitle>
           <DrawerDescription></DrawerDescription>
         </DrawerHeader>
-        <div className="pt-4">
+        <div className="pb-8 pt-4">
           {getMainMenuMobileItems("secondary").map((item, index) => (
             <MoreNavItem
               key={index}
@@ -58,7 +58,7 @@ const MoreNavItem = (props: {
     <a
       href={props.href}
       className={cn(
-        "flex items-center gap-3 px-6 py-3 opacity-50",
+        "flex items-center gap-3 px-6 py-4 opacity-60",
         isActive && "opacity-100",
       )}
     >

@@ -1,5 +1,5 @@
 ---
-import { Logo } from "@/components/Logo/Logo";
+import { Logo } from "@/components/Logo";
 import MainNavDesktopItem from "./MainNavDesktopItem.astro";
 import MainNavDesktopItemMore from "./MainNavDesktopItemMore";
 import { getMainMenuDesktopItems } from "@/content/menus";
@@ -14,7 +14,7 @@ import { getMainMenuDesktopItems } from "@/content/menus";
       <a href="/" class="py-2">
         <Logo className="w-28" />
       </a>
-      <nav class="flex items-center gap-2">
+      <nav class="flex items-center gap-1">
         {
           getMainMenuDesktopItems("primary").map((item) => (
             <MainNavDesktopItem

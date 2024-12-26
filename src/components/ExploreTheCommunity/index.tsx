@@ -1,5 +1,5 @@
-import { Logo } from "@/components/Logo/Logo";
-import { LogoIcon } from "@/components/Logo/LogoIcon";
+import { Logo } from "@/components/Logo";
+import { LogoIcon } from "@/components/LogoIcon";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { LuArrowUpRight } from "react-icons/lu";
