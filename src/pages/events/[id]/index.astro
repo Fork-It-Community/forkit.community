@@ -32,15 +32,26 @@ const navItems = await getEventNavItems(event.id);
 
 <EventLayout event={event}>
   <div class="flex h-[90svh] flex-col items-center justify-center">
-    <div class="flex flex-1 flex-col items-center justify-center gap-8 p-4">
+    <div
+      class="flex flex-1 flex-col items-center justify-center gap-8 p-4 md:gap-12"
+    >
       <Logo className="w-48" />
-      <h1 class="flex flex-col gap-2 text-balance text-center font-heading">
+      <h1
+        class="flex flex-col gap-1 text-balance text-center font-heading md:gap-2"
+      >
         <span class="text-4xl font-medium md:text-6xl">
           {dayjs(event.data.date).format("MMMM DD, YYYY")}
         </span>
         <span class="text-2xl text-primary md:text-4xl"
           >{event.data.city}, {event.data.country}</span
         >
+        {
+          event.data.type === "meetup" && (
+            <span class="p-4 text-xs uppercase tracking-widest opacity-60 md:text-sm">
+              Community Meetup
+            </span>
+          )
+        }
       </h1>
       <div class="flex flex-wrap gap-4">
         <a href="#" class={buttonVariants({})}> Get Your Ticket </a>
