@@ -5,7 +5,7 @@ import type { CollectionEntry } from "astro:content";
 
 type BreakCardProps = {
   schedule: Event["schedule"][number];
-  sponsor?: CollectionEntry<"sponsors">["data"];
+  sponsor?: CollectionEntry<"partners">["data"];
 };
 
 export const BreakCard = (props: Readonly<BreakCardProps>) => {

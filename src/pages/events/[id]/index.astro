@@ -28,8 +28,8 @@ export async function getStaticPaths() {
   );
 }
 
-const { event, subPages, speakers, talks, partners: _partenrs } = Astro.props;
-const partners = _partenrs.filter((p) => !!p);
+const { event, subPages, speakers, talks, partners: _partners } = Astro.props;
+const partners = _partners.filter((p) => !!p);
 const navItems = await getEventNavItems(event.id);
 ---
 

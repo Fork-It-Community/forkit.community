@@ -3,7 +3,6 @@ import { glob } from "astro/loaders";
 import { zEvent } from "@/schemas/events";
 import { zNews } from "@/schemas/news";
 import { zPerson } from "@/schemas/people";
-import { zSponsor } from "@/schemas/sponsors";
 import { zPartner } from "@/schemas/partners";
 import { zTalk } from "@/schemas/talks";
 import { zEventSubPage } from "@/schemas/eventsSubPages";
@@ -13,10 +12,6 @@ export const collections = {
   partners: defineCollection({
     loader: glob({ pattern: "**/*.mdx", base: "./src/content/partners" }),
     schema: zPartner,
-  }),
-  sponsors: defineCollection({
-    loader: glob({ pattern: "**/*.mdx", base: "./src/content/sponsors" }),
-    schema: zSponsor,
   }),
   events: defineCollection({
     loader: glob({
@@ -45,7 +40,7 @@ export const collections = {
     schema: zNews,
   }),
   podcast: defineCollection({
-    loader: glob({ pattern: "**/*.mdx", base: "./src/content/news" }),
+    loader: glob({ pattern: "**/*.mdx", base: "./src/content/podcast" }),
     schema: zPodcast,
   }),
 };
