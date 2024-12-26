@@ -84,12 +84,12 @@ const navItems = await getEventNavItems(event.id);
       class="absolute bottom-0 left-0 right-0 flex flex-col items-center justify-center gap-2 px-6 py-8 md:py-16"
     >
       <h4 class="text-xs uppercase tracking-widest opacity-40">Quick Access</h4>
-      <nav class="flex gap-4">
+      <nav class="flex gap-2">
         {
           navItems.map((item) => (
             <a
               href={item.href}
-              class="underline decoration-foreground/40 underline-offset-4 opacity-60 hover:text-primary hover:decoration-current hover:opacity-100"
+              class="flex p-2 text-sm underline decoration-foreground/40 underline-offset-4 opacity-60 hover:text-primary hover:decoration-current hover:opacity-100 md:text-base"
             >
               {item.label}
             </a>
