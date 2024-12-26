@@ -7,6 +7,7 @@ import {
   getEventsCollection,
   getEventSubPagesCollection,
 } from "@/lib/events";
+import { Image } from "astro:assets";
 import { getEntries } from "astro:content";
 import dayjs from "dayjs";
 
@@ -21,45 +22,63 @@ export async function getStaticPaths() {
         subPages: await getEventSubPagesCollection(event),
         speakers: await getEntries(event.data.speakers ?? []),
         talks: await getEntries(event.data.talks ?? []),
+        partners: await getEntries(event.data.partners ?? []),
       },
     })),
   );
 }
 
-const { event, subPages, speakers, talks } = Astro.props;
+const { event, subPages, speakers, talks, partners: _partenrs } = Astro.props;
+const partners = _partenrs.filter((p) => !!p);
 const navItems = await getEventNavItems(event.id);
 ---
 
 <EventLayout event={event}>
-  <div class="flex h-[90svh] flex-col items-center justify-center">
+  <div class="flex h-[80svh] flex-col items-center justify-center">
     <div
       class="flex flex-1 flex-col items-center justify-center gap-8 p-4 md:gap-12"
     >
-      <Logo className="w-48" />
+      <Logo className="w-32 md:w-48" />
       <h1
         class="flex flex-col gap-1 text-balance text-center font-heading md:gap-2"
       >
-        <span class="text-4xl font-medium md:text-6xl">
+        <span class="text-3xl font-medium md:text-6xl">
           {dayjs(event.data.date).format("MMMM DD, YYYY")}
         </span>
-        <span class="text-2xl text-primary md:text-4xl"
+        <span class="text-xl text-primary md:text-4xl"
           >{event.data.city}, {event.data.country}</span
         >
         {
           event.data.type === "meetup" && (
-            <span class="p-4 text-xs uppercase tracking-widest opacity-60 md:text-sm">
+            <span class="p-2 text-xs uppercase tracking-widest opacity-60 md:text-sm">
               Community Meetup
             </span>
           )
         }
       </h1>
+
       <div class="flex flex-wrap gap-4">
         <a href="#" class={buttonVariants({})}> Get Your Ticket </a>
         <a href="#" class={buttonVariants({ variant: "ghost" })}> CFP </a>
       </div>
+      {
+        !!partners.length && (
+          <div class="flex w-full items-center justify-center gap-4">
+            {partners.map((partner) => (
+              <a href={partner.data.href}>
+                <Image
+                  class="size-20 md:size-28"
+                  src={partner.data.logos.noBgSquare}
+                  alt={partner.data.name}
+                />
+              </a>
+            ))}
+          </div>
+        )
+      }
     </div>
 
-    <div class="flex flex-col items-center justify-center gap-2 p-6">
+    <div class="flex flex-col items-center justify-center gap-2 px-6 py-4">
       <h4 class="text-xs uppercase tracking-widest opacity-40">Quick Access</h4>
       <nav class="flex gap-4">
         {
