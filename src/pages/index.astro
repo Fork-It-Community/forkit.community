@@ -24,7 +24,7 @@ const podcasts = await getPodcastsCollection();
     <Logo className="w-56" />
   </div>
 
-  <div class="mx-auto w-full max-w-screen-lg px-6">
+  <div class="mx-auto w-full max-w-screen-sm px-4">
     <div class="flex-1">
       <h1>Upcoming events</h1>
       <a href={`/events/${nextEvent?.id}`}>{nextEvent?.data.name}</a>

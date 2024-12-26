@@ -33,6 +33,8 @@ const { title, description, event } = Astro.props;
       logoUrl={`/events/${event.id}`}
     />
   </div>
-  <slot />
+  <div class="flex flex-1 flex-col pb-40">
+    <slot />
+  </div>
   <EventWarningBanner event={event} />
 </RootLayout>

@@ -1,0 +1,43 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import dayjs from "dayjs";
+
+interface Props {
+  event: CollectionEntry<"events">;
+}
+
+const { event } = Astro.props;
+---
+
+<a
+  href={`/events/${event.id}`}
+  class="group relative z-10 flex flex-col overflow-hidden rounded-lg border border-black/10 bg-background px-6 py-4"
+>
+  {
+    !!event.data.image?.src && (
+      <div class="pointer-events-none absolute bottom-0 left-0 right-0 top-0 -z-10 overflow-hidden">
+        <Image
+          src={event.data.image.src}
+          alt=""
+          class="absolute size-full object-cover object-center transition group-hover:scale-105"
+          width={600}
+        />
+        <div class="absolute size-full bg-gradient-to-l from-black/10 to-black/80" />
+        <div
+          class="absolute h-full w-full"
+          style={{
+            backdropFilter: "blur(32px)",
+            maskImage: "linear-gradient(90deg, black 30%, transparent 70%)",
+          }}
+        />
+      </div>
+    )
+  }
+  <div class="font-heading font-medium">
+    {dayjs(event.data.date).format("MMMM DD, YYYY")}
+  </div>
+  <div class="font-heading text-sm opacity-60">
+    {event.data.city}, {event.data.country}
+  </div>
+</a>

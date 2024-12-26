@@ -3,37 +3,49 @@ import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import bgImage from "@/assets/images/events.jpeg";
 import { getPastEvents, getUpcomingEvents } from "@/lib/events";
+import EventCard from "@/components/EventCard/index.astro";
 
-const upcoming = await getUpcomingEvents();
-const past = await getPastEvents();
+const upcomingEvents = await getUpcomingEvents();
+const pastEvents = await getPastEvents();
 ---
 
 <MainLayout>
-  <div class="mx-auto w-full max-w-screen-lg px-6">
-    <MainPageTitle title="Events" imageSrc={bgImage} />
+  <div class="mx-auto w-full max-w-screen-sm px-4">
+    <MainPageTitle
+      title="Events"
+      subtitle="All the Fork it! tech events"
+      imageSrc={bgImage}
+    />
 
-    <h2>Upcoming Events</h2>
-    <div>
+    <div class="flex flex-col gap-12">
       {
-        upcoming.map((event) => (
-          <a href={`/events/${event.id}`}>
-            <h2>{event.data.name}</h2>
-            <p>{event.data.date}</p>
-            <p>{event.data.location?.name}</p>
-          </a>
-        ))
+        !!upcomingEvents.length && (
+          <div class="flex flex-col gap-2">
+            <h2 class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
+              Upcoming Events
+            </h2>
+            <div class="flex flex-col gap-3">
+              {upcomingEvents.map((event) => (
+                <EventCard event={event} />
+              ))}
+            </div>
+          </div>
+        )
       }
-    </div>
-    <h2>Past Events</h2>
-    <div>
+
       {
-        past.map((event) => (
-          <a href={`/events/${event.id}`}>
-            <h2>{event.data.name}</h2>
-            <p>{event.data.date}</p>
-            <p>{event.data.location?.name}</p>
-          </a>
-        ))
+        !!pastEvents.length && (
+          <div class="flex flex-col gap-2">
+            <h2 class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
+              Past Events
+            </h2>
+            <div class="flex flex-col gap-3">
+              {pastEvents.map((event) => (
+                <EventCard event={event} />
+              ))}
+            </div>
+          </div>
+        )
       }
     </div>
   </div>

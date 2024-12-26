@@ -6,10 +6,11 @@ import defaultImage from "@/assets/images/events.jpeg";
 
 interface Props {
   title: ReactNode;
+  subtitle?: ReactNode;
   imageSrc?: ImageMetadata;
 }
 
-const { title, imageSrc } = Astro.props;
+const { title, subtitle, imageSrc } = Astro.props;
 ---
 
 <ImageBackgroundHero
@@ -18,12 +19,22 @@ const { title, imageSrc } = Astro.props;
   className="h-[80vh] opacity-80"
 />
 
-<div class="flex w-full flex-col gap-4 pb-8 pt-12">
-  <a href="/" class="md:hidden"><Logo className="w-28" /></a>
-  <div class="flex items-center gap-4">
-    <h1 class="font-heading text-3xl font-medium max-md:flex-1">
+<div
+  class="flex min-h-[35svh] w-full flex-col items-center justify-center gap-12 pb-8 pt-12"
+>
+  <a href="/" class="md:hidden"><Logo className="w-48" /></a>
+  <div class="flex flex-col items-center gap-2">
+    <h1
+      class="text-balance text-center font-heading text-3xl font-medium uppercase tracking-wider max-md:flex-1 md:text-5xl"
+    >
       {title}
     </h1>
-    <slot />
+    {
+      !!subtitle && (
+        <h3 class="text-balance text-center text-xs tracking-widest opacity-60 md:text-sm">
+          {subtitle}
+        </h3>
+      )
+    }
   </div>
 </div>

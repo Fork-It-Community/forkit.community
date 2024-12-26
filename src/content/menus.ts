@@ -50,8 +50,8 @@ const MainMenu: Array<{
     level: "primary",
   },
   {
-    label: "Speakers",
-    href: "/speakers",
+    label: "Community members",
+    href: "/people",
     icon: MdBadge,
     scope: "all",
     level: "secondary",

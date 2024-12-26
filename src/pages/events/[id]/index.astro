@@ -10,6 +10,7 @@ import {
 import { Image } from "astro:assets";
 import { getEntries, render } from "astro:content";
 import dayjs from "dayjs";
+import { match } from "ts-pattern";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -60,13 +61,17 @@ const { Content } = await render(event);
           <span class="text-xl text-primary md:text-4xl"
             >{event.data.city}, {event.data.country}</span
           >
-          {
-            event.data.type === "meetup" && (
-              <span class="p-2 text-xs uppercase tracking-widest opacity-60 md:text-sm">
-                Community Meetup
-              </span>
-            )
-          }
+
+          <span
+            class="p-2 text-xs uppercase tracking-widest opacity-60 md:text-sm"
+          >
+            {
+              match(event.data.type)
+                .with("event", () => "Full Day Event")
+                .with("meetup", () => "Community Meetup")
+                .exhaustive()
+            }
+          </span>
         </h1>
       </div>
 
@@ -112,7 +117,7 @@ const { Content } = await render(event);
     </div>
   </div>
 
-  <div class="mx-auto w-full max-w-screen-lg px-6 py-24">
+  <div class="mx-auto w-full max-w-screen-sm px-4 py-24">
     <div>Event page {event.data.name}</div>
     <ul>
       {
