@@ -16,6 +16,8 @@ const { event } = Astro.props;
 const coOrganizers = (await getEntries(event.data.coOrganizers ?? []))
   .filter((p) => !!p)
   .slice(0, 5);
+
+const isUpcomingEvent = dayjs().isBefore(event.data.date);
 ---
 
 <a
@@ -28,7 +30,9 @@ const coOrganizers = (await getEntries(event.data.coOrganizers ?? []))
         <Image
           src={event.data.image.src}
           alt=""
-          class="absolute size-full object-cover object-center transition duration-500 group-hover:scale-105"
+          class={cn(
+            "absolute size-full object-cover object-center transition duration-500 group-hover:scale-105",
+          )}
           width={600}
         />
         <div
@@ -95,13 +99,17 @@ const coOrganizers = (await getEntries(event.data.coOrganizers ?? []))
       <span
         class={cn(
           buttonVariants({
-            variant: dayjs().isBefore(event.data.date) ? "default" : "ghost",
+            variant: isUpcomingEvent ? "default" : "ghost",
           }),
           "gap-2 sm:max-w-56",
         )}
       >
-        {dayjs().isBefore(event.data.date) ? "Register Now" : "Event Details"}
-        <MdArrowForward />
+        {isUpcomingEvent
+          ? event.data.tickets
+            ? "Tickets available"
+            : "Discover Event"
+          : "Explore Past Event"}
+        <MdArrowForward className="group-hover:translate-x-1 transition" />
       </span>
     )
   }

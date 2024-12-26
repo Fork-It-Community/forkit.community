@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { Image } from "astro:assets";
 import { getEntries, render } from "astro:content";
 import dayjs from "dayjs";
+import { MdArrowForward } from "react-icons/md";
 import { match } from "ts-pattern";
 
 export async function getStaticPaths() {
@@ -77,7 +78,10 @@ const { Content } = await render(event);
       </div>
 
       <div class="flex flex-wrap gap-4">
-        <a href="#" class={buttonVariants({})}> Get Your Ticket </a>
+        <a href="#" class={cn(buttonVariants({}), "group gap-2")}>
+          Get Your Ticket
+          <MdArrowForward className="transition group-hover:translate-x-1" />
+        </a>
         <a href="#" class={buttonVariants({ variant: "ghost" })}> CFP </a>
       </div>
       {

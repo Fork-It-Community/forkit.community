@@ -1,7 +1,7 @@
 import { Logo } from "@/components/Logo";
 import { LogoIcon } from "@/components/LogoIcon";
 import { Button } from "@/components/ui/button";
-import { LuArrowUpRight } from "react-icons/lu";
+import { MdArrowOutward } from "react-icons/md";
 
 export const ExploreTheCommunity = (props: {
   logoUrl: string;
@@ -35,9 +35,9 @@ export const ExploreTheCommunity = (props: {
       </a>
       <div className="flex items-center justify-center pe-3">
         <Button asChild size="xs" variant="ghost">
-          <a href="/" className="flex gap-1">
+          <a href="/" className="group flex gap-1">
             Community Hub
-            <LuArrowUpRight className="text-lg" aria-hidden="true" />
+            <MdArrowOutward className="text-lg transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </a>
         </Button>
       </div>

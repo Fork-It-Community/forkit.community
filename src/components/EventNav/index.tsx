@@ -9,10 +9,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { MdMenu } from "react-icons/md";
+import { MdArrowForward, MdArrowOutward, MdMenu } from "react-icons/md";
 import { useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
-import { LuArrowUpRight } from "react-icons/lu";
 
 export const EventNav = (props: {
   eventName: ReactNode;
@@ -87,10 +86,11 @@ export const EventNav = (props: {
                 <Button asChild size="sm">
                   <a
                     href="#"
-                    className="flex-[2]"
+                    className="group flex-[2] gap-2"
                     onClick={() => setOpen(false)}
                   >
                     Get Your Ticket
+                    <MdArrowForward className="transition group-hover:translate-x-1" />
                   </a>
                 </Button>
                 <Button asChild size="sm" variant="ghost">
@@ -101,11 +101,11 @@ export const EventNav = (props: {
                 <Button asChild size="sm" variant="ghost">
                   <a
                     href="/"
-                    className="flex w-full gap-1"
+                    className="group flex w-full gap-2"
                     onClick={() => setOpen(false)}
                   >
                     Community Hub
-                    <LuArrowUpRight className="text-lg" aria-hidden="true" />
+                    <MdArrowOutward className="text-lg transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </a>
                 </Button>
               </div>
