@@ -40,7 +40,7 @@ export const collections = {
     schema: zNews,
   }),
   podcast: defineCollection({
-    loader: glob({ pattern: "**/*.mdx", base: "./src/content/podcast" }),
+    loader: glob({ pattern: "**/*.mdx", base: "./src/content/podcasts" }),
     schema: zPodcast,
   }),
 };
