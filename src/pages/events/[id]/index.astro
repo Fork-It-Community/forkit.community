@@ -36,7 +36,7 @@ const navItems = await getEventNavItems(event.id);
 <EventLayout event={event}>
   <div class="flex h-[100svh] flex-col items-center justify-center">
     <div
-      class="flex flex-1 flex-col items-center justify-center gap-8 p-4 md:gap-12"
+      class="relative flex flex-1 flex-col items-center justify-center gap-8 p-4 md:gap-12"
     >
       <div class="flex flex-col items-center justify-center gap-4">
         <Logo className="w-32 md:w-48" />
@@ -84,7 +84,9 @@ const navItems = await getEventNavItems(event.id);
       class="absolute bottom-0 left-0 right-0 flex flex-col items-center justify-center gap-2 px-6 py-8 md:py-16"
     >
       <h4 class="text-xs uppercase tracking-widest opacity-40">Quick Access</h4>
-      <nav class="flex gap-2">
+      <nav
+        class="flex flex-wrap items-center justify-center gap-x-1 xs:gap-x-2 md:gap-x-3"
+      >
         {
           navItems.map((item) => (
             <a
