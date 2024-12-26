@@ -5,7 +5,12 @@ const zEventBase = ({ image }: SchemaContext) =>
     city: z.string(),
     country: z.string(),
     date: z.date(),
-    status: z.enum(["draft", "published-without-date", "published"]),
+    status: z.enum([
+      "draft",
+      "published-without-date",
+      "published",
+      "cancelled",
+    ]),
     location: z
       .object({
         name: z.string().optional(),
