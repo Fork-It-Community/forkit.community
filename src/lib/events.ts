@@ -42,6 +42,18 @@ export async function getUpcomingEvents() {
   return upcomingEvents ?? [];
 }
 
+export async function getPastEvents() {
+  const events = await getEventsCollection();
+  const pastEvents = events
+    .filter((event) => dayjs().isAfter(event.data.date))
+    .sort(
+      (event1, event2) =>
+        (event1.data.date?.valueOf() ?? 0) - (event2.data.date?.valueOf() ?? 0),
+    );
+
+  return pastEvents ?? [];
+}
+
 export async function getNextEvent() {
   const upcomingEvents = await getUpcomingEvents();
 
