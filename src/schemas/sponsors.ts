@@ -9,6 +9,12 @@ export const zSponsor = ({ image }: SchemaContext) =>
       src: image(),
       alt: z.string(),
     }),
+    logo: z
+      .object({
+        src: image(),
+        alt: z.string().optional(),
+      })
+      .optional(),
     href: z.string().url().optional(),
     socials: z
       .array(
