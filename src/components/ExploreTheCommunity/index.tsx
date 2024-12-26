@@ -1,7 +1,6 @@
 import { Logo } from "@/components/Logo";
 import { LogoIcon } from "@/components/LogoIcon";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { LuArrowUpRight } from "react-icons/lu";
 
 export const ExploreTheCommunity = (props: {
@@ -37,10 +36,7 @@ export const ExploreTheCommunity = (props: {
       <div className="flex items-center justify-center pe-3">
         <Button asChild size="xs" variant="ghost">
           <a href="/" className="flex gap-1">
-            <span className={cn(!!props.eventCity && "max-xs:sr-only")}>
-              Explore The
-            </span>
-            Community
+            Community Hub
             <LuArrowUpRight className="text-lg" aria-hidden="true" />
           </a>
         </Button>

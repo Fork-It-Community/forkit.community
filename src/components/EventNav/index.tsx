@@ -104,7 +104,7 @@ export const EventNav = (props: {
                     className="flex w-full gap-1"
                     onClick={() => setOpen(false)}
                   >
-                    Explore The Community
+                    Community Hub
                     <LuArrowUpRight className="text-lg" aria-hidden="true" />
                   </a>
                 </Button>
