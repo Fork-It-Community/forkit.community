@@ -8,10 +8,7 @@ const SpeakerDetail = (
   return (
     <div className="flex h-fit w-fit flex-col gap-2">
       <div className="mx-auto aspect-square overflow-hidden rounded-lg">
-        <img
-          src={props.speaker.avatar}
-          alt={`${props.speaker.name} profile picture`}
-        />
+        {/* Image */}
       </div>
       <div className="flex flex-col gap-3">
         <div>

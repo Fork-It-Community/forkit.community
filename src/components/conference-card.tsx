@@ -45,11 +45,7 @@ export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
                       "col-start-2",
                   )}
                 >
-                  <img
-                    src={speaker.avatar}
-                    alt={speaker.name}
-                    className="h-full w-full object-cover"
-                  />
+                  {/* Image */}
                 </div>
               ))}
             </div>

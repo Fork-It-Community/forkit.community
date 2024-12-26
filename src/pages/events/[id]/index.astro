@@ -3,6 +3,7 @@ import { Logo } from "@/components/Logo/Logo";
 import { buttonVariants } from "@/components/ui/button";
 import EventLayout from "@/layouts/EventLayout.astro";
 import { getEventsCollection, getEventSubPagesCollection } from "@/lib/events";
+import { getEntries } from "astro:content";
 import dayjs from "dayjs";
 
 export async function getStaticPaths() {
@@ -14,12 +15,14 @@ export async function getStaticPaths() {
       props: {
         event,
         subPages: await getEventSubPagesCollection(event),
+        speakers: await getEntries(event.data.speakers ?? []),
+        talks: await getEntries(event.data.talks ?? []),
       },
     })),
   );
 }
 
-const { event, subPages } = Astro.props;
+const { event, subPages, speakers, talks } = Astro.props;
 ---
 
 <EventLayout event={event}>
@@ -77,6 +80,15 @@ const { event, subPages } = Astro.props;
           </li>
         ))
       }
+    </ul>
+    <hr />
+    <div>Speakers</div>
+    <ul>
+      {speakers.map((speaker) => <li>{speaker.data.name}</li>)}
+    </ul>
+    <div>Talks</div>
+    <ul>
+      {talks.map((talk) => <li>{talk.data.title}</li>)}
     </ul>
   </div>
 </EventLayout>

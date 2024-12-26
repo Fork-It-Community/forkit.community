@@ -38,7 +38,7 @@ export const collections = {
   }),
   people: defineCollection({
     loader: glob({ pattern: "**/*.mdx", base: "./src/content/people" }),
-    schema: zPerson(),
+    schema: zPerson,
   }),
   news: defineCollection({
     loader: glob({ pattern: "**/*.mdx", base: "./src/content/news" }),
