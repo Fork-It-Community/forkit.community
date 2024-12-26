@@ -24,7 +24,7 @@ export async function getStaticPaths() {
         subPages: await getEventSubPagesCollection(event),
         speakers: await getEntries(event.data.speakers ?? []),
         talks: await getEntries(event.data.talks ?? []),
-        partners: await getEntries(event.data.partners ?? []),
+        coOrganizers: await getEntries(event.data.coOrganizers ?? []),
         sponsors: await getEntries(
           (event.data.sponsors ?? []).map((s) => s.slug),
         ),
@@ -38,10 +38,10 @@ const {
   subPages,
   speakers,
   talks,
-  partners: _partners,
+  coOrganizers: _coOrganizers,
   sponsors,
 } = Astro.props;
-const partners = _partners.filter((p) => !!p);
+const coOrganizers = _coOrganizers.filter((p) => !!p);
 const navItems = await getEventNavItems(event.id);
 const { Content } = await render(event);
 ---
@@ -81,22 +81,22 @@ const { Content } = await render(event);
         <a href="#" class={buttonVariants({ variant: "ghost" })}> CFP </a>
       </div>
       {
-        !!partners.length && (
+        !!coOrganizers.length && (
           <div class="flex flex-col items-center justify-center">
             <div class="relative size-8 translate-y-1/2 opacity-20">
               <div class="h-[1px] w-full rotate-45 bg-white" />
               <div class="h-[1px] w-full -rotate-45 bg-white" />
             </div>
             <div class="flex w-full flex-wrap items-center justify-center gap-x-4">
-              {partners.map((partner) => (
-                <a href={partner.data.href}>
+              {coOrganizers.map((coOrganizer) => (
+                <a href={coOrganizer.data.href}>
                   <Image
                     class={cn(
                       "size-24 md:size-28",
-                      partners.length > 2 && "size-16 md:size-24",
+                      coOrganizers.length > 2 && "size-16 md:size-24",
                     )}
-                    src={partner.data.logos.noBgSquare}
-                    alt={partner.data.name}
+                    src={coOrganizer.data.logos.noBgSquare}
+                    alt={coOrganizer.data.name}
                   />
                 </a>
               ))}

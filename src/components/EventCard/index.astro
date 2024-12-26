@@ -1,23 +1,26 @@
 ---
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { getEntries } from "astro:content";
 import dayjs from "dayjs";
+import { MdArrowForward } from "react-icons/md";
+import { match } from "ts-pattern";
 
 interface Props {
   event: CollectionEntry<"events">;
 }
 
 const { event } = Astro.props;
-const partners = (await getEntries(event.data.partners ?? []))
+const coOrganizers = (await getEntries(event.data.coOrganizers ?? []))
   .filter((p) => !!p)
   .slice(0, 5);
 ---
 
 <a
   href={`/events/${event.id}`}
-  class="group relative z-10 flex gap-2 overflow-hidden rounded-lg border border-black/10 bg-background px-4 py-4 max-sm:flex-col md:px-6"
+  class="group relative z-10 flex flex-col gap-4 overflow-hidden rounded-lg border border-black/10 bg-background px-4 py-4 md:px-6"
 >
   {
     !!event.data.image?.src && (
@@ -30,8 +33,8 @@ const partners = (await getEntries(event.data.partners ?? []))
         />
         <div
           class={cn(
-            "absolute size-full bg-gradient-to-r from-black/80 via-black/0",
-            partners.length && "to-black/80",
+            "absolute size-full bg-gradient-to-r from-black/90 via-black/20",
+            coOrganizers.length && "to-black/80",
           )}
         />
         <div
@@ -44,28 +47,62 @@ const partners = (await getEntries(event.data.partners ?? []))
       </div>
     )
   }
-  <div class="flex flex-1 flex-col">
-    <div class="font-heading font-medium">
-      {dayjs(event.data.date).format("MMMM DD, YYYY")}
+  <div class="flex gap-2 max-sm:flex-col">
+    <div class="flex flex-1 flex-col gap-1">
+      <div
+        class="text-2xs uppercase tracking-widest opacity-60 transition group-hover:opacity-100"
+      >
+        {
+          match(event.data.type)
+            .with("event", () => "Full Day Event")
+            .with("meetup", () => "Community Meetup")
+            .exhaustive()
+        }
+      </div>
+      <div class="flex flex-col">
+        <div
+          class={cn(
+            "font-heading font-medium",
+            event.data.type === "event" && "text-xl",
+          )}
+        >
+          {dayjs(event.data.date).format("MMMM DD, YYYY")}
+        </div>
+        <div
+          class="font-heading text-sm opacity-60 transition group-hover:text-primary group-hover:opacity-100"
+        >
+          {event.data.city}, {event.data.country}
+        </div>
+      </div>
     </div>
-    <div
-      class="font-heading text-sm opacity-60 transition group-hover:text-primary group-hover:opacity-100"
-    >
-      {event.data.city}, {event.data.country}
-    </div>
+    {
+      !!coOrganizers.length && (
+        <div class="flex flex-1 flex-wrap items-center gap-2 sm:justify-end">
+          {coOrganizers.map((coOrganizer) => (
+            <Image
+              class="size-8 sm:size-12"
+              src={coOrganizer.data.logos.noBgSquare}
+              alt={coOrganizer.data.name}
+              width={100}
+            />
+          ))}
+        </div>
+      )
+    }
   </div>
   {
-    !!partners.length && (
-      <div class="flex flex-1 flex-wrap items-center gap-2 sm:justify-end">
-        {partners.map((partner) => (
-          <Image
-            class="size-8 sm:size-10"
-            src={partner.data.logos.noBgSquare}
-            alt={partner.data.name}
-            width={100}
-          />
-        ))}
-      </div>
+    event.data.type === "event" && (
+      <span
+        class={cn(
+          buttonVariants({
+            variant: dayjs().isBefore(event.data.date) ? "default" : "ghost",
+          }),
+          "gap-2 sm:max-w-56",
+        )}
+      >
+        {dayjs().isBefore(event.data.date) ? "Register Now" : "Event Details"}
+        <MdArrowForward />
+      </span>
     )
   }
 </a>
