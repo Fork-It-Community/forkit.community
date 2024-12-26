@@ -69,20 +69,41 @@ export const EventNav = (props: {
                   {props.eventName}
                 </span>
               </a>
-              <div className="flex-1">
-                {props.items.map((item) => (
-                  <a
-                    href={item.href}
-                    onClick={() => setOpen(false)}
-                    className="flex items-center gap-3 px-6 py-3 tracking-wide opacity-80 transition hover:bg-black/20 hover:opacity-100"
-                  >
-                    {item.label}
-                  </a>
-                ))}
+              <div className="relative flex-1">
+                <div className="absolute inset-0 overflow-auto">
+                  {props.items.map((item) => (
+                    <a
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      className="flex items-center gap-3 px-6 py-3 tracking-wide opacity-80 transition hover:bg-black/20 hover:opacity-100"
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                </div>
               </div>
-              <div className="flex items-center justify-center p-6">
-                <Button asChild className="w-full">
-                  <a href="/" className="flex gap-1">
+              <div className="absolute bottom-0 left-0 h-20 w-full bg-white opacity-15 blur-3xl" />
+              <div className="relative z-10 flex flex-wrap items-center justify-center gap-3 p-6">
+                <Button asChild size="sm">
+                  <a
+                    href="#"
+                    className="flex-[2]"
+                    onClick={() => setOpen(false)}
+                  >
+                    Get Your Ticket
+                  </a>
+                </Button>
+                <Button asChild size="sm" variant="ghost">
+                  <a href="#" className="flex-1" onClick={() => setOpen(false)}>
+                    CFP
+                  </a>
+                </Button>
+                <Button asChild size="sm" variant="ghost">
+                  <a
+                    href="/"
+                    className="flex w-full gap-1"
+                    onClick={() => setOpen(false)}
+                  >
                     Explore The Community
                     <LuArrowUpRight className="text-lg" aria-hidden="true" />
                   </a>
