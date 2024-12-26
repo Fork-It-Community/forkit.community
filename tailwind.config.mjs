@@ -14,6 +14,12 @@ export default {
       },
     },
     extend: {
+      screens: {
+        xs: "480px",
+      },
+      fontSize: {
+        "2xs": ["0.6rem", "0.8rem"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -50,7 +56,6 @@ export default {
         },
       },
       fontFamily: {
-        // TODO import font source
         sans: ["Inter", ...defaultTheme.fontFamily.sans],
         heading: ["Tomorrow", ...defaultTheme.fontFamily.sans],
       },

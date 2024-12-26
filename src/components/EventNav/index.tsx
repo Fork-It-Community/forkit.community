@@ -19,7 +19,7 @@ export const EventNav = (props: { event: CollectionEntry<"events"> }) => {
           className="group flex flex-col justify-center gap-1 px-4"
         >
           <Logo className="w-28" />
-          <span className="font-heading text-xs font-medium uppercase leading-tight opacity-60 group-hover:opacity-100">
+          <span className="font-heading text-2xs font-medium uppercase leading-tight tracking-wide opacity-60 group-hover:opacity-100">
             {props.event.data.name}
           </span>
         </a>
