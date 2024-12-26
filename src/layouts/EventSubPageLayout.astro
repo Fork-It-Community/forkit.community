@@ -25,7 +25,12 @@ const { title, description, event } = Astro.props;
     )
   }
   <div class="p-2">
-    <ExploreTheCommunity event={event} logoUrl={`/events/${event.id}`} />
+    <ExploreTheCommunity
+      eventCity={event.data.city}
+      eventCountry={event.data.country}
+      eventDate={event.data.date}
+      logoUrl={`/events/${event.id}`}
+    />
   </div>
   <slot />
 </RootLayout>
