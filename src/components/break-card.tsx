@@ -27,11 +27,7 @@ export const BreakCard = (props: Readonly<BreakCardProps>) => {
                 },
               )}
             >
-              <img
-                src={props.sponsor.image.src}
-                alt={props.sponsor.image.alt}
-                className="h-full w-full object-cover"
-              />
+              {/* Image sponsor */}
             </div>
           </div>
         )}

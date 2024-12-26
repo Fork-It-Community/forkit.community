@@ -4,7 +4,8 @@ const zEventBase = ({ image }: SchemaContext) =>
   z.object({
     city: z.string(),
     country: z.string(),
-    date: z.date().optional(),
+    date: z.date(),
+    status: z.enum(["draft", "published-without-date", "published"]),
     location: z
       .object({
         name: z.string().optional(),
@@ -47,7 +48,6 @@ const zEventBase = ({ image }: SchemaContext) =>
         title: z.string().optional(),
       })
       .optional(),
-    published: z.boolean().optional().default(false),
     sponsors: z
       .array(
         z.object({
@@ -62,7 +62,7 @@ const zEventBase = ({ image }: SchemaContext) =>
     faq: z
       .array(z.object({ question: z.string(), answer: z.string() }))
       .optional(),
-    status: z.enum([
+    eventStatus: z.enum([
       "EventCancelled",
       "EventMovedOnline",
       "EventPostponed",

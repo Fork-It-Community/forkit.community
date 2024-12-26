@@ -16,14 +16,14 @@ export const collections = {
   }),
   sponsors: defineCollection({
     loader: glob({ pattern: "**/*.mdx", base: "./src/content/sponsors" }),
-    schema: zSponsor(),
+    schema: zSponsor,
   }),
   events: defineCollection({
     loader: glob({
       pattern: ["**/*.mdx", "!**/pages/*.mdx"],
       base: "./src/content/events",
     }),
-    schema: ({ image }) => zEvent({ image }),
+    schema: zEvent,
   }),
   eventsSubPages: defineCollection({
     loader: glob({

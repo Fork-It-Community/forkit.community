@@ -4,7 +4,7 @@ import { getCollection, getEntries, type CollectionEntry } from "astro:content";
 
 export function getEventsCollection() {
   return getCollection("events", ({ data }) =>
-    import.meta.env.PROD ? data.published === true : true,
+    import.meta.env.PROD ? data.status !== "draft" : true,
   );
 }
 
@@ -39,7 +39,7 @@ export async function getNextEvent() {
 
 export async function getMeetupsCollection() {
   return getCollection("events", ({ data }) => {
-    const isPublished = import.meta.env.PROD ? data.published === true : true;
+    const isPublished = import.meta.env.PROD ? data.status !== "draft" : true;
 
     return isPublished && data.type === "meetup";
   });
