@@ -5,6 +5,7 @@ import type { CollectionEntry } from "astro:content";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import { EventNav } from "@/components/EventNav";
 import { getEventNavItems } from "@/lib/events";
+import EventWarningBanner from "@/components/EventWarningBanner/EventWarningBanner.astro";
 
 interface Props {
   title?: string;
@@ -26,7 +27,7 @@ const navItems = await getEventNavItems(event.id);
       />
     )
   }
-  <div class="p-2">
+  <div class="absolute inset-0 p-2">
     <ExploreTheCommunity
       eventCity={event.data.city}
       eventCountry={event.data.country}
@@ -41,4 +42,5 @@ const navItems = await getEventNavItems(event.id);
     client:load
   />
   <slot />
+  <EventWarningBanner event={event} />
 </RootLayout>

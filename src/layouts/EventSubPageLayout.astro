@@ -3,6 +3,7 @@ import { ExploreTheCommunity } from "@/components/ExploreTheCommunity";
 import RootLayout from "@/layouts/RootLayout.astro";
 import type { CollectionEntry } from "astro:content";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
+import EventWarningBanner from "@/components/EventWarningBanner/EventWarningBanner.astro";
 
 interface Props {
   title?: string;
@@ -33,4 +34,5 @@ const { title, description, event } = Astro.props;
     />
   </div>
   <slot />
+  <EventWarningBanner event={event} />
 </RootLayout>
