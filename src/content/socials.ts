@@ -1,5 +1,5 @@
 import { IconLuma } from "@/components/CustomIcons/IconLuma";
-import type { FC, ReactNode } from "react";
+import type { FC } from "react";
 import {
   FaBluesky,
   FaDiscord,

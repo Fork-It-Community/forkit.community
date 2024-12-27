@@ -4,6 +4,7 @@ import RootLayout from "@/layouts/RootLayout.astro";
 import type { CollectionEntry } from "astro:content";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import EventWarningBanner from "@/components/EventWarningBanner/index.astro";
+import Footer from "@/components/Footer/index.astro";
 
 interface Props {
   title?: string;
@@ -36,5 +37,6 @@ const { title, description, event } = Astro.props;
   <div class="flex flex-1 flex-col pb-40">
     <slot />
   </div>
+  <Footer />
   <EventWarningBanner event={event} />
 </RootLayout>

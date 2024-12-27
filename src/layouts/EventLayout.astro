@@ -6,6 +6,7 @@ import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import { EventNav } from "@/components/EventNav";
 import { getEventNavItems } from "@/lib/events";
 import EventWarningBanner from "@/components/EventWarningBanner/index.astro";
+import Footer from "@/components/Footer/index.astro";
 
 interface Props {
   title?: string;
@@ -44,5 +45,6 @@ const navItems = await getEventNavItems(event.id);
   <div class="flex flex-1 flex-col pb-40">
     <slot />
   </div>
+  <Footer />
   <EventWarningBanner event={event} />
 </RootLayout>

@@ -1,0 +1,53 @@
+---
+import { getSocialsItems } from "@/content/socials";
+import dayjs from "dayjs";
+import { MdArrowOutward } from "react-icons/md";
+---
+
+<footer class="bg-background-blur">
+  <div
+    class="mx-auto flex w-full max-w-screen-lg flex-col items-center gap-4 px-4 py-12 sm:flex-row"
+  >
+    <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-0">
+      {
+        getSocialsItems().map(({ icon: Icon, ...social }) => (
+          <a
+            href={social.href}
+            class="flex items-center gap-2 p-1 text-lg opacity-60 transition hover:text-white hover:opacity-100"
+            aria-label={social.label}
+            title={social.label}
+          >
+            <Icon />
+          </a>
+        ))
+      }
+    </div>
+    <div class="flex flex-1 flex-col gap-1 sm:-order-1">
+      <div class="flex items-center justify-start gap-1 text-xs">
+        <a class="opacity-60 transition hover:opacity-100" href="/"> Home </a>
+        <span class="opacity-20">⋅</span>
+        <a
+          class="flex items-center gap-1 opacity-60 transition hover:opacity-100"
+          href="https://drive.google.com/drive/folders/1JkxgD0f6fetVdzsjGLLMexTRwRdb3Euv?usp=sharing"
+        >
+          Media Kit
+          <MdArrowOutward className="text-base" />
+        </a>
+        <span class="opacity-20">⋅</span>
+        <a
+          class="opacity-60 transition hover:opacity-100"
+          href="/code-of-conduct"
+        >
+          Code of Conduct
+        </a>
+        <span class="opacity-20">⋅</span>
+        <a class="opacity-60 transition hover:opacity-100" href="/sitemap.xml">
+          Sitemap
+        </a>
+      </div>
+      <p class="text-xs opacity-40">
+        © {dayjs().format("YYYY")} Fork it! Community. All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>
