@@ -157,7 +157,10 @@ const { Content } = await render(event);
   </div>
 
   <div class="mx-auto flex w-full max-w-screen-md flex-col gap-8 px-4 py-12">
-    <h2 class="font-heading text-2xl font-medium uppercase tracking-widest">
+    <h2
+      id="schedule"
+      class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+    >
       Schedule
     </h2>
     <Schedule event={event} />
@@ -175,7 +178,12 @@ const { Content } = await render(event);
       }
     </ul>
     <hr />
-    <div id="speakers" class="scroll-mt-20">Speakers</div>
+    <h2
+      id="speakers"
+      class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+    >
+      Speakers
+    </h2>
     <ul>
       {speakers.map((speaker) => <Speaker speaker={speaker} />)}
     </ul>

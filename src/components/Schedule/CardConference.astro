@@ -1,10 +1,9 @@
 ---
-import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
-import SpeakerPlaceholder from "@/assets/images/speaker-placeholder.jpeg";
 import { getEntry } from "astro:content";
 import { getEntries } from "astro:content";
 import { IoLanguageSharp } from "react-icons/io5";
+import SpeakerForCard from "./SpeakerForCard.astro";
 
 interface Props {
   activity: CollectionEntry<"events">["data"]["schedule"][number];
@@ -16,57 +15,41 @@ const { activity, event } = Astro.props;
 const talk = activity.slug ? await getEntry(activity.slug) : undefined;
 const hosts = await getEntries(talk?.data.hosts ?? []);
 const speakers = await getEntries(talk?.data.speakers ?? []);
+const people = [...hosts, ...speakers];
 ---
 
 {
   talk && (
     <a
       href={`/events/${event.id}/talks/${talk.id}`}
-      class="flex w-full flex-[4] gap-2 rounded-lg border-2 p-2 px-6 py-4"
+      class="group flex w-full flex-col gap-4 rounded-lg bg-white/5 p-4 backdrop-blur-md transition hover:bg-white/10 sm:px-6 sm:py-5"
     >
-      <div class="flex w-full flex-col gap-4">
-        <div class="flex flex-col gap-2">
-          <p class="text-xl font-semibold">{talk.data.title}</p>
-          <div class="flex flex-col gap-2">
-            {hosts?.map((host) => (
-              <div class="flex flex-row gap-2">
-                <Image
-                  class="aspect-square rounded-sm"
-                  src={host.data.avatar ?? SpeakerPlaceholder}
-                  alt={host.data.name}
-                  width={40}
-                  height={40}
-                  sizes="40px"
-                />
-                <div class="flex flex-col">
-                  <p class="font-heading">{host.data.name}</p>
-                  <p class="text-xs font-semibold">Roundtable host</p>
-                </div>
-              </div>
-            ))}
-            {speakers.map((speaker) => (
-              <div class="flex flex-row gap-2">
-                <Image
-                  class="aspect-square rounded-sm"
-                  src={speaker.data.avatar ?? SpeakerPlaceholder}
-                  alt={speaker.data.name}
-                  width={40}
-                  height={40}
-                  sizes="40px"
-                />
-                <p class="font-heading">{speaker.data.name}</p>
-              </div>
-            ))}
-          </div>
+      <p class="text-balance font-heading text-base font-medium leading-tight tracking-wider text-white transition group-hover:text-primary">
+        {talk.data.title}
+      </p>
+      {!!people.length && (
+        <div class="grid grid-cols-2 gap-3 md:grid-cols-3">
+          {hosts?.map((host) => (
+            <SpeakerForCard
+              name={host.data.name}
+              avatar={host.data.avatar ?? null}
+              role="Roundtable host"
+            />
+          ))}
+          {speakers.map((speaker) => (
+            <SpeakerForCard
+              name={speaker.data.name}
+              avatar={speaker.data.avatar ?? null}
+            />
+          ))}
         </div>
-        <div class="flex flex-row items-center justify-between">
-          <span>
-            <IoLanguageSharp className="size-4" />
-            <span>
-              Talk in <span class="capitalize">{talk.data.language}</span>
-            </span>
-          </span>
-        </div>
+      )}
+
+      <div>
+        <span class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase opacity-60 transition group-hover:opacity-100">
+          <IoLanguageSharp className="text-base" />
+          <span>Talk in {talk.data.language}</span>
+        </span>
       </div>
     </a>
   )

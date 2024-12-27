@@ -13,26 +13,47 @@ const sponsors = await getEntries(_break.sponsors ?? []);
 ---
 
 <div
-  class="flex w-full flex-col gap-0 rounded-lg bg-white/5 px-6 py-4 backdrop-blur-md"
+  class="flex w-full flex-col gap-2 rounded-lg bg-white/5 px-6 py-5 backdrop-blur-md md:flex-row md:items-center"
 >
-  <p class="font-heading text-base font-medium tracking-wider">
-    {_break.name}
-  </p>
-
-  {_break.description && <p class="text-sm opacity-60">{_break.description}</p>}
+  <div class="flex w-full flex-col gap-1">
+    <p
+      class="text-balance font-heading text-base font-medium leading-tight tracking-wider opacity-80"
+    >
+      {_break.name}
+    </p>
+    {
+      _break.description && (
+        <p class="text-balance text-sm tracking-wider opacity-60">
+          {_break.description}
+        </p>
+      )
+    }
+  </div>
   {
     sponsors.map((sponsor) => (
-      <div class="flex flex-col gap-2">
-        <p class="text-sm">Sponsored by</p>
-        <div class:list="w-40 overflow-hidden rounded-md border-2 border-gray-100">
+      <div class="flex flex-col items-center justify-center gap-1">
+        <p class="text-2xs font-medium uppercase tracking-wide opacity-40">
+          Sponsored by
+        </p>
+        {sponsor.data.href ? (
+          <a href={sponsor.data.href}>
+            <Image
+              class="rounded-md bg-white/20"
+              src={sponsor.data.logos.bgWhite}
+              alt={sponsor.data.name}
+              width={120}
+              height={72}
+            />
+          </a>
+        ) : (
           <Image
-            class="w-full"
+            class="rounded-md bg-white/20"
             src={sponsor.data.logos.bgWhite}
             alt={sponsor.data.name}
-            width={1000}
-            height={500}
+            width={120}
+            height={72}
           />
-        </div>
+        )}
       </div>
     ))
   }
