@@ -93,7 +93,7 @@ export async function getMeetupsCollection() {
 
 export async function getEvent(id: string) {
   const event = await getEntry("events", id);
-  if (import.meta.env.PROD && isEventPublished(event?.data.status)) {
+  if (import.meta.env.PROD && !isEventPublished(event?.data.status)) {
     return undefined;
   }
   return event;
@@ -102,21 +102,23 @@ export async function getEvent(id: string) {
 export async function getEventNavItems(id: string) {
   const event = await getEvent(id);
 
+  if (!event) return [];
+
   return [
     {
-      href: `/events/${event?.id}#venue`,
+      href: `/events/${event.id}#venue`,
       label: "Venue",
     },
     {
-      href: `/events/${event?.id}#schedule`,
+      href: `/events/${event.id}#schedule`,
       label: "Schedule",
     },
     {
-      href: `/events/${event?.id}#speakers`,
+      href: `/events/${event.id}#speakers`,
       label: "Speakers",
     },
     {
-      href: `/events/${event?.id}#sponsors`,
+      href: `/events/${event.id}#sponsors`,
       label: "Sponsors",
     },
   ];
