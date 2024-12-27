@@ -4,6 +4,7 @@ import { buttonVariants } from "@/components/ui/button";
 import FeedbackCTA from "@/components/FeedbackCTA/index.astro";
 import EventLayout from "@/layouts/EventLayout.astro";
 import Schedule from "@/components/Schedule/index.astro";
+import Speaker from "@/components/Speaker/index.astro";
 import {
   getEventNavItems,
   getEventsCollection,
@@ -171,7 +172,7 @@ const { Content } = await render(event);
     <hr />
     <div id="speakers" class="scroll-mt-20">Speakers</div>
     <ul>
-      {speakers.map((speaker) => <li>{speaker.data.name}</li>)}
+      {speakers.map((speaker) => <Speaker speaker={speaker} />)}
     </ul>
     <div>Talks</div>
     <ul>

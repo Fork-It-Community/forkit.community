@@ -1,0 +1,74 @@
+---
+import { Image } from "astro:assets";
+import SpeakerPlaceholder from "@/assets/images/speaker-placeholder.jpeg";
+import type { CollectionEntry } from "astro:content";
+import { SOCIALS_TYPE_MAP } from "@/content/socials";
+
+interface Props {
+  speaker: CollectionEntry<"people">;
+}
+
+const { speaker } = Astro.props;
+---
+
+<div class="flex h-fit w-fit flex-col gap-2">
+  <div class="mx-auto aspect-square overflow-hidden rounded-lg">
+    <Image
+      src={speaker.data.avatar ?? SpeakerPlaceholder}
+      alt={speaker.data.name}
+    />
+  </div>
+  <div class="flex flex-col gap-3">
+    <div>
+      <h2
+        class="text-lg font-semibold leading-6 tracking-tight text-white md:text-xl"
+      >
+        {speaker.data.name}
+      </h2>
+      {!!speaker.data.job && <p class="text-neutral-400">{speaker.data.job}</p>}
+      {
+        !!speaker.data.company && (
+          <div>
+            {!!speaker.data.company.href ? (
+              <a
+                href={speaker.data.company.href}
+                target="_blank"
+                class="text-neutral-400 text-sm leading-5 underline transition hover:text-primary"
+              >
+                {speaker.data.company.title}
+              </a>
+            ) : (
+              <p class="text-sm leading-5 text-gray-400">
+                {speaker.data.company.title}
+              </p>
+            )}
+          </div>
+        )
+      }
+    </div>
+    {
+      !!speaker.data.socials && (
+        <ul class="flex gap-x-2">
+          {speaker.data.socials.map((social) => {
+            const Icon = SOCIALS_TYPE_MAP[social.type];
+
+            return (
+              <Fragment>
+                <li>
+                  <a
+                    href={social.href}
+                    class="transition hover:text-primary"
+                    target="_blank"
+                  >
+                    <span class="sr-only">{social.type}</span>
+                    <Icon />
+                  </a>
+                </li>
+              </Fragment>
+            );
+          })}
+        </ul>
+      )
+    }
+  </div>
+</div>

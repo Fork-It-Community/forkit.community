@@ -1,9 +1,11 @@
 import { IconLuma } from "@/components/CustomIcons/IconLuma";
+import type { SocialType } from "@/schemas/utils";
 import type { FC } from "react";
 import {
   FaBluesky,
   FaDiscord,
   FaGithub,
+  FaInstagram,
   FaLinkedin,
   FaXTwitter,
   FaYoutube,
@@ -65,3 +67,11 @@ export function getSocialsItems(level?: SocialsLevel) {
   if (!level) return SOCIALS;
   return SOCIALS.filter((item) => item.level === level);
 }
+
+export const SOCIALS_TYPE_MAP = {
+  bluesky: FaBluesky,
+  github: FaGithub,
+  instagram: FaInstagram,
+  linkedin: FaLinkedin,
+  x: FaXTwitter,
+} satisfies Record<SocialType, FC>;

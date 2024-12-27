@@ -23,7 +23,7 @@ const { event } = Astro.props;
     href={`mailto:rudy@forkit.community?subject=${event.data.date?.getFullYear()} ${
       event.data.city
     } ${event.data.country} Sponsorship`}
-    class:list={buttonVariants()}
+    class={buttonVariants()}
   >
     Contact Us<MdMail className="ml-2 h-4 w-4" />
   </a>
