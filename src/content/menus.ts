@@ -2,11 +2,11 @@ import type { FC, ReactNode } from "react";
 import {
   MdHomeFilled,
   MdEvent,
-  MdFeed,
-  MdPodcasts,
-  MdBadge,
-  MdHandshake,
-  MdLocalActivity,
+  // MdFeed,
+  // MdPodcasts,
+  // MdBadge,
+  // MdHandshake,
+  // MdLocalActivity,
 } from "react-icons/md";
 
 type MainMenuScope = "all" | "mobile" | "desktop";
@@ -35,41 +35,41 @@ const MainMenu: Array<{
     scope: "all",
     level: "primary",
   },
-  {
-    label: "News",
-    href: "/news",
-    icon: MdFeed,
-    scope: "all",
-    level: "primary",
-  },
-  {
-    label: "Podcasts",
-    href: "/podcasts",
-    icon: MdPodcasts,
-    scope: "all",
-    level: "primary",
-  },
-  {
-    label: "Community members",
-    href: "/people",
-    icon: MdBadge,
-    scope: "all",
-    level: "secondary",
-  },
-  {
-    label: "Partners",
-    href: "/partners",
-    icon: MdHandshake,
-    scope: "all",
-    level: "secondary",
-  },
-  {
-    label: "Organize an event",
-    href: "/organize-event",
-    icon: MdLocalActivity,
-    scope: "all",
-    level: "secondary",
-  },
+  // {
+  //   label: "News",
+  //   href: "/news",
+  //   icon: MdFeed,
+  //   scope: "all",
+  //   level: "primary",
+  // },
+  // {
+  //   label: "Podcasts",
+  //   href: "/podcasts",
+  //   icon: MdPodcasts,
+  //   scope: "all",
+  //   level: "primary",
+  // },
+  // {
+  //   label: "Community members",
+  //   href: "/people",
+  //   icon: MdBadge,
+  //   scope: "all",
+  //   level: "secondary",
+  // },
+  // {
+  //   label: "Partners",
+  //   href: "/partners",
+  //   icon: MdHandshake,
+  //   scope: "all",
+  //   level: "secondary",
+  // },
+  // {
+  //   label: "Organize an event",
+  //   href: "/organize-event",
+  //   icon: MdLocalActivity,
+  //   scope: "all",
+  //   level: "secondary",
+  // },
 ];
 
 export function getMainMenuMobileItems(level: MainMenuLevel) {

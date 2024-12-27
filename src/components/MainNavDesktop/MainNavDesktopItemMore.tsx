@@ -9,6 +9,12 @@ import {
 import { getMainMenuDesktopItems } from "@/content/menus";
 
 const MainNavMobileItemMore = (props: { currentPathname: string }) => {
+  const secondaryContent = getMainMenuDesktopItems("secondary");
+
+  if (secondaryContent.length === 0) {
+    return null;
+  }
+
   return (
     <Popover>
       <PopoverTrigger className="flex items-center justify-center gap-2 rounded px-3 py-2 opacity-50 transition hover:bg-black/30 hover:opacity-100">
@@ -23,7 +29,7 @@ const MainNavMobileItemMore = (props: { currentPathname: string }) => {
         alignOffset={-20}
         sideOffset={8}
       >
-        {getMainMenuDesktopItems("secondary").map((item, index) => (
+        {secondaryContent.map((item, index) => (
           <MoreNavItem
             key={index}
             icon={item.icon}
