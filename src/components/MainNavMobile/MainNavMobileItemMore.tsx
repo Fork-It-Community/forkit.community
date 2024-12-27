@@ -12,6 +12,12 @@ import { cn } from "@/lib/utils";
 import { getMainMenuMobileItems } from "@/content/menus";
 
 const MainNavMobileItemMore = (props: { currentPathname: string }) => {
+  const secondaryItems = getMainMenuMobileItems("secondary");
+
+  if (secondaryItems.length === 0) {
+    return null;
+  }
+
   return (
     <Drawer autoFocus>
       <DrawerTrigger className="flex flex-1 flex-col items-center justify-center py-3 opacity-60">
@@ -26,7 +32,7 @@ const MainNavMobileItemMore = (props: { currentPathname: string }) => {
           <DrawerDescription></DrawerDescription>
         </DrawerHeader>
         <div className="pb-8 pt-4">
-          {getMainMenuMobileItems("secondary").map((item, index) => (
+          {secondaryItems.map((item, index) => (
             <MoreNavItem
               key={index}
               icon={item.icon}
