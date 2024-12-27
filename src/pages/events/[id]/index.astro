@@ -5,6 +5,7 @@ import FeedbackCTA from "@/components/FeedbackCTA/index.astro";
 import EventLayout from "@/layouts/EventLayout.astro";
 import Schedule from "@/components/Schedule/index.astro";
 import Speaker from "@/components/Speaker/index.astro";
+import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import {
   getEventNavItems,
   getEventsCollection,
@@ -190,6 +191,8 @@ const { Content } = await render(event);
       )
     }
   </div>
+
+  <JoinTheCommunity />
 
   <div class="mx-auto w-full max-w-screen-sm px-4 py-24">
     <div>Event page {event.data.name}</div>
