@@ -64,11 +64,14 @@ const zEventBase = ({ image }: SchemaContext) =>
       .optional(),
     coOrganizers: z.array(reference("partners")).optional(),
     partners: z.array(reference("partners")).optional(),
-    speakers: z.array(reference("people")).optional(),
-    talks: z.array(reference("talks")).optional(),
+    speakers: z
+      .array(reference("people"))
+      .optional()
+      .describe("Collection of people to be added in addition to the schedule"),
     faq: z
       .array(z.object({ question: z.string(), answer: z.string() }))
-      .optional(),
+      .optional()
+      .describe("Frequently Asked Questions for the event"),
     eventStatus: z.enum([
       "EventCancelled",
       "EventMovedOnline",
@@ -90,7 +93,7 @@ const zEventBase = ({ image }: SchemaContext) =>
         name: z.string().optional(),
         slug: reference("talks").optional(),
         startTime: z.date().optional(),
-        duration: z.number().optional(),
+        duration: z.number().optional().describe("Number of minutes"),
         location: z.string().optional(),
       }),
     ),

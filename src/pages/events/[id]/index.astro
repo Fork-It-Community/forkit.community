@@ -28,7 +28,11 @@ export async function getStaticPaths() {
         event,
         subPages: await getEventSubPagesCollection(event),
         speakers: await getEntries(event.data.speakers ?? []),
-        talks: await getEntries(event.data.talks ?? []),
+        talks: await getEntries(
+          event.data.schedule
+            .map((activity) => activity.slug)
+            .filter((slug) => !!slug) ?? [],
+        ),
         coOrganizers: await getEntries(event.data.coOrganizers ?? []),
         sponsors: await getEntries(
           (event.data.sponsors ?? []).map((s) => s.slug),
