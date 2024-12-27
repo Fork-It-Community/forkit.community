@@ -12,7 +12,7 @@ import {
 type MainMenuScope = "all" | "mobile" | "desktop";
 type MainMenuLevel = "primary" | "secondary";
 
-const MainMenu: Array<{
+const MAIN_MENU: Array<{
   icon: FC;
   label: ReactNode;
   href: string;
@@ -73,14 +73,14 @@ const MainMenu: Array<{
 ];
 
 export function getMainMenuMobileItems(level: MainMenuLevel) {
-  return MainMenu.filter(
+  return MAIN_MENU.filter(
     (item) =>
       (item.scope === "all" || item.scope === "mobile") && item.level === level,
   );
 }
 
 export function getMainMenuDesktopItems(level: MainMenuLevel) {
-  return MainMenu.filter(
+  return MAIN_MENU.filter(
     (item) =>
       (item.scope === "all" || item.scope === "desktop") &&
       item.level === level,

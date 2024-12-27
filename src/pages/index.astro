@@ -1,7 +1,7 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
-import { getNextEvent } from "@/lib/events";
+import { getNextMajorEvent } from "@/lib/events";
 import { getPodcastsCollection } from "@/lib/podcasts";
 import { Logo } from "@/components/Logo";
 import { Image } from "astro:assets";
@@ -11,7 +11,7 @@ import { MdArrowForward } from "react-icons/md";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
-const nextEvent = await getNextEvent();
+const nextEvent = await getNextMajorEvent();
 const podcasts = await getPodcastsCollection();
 ---
 
@@ -51,7 +51,7 @@ const podcasts = await getPodcastsCollection();
         </div>
         {
           !nextEvent && (
-            <div class="flex w-full items-center justify-center">
+            <div class="flex w-full items-center justify-center sm:justify-start">
               <a
                 href="/events"
                 class={cn(buttonVariants(), "gap-2 sm:max-w-56")}
