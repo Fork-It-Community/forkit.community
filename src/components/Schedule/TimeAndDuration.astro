@@ -1,10 +1,10 @@
 ---
-import { formatTime } from "@/lib/utils";
+import { cn, formatTime } from "@/lib/utils";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
   activity: CollectionEntry<"events">["data"]["schedule"][number];
-  class: string;
+  class?: string;
 }
 
 const { activity, class: className } = Astro.props;
@@ -12,13 +12,17 @@ const { activity, class: className } = Astro.props;
 
 {
   activity.startTime && (
-    <div class:list={["flex flex-row gap-2 text-sm text-gray-300", className]}>
-      <time datetime={activity.startTime.toISOString()}>
+    <div class={cn("flex gap-1.5", className)}>
+      <time class="font-medium" datetime={activity.startTime.toISOString()}>
         {formatTime(activity.startTime)}
       </time>
-      <span class="md:hidden">·</span>{" "}
-      {activity.duration && <p>{activity.duration} minutes</p>}
-      <slot />
+
+      {activity.duration && (
+        <>
+          <span class="opacity-60">·</span>
+          <p class="text-[0.9em]">({activity.duration} min)</p>
+        </>
+      )}
     </div>
   )
 }

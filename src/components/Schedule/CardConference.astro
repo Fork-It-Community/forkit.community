@@ -1,12 +1,10 @@
 ---
-import LocationBadge from "@/components/Schedule/LocationBadge.astro";
-import TimeAndDuration from "@/components/Schedule/TimeAndDuration.astro";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import SpeakerPlaceholder from "@/assets/images/speaker-placeholder.jpeg";
-import { LanguageBadge } from "@/components/language-badge";
 import { getEntry } from "astro:content";
 import { getEntries } from "astro:content";
+import { IoLanguageSharp } from "react-icons/io5";
 
 interface Props {
   activity: CollectionEntry<"events">["data"]["schedule"][number];
@@ -15,8 +13,6 @@ interface Props {
 
 const { activity, event } = Astro.props;
 
-console.log({ activity });
-
 const talk = activity.slug ? await getEntry(activity.slug) : undefined;
 const hosts = await getEntries(talk?.data.hosts ?? []);
 const speakers = await getEntries(talk?.data.speakers ?? []);
@@ -24,72 +20,54 @@ const speakers = await getEntries(talk?.data.speakers ?? []);
 
 {
   talk && (
-    <div class="flex flex-row gap-4 lg:gap-8">
-      <div class="hidden gap-2 md:flex md:flex-1 md:flex-col">
-        <TimeAndDuration activity={activity} class="flex flex-col">
-          {activity.type === "roundtable" && <>Roundtable</>}
-        </TimeAndDuration>
-        {!!activity.location && (
-          <LocationBadge>{activity.location}</LocationBadge>
-        )}
-      </div>
-
-      <a
-        href={`/events/${event.id}/talks/${talk.id}`}
-        class="flex w-full flex-[4] gap-2 rounded-lg border-2 p-2 px-6 py-4"
-      >
-        <div class="flex w-full flex-col gap-4">
+    <a
+      href={`/events/${event.id}/talks/${talk.id}`}
+      class="flex w-full flex-[4] gap-2 rounded-lg border-2 p-2 px-6 py-4"
+    >
+      <div class="flex w-full flex-col gap-4">
+        <div class="flex flex-col gap-2">
+          <p class="text-xl font-semibold">{talk.data.title}</p>
           <div class="flex flex-col gap-2">
-            <div class="flex flex-1 flex-col gap-2 md:hidden">
-              <TimeAndDuration
-                activity={activity}
-                class="flex flex-wrap md:hidden"
-              >
-                {activity.type === "roundtable" && <>Roundtable</>}
-              </TimeAndDuration>
-              {!!activity.location && (
-                <LocationBadge>{activity.location}</LocationBadge>
-              )}
-            </div>
-
-            <p class="text-xl font-semibold">{talk.data.title}</p>
-            <div class="flex flex-col gap-2">
-              {hosts?.map((host) => (
-                <div class="flex flex-row gap-2">
-                  <Image
-                    class="aspect-square rounded-sm"
-                    src={host.data.avatar ?? SpeakerPlaceholder}
-                    alt={host.data.name}
-                    width={40}
-                    height={40}
-                    sizes="40px"
-                  />
-                  <div class="flex flex-col">
-                    <p class="font-heading">{host.data.name}</p>
-                    <p class="text-xs font-semibold">Roundtable host</p>
-                  </div>
+            {hosts?.map((host) => (
+              <div class="flex flex-row gap-2">
+                <Image
+                  class="aspect-square rounded-sm"
+                  src={host.data.avatar ?? SpeakerPlaceholder}
+                  alt={host.data.name}
+                  width={40}
+                  height={40}
+                  sizes="40px"
+                />
+                <div class="flex flex-col">
+                  <p class="font-heading">{host.data.name}</p>
+                  <p class="text-xs font-semibold">Roundtable host</p>
                 </div>
-              ))}
-              {speakers.map((speaker) => (
-                <div class="flex flex-row gap-2">
-                  <Image
-                    class="aspect-square rounded-sm"
-                    src={speaker.data.avatar ?? SpeakerPlaceholder}
-                    alt={speaker.data.name}
-                    width={40}
-                    height={40}
-                    sizes="40px"
-                  />
-                  <p class="font-heading">{speaker.data.name}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div class="flex flex-row items-center justify-between">
-            <LanguageBadge language={talk.data.language} />
+              </div>
+            ))}
+            {speakers.map((speaker) => (
+              <div class="flex flex-row gap-2">
+                <Image
+                  class="aspect-square rounded-sm"
+                  src={speaker.data.avatar ?? SpeakerPlaceholder}
+                  alt={speaker.data.name}
+                  width={40}
+                  height={40}
+                  sizes="40px"
+                />
+                <p class="font-heading">{speaker.data.name}</p>
+              </div>
+            ))}
           </div>
         </div>
-      </a>
-    </div>
+        <div class="flex flex-row items-center justify-between">
+          <span>
+            <IoLanguageSharp className="size-4" />
+            <span>
+              Talk in <span class="capitalize">{talk.data.language}</span>
+            </span>
+          </span>
+        </div>
+      </div>
+    </a>
   )
 }

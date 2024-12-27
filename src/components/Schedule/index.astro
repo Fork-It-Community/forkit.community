@@ -1,8 +1,10 @@
 ---
 import CardBreak from "@/components/Schedule/CardBreak.astro";
 import CardConference from "@/components/Schedule/CardConference.astro";
+import TimeAndDuration from "@/components/Schedule/TimeAndDuration.astro";
 import ScheduleComingSoon from "@/components/ScheduleComingSoon/index.astro";
 import type { CollectionEntry } from "astro:content";
+import { MdPlace } from "react-icons/md";
 import { match } from "ts-pattern";
 
 interface Props {
@@ -14,20 +16,44 @@ const { event } = Astro.props;
 
 {!event.data.schedule && <ScheduleComingSoon event={event} />}
 
-<div class="flex flex-col gap-4">
+<div class="flex flex-col pb-4">
   {
     event.data.schedule
       .toSorted(
         (talk1, talk2) =>
           (talk1.startTime?.valueOf() ?? 0) - (talk2.startTime?.valueOf() ?? 0),
       )
-      .map((activity) =>
-        match(activity.type)
-          .with("conference", "roundtable", () => (
-            <CardConference activity={activity} event={event} />
-          ))
-          .with("break", () => <CardBreak break={activity} />)
-          .otherwise(() => null),
-      )
+      .map((activity) => {
+        return (
+          <div class="group flex gap-3">
+            <div class="flex flex-col items-center gap-1 pt-1">
+              <div class="size-2.5 rounded-full border-2 border-white/40" />
+              <div class="flex-1 border-l border-dashed border-white/20 group-last:hidden" />
+            </div>
+            <div class="flex w-full flex-col gap-2 pb-6">
+              <div class="flex flex-1 flex-col justify-between gap-x-3 gap-y-1 xs:flex-row">
+                <TimeAndDuration
+                  activity={activity}
+                  class="font-heading text-sm tracking-wide opacity-80"
+                />
+                {!!activity.location && (
+                  <span class="flex items-center gap-1.5 text-xs uppercase tracking-wide opacity-60">
+                    <MdPlace className="text-base max-xs:hidden" />
+                    {activity.location}
+                  </span>
+                )}
+              </div>
+              <div class="">
+                {match(activity.type)
+                  .with("conference", "roundtable", () => (
+                    <CardConference activity={activity} event={event} />
+                  ))
+                  .with("break", "lunch", () => <CardBreak break={activity} />)
+                  .exhaustive()}
+              </div>
+            </div>
+          </div>
+        );
+      })
   }
 </div>

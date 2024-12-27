@@ -1,6 +1,4 @@
 ---
-import LocationBadge from "@/components/Schedule/LocationBadge.astro";
-import TimeAndDuration from "@/components/Schedule/TimeAndDuration.astro";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { getEntries } from "astro:content";
@@ -14,38 +12,28 @@ const { break: _break } = Astro.props;
 const sponsors = await getEntries(_break.sponsors ?? []);
 ---
 
-<div class="flex flex-row gap-4 lg:gap-8">
-  <div class="hidden md:flex md:flex-1 md:flex-col md:gap-2">
-    <TimeAndDuration activity={_break} class="hidden md:flex md:flex-col" />
-    {!!_break.location && <LocationBadge>{_break.location}</LocationBadge>}
-  </div>
+<div
+  class="flex w-full flex-col gap-0 rounded-lg bg-white/5 px-6 py-4 backdrop-blur-md"
+>
+  <p class="font-heading text-base font-medium tracking-wider">
+    {_break.name}
+  </p>
 
-  <div
-    class="flex w-full flex-[4] flex-col gap-2 rounded-lg border-2 border-gray-600 bg-gray-800 px-6 py-4"
-  >
-    <div class="flex flex-col gap-1 md:hidden">
-      <TimeAndDuration activity={_break} class="flex flex-wrap" />
-      {!!_break.location && <LocationBadge>{_break.location}</LocationBadge>}
-    </div>
-    <p class="text-xl font-semibold">{_break.name}</p>
-    <div class="flex flex-col justify-between gap-4 md:flex-row">
-      {_break.description && <p>{_break.description}</p>}
-      {
-        sponsors.map((sponsor) => (
-          <div class="flex flex-col gap-2">
-            <p class="text-sm">Sponsored by</p>
-            <div class:list="w-40 overflow-hidden rounded-md border-2 border-gray-100">
-              <Image
-                class="w-full"
-                src={sponsor.data.logos.bgWhite}
-                alt={sponsor.data.name}
-                width={1000}
-                height={500}
-              />
-            </div>
-          </div>
-        ))
-      }
-    </div>
-  </div>
+  {_break.description && <p class="text-sm opacity-60">{_break.description}</p>}
+  {
+    sponsors.map((sponsor) => (
+      <div class="flex flex-col gap-2">
+        <p class="text-sm">Sponsored by</p>
+        <div class:list="w-40 overflow-hidden rounded-md border-2 border-gray-100">
+          <Image
+            class="w-full"
+            src={sponsor.data.logos.bgWhite}
+            alt={sponsor.data.name}
+            width={1000}
+            height={500}
+          />
+        </div>
+      </div>
+    ))
+  }
 </div>
