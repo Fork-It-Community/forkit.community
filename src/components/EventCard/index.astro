@@ -22,11 +22,18 @@ const isUpcomingEvent = dayjs().isBefore(event.data.date);
 
 <a
   href={`/events/${event.id}`}
-  class="group relative z-10 flex flex-col gap-4 overflow-hidden rounded-lg bg-background px-4 py-4 md:px-6"
+  class={cn(
+    "group relative z-10 flex flex-col gap-4 overflow-hidden rounded-lg bg-background px-4 py-4 shadow-xl md:px-6",
+  )}
 >
   {
     !!event.data.image?.src && (
-      <div class="pointer-events-none absolute bottom-0 left-0 right-0 top-0 -z-10 overflow-hidden">
+      <div
+        class={cn(
+          "pointer-events-none absolute bottom-0 left-0 right-0 top-0 -z-10 overflow-hidden",
+          event.data.eventStatus === "EventCancelled" && "grayscale",
+        )}
+      >
         <Image
           src={event.data.image.src}
           alt=""
@@ -53,21 +60,32 @@ const isUpcomingEvent = dayjs().isBefore(event.data.date);
   }
   <div class="flex gap-2 max-sm:flex-col">
     <div class="flex flex-1 flex-col gap-1">
-      <div
-        class="text-2xs uppercase tracking-widest opacity-60 transition group-hover:opacity-100"
-      >
+      <div class="flex items-center gap-3">
         {
-          match(event.data.type)
-            .with("event", () => "Full Day Event")
-            .with("meetup", () => "Community Meetup")
-            .exhaustive()
+          event.data.eventStatus === "EventCancelled" && (
+            <div class="bg-background-blur rounded px-1.5 py-1 text-2xs font-bold uppercase leading-none text-white transition group-hover:bg-primary group-hover:text-black">
+              Cancelled
+            </div>
+          )
         }
+        <div
+          class="text-2xs uppercase tracking-widest opacity-60 transition group-hover:opacity-100"
+        >
+          {
+            match(event.data.type)
+              .with("event", () => "Full Day Event")
+              .with("meetup", () => "Community Meetup")
+              .exhaustive()
+          }
+        </div>
       </div>
       <div class="flex flex-col">
         <div
           class={cn(
-            "font-heading font-medium",
+            "font-heading font-medium transition",
             event.data.type === "event" && "text-xl",
+            event.data.eventStatus === "EventCancelled" &&
+              "opacity-50 group-hover:opacity-100",
           )}
         >
           {dayjs(event.data.date).format("MMMM DD, YYYY")}
