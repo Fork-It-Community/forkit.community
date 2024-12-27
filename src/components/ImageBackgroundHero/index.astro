@@ -1,4 +1,5 @@
 ---
+import { Client } from "./Client";
 import { cn } from "@/lib/utils";
 import { Image } from "astro:assets";
 
@@ -14,18 +15,18 @@ const { src, alt, className, blur } = Astro.props;
 
 <div
   class={cn(
-    "pointer-events-none absolute left-0 right-0 top-0 -z-10 h-screen overflow-hidden bg-white/30",
+    "pointer-events-none fixed left-0 right-0 top-0 -z-10 h-screen overflow-hidden ",
     className,
   )}
 >
   <div>
-    <div class={cn(blur && "blur-md absolute size-full scale-125")}>
+    <Client defaultBlur={blur ?? false} client:load>
       <Image
         src={src}
         alt={alt}
-        class="absolute size-full object-cover object-center"
+        class="absolute size-full bg-white/30 object-cover object-center"
       />
-    </div>
+    </Client>
     <div class="absolute size-full bg-gradient-to-b from-black/30 to-black">
     </div>
     <div
