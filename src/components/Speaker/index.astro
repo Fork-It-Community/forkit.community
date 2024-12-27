@@ -11,41 +11,45 @@ interface Props {
 const { speaker } = Astro.props;
 ---
 
-<div class="flex h-fit w-fit flex-col gap-2">
-  <div class="mx-auto aspect-square overflow-hidden rounded-lg">
+<div class="flex h-fit w-fit flex-col items-start gap-2">
+  <div class="aspect-square overflow-hidden rounded-lg">
     <Image
       src={speaker.data.avatar ?? SpeakerPlaceholder}
       alt={speaker.data.name}
+      width={160}
+      height={160}
     />
   </div>
-  <div class="flex flex-col gap-3">
-    <div>
-      <h2
-        class="text-lg font-semibold leading-6 tracking-tight text-white md:text-xl"
-      >
+  <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-0.5">
+      <p class="line-clamp-3 font-heading text-sm font-medium tracking-wide">
         {speaker.data.name}
-      </h2>
-      {!!speaker.data.job && <p class="text-neutral-400">{speaker.data.job}</p>}
+      </p>
       {
-        !!speaker.data.company && (
-          <div>
-            {!!speaker.data.company.href ? (
-              <a
-                href={speaker.data.company.href}
-                target="_blank"
-                class="text-neutral-400 text-sm leading-5 underline transition hover:text-primary"
-              >
-                {speaker.data.company.title}
-              </a>
-            ) : (
-              <p class="text-sm leading-5 text-gray-400">
-                {speaker.data.company.title}
-              </p>
-            )}
-          </div>
+        !!speaker.data.job && (
+          <p class="line-clamp-3 text-xs tracking-wide opacity-60">
+            {speaker.data.job}
+          </p>
         )
       }
     </div>
+    {
+      !!speaker.data.company && (
+        <>
+          {!!speaker.data.company.href ? (
+            <a
+              href={speaker.data.company.href}
+              target="_blank"
+              class="text-xs underline opacity-60 transition hover:text-primary hover:opacity-100"
+            >
+              {speaker.data.company.title}
+            </a>
+          ) : (
+            <p class="text-xs opacity-60">{speaker.data.company.title}</p>
+          )}
+        </>
+      )
+    }
     {
       !!speaker.data.socials && (
         <ul class="flex gap-x-2">
@@ -57,7 +61,7 @@ const { speaker } = Astro.props;
                 <li>
                   <a
                     href={social.href}
-                    class="transition hover:text-primary"
+                    class="opacity-60 transition hover:text-primary hover:opacity-100"
                     target="_blank"
                   >
                     <span class="sr-only">{social.type}</span>

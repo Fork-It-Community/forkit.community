@@ -47,7 +47,6 @@ const {
   event,
   subPages,
   speakers,
-  talks,
   coOrganizers: _coOrganizers,
   sponsors,
 } = Astro.props;
@@ -156,14 +155,33 @@ const { Content } = await render(event);
     </div>
   </div>
 
-  <div class="mx-auto flex w-full max-w-screen-sm flex-col gap-8 px-4 py-12">
-    <h2
-      id="schedule"
-      class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
-    >
-      Schedule
-    </h2>
-    <Schedule event={event} />
+  <!-- Schedule & Speakers -->
+  <div
+    class="mx-auto flex w-full max-w-screen-sm flex-col gap-24 px-4 py-16 lg:max-w-screen-lg lg:flex-row lg:gap-8"
+  >
+    <div class="flex w-full flex-[1.3] flex-col gap-8">
+      <h2
+        id="schedule"
+        class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+      >
+        Schedule
+      </h2>
+      <Schedule event={event} />
+    </div>
+
+    <div class="flex w-full flex-1 flex-col gap-8">
+      <h2
+        id="speakers"
+        class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+      >
+        Speakers
+      </h2>
+      <div
+        class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-3"
+      >
+        {speakers.map((speaker) => <Speaker speaker={speaker} />)}
+      </div>
+    </div>
   </div>
 
   <div class="mx-auto w-full max-w-screen-sm px-4 py-24">
@@ -177,20 +195,7 @@ const { Content } = await render(event);
         ))
       }
     </ul>
-    <hr />
-    <h2
-      id="speakers"
-      class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
-    >
-      Speakers
-    </h2>
-    <ul>
-      {speakers.map((speaker) => <Speaker speaker={speaker} />)}
-    </ul>
-    <div>Talks</div>
-    <ul>
-      {talks.map((talk) => <li>{talk.data.title}</li>)}
-    </ul>
+
     <div>Sponsors</div>
     <ul>
       {sponsors.map((sponsor) => <li>{sponsor.data.name}</li>)}
