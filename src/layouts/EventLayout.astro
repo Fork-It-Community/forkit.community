@@ -39,6 +39,12 @@ const navItems = await getEventNavItems(event.id);
   <EventNav
     eventName={event.data.name}
     eventId={event.id}
+    eventMetadata={{
+      date: event.data.date,
+      status: event.data.status,
+      cfp: event.data.cfp,
+      tickets: event.data.tickets,
+    }}
     items={navItems}
     client:load
   />

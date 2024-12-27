@@ -13,9 +13,13 @@ import { MdArrowForward, MdArrowOutward, MdMenu } from "react-icons/md";
 import { useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 
+import type { Event } from "@/schemas/events";
+import dayjs from "dayjs";
+
 export const EventNav = (props: {
   eventName: ReactNode;
   eventId: string;
+  eventMetadata: Pick<Event, "cfp" | "tickets" | "date" | "status">;
   items: Array<{ href: string; label: ReactNode }>;
 }) => {
   const [{ y }] = useWindowScroll();
@@ -70,11 +74,12 @@ export const EventNav = (props: {
               </a>
               <div className="relative flex-1">
                 <div className="absolute inset-0 overflow-auto">
-                  {props.items.map((item) => (
+                  {props.items.map((item, index) => (
                     <a
                       href={item.href}
                       onClick={() => setOpen(false)}
                       className="flex items-center gap-3 px-6 py-3 tracking-wide opacity-80 transition hover:bg-black/20 hover:opacity-100"
+                      key={index}
                     >
                       {item.label}
                     </a>
@@ -83,21 +88,33 @@ export const EventNav = (props: {
               </div>
               <div className="absolute bottom-0 left-0 h-20 w-full bg-white opacity-15 blur-3xl" />
               <div className="relative z-10 flex flex-wrap items-center justify-center gap-3 p-6">
-                <Button asChild size="sm">
-                  <a
-                    href="#"
-                    className="group flex-[2] gap-2"
-                    onClick={() => setOpen(false)}
-                  >
-                    Get Your Ticket
-                    <MdArrowForward className="transition group-hover:translate-x-1" />
-                  </a>
-                </Button>
-                <Button asChild size="sm" variant="ghost">
-                  <a href="#" className="flex-1" onClick={() => setOpen(false)}>
-                    CFP
-                  </a>
-                </Button>
+                {props.eventMetadata.status !== "cancelled" &&
+                  props.eventMetadata.tickets &&
+                  dayjs().isBefore(props.eventMetadata.date) && (
+                    <Button asChild size="sm">
+                      <a
+                        href={props.eventMetadata.tickets?.href}
+                        className="group flex-[2] gap-2"
+                        onClick={() => setOpen(false)}
+                      >
+                        Get Your Ticket
+                        <MdArrowForward className="transition group-hover:translate-x-1" />
+                      </a>
+                    </Button>
+                  )}
+                {props.eventMetadata.status !== "cancelled" &&
+                  props.eventMetadata.cfp &&
+                  dayjs().isBefore(props.eventMetadata.cfp.endDate) && (
+                    <Button asChild size="sm" variant="ghost">
+                      <a
+                        href={props.eventMetadata.cfp.href}
+                        className="flex-1"
+                        onClick={() => setOpen(false)}
+                      >
+                        CFP
+                      </a>
+                    </Button>
+                  )}
                 <Button asChild size="sm" variant="ghost">
                   <a
                     href="/"
