@@ -1,6 +1,7 @@
 ---
 import { Logo } from "@/components/Logo";
 import { buttonVariants } from "@/components/ui/button";
+import FeedbackCTA from "@/components/FeedbackCTA/index.astro";
 import EventLayout from "@/layouts/EventLayout.astro";
 import {
   getEventNavItems,
@@ -173,6 +174,9 @@ const { Content } = await render(event);
     <ul>
       {sponsors.map((sponsor) => <li>{sponsor.data.name}</li>)}
     </ul>
+  </div>
+  <div class="prose prose-invert mx-auto w-full max-w-screen-sm px-4 py-24">
     <Content />
   </div>
+  {event.data.feedback && <FeedbackCTA href={event.data.feedback.link} />}
 </EventLayout>

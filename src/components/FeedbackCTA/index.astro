@@ -1,0 +1,45 @@
+---
+import { Button } from "@/components/ui/button";
+
+interface Props {
+  href: string;
+}
+
+const { href } = Astro.props;
+---
+
+<a href={href} target="_blank" rel="noreferer" class="group">
+  <div
+    class="relative isolate overflow-hidden bg-gray-950 px-6 py-20 text-center shadow-2xl sm:px-16"
+  >
+    <h2
+      class="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl"
+    >
+      We need you!
+    </h2>
+    <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-300">
+      Help speakers by giving them feedbacks about their talks
+    </p>
+    <div class="mt-10 flex items-center justify-center gap-x-6">
+      <Button>Give talk feedback!</Button>
+    </div>
+    <svg
+      viewBox="0 0 1024 1024"
+      class="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-x-1/2 text-primary transition-all [mask-image:radial-gradient(closest-side,white,transparent)] group-hover:-translate-y-8"
+      aria-hidden="true"
+    >
+      <circle
+        cx={512}
+        cy={512}
+        r={512}
+        fill="url(#primaryCircle)"
+        fill-opacity="0.7"></circle>
+      <defs>
+        <radialGradient id="primaryCircle">
+          <stop stop-color="currentColor"></stop>
+          <stop offset={1} stop-color="currentColor"></stop>
+        </radialGradient>
+      </defs>
+    </svg>
+  </div>
+</a>

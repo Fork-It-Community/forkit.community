@@ -48,3 +48,57 @@ eventStatus: EventScheduled
 attendanceMode: OfflineEventAttendanceMode
 postMeetupPhotosUrl: https://photos.app.goo.gl/bpwJ45YH3QKrt5hj6
 ---
+
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { MdEvent, MdLocationPin } from "react-icons/md";
+import { formatDateTime } from "@/lib/utils";
+
+## When? Where?
+
+<div className="space-y-8 text-gray-200">
+  {frontmatter.location && (
+    <div className="flex gap-x-3">
+      <MdLocationPin
+        className="mt-1 h-5 w-5 flex-none text-primary"
+        aria-hidden="true"
+      />
+      <span>
+        <strong className="font-semibold text-primary">
+          {frontmatter.location.name},{" "}
+          {frontmatter.location.address}.
+        </strong>{" "}
+        Join us in Comwork&apos;s offices to share experiences and
+        network.
+      </span>
+    </div>
+  )}
+  {frontmatter.date && (
+    <div className="flex gap-x-3">
+      <MdEvent
+        className="mt-1 h-5 w-5 flex-none text-primary"
+        aria-hidden="true"
+      />
+      <span>
+        <time
+          dateTime={frontmatter.date}
+          className="font-semibold text-primary"
+        >
+          {formatDateTime(frontmatter.date)}.
+        </time>{" "}
+        Come enjoy two conferences and a networking cocktail to
+        wrap up September on a high note.
+      </span>
+    </div>
+  )}
+</div>
+
+Comwork is a service company specialized in application
+development and consulting for cloud deployment automation / SRE
+/ DevOps and production infrastructure outsourcing, and
+publisher of software solutions to accelerate the automation of
+these deployments in a host-agnostic way.
+
+<a href="https://www.comwork.io" className={cn(buttonVariants(), 'w-fit no-underline')} target="_blank">
+  Visit Comwork website
+</a>
