@@ -43,7 +43,7 @@ const TimerDisplay = (
   }>,
 ) => {
   return (
-    <div className="flex h-[66px] w-[66px] flex-col items-center rounded-md bg-neutral-900 bg-opacity-40 p-2">
+    <div className="bg-neutral-900 flex h-[66px] w-[66px] flex-col items-center rounded-md bg-opacity-40 p-2">
       <MotionNumber
         id={props.unit}
         value={props.value}

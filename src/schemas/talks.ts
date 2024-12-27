@@ -11,6 +11,9 @@ export const zTalk = () =>
         link: z.string().url(),
       })
       .optional(),
-    hosts: z.string().array().optional().describe("Hosts of the round table"),
+    hosts: z
+      .array(reference("people"))
+      .optional()
+      .describe("Hosts of the round table"),
     vod: z.string().url().optional(),
   });

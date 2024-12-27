@@ -11,14 +11,14 @@ type BreakCardProps = {
 export const BreakCard = (props: Readonly<BreakCardProps>) => {
   return (
     <div>
-      <div className="flex w-full flex-[4] flex-row justify-between gap-2 rounded-lg border-2 border-neutral-700 bg-neutral-800 px-4 py-4">
+      <div className="border-neutral-700 bg-neutral-800 flex w-full flex-[4] flex-row justify-between gap-2 rounded-lg border-2 px-4 py-4">
         <div className="flex flex-col justify-center">
           <p className="text-xl font-semibold">{props.schedule.name}</p>
           {props.schedule.description && <p>{props.schedule.description}</p>}
         </div>
         {props.sponsor && (
           <div className="flex flex-col gap-2">
-            <p className="text-xs text-neutral-400">Sponsored by</p>
+            <p className="text-neutral-400 text-xs">Sponsored by</p>
             <div
               className={cn(
                 "w-20 overflow-hidden rounded-md border-2 border-gray-100",

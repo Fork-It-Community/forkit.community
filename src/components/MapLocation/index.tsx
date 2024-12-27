@@ -21,7 +21,7 @@ const MapLocation = (
         <div className="flex flex-col">
           <p className="my-0">{props.detail.title}</p>
           {props.detail.description && (
-            <p className="my-0 text-neutral-400">{props.detail.description}</p>
+            <p className="text-neutral-400 my-0">{props.detail.description}</p>
           )}
         </div>
       </div>

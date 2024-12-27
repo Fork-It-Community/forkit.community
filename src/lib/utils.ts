@@ -10,19 +10,8 @@ export function formatDateTime(date: dayjs.ConfigType) {
   return dayjs(date).format("dddd, MMMM D, YYYY");
 }
 
-export function formatTime(date: string | number | Date) {
-  return new Intl.DateTimeFormat("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(new Date(date));
-}
-
-export function formatDateTimeShort(date: string | number | Date) {
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "2-digit",
-    year: "numeric",
-  }).format(new Date(date));
+export function formatTime(date: dayjs.ConfigType) {
+  return dayjs(date).format("hh:mm A");
 }
 
 export function calculateTimeLeft(date: Date) {

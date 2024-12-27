@@ -94,7 +94,7 @@ const TimelineIcon = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "flex size-1 flex-col rounded-full bg-neutral-500",
+      "bg-neutral-500 flex size-1 flex-col rounded-full",
       className,
     )}
     {...props}

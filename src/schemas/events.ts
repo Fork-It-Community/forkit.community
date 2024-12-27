@@ -83,11 +83,12 @@ const zEventBase = ({ image }: SchemaContext) =>
     ]),
     schedule: z.array(
       z.object({
+        // TODO Discriminated union
         type: z.enum(["conference", "roundtable", "break", "lunch"]),
         sponsors: z.array(reference("partners")).optional(),
         description: z.string().optional(),
         name: z.string().optional(),
-        slug: z.string().optional(),
+        slug: reference("talks").optional(),
         startTime: z.date().optional(),
         duration: z.number().optional(),
         location: z.string().optional(),

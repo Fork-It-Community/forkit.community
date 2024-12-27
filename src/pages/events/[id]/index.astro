@@ -3,7 +3,7 @@ import { Logo } from "@/components/Logo";
 import { buttonVariants } from "@/components/ui/button";
 import FeedbackCTA from "@/components/FeedbackCTA/index.astro";
 import EventLayout from "@/layouts/EventLayout.astro";
-import ScheduleComingSoon from "@/components/ScheduleComingSoon/index.astro";
+import Schedule from "@/components/Schedule/index.astro";
 import {
   getEventNavItems,
   getEventsCollection,
@@ -179,6 +179,7 @@ const { Content } = await render(event);
   <div class="prose prose-invert mx-auto w-full max-w-screen-sm px-4 py-24">
     <Content />
   </div>
-  {!event.data.schedule && <ScheduleComingSoon event={event} />}
+
+  <Schedule event={event} />
   {event.data.feedback && <FeedbackCTA href={event.data.feedback.link} />}
 </EventLayout>

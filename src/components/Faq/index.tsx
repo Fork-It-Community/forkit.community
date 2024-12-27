@@ -20,7 +20,7 @@ export const FAQ = (
             {props.faq?.map((item) => (
               <AccordionItem key={item.question} value={item.question}>
                 <dt>
-                  <AccordionTrigger className="text-left text-xl font-semibold transition hover:text-neutral-400 hover:no-underline">
+                  <AccordionTrigger className="hover:text-neutral-400 text-left text-xl font-semibold transition hover:no-underline">
                     {item.question}
                   </AccordionTrigger>
                 </dt>

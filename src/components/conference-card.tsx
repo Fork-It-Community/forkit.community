@@ -17,18 +17,18 @@ export const ConferenceCard = (props: Readonly<ConferenceCardProps>) => {
       {/* // TODO: Update the href attribute once the target redirect page is finalized. */}
       <a
         href="/"
-        className="flex w-full gap-2 rounded-lg border-2 border-neutral-600 bg-neutral-900 p-4"
+        className="border-neutral-600 bg-neutral-900 flex w-full gap-2 rounded-lg border-2 p-4"
       >
         <div className="flex w-full flex-col gap-4">
           <div className="flex-start flex justify-between gap-4">
             <div className="flex w-2/3 flex-col gap-1">
-              <h1 className="font-heading text-lg font-medium leading-6 text-neutral-100">
+              <h1 className="text-neutral-100 font-heading text-lg font-medium leading-6">
                 {props.talk.data.title}
               </h1>
               {props.people.map((person, index) => (
                 <p
                   key={index}
-                  className="text-sm font-semibold text-neutral-100"
+                  className="text-neutral-100 text-sm font-semibold"
                 >
                   {person.name}
                 </p>

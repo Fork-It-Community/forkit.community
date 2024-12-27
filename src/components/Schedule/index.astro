@@ -1,0 +1,28 @@
+---
+import CardBreak from "@/components/Schedule/CardBreak.astro";
+import CardConference from "@/components/Schedule/CardConference.astro";
+import ScheduleComingSoon from "@/components/ScheduleComingSoon/index.astro";
+import type { CollectionEntry } from "astro:content";
+import { match } from "ts-pattern";
+
+interface Props {
+  event: CollectionEntry<"events">;
+}
+
+const { event } = Astro.props;
+---
+
+{!event.data.schedule && <ScheduleComingSoon event={event} />}
+
+<div class="flex flex-col gap-4">
+  {
+    event.data.schedule.map((activity) =>
+      match(activity.type)
+        .with("conference", "roundtable", () => (
+          <CardConference activity={activity} event={event} />
+        ))
+        .with("break", () => <CardBreak break={activity} />)
+        .otherwise(() => null),
+    )
+  }
+</div>

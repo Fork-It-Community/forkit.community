@@ -24,7 +24,7 @@ const SpeakerDetail = (
                 <a
                   href={props.speaker.company.href}
                   target="_blank"
-                  className="text-sm leading-5 text-neutral-400 underline transition hover:text-primary"
+                  className="text-neutral-400 text-sm leading-5 underline transition hover:text-primary"
                 >
                   {props.speaker.company.title}
                 </a>
