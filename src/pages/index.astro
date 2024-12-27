@@ -1,26 +1,34 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
-import { getNextMajorEvent } from "@/lib/events";
+import { getUpcomingMajorEvent } from "@/lib/events";
 import { getPodcastsCollection } from "@/lib/podcasts";
 import { Logo } from "@/components/Logo";
 import { Image } from "astro:assets";
 import defaultImage from "@/assets/images/events.jpeg";
 import dayjs from "dayjs";
-import { MdArrowForward } from "react-icons/md";
+import { MdArrowForward, MdEvent } from "react-icons/md";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { getSocialsItems } from "@/content/socials";
+import { match } from "ts-pattern";
+import { getUpcomingEvents } from "@/lib/events";
 
-const nextEvent = await getNextMajorEvent();
+const upcomingMajorEvent = await getUpcomingMajorEvent();
+const upcomingEvents = (await getUpcomingEvents())
+  .filter(
+    (event) =>
+      event.id !== upcomingMajorEvent?.id && event.data.status !== "cancelled",
+  )
+  .slice(0, 3);
 const podcasts = await getPodcastsCollection();
 ---
 
 <MainLayout>
   <!-- HERO -->
   <ImageBackgroundHero
-    src={nextEvent?.data?.image?.src ?? defaultImage}
-    alt={nextEvent?.data?.image?.alt ?? ""}
+    src={upcomingMajorEvent?.data?.image?.src ?? defaultImage}
+    alt={upcomingMajorEvent?.data?.image?.alt ?? ""}
     blur
   />
   <div class="mx-auto w-full max-w-screen-xl px-4">
@@ -39,7 +47,7 @@ const podcasts = await getPodcastsCollection();
             <span class="text-primary">Community</span>
           </h1>
           {
-            !nextEvent && (
+            !upcomingMajorEvent && (
               <p class="text-balance text-center sm:text-left">
                 <strong> Fork it! Community’s</strong>{" "}
                 <span class="opacity-60">
@@ -50,71 +58,102 @@ const podcasts = await getPodcastsCollection();
             )
           }
         </div>
-        {
-          !nextEvent && (
-            <div class="flex w-full items-center justify-center sm:justify-start">
-              <a
-                href="/events"
-                class={cn(buttonVariants(), "gap-2 sm:max-w-56")}
-              >
-                Discover all events
-                <MdArrowForward className="group-hover:translate-x-1 transition" />
-              </a>
-            </div>
-          )
-        }
-        {
-          !!nextEvent && (
-            <a
-              href={`/events/${nextEvent.id}`}
-              class={cn(
-                "group relative z-10 flex flex-col gap-3",
-                "max-sm:overflow-hidden max-sm:rounded-lg max-sm:bg-background max-sm:p-6 max-sm:shadow-xl",
-              )}
-            >
-              {!!nextEvent.data.image?.src && (
-                <div class="pointer-events-none absolute bottom-0 left-0 right-0 top-0 -z-10 overflow-hidden sm:hidden">
-                  <Image
-                    src={nextEvent.data.image.src}
-                    alt=""
-                    class={cn(
-                      "absolute size-full bg-white/20 object-cover object-center transition duration-500 group-hover:scale-110",
-                    )}
-                    width={600}
-                  />
-                  <div class="absolute size-full bg-gradient-to-r from-black/90 to-black/0" />
-                  <div
-                    class="absolute h-full w-full"
-                    style={{
-                      backdropFilter: "blur(32px)",
-                      maskImage:
-                        "linear-gradient(90deg, black 30%, transparent 70%)",
-                    }}
-                  />
-                </div>
-              )}
-              <div class="flex flex-col gap-1">
-                <h2 class="font-heading text-2xs uppercase tracking-widest opacity-60">
-                  Next Event
-                </h2>
-                <div class="flex flex-col">
-                  <div class="font-heading text-lg font-medium sm:text-2xl">
-                    {dayjs(nextEvent.data.date).format("MMMM DD, YYYY")}
-                  </div>
-                  <div class="-mt-1 font-heading text-sm opacity-60 transition group-hover:text-primary group-hover:opacity-100 sm:text-lg">
-                    {nextEvent.data.city}, {nextEvent.data.country}
-                  </div>
-                </div>
+
+        <!-- Next Events -->
+        <div class="flex flex-col gap-10 sm:gap-8">
+          {
+            !upcomingMajorEvent && (
+              <div class="flex w-full items-center justify-center sm:justify-start">
+                <a
+                  href="/events"
+                  class={cn(buttonVariants(), "gap-2 sm:max-w-56")}
+                >
+                  Discover all events
+                  <MdArrowForward className="group-hover:translate-x-1 transition" />
+                </a>
               </div>
-              <span class={cn(buttonVariants(), "gap-2 sm:max-w-56")}>
-                {nextEvent.data.tickets
-                  ? "Tickets available"
-                  : "Discover Event"}
-                <MdArrowForward className="group-hover:translate-x-1 transition" />
-              </span>
-            </a>
-          )
-        }
+            )
+          }
+          {
+            !!upcomingMajorEvent && (
+              <a
+                href={`/events/${upcomingMajorEvent.id}`}
+                class={cn(
+                  "group relative z-10 flex flex-col gap-3",
+                  "max-sm:overflow-hidden max-sm:rounded-lg max-sm:bg-background max-sm:p-6 max-sm:shadow-xl",
+                )}
+              >
+                {!!upcomingMajorEvent.data.image?.src && (
+                  <div class="pointer-events-none absolute bottom-0 left-0 right-0 top-0 -z-10 overflow-hidden sm:hidden">
+                    <Image
+                      src={upcomingMajorEvent.data.image.src}
+                      alt=""
+                      class={cn(
+                        "absolute size-full bg-white/20 object-cover object-center transition duration-500 group-hover:scale-110",
+                      )}
+                      width={600}
+                    />
+                    <div class="absolute size-full bg-gradient-to-r from-black/90 to-black/0" />
+                    <div
+                      class="absolute h-full w-full"
+                      style={{
+                        backdropFilter: "blur(32px)",
+                        maskImage:
+                          "linear-gradient(90deg, black 30%, transparent 70%)",
+                      }}
+                    />
+                  </div>
+                )}
+                <div class="flex flex-col gap-1">
+                  <h2 class="font-heading text-2xs uppercase tracking-widest opacity-60">
+                    Next
+                    {match(upcomingMajorEvent.data.type)
+                      .with("event", () => "Full Day Event")
+                      .with("meetup", () => "Community Meetup")
+                      .exhaustive()}
+                  </h2>
+                  <div class="flex flex-col">
+                    <div class="font-heading text-lg font-medium sm:text-2xl">
+                      {dayjs(upcomingMajorEvent.data.date).format(
+                        "MMMM DD, YYYY",
+                      )}
+                    </div>
+                    <div class="-mt-1 font-heading text-sm opacity-60 transition group-hover:text-primary group-hover:opacity-100 sm:text-lg">
+                      {upcomingMajorEvent.data.city},{" "}
+                      {upcomingMajorEvent.data.country}
+                    </div>
+                  </div>
+                </div>
+                <span class={cn(buttonVariants(), "gap-2 sm:max-w-56")}>
+                  {upcomingMajorEvent.data.tickets
+                    ? "Tickets available"
+                    : "Discover Event"}
+                  <MdArrowForward className="group-hover:translate-x-1 transition" />
+                </span>
+              </a>
+            )
+          }
+
+          {
+            !!upcomingEvents.length && (
+              <div class="flex flex-col gap-6 px-6 sm:gap-3 sm:px-0">
+                {upcomingEvents.map((event) => (
+                  <a href={`/events/${event.id}`} class="group flex gap-2">
+                    <MdEvent className="opacity-40 group-hover:opacity-100 transition size-4 mt-0.5" />
+                    <div class="flex flex-col">
+                      <div class="font-heading font-medium tracking-wide opacity-80 transition group-hover:opacity-100 sm:text-sm">
+                        {dayjs(event.data.date).format("MMMM DD, YYYY")}
+                      </div>
+                      <div class="text-xs tracking-wide opacity-60 transition group-hover:text-primary group-hover:opacity-100">
+                        {event.data.city}, {event.data.country}
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            )
+          }
+        </div>
       </div>
 
       <div
@@ -122,8 +161,8 @@ const podcasts = await getPodcastsCollection();
       >
         <Image
           class="aspect-[3/2] w-full bg-background object-cover text-gray-900"
-          src={nextEvent?.data?.image?.src ?? defaultImage}
-          alt={nextEvent?.data?.image?.alt ??
+          src={upcomingMajorEvent?.data?.image?.src ?? defaultImage}
+          alt={upcomingMajorEvent?.data?.image?.alt ??
             "Speaker giving a tech talk in from of attendees"}
           width={480}
           height={320}

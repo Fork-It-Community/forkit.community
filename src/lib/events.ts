@@ -81,7 +81,7 @@ export async function getNextEvent() {
   return nextEvent;
 }
 
-export async function getNextMajorEvent() {
+export async function getUpcomingMajorEvent() {
   const upcomingEvents = await getUpcomingEvents();
 
   const notCancelledEvents = upcomingEvents.filter(
