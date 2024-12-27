@@ -84,19 +84,21 @@ const zEventBase = ({ image }: SchemaContext) =>
       "OnlineEventAttendanceMode",
       "MixedEventAttendanceMode",
     ]),
-    schedule: z.array(
-      z.object({
-        // TODO Discriminated union
-        type: z.enum(["conference", "roundtable", "break", "lunch"]),
-        sponsors: z.array(reference("partners")).optional(),
-        description: z.string().optional(),
-        name: z.string().optional(),
-        slug: reference("talks").optional(),
-        startTime: z.date().optional(),
-        duration: z.number().optional().describe("Number of minutes"),
-        location: z.string().optional(),
-      }),
-    ),
+    schedule: z
+      .array(
+        z.object({
+          // TODO Discriminated union
+          type: z.enum(["conference", "roundtable", "break", "lunch"]),
+          sponsors: z.array(reference("partners")).optional(),
+          description: z.string().optional(),
+          name: z.string().optional(),
+          slug: reference("talks").optional(),
+          startTime: z.date().optional(),
+          duration: z.number().optional().describe("Number of minutes"),
+          location: z.string().optional(),
+        }),
+      )
+      .optional(),
     feedback: z
       .object({
         link: z.string().url(),

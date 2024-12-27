@@ -3,7 +3,7 @@ import { cn, formatTime } from "@/lib/utils";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
-  activity: CollectionEntry<"events">["data"]["schedule"][number];
+  activity: NonNullable<CollectionEntry<"events">["data"]["schedule"]>[number];
   class?: string;
 }
 

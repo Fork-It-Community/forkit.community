@@ -128,14 +128,22 @@ export async function getEventNavItems(id: string) {
       href: `/events/${event.id}#schedule`,
       label: "Schedule",
     },
-    {
-      href: `/events/${event.id}#speakers`,
-      label: "Speakers",
-    },
-    {
-      href: `/events/${event.id}#sponsors`,
-      label: "Sponsors",
-    },
+    ...(event.data.speakers?.length
+      ? [
+          {
+            href: `/events/${event.id}#speakers`,
+            label: "Speakers",
+          },
+        ]
+      : []),
+    ...(event.data.sponsors?.length
+      ? [
+          {
+            href: `/events/${event.id}#sponsors`,
+            label: "Sponsors",
+          },
+        ]
+      : []),
   ];
 }
 

@@ -31,7 +31,7 @@ export async function getStaticPaths() {
         speakers: await getEntries(event.data.speakers ?? []),
         talks: await getEntries(
           event.data.schedule
-            .map((activity) => activity.slug)
+            ?.map((activity) => activity.slug)
             .filter((slug) => !!slug) ?? [],
         ),
         coOrganizers: await getEntries(event.data.coOrganizers ?? []),
@@ -157,7 +157,10 @@ const { Content } = await render(event);
 
   <!-- Schedule & Speakers -->
   <div
-    class="mx-auto flex w-full max-w-screen-sm flex-col gap-24 px-4 py-16 lg:max-w-screen-lg lg:flex-row lg:gap-8"
+    class={cn(
+      "mx-auto flex w-full max-w-screen-sm flex-col gap-24 px-4 py-16 lg:max-w-screen-lg lg:flex-row lg:gap-12",
+      !speakers.length && "lg:max-w-screen-sm",
+    )}
   >
     <div class="flex w-full flex-[1.3] flex-col gap-8">
       <h2
@@ -169,19 +172,23 @@ const { Content } = await render(event);
       <Schedule event={event} />
     </div>
 
-    <div class="flex w-full flex-1 flex-col gap-8">
-      <h2
-        id="speakers"
-        class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
-      >
-        Speakers
-      </h2>
-      <div
-        class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-3"
-      >
-        {speakers.map((speaker) => <Speaker speaker={speaker} />)}
-      </div>
-    </div>
+    {
+      !!speakers.length && (
+        <div class="flex w-full flex-1 flex-col gap-8">
+          <h2
+            id="speakers"
+            class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+          >
+            Speakers
+          </h2>
+          <div class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-3">
+            {speakers.map((speaker) => (
+              <Speaker speaker={speaker} />
+            ))}
+          </div>
+        </div>
+      )
+    }
   </div>
 
   <div class="mx-auto w-full max-w-screen-sm px-4 py-24">

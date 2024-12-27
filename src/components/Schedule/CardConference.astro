@@ -6,7 +6,7 @@ import { IoLanguageSharp } from "react-icons/io5";
 import SpeakerForCard from "./SpeakerForCard.astro";
 
 interface Props {
-  activity: CollectionEntry<"events">["data"]["schedule"][number];
+  activity: NonNullable<CollectionEntry<"events">["data"]["schedule"]>[number];
   event: CollectionEntry<"events">;
 }
 
