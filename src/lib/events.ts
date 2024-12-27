@@ -81,6 +81,21 @@ export async function getNextEvent() {
   return nextEvent;
 }
 
+export async function getNextMajorEvent() {
+  const upcomingEvents = await getUpcomingEvents();
+
+  const notCancelledEvents = upcomingEvents.filter(
+    (event) => event.data.status !== "cancelled",
+  );
+
+  return (
+    notCancelledEvents.find((event) => event.data.type === "event") ??
+    notCancelledEvents.find((event) => event.data.type === "meetup") ??
+    // In case we add another type later, like external events
+    notCancelledEvents.at(0)
+  );
+}
+
 export async function getMeetupsCollection() {
   return getCollection("events", ({ data }) => {
     const isPublished = import.meta.env.PROD
