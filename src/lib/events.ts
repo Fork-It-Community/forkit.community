@@ -123,3 +123,27 @@ export async function getEventNavItems(id: string) {
     },
   ];
 }
+
+export function shouldShowTicketsButton(
+  event: CollectionEntry<"events">,
+): event is CollectionEntry<"events"> & {
+  data: { tickets: NonNullable<CollectionEntry<"events">["data"]["tickets"]> };
+} {
+  if (event.data.status === "cancelled") {
+    return false;
+  }
+
+  return !!(event.data.tickets && dayjs().isBefore(event.data.date));
+}
+
+export function shouldShowCFPButton(
+  event: CollectionEntry<"events">,
+): event is CollectionEntry<"events"> & {
+  data: { cfp: NonNullable<CollectionEntry<"events">["data"]["cfp"]> };
+} {
+  if (event.data.status === "cancelled") {
+    return false;
+  }
+
+  return !!(event.data.cfp && dayjs().isBefore(event.data.cfp.endDate));
+}

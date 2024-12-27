@@ -6,6 +6,8 @@ import {
   getEventNavItems,
   getEventsCollection,
   getEventSubPagesCollection,
+  shouldShowTicketsButton,
+  shouldShowCFPButton,
 } from "@/lib/events";
 import { cn } from "@/lib/utils";
 import { Image } from "astro:assets";
@@ -78,11 +80,27 @@ const { Content } = await render(event);
       </div>
 
       <div class="flex flex-wrap gap-4">
-        <a href="#" class={cn(buttonVariants({}), "group gap-2")}>
-          Get Your Ticket
-          <MdArrowForward className="transition group-hover:translate-x-1" />
-        </a>
-        <a href="#" class={buttonVariants({ variant: "ghost" })}> CFP </a>
+        {
+          shouldShowTicketsButton(event) && (
+            <a
+              href={event.data.tickets.href}
+              class={cn(buttonVariants(), "group gap-2")}
+            >
+              Get Your Ticket
+              <MdArrowForward className="transition group-hover:translate-x-1" />
+            </a>
+          )
+        }
+        {
+          shouldShowCFPButton(event) && (
+            <a
+              href={event.data.cfp.href}
+              class={buttonVariants({ variant: "ghost" })}
+            >
+              CFP
+            </a>
+          )
+        }
       </div>
       {
         !!coOrganizers.length && (
