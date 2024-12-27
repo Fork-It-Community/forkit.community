@@ -1,5 +1,6 @@
 ---
 import { buttonVariants } from "@/components/ui/button";
+import { getEventDisplayDate } from "@/lib/events";
 import { cn } from "@/lib/utils";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
@@ -88,7 +89,7 @@ const isUpcomingEvent = dayjs().isBefore(event.data.date);
               "opacity-50 group-hover:opacity-100",
           )}
         >
-          {dayjs(event.data.date).format("MMMM DD, YYYY")}
+          {getEventDisplayDate(event)}
         </div>
         <div
           class="font-heading text-sm opacity-60 transition group-hover:text-primary group-hover:opacity-100"

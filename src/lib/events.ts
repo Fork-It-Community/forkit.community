@@ -162,3 +162,9 @@ export function shouldShowCFPButton(
 
   return !!(event.data.cfp && dayjs().isBefore(event.data.cfp.endDate));
 }
+
+export function getEventDisplayDate(event: CollectionEntry<"events">) {
+  if (event.data.status === "published-without-date")
+    return `Coming in ${dayjs(event.data.date).format("YYYY")}`;
+  return dayjs(event.data.date).format("MMMM DD, YYYY");
+}

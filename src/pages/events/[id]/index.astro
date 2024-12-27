@@ -10,11 +10,11 @@ import {
   getEventSubPagesCollection,
   shouldShowTicketsButton,
   shouldShowCFPButton,
+  getEventDisplayDate,
 } from "@/lib/events";
 import { cn } from "@/lib/utils";
 import { Image } from "astro:assets";
 import { getEntries, render } from "astro:content";
-import dayjs from "dayjs";
 import { MdArrowForward } from "react-icons/md";
 import { match } from "ts-pattern";
 
@@ -62,7 +62,7 @@ const { Content } = await render(event);
           class="flex flex-col gap-1 text-balance text-center font-heading md:gap-2"
         >
           <span class="text-3xl font-medium md:text-6xl">
-            {dayjs(event.data.date).format("MMMM DD, YYYY")}
+            {getEventDisplayDate(event)}
           </span>
           <span class="text-xl text-primary md:text-4xl"
             >{event.data.city}, {event.data.country}</span
@@ -151,6 +151,8 @@ const { Content } = await render(event);
     </div>
   </div>
 
+  <Schedule event={event} />
+
   <div class="mx-auto w-full max-w-screen-sm px-4 py-24">
     <div>Event page {event.data.name}</div>
     <ul>
@@ -180,6 +182,5 @@ const { Content } = await render(event);
     <Content />
   </div>
 
-  <Schedule event={event} />
   {event.data.feedback && <FeedbackCTA href={event.data.feedback.link} />}
 </EventLayout>
