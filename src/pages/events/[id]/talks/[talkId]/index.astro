@@ -1,0 +1,99 @@
+---
+import { buttonVariants } from "@/components/ui/button";
+import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
+import Speaker from "@/components/Speaker/index.astro";
+import { getEventsCollection } from "@/lib/events";
+import { getEntries } from "astro:content";
+import { render } from "astro:content";
+import { LuArrowLeft } from "react-icons/lu";
+import { IoLanguageSharp } from "react-icons/io5";
+import { cn } from "@/lib/utils";
+import { MdArrowOutward } from "react-icons/md";
+import dayjs from "dayjs";
+
+export async function getStaticPaths() {
+  const events = await getEventsCollection();
+
+  const talks = (
+    await Promise.all(
+      events.map(async (event) => {
+        const talks = await getEntries(
+          (event.data.schedule ?? [])
+            .map((activity) => activity.slug)
+            .filter((s) => !!s),
+        );
+
+        return talks.map((s) => ({ ...s, __event: event }));
+      }),
+    )
+  ).flat();
+
+  return Promise.all(
+    talks.map(async (talk) => ({
+      params: { id: talk.__event.id, talkId: talk.id },
+      props: {
+        talk,
+        speakers: await getEntries(talk.data.speakers),
+        event: talk.__event,
+      },
+    })),
+  );
+}
+
+const { talk, event, speakers } = Astro.props;
+const { Content } = await render(talk);
+---
+
+<EventSubPageLayout title={talk.data.title} event={event}>
+  <div class="mx-auto max-w-screen-sm p-4 md:p-8">
+    <div class="flex justify-between">
+      <a
+        href={`/events/${event.id}`}
+        class={buttonVariants({ variant: "ghost", size: "xs" })}
+      >
+        <LuArrowLeft className="mr-2" /> Back
+      </a>
+      {
+        event.data.status !== "cancelled" &&
+          talk.data.feedback &&
+          !dayjs().isBefore(event.data.date) && (
+            <a
+              href={talk.data.feedback.link}
+              target="_blank"
+              rel="noreferrer"
+              class={cn(
+                buttonVariants({ variant: "default", size: "xs" }),
+                "flex flex-row gap-2 no-underline",
+              )}
+            >
+              <span>Give feedback</span>
+              <MdArrowOutward className="text-base" />
+            </a>
+          )
+      }
+    </div>
+    <main class="flex flex-col items-center gap-14">
+      <div
+        class="prose prose-sm prose-invert md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
+      >
+        <h1>{talk.data.title}</h1>
+
+        <div>
+          <span
+            class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none opacity-60 transition group-hover:opacity-100"
+          >
+            <IoLanguageSharp className="text-base" />
+            <span>Talk in {talk.data.language}</span>
+          </span>
+        </div>
+        <Content />
+      </div>
+
+      <div
+        class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-3 sm:grid-cols-4"
+      >
+        {speakers.map((speaker) => <Speaker speaker={speaker} />)}
+      </div>
+    </main>
+  </div>
+</EventSubPageLayout>
