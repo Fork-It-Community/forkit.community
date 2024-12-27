@@ -8,6 +8,7 @@ export default {
   theme: {
     extend: {
       screens: {
+        "2xs": "360px",
         xs: "480px",
       },
       fontSize: {
