@@ -18,12 +18,14 @@ const { src, alt, className, blur } = Astro.props;
     className,
   )}
 >
-  <div class={cn(blur && "blur-md absolute size-full scale-125")}>
-    <Image
-      src={src}
-      alt={alt}
-      class="absolute size-full object-cover object-center"
-    />
+  <div>
+    <div class={cn(blur && "blur-md absolute size-full scale-125")}>
+      <Image
+        src={src}
+        alt={alt}
+        class="absolute size-full object-cover object-center"
+      />
+    </div>
     <div class="absolute size-full bg-gradient-to-b from-black/30 to-black">
     </div>
     <div
