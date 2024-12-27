@@ -107,14 +107,14 @@ const zEventBase = ({ image }: SchemaContext) =>
           .optional(),
       })
       .optional(),
+    subPages: z.array(reference("eventsSubPages")).optional(),
+    sponsoringLevels: z.array(z.string()).optional(),
   });
 
 const zMeetup = () => z.object({ type: z.literal("meetup") });
 const zEventClassic = () =>
   z.object({
     type: z.literal("event"),
-    subPages: z.array(reference("eventsSubPages")).optional(),
-    sponsoringLevels: z.array(z.string()).optional(),
   });
 
 export type Event = z.infer<ReturnType<typeof zEvent>>;

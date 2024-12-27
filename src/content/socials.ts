@@ -13,7 +13,7 @@ type SocialsLevel = "primary" | "secondary";
 
 const SOCIALS: Array<{
   icon: FC;
-  label: ReactNode;
+  label: string;
   href: string;
   level: SocialsLevel;
 }> = [

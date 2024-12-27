@@ -23,7 +23,7 @@ export function getEventsCollection() {
 export function getEventSubPagesCollection(
   event: CollectionEntry<"events"> | null | undefined,
 ) {
-  if (!event || event.data.type !== "event") {
+  if (!event) {
     return [];
   }
 
