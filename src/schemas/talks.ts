@@ -4,7 +4,9 @@ export type Talk = z.infer<ReturnType<typeof zTalk>>;
 export const zTalk = () =>
   z.object({
     title: z.string(),
-    speakers: z.array(reference("people")),
+    speakers: z.array(
+      z.object({ id: reference("people"), role: z.string().optional() }),
+    ),
     language: z.enum(["french", "english"]),
     feedback: z
       .object({

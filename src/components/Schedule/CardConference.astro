@@ -12,7 +12,15 @@ const { activity, event } = Astro.props;
 
 const talk = activity.slug ? await getEntry(activity.slug) : undefined;
 const hosts = await getEntries(talk?.data.hosts ?? []);
-const speakers = await getEntries(talk?.data.speakers ?? []);
+const speakers = (
+  await getEntries(talk?.data.speakers.map((speaker) => speaker.id) ?? [])
+).map((speaker) => ({
+  ...speaker,
+  data: {
+    ...speaker.data,
+    role: talk?.data.speakers.find((s) => s.id.id === speaker.id)?.role,
+  },
+}));
 const people = [...hosts, ...speakers];
 ---
 
@@ -27,17 +35,11 @@ const people = [...hosts, ...speakers];
       </p>
       {!!people.length && (
         <div class="grid grid-cols-2 gap-3 md:grid-cols-3">
-          {hosts?.map((host) => (
-            <SpeakerForCard
-              name={host.data.name}
-              avatar={host.data.avatar ?? null}
-              role="Roundtable host"
-            />
-          ))}
           {speakers.map((speaker) => (
             <SpeakerForCard
               name={speaker.data.name}
               avatar={speaker.data.avatar ?? null}
+              role={speaker.data.role ?? ""}
             />
           ))}
         </div>

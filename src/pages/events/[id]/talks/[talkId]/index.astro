@@ -33,7 +33,9 @@ export async function getStaticPaths() {
       params: { id: talk.__event.id, talkId: talk.id },
       props: {
         talk,
-        speakers: await getEntries(talk.data.speakers),
+        speakers: await getEntries(
+          talk.data.speakers.map((speaker) => speaker.id),
+        ),
         event: talk.__event,
       },
     })),
