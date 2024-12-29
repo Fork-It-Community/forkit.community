@@ -16,7 +16,10 @@ import {
 } from "@/lib/events";
 import { cn } from "@/lib/utils";
 import { Image } from "astro:assets";
-import { getEntries, render } from "astro:content";
+import {
+  getEntries,
+  // render
+} from "astro:content";
 import { MdArrowForward } from "react-icons/md";
 import { match } from "ts-pattern";
 
@@ -46,14 +49,14 @@ export async function getStaticPaths() {
 
 const {
   event,
-  subPages,
+  // subPages,
   speakers,
   coOrganizers: _coOrganizers,
   sponsors,
 } = Astro.props;
 const coOrganizers = _coOrganizers.filter((p) => !!p);
 const navItems = await getEventNavItems(event.id);
-const { Content } = await render(event);
+// const { Content } = await render(event);
 ---
 
 <EventLayout event={event}>
@@ -155,6 +158,29 @@ const { Content } = await render(event);
       </nav>
     </div>
   </div>
+  {
+    !!sponsors.length && (
+      <div class="hide-scrollbar overflow-auto">
+        <div class="mx-auto flex w-fit items-center gap-4 px-8 py-8">
+          {sponsors.map((sponsor) => (
+            <a
+              href={sponsor.data.href}
+              class="brightness-200 grayscale transition duration-300 hover:brightness-100 hover:grayscale-0"
+              title={sponsor.data.name}
+            >
+              <Image
+                class="w-12 max-w-none flex-none"
+                src={sponsor.data.logos.noBgSquare}
+                alt={sponsor.data.name}
+                width={48}
+                height={48}
+              />
+            </a>
+          ))}
+        </div>
+      </div>
+    )
+  }
 
   <!-- Schedule & Speakers -->
   <div
@@ -192,27 +218,66 @@ const { Content } = await render(event);
     }
   </div>
 
-  <JoinTheCommunity />
+  {
+    !!sponsors.length && (
+      <div class="mx-auto flex w-full max-w-screen-lg flex-col gap-8 px-4 py-12">
+        <h2
+          id="sponsors"
+          class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+        >
+          Sponsors
+        </h2>
+        <div class="flex flex-col gap-8">
+          {event.data.sponsoringLevels?.map((sponsoringLevel) => {
+            const levelSponsors = event.data.sponsors
+              ?.filter((s) => s.level === sponsoringLevel)
+              .map(({ slug }) => sponsors.find((s) => s.id === slug.id))
+              .filter((s) => !!s);
 
-  <div class="mx-auto w-full max-w-screen-sm px-4 py-24">
-    <div>Event page {event.data.name}</div>
-    <ul>
-      {
-        subPages.map((subPage) => (
-          <li>
-            <a href={`/events/${subPage.id}`}>{subPage.data.title}</a>
-          </li>
-        ))
-      }
-    </ul>
+            if (!levelSponsors?.length) return null;
+            return (
+              <div class="flex flex-col gap-2">
+                <h3 class="font-heading text-base font-medium uppercase tracking-widest">
+                  {sponsoringLevel}
+                </h3>
+                <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+                  {levelSponsors.map((sponsor) => {
+                    if (!sponsor.data.href) {
+                      return (
+                        <div>
+                          <Image
+                            src={sponsor.data.logos.bgWhite}
+                            alt={sponsor.data.name}
+                            class="rounded-md"
+                            width={500}
+                            height={300}
+                          />
+                        </div>
+                      );
+                    }
+                    return (
+                      <a href={sponsor.data.href}>
+                        <Image
+                          src={sponsor.data.logos.bgWhite}
+                          alt={sponsor.data.name}
+                          class="rounded-md"
+                          width={500}
+                          height={300}
+                        />
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    )
+  }
 
-    <div>Sponsors</div>
-    <ul>
-      {sponsors.map((sponsor) => <li>{sponsor.data.name}</li>)}
-    </ul>
-  </div>
-  <div class="prose prose-invert mx-auto w-full max-w-screen-sm px-4 py-24">
-    <Content />
+  <div class="py-24">
+    <JoinTheCommunity />
   </div>
 
   {event.data.feedback && <FeedbackCTA href={event.data.feedback.link} />}

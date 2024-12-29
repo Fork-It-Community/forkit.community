@@ -47,6 +47,18 @@
   .bg-background-blur {
     @apply bg-background/60 backdrop-blur-md;
   }
+
+  .hide-scrollbar {
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    & {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+  }
 }
 
 /* Shadcn config */
