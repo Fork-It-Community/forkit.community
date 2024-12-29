@@ -104,33 +104,35 @@ export const EventNav = (props: {
                   </div>
                 </div>
                 <div className="absolute bottom-0 left-0 h-20 w-full bg-white opacity-15 blur-3xl" />
-                <div className="relative z-10 flex flex-wrap items-center justify-center gap-3 p-6">
-                  {canShowTicketsButton && (
-                    <Button asChild size="sm">
-                      <a
-                        href={props.eventMetadata.tickets?.href}
-                        className="group flex-[2] gap-2"
-                        onClick={() => setOpen(false)}
-                      >
-                        Get Your Ticket
-                        <MdArrowForward className="transition group-hover:translate-x-1" />
-                      </a>
-                    </Button>
-                  )}
-                  {props.eventMetadata.status !== "cancelled" &&
-                    props.eventMetadata.cfp &&
-                    dayjs().isBefore(props.eventMetadata.cfp.endDate) && (
-                      <Button asChild size="sm" variant="ghost">
+                <div className="relative z-10 flex flex-wrap items-center justify-center gap-3 p-6 pb-8">
+                  <div className="flex w-full gap-3">
+                    {canShowTicketsButton && (
+                      <Button asChild size="lg">
                         <a
-                          href={props.eventMetadata.cfp.href}
-                          className="flex-1"
+                          href={props.eventMetadata.tickets?.href}
+                          className="group flex-[2] gap-2"
                           onClick={() => setOpen(false)}
                         >
-                          CFP
+                          Get Your Ticket
+                          <MdArrowForward className="transition group-hover:translate-x-1" />
                         </a>
                       </Button>
                     )}
-                  <Button asChild size="sm" variant="ghost">
+                    {props.eventMetadata.status !== "cancelled" &&
+                      props.eventMetadata.cfp &&
+                      dayjs().isBefore(props.eventMetadata.cfp.endDate) && (
+                        <Button asChild size="lg" variant="ghost">
+                          <a
+                            href={props.eventMetadata.cfp.href}
+                            className="flex-1"
+                            onClick={() => setOpen(false)}
+                          >
+                            CFP
+                          </a>
+                        </Button>
+                      )}
+                  </div>
+                  <Button asChild size="lg" variant="ghost">
                     <a
                       href="/"
                       className="group flex w-full gap-2"

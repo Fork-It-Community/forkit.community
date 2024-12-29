@@ -91,7 +91,7 @@ const { Content } = await render(event);
           shouldShowTicketsButton(event) && (
             <a
               href={event.data.tickets.href}
-              class={cn(buttonVariants(), "group gap-2")}
+              class={cn(buttonVariants({ size: "lg" }), "group gap-2")}
             >
               Get Your Ticket
               <MdArrowForward className="transition group-hover:translate-x-1" />
@@ -102,7 +102,7 @@ const { Content } = await render(event);
           shouldShowCFPButton(event) && (
             <a
               href={event.data.cfp.href}
-              class={buttonVariants({ variant: "ghost" })}
+              class={buttonVariants({ size: "lg", variant: "ghost" })}
             >
               CFP
             </a>
@@ -138,7 +138,7 @@ const { Content } = await render(event);
     <div
       class="absolute bottom-0 left-0 right-0 flex flex-col items-center justify-center gap-2 px-6 py-8 md:py-16"
     >
-      <h4 class="text-xs uppercase tracking-widest opacity-40">Quick Access</h4>
+      <p class="text-xs uppercase tracking-widest opacity-40">Quick Access</p>
       <nav
         class="flex flex-wrap items-center justify-center gap-x-1 xs:gap-x-2 md:gap-x-3"
       >
