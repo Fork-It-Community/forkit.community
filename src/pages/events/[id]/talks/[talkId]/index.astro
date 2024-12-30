@@ -5,11 +5,11 @@ import Speaker from "@/components/Speaker/index.astro";
 import { getEventsCollection } from "@/lib/events";
 import { getEntries } from "astro:content";
 import { render } from "astro:content";
-import { LuArrowLeft } from "react-icons/lu";
 import { IoLanguageSharp } from "react-icons/io5";
 import { cn } from "@/lib/utils";
 import { MdArrowOutward } from "react-icons/md";
 import dayjs from "dayjs";
+import { BackButton } from "@/components/BackButton";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -49,12 +49,7 @@ const { Content } = await render(talk);
 <EventSubPageLayout title={talk.data.title} event={event}>
   <div class="mx-auto max-w-screen-sm p-4 md:p-8">
     <div class="flex justify-between">
-      <a
-        href={`/events/${event.id}`}
-        class={buttonVariants({ variant: "ghost", size: "xs" })}
-      >
-        <LuArrowLeft className="mr-2" /> Back
-      </a>
+      <BackButton href={`/events/${event.id}`} client:load />
       {
         event.data.status !== "cancelled" &&
           talk.data.feedback &&
