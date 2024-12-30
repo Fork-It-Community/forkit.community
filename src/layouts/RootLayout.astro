@@ -4,13 +4,6 @@ import "@fontsource/tomorrow/500.css";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/inter";
 import "@/styles/globals.css";
-
-interface Props {
-  title?: string;
-  description?: string;
-}
-
-const { title, description } = Astro.props;
 ---
 
 <html lang="en" class="dark">
@@ -20,14 +13,7 @@ const { title, description } = Astro.props;
       name="viewport"
       content="width=device-width, initial-scale=1, interactive-widget=resizes-content"
     />
-    <title>{title || "Fork it! Community"}</title>
-    <meta
-      name="description"
-      content={description ||
-        "Fork it! Community’s mission is to share computer science knowledge through worldwide events."}
-    />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <link rel="canonical" href={Astro.url} />
     <meta name="generator" content={Astro.generator} />
     <slot name="seo" />
   </head>

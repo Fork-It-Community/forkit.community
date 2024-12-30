@@ -1,0 +1,38 @@
+---
+import { SEO } from "astro-seo";
+import type { ComponentProps } from "astro/types";
+
+interface Props
+  extends Pick<ComponentProps<typeof SEO>, "title" | "description"> {
+  image: NonNullable<ComponentProps<typeof SEO>["openGraph"]>["basic"]["image"];
+  imageAlt: string;
+  url: NonNullable<ComponentProps<typeof SEO>["openGraph"]>["basic"]["url"];
+}
+
+const { title, description, image, imageAlt, url } = Astro.props;
+---
+
+<SEO
+  title={title ?? ""}
+  titleTemplate="%s | Fork it! Community"
+  titleDefault="Fork it! Community"
+  description={description ?? ""}
+  openGraph={{
+    basic: {
+      title: title ?? "",
+      type: "website",
+      image,
+      url: url ?? "",
+    },
+    image: {
+      alt: imageAlt ?? "",
+    },
+  }}
+  twitter={{
+    card: "summary_large_image",
+    title: title ?? "",
+    description: description ?? "",
+    image,
+    imageAlt: imageAlt ?? "",
+  }}
+/>

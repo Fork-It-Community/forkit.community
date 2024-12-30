@@ -7,6 +7,8 @@ import { EventNav } from "@/components/EventNav";
 import { getEventNavItems } from "@/lib/events";
 import EventWarningBanner from "@/components/EventWarningBanner/index.astro";
 import Footer from "@/components/Footer/index.astro";
+import dayjs from "dayjs";
+import SEO from "@/components/SEO/index.astro";
 
 interface Props {
   title?: string;
@@ -14,12 +16,24 @@ interface Props {
   event: CollectionEntry<"events">;
 }
 
-const { title, description, event } = Astro.props;
+const { event } = Astro.props;
 const navItems = await getEventNavItems(event.id);
+
+const ogImage = new URL("/opengraph-image.jpg", Astro.site);
+const ogImageAlt = "Fork it! Community";
+const url = new URL(Astro.url.pathname, Astro.site);
+const title = `${event.data.city}, ${event.data.country}, ${dayjs(event.data.date).format("YYYY")}`;
 ---
 
-<RootLayout title?={title} description?={description}>
-  <slot name="seo" slot="seo" />
+<RootLayout>
+  <SEO
+    slot="seo"
+    title={title}
+    description={event.data.excerpt ?? ""}
+    image={ogImage.toString()}
+    imageAlt={ogImageAlt}
+    url={url}
+  />
   {
     !!event?.data.image?.src && (
       <ImageBackgroundHero
