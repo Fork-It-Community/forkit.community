@@ -62,7 +62,9 @@ const navItems = await getEventNavItems(event.id);
 ---
 
 <EventLayout event={event}>
-  <div class="flex h-[100svh] flex-col items-center justify-center">
+  <div
+    class="relative flex h-[100svh] min-h-[600px] flex-col items-center justify-center"
+  >
     <div
       class="relative flex flex-1 flex-col items-center justify-center gap-8 p-4 md:gap-12"
     >
