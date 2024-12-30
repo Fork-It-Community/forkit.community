@@ -161,19 +161,19 @@ const navItems = await getEventNavItems(event.id);
   {
     !!sponsors.length && (
       <div class="hide-scrollbar overflow-auto">
-        <div class="mx-auto flex w-fit items-center gap-4 px-8 py-8">
+        <div class="mx-auto flex w-fit items-center gap-6 px-8 py-8">
           {sponsors.map((sponsor) => (
             <a
               href={sponsor.data.href}
-              class="brightness-200 grayscale transition duration-300 hover:brightness-100 hover:grayscale-0"
+              class="opacity-60 brightness-200 grayscale transition duration-300 hover:opacity-100 hover:brightness-100 hover:grayscale-0"
               title={sponsor.data.name}
             >
               <Image
-                class="w-12 max-w-none flex-none"
-                src={sponsor.data.logos.noBgSquare}
+                class="w-24 max-w-none flex-none"
+                src={sponsor.data.logos.noBg}
                 alt={sponsor.data.name}
-                width={48}
-                height={48}
+                width={192}
+                height={116}
               />
             </a>
           ))}
