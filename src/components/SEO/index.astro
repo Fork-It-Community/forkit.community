@@ -4,12 +4,17 @@ import type { ComponentProps } from "astro/types";
 
 interface Props
   extends Pick<ComponentProps<typeof SEO>, "title" | "description"> {
-  image: NonNullable<ComponentProps<typeof SEO>["openGraph"]>["basic"]["image"];
-  imageAlt: string;
+  image?: NonNullable<
+    ComponentProps<typeof SEO>["openGraph"]
+  >["basic"]["image"];
+  imageAlt?: string;
   url: NonNullable<ComponentProps<typeof SEO>["openGraph"]>["basic"]["url"];
 }
 
 const { title, description, image, imageAlt, url } = Astro.props;
+
+const ogImage = new URL("/opengraph-image.jpg", Astro.site);
+const ogImageAlt = "Fork it! Community";
 ---
 
 <SEO
@@ -21,18 +26,18 @@ const { title, description, image, imageAlt, url } = Astro.props;
     basic: {
       title: title ?? "",
       type: "website",
-      image,
+      image: image ?? ogImage.toString(),
       url: url ?? "",
     },
     image: {
-      alt: imageAlt ?? "",
+      alt: imageAlt ?? ogImageAlt,
     },
   }}
   twitter={{
     card: "summary_large_image",
     title: title ?? "",
     description: description ?? "",
-    image,
-    imageAlt: imageAlt ?? "",
+    image: image ?? ogImage.toString(),
+    imageAlt: imageAlt ?? ogImageAlt,
   }}
 />

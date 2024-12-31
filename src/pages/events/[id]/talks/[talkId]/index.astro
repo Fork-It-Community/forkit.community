@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { MdArrowOutward } from "react-icons/md";
 import dayjs from "dayjs";
 import { BackButton } from "@/components/BackButton";
+import SEO from "@/components/SEO/index.astro";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -44,9 +45,22 @@ export async function getStaticPaths() {
 
 const { talk, event, speakers } = Astro.props;
 const { Content } = await render(talk);
+
+const url = new URL(Astro.url.pathname, Astro.site);
+const title = `${talk.data.title} | ${event.data.city}, ${event.data.country}, ${dayjs(event.data.date).format("YYYY")}`;
 ---
 
 <EventSubPageLayout title={talk.data.title} event={event}>
+  {
+    /* TODO description will be better with talk description I think (but need to sanitize html) */
+    /* The old website was using event description too, so not a regression at the moment */
+  }
+  <SEO
+    slot="seo"
+    title={title}
+    description={event.data.excerpt ?? ""}
+    url={url}
+  />
   <div class="mx-auto max-w-screen-sm p-4 md:p-8">
     <div class="flex justify-between">
       <BackButton href={`/events/${event.id}`} client:load />

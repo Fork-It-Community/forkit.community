@@ -9,6 +9,7 @@ import EventWarningBanner from "@/components/EventWarningBanner/index.astro";
 import Footer from "@/components/Footer/index.astro";
 import dayjs from "dayjs";
 import SEO from "@/components/SEO/index.astro";
+import { match } from "ts-pattern";
 
 interface Props {
   title?: string;
@@ -19,10 +20,13 @@ interface Props {
 const { event } = Astro.props;
 const navItems = await getEventNavItems(event.id);
 
-const ogImage = new URL("/opengraph-image.jpg", Astro.site);
-const ogImageAlt = "Fork it! Community";
 const url = new URL(Astro.url.pathname, Astro.site);
-const title = `${event.data.city}, ${event.data.country}, ${dayjs(event.data.date).format("YYYY")}`;
+const title = `${event.data.city}, ${event.data.country}, ${dayjs(event.data.date).format("YYYY")}, ${match(
+  event.data.type,
+)
+  .with("event", () => "Full Day Event")
+  .with("meetup", () => "Community Meetup")
+  .exhaustive()}`;
 ---
 
 <RootLayout>
@@ -30,8 +34,6 @@ const title = `${event.data.city}, ${event.data.country}, ${dayjs(event.data.dat
     slot="seo"
     title={title}
     description={event.data.excerpt ?? ""}
-    image={ogImage.toString()}
-    imageAlt={ogImageAlt}
     url={url}
   />
   {
