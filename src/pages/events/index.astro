@@ -4,12 +4,18 @@ import MainLayout from "@/layouts/MainLayout.astro";
 import bgImage from "@/assets/images/events.jpeg";
 import { getPastEvents, getUpcomingEvents } from "@/lib/events";
 import EventCard from "@/components/EventCard/index.astro";
+import SEO from "@/components/SEO/index.astro";
 
 const upcomingEvents = await getUpcomingEvents();
 const pastEvents = await getPastEvents();
 ---
 
 <MainLayout>
+  <SEO
+    slot="seo"
+    title="Events"
+    description="All the Fork it! events, from meetups to full day events, come take a look at what is happening near you."
+  />
   <div class="mx-auto w-full max-w-screen-sm px-4">
     <MainPageTitle
       title="Events"
