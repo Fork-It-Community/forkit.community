@@ -8,26 +8,36 @@ interface Props
     ComponentProps<typeof SEO>["openGraph"]
   >["basic"]["image"];
   imageAlt?: string;
-  url: NonNullable<ComponentProps<typeof SEO>["openGraph"]>["basic"]["url"];
+  url?: NonNullable<ComponentProps<typeof SEO>["openGraph"]>["basic"]["url"];
 }
 
-const { title, description, image, imageAlt, url } = Astro.props;
+const {
+  title,
+  description = "Fork it! Community’s mission is to share computer science knowledge through worldwide events.",
+  image,
+  imageAlt,
+  url = Astro.url,
+} = Astro.props;
 
 const ogImage = new URL("/opengraph-image.jpg", Astro.site);
 const ogImageAlt = "Fork it! Community";
+const titleDefault = "Fork it! Community";
 ---
 
 <SEO
   title={title ?? ""}
   titleTemplate="%s | Fork it! Community"
-  titleDefault="Fork it! Community"
+  titleDefault={titleDefault}
   description={description ?? ""}
   openGraph={{
     basic: {
-      title: title ?? "",
+      title: title ?? titleDefault,
       type: "website",
       image: image ?? ogImage.toString(),
       url: url ?? "",
+    },
+    optional: {
+      description,
     },
     image: {
       alt: imageAlt ?? ogImageAlt,
@@ -35,7 +45,7 @@ const ogImageAlt = "Fork it! Community";
   }}
   twitter={{
     card: "summary_large_image",
-    title: title ?? "",
+    title: title ?? titleDefault ?? "",
     description: description ?? "",
     image: image ?? ogImage.toString(),
     imageAlt: imageAlt ?? ogImageAlt,

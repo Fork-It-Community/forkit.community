@@ -13,6 +13,7 @@ import { buttonVariants } from "@/components/ui/button";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import { match } from "ts-pattern";
 import { getUpcomingEvents } from "@/lib/events";
+import SEO from "@/components/SEO/index.astro";
 
 const upcomingMajorEvent = await getUpcomingMajorEvent();
 const upcomingEvents = (await getUpcomingEvents())
@@ -25,6 +26,7 @@ const podcasts = await getPodcastsCollection();
 ---
 
 <MainLayout>
+  <SEO slot="seo" />
   <!-- HERO -->
   <ImageBackgroundHero
     src={upcomingMajorEvent?.data?.image?.src ?? defaultImage}
