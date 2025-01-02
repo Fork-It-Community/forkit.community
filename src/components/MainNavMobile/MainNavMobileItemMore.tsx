@@ -8,7 +8,6 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import type { FC, ReactNode } from "react";
-import { cn } from "@/lib/utils";
 import { getMainMenuMobileItems } from "@/content/menus";
 
 const MainNavMobileItemMore = (props: { currentPathname: string }) => {
@@ -63,10 +62,7 @@ const MoreNavItem = (props: {
   return (
     <a
       href={props.href}
-      className={cn(
-        "flex items-center gap-3 px-6 py-4 opacity-60",
-        isActive && "opacity-100",
-      )}
+      className={`flex items-center gap-3 px-6 py-4 ${isActive ? "opacity-100" : "opacity-60"}`}
     >
       <span className="text-xl">
         <Icon />

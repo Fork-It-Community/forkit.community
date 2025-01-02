@@ -1,6 +1,5 @@
 import { Logo } from "@/components/Logo";
 import { useWindowScroll, useWindowSize } from "@uidotdev/usehooks";
-import { cn } from "@/lib/utils";
 import {
   Sheet,
   SheetContent,
@@ -14,28 +13,22 @@ import { useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 
 import type { Event } from "@/schemas/events";
-import dayjs from "dayjs";
 
 export const EventNav = (props: {
   eventName: ReactNode;
   eventId: string;
   eventMetadata: Pick<Event, "cfp" | "tickets" | "date" | "status">;
   items: Array<{ href: string; label: ReactNode }>;
+  shouldShowTicketsButton: boolean;
+  shouldShowCFPButton: boolean;
 }) => {
   const [{ y }] = useWindowScroll();
   const { height } = useWindowSize();
   const [open, setOpen] = useState(false);
-  const canShowTicketsButton =
-    props.eventMetadata.status !== "cancelled" &&
-    props.eventMetadata.tickets?.href &&
-    dayjs().isBefore(props.eventMetadata.date);
 
   return (
     <div
-      className={cn(
-        "bg-background-blur fixed left-0 right-0 top-0 z-30 flex h-14 -translate-y-full transition-transform duration-500",
-        height && (y ?? 0) >= height * 0.7 && "translate-y-0",
-      )}
+      className={`bg-background-blur fixed left-0 right-0 top-0 z-30 flex h-14 transition-transform duration-500 ${height && (y ?? 0) >= height * 0.7 ? "translate-y-0" : "-translate-y-full"}`}
       style={{
         right: "var(--removed-body-scroll-bar-size, 0)",
       }}
@@ -52,7 +45,7 @@ export const EventNav = (props: {
         </a>
 
         <div className="flex items-center gap-1">
-          {canShowTicketsButton && (
+          {props.shouldShowTicketsButton && (
             <Button size="xs" asChild>
               <a
                 href={props.eventMetadata.tickets?.href}
@@ -106,7 +99,7 @@ export const EventNav = (props: {
                 <div className="absolute bottom-0 left-0 h-20 w-full bg-white opacity-15 blur-3xl" />
                 <div className="relative z-10 flex flex-wrap items-center justify-center gap-3 p-6 pb-8">
                   <div className="flex w-full gap-3">
-                    {canShowTicketsButton && (
+                    {props.shouldShowTicketsButton && (
                       <Button asChild size="lg">
                         <a
                           href={props.eventMetadata.tickets?.href}
@@ -118,9 +111,8 @@ export const EventNav = (props: {
                         </a>
                       </Button>
                     )}
-                    {props.eventMetadata.status !== "cancelled" &&
-                      props.eventMetadata.cfp &&
-                      dayjs().isBefore(props.eventMetadata.cfp.endDate) && (
+                    {props.shouldShowCFPButton &&
+                      props.eventMetadata.cfp?.href && (
                         <Button asChild size="lg" variant="ghost">
                           <a
                             href={props.eventMetadata.cfp.href}

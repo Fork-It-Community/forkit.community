@@ -1,6 +1,5 @@
 import { MdMoreHoriz } from "react-icons/md";
 import type { FC, ReactNode } from "react";
-import { cn } from "@/lib/utils";
 import {
   Popover,
   PopoverContent,
@@ -59,10 +58,7 @@ const MoreNavItem = (props: {
   return (
     <a
       href={props.href}
-      className={cn(
-        "flex items-center gap-3 rounded px-3 py-2.5 text-white opacity-50 transition hover:bg-black/30 hover:opacity-100",
-        isActive && "opacity-100",
-      )}
+      className={`flex items-center gap-3 rounded px-3 py-2.5 text-white transition hover:bg-black/30 hover:opacity-100 ${isActive ? "opacity-100" : "opacity-50"}`}
     >
       <span className="text-xl">
         <Icon />

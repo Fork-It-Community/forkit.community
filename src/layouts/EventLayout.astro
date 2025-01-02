@@ -4,7 +4,11 @@ import RootLayout from "@/layouts/RootLayout.astro";
 import type { CollectionEntry } from "astro:content";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import { EventNav } from "@/components/EventNav";
-import { getEventNavItems } from "@/lib/events";
+import {
+  getEventNavItems,
+  shouldShowCFPButton,
+  shouldShowTicketsButton,
+} from "@/lib/events";
 import EventWarningBanner from "@/components/EventWarningBanner/index.astro";
 import Footer from "@/components/Footer/index.astro";
 import dayjs from "dayjs";
@@ -62,6 +66,8 @@ const title = `${event.data.city}, ${event.data.country}, ${dayjs(event.data.dat
       tickets: event.data.tickets,
     }}
     items={navItems}
+    shouldShowCFPButton={shouldShowCFPButton(event)}
+    shouldShowTicketsButton={shouldShowTicketsButton(event)}
     client:load
   />
   <div class="flex flex-1 flex-col">
