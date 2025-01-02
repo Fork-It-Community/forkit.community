@@ -14,7 +14,7 @@ import {
   shouldShowCFPButton,
   getEventDisplayDate,
 } from "@/lib/events";
-import { cn } from "@/lib/utils";
+import { cn, formatDateTime } from "@/lib/utils";
 import { Image } from "astro:assets";
 import {
   getEntries,
@@ -23,6 +23,8 @@ import {
 import { MdArrowForward } from "react-icons/md";
 import { match } from "ts-pattern";
 import { motion } from "motion/react";
+import { Schema } from "astro-seo-schema";
+import type { Place } from "schema-dts";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -60,9 +62,48 @@ const {
 const coOrganizers = _coOrganizers.filter((p) => !!p);
 const navItems = await getEventNavItems(event.id);
 // const { Content } = await render(event);
+
+const location: Place | undefined = event.data.location
+  ? {
+      "@type": "Place",
+      address: event.data.location.address,
+      name: event.data.location.name ?? "",
+    }
+  : undefined;
 ---
 
 <EventLayout event={event}>
+  <Schema
+    item={{
+      "@context": "https://schema.org",
+      "@type": "Event",
+      name: `${event.data.date ? formatDateTime(event.data.date) + " " : ""}${event.data.name}`,
+      startDate: event.data.date?.toISOString(),
+      endDate: event.data.date?.toISOString(),
+      description: event.data.excerpt ?? "",
+      offers: (event.data.tickets?.offers ?? []).map((offer) => ({
+        "@type": "Offer",
+        price: offer.price,
+        priceCurrency: offer.priceCurrency,
+        url: event.data.tickets?.href ?? "",
+        availability: `https://schema.org/${offer.availability}`,
+        validFrom: offer.validFrom.toISOString(),
+      })),
+      eventStatus: `https://schema.org/${event.data.eventStatus}`,
+      image: event.data.image?.src.src ?? "",
+      organizer: {
+        "@type": "Organization",
+        name: "Fork it! Community",
+        url: "https://www.forkit.community",
+      },
+      eventAttendanceMode: event.data.attendanceMode,
+      performer: (speakers ?? []).map((speaker) => ({
+        "@type": "Person",
+        name: speaker.data.name,
+      })),
+      ...(location && { location }),
+    }}
+  />
   <div
     class="relative flex h-[100svh] min-h-[600px] flex-col items-center justify-center"
   >

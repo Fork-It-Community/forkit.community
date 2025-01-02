@@ -62,6 +62,9 @@ importers:
       astro-seo:
         specifier: 0.8.4
         version: 0.8.4(prettier-plugin-astro@0.14.1)(prettier@3.3.3)(typescript@5.5.4)
+      astro-seo-schema:
+        specifier: 5.0.0
+        version: 5.0.0(astro@5.1.1(jiti@2.4.2)(rollup@4.29.1)(typescript@5.5.4)(yaml@2.5.0))(schema-dts@1.1.2(typescript@5.5.4))
       class-variance-authority:
         specifier: 0.7.0
         version: 0.7.0
@@ -89,6 +92,9 @@ importers:
       react-icons:
         specifier: 5.4.0
         version: 5.4.0(react@18.3.1)
+      schema-dts:
+        specifier: 1.1.2
+        version: 1.1.2(typescript@5.5.4)
       sharp:
         specifier: 0.33.5
         version: 0.33.5
@@ -1546,6 +1552,12 @@ packages:
 
   astro-robots-txt@1.0.0:
     resolution: {integrity: sha512-6JQSLid4gMhoWjOm85UHLkgrw0+hHIjnJVIUqxjU2D6feKlVyYukMNYjH44ZDZBK1P8hNxd33PgWlHzCASvedA==}
+
+  astro-seo-schema@5.0.0:
+    resolution: {integrity: sha512-rbP9BUxvqH4tdgG5VEYDcoAxUhVKv93TdHRQ5zbYUxee1TKAWsNcAG3nqavX83QTTGqU5anvikMcJZXWhGN9wg==}
+    peerDependencies:
+      astro: ^5.0.0
+      schema-dts: ^1.1.0
 
   astro-seo@0.8.4:
     resolution: {integrity: sha512-Ou1vzQSXAxa0K8rtNtXNvSpYqOGEgMhh0immMxJeXmbVZac3UKCNWAoXWyOQDFYsZvBugCRSg0N1phBqPMVgCw==}
@@ -3041,6 +3053,11 @@ packages:
 
   scheduler@0.23.2:
     resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
+
+  schema-dts@1.1.2:
+    resolution: {integrity: sha512-MpNwH0dZJHinVxk9bT8XUdjKTxMYrA5bLtrrGmFA6PTLwlOKnhi67XoRd6/ty+Djt6ZC0slR57qFhZDNMI6DhQ==}
+    peerDependencies:
+      typescript: '>=4.1.0'
 
   semver@6.3.1:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
@@ -5084,6 +5101,11 @@ snapshots:
       valid-filename: 4.0.0
       zod: 3.23.8
 
+  astro-seo-schema@5.0.0(astro@5.1.1(jiti@2.4.2)(rollup@4.29.1)(typescript@5.5.4)(yaml@2.5.0))(schema-dts@1.1.2(typescript@5.5.4)):
+    dependencies:
+      astro: 5.1.1(jiti@2.4.2)(rollup@4.29.1)(typescript@5.5.4)(yaml@2.5.0)
+      schema-dts: 1.1.2(typescript@5.5.4)
+
   astro-seo@0.8.4(prettier-plugin-astro@0.14.1)(prettier@3.3.3)(typescript@5.5.4):
     dependencies:
       '@astrojs/check': 0.5.10(prettier-plugin-astro@0.14.1)(prettier@3.3.3)(typescript@5.5.4)
@@ -7052,6 +7074,10 @@ snapshots:
   scheduler@0.23.2:
     dependencies:
       loose-envify: 1.4.0
+
+  schema-dts@1.1.2(typescript@5.5.4):
+    dependencies:
+      typescript: 5.5.4
 
   semver@6.3.1: {}
 
