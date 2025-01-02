@@ -22,6 +22,7 @@ import {
 } from "astro:content";
 import { MdArrowForward } from "react-icons/md";
 import { match } from "ts-pattern";
+import { motion } from "motion/react";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -65,20 +66,36 @@ const navItems = await getEventNavItems(event.id);
   <div
     class="relative flex h-[100svh] min-h-[600px] flex-col items-center justify-center"
   >
-    <div
-      class="relative flex flex-1 flex-col items-center justify-center gap-8 p-4 md:gap-12"
+    <motion.div
+      client:load
+      initial={{ opacity: 0, y: -15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: "spring" }}
+      className="relative flex flex-1 flex-col items-center justify-center gap-8 p-4 md:gap-12"
     >
       <div class="flex flex-col items-center justify-center gap-4">
         <Logo className="w-32 md:w-48" />
         <h1
           class="flex flex-col gap-1 text-balance text-center font-heading md:gap-2"
         >
-          <span class="text-3xl font-medium md:text-6xl">
-            {getEventDisplayDate(event)}
-          </span>
-          <span class="text-xl text-primary md:text-4xl"
-            >{event.data.city}, {event.data.country}</span
+          <motion.span
+            client:load
+            initial={{ opacity: 0, y: -15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring" }}
+            className="text-3xl font-medium md:text-6xl"
           >
+            {getEventDisplayDate(event)}
+          </motion.span>
+          <motion.span
+            client:load
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", delay: 0.2 }}
+            className="text-xl text-primary md:text-4xl"
+          >
+            {event.data.city}, {event.data.country}
+          </motion.span>
 
           <span
             class="p-2 text-xs uppercase tracking-widest opacity-60 md:text-sm"
@@ -140,10 +157,14 @@ const navItems = await getEventNavItems(event.id);
           </div>
         )
       }
-    </div>
+    </motion.div>
 
-    <div
-      class="absolute bottom-0 left-0 right-0 flex flex-col items-center justify-center gap-2 px-6 py-8 md:py-16"
+    <motion.div
+      client:load
+      initial={{ opacity: 0, y: -15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: "spring", delay: 0.2 }}
+      className="absolute bottom-0 left-0 right-0 flex flex-col items-center justify-center gap-2 px-6 py-8 md:py-16"
     >
       <p class="text-xs uppercase tracking-widest opacity-40">Quick Access</p>
       <nav
@@ -160,7 +181,7 @@ const navItems = await getEventNavItems(event.id);
           ))
         }
       </nav>
-    </div>
+    </motion.div>
   </div>
   {
     !!sponsors.length && (

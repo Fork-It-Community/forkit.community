@@ -14,6 +14,7 @@ import Footer from "@/components/Footer/index.astro";
 import dayjs from "dayjs";
 import SEO from "@/components/SEO/index.astro";
 import { match } from "ts-pattern";
+import { motion } from "motion/react";
 
 interface Props {
   title?: string;
@@ -42,10 +43,17 @@ const title = `${event.data.city}, ${event.data.country}, ${dayjs(event.data.dat
   />
   {
     !!event?.data.image?.src && (
-      <ImageBackgroundHero
-        src={event.data.image.src}
-        alt={event.data.image.alt}
-      />
+      <motion.div
+        client:load
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <ImageBackgroundHero
+          src={event.data.image.src}
+          alt={event.data.image.alt}
+        />
+      </motion.div>
     )
   }
   <div class="absolute inset-0 p-2">
