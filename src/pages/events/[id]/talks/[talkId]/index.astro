@@ -50,7 +50,7 @@ const url = new URL(Astro.url.pathname, Astro.site);
 const title = `${talk.data.title} | ${event.data.city}, ${event.data.country}, ${dayjs(event.data.date).format("YYYY")}`;
 ---
 
-<EventSubPageLayout title={talk.data.title} event={event}>
+<EventSubPageLayout event={event}>
   {
     /* TODO description will be better with talk description I think (but need to sanitize html) */
     /* The old website was using event description too, so not a regression at the moment */

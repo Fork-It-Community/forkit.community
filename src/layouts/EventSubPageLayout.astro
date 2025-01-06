@@ -7,15 +7,13 @@ import EventWarningBanner from "@/components/EventWarningBanner/index.astro";
 import Footer from "@/components/Footer/index.astro";
 
 interface Props {
-  title?: string;
-  description?: string;
   event: CollectionEntry<"events">;
 }
 
-const { title, description, event } = Astro.props;
+const { event } = Astro.props;
 ---
 
-<RootLayout title?={title} description?={description}>
+<RootLayout>
   <slot name="seo" slot="seo" />
   {
     !!event.data.image?.src && (

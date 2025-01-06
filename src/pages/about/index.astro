@@ -1,9 +1,15 @@
 ---
 import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
+import { SEO } from "astro-seo";
 ---
 
 <MainLayout>
+  <SEO
+    slot="seo"
+    title="About Fork it! Community"
+    description="Discover the origins of the community"
+  />
   <div class="mx-auto w-full max-w-screen-sm px-4">
     <MainPageTitle
       title="About Fork it!"
