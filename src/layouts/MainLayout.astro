@@ -16,7 +16,7 @@ const { title, description } = Astro.props;
 <RootLayout title?={title} description?={description}>
   <slot name="seo" slot="seo" />
   <MainNavDesktop />
-  <div class="flex flex-1 flex-col pb-40"><slot /></div>
+  <div class="flex flex-1 flex-col"><slot /></div>
   <Footer />
   <MainNavMobile />
 </RootLayout>
