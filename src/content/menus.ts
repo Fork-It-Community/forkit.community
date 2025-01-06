@@ -2,6 +2,7 @@ import type { FC, ReactNode } from "react";
 import {
   MdHomeFilled,
   MdEvent,
+  MdInfo,
   // MdFeed,
   // MdPodcasts,
   // MdBadge,
@@ -32,6 +33,13 @@ const MAIN_MENU: Array<{
     label: "Events",
     href: "/events",
     icon: MdEvent,
+    scope: "all",
+    level: "primary",
+  },
+  {
+    label: "About",
+    href: "/about",
+    icon: MdInfo,
     scope: "all",
     level: "primary",
   },

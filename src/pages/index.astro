@@ -6,6 +6,8 @@ import { getPodcastsCollection } from "@/lib/podcasts";
 import { Logo } from "@/components/Logo";
 import { Image } from "astro:assets";
 import defaultImage from "@/assets/images/events.jpeg";
+import aboutBackground from "@/assets/images/about.jpg";
+import afterMovieRouen2024VideoThumbnail from "@/assets/images/after-movie-rouen-2024-video-thumbnail.jpg";
 import dayjs from "dayjs";
 import { MdArrowForward, MdEvent } from "react-icons/md";
 import { cn } from "@/lib/utils";
@@ -162,7 +164,7 @@ const podcasts = await getPodcastsCollection();
         class="forkit-image-mask relative -mx-6 flex-[1.5] max-sm:hidden sm:mx-0"
       >
         <Image
-          class="aspect-[3/2] w-full bg-background object-cover text-gray-900"
+          class="aspect-[3/2] w-full bg-background object-cover text-white/40"
           src={upcomingMajorEvent?.data?.image?.src ?? defaultImage}
           alt={upcomingMajorEvent?.data?.image?.alt ??
             "Speaker giving a tech talk in from of attendees"}
@@ -177,7 +179,6 @@ const podcasts = await getPodcastsCollection();
   <JoinTheCommunity />
 
   <!-- PODCASTS -->
-
   <div class="mx-auto w-full max-w-screen-lg px-4 py-24">
     <div>
       <h2>Podcasts</h2>
@@ -190,6 +191,59 @@ const podcasts = await getPodcastsCollection();
           ))
         }
       </ul>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="relative overflow-hidden py-16 sm:py-40">
+    <Image
+      alt=""
+      class="absolute inset-0 h-full w-full -scale-x-100 object-cover mix-blend-color-dodge grayscale"
+      src={aboutBackground}
+      width={1200}
+    />
+    <div
+      class="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/0"
+    >
+    </div>
+    <div
+      class="absolute inset-0 h-full w-full"
+      style={{
+        backdropFilter: "blur(64px)",
+        maskImage: "linear-gradient(90deg, black 30%, transparent 70%)",
+      }}
+    >
+    </div>
+    <div
+      class="relative mx-auto flex max-w-screen-lg flex-col items-center justify-center gap-8 px-4 md:flex-row xl:justify-normal"
+    >
+      <div class="relative flex w-full flex-1 flex-col gap-4 px-4">
+        <h2
+          class="text-balance font-heading text-3xl font-medium uppercase tracking-wide"
+        >
+          What is Fork&nbsp;it! Community?
+        </h2>
+        <p class="bold max-w-[50ch] text-balance text-sm opacity-60">
+          Fork it! is a global tech community where real people share honest
+          feedback, real-life experiences, and authentic stories.
+        </p>
+
+        <a href="/about" class={cn(buttonVariants(), "gap-2 xs:max-w-44 mt-4")}>
+          About Fork it!
+          <MdArrowForward className="transition group-hover:translate-x-1" />
+        </a>
+      </div>
+      <div class="relative aspect-[1134/640] w-full min-w-0 flex-1">
+        <a href="https://www.youtube.com/watch?v=HLGnkpZ-Q1Q" target="_blank">
+          <Image
+            alt="Fork it! Rouen 2024 After Movie"
+            class="object-cover sm:rounded-lg"
+            src={afterMovieRouen2024VideoThumbnail}
+            width={1134}
+            height={640}
+          />
+        </a>
+      </div>
     </div>
   </div>
 </MainLayout>

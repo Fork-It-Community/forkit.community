@@ -1,0 +1,27 @@
+---
+import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
+---
+
+<MainLayout>
+  <div class="mx-auto w-full max-w-screen-sm px-4">
+    <MainPageTitle
+      title="About Fork it!"
+      subtitle="Discover the origins of the community"
+    />
+    <div
+      class="prose prose-sm prose-invert md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
+    >
+      <p>
+        Fork it! is a global tech community where real people share real-life
+        experiences. We believe in honest conversations, genuine feedback, and
+        learning from each other’s successes and challenges.
+      </p>
+
+      <p>
+        We focus on real projects and authentic stories. No fluff, no hype. It’s
+        a space to connect, collaborate, and keep it real in the world of tech.
+      </p>
+    </div>
+  </div>
+</MainLayout>
