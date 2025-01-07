@@ -9,7 +9,12 @@ export const zPodcast = ({ image }: SchemaContext) =>
     urls: z
       .array(
         z.object({
-          name: z.string(),
+          platform: z.enum([
+            "spotify",
+            "apple-podcast",
+            "podcast-index",
+            "deezer",
+          ]),
           url: z.string().url(),
         }),
       )
