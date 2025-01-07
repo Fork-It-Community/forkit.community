@@ -1,7 +1,18 @@
 ---
 import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
+import People from "@/components/People/index.astro";
 import { SEO } from "astro-seo";
+import { getEntry } from "astro:content";
+
+const organizers = (
+  await Promise.all([
+    getEntry("people", "forkit-ivan-dalmet"),
+    getEntry("people", "forkit-nhung-duong"),
+    getEntry("people", "forkit-yoann-fleury"),
+    getEntry("people", "forkit-rudy-baer"),
+  ])
+).filter((o) => !!o);
 ---
 
 <MainLayout>
@@ -10,24 +21,46 @@ import { SEO } from "astro-seo";
     title="About Fork it! Community"
     description="Discover the origins of the community"
   />
-  <div class="mx-auto w-full max-w-screen-sm px-4">
+  <div class="mx-auto w-full max-w-screen-sm px-4 pb-40">
     <MainPageTitle
       title="About Fork it!"
       subtitle="Discover the origins of the community"
     />
-    <div
-      class="prose prose-sm prose-invert md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
-    >
-      <p>
-        Fork it! is a global tech community where real people share real-life
-        experiences. We believe in honest conversations, genuine feedback, and
-        learning from each other’s successes and challenges.
-      </p>
+    <div class="flex flex-col gap-24">
+      <div
+        class="prose prose-sm prose-invert md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
+      >
+        <p>
+          Fork it! is a global tech community where real people share real-life
+          experiences. We believe in honest conversations, genuine feedback, and
+          learning from each other’s successes and challenges.
+        </p>
 
-      <p>
-        We focus on real projects and authentic stories. No fluff, no hype. It’s
-        a space to connect, collaborate, and keep it real in the world of tech.
-      </p>
+        <p>
+          We focus on real projects and authentic stories. No fluff, no hype.
+          It’s a space to connect, collaborate, and keep it real in the world of
+          tech.
+        </p>
+      </div>
+
+      {
+        !!organizers.length && (
+          <div class="flex flex-col gap-8">
+            <h2
+              id="organizers"
+              class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+            >
+              Organizers
+            </h2>
+
+            <div class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-4">
+              {organizers.map((speaker) => (
+                <People people={speaker} />
+              ))}
+            </div>
+          </div>
+        )
+      }
     </div>
   </div>
 </MainLayout>

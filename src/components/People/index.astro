@@ -1,21 +1,21 @@
 ---
 import { Image } from "astro:assets";
-import SpeakerPlaceholder from "@/assets/images/speaker-placeholder.jpeg";
+import SpeakerPlaceholder from "@/assets/images/people-placeholder.jpeg";
 import type { CollectionEntry } from "astro:content";
 import { SOCIALS_TYPE_MAP } from "@/content/socials";
 
 interface Props {
-  speaker: CollectionEntry<"people">;
+  people: CollectionEntry<"people">;
 }
 
-const { speaker } = Astro.props;
+const { people } = Astro.props;
 ---
 
 <div class="flex h-fit w-fit flex-col items-start gap-2">
   <div class="aspect-square overflow-hidden rounded-lg">
     <Image
-      src={speaker.data.avatar ?? SpeakerPlaceholder}
-      alt={speaker.data.name}
+      src={people.data.avatar ?? SpeakerPlaceholder}
+      alt={people.data.name}
       width={160}
       height={160}
     />
@@ -23,37 +23,37 @@ const { speaker } = Astro.props;
   <div class="flex flex-col gap-2">
     <div class="flex flex-col gap-0.5">
       <p class="line-clamp-3 font-heading text-sm font-medium tracking-wide">
-        {speaker.data.name}
+        {people.data.name}
       </p>
       {
-        !!speaker.data.job && (
+        !!people.data.job && (
           <p class="line-clamp-3 text-xs tracking-wide opacity-60">
-            {speaker.data.job}
+            {people.data.job}
           </p>
         )
       }
     </div>
     {
-      !!speaker.data.company && (
+      !!people.data.company && (
         <>
-          {!!speaker.data.company.href ? (
+          {!!people.data.company.href ? (
             <a
-              href={speaker.data.company.href}
+              href={people.data.company.href}
               target="_blank"
               class="text-xs underline opacity-60 transition hover:text-primary hover:opacity-100"
             >
-              {speaker.data.company.title}
+              {people.data.company.title}
             </a>
           ) : (
-            <p class="text-xs opacity-60">{speaker.data.company.title}</p>
+            <p class="text-xs opacity-60">{people.data.company.title}</p>
           )}
         </>
       )
     }
     {
-      !!speaker.data.socials && (
+      !!people.data.socials && (
         <ul class="flex gap-x-2">
-          {speaker.data.socials.map((social) => {
+          {people.data.socials.map((social) => {
             const Icon = SOCIALS_TYPE_MAP[social.type];
 
             return (

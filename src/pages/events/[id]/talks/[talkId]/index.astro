@@ -1,7 +1,7 @@
 ---
 import { buttonVariants } from "@/components/ui/button";
 import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
-import Speaker from "@/components/Speaker/index.astro";
+import People from "@/components/People/index.astro";
 import { getEventsCollection } from "@/lib/events";
 import { getEntries } from "astro:content";
 import { render } from "astro:content";
@@ -103,7 +103,7 @@ const title = `${talk.data.title} | ${event.data.city}, ${event.data.country}, $
       <div
         class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-3 sm:grid-cols-4"
       >
-        {speakers.map((speaker) => <Speaker speaker={speaker} />)}
+        {speakers.map((speaker) => <People people={speaker} />)}
       </div>
     </main>
   </div>
