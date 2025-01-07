@@ -33,6 +33,7 @@ const title = `${event.data.city}, ${event.data.country}, ${dayjs(event.data.dat
 ---
 
 <RootLayout>
+  <slot name="ld+json" slot="ld+json" />
   <SEO
     slot="seo"
     title={title}

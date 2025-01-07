@@ -11,6 +11,7 @@ import { MdArrowOutward } from "react-icons/md";
 import dayjs from "dayjs";
 import { BackButton } from "@/components/BackButton";
 import SEO from "@/components/SEO/index.astro";
+import { Schema } from "astro-seo-schema";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -24,7 +25,13 @@ export async function getStaticPaths() {
             .filter((s) => !!s),
         );
 
-        return talks.map((s) => ({ ...s, __event: event }));
+        return talks.map((s) => ({
+          ...s,
+          __event: event,
+          __schedule: event.data.schedule?.find(
+            (activity) => activity.slug?.id === s.id,
+          ),
+        }));
       }),
     )
   ).flat();
@@ -34,6 +41,7 @@ export async function getStaticPaths() {
       params: { id: talk.__event.id, talkId: talk.id },
       props: {
         talk,
+        schedule: talk.__schedule,
         speakers: await getEntries(
           talk.data.speakers.map((speaker) => speaker.id),
         ),
@@ -43,11 +51,21 @@ export async function getStaticPaths() {
   );
 }
 
-const { talk, event, speakers } = Astro.props;
+const { talk, event, speakers, schedule } = Astro.props;
 const { Content } = await render(talk);
 
 const url = new URL(Astro.url.pathname, Astro.site);
 const title = `${talk.data.title} | ${event.data.city}, ${event.data.country}, ${dayjs(event.data.date).format("YYYY")}`;
+
+const startDate = schedule?.startTime
+  ? dayjs(schedule?.startTime).toISOString()
+  : "";
+const endDate =
+  schedule?.duration && schedule?.startTime
+    ? dayjs(schedule?.startTime)
+        .add(schedule?.duration, "minutes")
+        .toISOString()
+    : "";
 ---
 
 <EventSubPageLayout event={event}>
@@ -60,6 +78,29 @@ const title = `${talk.data.title} | ${event.data.city}, ${event.data.country}, $
     title={title}
     description={event.data.excerpt ?? ""}
     url={url}
+  />
+  <Schema
+    slot="ld+json"
+    item={{
+      "@context": "https://schema.org",
+      "@type": "SocialEvent",
+      name: talk.data.title,
+      ...(startDate && { startDate }),
+      ...(endDate && { endDate }),
+      description: event.data.excerpt ?? "",
+      organizer: {
+        "@type": "Organization",
+        name: "Fork it! Community",
+        url: "https://www.forkit.community",
+      },
+      eventAttendanceMode: event.data.attendanceMode,
+      performer: (speakers ?? []).map((speaker) => ({
+        "@type": "Person",
+        name: speaker.data.name,
+        jobTitle: speaker.data.job ?? "",
+        worksFor: speaker.data.company?.title ?? "",
+      })),
+    }}
   />
   <div class="mx-auto max-w-screen-sm p-4 md:p-8">
     <div class="flex justify-between">

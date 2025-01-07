@@ -15,6 +15,7 @@ const { event } = Astro.props;
 
 <RootLayout>
   <slot name="seo" slot="seo" />
+  <slot name="ld+json" slot="ld+json" />
   {
     !!event.data.image?.src && (
       <ImageBackgroundHero
