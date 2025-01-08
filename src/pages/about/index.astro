@@ -2,23 +2,33 @@
 import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import People from "@/components/People/index.astro";
-import { SEO } from "astro-seo";
-import { getEntry } from "astro:content";
+import SEO from "@/components/SEO/index.astro";
+import PartnersBlock from "@/components/PartnersBlock/index.astro";
+import { HOME_CONFIG } from "@/content/home";
+
+import { getEntries } from "astro:content";
 
 const organizers = (
-  await Promise.all([
-    getEntry("people", "forkit-ivan-dalmet"),
-    getEntry("people", "forkit-nhung-duong"),
-    getEntry("people", "forkit-yoann-fleury"),
-    getEntry("people", "forkit-rudy-baer"),
+  await getEntries<"people">([
+    { collection: "people", id: "forkit-ivan-dalmet" },
+    { collection: "people", id: "forkit-nhung-duong" },
+    { collection: "people", id: "forkit-yoann-fleury" },
+    { collection: "people", id: "forkit-rudy-baer" },
   ])
 ).filter((o) => !!o);
+
+const partners = await getEntries<"partners">(
+  (HOME_CONFIG.partners ?? []).map((partner) => ({
+    collection: "partners",
+    id: partner,
+  })),
+);
 ---
 
 <MainLayout>
   <SEO
     slot="seo"
-    title="About Fork it! Community"
+    title="About"
     description="Discover the origins of the community"
   />
   <div class="mx-auto w-full max-w-screen-sm px-4 pb-40">
@@ -61,6 +71,48 @@ const organizers = (
           </div>
         )
       }
+
+      <section
+        class="prose prose-sm prose-invert md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
+      >
+        <p>
+          Conferences should be about sharing knowledge, learning from each
+          other, and building community—not about selling products. We believe
+          in fostering authentic connections and offering spaces where
+          developers and tech enthusiasts can come together to exchange ideas,
+          collaborate, and grow.
+        </p>
+
+        <p>
+          We organize a variety of events and content to engage the community,
+          including <strong>meetups</strong>, multi-track <strong
+            >conferences</strong
+          >, hands-on <strong>hackathons</strong>, and <strong
+            >off-trail gatherings</strong
+          > in unique locations. We also produce <strong>podcasts</strong> featuring
+          insightful conversations with industry experts, with more formats to come
+          as we continue to grow and evolve. Each initiative is designed to promote
+          learning, collaboration, and creativity.
+        </p>
+
+        <p>
+          Our values are simple: no marketing-driven talks, no unnecessary
+          distractions—just real conversations and learning. We’re committed to
+          inclusivity, offering live translations to support non-English
+          speakers, and keeping ticket prices low or free to ensure
+          accessibility for all.
+        </p>
+
+        <p>
+          Run by developers with real-world experience in event organization, we
+          aim to create spaces where knowledge flows freely, and everyone feels
+          welcome. Whether it’s a local meetup, a global conference, or engaging
+          content online, we invite you to join us in building a community where
+          learning comes first.
+        </p>
+      </section>
+
+      <PartnersBlock partners={partners} />
     </div>
   </div>
 </MainLayout>
