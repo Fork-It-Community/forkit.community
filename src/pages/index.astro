@@ -2,7 +2,7 @@
 import MainLayout from "@/layouts/MainLayout.astro";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import { getEventDisplayDate, getUpcomingMajorEvent } from "@/lib/events";
-import { getPodcastsCollection } from "@/lib/podcasts";
+import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 import { Logo } from "@/components/Logo";
 import { Image } from "astro:assets";
 import defaultImage from "@/assets/images/events.jpeg";
@@ -27,7 +27,7 @@ const upcomingEvents = (await getUpcomingEvents())
       event.id !== upcomingMajorEvent?.id && event.data.status !== "cancelled",
   )
   .slice(0, 3);
-const podcasts = await getPodcastsCollection();
+const podcasts = await getPodcastsEpisodesCollection();
 const partners = await getEntries<"partners">(
   (HOME_CONFIG.partners ?? []).map((partner) => ({
     collection: "partners",

@@ -5,17 +5,17 @@ type Params = {
   limit?: number;
 };
 
-export async function getPodcastsCollection({
+export async function getPodcastsEpisodesCollection({
   limit = undefined,
 }: Params = {}) {
-  const podcasts =
-    (await getCollection("podcast", ({ data }) =>
+  const episodes =
+    (await getCollection("episodes", ({ data }) =>
       import.meta.env.PROD ? dayjs().isAfter(data.releaseDate) : true,
     )) ?? [];
 
   if (limit) {
-    return podcasts.slice(0, limit);
+    return episodes.slice(0, limit);
   }
 
-  return podcasts;
+  return episodes;
 }

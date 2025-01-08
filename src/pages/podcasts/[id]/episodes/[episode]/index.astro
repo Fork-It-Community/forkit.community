@@ -1,0 +1,44 @@
+---
+import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
+import bgImage from "@/assets/images/podcasts.jpeg";
+
+import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
+import { getEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const episodes = await getPodcastsEpisodesCollection();
+
+  return Promise.all(
+    episodes.map(async (e) => {
+      const [id = "", _, episode] = e.id.split("/");
+
+      const show = await getEntry<"podcast", string>({
+        collection: "podcast",
+        id,
+      });
+
+      return {
+        params: { id, episode },
+        props: {
+          episode: e,
+          show,
+        },
+      };
+    }),
+  );
+}
+
+const { episode, show } = Astro.props;
+---
+
+<MainLayout>
+  <div class="mx-auto w-full max-w-screen-sm px-4">
+    <!-- This is just to check data, will remove later for better design -->
+    <MainPageTitle
+      title={show.data.title}
+      subtitle={episode.data.title}
+      imageSrc={bgImage}
+    />
+  </div>
+</MainLayout>

@@ -6,7 +6,7 @@ import { zPerson } from "@/schemas/people";
 import { zPartner } from "@/schemas/partners";
 import { zTalk } from "@/schemas/talks";
 import { zEventSubPage } from "@/schemas/eventsSubPages";
-import { zPodcast } from "@/schemas/podcasts";
+import { zEpisode, zPodcast } from "@/schemas/podcasts";
 
 export const collections = {
   partners: defineCollection({
@@ -40,7 +40,17 @@ export const collections = {
     schema: zNews,
   }),
   podcast: defineCollection({
-    loader: glob({ pattern: "**/*.mdx", base: "./src/content/podcasts" }),
+    loader: glob({
+      pattern: ["**/*.mdx", "!**/episodes/**/*.mdx"],
+      base: "./src/content/podcasts",
+    }),
     schema: zPodcast,
+  }),
+  episodes: defineCollection({
+    loader: glob({
+      pattern: "**/episodes/**/*.mdx",
+      base: "./src/content/podcasts",
+    }),
+    schema: zEpisode,
   }),
 };
