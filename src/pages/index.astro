@@ -16,6 +16,9 @@ import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import { match } from "ts-pattern";
 import { getUpcomingEvents } from "@/lib/events";
 import SEO from "@/components/SEO/index.astro";
+import { HOME_CONFIG } from "@/content/home";
+import { getEntries } from "astro:content";
+import PartnersBlock from "@/components/PartnersBlock/index.astro";
 
 const upcomingMajorEvent = await getUpcomingMajorEvent();
 const upcomingEvents = (await getUpcomingEvents())
@@ -25,6 +28,12 @@ const upcomingEvents = (await getUpcomingEvents())
   )
   .slice(0, 3);
 const podcasts = await getPodcastsCollection();
+const partners = await getEntries<"partners">(
+  (HOME_CONFIG.partners ?? []).map((partner) => ({
+    collection: "partners",
+    id: partner,
+  })),
+);
 ---
 
 <MainLayout>
@@ -249,4 +258,7 @@ const podcasts = await getPodcastsCollection();
       </div>
     </div>
   </div>
+
+  <!-- PARTNERS -->
+  {!!partners.length && <PartnersBlock partners={partners} />}
 </MainLayout>

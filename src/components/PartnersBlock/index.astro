@@ -1,0 +1,48 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  partners: Array<CollectionEntry<"partners">>;
+}
+
+const { partners } = Astro.props;
+---
+
+<div class="mx-auto flex w-full max-w-screen-lg flex-col gap-8 px-4 py-12">
+  <h2
+    id="partners"
+    class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+  >
+    Partners
+  </h2>
+
+  <div class="grid grid-cols-3 gap-2 md:grid-cols-6 md:gap-4">
+    {
+      partners.map((partner) => {
+        if (!partner.data.href) {
+          return (
+            <Image
+              src={partner.data.logos.bgWhite}
+              alt={partner.data.name}
+              class="rounded-md"
+              width={500}
+              height={300}
+            />
+          );
+        }
+        return (
+          <a href={partner.data.href}>
+            <Image
+              src={partner.data.logos.bgWhite}
+              alt={partner.data.name}
+              class="rounded-md"
+              width={500}
+              height={300}
+            />
+          </a>
+        );
+      })
+    }
+  </div>
+</div>
