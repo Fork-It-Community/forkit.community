@@ -110,7 +110,7 @@ const location: Place | undefined = event.data.location
   >
     <motion.div
       client:load
-      initial={{ opacity: 0, y: -15 }}
+      initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: "spring" }}
       className="relative flex flex-1 flex-col items-center justify-center gap-8 p-4 md:gap-12"
@@ -120,24 +120,12 @@ const location: Place | undefined = event.data.location
         <h1
           class="flex flex-col gap-1 text-balance text-center font-heading md:gap-2"
         >
-          <motion.span
-            client:load
-            initial={{ opacity: 0, y: -15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring" }}
-            className="text-3xl font-medium md:text-6xl"
-          >
+          <span class="text-3xl font-medium md:text-6xl">
             {getEventDisplayDate(event)}
-          </motion.span>
-          <motion.span
-            client:load
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", delay: 0.2 }}
-            className="text-xl text-primary md:text-4xl"
-          >
+          </span>
+          <span class="text-xl text-primary md:text-4xl">
             {event.data.city}, {event.data.country}
-          </motion.span>
+          </span>
 
           <span
             class="p-2 text-xs uppercase tracking-widest opacity-60 md:text-sm"
@@ -203,7 +191,7 @@ const location: Place | undefined = event.data.location
 
     <motion.div
       client:load
-      initial={{ opacity: 0, y: -15 }}
+      initial={{ opacity: 0, y: -5 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: "spring", delay: 0.2 }}
       className="absolute bottom-0 left-0 right-0 flex flex-col items-center justify-center gap-2 px-6 py-8 md:py-16"
