@@ -260,5 +260,12 @@ const partners = await getEntries<"partners">(
   </div>
 
   <!-- PARTNERS -->
-  {!!partners.length && <PartnersBlock partners={partners} />}
+
+  {
+    !!partners.length && (
+      <div class="px-4">
+        <PartnersBlock partners={partners} />
+      </div>
+    )
+  }
 </MainLayout>
