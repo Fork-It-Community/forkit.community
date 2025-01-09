@@ -26,6 +26,7 @@ import { motion } from "motion/react";
 import { Schema } from "astro-seo-schema";
 import type { Place } from "schema-dts";
 import PartnersBlock from "@/components/PartnersBlock/index.astro";
+import { FAQ } from "@/components/Faq";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -337,4 +338,6 @@ const location: Place | undefined = event.data.location
   {!!partners.length && <PartnersBlock partners={partners} />}
 
   {event.data.feedback && <FeedbackCTA href={event.data.feedback.link} />}
+
+  {event.data.faq && <FAQ client:load faq={event.data.faq} />}
 </EventLayout>
