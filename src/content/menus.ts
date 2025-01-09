@@ -4,7 +4,7 @@ import {
   MdEvent,
   MdInfo,
   // MdFeed,
-  // MdPodcasts,
+  MdPodcasts,
   // MdBadge,
   // MdHandshake,
   // MdLocalActivity,
@@ -37,6 +37,13 @@ const MAIN_MENU: Array<{
     level: "primary",
   },
   {
+    label: "Podcasts",
+    href: "/podcasts",
+    icon: MdPodcasts,
+    scope: "all",
+    level: "primary",
+  },
+  {
     label: "About",
     href: "/about",
     icon: MdInfo,
@@ -50,13 +57,7 @@ const MAIN_MENU: Array<{
   //   scope: "all",
   //   level: "primary",
   // },
-  // {
-  //   label: "Podcasts",
-  //   href: "/podcasts",
-  //   icon: MdPodcasts,
-  //   scope: "all",
-  //   level: "primary",
-  // },
+
   // {
   //   label: "Community members",
   //   href: "/people",

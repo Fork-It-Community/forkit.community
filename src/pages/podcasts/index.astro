@@ -2,6 +2,10 @@
 import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import bgImage from "@/assets/images/podcasts.jpeg";
+import PodcastEpisodeCard from "@/components/PodcastEpisodeCard/index.astro";
+import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
+
+const episodes = await getPodcastsEpisodesCollection();
 ---
 
 <MainLayout>
@@ -11,5 +15,15 @@ import bgImage from "@/assets/images/podcasts.jpeg";
       subtitle="Listen to the community"
       imageSrc={bgImage}
     />
+    <article class="flex flex-col gap-2">
+      <h2
+        class="font-heading text-sm font-medium uppercase tracking-widest opacity-60"
+      >
+        Latest episodes
+      </h2>
+      <div class="flex flex-col gap-3">
+        {episodes.map((episode) => <PodcastEpisodeCard episode={episode} />)}
+      </div>
+    </article>
   </div>
 </MainLayout>

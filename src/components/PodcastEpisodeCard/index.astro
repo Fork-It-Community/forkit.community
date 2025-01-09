@@ -1,0 +1,75 @@
+---
+import { cn, formatDateTime } from "@/lib/utils";
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { getEntries } from "astro:content";
+import personPlaceholder from "@/assets/images/people-placeholder.jpeg";
+
+interface Props {
+  episode: CollectionEntry<"episodes">;
+}
+
+const { episode } = Astro.props;
+
+const hosts = (await getEntries(episode.data.hosts ?? []))
+  .filter((p) => !!p)
+  .sort((a, b) => a.data.name.localeCompare(b.data.name));
+const guests = (await getEntries(episode.data.guests ?? []))
+  .filter((p) => !!p)
+  .sort((a, b) => a.data.name.localeCompare(b.data.name));
+
+const people = [...hosts, ...guests];
+---
+
+<a
+  href={`/podcasts/${episode.id}`}
+  class={cn(
+    "group relative z-10 flex flex-col gap-4 overflow-hidden rounded-lg bg-background px-4 py-4 shadow-xl md:px-6",
+  )}
+>
+  <div class="flex gap-2 max-sm:flex-col">
+    <div class="flex flex-1 flex-col gap-1">
+      <div class="flex items-center gap-3">
+        <div
+          class="text-2xs uppercase tracking-widest opacity-60 transition group-hover:opacity-100"
+        >
+          {formatDateTime(episode.data.releaseDate)}
+        </div>
+      </div>
+      <div class="flex flex-col gap-3">
+        <div class="font-heading font-medium transition">
+          {episode.data.title}
+        </div>
+        {
+          episode.data.description && (
+            <div class="font-heading text-sm opacity-60 transition group-hover:text-primary group-hover:opacity-100">
+              {episode.data.description}
+            </div>
+          )
+        }
+
+        {
+          episode.data.tags && (
+            <div class="flex gap-2">
+              {episode.data.tags.map((tag) => (
+                <div class="rounded-sm bg-white/10 px-2 text-sm">#{tag}</div>
+              ))}
+            </div>
+          )
+        }
+        <div class="group flex -space-x-4 hover:-space-x-1">
+          {
+            people.map((person) => (
+              <Image
+                class="aspect-square rounded-full transition-all"
+                src={person.data.avatar ?? personPlaceholder}
+                alt={person.data.name}
+                width={40}
+              />
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</a>

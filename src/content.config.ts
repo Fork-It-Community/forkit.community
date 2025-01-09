@@ -39,7 +39,7 @@ export const collections = {
     loader: glob({ pattern: "**/*.mdx", base: "./src/content/news" }),
     schema: zNews,
   }),
-  podcast: defineCollection({
+  podcasts: defineCollection({
     loader: glob({
       pattern: ["**/*.mdx", "!**/episodes/**/*.mdx"],
       base: "./src/content/podcasts",

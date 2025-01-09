@@ -13,8 +13,8 @@ export async function getStaticPaths() {
     episodes.map(async (e) => {
       const [id = "", _, episode] = e.id.split("/");
 
-      const show = await getEntry<"podcast", string>({
-        collection: "podcast",
+      const show = await getEntry<"podcasts", string>({
+        collection: "podcasts",
         id,
       });
 

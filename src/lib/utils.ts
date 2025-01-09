@@ -6,6 +6,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+/**
+ *
+ * @param date a dayjs compatible date
+ * @returns a string with the format `dddd, MMMM D, YYYY`
+ * @example
+ * // Reurns Thursday, January 9, 2025
+ * dayjs('2025-01-09').format('dddd, MMMM D, YYYY');
+ */
 export function formatDateTime(date: dayjs.ConfigType) {
   return dayjs(date).format("dddd, MMMM D, YYYY");
 }
