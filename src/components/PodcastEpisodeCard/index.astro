@@ -1,9 +1,10 @@
 ---
-import { cn, formatDateTime } from "@/lib/utils";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { getEntries } from "astro:content";
 import personPlaceholder from "@/assets/images/people-placeholder.jpeg";
+import dayjs from "dayjs";
+import { IoLanguageSharp } from "react-icons/io5";
 
 interface Props {
   episode: CollectionEntry<"episodes">;
@@ -23,45 +24,61 @@ const people = [...hosts, ...guests];
 
 <a
   href={`/podcasts/${episode.id}`}
-  class={cn(
-    "group relative z-10 flex flex-col gap-4 overflow-hidden rounded-lg bg-background px-4 py-4 shadow-xl md:px-6",
-  )}
+  class="group relative z-10 flex flex-col gap-4 overflow-hidden rounded-lg bg-white/5 p-4 backdrop-blur-md transition hover:bg-white/10"
 >
-  <div class="flex gap-2 max-sm:flex-col">
-    <div class="flex flex-1 flex-col gap-1">
-      <div class="flex items-center gap-3">
+  <div class="flex gap-4 max-xs:flex-col">
+    <div>
+      <Image
+        src={episode.data.cover}
+        alt={episode.data.title}
+        class="rounded-md border-2 border-black/20 xs:size-48"
+      />
+    </div>
+    <div class="flex flex-1 flex-col gap-4">
+      <div class="flex flex-1 flex-col gap-1">
         <div
-          class="text-2xs uppercase tracking-widest opacity-60 transition group-hover:opacity-100"
+          class="flex items-start gap-2 max-sm:flex-col sm:items-center sm:justify-between"
         >
-          {formatDateTime(episode.data.releaseDate)}
+          <div
+            class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none opacity-60 transition group-hover:opacity-100"
+          >
+            <IoLanguageSharp className="text-base" />
+            <span>Episode in {episode.data.language}</span>
+          </div>
+          <div class="text-2xs uppercase tracking-widest opacity-60">
+            {dayjs(episode.data.releaseDate).format("MMMM D, YYYY")}
+          </div>
         </div>
-      </div>
-      <div class="flex flex-col gap-3">
-        <div class="font-heading font-medium transition">
+        <div
+          class="font-heading font-medium transition group-hover:text-primary"
+        >
           {episode.data.title}
         </div>
         {
           episode.data.description && (
-            <div class="font-heading text-sm opacity-60 transition group-hover:text-primary group-hover:opacity-100">
+            <div class="line-clamp-3 text-xs opacity-60">
               {episode.data.description}
             </div>
           )
         }
-
+      </div>
+      <div class="flex flex-col gap-3">
         {
           episode.data.tags && (
-            <div class="flex gap-2">
+            <div class="flex flex-wrap gap-2">
               {episode.data.tags.map((tag) => (
-                <div class="rounded-sm bg-white/10 px-2 text-sm">#{tag}</div>
+                <div class="rounded-sm bg-white/10 px-1.5 py-0.5 text-xs uppercase">
+                  #{tag}
+                </div>
               ))}
             </div>
           )
         }
-        <div class="group flex -space-x-4 hover:-space-x-1">
+        <div class="flex -space-x-4">
           {
             people.map((person) => (
               <Image
-                class="aspect-square rounded-full transition-all"
+                class="aspect-square rounded-full border-2 border-background"
                 src={person.data.avatar ?? personPlaceholder}
                 alt={person.data.name}
                 width={40}
