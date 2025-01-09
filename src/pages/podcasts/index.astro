@@ -2,6 +2,7 @@
 import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import bgImage from "@/assets/images/podcasts.jpeg";
+import SEO from "@/components/SEO/index.astro";
 import PodcastEpisodeCard from "@/components/PodcastEpisodeCard/index.astro";
 import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 
@@ -9,6 +10,11 @@ const episodes = await getPodcastsEpisodesCollection();
 ---
 
 <MainLayout>
+  <SEO
+    slot="seo"
+    title="Podcasts"
+    description="Listen to the Fork it! Community"
+  />
   <div class="mx-auto w-full max-w-screen-sm px-4 pb-40">
     <MainPageTitle
       title="Podcasts"
