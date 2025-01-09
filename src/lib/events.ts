@@ -144,6 +144,9 @@ export async function getEventNavItems(id: string) {
           },
         ]
       : []),
+    ...(event.data.faq?.length
+      ? [{ href: `/events/${event.id}#faq`, label: "FAQ" }]
+      : []),
   ];
 }
 

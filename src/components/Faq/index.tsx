@@ -12,7 +12,7 @@ export const FAQ = (
   return (
     <div className="py-16" id="faq">
       <article className="mx-auto max-w-3xl px-6 lg:px-8">
-        <h2 className="text-center font-heading text-3xl font-bold sm:text-4xl">
+        <h2 className="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest">
           Frequently Asked Questions
         </h2>
         <Accordion type="single" collapsible className="w-full">
