@@ -51,3 +51,24 @@ export const PLATFORMS: Record<
   "link-to-download": { label: "Download", icon: FaDownload },
   "podcast-index": { label: "Podcast Index", icon: SiPodcastindex },
 };
+
+export function formatDuration(seconds: number) {
+  const hours = Math.floor(seconds / 3600);
+  const remainingSecondsAfterHours = seconds % 3600;
+  const minutes = Math.floor(remainingSecondsAfterHours / 60);
+  const remainingSeconds = remainingSecondsAfterHours % 60;
+
+  let durationParts = "PT";
+
+  if (hours > 0) {
+    durationParts += `${hours}H`;
+  }
+  if (minutes > 0) {
+    durationParts += `${minutes}M`;
+  }
+  if (remainingSeconds > 0) {
+    durationParts += `${remainingSeconds}S`;
+  }
+
+  return durationParts;
+}

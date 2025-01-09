@@ -3,9 +3,15 @@ import { getEntry, getEntries, render } from "astro:content";
 
 import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
+import SEO from "@/components/SEO/index.astro";
 import People from "@/components/People/index.astro";
-import { getPodcastsEpisodesCollection, PLATFORMS } from "@/lib/podcasts";
+import {
+  getPodcastsEpisodesCollection,
+  PLATFORMS,
+  formatDuration,
+} from "@/lib/podcasts";
 import dayjs from "dayjs";
+import { Schema } from "astro-seo-schema";
 
 export async function getStaticPaths() {
   const episodes = await getPodcastsEpisodesCollection();
@@ -24,13 +30,14 @@ export async function getStaticPaths() {
         props: {
           episode: e,
           show,
+          number: episode,
         },
       };
     }),
   );
 }
 
-const { episode, show } = Astro.props;
+const { episode, show, number } = Astro.props;
 
 const { Content } = await render(episode);
 const hosts = (await getEntries(episode.data.hosts ?? []))
@@ -39,9 +46,50 @@ const hosts = (await getEntries(episode.data.hosts ?? []))
 const guests = (await getEntries(episode.data.guests ?? []))
   .filter((p) => !!p)
   .sort((a, b) => a.data.name.localeCompare(b.data.name));
+
+const title = `${episode.data.title} (${number}) | ${show.data.title}`;
 ---
 
 <MainLayout>
+  <SEO slot="seo" {title} description={episode.data.description ?? ""} />
+  <Schema
+    slot="ld+json"
+    item={{
+      "@context": "https://schema.org",
+      "@type": "PodcastEpisode",
+      name: episode.data.title,
+      datePublished: dayjs(episode.data.releaseDate).format("YYYY-MM-DD"),
+      duration: formatDuration(episode.data.duration),
+      inLanguage: {
+        "@type": "Language",
+        name: episode.data.language,
+      },
+      url:
+        (episode.data.urls ?? []).find(
+          (url) => url.platform === "link-to-download",
+        )?.url ?? "",
+      associatedMedia: (episode.data.urls ?? []).map((item) => ({
+        "@type": "MediaObject",
+        contentUrl: item.url,
+        name: PLATFORMS[item.platform].label,
+      })),
+      image: episode.data.cover.src,
+      keywords: episode.data.tags ?? [],
+      partOfSeries: {
+        "@type": "PodcastSeries",
+        name: show.data.title,
+      },
+      creator: hosts.map((host) => ({
+        "@type": "Person",
+        name: host.data.name,
+      })),
+      contributor: guests.map((guest) => ({
+        "@type": "Person",
+        name: guest.data.name,
+      })),
+    }}
+  />
+
   <div class="mx-auto w-full max-w-screen-sm px-4">
     <!-- This is just to check data, will remove later for better design -->
     <MainPageTitle
