@@ -22,6 +22,7 @@ const zEventBase = ({ image }: SchemaContext) =>
       .object({
         src: image(),
         alt: z.string(),
+        credit: z.string().optional(),
       })
       .optional(),
     cfp: z
