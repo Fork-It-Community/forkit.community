@@ -16,10 +16,7 @@ import {
 } from "@/lib/events";
 import { cn, formatDateTime } from "@/lib/utils";
 import { Image } from "astro:assets";
-import {
-  getEntries,
-  // render
-} from "astro:content";
+import { getEntries, render } from "astro:content";
 import { MdArrowForward } from "react-icons/md";
 import { match } from "ts-pattern";
 import { motion } from "motion/react";
@@ -63,7 +60,7 @@ const {
 } = Astro.props;
 const coOrganizers = _coOrganizers.filter((p) => !!p);
 const navItems = await getEventNavItems(event.id);
-// const { Content } = await render(event);
+const { Content } = await render(event);
 
 const location: Place | undefined = event.data.location
   ? {
@@ -239,6 +236,22 @@ const location: Place | undefined = event.data.location
     )
   }
 
+  <!-- Venue -->
+  {
+    event.body && (
+      <article class="mx-auto">
+        <h2
+          id="venue"
+          class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+        >
+          Venue
+        </h2>
+        <div class="prose prose-sm prose-invert md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white">
+          <Content />
+        </div>
+      </article>
+    )
+  }
   <!-- Schedule & Speakers -->
   <div
     class={cn(

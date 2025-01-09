@@ -120,10 +120,14 @@ export async function getEventNavItems(id: string) {
   if (!event) return [];
 
   return [
-    {
-      href: `/events/${event.id}#venue`,
-      label: "Venue",
-    },
+    ...(event.body
+      ? [
+          {
+            href: `/events/${event.id}#venue`,
+            label: "Venue",
+          },
+        ]
+      : []),
     {
       href: `/events/${event.id}#schedule`,
       label: "Schedule",

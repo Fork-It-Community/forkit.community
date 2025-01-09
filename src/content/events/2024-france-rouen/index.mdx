@@ -203,3 +203,27 @@ subPages:
   - 2024-france-rouen/pages/informations
   - 2024-france-rouen/pages/weekend
 ---
+
+import dayjs from "dayjs";
+import { LuCalendar, LuMapPin } from "react-icons/lu";
+import { Image } from 'astro:assets';
+import leVillageByCa from './le-village-by-ca.jpg'
+
+<Image src={leVillageByCa} alt={frontmatter.location.name} />
+
+The Rouen 2024 conference, set at Le Village By CA Vallée de
+Seine in Rouen, will bring together around 200 participants and
+a dozen speakers. This event is designed to facilitate the
+sharing of concrete experiences and practical know-how within
+Rouen’s diverse tech community, encompassing engineers and
+C-level professionals. The goal is to foster direct and relevant
+exchanges that enrich all attendees. We are also proud to offer
+conferences in multiple languages, catering to our international
+audience and enhancing the accessibility and inclusiveness of
+our discussions.
+
+<strong>{frontmatter.location.name}</strong> Join us in that awesome
+location. Enjoy the Seine river from the heart of Rouen.
+
+<strong>{dayjs(frontmatter.date).format("dddd, MMMM D, YYYY")}</strong> Come
+enjoy the last spring days, entertaind with awesome conferences.
