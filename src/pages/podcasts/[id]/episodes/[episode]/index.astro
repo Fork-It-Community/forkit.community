@@ -1,10 +1,11 @@
 ---
+import { getEntry, getEntries, render } from "astro:content";
+
 import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
-import bgImage from "@/assets/images/podcasts.jpeg";
-
-import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
-import { getEntry } from "astro:content";
+import People from "@/components/People/index.astro";
+import { getPodcastsEpisodesCollection, PLATFORMS } from "@/lib/podcasts";
+import dayjs from "dayjs";
 
 export async function getStaticPaths() {
   const episodes = await getPodcastsEpisodesCollection();
@@ -30,15 +31,105 @@ export async function getStaticPaths() {
 }
 
 const { episode, show } = Astro.props;
+
+const { Content } = await render(episode);
+const hosts = (await getEntries(episode.data.hosts ?? []))
+  .filter((p) => !!p)
+  .sort((a, b) => a.data.name.localeCompare(b.data.name));
+const guests = (await getEntries(episode.data.guests ?? []))
+  .filter((p) => !!p)
+  .sort((a, b) => a.data.name.localeCompare(b.data.name));
 ---
 
 <MainLayout>
   <div class="mx-auto w-full max-w-screen-sm px-4">
     <!-- This is just to check data, will remove later for better design -->
     <MainPageTitle
-      title={show.data.title}
-      subtitle={episode.data.title}
-      imageSrc={bgImage}
+      title={episode.data.title}
+      subtitle={show.data.title}
+      imageSrc={episode.data.cover}
     />
+    <div class="flex flex-col gap-8 pb-32">
+      <div
+        class="flex flex-col items-center justify-center gap-2 text-xs uppercase tracking-widest opacity-60 md:flex-row"
+      >
+        {dayjs(episode.data.releaseDate).format("MMMM D, YYYY")}
+        {
+          !!episode.data.tags?.length && (
+            <>
+              <span>×</span>
+              <span class="flex gap-2">
+                {episode.data.tags.map((tag) => (
+                  <span>#{tag}</span>
+                ))}
+              </span>
+            </>
+          )
+        }
+      </div>
+      <div class="mx-auto w-full max-w-screen-lg px-4">
+        <div
+          class="flex flex-col items-center justify-center gap-x-6 gap-y-2 lg:flex-row"
+        >
+          <h2
+            class="font-heading text-sm font-medium uppercase tracking-widest opacity-60"
+          >
+            Listen on
+          </h2>
+          <div
+            class="flex flex-wrap items-center justify-center gap-x-3 gap-y-0"
+          >
+            {
+              (episode.data.urls ?? []).map((url) => {
+                const { icon: Icon, label } = PLATFORMS[url.platform];
+
+                return (
+                  <a
+                    href={url.url}
+                    class="flex items-center gap-2 p-2 opacity-60 transition hover:text-white hover:opacity-100"
+                  >
+                    <span class="text-lg">
+                      <Icon />
+                    </span>
+                    <span class="text-sm uppercase tracking-wide">{label}</span>
+                  </a>
+                );
+              })
+            }
+          </div>
+        </div>
+      </div>
+      <div
+        class="prose prose-sm prose-invert md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
+      >
+        <Content />
+      </div>
+      {
+        !!guests.length && (
+          <div class="flex flex-col gap-2">
+            <h2 class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
+              Guest{guests.length > 1 ? "s" : ""}
+            </h2>
+            <div class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-3 sm:grid-cols-4">
+              {guests.map((person) => (
+                <People people={person} />
+              ))}
+            </div>
+          </div>
+        )
+      }
+      <div class="flex flex-col gap-2">
+        <h2
+          class="font-heading text-sm font-medium uppercase tracking-widest opacity-60"
+        >
+          Host{hosts.length > 1 ? "s" : ""}
+        </h2>
+        <div
+          class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-3 sm:grid-cols-4"
+        >
+          {hosts.map((person) => <People people={person} />)}
+        </div>
+      </div>
+    </div>
   </div>
 </MainLayout>

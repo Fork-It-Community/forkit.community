@@ -1,5 +1,16 @@
 import { reference, z, type SchemaContext } from "astro:content";
 
+export type Platform = z.infer<ReturnType<typeof zPlatform>>;
+const zPlatform = () =>
+  z.enum([
+    "link-to-download",
+    "spotify",
+    "apple-podcast",
+    "podcast-index",
+    "deezer",
+    "youtube",
+  ]);
+
 export const zPodcast = ({ image }: SchemaContext) =>
   z.object({
     title: z.string(),
@@ -11,12 +22,7 @@ export const zPodcast = ({ image }: SchemaContext) =>
     urls: z
       .array(
         z.object({
-          platform: z.enum([
-            "spotify",
-            "apple-podcast",
-            "podcast-index",
-            "deezer",
-          ]),
+          platform: zPlatform(),
           url: z.string().url(),
         }),
       )
@@ -32,12 +38,7 @@ export const zEpisode = ({ image }: SchemaContext) =>
     urls: z
       .array(
         z.object({
-          platform: z.enum([
-            "spotify",
-            "apple-podcast",
-            "podcast-index",
-            "deezer",
-          ]),
+          platform: zPlatform(),
           url: z.string().url(),
         }),
       )
