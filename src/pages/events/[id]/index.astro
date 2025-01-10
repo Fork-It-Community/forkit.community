@@ -263,14 +263,19 @@ const location: Place | undefined = event.data.location
               <h2 class="font-heading text-2xl font-medium uppercase tracking-widest text-white">
                 Venue
               </h2>
-              <div class="flex gap-2">
-                <MdLocationPin className="size-5 opacity-40" />
-                <address class="font-bold not-italic leading-tight text-white">
-                  {event.data.location.name}
+              <a
+                class="group flex gap-2 text-white"
+                href={`https://www.google.com/maps/search/${event.data.location.name},${event.data.location.address}`}
+              >
+                <MdLocationPin className="size-5 transition opacity-40 group-hover:opacity-100" />
+                <address class="not-italic leading-tight">
+                  <strong class="transition group-hover:text-primary">
+                    {event.data.location.name}
+                  </strong>
                   <br />
                   {event.data.location.address}
                 </address>
-              </div>
+              </a>
               <div class="flex gap-2">
                 <MdEvent className="size-5 opacity-40" />
                 <p class="text-sm">
