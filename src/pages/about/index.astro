@@ -5,6 +5,7 @@ import People from "@/components/People/index.astro";
 import SEO from "@/components/SEO/index.astro";
 import PartnersBlock from "@/components/PartnersBlock/index.astro";
 import { HOME_CONFIG } from "@/content/home";
+import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 
 import { getEntries } from "astro:content";
 
@@ -114,5 +115,17 @@ const partners = await getEntries<"partners">(
       </section>
     </div>
   </div>
-  <PartnersBlock partners={partners} />
+
+  <!-- PARTNERS -->
+  {
+    !!partners.length && (
+      <div class="py-12">
+        <PartnersBlock partners={partners} />
+      </div>
+    )
+  }
+
+  <div class="py-8 md:py-12">
+    <JoinTheCommunity />
+  </div>
 </MainLayout>

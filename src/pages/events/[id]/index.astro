@@ -326,7 +326,7 @@ const location: Place | undefined = event.data.location
 
   {
     !!sponsors.length && (
-      <div class="mx-auto flex w-full max-w-screen-lg flex-col gap-8 px-4 py-12">
+      <div class="relative mx-auto flex w-full max-w-screen-lg flex-col gap-8 px-4 py-12 md:py-24">
         <h2
           id="sponsors"
           class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
@@ -380,13 +380,13 @@ const location: Place | undefined = event.data.location
     )
   }
 
-  <div class="py-12 md:py-24">
-    <JoinTheCommunity />
-  </div>
-
-  {!!partners.length && <PartnersBlock partners={partners} />}
-
   {event.data.feedback && <FeedbackCTA href={event.data.feedback.link} />}
 
   {event.data.faq && <FAQ client:load faq={event.data.faq} />}
+
+  {!!partners.length && <PartnersBlock partners={partners} />}
+
+  <div class="py-8 md:py-12">
+    <JoinTheCommunity />
+  </div>
 </EventLayout>
