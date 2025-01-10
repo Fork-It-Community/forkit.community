@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
+import type { ReactNode } from "react";
 import { MdArrowBack } from "react-icons/md";
 
-export const BackButton = (props: { href: string }) => {
+export const BackButton = (props: { href: string; children?: ReactNode }) => {
   return (
     <Button asChild variant="secondary-dark" size="xs">
       <a
@@ -16,7 +17,7 @@ export const BackButton = (props: { href: string }) => {
           }
         }}
       >
-        <MdArrowBack className="mr-2" /> Back
+        <MdArrowBack className="mr-2" /> {props.children ?? "Back"}
       </a>
     </Button>
   );

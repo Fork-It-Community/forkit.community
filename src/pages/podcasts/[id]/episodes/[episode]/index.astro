@@ -1,7 +1,6 @@
 ---
 import { getEntry, getEntries, render } from "astro:content";
-
-import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import SEO from "@/components/SEO/index.astro";
 import People from "@/components/People/index.astro";
@@ -12,6 +11,12 @@ import {
 } from "@/lib/podcasts";
 import dayjs from "dayjs";
 import { Schema } from "astro-seo-schema";
+import bg from "@/assets/images/podcasts.jpeg";
+import { BackButton } from "@/components/BackButton";
+import { Image } from "astro:assets";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+import { IoLanguageSharp } from "react-icons/io5";
 
 export async function getStaticPaths() {
   const episodes = await getPodcastsEpisodesCollection();
@@ -90,63 +95,77 @@ const title = `${episode.data.title} (${number}) | ${show.data.title}`;
     }}
   />
 
-  <div class="mx-auto w-full max-w-screen-sm px-4">
-    <!-- This is just to check data, will remove later for better design -->
-    <MainPageTitle
-      title={episode.data.title}
-      subtitle={show.data.title}
-      imageSrc={episode.data.cover}
-    />
-    <div class="flex flex-col gap-8 pb-32">
-      <div
-        class="flex flex-col items-center justify-center gap-2 text-xs uppercase tracking-widest opacity-60 md:flex-row"
-      >
-        {dayjs(episode.data.releaseDate).format("MMMM D, YYYY")}
-        {
-          !!episode.data.tags?.length && (
-            <>
-              <span>×</span>
-              <span class="flex gap-2">
+  <ImageBackgroundHero src={bg} alt="" className="h-[80vh] opacity-80" />
+  <div class="mx-auto w-full max-w-screen-sm px-4 py-8">
+    <BackButton href="/podcasts">All episodes</BackButton>
+  </div>
+
+  <div class="mx-auto w-full max-w-screen-lg p-4 md:py-8">
+    <div class="flex flex-col justify-center gap-6 md:flex-row">
+      <div class="flex-none">
+        <Image
+          src={episode.data.cover}
+          alt={episode.data.title}
+          class="rounded-md object-cover xs:size-64"
+        />
+      </div>
+      <div class="flex min-w-0 flex-1 flex-col gap-6">
+        <div class="flex flex-col gap-3">
+          <div
+            class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none"
+          >
+            <IoLanguageSharp className="text-base" />
+            <span>Episode in {episode.data.language}</span>
+          </div>
+          <div class="flex flex-col gap-0.5">
+            <h1
+              class="text-balance font-heading text-2xl font-medium tracking-wider"
+            >
+              {episode.data.title}
+            </h1>
+            <div class="text-sm uppercase tracking-widest opacity-60">
+              {dayjs(episode.data.releaseDate).format("MMMM D, YYYY")}
+            </div>
+          </div>
+          {
+            !!episode.data.tags?.length && (
+              <div class="flex flex-wrap gap-2 text-xs uppercase tracking-widest opacity-60">
                 {episode.data.tags.map((tag) => (
                   <span>#{tag}</span>
                 ))}
-              </span>
-            </>
-          )
-        }
-      </div>
-      <div class="mx-auto w-full max-w-screen-lg px-4">
-        <div
-          class="flex flex-col items-center justify-center gap-x-6 gap-y-2 lg:flex-row"
-        >
-          <h2
-            class="font-heading text-sm font-medium uppercase tracking-widest opacity-60"
-          >
-            Listen on
-          </h2>
-          <div
-            class="flex flex-wrap items-center justify-center gap-x-3 gap-y-0"
-          >
-            {
-              (episode.data.urls ?? []).map((url) => {
-                const { icon: Icon, label } = PLATFORMS[url.platform];
+              </div>
+            )
+          }
+        </div>
 
-                return (
-                  <a
-                    href={url.url}
-                    class="flex items-center gap-2 p-2 opacity-60 transition hover:text-white hover:opacity-100"
-                  >
-                    <span class="text-lg">
-                      <Icon />
-                    </span>
-                    <span class="text-sm uppercase tracking-wide">{label}</span>
-                  </a>
-                );
-              })
-            }
-          </div>
+        <div class="flex flex-wrap gap-2">
+          {
+            (episode.data.urls ?? []).map((url) => {
+              const { icon: Icon, label } = PLATFORMS[url.platform];
+
+              return (
+                <a
+                  href={url.url}
+                  class={cn(
+                    buttonVariants({ variant: "secondary" }),
+                    "flex gap-2",
+                  )}
+                >
+                  <span class="text-lg">
+                    <Icon />
+                  </span>
+                  <span class="text-sm uppercase tracking-wide">{label}</span>
+                </a>
+              );
+            })
+          }
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="mx-auto w-full max-w-screen-sm px-4 py-8">
+    <div class="flex flex-col gap-8 pb-32">
       <div
         class="prose prose-sm prose-invert md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
       >
