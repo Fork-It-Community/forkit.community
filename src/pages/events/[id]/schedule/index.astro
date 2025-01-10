@@ -1,0 +1,39 @@
+---
+import { BackButton } from "@/components/BackButton";
+import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
+import { getEventsCollection } from "@/lib/events";
+import { SEO } from "astro-seo";
+import dayjs from "dayjs";
+import Schedule from "@/components/Schedule/index.astro";
+
+export async function getStaticPaths() {
+  const events = await getEventsCollection();
+
+  return events.map((event) => ({
+    params: { id: event.id },
+    props: {
+      event,
+    },
+  }));
+}
+
+const { event } = Astro.props;
+
+const title = `Schedule | ${event.data.city}, ${event.data.country}, ${dayjs(event.data.date).format("YYYY")}`;
+---
+
+<EventSubPageLayout event={event}>
+  <SEO slot="seo" title={title} />
+  <div class="mx-auto space-y-8 p-4 md:p-8">
+    <BackButton href={`/events/${event.id}`} client:load />
+
+    <main class="space-y-2">
+      <h2
+        class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+      >
+        Schedule
+      </h2>
+      <Schedule event={event} />
+    </main>
+  </div>
+</EventSubPageLayout>
