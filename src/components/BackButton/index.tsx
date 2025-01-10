@@ -3,7 +3,7 @@ import { MdArrowBack } from "react-icons/md";
 
 export const BackButton = (props: { href: string }) => {
   return (
-    <Button asChild variant="ghost" size="xs">
+    <Button asChild variant="secondary-dark" size="xs">
       <a
         href={props.href}
         onClick={(e) => {

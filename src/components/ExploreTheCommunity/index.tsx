@@ -34,7 +34,7 @@ export const ExploreTheCommunity = (props: {
         )}
       </a>
       <div className="flex items-center justify-center pe-3">
-        <Button asChild size="xs" variant="ghost">
+        <Button asChild size="xs" variant="secondary-dark">
           <a href="/" className="group flex gap-1">
             Community Hub
             <MdArrowOutward className="text-lg transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

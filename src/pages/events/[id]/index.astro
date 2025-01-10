@@ -155,7 +155,7 @@ const location: Place | undefined = event.data.location
           shouldShowCFPButton(event) && (
             <a
               href={event.data.cfp.href}
-              class={buttonVariants({ size: "lg", variant: "ghost" })}
+              class={buttonVariants({ size: "lg", variant: "secondary" })}
             >
               CFP
             </a>
@@ -239,25 +239,30 @@ const location: Place | undefined = event.data.location
   <!-- Venue -->
   {
     event.data.location && (
-      <article class="relative mx-auto">
-        <h2
-          id="venue"
-          class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
-        >
-          Venue
-        </h2>
-        <div class="prose prose-sm prose-invert md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white">
-          <address>
-            {event.data.location.name}, {event.data.location.address}
-          </address>
-          {event.data.location.image && (
+      <article
+        id="venue"
+        class="relative mx-auto flex max-w-screen-2xl flex-col gap-8 py-8 md:flex-row md:gap-4 md:py-24"
+      >
+        {event.data.location.image && (
+          <div class="flex-1 md:-ml-4">
             <Image
+              class="bg-black/20 md:rounded-sm"
               src={event.data.location.image}
               alt={event.data.location.name}
             />
-          )}
+          </div>
+        )}
+        <div class="flex flex-1 flex-col items-center justify-center px-4 md:px-12">
+          <div class="prose prose-sm prose-invert w-full md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white prose-p:opacity-80 prose-li:opacity-80">
+            <h2 class="font-heading text-2xl font-medium uppercase tracking-widest">
+              Venue
+            </h2>
+            <address>
+              {event.data.location.name}, {event.data.location.address}
+            </address>
 
-          <Content />
+            <Content />
+          </div>
         </div>
       </article>
     )

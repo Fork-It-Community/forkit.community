@@ -113,7 +113,7 @@ export const EventNav = (props: {
                     )}
                     {props.shouldShowCFPButton &&
                       props.eventMetadata.cfp?.href && (
-                        <Button asChild size="lg" variant="ghost">
+                        <Button asChild size="lg" variant="secondary">
                           <a
                             href={props.eventMetadata.cfp.href}
                             className="flex-1"
@@ -124,7 +124,7 @@ export const EventNav = (props: {
                         </Button>
                       )}
                   </div>
-                  <Button asChild size="lg" variant="ghost">
+                  <Button asChild size="lg" variant="secondary">
                     <a
                       href="/"
                       className="group flex w-full gap-2"

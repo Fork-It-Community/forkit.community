@@ -9,32 +9,39 @@ interface Props {
 const { partners } = Astro.props;
 ---
 
-<div class="mx-auto flex w-full max-w-screen-lg flex-col gap-8 py-12">
+<div class="mx-auto flex w-full max-w-screen-lg flex-col gap-2 py-12 md:py-32">
   <h2
     id="partners"
-    class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+    class="scroll-mt-32 text-center font-heading text-lg font-medium uppercase tracking-widest"
   >
-    Partners
+    Fork it! Partners
   </h2>
 
-  <div class="grid grid-cols-3 gap-2 md:grid-cols-6 md:gap-4">
+  <div
+    class="flex flex-wrap items-center justify-center gap-2 *:w-32 md:gap-4 md:*:w-40"
+  >
     {
       partners.map((partner) => {
         if (!partner.data.href) {
           return (
-            <Image
-              src={partner.data.logos.bgWhite}
-              alt={partner.data.name}
-              class="rounded-md"
-              width={500}
-              height={300}
-            />
+            <div class="opacity-60 brightness-200 grayscale transition duration-300 hover:opacity-100 hover:brightness-100 hover:grayscale-0">
+              <Image
+                src={partner.data.logos.bgWhite}
+                alt={partner.data.name}
+                class="rounded-md"
+                width={500}
+                height={300}
+              />
+            </div>
           );
         }
         return (
-          <a href={partner.data.href}>
+          <a
+            href={partner.data.href}
+            class="opacity-60 brightness-200 grayscale transition duration-300 hover:opacity-100 hover:brightness-100 hover:grayscale-0"
+          >
             <Image
-              src={partner.data.logos.bgWhite}
+              src={partner.data.logos.noBg}
               alt={partner.data.name}
               class="rounded-md"
               width={500}
