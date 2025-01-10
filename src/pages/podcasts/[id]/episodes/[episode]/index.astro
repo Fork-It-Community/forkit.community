@@ -97,7 +97,7 @@ const title = `${episode.data.title} (${number}) | ${show.data.title}`;
 
   <ImageBackgroundHero src={bg} alt="" className="h-[80vh] opacity-80" />
   <div class="mx-auto w-full max-w-screen-sm px-4 py-8">
-    <BackButton href="/podcasts">All episodes</BackButton>
+    <BackButton client:load href="/podcasts">All episodes</BackButton>
   </div>
 
   <div class="mx-auto w-full max-w-screen-lg p-4 md:py-8">
