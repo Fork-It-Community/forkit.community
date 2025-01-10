@@ -1,0 +1,19 @@
+---
+title: "Creating and Releasing a Multi-Profile Java Library via GitLab CI: A How-To Guide"
+speakers:
+  - zouhair-mkassmi
+language: french
+---
+
+In more and more projects, we find ourselves needing libraries to share code and features, all while managing different framework versions. At CamelStudio, we encountered this need in one of our projects: developing a Java library compatible with both Java 17 and Java 8. 
+
+To address this challenge, we turned to multi-profile artifacts, a solution that allows us to build specific versions tailored to each target environment. Additionally, we set up a GitLab CI pipeline to test and easily generate these various artifacts.
+
+In this talk, I’ll explain how multi-profile artifacts work and how to implement them.
+
+Agenda:
+* Introduction to Java artifacts
+* Generating a library for Java 17
+* Overview of classifiers and multi-profile artifacts
+* Building the library with two profiles for compatibility with both Java 17 and Java 8
+* Setting up GitLab CI for releasing, packaging, and versioning artifacts
