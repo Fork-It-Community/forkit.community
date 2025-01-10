@@ -28,7 +28,7 @@ export const EventNav = (props: {
 
   return (
     <div
-      className={`bg-background-blur fixed left-0 right-0 top-0 z-30 flex h-14 transition-transform duration-500 ${height && (y ?? 0) >= height * 0.7 ? "translate-y-0" : "-translate-y-full"}`}
+      className={`bg-background-blur fixed left-0 right-0 top-0 z-30 flex h-14 transition-transform duration-500 ${height && (y ?? 0) >= height * 0.7 ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}`}
       style={{
         right: "var(--removed-body-scroll-bar-size, 0)",
       }}
