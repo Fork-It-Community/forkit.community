@@ -51,49 +51,49 @@
       "statusCode": 301
     },
     {
-      "source": "/events/2024-06-07-rouen/:path",
-      "destination": "/events/2024-france-rouen/:path",
+      "source": "/events/2024-06-07-rouen/:path*",
+      "destination": "/events/2024-france-rouen/:path*",
       "statusCode": 301
     },
     {
-      "source": "/meetups/2024-11-28-casablanca/:path",
-      "destination": "/events/2024-morocco-casablanca/:path",
-      "statusCode": 301
-    },
-
-    {
-      "source": "/meetups/2024-11-15-da-nang/:path",
-      "destination": "/events/2024-vietnam-da-nang/:path",
+      "source": "/meetups/2024-11-28-casablanca/:path*",
+      "destination": "/events/2024-morocco-casablanca/:path*",
       "statusCode": 301
     },
 
     {
-      "source": "/meetups/2024-11-05-bangkok/:path",
-      "destination": "/events/2024-thailand-bangkok/:path",
+      "source": "/meetups/2024-11-15-da-nang/:path*",
+      "destination": "/events/2024-vietnam-da-nang/:path*",
       "statusCode": 301
     },
 
     {
-      "source": "/meetups/2024-10-22-kuala-lumpur/:path",
-      "destination": "/events/2024-malaisia-kuala-lumpur/:path",
+      "source": "/meetups/2024-11-05-bangkok/:path*",
+      "destination": "/events/2024-thailand-bangkok/:path*",
       "statusCode": 301
     },
 
     {
-      "source": "/meetups/2024-10-17-hanoi/:path",
-      "destination": "/events/2024-vietnam-hanoi/:path",
+      "source": "/meetups/2024-10-22-kuala-lumpur/:path*",
+      "destination": "/events/2024-malaisia-kuala-lumpur/:path*",
       "statusCode": 301
     },
 
     {
-      "source": "/meetups/2024-09-24-tunis/:path",
-      "destination": "/events/2024-tunisia-tunis/:path",
+      "source": "/meetups/2024-10-17-hanoi/:path*",
+      "destination": "/events/2024-vietnam-hanoi/:path*",
       "statusCode": 301
     },
 
     {
-      "source": "/meetups/2024-11-19-belgium/:path",
-      "destination": "/events/2024-belgium-ottignies-louvain-la-neuve/:path",
+      "source": "/meetups/2024-09-24-tunis/:path*",
+      "destination": "/events/2024-tunisia-tunis/:path*",
+      "statusCode": 301
+    },
+
+    {
+      "source": "/meetups/2024-11-19-belgium/:path*",
+      "destination": "/events/2024-belgium-ottignies-louvain-la-neuve/:path*",
       "statusCode": 301
     }
   ]
