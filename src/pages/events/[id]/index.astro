@@ -13,6 +13,7 @@ import {
   shouldShowTicketsButton,
   shouldShowCFPButton,
   getEventDisplayDate,
+  shouldShowProspectusButton,
 } from "@/lib/events";
 import { cn, formatDateTime } from "@/lib/utils";
 import { Image } from "astro:assets";
@@ -144,7 +145,7 @@ const location: Place | undefined = event.data.location
         </h1>
       </div>
 
-      <div class="flex flex-wrap gap-4">
+      <div class="flex flex-wrap items-center justify-center gap-4">
         {
           shouldShowTicketsButton(event) && (
             <a
@@ -157,14 +158,21 @@ const location: Place | undefined = event.data.location
           )
         }
         {
-          shouldShowCFPButton(event) && (
+          shouldShowProspectusButton(event) ? (
+            <a
+              href={event.data.prospectus.href}
+              class={buttonVariants({ size: "lg", variant: "secondary" })}
+            >
+              Become a Sponsor
+            </a>
+          ) : shouldShowCFPButton(event) ? (
             <a
               href={event.data.cfp.href}
               class={buttonVariants({ size: "lg", variant: "secondary" })}
             >
-              CFP
+              Call For Paper
             </a>
-          )
+          ) : null
         }
       </div>
       {

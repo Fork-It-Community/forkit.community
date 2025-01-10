@@ -178,6 +178,22 @@ export function shouldShowCFPButton(
   return !!(event.data.cfp && dayjs().isBefore(event.data.cfp.endDate));
 }
 
+export function shouldShowProspectusButton(
+  event: CollectionEntry<"events">,
+): event is CollectionEntry<"events"> & {
+  data: {
+    prospectus: NonNullable<CollectionEntry<"events">["data"]["prospectus"]>;
+  };
+} {
+  if (event.data.status === "cancelled") {
+    return false;
+  }
+
+  return !!(
+    event.data.prospectus && dayjs().isBefore(event.data.prospectus.endDate)
+  );
+}
+
 export function getEventDisplayDate(event: CollectionEntry<"events">) {
   if (event.data.status === "published-without-date")
     return `Coming in ${dayjs(event.data.date).format("YYYY")}`;

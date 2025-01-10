@@ -17,10 +17,14 @@ import type { Event } from "@/schemas/events";
 export const EventNav = (props: {
   eventName: ReactNode;
   eventId: string;
-  eventMetadata: Pick<Event, "cfp" | "tickets" | "date" | "status">;
+  eventMetadata: Pick<
+    Event,
+    "cfp" | "tickets" | "date" | "status" | "prospectus"
+  >;
   items: Array<{ href: string; label: ReactNode }>;
   shouldShowTicketsButton: boolean;
   shouldShowCFPButton: boolean;
+  shouldShowProspectusButton: boolean;
 }) => {
   const [{ y }] = useWindowScroll();
   const { height } = useWindowSize();
@@ -98,32 +102,43 @@ export const EventNav = (props: {
                 </div>
                 <div className="absolute bottom-0 left-0 h-20 w-full bg-white opacity-15 blur-3xl" />
                 <div className="relative z-10 flex flex-wrap items-center justify-center gap-3 p-6 pb-8">
-                  <div className="flex w-full gap-3">
-                    {props.shouldShowTicketsButton && (
-                      <Button asChild size="lg">
+                  {props.shouldShowTicketsButton && (
+                    <Button asChild size="lg">
+                      <a
+                        href={props.eventMetadata.tickets?.href}
+                        className="group flex-1 gap-2"
+                        onClick={() => setOpen(false)}
+                      >
+                        Get Your Ticket
+                        <MdArrowForward className="transition group-hover:translate-x-1" />
+                      </a>
+                    </Button>
+                  )}
+                  {props.shouldShowCFPButton &&
+                    props.eventMetadata.cfp?.href && (
+                      <Button asChild size="lg" variant="secondary">
                         <a
-                          href={props.eventMetadata.tickets?.href}
-                          className="group flex-[2] gap-2"
+                          href={props.eventMetadata.cfp.href}
+                          className="flex-1"
                           onClick={() => setOpen(false)}
                         >
-                          Get Your Ticket
-                          <MdArrowForward className="transition group-hover:translate-x-1" />
+                          Call for Paper
                         </a>
                       </Button>
                     )}
-                    {props.shouldShowCFPButton &&
-                      props.eventMetadata.cfp?.href && (
-                        <Button asChild size="lg" variant="secondary">
-                          <a
-                            href={props.eventMetadata.cfp.href}
-                            className="flex-1"
-                            onClick={() => setOpen(false)}
-                          >
-                            CFP
-                          </a>
-                        </Button>
-                      )}
-                  </div>
+                  {props.shouldShowProspectusButton &&
+                    props.eventMetadata.prospectus?.href && (
+                      <Button asChild size="lg" variant="secondary">
+                        <a
+                          href={props.eventMetadata.prospectus.href}
+                          className="flex-1"
+                          onClick={() => setOpen(false)}
+                        >
+                          Become a Sponsor
+                        </a>
+                      </Button>
+                    )}
+
                   <Button asChild size="lg" variant="secondary">
                     <a
                       href="/"

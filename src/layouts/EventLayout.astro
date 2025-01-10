@@ -7,6 +7,7 @@ import { EventNav } from "@/components/EventNav";
 import {
   getEventNavItems,
   shouldShowCFPButton,
+  shouldShowProspectusButton,
   shouldShowTicketsButton,
 } from "@/lib/events";
 import EventWarningBanner from "@/components/EventWarningBanner/index.astro";
@@ -71,10 +72,12 @@ const title = `${event.data.city}, ${event.data.country}, ${dayjs(event.data.dat
       status: event.data.status,
       cfp: event.data.cfp,
       tickets: event.data.tickets,
+      prospectus: event.data.prospectus,
     }}
     items={navItems}
-    shouldShowCFPButton={shouldShowCFPButton(event)}
     shouldShowTicketsButton={shouldShowTicketsButton(event)}
+    shouldShowCFPButton={shouldShowCFPButton(event)}
+    shouldShowProspectusButton={shouldShowProspectusButton(event)}
     client:load
   />
   <div class="flex flex-1 flex-col">
