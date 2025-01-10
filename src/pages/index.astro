@@ -9,7 +9,7 @@ import defaultImage from "@/assets/images/events.jpeg";
 import aboutBackground from "@/assets/images/about.jpg";
 import afterMovieRouen2024VideoThumbnail from "@/assets/images/after-movie-rouen-2024-video-thumbnail.jpg";
 import dayjs from "dayjs";
-import { MdArrowForward, MdEvent } from "react-icons/md";
+import { MdArrowForward, MdEvent, MdPodcasts } from "react-icons/md";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
@@ -27,7 +27,7 @@ const upcomingEvents = (await getUpcomingEvents())
       event.id !== upcomingMajorEvent?.id && event.data.status !== "cancelled",
   )
   .slice(0, 3);
-const podcasts = await getPodcastsEpisodesCollection();
+const podcasts = (await getPodcastsEpisodesCollection()).slice(0, 4);
 const partners = await getEntries<"partners">(
   (HOME_CONFIG.partners ?? []).map((partner) => ({
     collection: "partners",
@@ -188,18 +188,60 @@ const partners = await getEntries<"partners">(
   <JoinTheCommunity />
 
   <!-- PODCASTS -->
-  <div class="mx-auto w-full max-w-screen-lg px-4 py-24">
-    <div>
-      <h2>Podcasts</h2>
-      <ul>
-        {
-          podcasts.map((podcast) => (
-            <li>
-              <a href={`/podcasts/${podcast.id}`}>{podcast.data.title}</a>
-            </li>
-          ))
-        }
-      </ul>
+  <div class="flex flex-col py-24 md:py-32">
+    <div class="mx-auto flex w-full max-w-screen-lg flex-col gap-2 px-6">
+      <a href="/podcasts">
+        <h2
+          class="flex items-center gap-2 text-balance font-heading text-3xl font-medium uppercase tracking-wide"
+        >
+          <MdPodcasts className="opacity-40" />
+          Podcasts
+        </h2></a
+      >
+      <p class="bold max-w-[50ch] text-balance text-sm opacity-60">
+        Latest episodes about the community
+      </p>
+    </div>
+
+    <div class="mx-auto flex w-full flex-col gap-2">
+      <div class="hide-scrollbar overflow-auto">
+        <div
+          class="mx-auto flex w-full max-w-screen-lg gap-4 px-6 py-8 md:gap-6"
+        >
+          {
+            podcasts.map((episode) => (
+              <div>
+                <a
+                  href={`/podcasts/${episode.id}`}
+                  class="group relative block size-48 md:size-64"
+                  title={episode.data.title}
+                >
+                  <Image
+                    src={episode.data.cover}
+                    alt={episode.data.title}
+                    class="absolute inset-0 rounded-md object-cover transition duration-300 group-hover:-translate-y-2 group-hover:shadow-2xl"
+                  />
+                </a>
+              </div>
+            ))
+          }
+          {
+            podcasts.length < 3 && (
+              <div class="relative flex size-48 flex-none items-center justify-center rounded-md bg-black/10 text-xs uppercase tracking-widest text-white/50 md:size-64">
+                Coming soon
+              </div>
+            )
+          }
+          {
+            podcasts.length < 2 && (
+              <div class="relative flex size-48 flex-none items-center justify-center rounded-md bg-black/10 text-xs uppercase tracking-widest text-white/50 md:size-64">
+                Coming soon
+              </div>
+            )
+          }
+          <div class="w-16 flex-none"></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -260,6 +302,5 @@ const partners = await getEntries<"partners">(
   </div>
 
   <!-- PARTNERS -->
-
   {!!partners.length && <PartnersBlock partners={partners} />}
 </MainLayout>
