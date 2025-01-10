@@ -31,7 +31,7 @@ const partners = await getEntries<"partners">(
     title="About"
     description="Discover the origins of the community"
   />
-  <div class="mx-auto w-full max-w-screen-sm px-4 pb-40">
+  <div class="mx-auto w-full max-w-screen-sm px-4">
     <MainPageTitle
       title="About Fork it!"
       subtitle="Discover the origins of the community"
@@ -112,8 +112,7 @@ const partners = await getEntries<"partners">(
           learning comes first.
         </p>
       </section>
-
-      <PartnersBlock partners={partners} />
     </div>
   </div>
+  <PartnersBlock partners={partners} />
 </MainLayout>
