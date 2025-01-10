@@ -52,7 +52,6 @@ export async function getStaticPaths() {
 
 const {
   event,
-  // subPages,
   speakers,
   coOrganizers: _coOrganizers,
   sponsors,
@@ -241,7 +240,7 @@ const location: Place | undefined = event.data.location
     event.data.location && (
       <article
         id="venue"
-        class="relative mx-auto flex max-w-screen-2xl flex-col gap-8 py-8 md:flex-row md:gap-4 md:py-24"
+        class="relative mx-auto flex max-w-screen-2xl scroll-m-8 flex-col gap-8 py-8 md:flex-row md:gap-4 md:py-24"
       >
         {event.data.location.image && (
           <div class="flex-1 md:-ml-4">
