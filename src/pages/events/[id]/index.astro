@@ -17,13 +17,14 @@ import {
 import { cn, formatDateTime } from "@/lib/utils";
 import { Image } from "astro:assets";
 import { getEntries, render } from "astro:content";
-import { MdArrowForward, MdArrowOutward } from "react-icons/md";
+import { MdArrowForward, MdLocationPin, MdEvent, MdArrowOutward } from "react-icons/md";
 import { match } from "ts-pattern";
 import { motion } from "motion/react";
 import { Schema } from "astro-seo-schema";
 import type { Place } from "schema-dts";
 import PartnersBlock from "@/components/PartnersBlock/index.astro";
 import { FAQ } from "@/components/Faq";
+import dayjs from "dayjs";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -252,14 +253,26 @@ const location: Place | undefined = event.data.location
           </div>
         )}
         <div class="flex flex-1 flex-col items-center justify-center px-4 md:px-12">
-          <div class="prose prose-sm prose-invert w-full md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white prose-p:opacity-80 prose-li:opacity-80">
-            <h2 class="font-heading text-2xl font-medium uppercase tracking-widest">
-              Venue
-            </h2>
-            <address>
-              {event.data.location.name}, {event.data.location.address}
-            </address>
-
+          <div class="prose prose-sm prose-invert w-full md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white">
+            <div class="not-prose flex flex-col gap-3">
+              <h2 class="font-heading text-2xl font-medium uppercase tracking-widest text-white">
+                Venue
+              </h2>
+              <div class="flex gap-2">
+                <MdLocationPin className="size-5 opacity-40" />
+                <address class="font-bold not-italic leading-tight text-white">
+                  {event.data.location.name}
+                  <br />
+                  {event.data.location.address}
+                </address>
+              </div>
+              <div class="flex gap-2">
+                <MdEvent className="size-5 opacity-40" />
+                <p class="text-sm">
+                  {dayjs(event.data.date).format("dddd, MMMM DD, YYYY")}
+                </p>
+              </div>
+            </div>
             <Content />
           </div>
         </div>
