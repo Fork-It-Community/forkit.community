@@ -19,9 +19,10 @@ import { motion } from "motion/react";
 
 interface Props {
   event: CollectionEntry<"events">;
+  ogImage: URL;
 }
 
-const { event } = Astro.props;
+const { event, ogImage } = Astro.props;
 const navItems = await getEventNavItems(event.id);
 
 const url = new URL(Astro.url.pathname, Astro.site);
@@ -40,6 +41,7 @@ const title = `${event.data.city}, ${event.data.country}, ${dayjs(event.data.dat
     title={title}
     description={event.data.excerpt ?? ""}
     url={url}
+    image={ogImage.toString()}
   />
   {
     !!event?.data.image?.src && (
