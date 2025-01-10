@@ -15,6 +15,7 @@ const zEventBase = ({ image }: SchemaContext) =>
       .object({
         name: z.string().optional(),
         address: z.string(),
+        image: image().optional(),
       })
       .optional(),
     excerpt: z.string().optional(),
