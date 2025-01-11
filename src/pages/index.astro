@@ -19,6 +19,7 @@ import SEO from "@/components/SEO/index.astro";
 import { HOME_CONFIG } from "@/content/home";
 import { getEntries } from "astro:content";
 import PartnersBlock from "@/components/PartnersBlock/index.astro";
+import { Schema } from "astro-seo-schema";
 
 const upcomingMajorEvent = await getUpcomingMajorEvent();
 const upcomingEvents = (await getUpcomingEvents())
@@ -27,7 +28,7 @@ const upcomingEvents = (await getUpcomingEvents())
       event.id !== upcomingMajorEvent?.id && event.data.status !== "cancelled",
   )
   .slice(0, 3);
-const podcasts = (await getPodcastsEpisodesCollection()).slice(0, 4);
+const podcasts = await getPodcastsEpisodesCollection({ limit: 4 });
 const partners = await getEntries<"partners">(
   (HOME_CONFIG.partners ?? []).map((partner) => ({
     collection: "partners",
@@ -37,7 +38,15 @@ const partners = await getEntries<"partners">(
 ---
 
 <MainLayout>
-  <SEO slot="seo" />
+  <SEO slot="seo" title="Community Hub" />
+  <Schema
+    slot="ld+json"
+    item={{
+      "@type": "WebSite",
+      "@context": "https://schema.org",
+      name: "Fork it! Community",
+    }}
+  />
   <!-- HERO -->
   <ImageBackgroundHero
     src={upcomingMajorEvent?.data?.image?.src ?? defaultImage}

@@ -1,3 +1,4 @@
+import { zLanguage } from "@/schemas/language";
 import { reference, z, type SchemaContext } from "astro:content";
 
 export type Platform = z.infer<ReturnType<typeof zPlatform>>;
@@ -17,7 +18,7 @@ export const zPodcast = ({ image }: SchemaContext) =>
     subtitle: z.string().optional(),
     cover: image(),
     rssFeed: z.string().url().optional(),
-    language: z.enum(["french", "english"]),
+    language: zLanguage(),
     keywords: z.array(z.string()).optional(),
     urls: z
       .array(
@@ -47,5 +48,5 @@ export const zEpisode = ({ image }: SchemaContext) =>
     tags: z.array(z.string()).optional(),
     hosts: z.array(reference("people")),
     guests: z.array(reference("people")).optional(),
-    language: z.enum(["french", "english"]),
+    language: zLanguage(),
   });

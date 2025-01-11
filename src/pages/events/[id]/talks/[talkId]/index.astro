@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import { BackButton } from "@/components/BackButton";
 import SEO from "@/components/SEO/index.astro";
 import { Schema } from "astro-seo-schema";
+import { lang } from "@/lib/lang";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -128,7 +129,7 @@ const endDate =
       <div
         class="prose prose-sm prose-invert md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
       >
-        <h1>{talk.data.title}</h1>
+        <h1 lang={lang(talk.data.contentLanguage)}>{talk.data.title}</h1>
 
         <div>
           <span
@@ -138,7 +139,9 @@ const endDate =
             <span>Talk in {talk.data.language}</span>
           </span>
         </div>
-        <Content />
+        <div lang={lang(talk.data.contentLanguage)}>
+          <Content />
+        </div>
       </div>
 
       <div

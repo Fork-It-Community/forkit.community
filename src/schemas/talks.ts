@@ -1,3 +1,4 @@
+import { zLanguage } from "@/schemas/language";
 import { reference, z } from "astro:content";
 
 export type Talk = z.infer<ReturnType<typeof zTalk>>;
@@ -7,7 +8,7 @@ export const zTalk = () =>
     speakers: z.array(
       z.object({ id: reference("people"), role: z.string().optional() }),
     ),
-    language: z.enum(["french", "english"]),
+    language: zLanguage(),
     feedback: z
       .object({
         link: z.string().url(),
@@ -18,4 +19,5 @@ export const zTalk = () =>
       .optional()
       .describe("Hosts of the round table"),
     vod: z.string().url().optional(),
+    contentLanguage: zLanguage().optional().default("english"),
   });

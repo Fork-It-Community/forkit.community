@@ -17,6 +17,7 @@ import { Image } from "astro:assets";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { IoLanguageSharp } from "react-icons/io5";
+import { lang } from "@/lib/lang";
 
 export async function getStaticPaths() {
   const episodes = await getPodcastsEpisodesCollection();
@@ -119,13 +120,17 @@ const title = `${episode.data.title} (${number}) | ${show.data.title}`;
           </div>
           <div class="flex flex-col gap-0.5">
             <h1
+              lang={lang(episode.data.language)}
               class="text-balance font-heading text-2xl font-medium tracking-wider"
             >
               {episode.data.title}
             </h1>
-            <div class="text-sm uppercase tracking-widest opacity-60">
+            <time
+              datetime={dayjs(episode.data.releaseDate).toISOString()}
+              class="text-sm uppercase tracking-widest opacity-60"
+            >
               {dayjs(episode.data.releaseDate).format("MMMM D, YYYY")}
-            </div>
+            </time>
           </div>
           {
             !!episode.data.tags?.length && (
@@ -167,6 +172,7 @@ const title = `${episode.data.title} (${number}) | ${show.data.title}`;
   <div class="mx-auto w-full max-w-screen-sm px-4 py-8">
     <div class="flex flex-col gap-8 pb-32">
       <div
+        lang={lang(episode.data.language)}
         class="prose prose-sm prose-invert md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
       >
         <Content />
