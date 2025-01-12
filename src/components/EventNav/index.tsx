@@ -62,7 +62,10 @@ export const EventNav = (props: {
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <button className="self-stretch px-6 opacity-60 hover:opacity-100">
+              <button
+                className="self-stretch px-6 opacity-60 hover:opacity-100"
+                aria-label="Open menu"
+              >
                 <MdMenu className="text-2xl" />
               </button>
             </SheetTrigger>
