@@ -1,6 +1,11 @@
 {
   "redirects": [
     {
+      "source": "/meetups/2025-02-12-nabeul",
+      "destination": "2025-tunisia-nabeul",
+      "statusCode": 301
+    },
+    {
       "source": "/events/2024-06-07-rouen",
       "destination": "/events/2024-france-rouen",
       "statusCode": 301
@@ -90,10 +95,14 @@
       "destination": "/events/2024-tunisia-tunis/:path*",
       "statusCode": 301
     },
-
     {
       "source": "/meetups/2024-11-19-belgium/:path*",
       "destination": "/events/2024-belgium-ottignies-louvain-la-neuve/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/meetups/2025-02-12-nabeul/:path*",
+      "destination": "2025-tunisia-nabeul/:path*",
       "statusCode": 301
     }
   ]
