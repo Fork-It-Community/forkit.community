@@ -297,6 +297,39 @@ const location: Place | undefined = event.data.location
       </article>
     )
   }
+
+  <!-- CFP -->
+  {
+    shouldShowCFPButton(event) && (
+      <div class="relative flex w-full flex-col gap-6 px-6 py-12">
+        <a
+          href={event.data.cfp.href}
+          target="_blank"
+          rel="noreferer"
+          class="group mx-auto flex w-full max-w-screen-md flex-col items-start gap-6 rounded-lg bg-white/5 p-8 backdrop-blur-md transition hover:bg-white/10 md:flex-row md:items-center md:px-12 md:py-10"
+        >
+          <div class="flex flex-1 flex-col">
+            <h2 class="text-balance font-heading text-xl font-medium uppercase tracking-widest transition group-hover:text-primary">
+              Submit your talk
+            </h2>
+            <p class="text-balance text-base tracking-wide opacity-60">
+              Propose your subject, we accept speakers of all levels.
+            </p>
+          </div>
+
+          <div
+            class={cn(
+              buttonVariants({ size: "lg", variant: "secondary" }),
+              "max-xs:w-full",
+            )}
+          >
+            Call for Paper
+          </div>
+        </a>
+      </div>
+    )
+  }
+
   <!-- Schedule & Speakers -->
   <div
     class={cn(
@@ -341,6 +374,8 @@ const location: Place | undefined = event.data.location
       )
     }
   </div>
+
+  {event.data.feedback && <FeedbackCTA href={event.data.feedback.link} />}
 
   {
     !!sponsors.length && (
@@ -412,7 +447,32 @@ const location: Place | undefined = event.data.location
     )
   }
 
-  {event.data.feedback && <FeedbackCTA href={event.data.feedback.link} />}
+  <!-- Prospectus -->
+  {
+    shouldShowProspectusButton(event) && (
+      <div class="relative flex w-full flex-col gap-6 px-6 py-12">
+        <a
+          href={event.data.prospectus.href}
+          target="_blank"
+          rel="noreferer"
+          class="group mx-auto flex w-full max-w-screen-md flex-col items-start gap-6 rounded-lg bg-white/5 p-8 backdrop-blur-md transition hover:bg-white/10 md:flex-row md:items-center md:px-12 md:py-10"
+        >
+          <div class="flex flex-1 flex-col">
+            <h2 class="text-balance font-heading text-xl font-medium uppercase tracking-widest transition group-hover:text-primary">
+              Want to support the event?
+            </h2>
+            <p class="text-balance text-base tracking-wide opacity-60">
+              Support the community and make your company shine
+            </p>
+          </div>
+
+          <div class={cn(buttonVariants({ size: "lg" }), "max-xs:w-full")}>
+            Become a Sponsor
+          </div>
+        </a>
+      </div>
+    )
+  }
 
   {event.data.faq && <FAQ client:load faq={event.data.faq} />}
 
