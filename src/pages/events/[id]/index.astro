@@ -249,6 +249,22 @@ const location: Place | undefined = event.data.location
     )
   }
 
+  {
+    event.data.content && event.data.content.afterMovie && (
+      <div>After Movie{event.data.content.afterMovie.href}</div>
+    )
+  }
+  {
+    event.data.content && event.data.content.vods && (
+      <div>VODs: {event.data.content.vods.href}</div>
+    )
+  }
+  {
+    event.data.content && event.data.content.photos && (
+      <div>Photos: {event.data.content.photos.href}</div>
+    )
+  }
+
   <!-- Venue -->
   {
     event.data.location && (

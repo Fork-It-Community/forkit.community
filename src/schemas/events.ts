@@ -113,6 +113,16 @@ const zEventBase = ({ image }: SchemaContext) =>
             href: z.string().url(),
           })
           .optional(),
+        vods: z
+          .object({
+            href: z.string().url().describe("The playlist of the VODs"),
+          })
+          .optional(),
+        photos: z
+          .object({
+            href: z.string().url(),
+          })
+          .optional(),
       })
       .optional(),
     subPages: z.array(reference("eventsSubPages")).optional(),
