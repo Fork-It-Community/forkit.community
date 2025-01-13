@@ -27,7 +27,7 @@ export const GET: APIRoute = async function get({ params, url }) {
           {
             type: "img",
             props: {
-              src: new URL("/forkit-open-graph.png", url).toString(),
+              src: new URL("/forkit-open-graph.png", url.origin).toString(),
               width: "1000px",
               height: "100px",
               style: {
