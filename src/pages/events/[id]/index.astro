@@ -315,7 +315,7 @@ const location: Place | undefined = event.data.location
                           .href ? (
                         <a
                           class={cn(
-                            "relative overflow-hidden rounded-md",
+                            "relative flex h-full overflow-hidden rounded-md",
                             (event.data.afterEventContent?.photos.sources
                               ?.length ?? 0) === 3 &&
                               index === 1 &&
