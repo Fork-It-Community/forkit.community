@@ -565,18 +565,6 @@ const location: Place | undefined = event.data.location
                       </a>
                     );
                   })}
-
-                  {event.data.prospectus &&
-                    levelSponsors.length < 3 &&
-                    dayjs().isBefore(event.data.prospectus.endDate) && (
-                      <a
-                        href={event.data.prospectus.href}
-                        class="group relative flex w-full flex-none items-center justify-center rounded-md bg-white/5 text-xs uppercase tracking-widest text-white/50"
-                      >
-                        Become sponsor{" "}
-                        <MdArrowOutward className="text-lg transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                      </a>
-                    )}
                 </div>
               </div>
             );
