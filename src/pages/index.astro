@@ -88,6 +88,7 @@ const partners = await getEntries<"partners">(
               <div class="flex w-full items-center justify-center sm:justify-start">
                 <a
                   href="/events"
+                  title="All the events page"
                   class={cn(buttonVariants(), "gap-2 sm:max-w-56")}
                 >
                   Discover all events
@@ -100,6 +101,7 @@ const partners = await getEntries<"partners">(
             !!upcomingMajorEvent && (
               <a
                 href={`/events/${upcomingMajorEvent.id}`}
+                title="Upcoming major event"
                 class={cn(
                   "group relative z-10 flex flex-col gap-3",
                   "max-sm:overflow-hidden max-sm:rounded-lg max-sm:bg-background max-sm:p-6 max-sm:shadow-xl",
@@ -160,7 +162,11 @@ const partners = await getEntries<"partners">(
             !!upcomingEvents.length && (
               <div class="flex flex-col gap-6 px-6 sm:gap-3 sm:px-0">
                 {upcomingEvents.map((event) => (
-                  <a href={`/events/${event.id}`} class="group flex gap-2">
+                  <a
+                    href={`/events/${event.id}`}
+                    title={`${event.data.city}, ${event.data.country} event`}
+                    class="group flex gap-2"
+                  >
                     <MdEvent className="opacity-40 group-hover:opacity-100 transition size-4 mt-0.5" />
                     <div class="flex flex-col">
                       <div class="font-heading font-medium tracking-wide opacity-80 transition group-hover:opacity-100 sm:text-sm">
@@ -199,14 +205,14 @@ const partners = await getEntries<"partners">(
   <!-- PODCASTS -->
   <div class="flex flex-col py-24 md:py-32">
     <div class="mx-auto flex w-full max-w-screen-lg flex-col gap-2 px-6">
-      <a href="/podcasts">
+      <a href="/podcasts" title="All the podcasts">
         <h2
           class="flex items-center gap-2 text-balance font-heading text-3xl font-medium uppercase tracking-wide"
         >
           <MdPodcasts className="opacity-40" />
           Podcasts
-        </h2></a
-      >
+        </h2>
+      </a>
       <p class="bold max-w-[50ch] text-balance text-sm opacity-60">
         Latest episodes about the community
       </p>
@@ -290,6 +296,7 @@ const partners = await getEntries<"partners">(
 
         <a
           href="/about"
+          title="About page"
           class={cn(buttonVariants(), "group gap-2 xs:max-w-44 mt-4")}
         >
           About Fork it!
