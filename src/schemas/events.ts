@@ -134,8 +134,9 @@ const zEventBase = ({ image }: SchemaContext) =>
                 })
                 .optional(),
             )
-            .min(1)
-            .max(4),
+
+            .max(4)
+            .optional(),
         }),
       })
       .optional(),

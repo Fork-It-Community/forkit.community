@@ -301,51 +301,54 @@ const location: Place | undefined = event.data.location
             <div
               class={cn("flex flex-[0.7] flex-col gap-4 md:max-w-screen-sm")}
             >
-              <div
-                class={cn(
-                  "grid aspect-[640/426] gap-4",
-                  event.data.afterEventContent.photos.sources.length > 1 &&
-                    "grid-cols-2",
-                )}
-              >
-                {event.data.afterEventContent.photos.sources.map(
-                  (item, index) =>
-                    !item ? null : event.data.afterEventContent?.photos.href ? (
-                      <a
-                        class={cn(
-                          "relative overflow-hidden rounded-md",
-                          event.data.afterEventContent.photos.sources.length ===
-                            3 &&
-                            index === 1 &&
-                            "row-span-2",
-                        )}
-                        href={event.data.afterEventContent.photos.href}
-                      >
-                        <Image
-                          class="absolute inset-0 h-full w-full max-w-none bg-white/5 object-cover"
-                          src={item.image}
-                          alt={item.alt}
-                        />
-                      </a>
-                    ) : (
-                      <div
-                        class={cn(
-                          "relative overflow-hidden rounded-md",
-                          event.data.afterEventContent?.photos.sources
-                            .length === 3 &&
-                            index === 1 &&
-                            "row-span-2",
-                        )}
-                      >
-                        <Image
-                          class="absolute inset-0 h-full w-full max-w-none bg-white/5 object-cover"
-                          src={item.image}
-                          alt={item.alt}
-                        />
-                      </div>
-                    ),
-                )}
-              </div>
+              {!!event.data.afterEventContent.photos.sources?.length && (
+                <div
+                  class={cn(
+                    "grid aspect-[640/426] gap-4",
+                    (event.data.afterEventContent.photos.sources?.length ?? 0) >
+                      1 && "grid-cols-2",
+                  )}
+                >
+                  {event.data.afterEventContent.photos.sources?.map(
+                    (item, index) =>
+                      !item ? null : event.data.afterEventContent?.photos
+                          .href ? (
+                        <a
+                          class={cn(
+                            "relative overflow-hidden rounded-md",
+                            (event.data.afterEventContent?.photos.sources
+                              ?.length ?? 0) === 3 &&
+                              index === 1 &&
+                              "row-span-2",
+                          )}
+                          href={event.data.afterEventContent.photos.href}
+                        >
+                          <Image
+                            class="absolute inset-0 h-full w-full max-w-none bg-white/5 object-cover"
+                            src={item.image}
+                            alt={item.alt}
+                          />
+                        </a>
+                      ) : (
+                        <div
+                          class={cn(
+                            "relative overflow-hidden rounded-md",
+                            (event.data.afterEventContent?.photos.sources
+                              ?.length ?? 0) === 3 &&
+                              index === 1 &&
+                              "row-span-2",
+                          )}
+                        >
+                          <Image
+                            class="absolute inset-0 h-full w-full max-w-none bg-white/5 object-cover"
+                            src={item.image}
+                            alt={item.alt}
+                          />
+                        </div>
+                      ),
+                  )}
+                </div>
+              )}
 
               <div
                 class={cn(
