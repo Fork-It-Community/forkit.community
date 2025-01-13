@@ -5,7 +5,6 @@ import { MdArrowOutward } from "react-icons/md";
 
 export const ExploreTheCommunity = (props: {
   logoUrl: string;
-  backUrl?: string;
   eventCity?: string;
   eventCountry?: string;
   eventDate?: Date;
