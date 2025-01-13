@@ -32,6 +32,7 @@ const { people } = Astro.props;
           </p>
         )
       }
+      <slot />
     </div>
     {
       !!people.data.company && (
