@@ -236,7 +236,9 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
                   <Image
                     src={episode.data.cover}
                     alt={episode.data.title}
-                    class="absolute inset-0 rounded-md object-cover transition duration-300 group-hover:-translate-y-2 group-hover:shadow-2xl"
+                    class="absolute inset-0 h-full w-full rounded-md object-cover transition duration-300 group-hover:-translate-y-2 group-hover:shadow-2xl"
+                    width={384}
+                    height={384}
                   />
                 </a>
               </div>
