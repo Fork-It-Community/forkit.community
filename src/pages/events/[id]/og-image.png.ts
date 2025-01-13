@@ -13,7 +13,7 @@ export async function getStaticPaths() {
   }));
 }
 
-export const GET: APIRoute = async function get({ params }) {
+export const GET: APIRoute = async function get({ params, url }) {
   const tomorrowData = await fs.readFile(
     "./public/fonts/tomorrow/Tomorrow-Regular.ttf",
   );
@@ -27,12 +27,11 @@ export const GET: APIRoute = async function get({ params }) {
           {
             type: "img",
             props: {
-              src: new URL(
-                "/forkit-open-graph.png",
-                "http://localhost:4321",
-              ).toString(),
+              src: new URL("/forkit-open-graph.png", url).toString(),
+              width: "1000px",
+              height: "100px",
               style: {
-                objectFit: "cover",
+                objectFit: "fill",
                 "margin-top": "10rem",
               },
             },
