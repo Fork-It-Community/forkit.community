@@ -10,10 +10,10 @@ import {
   getEventNavItems,
   getEventsCollection,
   getEventSubPagesCollection,
-  shouldShowTicketsButton,
-  shouldShowCFPButton,
+  shouldShowTickets,
+  shouldShowCFP,
   getEventDisplayDate,
-  shouldShowProspectusButton,
+  shouldShowProspectus,
 } from "@/lib/events";
 import { cn, formatDateTime } from "@/lib/utils";
 import { Image } from "astro:assets";
@@ -147,7 +147,7 @@ const location: Place | undefined = event.data.location
 
       <div class="flex flex-wrap items-center justify-center gap-4">
         {
-          shouldShowTicketsButton(event) && (
+          shouldShowTickets(event) ? (
             <a
               href={event.data.tickets.href}
               class={cn(buttonVariants({ size: "lg" }), "group gap-2")}
@@ -155,17 +155,24 @@ const location: Place | undefined = event.data.location
               Get Your Ticket
               <MdArrowForward className="transition group-hover:translate-x-1" />
             </a>
-          )
+          ) : event.data.afterEventContent ? (
+            <a
+              href="#after-event"
+              class={cn(buttonVariants({ size: "lg" }), "gap-2")}
+            >
+              After Event Insights
+            </a>
+          ) : null
         }
         {
-          shouldShowProspectusButton(event) ? (
+          shouldShowProspectus(event) ? (
             <a
               href={event.data.prospectus.href}
               class={buttonVariants({ size: "lg", variant: "secondary" })}
             >
               Become a Sponsor
             </a>
-          ) : shouldShowCFPButton(event) ? (
+          ) : shouldShowCFP(event) ? (
             <a
               href={event.data.cfp.href}
               class={buttonVariants({ size: "lg", variant: "secondary" })}
@@ -249,19 +256,132 @@ const location: Place | undefined = event.data.location
     )
   }
 
+  <!-- After event  -->
   {
-    event.data.content && event.data.content.afterMovie && (
-      <div>After Movie{event.data.content.afterMovie.href}</div>
-    )
-  }
-  {
-    event.data.content && event.data.content.vods && (
-      <div>VODs: {event.data.content.vods.href}</div>
-    )
-  }
-  {
-    event.data.content && event.data.content.photos && (
-      <div>Photos: {event.data.content.photos.href}</div>
+    !!event.data.afterEventContent && (
+      <div
+        id="after-event"
+        class="relative flex w-full scroll-m-12 flex-col gap-6 px-6 py-24 md:py-32"
+      >
+        <div
+          class={cn(
+            "mx-auto flex w-full max-w-screen-lg flex-col gap-12",
+            event.data.afterEventContent.afterMovie && "max-w-screen-xl",
+          )}
+        >
+          <div class="text-center">
+            <h2 class="font-heading text-2xl font-medium uppercase tracking-widest text-white md:text-3xl">
+              After Event Insights
+            </h2>
+            <p class="text-balance text-base tracking-wide opacity-60">
+              Key moments of the event
+            </p>
+          </div>
+
+          <div class="flex flex-1 flex-col justify-center gap-4 md:flex-row">
+            {event.data.afterEventContent.afterMovie && (
+              <div class="relative aspect-[1134/640] w-full min-w-0 flex-1">
+                <a
+                  href={event.data.afterEventContent.afterMovie.href}
+                  target="_blank"
+                >
+                  <Image
+                    alt={event.data.afterEventContent.afterMovie.thumbnail.alt}
+                    class="rounded-lg object-cover"
+                    src={
+                      event.data.afterEventContent.afterMovie.thumbnail.image
+                    }
+                    width={1134}
+                    height={640}
+                  />
+                </a>
+              </div>
+            )}
+
+            <div
+              class={cn("flex flex-[0.7] flex-col gap-4 md:max-w-screen-sm")}
+            >
+              <div
+                class={cn(
+                  "grid aspect-[640/426] gap-4",
+                  event.data.afterEventContent.photos.sources.length > 1 &&
+                    "grid-cols-2",
+                )}
+              >
+                {event.data.afterEventContent.photos.sources.map(
+                  (item, index) =>
+                    !item ? null : event.data.afterEventContent?.photos.href ? (
+                      <a
+                        class={cn(
+                          "relative overflow-hidden rounded-md",
+                          event.data.afterEventContent.photos.sources.length ===
+                            3 &&
+                            index === 1 &&
+                            "row-span-2",
+                        )}
+                        href={event.data.afterEventContent.photos.href}
+                      >
+                        <Image
+                          class="absolute inset-0 h-full w-full max-w-none bg-white/5 object-cover"
+                          src={item.image}
+                          alt={item.alt}
+                        />
+                      </a>
+                    ) : (
+                      <div
+                        class={cn(
+                          "relative overflow-hidden rounded-md",
+                          event.data.afterEventContent?.photos.sources
+                            .length === 3 &&
+                            index === 1 &&
+                            "row-span-2",
+                        )}
+                      >
+                        <Image
+                          class="absolute inset-0 h-full w-full max-w-none bg-white/5 object-cover"
+                          src={item.image}
+                          alt={item.alt}
+                        />
+                      </div>
+                    ),
+                )}
+              </div>
+
+              <div
+                class={cn(
+                  "flex flex-col justify-center gap-4 sm:flex-row",
+                  event.data.afterEventContent.afterMovie && "md:justify-start",
+                )}
+              >
+                {event.data.afterEventContent.photos.href && (
+                  <a
+                    href={event.data.afterEventContent.photos.href}
+                    class={cn(
+                      buttonVariants({ size: "lg" }),
+                      "group gap-2 sm:max-w-48 md:flex-1",
+                    )}
+                  >
+                    Event Photos
+                    <MdArrowForward className="transition group-hover:translate-x-1" />
+                  </a>
+                )}
+                {event.data.afterEventContent.vods?.href && (
+                  <a
+                    href={event.data.afterEventContent.vods.href}
+                    class={cn(
+                      buttonVariants({ size: "lg" }),
+                      "group gap-2 sm:max-w-48 md:flex-1",
+                    )}
+                  >
+                    All VODs
+                    <MdArrowForward className="transition group-hover:translate-x-1" />
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     )
   }
 
@@ -316,7 +436,7 @@ const location: Place | undefined = event.data.location
 
   <!-- CFP -->
   {
-    shouldShowCFPButton(event) && (
+    shouldShowCFP(event) && (
       <div class="relative flex w-full flex-col gap-6 px-6 py-12">
         <a
           href={event.data.cfp.href}
@@ -465,7 +585,7 @@ const location: Place | undefined = event.data.location
 
   <!-- Prospectus -->
   {
-    shouldShowProspectusButton(event) && (
+    shouldShowProspectus(event) && (
       <div class="relative flex w-full flex-col gap-6 px-6 py-12">
         <a
           href={event.data.prospectus.href}

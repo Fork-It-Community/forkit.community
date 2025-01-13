@@ -6,9 +6,9 @@ import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import { EventNav } from "@/components/EventNav";
 import {
   getEventNavItems,
-  shouldShowCFPButton,
-  shouldShowProspectusButton,
-  shouldShowTicketsButton,
+  shouldShowCFP,
+  shouldShowProspectus,
+  shouldShowTickets,
 } from "@/lib/events";
 import EventWarningBanner from "@/components/EventWarningBanner/index.astro";
 import Footer from "@/components/Footer/index.astro";
@@ -75,9 +75,9 @@ const title = `${event.data.city}, ${event.data.country}, ${dayjs(event.data.dat
       prospectus: event.data.prospectus,
     }}
     items={navItems}
-    shouldShowTicketsButton={shouldShowTicketsButton(event)}
-    shouldShowCFPButton={shouldShowCFPButton(event)}
-    shouldShowProspectusButton={shouldShowProspectusButton(event)}
+    shouldShowTicketsButton={shouldShowTickets(event)}
+    shouldShowCFPButton={shouldShowCFP(event)}
+    shouldShowProspectusButton={shouldShowProspectus(event)}
     client:load
   />
   <div class="flex flex-1 flex-col">

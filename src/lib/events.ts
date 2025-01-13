@@ -120,6 +120,14 @@ export async function getEventNavItems(id: string) {
   if (!event) return [];
 
   return [
+    ...(event.data.afterEventContent
+      ? [
+          {
+            href: `/events/${event.id}#after-event`,
+            label: "After Event",
+          },
+        ]
+      : []),
     ...(event.data.location
       ? [
           {
@@ -154,7 +162,7 @@ export async function getEventNavItems(id: string) {
   ];
 }
 
-export function shouldShowTicketsButton(
+export function shouldShowTickets(
   event: CollectionEntry<"events">,
 ): event is CollectionEntry<"events"> & {
   data: { tickets: NonNullable<CollectionEntry<"events">["data"]["tickets"]> };
@@ -163,10 +171,13 @@ export function shouldShowTicketsButton(
     return false;
   }
 
-  return !!(event.data.tickets && dayjs().isBefore(event.data.date));
+  return !!(
+    event.data.tickets &&
+    dayjs().isBefore(event.data.tickets.endDate ?? event.data.date)
+  );
 }
 
-export function shouldShowCFPButton(
+export function shouldShowCFP(
   event: CollectionEntry<"events">,
 ): event is CollectionEntry<"events"> & {
   data: { cfp: NonNullable<CollectionEntry<"events">["data"]["cfp"]> };
@@ -178,7 +189,7 @@ export function shouldShowCFPButton(
   return !!(event.data.cfp && dayjs().isBefore(event.data.cfp.endDate));
 }
 
-export function shouldShowProspectusButton(
+export function shouldShowProspectus(
   event: CollectionEntry<"events">,
 ): event is CollectionEntry<"events"> & {
   data: {

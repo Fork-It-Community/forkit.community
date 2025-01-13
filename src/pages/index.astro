@@ -7,7 +7,6 @@ import { Logo } from "@/components/Logo";
 import { Image } from "astro:assets";
 import defaultImage from "@/assets/images/events.jpeg";
 import aboutBackground from "@/assets/images/about.jpg";
-import afterMovieRouen2024VideoThumbnail from "@/assets/images/after-movie-rouen-2024-video-thumbnail.jpg";
 import dayjs from "dayjs";
 import { MdArrowForward, MdEvent, MdPodcasts } from "react-icons/md";
 import { cn } from "@/lib/utils";
@@ -20,6 +19,7 @@ import { HOME_CONFIG } from "@/content/home";
 import { getEntries } from "astro:content";
 import PartnersBlock from "@/components/PartnersBlock/index.astro";
 import { Schema } from "astro-seo-schema";
+import { getEntry } from "astro:content";
 
 const upcomingMajorEvent = await getUpcomingMajorEvent();
 const upcomingEvents = (await getUpcomingEvents())
@@ -35,6 +35,8 @@ const partners = await getEntries<"partners">(
     id: partner,
   })),
 );
+const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
+  .afterEventContent?.afterMovie;
 ---
 
 <MainLayout>
@@ -281,7 +283,7 @@ const partners = await getEntries<"partners">(
     >
     </div>
     <div
-      class="relative mx-auto flex max-w-screen-lg flex-col items-center justify-center gap-8 md:flex-row md:px-4 xl:justify-normal"
+      class="relative mx-auto flex max-w-screen-lg flex-col items-center justify-center gap-8 px-4 md:flex-row xl:justify-normal"
     >
       <div class="relative flex w-full flex-1 flex-col gap-4 px-6 md:px-0">
         <h2
@@ -303,17 +305,21 @@ const partners = await getEntries<"partners">(
           <MdArrowForward className="transition group-hover:translate-x-1" />
         </a>
       </div>
-      <div class="relative aspect-[1134/640] w-full min-w-0 flex-1">
-        <a href="https://www.youtube.com/watch?v=HLGnkpZ-Q1Q" target="_blank">
-          <Image
-            alt="Fork it! Rouen 2024 After Movie"
-            class="object-cover sm:rounded-lg"
-            src={afterMovieRouen2024VideoThumbnail}
-            width={1134}
-            height={640}
-          />
-        </a>
-      </div>
+      {
+        afterMovie && (
+          <div class="relative aspect-[1134/640] w-full min-w-0 flex-1">
+            <a href={afterMovie.href} target="_blank">
+              <Image
+                alt={afterMovie.thumbnail.alt}
+                class="rounded-lg object-cover"
+                src={afterMovie.thumbnail.image}
+                width={1134}
+                height={640}
+              />
+            </a>
+          </div>
+        )
+      }
     </div>
   </div>
 

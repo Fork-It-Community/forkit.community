@@ -35,6 +35,7 @@ const zEventBase = ({ image }: SchemaContext) =>
     tickets: z
       .object({
         href: z.string().url(),
+        endDate: z.date().optional(),
         offers: z
           .array(
             z.object({
@@ -106,7 +107,7 @@ const zEventBase = ({ image }: SchemaContext) =>
         link: z.string().url(),
       })
       .optional(),
-    content: z
+    afterEventContent: z
       .object({
         afterMovie: z
           .object({
@@ -122,19 +123,20 @@ const zEventBase = ({ image }: SchemaContext) =>
             href: z.string().url().describe("The playlist of the VODs"),
           })
           .optional(),
-        photos: z
-          .object({
-            href: z.string().url(),
-            sources: z.array(
+        photos: z.object({
+          href: z.string().url().optional(),
+          sources: z
+            .array(
               z
                 .object({
                   image: image(),
                   alt: z.string().optional(),
                 })
                 .optional(),
-            ),
-          })
-          .optional(),
+            )
+            .min(1)
+            .max(4),
+        }),
       })
       .optional(),
     subPages: z.array(reference("eventsSubPages")).optional(),
