@@ -111,6 +111,10 @@ const zEventBase = ({ image }: SchemaContext) =>
         afterMovie: z
           .object({
             href: z.string().url(),
+            thumbnail: z.object({
+              image: image(),
+              alt: z.string(),
+            }),
           })
           .optional(),
         vods: z
@@ -121,6 +125,14 @@ const zEventBase = ({ image }: SchemaContext) =>
         photos: z
           .object({
             href: z.string().url(),
+            sources: z.array(
+              z
+                .object({
+                  image: image(),
+                  alt: z.string().optional(),
+                })
+                .optional(),
+            ),
           })
           .optional(),
       })
