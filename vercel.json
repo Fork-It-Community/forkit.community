@@ -2,7 +2,7 @@
   "redirects": [
     {
       "source": "/meetups/2025-02-12-nabeul",
-      "destination": "2025-tunisia-nabeul",
+      "destination": "/events/2025-tunisia-nabeul",
       "statusCode": 301
     },
     {
@@ -102,7 +102,7 @@
     },
     {
       "source": "/meetups/2025-02-12-nabeul/:path*",
-      "destination": "2025-tunisia-nabeul/:path*",
+      "destination": "/events/2025-tunisia-nabeul/:path*",
       "statusCode": 301
     }
   ]
