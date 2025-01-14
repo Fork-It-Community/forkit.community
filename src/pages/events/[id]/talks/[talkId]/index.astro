@@ -107,7 +107,11 @@ const endDate =
         "@type": "Person",
         name: speaker.data.name,
         jobTitle: speaker.data.job ?? "",
-        worksFor: speaker.data.company?.title ?? "",
+        worksFor: {
+          "@type": "Organization",
+          name: speaker.data.company?.title ?? "",
+          url: speaker.data.company?.href ?? "",
+        },
       })),
     }}
   />
