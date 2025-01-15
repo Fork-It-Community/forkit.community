@@ -1,6 +1,6 @@
 ---
 import { buttonVariants } from "@/components/ui/button";
-import { getEventDisplayDate } from "@/lib/events";
+import { getEventDisplayDate, shouldShowTickets } from "@/lib/events";
 import { cn } from "@/lib/utils";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
@@ -11,9 +11,10 @@ import { match } from "ts-pattern";
 
 interface Props {
   event: CollectionEntry<"events">;
+  class?: string;
 }
 
-const { event } = Astro.props;
+const { event, class: className } = Astro.props;
 const coOrganizers = (await getEntries(event.data.coOrganizers ?? []))
   .filter((p) => !!p)
   .slice(0, 5);
@@ -24,7 +25,8 @@ const isUpcomingEvent = dayjs().isBefore(event.data.date);
 <a
   href={`/events/${event.id}`}
   class={cn(
-    "group relative z-10 flex flex-col gap-4 overflow-hidden rounded-lg bg-background px-4 py-4 shadow-xl md:px-6",
+    "group relative z-10 flex flex-col gap-4 overflow-hidden rounded-lg bg-background px-6 py-6 shadow-xl",
+    className,
   )}
 >
   {
@@ -46,7 +48,7 @@ const isUpcomingEvent = dayjs().isBefore(event.data.date);
         <div
           class={cn(
             "absolute size-full bg-gradient-to-r from-black/90 via-black/20",
-            coOrganizers.length && "sm:to-black/80",
+            coOrganizers.length && !isUpcomingEvent && "sm:to-black/80",
           )}
         />
         <div
@@ -59,7 +61,12 @@ const isUpcomingEvent = dayjs().isBefore(event.data.date);
       </div>
     )
   }
-  <div class="flex gap-2 max-sm:flex-col">
+  <div
+    class={cn(
+      "flex gap-2 max-sm:flex-col",
+      isUpcomingEvent && "flex-col flex-1",
+    )}
+  >
     <div class="flex flex-1 flex-col gap-1">
       <div class="flex items-center gap-3">
         {
@@ -84,7 +91,7 @@ const isUpcomingEvent = dayjs().isBefore(event.data.date);
         <div
           class={cn(
             "font-heading font-medium transition",
-            event.data.type === "event" && "text-xl",
+            isUpcomingEvent && "text-xl",
             event.data.status === "cancelled" &&
               "opacity-50 group-hover:opacity-100",
           )}
@@ -92,7 +99,12 @@ const isUpcomingEvent = dayjs().isBefore(event.data.date);
           {getEventDisplayDate(event)}
         </div>
         <div
-          class="font-heading text-sm opacity-60 transition group-hover:text-primary group-hover:opacity-100"
+          class={cn(
+            "font-heading text-sm opacity-80 transition group-hover:text-primary group-hover:opacity-100",
+            isUpcomingEvent && "text-base",
+            event.data.status === "cancelled" &&
+              "opacity-50 group-hover:opacity-100",
+          )}
         >
           {event.data.city}, {event.data.country}
         </div>
@@ -100,10 +112,18 @@ const isUpcomingEvent = dayjs().isBefore(event.data.date);
     </div>
     {
       !!coOrganizers.length && (
-        <div class="flex flex-1 flex-wrap items-center gap-2 sm:justify-end">
+        <div
+          class={cn(
+            "flex flex-wrap items-center gap-2 sm:justify-end",
+            isUpcomingEvent && "sm:justify-start",
+          )}
+        >
           {coOrganizers.map((coOrganizer) => (
             <Image
-              class="size-10 sm:size-12"
+              class={cn(
+                "size-10 sm:size-12",
+                event.data.status === "cancelled" && "brightness-200 grayscale",
+              )}
               src={coOrganizer.data.logos.noBgSquare}
               alt={coOrganizer.data.name}
               width={100}
@@ -114,22 +134,26 @@ const isUpcomingEvent = dayjs().isBefore(event.data.date);
     }
   </div>
   {
-    event.data.type === "event" && (
-      <span
-        class={cn(
-          buttonVariants({
-            variant: isUpcomingEvent ? "default" : "secondary-dark",
-          }),
-          "gap-2 sm:max-w-56",
-        )}
-      >
-        {isUpcomingEvent
-          ? event.data.tickets
-            ? "Tickets available"
-            : "Discover Event"
-          : "Explore Past Event"}
-        <MdArrowForward className="group-hover:translate-x-1 transition" />
-      </span>
-    )
+    (event.data.type === "event" || isUpcomingEvent) &&
+      event.data.status !== "cancelled" && (
+        <div
+          class={cn(
+            buttonVariants({
+              variant:
+                isUpcomingEvent && event.data.type === "event"
+                  ? "default"
+                  : "secondary-dark",
+            }),
+            "gap-2 sm:max-w-56",
+          )}
+        >
+          {isUpcomingEvent
+            ? shouldShowTickets(event)
+              ? "Tickets available"
+              : "Discover Event"
+            : "Explore Past Event"}
+          <MdArrowForward className="group-hover:translate-x-1 transition" />
+        </div>
+      )
   }
 </a>
