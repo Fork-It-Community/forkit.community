@@ -5,6 +5,8 @@ import bgImage from "@/assets/images/events.jpeg";
 import { getPastEvents, getUpcomingEvents } from "@/lib/events";
 import EventCard from "@/components/EventCard/index.astro";
 import SEO from "@/components/SEO/index.astro";
+import { cn } from "@/lib/utils";
+import { getSocialsItems } from "@/content/socials";
 
 const upcomingEvents = await getUpcomingEvents();
 const pastEvents = await getPastEvents();
@@ -16,31 +18,60 @@ const pastEvents = await getPastEvents();
     title="Events"
     description="All the Fork it! events, from meetups to full day events, come take a look at what is happening near you."
   />
-  <div class="mx-auto w-full max-w-screen-sm px-4 pb-40">
-    <MainPageTitle
-      title="Events"
-      subtitle="All the Fork it! tech events"
-      imageSrc={bgImage}
-    />
+  <MainPageTitle
+    title="Events"
+    subtitle="All the Fork it! tech events"
+    imageSrc={bgImage}
+  />
 
-    <div class="flex flex-col gap-12">
-      {
-        !!upcomingEvents.length && (
+  <div class="flex flex-col gap-24 pb-40">
+    {
+      !!upcomingEvents.length && (
+        <div class={cn("mx-auto w-full max-w-screen-lg grid-cols-2 px-4")}>
           <div class="flex flex-col gap-2">
             <h2 class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
               Upcoming Events
             </h2>
-            <div class="flex flex-col gap-3">
+            <div class={cn("grid grid-cols-1 gap-3 md:grid-cols-2")}>
               {upcomingEvents.map((event) => (
-                <EventCard event={event} />
+                <EventCard
+                  event={event}
+                  class={cn(event.data.status !== "cancelled" && "min-h-56")}
+                />
               ))}
+              {upcomingEvents.length % 2 !== 0 && (
+                <div class="relative hidden flex-col items-center justify-center gap-4 rounded-md bg-white/5 px-8 py-6 tracking-widest md:flex">
+                  <div class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
+                    Keep updated
+                  </div>
+                  <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-0">
+                    {getSocialsItems("primary").map(
+                      ({ icon: Icon, ...social }) => (
+                        <a
+                          href={social.href}
+                          class="flex items-center gap-2 p-2 opacity-60 transition hover:text-white hover:opacity-100"
+                        >
+                          <span class="text-lg">
+                            <Icon />
+                          </span>
+                          <span class="text-sm uppercase tracking-wide">
+                            {social.label}
+                          </span>
+                        </a>
+                      ),
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        )
-      }
+        </div>
+      )
+    }
 
-      {
-        !!pastEvents.length && (
+    {
+      !!pastEvents.length && (
+        <div class="mx-auto w-full max-w-screen-sm px-4">
           <div class="flex flex-col gap-2">
             <h2 class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
               Past Events
@@ -51,8 +82,8 @@ const pastEvents = await getPastEvents();
               ))}
             </div>
           </div>
-        )
-      }
-    </div>
+        </div>
+      )
+    }
   </div>
 </MainLayout>
