@@ -61,7 +61,7 @@ const title = `${episode.data.title} (${number}) | ${show.data.title}`;
     slot="seo"
     {title}
     description={episode.data.description ?? ""}
-    image={new URL(episode.data.cover.src, Astro.site).toString()}
+    image={new URL(episode.data.thumbnail.src, Astro.site).toString()}
   />
   <Schema
     slot="ld+json"
