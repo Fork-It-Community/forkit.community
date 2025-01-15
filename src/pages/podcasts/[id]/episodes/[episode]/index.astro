@@ -57,7 +57,12 @@ const title = `${episode.data.title} (${number}) | ${show.data.title}`;
 ---
 
 <MainLayout>
-  <SEO slot="seo" {title} description={episode.data.description ?? ""} />
+  <SEO
+    slot="seo"
+    {title}
+    description={episode.data.description ?? ""}
+    image={new URL(episode.data.cover.src, Astro.site).toString()}
+  />
   <Schema
     slot="ld+json"
     item={{
