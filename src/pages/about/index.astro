@@ -8,15 +8,11 @@ import { HOME_CONFIG } from "@/content/home";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 
 import { getEntries } from "astro:content";
+import { getCollection } from "astro:content";
 
-const organizers = (
-  await getEntries<"people">([
-    { collection: "people", id: "forkit-ivan-dalmet" },
-    { collection: "people", id: "forkit-nhung-duong" },
-    { collection: "people", id: "forkit-yoann-fleury" },
-    { collection: "people", id: "forkit-rudy-baer" },
-  ])
-).filter((o) => !!o);
+const organizers = await getCollection("people", (people) =>
+  people.id.startsWith("forkit-"),
+);
 
 const partners = await getEntries<"partners">(
   (HOME_CONFIG.partners ?? []).map((partner) => ({
