@@ -112,6 +112,14 @@ const endDate =
         name: "Fork it! Community",
         url: "https://www.forkit.community",
       },
+      offers: (event.data.tickets?.offers ?? []).map((offer) => ({
+        "@type": "Offer",
+        price: offer.price,
+        priceCurrency: offer.priceCurrency,
+        url: event.data.tickets?.href ?? "",
+        availability: offer.availability,
+        validFrom: offer.validFrom.toISOString(),
+      })),
       eventAttendanceMode: event.data.attendanceMode,
       eventStatus: event.data.eventStatus,
       performer: (speakers ?? []).map((speaker) => ({

@@ -92,7 +92,7 @@ const location: Place | undefined = event.data.location
         price: offer.price,
         priceCurrency: offer.priceCurrency,
         url: event.data.tickets?.href ?? "",
-        availability: `https://schema.org/${offer.availability}`,
+        availability: offer.availability,
         validFrom: offer.validFrom.toISOString(),
       })),
       eventStatus: `https://schema.org/${event.data.eventStatus}`,
