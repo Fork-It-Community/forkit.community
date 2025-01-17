@@ -1,0 +1,49 @@
+---
+import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
+import SEO from "@/components/SEO/index.astro";
+import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
+import bgImage from "@/assets/images/news.jpeg";
+import NewsArticleCard from "@/components/NewsArticleCard/index.astro";
+import NewsShort from "@/components/NewsShort/index.astro";
+
+// Debug
+const data = [
+  "long",
+  "short",
+  "short",
+  "long",
+  "long",
+  "short",
+  "short",
+] as const;
+---
+
+<MainLayout>
+  <SEO slot="seo" title="Fork It! News" />
+  <div class="mx-auto w-full max-w-screen-sm px-4">
+    <MainPageTitle
+      title="Fork It! News"
+      subtitle="Last news about the community"
+      imageSrc={bgImage}
+    />
+  </div>
+
+  <div class="flex flex-1 flex-col">
+    <!-- TOP NEWS -->
+    <div class="mx-auto w-full max-w-screen-sm pb-40 lg:max-w-screen-xs">
+      <div class="grid gap-16 px-6">
+        {
+          data.map((type) => {
+            if (type === "long") return <NewsArticleCard />;
+            return <NewsShort />;
+          })
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="py-8 md:py-12">
+    <JoinTheCommunity />
+  </div>
+</MainLayout>

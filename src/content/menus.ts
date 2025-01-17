@@ -3,7 +3,7 @@ import {
   MdHomeFilled,
   MdEvent,
   MdInfo,
-  // MdFeed,
+  MdFeed,
   MdPodcasts,
   MdBadge,
   // MdBadge,
@@ -45,13 +45,13 @@ const MAIN_MENU: Array<{
     level: "primary",
   },
 
-  // {
-  //   label: "News",
-  //   href: "/news",
-  //   icon: MdFeed,
-  //   scope: "all",
-  //   level: "primary",
-  // },
+  {
+    label: "News",
+    href: "/news",
+    icon: MdFeed,
+    scope: "all",
+    level: "primary",
+  },
 
   {
     label: "Community members",
