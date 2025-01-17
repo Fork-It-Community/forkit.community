@@ -97,3 +97,7 @@ export function getMainMenuDesktopItems(level: MainMenuLevel) {
       item.level === level,
   );
 }
+
+export function getMainMenuItems() {
+  return MAIN_MENU;
+}

@@ -1,7 +1,10 @@
 ---
 import { getSocialsItems } from "@/content/socials";
+import { getMainMenuItems } from "@/content/menus";
 import dayjs from "dayjs";
 import { MdArrowOutward } from "react-icons/md";
+
+const menuItems = getMainMenuItems();
 ---
 
 <footer class="bg-background-blur border-t border-t-black">
@@ -22,9 +25,25 @@ import { MdArrowOutward } from "react-icons/md";
         ))
       }
     </div>
-    <div class="flex flex-1 flex-col gap-1 sm:-order-1">
-      <div class="flex items-center justify-start gap-1 text-xs">
-        <a class="opacity-60 transition hover:opacity-100" href="/">Home</a>
+    <div class="flex flex-1 flex-col gap-2 sm:-order-1">
+      <div
+        class="flex flex-wrap items-center justify-center gap-1 gap-y-2 text-xs sm:justify-start"
+      >
+        {
+          menuItems.map((item, index) => (
+            <>
+              <a
+                class="opacity-60 transition hover:opacity-100"
+                href={item.href}
+              >
+                {item.label}
+              </a>
+              {index < menuItems.length - 1 && (
+                <span class="opacity-20">⋅</span>
+              )}
+            </>
+          ))
+        }
         <span class="opacity-20">⋅</span>
         <a
           class="flex items-center gap-1 opacity-60 transition hover:opacity-100"
@@ -41,7 +60,7 @@ import { MdArrowOutward } from "react-icons/md";
           Code of Conduct
         </a>
       </div>
-      <p class="text-xs opacity-50">
+      <p class="text-center text-xs opacity-50 sm:text-left">
         © {dayjs().format("YYYY")} Fork it! Community. All rights reserved.
       </p>
     </div>
