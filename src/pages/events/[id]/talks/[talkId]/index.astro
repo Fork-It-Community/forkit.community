@@ -1,18 +1,18 @@
 ---
+import { BackButton } from "@/components/BackButton";
+import People from "@/components/People/index.astro";
+import TimeAndDuration from "@/components/Schedule/TimeAndDuration.astro";
+import SEO from "@/components/SEO/index.astro";
 import { buttonVariants } from "@/components/ui/button";
 import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
-import People from "@/components/People/index.astro";
 import { getEventsCollection } from "@/lib/events";
-import { getEntries } from "astro:content";
-import { render } from "astro:content";
-import { IoLanguageSharp } from "react-icons/io5";
-import { cn } from "@/lib/utils";
-import { MdArrowOutward } from "react-icons/md";
-import dayjs from "dayjs";
-import { BackButton } from "@/components/BackButton";
-import SEO from "@/components/SEO/index.astro";
-import { Schema } from "astro-seo-schema";
 import { lang } from "@/lib/lang";
+import { cn } from "@/lib/utils";
+import { Schema } from "astro-seo-schema";
+import { getEntries, render } from "astro:content";
+import dayjs from "dayjs";
+import { IoLanguageSharp } from "react-icons/io5";
+import { MdArrowOutward, MdPlace } from "react-icons/md";
 import type { Place } from "schema-dts";
 
 export async function getStaticPaths() {
@@ -160,15 +160,33 @@ const endDate =
       <div
         class="prose prose-sm prose-invert md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
       >
+        <div
+          class="not-prose -mb-1 flex flex-1 flex-wrap items-center gap-x-3 gap-y-1 pt-8 text-white"
+        >
+          <TimeAndDuration
+            startTime={talk.__schedule?.startTime}
+            duration={talk.__schedule?.duration}
+            class="font-heading text-sm tracking-wide"
+          />
+          {
+            !!talk.__schedule?.location && (
+              <span class="flex items-center gap-1.5 text-sm uppercase tracking-wide">
+                <MdPlace className="text-base" />
+                {talk.__schedule?.location}
+              </span>
+            )
+          }
+        </div>
         <h1 lang={lang(talk.data.contentLanguage)}>{talk.data.title}</h1>
-
-        <div>
-          <span
-            class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none"
-          >
-            <IoLanguageSharp className="text-base" />
-            <span>Talk in {talk.data.language}</span>
-          </span>
+        <div class="flex gap-2">
+          <div>
+            <span
+              class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none"
+            >
+              <IoLanguageSharp className="text-base" />
+              <span>Talk in {talk.data.language}</span>
+            </span>
+          </div>
         </div>
         <div lang={lang(talk.data.contentLanguage)}>
           <Content />

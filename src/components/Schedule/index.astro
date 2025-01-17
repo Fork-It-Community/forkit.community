@@ -33,14 +33,15 @@ const { event } = Astro.props;
                 <div class="flex-1 border-l border-dashed border-white/20 group-last:hidden" />
               </div>
               <div class="flex w-full flex-col gap-2 pb-6">
-                <div class="flex flex-1 flex-col justify-between gap-x-3 gap-y-1 xs:flex-row">
+                <div class="flex flex-1 flex-row flex-wrap items-center justify-between gap-x-3 gap-y-1">
                   <TimeAndDuration
-                    activity={activity}
+                    startTime={activity.startTime}
+                    duration={activity.duration}
                     class="font-heading text-sm tracking-wide opacity-80"
                   />
                   {!!activity.location && (
                     <span class="flex items-center gap-1.5 text-xs uppercase tracking-wide opacity-60">
-                      <MdPlace className="text-base max-xs:hidden" />
+                      <MdPlace className="text-base" />
                       {activity.location}
                     </span>
                   )}

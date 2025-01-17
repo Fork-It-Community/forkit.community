@@ -1,26 +1,26 @@
 ---
 import { cn, formatTime } from "@/lib/utils";
-import type { CollectionEntry } from "astro:content";
 
 interface Props {
-  activity: NonNullable<CollectionEntry<"events">["data"]["schedule"]>[number];
+  startTime?: Date | undefined;
+  duration?: number | undefined;
   class?: string;
 }
 
-const { activity, class: className } = Astro.props;
+const { startTime, duration, class: className } = Astro.props;
 ---
 
 {
-  activity.startTime && (
+  startTime && (
     <div class={cn("flex gap-1.5", className)}>
-      <time class="font-medium" datetime={activity.startTime.toISOString()}>
-        {formatTime(activity.startTime)}
+      <time class="font-medium" datetime={startTime.toISOString()}>
+        {formatTime(startTime)}
       </time>
 
-      {activity.duration && (
+      {duration && (
         <>
           <span class="opacity-60">·</span>
-          <p class="text-[0.9em]">({activity.duration} min)</p>
+          <p class="text-[0.9em]">({duration} min)</p>
         </>
       )}
     </div>
