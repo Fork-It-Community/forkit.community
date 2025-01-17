@@ -1,81 +1,35 @@
-import fs from "fs/promises";
-import satori from "satori";
-import sharp from "sharp";
-import type { APIRoute } from "astro";
-import { getCollection, getEntry } from "astro:content";
+import { OGEvent } from "@/components/OpenGraph/OGEvent";
+import { generateOGResponse } from "@/components/OpenGraph/utils";
+import type { APIRoute, InferGetStaticPropsType } from "astro";
+import { getCollection } from "astro:content";
+import fs from "node:fs";
+import path from "node:path";
 
 export async function getStaticPaths() {
   const events = await getCollection("events");
 
   return events.map((event) => ({
     params: { id: event.id },
-    props: event,
+    props: { event },
   }));
 }
 
-export const GET: APIRoute = async function get({ params, url }) {
-  const tomorrowData = await fs.readFile(
-    "./public/fonts/tomorrow/Tomorrow-Regular.ttf",
-  );
-  const event = await getEntry("events", params.id ?? "");
-  const svg = await satori(
-    // @ts-ignore Satori want ReactNode when react is installed.
-    {
-      type: "div",
-      props: {
-        children: [
-          {
-            type: "img",
-            props: {
-              src: new URL("/forkit-open-graph.png", url.origin).toString(),
-              width: "1000px",
-              height: "100px",
-              style: {
-                objectFit: "fill",
-                "margin-top": "10rem",
-              },
-            },
-          },
-          {
-            type: "p",
-            props: {
-              children: event?.data.name,
-            },
-          },
-        ],
-        style: {
-          height: "100vh",
-          width: "100vw",
-          backgroundColor: "#171717",
-          color: "#ffffff",
-          padding: "2rem",
-          display: "flex",
-          flexDirection: "column",
-          lineHeight: 0,
-          fontSize: "4rem",
-          justifyContent: "space-between",
-          alignItems: "center",
-        },
-      },
-    },
-    {
-      width: 1200,
-      height: 630,
-      fonts: [
-        {
-          name: "Tomorrow",
-          data: tomorrowData,
-          style: "normal",
-        },
-      ],
-    },
-  );
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
-  const png = await sharp(Buffer.from(svg)).png().toBuffer();
+export const GET: APIRoute = async ({ props, site }) => {
+  const { event } = props as Props;
 
-  return new Response(png, {
-    headers: {
-      "Content-Type": "image/png",
-    },
-  });
+  const postCover = event.data.image
+    ? fs.readFileSync(
+        import.meta.env.DEV
+          ? path.resolve(
+              event.data.image.src.src.replace(/\?.*/, "").replace("/@fs", ""),
+            )
+          : path.resolve(event.data.image.src.src.replace("/", "dist/")),
+      )
+    : undefined;
+
+  return generateOGResponse(
+    OGEvent({ event, site: site?.toString() ?? "", postCover }),
+  );
 };
