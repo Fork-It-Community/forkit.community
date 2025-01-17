@@ -13,6 +13,7 @@ import { BackButton } from "@/components/BackButton";
 import SEO from "@/components/SEO/index.astro";
 import { Schema } from "astro-seo-schema";
 import { lang } from "@/lib/lang";
+import type { Place } from "schema-dts";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -66,6 +67,14 @@ const { Content } = await render(talk);
 const url = new URL(Astro.url.pathname, Astro.site);
 const title = `${talk.data.title} | ${event.data.city}, ${event.data.country}, ${dayjs(event.data.date).format("YYYY")}`;
 
+const location: Place | undefined = event.data.location
+  ? {
+      "@type": "Place",
+      address: event.data.location.address,
+      name: event.data.location.name ?? "",
+    }
+  : undefined;
+
 const startDate = schedule?.startTime
   ? dayjs(schedule?.startTime).toISOString()
   : "";
@@ -96,6 +105,7 @@ const endDate =
       name: talk.data.title,
       ...(startDate && { startDate }),
       ...(endDate && { endDate }),
+      ...(location && { location }),
       description: event.data.excerpt ?? "",
       organizer: {
         "@type": "Organization",
@@ -103,6 +113,7 @@ const endDate =
         url: "https://www.forkit.community",
       },
       eventAttendanceMode: event.data.attendanceMode,
+      eventStatus: event.data.eventStatus,
       performer: (speakers ?? []).map((speaker) => ({
         "@type": "Person",
         name: speaker.data.name,
