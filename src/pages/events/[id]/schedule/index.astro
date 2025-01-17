@@ -20,7 +20,7 @@ export async function getStaticPaths() {
 const { event } = Astro.props;
 
 const title = `Schedule | ${event.data.city}, ${event.data.country}, ${dayjs(event.data.date).format("YYYY")}`;
-const description = `Schedule for ${event.data.city}, ${event.data.country}, event, the ${dayjs(event.data.date).format("DD/MM/YYYY")}`;
+const description = `Schedule for the ${event.data.city}, ${event.data.country} event, taking place the ${dayjs(event.data.date).format("DD/MM/YYYY")}. Come enjoy content from the community.`;
 ---
 
 <EventSubPageLayout event={event}>
