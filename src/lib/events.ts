@@ -74,13 +74,6 @@ export async function getPastEvents({
   return pastEvents;
 }
 
-export async function getNextEvent() {
-  const upcomingEvents = await getUpcomingEvents();
-
-  const nextEvent = upcomingEvents.length > 0 ? upcomingEvents[0] : null;
-  return nextEvent;
-}
-
 export async function getUpcomingMajorEvent() {
   const upcomingEvents = await getUpcomingEvents();
 
@@ -94,16 +87,6 @@ export async function getUpcomingMajorEvent() {
     // In case we add another type later, like external events
     notCancelledEvents.at(0)
   );
-}
-
-export async function getMeetupsCollection() {
-  return getCollection("events", ({ data }) => {
-    const isPublished = import.meta.env.PROD
-      ? isEventPublished(data.status)
-      : true;
-
-    return isPublished && data.type === "meetup";
-  });
 }
 
 export async function getEvent(id: string) {
@@ -209,4 +192,32 @@ export function getEventDisplayDate(event: CollectionEntry<"events">) {
   if (event.data.status === "published-without-date")
     return `Coming in ${dayjs(event.data.date).format("YYYY")}`;
   return dayjs(event.data.date).format("MMMM DD, YYYY");
+}
+
+function personWasInEvent(
+  person: CollectionEntry<"people">,
+  event: CollectionEntry<"events">,
+) {
+  return (
+    event.data.organizers?.some((organizer) => organizer.id === person.id) ||
+    event.data.volunteers?.some((volunteer) => volunteer.id === person.id) ||
+    event.data.speakers?.some((speaker) => speaker.id === person.id)
+  );
+}
+
+export async function getPersonEvents(
+  person: CollectionEntry<"people">,
+  { limit }: GetEventsParams,
+) {
+  return (
+    (await getEventsCollection())
+      // Order with the most recent first
+      .sort((a, b) => dayjs(b.data.date).diff(a.data.date))
+      // We don't want cancelled events and just the one the person is in
+      .filter(
+        (event) =>
+          event.data.status !== "cancelled" && personWasInEvent(person, event),
+      )
+      .slice(0, limit)
+  );
 }

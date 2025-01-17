@@ -21,4 +21,10 @@ export const zPerson = ({ image }: SchemaContext) =>
         href: z.string().url().optional(),
       })
       .optional(),
+    forkit: z
+      .object({
+        role: z.enum(["founder", "organizer", "volunteer"]),
+        avatar: image().optional(),
+      })
+      .optional(),
   });

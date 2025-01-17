@@ -26,6 +26,16 @@ const zEventBase = ({ image }: SchemaContext) =>
         credit: z.string().optional(),
       })
       .optional(),
+
+    organizers: z
+      .array(reference("people"))
+      .optional()
+      .describe("Collection of people that organize the event"),
+    volunteers: z
+      .array(reference("people"))
+      .optional()
+      .describe("Collection of people that volunteer during the event"),
+
     cfp: z
       .object({
         href: z.string().url(),

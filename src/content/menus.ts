@@ -5,6 +5,7 @@ import {
   MdInfo,
   // MdFeed,
   MdPodcasts,
+  MdBadge,
   // MdBadge,
   // MdHandshake,
   // MdLocalActivity,
@@ -43,13 +44,7 @@ const MAIN_MENU: Array<{
     scope: "all",
     level: "primary",
   },
-  {
-    label: "About",
-    href: "/about",
-    icon: MdInfo,
-    scope: "all",
-    level: "primary",
-  },
+
   // {
   //   label: "News",
   //   href: "/news",
@@ -58,13 +53,13 @@ const MAIN_MENU: Array<{
   //   level: "primary",
   // },
 
-  // {
-  //   label: "Community members",
-  //   href: "/people",
-  //   icon: MdBadge,
-  //   scope: "all",
-  //   level: "secondary",
-  // },
+  {
+    label: "Community members",
+    href: "/people",
+    icon: MdBadge,
+    scope: "all",
+    level: "secondary",
+  },
   // {
   //   label: "Partners",
   //   href: "/partners",
@@ -79,6 +74,13 @@ const MAIN_MENU: Array<{
   //   scope: "all",
   //   level: "secondary",
   // },
+  {
+    label: "About Fork it!",
+    href: "/about",
+    icon: MdInfo,
+    scope: "all",
+    level: "secondary",
+  },
 ];
 
 export function getMainMenuMobileItems(level: MainMenuLevel) {
