@@ -7,25 +7,21 @@ import { MdEvent, MdPodcasts } from "react-icons/md";
 import { getEventsCollection } from "@/lib/events";
 
 interface Props {
-  people: CollectionEntry<"people">;
+  person: CollectionEntry<"people">;
   id?: string;
 }
 
-const { people, id } = Astro.props;
-
-const isForkItTeam = (await getCollection("people")).some(
-  (p) => p.id === `forkit-${people.id}`,
-);
+const { person, id } = Astro.props;
 
 const events = (await getEventsCollection())
   .filter(
     (event) =>
       event.data.status !== "cancelled" &&
-      (event.data.organizers?.some((organizer) => organizer.id === people.id) ||
-        event.data.volonteers?.some(
-          (volonteer) => volonteer.id === people.id,
+      (event.data.organizers?.some((organizer) => organizer.id === person.id) ||
+        event.data.volunteers?.some(
+          (volunteer) => volunteer.id === person.id,
         ) ||
-        event.data.speakers?.some((speaker) => speaker.id === people.id)),
+        event.data.speakers?.some((speaker) => speaker.id === person.id)),
   )
   .slice(0, 3);
 
@@ -33,8 +29,8 @@ const podcastsEpisodes = (
   await getCollection(
     "episodes",
     (event) =>
-      event.data.hosts?.some((host) => host.id === people.id) ||
-      event.data.guests?.some((guest) => guest.id === people.id),
+      event.data.hosts?.some((host) => host.id === person.id) ||
+      event.data.guests?.some((guest) => guest.id === person.id),
   )
 ).slice(0, 3);
 ---
@@ -46,15 +42,15 @@ const podcastsEpisodes = (
   <div class="flex items-start gap-4">
     <div class="aspect-square size-24 flex-none overflow-hidden rounded-lg">
       <Image
-        src={people.data.avatar ?? SpeakerPlaceholder}
-        alt={people.data.name}
+        src={person.data.avatar ?? SpeakerPlaceholder}
+        alt={person.data.name}
         width={160}
         height={160}
       />
     </div>
     <div class="flex flex-col gap-3">
       {
-        isForkItTeam && (
+        person.data.forkit?.role === "founder" && (
           <a
             href="/about#organizers"
             class="w-fit rounded bg-primary px-1.5 py-1 text-2xs font-bold uppercase leading-none text-black transition"
@@ -66,39 +62,39 @@ const podcastsEpisodes = (
 
       <div class="flex flex-col gap-0.5">
         <p class="line-clamp-3 font-heading text-sm font-medium tracking-wide">
-          {people.data.name}
+          {person.data.name}
         </p>
         {
-          !!people.data.job && (
+          !!person.data.job && (
             <p class="line-clamp-3 text-xs tracking-wide opacity-60">
-              {people.data.job}
+              {person.data.job}
             </p>
           )
         }
         <slot />
       </div>
       {
-        !!people.data.company && (
+        !!person.data.company && (
           <>
-            {!!people.data.company.href ? (
+            {!!person.data.company.href ? (
               <a
-                href={people.data.company.href}
+                href={person.data.company.href}
                 target="_blank"
                 class="text-xs underline opacity-60 transition hover:text-primary hover:opacity-100"
               >
-                {people.data.company.title}
+                {person.data.company.title}
               </a>
             ) : (
-              <p class="text-xs opacity-60">{people.data.company.title}</p>
+              <p class="text-xs opacity-60">{person.data.company.title}</p>
             )}
           </>
         )
       }
 
       {
-        !!people.data.socials && (
+        !!person.data.socials && (
           <ul class="flex gap-x-2">
-            {people.data.socials.map((social) => {
+            {person.data.socials.map((social) => {
               const Icon = SOCIALS_TYPE_MAP[social.type];
 
               return (
@@ -131,13 +127,13 @@ const podcastsEpisodes = (
         <ul class="flex flex-col gap-2">
           {events.map((event) => {
             const isOrganizer = !!event.data.organizers?.some(
-              (item) => item.id === people.id,
+              (item) => item.id === person.id,
             );
-            const isVolonteer = !!event.data.volonteers?.some(
-              (item) => item.id === people.id,
+            const isVolunteer = !!event.data.volunteers?.some(
+              (item) => item.id === person.id,
             );
             const isSpeaker = !!event.data.speakers?.some(
-              (item) => item.id === people.id,
+              (item) => item.id === person.id,
             );
             return (
               <li>
@@ -152,7 +148,7 @@ const podcastsEpisodes = (
                       {[
                         isOrganizer && "Organizer",
                         isSpeaker && "Speaker",
-                        isVolonteer && "Volonteer",
+                        isVolunteer && "Volunteer",
                       ]
                         .filter(Boolean)
                         .join(", ")}
@@ -175,10 +171,10 @@ const podcastsEpisodes = (
         <ul>
           {podcastsEpisodes.map((episode) => {
             const isHost = !!episode.data.hosts?.some(
-              (item) => item.id === people.id,
+              (item) => item.id === person.id,
             );
             const isGuest = !!episode.data.guests?.some(
-              (item) => item.id === people.id,
+              (item) => item.id === person.id,
             );
             return (
               <li>

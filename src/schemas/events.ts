@@ -31,10 +31,10 @@ const zEventBase = ({ image }: SchemaContext) =>
       .array(reference("people"))
       .optional()
       .describe("Collection of people that organize the event"),
-    volonteers: z
+    volunteers: z
       .array(reference("people"))
       .optional()
-      .describe("Collection of people that volonteer during the event"),
+      .describe("Collection of people that volunteer during the event"),
 
     cfp: z
       .object({

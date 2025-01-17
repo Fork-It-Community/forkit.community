@@ -10,9 +10,21 @@ import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import { getEntries } from "astro:content";
 import { getCollection } from "astro:content";
 
-const organizers = await getCollection("people", (people) =>
-  people.id.startsWith("forkit-"),
-);
+const organizers = (
+  await getCollection(
+    "people",
+    (people) => people.data.forkit?.role === "founder",
+  )
+).map((person) => ({
+  ...person,
+  data: {
+    ...person.data,
+    avatar: person.data.forkit?.avatar ?? person.data.avatar,
+    // We basically just want names and socials at the moment
+    company: undefined,
+    job: undefined,
+  },
+}));
 
 const partners = await getEntries<"partners">(
   (HOME_CONFIG.partners ?? []).map((partner) => ({
@@ -61,8 +73,8 @@ const partners = await getEntries<"partners">(
             </h2>
 
             <div class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-4">
-              {organizers.map((speaker) => (
-                <People people={speaker} />
+              {organizers.map((organizer) => (
+                <People people={organizer} />
               ))}
             </div>
           </div>
