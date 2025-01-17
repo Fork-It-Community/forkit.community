@@ -1,5 +1,5 @@
 import type { Platform } from "@/schemas/podcasts";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import dayjs from "dayjs";
 import type { FC } from "react";
 import {
@@ -71,4 +71,18 @@ export function formatDuration(seconds: number) {
   }
 
   return durationParts;
+}
+
+export async function getPersonEpisodes(
+  person: CollectionEntry<"people">,
+  { limit }: Params,
+) {
+  return (
+    await getCollection(
+      "episodes",
+      (episode) =>
+        episode.data.hosts?.some((host) => host.id === person.id) ||
+        episode.data.guests?.some((guest) => guest.id === person.id),
+    )
+  ).slice(0, limit);
 }

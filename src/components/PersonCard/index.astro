@@ -1,10 +1,11 @@
 ---
 import { Image } from "astro:assets";
 import SpeakerPlaceholder from "@/assets/images/people-placeholder.jpeg";
-import { getCollection, type CollectionEntry } from "astro:content";
+import { type CollectionEntry } from "astro:content";
 import { SOCIALS_TYPE_MAP } from "@/content/socials";
 import { MdEvent, MdPodcasts } from "react-icons/md";
-import { getEventsCollection } from "@/lib/events";
+import { getPersonEvents } from "@/lib/events";
+import { getPersonEpisodes } from "@/lib/podcasts";
 
 interface Props {
   person: CollectionEntry<"people">;
@@ -13,26 +14,8 @@ interface Props {
 
 const { person, id } = Astro.props;
 
-const events = (await getEventsCollection())
-  .filter(
-    (event) =>
-      event.data.status !== "cancelled" &&
-      (event.data.organizers?.some((organizer) => organizer.id === person.id) ||
-        event.data.volunteers?.some(
-          (volunteer) => volunteer.id === person.id,
-        ) ||
-        event.data.speakers?.some((speaker) => speaker.id === person.id)),
-  )
-  .slice(0, 3);
-
-const podcastsEpisodes = (
-  await getCollection(
-    "episodes",
-    (event) =>
-      event.data.hosts?.some((host) => host.id === person.id) ||
-      event.data.guests?.some((guest) => guest.id === person.id),
-  )
-).slice(0, 3);
+const events = await getPersonEvents(person, { limit: 3 });
+const podcastsEpisodes = await getPersonEpisodes(person, { limit: 3 });
 ---
 
 <div
