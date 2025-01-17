@@ -20,10 +20,11 @@ export async function getStaticPaths() {
 const { event } = Astro.props;
 
 const title = `Schedule | ${event.data.city}, ${event.data.country}, ${dayjs(event.data.date).format("YYYY")}`;
+const description = `Schedule for ${event.data.city}, ${event.data.country}, event, the ${dayjs(event.data.date).format("DD/MM/YYYY")}`;
 ---
 
 <EventSubPageLayout event={event}>
-  <SEO slot="seo" title={title} />
+  <SEO slot="seo" title={title} description={description} />
   <div class="mx-auto space-y-8 p-4 md:p-8">
     <BackButton href={`/events/${event.id}`} client:load />
 
