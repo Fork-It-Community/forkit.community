@@ -74,13 +74,6 @@ export async function getPastEvents({
   return pastEvents;
 }
 
-export async function getNextEvent() {
-  const upcomingEvents = await getUpcomingEvents();
-
-  const nextEvent = upcomingEvents.length > 0 ? upcomingEvents[0] : null;
-  return nextEvent;
-}
-
 export async function getUpcomingMajorEvent() {
   const upcomingEvents = await getUpcomingEvents();
 
@@ -94,16 +87,6 @@ export async function getUpcomingMajorEvent() {
     // In case we add another type later, like external events
     notCancelledEvents.at(0)
   );
-}
-
-export async function getMeetupsCollection() {
-  return getCollection("events", ({ data }) => {
-    const isPublished = import.meta.env.PROD
-      ? isEventPublished(data.status)
-      : true;
-
-    return isPublished && data.type === "meetup";
-  });
 }
 
 export async function getEvent(id: string) {
