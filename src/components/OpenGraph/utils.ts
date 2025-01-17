@@ -13,6 +13,12 @@ export async function SVG(component: JSX.Element) {
   const tomorrowData = await fs.readFile(
     "./public/fonts/tomorrow/Tomorrow-Regular.ttf",
   );
+  const tomorrowBoldData = await fs.readFile(
+    "./public/fonts/tomorrow/Tomorrow-Bold.ttf",
+  );
+  const tomorrowMediumData = await fs.readFile(
+    "./public/fonts/tomorrow/Tomorrow-Medium.ttf",
+  );
 
   return await satori(component, {
     width: 1920,
@@ -22,6 +28,19 @@ export async function SVG(component: JSX.Element) {
         name: "Tomorrow",
         data: tomorrowData,
         style: "normal",
+        weight: 400,
+      },
+      {
+        name: "Tomorrow",
+        data: tomorrowMediumData,
+        style: "normal",
+        weight: 500,
+      },
+      {
+        name: "Tomorrow",
+        data: tomorrowBoldData,
+        style: "normal",
+        weight: 700,
       },
     ],
   });
