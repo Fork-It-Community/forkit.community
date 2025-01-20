@@ -1,3 +1,4 @@
+import { Logo } from "@/components/Logo";
 import { COLORS } from "@/components/OpenGraph/utils";
 import type { CollectionEntry } from "astro:content";
 import dayjs from "dayjs";
@@ -19,34 +20,46 @@ export const OGEvent = (props: {
         backgroundColor: COLORS.background,
         width: "100%",
         position: "relative",
+        padding: 128,
       }}
     >
-      <div
+      <img
+        // @ts-expect-error: Type 'ArrayBuffer' is not assignable to type 'string'
+        src={props.postCover?.buffer ?? ""}
+        alt=""
         style={{
           position: "absolute",
-          right: 0,
-          display: "flex",
+          top: 0,
+          left: 0,
+          width: 1920,
+          height: 1080,
+          objectFit: "cover",
         }}
-      >
-        <img
-          /* @ts-expect-error: Type 'ArrayBuffer' is not assignable to type 'string' */
-          src={props.postCover?.buffer ?? ""}
-          alt=""
-          style={{
-            width: "80rem",
-            filter: "blur(4px)",
-          }}
-        />
-      </div>
-
+      />
+      <img
+        // @ts-expect-error: Type 'ArrayBuffer' is not assignable to type 'string'
+        src={props.postCover?.buffer ?? ""}
+        alt=""
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: 1920,
+          height: 1080,
+          objectFit: "cover",
+          filter: "blur(20px)",
+          maskImage: "linear-gradient(90deg, black 40%, transparent 100%)",
+        }}
+      />
       <div
         style={{
           background:
-            "linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 40%, rgba(0,0,0,0.2) 100%)",
+            "linear-gradient(90deg, rgba(0,0,0,1) 0%, transparent 100%)",
           position: "absolute",
-          width: "100%",
-          height: "100%",
-          inset: 0,
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
           zIndex: 2,
         }}
       />
@@ -55,51 +68,57 @@ export const OGEvent = (props: {
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "8rem",
-          position: "absolute",
-          top: "8rem",
-          left: "8rem",
+          gap: 128,
+          width: "100%",
+          justifyContent: "center",
           fontFamily: "Tomorrow",
           color: COLORS.white,
           zIndex: 100,
         }}
       >
-        <div
-          style={{
-            fontSize: "3rem",
-            fontWeight: 400,
-            textTransform: "uppercase",
-            opacity: 0.6,
-          }}
-        >
-          {match(props.event.data.type)
-            .with("event", () => "Full Day Event")
-            .with("meetup", () => "Community Meetup")
-            .exhaustive()}
-        </div>
+        <Logo style={{ width: 169 * 3, height: 18 * 3 }} />
+
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "2rem",
+            gap: 20,
           }}
         >
           <div
             style={{
-              fontSize: "8rem",
-              fontWeight: 700,
+              fontSize: 32,
+              fontWeight: 500,
+              textTransform: "uppercase",
+              opacity: 0.6,
+              letterSpacing: 4,
+            }}
+          >
+            {match(props.event.data.type)
+              .with("event", () => "Full Day Event")
+              .with("meetup", () => "Community Meetup")
+              .exhaustive()}
+          </div>
+          <div
+            style={{
+              fontSize: 132,
+              fontWeight: 500,
+              marginLeft: -6, // Visual alignment
             }}
           >
             {dayjs(props.event.data.date).format("MMMM DD, YYYY")}
           </div>
           <div
             style={{
-              fontSize: "5rem",
+              display: "flex",
+              fontSize: 80,
               fontWeight: 500,
-              opacity: 0.8,
+              color: COLORS.primary,
+              marginTop: -16,
+              marginLeft: -2, // Visual alignment
             }}
           >
-            {props.event.data.name}
+            {props.event.data.city}, {props.event.data.country}
           </div>
         </div>
       </div>
