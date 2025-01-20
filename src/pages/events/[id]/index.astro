@@ -75,9 +75,10 @@ const location: Place | undefined = event.data.location
       name: event.data.location.name ?? "",
     }
   : undefined;
+const ogImage = new URL(Astro.url.pathname + "/og-image.png", Astro.site);
 ---
 
-<EventLayout event={event}>
+<EventLayout event={event} ogImage={ogImage}>
   <Schema
     slot="ld+json"
     item={{

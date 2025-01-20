@@ -7,7 +7,9 @@ import robotsTxt from "astro-robots-txt";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://www.forkit.community",
+  site: import.meta.env.PROD
+    ? "https://www.forkit.community"
+    : "http://localhost:4321",
   trailingSlash: "never",
   integrations: [
     react(),

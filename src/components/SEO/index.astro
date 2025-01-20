@@ -14,12 +14,11 @@ interface Props
 const {
   title,
   description = "Fork it! Community’s mission is to share computer science knowledge through worldwide events.",
-  image,
+  image = new URL("/opengraph-image.jpg", Astro.site).toString(),
   imageAlt,
   url = Astro.url,
 } = Astro.props;
 
-const ogImage = new URL("/opengraph-image.jpg", Astro.site);
 const ogImageAlt = "Fork it! Community";
 const titleDefault = "Fork it! Community | Global Developer Community";
 ---
@@ -33,7 +32,7 @@ const titleDefault = "Fork it! Community | Global Developer Community";
     basic: {
       title: title ?? titleDefault,
       type: "website",
-      image: image ?? ogImage.toString(),
+      image: image,
       url: url ?? "",
     },
     optional: {
@@ -47,7 +46,7 @@ const titleDefault = "Fork it! Community | Global Developer Community";
     card: "summary_large_image",
     title: title ?? titleDefault ?? "",
     description: description ?? "",
-    image: image ?? ogImage.toString(),
+    image: image,
     imageAlt: imageAlt ?? ogImageAlt,
   }}
 />
