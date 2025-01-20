@@ -54,6 +54,7 @@ const guests = (await getEntries(episode.data.guests ?? []))
   .sort((a, b) => a.data.name.localeCompare(b.data.name));
 
 const title = `${episode.data.title} (${number}) | ${show.data.title}`;
+const ogImage = new URL(Astro.url.pathname + "/og-image.png", Astro.site);
 ---
 
 <MainLayout>
@@ -61,7 +62,7 @@ const title = `${episode.data.title} (${number}) | ${show.data.title}`;
     slot="seo"
     {title}
     description={episode.data.description ?? ""}
-    image={new URL(episode.data.thumbnail.src, Astro.site).toString()}
+    image={ogImage.toString()}
   />
   <Schema
     slot="ld+json"

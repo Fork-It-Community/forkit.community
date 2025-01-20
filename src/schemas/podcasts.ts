@@ -45,7 +45,6 @@ export const zEpisode = ({ image }: SchemaContext) =>
       )
       .optional(),
     cover: image(),
-    thumbnail: image(),
     tags: z.array(z.string()).optional(),
     hosts: z.array(reference("people")),
     guests: z.array(reference("people")).optional(),
