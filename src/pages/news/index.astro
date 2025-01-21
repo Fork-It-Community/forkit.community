@@ -1,22 +1,15 @@
 ---
-import MainPageTitle from "@/components/MainPageTitle/index.astro";
-import MainLayout from "@/layouts/MainLayout.astro";
-import SEO from "@/components/SEO/index.astro";
-import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import bgImage from "@/assets/images/news.jpeg";
+import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
+import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import NewsArticleCard from "@/components/NewsArticleCard/index.astro";
 import NewsShort from "@/components/NewsShort/index.astro";
+import SEO from "@/components/SEO/index.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
+import { getCollection } from "astro:content";
 
-// Debug
-const data = [
-  "long",
-  "short",
-  "short",
-  "long",
-  "long",
-  "short",
-  "short",
-] as const;
+const news = await getCollection("news");
+console.log(news);
 ---
 
 <MainLayout>
@@ -34,9 +27,10 @@ const data = [
     <div class="mx-auto w-full max-w-screen-sm pb-40 lg:max-w-screen-xs">
       <div class="grid gap-16 px-6">
         {
-          data.map((type) => {
-            if (type === "long") return <NewsArticleCard />;
-            return <NewsShort />;
+          news.map((newsItem) => {
+            if (newsItem.data.type === "long")
+              return <NewsArticleCard newsItem={newsItem} />;
+            return <NewsShort newsItem={newsItem} />;
           })
         }
       </div>

@@ -1,21 +1,27 @@
 ---
-import { Image } from "astro:assets";
-import imageExample from "@/assets/images/events.jpeg";
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
-import { MdArrowForward } from "react-icons/md";
 import { LogoIcon } from "@/components/LogoIcon";
+import { buttonVariants } from "@/components/ui/button";
+import { cn, formatDateTime } from "@/lib/utils";
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { getEntries } from "astro:content";
+import { MdArrowForward } from "react-icons/md";
 
-// Debug
-const withImage = Math.random() > 0.5;
-const withAuthor = Math.random() > 0.5;
+interface Props {
+  newsItem: CollectionEntry<"news">;
+}
+const { newsItem } = Astro.props;
+
+const authors = (await getEntries(newsItem.data.authors ?? []))
+  .filter((p) => !!p)
+  .sort((a, b) => a.data.name.localeCompare(b.data.name));
 ---
 
 <article
   class="group relative flex w-full flex-[1.2] flex-col overflow-hidden rounded-lg bg-white/5"
 >
   {
-    withImage && (
+    !!newsItem.data.featuredImage && (
       <div
         class="relative bg-black transition duration-500 group-hover:scale-105"
         style={{
@@ -25,8 +31,10 @@ const withAuthor = Math.random() > 0.5;
         <div class="absolute inset-0 w-full bg-gradient-to-b from-black/30 to-black" />
         <a href="#">
           <Image
-            src={imageExample}
-            alt=""
+            src={newsItem.data.featuredImage}
+            alt={newsItem.data.title}
+            width={600}
+            height={400}
             class="aspect-video w-full object-cover"
           />
         </a>
@@ -36,47 +44,44 @@ const withAuthor = Math.random() > 0.5;
   <div
     class={cn(
       "relative flex-1 flex flex-col gap-4 p-6",
-      withImage && "-mt-48 pt-24",
+      newsItem.data.featuredImage && "-mt-48 pt-24",
     )}
   >
     <time datetime="2020-03-16" class="-mb-2 text-xs uppercase opacity-60">
-      Mar 16, 2020
+      {formatDateTime(newsItem.data.date)}
     </time>
     <h2
       class="line-clamp-3 text-balance font-heading text-xl font-medium tracking-wide transition duration-500 group-hover:text-primary sm:text-2xl"
     >
       <a href="#">
-        We’re incredibly proud to announce we have secured $75m in Series B
+        {newsItem.data.title}
         <div class="absolute inset-0 z-10"></div>
       </a>
     </h2>
     <p
       class="text-sm/6 opacity-60 transition duration-500 group-hover:opacity-80"
     >
-      Libero neque aenean tincidunt nec consequat tempor. Viverra odio id velit
-      adipiscing id. Nisi vestibulum orci eget bibendum dictum. Velit viverra
-      posuere vulputate volutpat nunc. Nunc netus sit faucibus. Libero neque
-      aenean tincidunt nec consequat tempor. Viverra odio id velit adipiscing
-      id. Nisi vestibulum orci eget bibendum dictum. Velit viverra posuere
-      vulputate volutpat nunc. Nunc netus sit faucibus.
+      {newsItem.data.description}
     </p>
 
     <div class="flex items-center">
       {
-        withAuthor ? (
-          <a
-            href="#author"
-            class="group/author relative z-20 flex items-center gap-x-2.5 text-sm font-medium"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt=""
-              class="size-6 flex-none rounded-full bg-black"
-            />
-            <span class="opacity-60 transition group-hover/author:opacity-100">
-              Michael Foster
-            </span>
-          </a>
+        newsItem.data.authors ? (
+          authors.map((author) => (
+            <a
+              href="#author"
+              class="group/author relative z-20 flex items-center gap-x-2.5 text-sm font-medium"
+            >
+              <img
+                src={author.data.avatar?.src}
+                alt={author.data.name}
+                class="size-6 flex-none rounded-full bg-black"
+              />
+              <span class="opacity-60 transition group-hover/author:opacity-100">
+                {author.data.name}
+              </span>
+            </a>
+          ))
         ) : (
           <div class="relative z-20 flex items-center gap-x-2.5 text-sm font-medium">
             <div class="flex size-6 items-center justify-center rounded-full bg-black text-primary">

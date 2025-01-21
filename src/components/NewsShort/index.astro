@@ -1,36 +1,28 @@
 ---
-import { cn } from "@/lib/utils";
+import { cn, formatDateTime } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { MdArrowForward } from "react-icons/md";
+import type { CollectionEntry } from "astro:content";
 
-// Debug
-const withC2a = Math.random() > 0.5;
+interface Props {
+  newsItem: CollectionEntry<"news">;
+}
+const { newsItem } = Astro.props;
 ---
 
 <article class="relative flex">
   <div class="relative z-10 flex flex-col gap-3">
     <time datetime="2020-03-16" class="-mb-2 text-xs uppercase opacity-60">
-      Mar 10, 2020
+      {formatDateTime(newsItem.data.date)}
     </time>
     <h2 class="font-heading text-lg font-medium tracking-wide">
-      Boost your conversion rate
+      {newsItem.data.title}
     </h2>
     <div class="prose prose-sm prose-invert opacity-80">
-      <p>
-        Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae
-        illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem
-        placeat consectetur nulla deserunt vel iusto corrupti dicta laboris
-        incididunt.
-      </p>
-      <p>
-        Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae
-        illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem
-        placeat consectetur nulla deserunt vel iusto corrupti dicta laboris
-        incididunt.
-      </p>
+      {newsItem.data.description}
     </div>
     {
-      withC2a && (
+      !!newsItem.data.c2a && (
         <a
           href="#"
           class={cn(
@@ -38,7 +30,7 @@ const withC2a = Math.random() > 0.5;
             "relative z-20 mr-auto gap-2 px-0",
           )}
         >
-          Call to action
+          {newsItem.data.c2a}
           <MdArrowForward />
         </a>
       )
