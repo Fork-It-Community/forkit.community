@@ -4,6 +4,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn, formatDateTime } from "@/lib/utils";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
 import { getEntries } from "astro:content";
 import { MdArrowForward } from "react-icons/md";
 
@@ -11,6 +12,7 @@ interface Props {
   newsItem: CollectionEntry<"news">;
 }
 const { newsItem } = Astro.props;
+const { Content } = await render(newsItem);
 
 const authors = (await getEntries(newsItem.data.authors ?? []))
   .filter((p) => !!p)
@@ -18,18 +20,17 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
 ---
 
 <article
-  class="news-article-card group relative flex w-full flex-1 flex-col overflow-hidden rounded-lg bg-white/5 md:flex-row"
+  class="news-article-card group relative flex w-full flex-1 flex-col overflow-hidden rounded-lg bg-white/5 backdrop-blur-md transition duration-500 hover:bg-white/10"
 >
   {
     !!newsItem.data.featuredImage && (
       <div
         class="relative flex-1 bg-black transition duration-500 group-hover:scale-105"
         style={{
-          maskImage:
-            "linear-gradient(var(--news-article-card-mask-angle), black 50%, transparent 100%)",
+          maskImage: "linear-gradient(180deg, black 50%, transparent 100%)",
         }}
       >
-        <div class="pointer-events-none absolute inset-0 w-full bg-gradient-to-b from-black/30 to-black md:bg-gradient-to-r" />
+        <div class="pointer-events-none absolute inset-0 w-full bg-gradient-to-b from-black/30 to-black" />
         <a href="#" class="flex h-full w-full">
           <Image
             src={newsItem.data.featuredImage}
@@ -44,13 +45,11 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
   }
   <div
     class={cn(
-      "relative flex-1 flex flex-col gap-4 p-6",
-      newsItem.data.featuredImage && "-mt-48 pt-24 md:mt-0 md:-ms-48 md:pt-6",
+      "relative flex-1 flex flex-col gap-1 p-6",
+      newsItem.data.featuredImage && "-mt-48",
     )}
   >
-    <div class="-mb-3 flex flex-wrap gap-1 text-xs uppercase opacity-60">
-      <span>BLOG POST</span>
-      <span>⋅</span>
+    <div class="flex flex-wrap gap-1 text-xs uppercase opacity-60">
       <time datetime="2020-03-16">
         {formatDateTime(newsItem.data.date)}
       </time>
@@ -63,30 +62,44 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
         <div class="absolute inset-0 z-10"></div>
       </a>
     </h2>
-    <p
-      class="line-clamp-3 text-sm/6 opacity-60 transition duration-500 group-hover:opacity-80"
+    <div
+      class={cn(
+        "prose prose-sm prose-invert line-clamp-4 opacity-80",
+        !!newsItem.data.featuredImage && "line-clamp-1",
+      )}
     >
-      {newsItem.data.excerpt}
-    </p>
+      {newsItem.data.excerpt ? <p>{newsItem.data.excerpt}</p> : <Content />}
+    </div>
 
-    <div class="mt-auto flex items-center">
+    <div class="mt-auto flex items-center pt-2">
       {
         newsItem.data.authors ? (
-          authors.map((author) => (
-            <a
-              href={`/people/${author.id}`}
-              class="group/author relative z-20 flex items-center gap-x-2.5 text-sm font-medium"
-            >
-              <img
-                src={author.data.avatar?.src}
-                alt={author.data.name}
-                class="size-6 flex-none rounded-full bg-black"
-              />
-              <span class="opacity-60 transition group-hover/author:opacity-100">
-                {author.data.name}
-              </span>
-            </a>
-          ))
+          <div class="flex gap-3">
+            {authors.map((author) => (
+              <a
+                href={`/people#${author.id}`}
+                class={cn(
+                  "group/author relative z-20 flex items-center gap-x-2.5 text-sm font-medium",
+                  authors.length > 1 && "-mr-4",
+                )}
+              >
+                <img
+                  src={author.data.avatar?.src}
+                  alt={author.data.name}
+                  class="size-6 flex-none rounded-full bg-black"
+                />
+
+                <span
+                  class={cn(
+                    "opacity-60 transition group-hover/author:opacity-100",
+                    authors.length > 1 && "sr-only",
+                  )}
+                >
+                  {author.data.name}
+                </span>
+              </a>
+            ))}
+          </div>
         ) : (
           <div class="relative z-20 flex items-center gap-x-2.5 text-sm font-medium">
             <div class="flex size-6 items-center justify-center rounded-full bg-black text-primary">
