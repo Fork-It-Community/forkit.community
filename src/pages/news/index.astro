@@ -7,9 +7,14 @@ import NewsShort from "@/components/NewsShort/index.astro";
 import SEO from "@/components/SEO/index.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import { getCollection } from "astro:content";
+import dayjs from "dayjs";
 
-const news = await getCollection("news");
-console.log(news);
+const news = (await getCollection("news"))
+  .filter((post) => dayjs().isAfter(post.data.date))
+  .sort(
+    (post1, post2) =>
+      (post2.data.date?.valueOf() ?? 0) - (post1.data.date?.valueOf() ?? 0),
+  );
 ---
 
 <MainLayout>
@@ -24,8 +29,8 @@ console.log(news);
 
   <div class="flex flex-1 flex-col">
     <!-- TOP NEWS -->
-    <div class="mx-auto w-full max-w-screen-sm pb-40 lg:max-w-screen-xs">
-      <div class="grid gap-16 px-6">
+    <div class="mx-auto w-full max-w-screen-md pb-40">
+      <div class="flex flex-col gap-8 px-6">
         {
           news.map((newsItem) => {
             if (newsItem.data.type === "long")

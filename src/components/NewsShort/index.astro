@@ -2,35 +2,40 @@
 import { cn, formatDateTime } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { MdArrowForward } from "react-icons/md";
-import type { CollectionEntry } from "astro:content";
+import { render, type CollectionEntry } from "astro:content";
 
 interface Props {
   newsItem: CollectionEntry<"news">;
 }
 const { newsItem } = Astro.props;
+const { Content } = await render(newsItem);
 ---
 
-<article class="relative flex">
+<article class="relative flex md:p-6">
   <div class="relative z-10 flex flex-col gap-3">
-    <time datetime="2020-03-16" class="-mb-2 text-xs uppercase opacity-60">
-      {formatDateTime(newsItem.data.date)}
-    </time>
+    <div class="-mb-2 flex flex-wrap gap-1 text-xs uppercase opacity-60">
+      <span>QUICK NEWS</span>
+      <span>⋅</span>
+      <time datetime="2020-03-16">
+        {formatDateTime(newsItem.data.date)}
+      </time>
+    </div>
     <h2 class="font-heading text-lg font-medium tracking-wide">
       {newsItem.data.title}
     </h2>
     <div class="prose prose-sm prose-invert opacity-80">
-      {newsItem.data.description}
+      <Content />
     </div>
     {
       !!newsItem.data.c2a && (
         <a
-          href="#"
+          href={newsItem.data.c2a.href}
           class={cn(
             buttonVariants({ variant: "link-neutral", size: "sm" }),
             "relative z-20 mr-auto gap-2 px-0",
           )}
         >
-          {newsItem.data.c2a}
+          {newsItem.data.c2a.label}
           <MdArrowForward />
         </a>
       )

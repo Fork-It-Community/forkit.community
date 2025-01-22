@@ -18,18 +18,19 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
 ---
 
 <article
-  class="group relative flex w-full flex-[1.2] flex-col overflow-hidden rounded-lg bg-white/5"
+  class="news-article-card group relative flex w-full flex-1 flex-col overflow-hidden rounded-lg bg-white/5 md:flex-row"
 >
   {
     !!newsItem.data.featuredImage && (
       <div
-        class="relative bg-black transition duration-500 group-hover:scale-105"
+        class="relative flex-1 bg-black transition duration-500 group-hover:scale-105"
         style={{
-          maskImage: "linear-gradient(180deg, black 50%, transparent 100%)",
+          maskImage:
+            "linear-gradient(var(--news-article-card-mask-angle), black 50%, transparent 100%)",
         }}
       >
-        <div class="absolute inset-0 w-full bg-gradient-to-b from-black/30 to-black" />
-        <a href="#">
+        <div class="pointer-events-none absolute inset-0 w-full bg-gradient-to-b from-black/30 to-black md:bg-gradient-to-r" />
+        <a href="#" class="flex h-full w-full">
           <Image
             src={newsItem.data.featuredImage}
             alt={newsItem.data.title}
@@ -44,14 +45,18 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
   <div
     class={cn(
       "relative flex-1 flex flex-col gap-4 p-6",
-      newsItem.data.featuredImage && "-mt-48 pt-24",
+      newsItem.data.featuredImage && "-mt-48 pt-24 md:mt-0 md:-ms-48 md:pt-6",
     )}
   >
-    <time datetime="2020-03-16" class="-mb-2 text-xs uppercase opacity-60">
-      {formatDateTime(newsItem.data.date)}
-    </time>
+    <div class="-mb-3 flex flex-wrap gap-1 text-xs uppercase opacity-60">
+      <span>BLOG POST</span>
+      <span>⋅</span>
+      <time datetime="2020-03-16">
+        {formatDateTime(newsItem.data.date)}
+      </time>
+    </div>
     <h2
-      class="line-clamp-3 text-balance font-heading text-xl font-medium tracking-wide transition duration-500 group-hover:text-primary sm:text-2xl"
+      class="line-clamp-3 text-balance font-heading text-xl font-medium tracking-wide transition duration-500 group-hover:text-primary"
     >
       <a href="#">
         {newsItem.data.title}
@@ -59,17 +64,17 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
       </a>
     </h2>
     <p
-      class="text-sm/6 opacity-60 transition duration-500 group-hover:opacity-80"
+      class="line-clamp-3 text-sm/6 opacity-60 transition duration-500 group-hover:opacity-80"
     >
-      {newsItem.data.description}
+      {newsItem.data.excerpt}
     </p>
 
-    <div class="flex items-center">
+    <div class="mt-auto flex items-center">
       {
         newsItem.data.authors ? (
           authors.map((author) => (
             <a
-              href="#author"
+              href={`/people/${author.id}`}
               class="group/author relative z-20 flex items-center gap-x-2.5 text-sm font-medium"
             >
               <img
@@ -98,7 +103,7 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
           "relative z-20 ml-auto gap-2",
         )}
       >
-        Continue Reading
+        <span class="max-xs:sr-only">Continue Reading</span>
         <MdArrowForward />
       </a>
     </div>

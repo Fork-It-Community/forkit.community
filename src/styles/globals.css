@@ -70,3 +70,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Component escape hatch */
+.news-article-card {
+  --news-article-card-mask-angle: 180deg;
+  @media (min-width: 768px) {
+    --news-article-card-mask-angle: 90deg;
+  }
+}
