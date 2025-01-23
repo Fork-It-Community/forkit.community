@@ -1,0 +1,27 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+
+import { getNewsCollection } from "@/lib/news";
+import { getEntries } from "astro:content";
+
+export async function getStaticPaths() {
+  const news = await getNewsCollection();
+
+  return Promise.all(
+    news.map(async (article) => ({
+      params: { id: article.id },
+      props: {
+        article,
+        authors: await getEntries(article.data.authors ?? []),
+      },
+    })),
+  );
+}
+
+const { article, authors } = Astro.props;
+---
+
+<MainLayout>
+  <h1>{article.data.title}</h1>
+  <div>{authors.map((author) => <p>{author.data.name}</p>)}</div>
+</MainLayout>

@@ -31,7 +31,7 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
         }}
       >
         <div class="pointer-events-none absolute inset-0 w-full bg-gradient-to-b from-black/30 to-black" />
-        <a href="#" class="flex h-full w-full">
+        <a href={`/news/article/${newsItem.id}`} class="flex h-full w-full">
           <Image
             src={newsItem.data.featuredImage}
             alt={newsItem.data.title}
@@ -57,7 +57,7 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
     <h2
       class="line-clamp-3 text-balance font-heading text-xl font-medium tracking-wide transition duration-500 group-hover:text-primary"
     >
-      <a href="#">
+      <a href={`/news/article/${newsItem.id}`}>
         {newsItem.data.title}
         <div class="absolute inset-0 z-10"></div>
       </a>
@@ -110,7 +110,7 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
         )
       }
       <a
-        href="#"
+        href={`/news/article/${newsItem.id}`}
         class={cn(
           buttonVariants({ variant: "secondary", size: "sm" }),
           "relative z-20 ml-auto gap-2",
