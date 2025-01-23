@@ -1,0 +1,84 @@
+---
+import bgImage from "@/assets/images/news.jpeg";
+import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
+import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import NewsCard from "@/components/NewsCard/index.astro";
+import SEO from "@/components/SEO/index.astro";
+import { buttonVariants } from "@/components/ui/button";
+import MainLayout from "@/layouts/MainLayout.astro";
+import { getNewsCollection } from "@/lib/news";
+import type { GetStaticPathsOptions } from "astro";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const newsPages = await getNewsCollection();
+  // Generate pages from our array of astronauts, with 2 to a page
+  return paginate(newsPages, { pageSize: 2 });
+}
+
+const { page } = Astro.props;
+---
+
+<MainLayout>
+  <SEO
+    slot="seo"
+    title="News"
+    description="All the news about Fork it! Community. Conferences feedback, real life experience, we share it all."
+  />
+  <div class="mx-auto w-full max-w-screen-sm px-4">
+    <MainPageTitle
+      title="Fork it! News"
+      subtitle="Last news about the community"
+      imageSrc={bgImage}
+    />
+  </div>
+
+  <div class="flex flex-1 flex-col">
+    <!-- TOP NEWS -->
+    <div class="mx-auto w-full max-w-screen-lg pb-40">
+      <div class="grid gap-4 px-6 md:grid-cols-2">
+        {
+          page.data.map((newsItem) => {
+            return <NewsCard newsItem={newsItem} />;
+          })
+        }
+      </div>
+      <div>
+        {
+          page.url.first ? (
+            <a
+              href={page.url.first}
+              class={buttonVariants({ variant: "link" })}
+            >
+              First
+            </a>
+          ) : null
+        }
+        {
+          page.url.prev ? (
+            <a href={page.url.prev} class={buttonVariants({ variant: "link" })}>
+              Previous
+            </a>
+          ) : null
+        }
+        {
+          page.url.next ? (
+            <a href={page.url.next} class={buttonVariants({ variant: "link" })}>
+              Next
+            </a>
+          ) : null
+        }
+        {
+          page.url.last ? (
+            <a href={page.url.last} class={buttonVariants({ variant: "link" })}>
+              Last
+            </a>
+          ) : null
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="py-8 md:py-12">
+    <JoinTheCommunity />
+  </div>
+</MainLayout>
