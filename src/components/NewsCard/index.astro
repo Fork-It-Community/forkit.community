@@ -1,11 +1,12 @@
 ---
 import { LogoIcon } from "@/components/LogoIcon";
 import { buttonVariants } from "@/components/ui/button";
-import { cn, formatDateTime } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { render } from "astro:content";
 import { getEntries } from "astro:content";
+import dayjs from "dayjs";
 import { MdArrowForward } from "react-icons/md";
 
 interface Props {
@@ -55,11 +56,11 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
   >
     <div class="flex flex-wrap gap-1 text-xs uppercase opacity-60">
       <time datetime="2020-03-16">
-        {formatDateTime(newsItem.data.date)}
+        {dayjs(newsItem.data.date).format("dddd, MMMM D, YYYY")}
       </time>
     </div>
     <h2
-      class="line-clamp-3 text-balance font-heading text-xl font-medium tracking-wide transition duration-500 group-hover:text-primary"
+      class="line-clamp-2 text-balance font-heading text-xl font-medium tracking-wide transition duration-500 group-hover:text-primary"
     >
       <a href={`/news/article/${newsItem.id}`}>
         {newsItem.data.title}
@@ -116,8 +117,8 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
       <a
         href={`/news/article/${newsItem.id}`}
         class={cn(
-          buttonVariants({ variant: "secondary", size: "sm" }),
-          "relative z-20 ml-auto gap-2",
+          buttonVariants({ variant: "link-neutral", size: "sm" }),
+          "relative z-20 ml-auto gap-2 opacity-60 group-hover:opacity-100 transition duration-500 px-0",
         )}
       >
         <span class="max-xs:sr-only">Continue Reading</span>

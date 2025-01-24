@@ -1,8 +1,16 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
-
+import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import { getNewsCollection } from "@/lib/news";
 import { getEntries } from "astro:content";
+import defaultImage from "@/assets/images/news.jpeg";
+import { Image } from "astro:assets";
+import { cn } from "@/lib/utils";
+import { BackButton } from "@/components/BackButton";
+import { render } from "astro:content";
+import { LogoIcon } from "@/components/LogoIcon";
+import dayjs from "dayjs";
+import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 
 export async function getStaticPaths() {
   const news = await getNewsCollection();
@@ -19,9 +27,110 @@ export async function getStaticPaths() {
 }
 
 const { article, authors } = Astro.props;
+const { Content } = await render(article);
 ---
 
 <MainLayout>
-  <h1>{article.data.title}</h1>
-  <div>{authors.map((author) => <p>{author.data.name}</p>)}</div>
+  <ImageBackgroundHero
+    src={article.data.featuredImage ?? defaultImage}
+    alt=""
+    className="h-[80vh] opacity-80"
+    blur
+  />
+  {
+    !!article.data.featuredImage && (
+      <div class="relative mx-auto mt-2 w-full max-w-screen-lg px-2 lg:mt-10 lg:px-0">
+        <div class="absolute left-8 top-8 z-10">
+          <BackButton client:visible href="/news" />
+        </div>
+        <div
+          class="relative flex-[10] rounded-lg bg-black transition duration-500 group-hover:scale-105"
+          style={{
+            maskImage: "linear-gradient(180deg, black 0%, transparent 100%)",
+          }}
+        >
+          <div class="pointer-events-none absolute inset-0 flex h-full w-full bg-gradient-to-b from-black/30 to-black" />
+          <Image
+            src={article.data.featuredImage}
+            alt={article.data.title}
+            width={600}
+            height={400}
+            class="aspect-video w-full object-cover"
+          />
+        </div>
+      </div>
+    )
+  }
+  <div
+    class={cn(
+      "mx-auto w-full max-w-screen-md flex flex-col gap-12 pb-40 relative z-10 pt-24 px-8 md:px-12",
+      !!article.data.featuredImage && "-mt-36 md:-mt-96",
+    )}
+  >
+    <div class="flex flex-col gap-4">
+      {
+        !article.data.featuredImage && (
+          <div class="pb-8">
+            <BackButton client:visible href="/news" />
+          </div>
+        )
+      }
+      <h1
+        class="text-balance font-heading text-2xl font-medium uppercase tracking-wider md:text-4xl/tight"
+      >
+        {article.data.title}
+      </h1>
+      <div
+        class="flex flex-col flex-wrap gap-2 md:flex-row md:items-center md:gap-x-6"
+      >
+        <div class="flex flex-wrap gap-1 text-sm opacity-60">
+          <time datetime="2020-03-16">
+            {dayjs(article.data.date).format("dddd, MMMM D, YYYY")}
+          </time>
+        </div>
+
+        {
+          authors ? (
+            <div class="flex flex-wrap gap-x-5 gap-y-3">
+              {authors.map((author) => (
+                <a
+                  href={`/people#${author.id}`}
+                  class={cn(
+                    "group/author relative z-20 flex items-center gap-x-2.5 text-sm font-medium",
+                  )}
+                >
+                  <img
+                    src={author.data.avatar?.src}
+                    alt={author.data.name}
+                    class="size-6 flex-none rounded-full bg-black"
+                  />
+
+                  <span
+                    class={cn(
+                      "opacity-60 transition group-hover/author:opacity-100",
+                    )}
+                  >
+                    {author.data.name}
+                  </span>
+                </a>
+              ))}
+            </div>
+          ) : (
+            <div class="relative z-20 flex items-center gap-x-2.5 text-sm font-medium">
+              <div class="flex size-6 items-center justify-center rounded-full bg-black text-primary">
+                <LogoIcon className="size-3" />
+              </div>
+              <span class="opacity-60">Fork It! Team</span>
+            </div>
+          )
+        }
+      </div>
+    </div>
+    <div class={cn("prose prose-invert")}>
+      <Content />
+    </div>
+  </div>
+  <div class="py-8 md:py-12">
+    <JoinTheCommunity />
+  </div>
 </MainLayout>
