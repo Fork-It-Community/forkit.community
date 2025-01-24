@@ -5,6 +5,7 @@ import { getEventsCollection, getEventSubPagesCollection } from "@/lib/events";
 import { SEO } from "astro-seo";
 import { render } from "astro:content";
 import dayjs from "dayjs";
+import Prose from "@/components/Prose/index.astro";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -48,10 +49,8 @@ const description = `${subpage.data.title} page for the ${event.data.city}, ${ev
   />
   <div class="mx-auto p-4 md:p-8">
     <BackButton href={`/events/${event.id}`} client:load />
-    <div
-      class="prose prose-sm prose-invert md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
-    >
+    <Prose>
       <Content />
-    </div>
+    </Prose>
   </div>
 </EventSubPageLayout>

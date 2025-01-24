@@ -1,6 +1,7 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
+import Prose from "@/components/Prose/index.astro";
 import { getNewsCollection } from "@/lib/news";
 import { getEntries } from "astro:content";
 import defaultImage from "@/assets/images/news.jpeg";
@@ -39,8 +40,8 @@ const { Content } = await render(article);
   />
   {
     !!article.data.featuredImage && (
-      <div class="relative mx-auto mt-2 w-full max-w-screen-lg px-2 lg:mt-10 lg:px-0">
-        <div class="absolute left-8 top-8 z-10">
+      <div class="relative mx-auto mt-2 w-full max-w-screen-lg px-2 lg:mt-10 lg:px-6">
+        <div class="absolute left-8 top-8 z-10 lg:left-14">
           <BackButton client:visible href="/news" />
         </div>
         <div
@@ -63,7 +64,7 @@ const { Content } = await render(article);
   }
   <div
     class={cn(
-      "mx-auto w-full max-w-screen-md flex flex-col gap-12 pb-40 relative z-10 pt-24 px-8 md:px-12",
+      "mx-auto w-full flex-1 max-w-screen-md flex flex-col gap-12 pb-40 relative z-10 pt-24 px-8 md:px-12",
       !!article.data.featuredImage && "-mt-36 md:-mt-96",
     )}
   >
@@ -126,9 +127,9 @@ const { Content } = await render(article);
         }
       </div>
     </div>
-    <div class={cn("prose prose-invert")}>
+    <Prose>
       <Content />
-    </div>
+    </Prose>
   </div>
   <div class="py-8 md:py-12">
     <JoinTheCommunity />

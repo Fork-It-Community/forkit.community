@@ -1,0 +1,31 @@
+---
+import { cn } from "@/lib/utils";
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<div
+  class={cn(
+    // Base
+    "prose prose-invert w-full",
+    // headings
+    "prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white",
+    // Lists
+    "prose-li:marker:text-white/60",
+    // Blockquote
+    "prose-blockquote:border-white/10 prose-blockquote:border-l",
+    // Text
+    "prose-p:text-white/80 prose-li:text-white/80",
+    // Table
+    "prose-thead:border-white/10 prose-tr:border-white/10",
+    // Image
+    "prose-img:rounded-lg",
+
+    className,
+  )}
+>
+  <slot />
+</div>
