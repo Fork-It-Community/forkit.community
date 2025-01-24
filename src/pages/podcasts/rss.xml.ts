@@ -7,7 +7,8 @@ export const GET: APIRoute = async function get(context) {
   return rss({
     title: "Fork it! Community podcasts",
     description: "Listen to the Fork it! Community",
-    site: context.site!,
+    site: context.site! + "/podcasts",
+    trailingSlash: false,
     items: podcasts.map((podcast) => ({
       title: podcast.data.title,
       description: podcast.data.description,

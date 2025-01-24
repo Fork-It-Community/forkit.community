@@ -9,7 +9,8 @@ export const GET: APIRoute = async function get(context) {
     title: "Fork it! Community | Events",
     description:
       "All the Fork it! events, from meetups to full day events, come take a look at what is happening near you!",
-    site: context.site!,
+    site: context.site! + "/events",
+    trailingSlash: false,
     items: events.map((event) => ({
       title: `${event.data.name}, ${match(event.data.type)
         .with("event", () => "Full Day Event")
