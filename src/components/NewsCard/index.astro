@@ -24,7 +24,7 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
 
 <article
   class={cn(
-    "news-article-card group relative flex w-full flex-1 flex-col overflow-hidden rounded-lg bg-white/5 backdrop-blur-md transition duration-500 hover:bg-white/10",
+    "group relative flex w-full flex-1 flex-col overflow-hidden rounded-lg bg-white/5 backdrop-blur-md transition duration-500 hover:bg-white/10",
     className,
   )}
 >
@@ -33,7 +33,7 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
       <div
         class="relative flex-1 bg-black transition duration-500 group-hover:scale-105"
         style={{
-          maskImage: "linear-gradient(180deg, black 50%, transparent 100%)",
+          maskImage: "linear-gradient(180deg, black 30%, transparent 80%)",
         }}
       >
         <div
@@ -58,6 +58,7 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
     class={cn(
       "relative flex flex-col gap-1 p-6",
       newsItem.data.featuredImage && "-mt-48 max-sm:pt-24",
+      !newsItem.data.featuredImage && "flex-1",
     )}
   >
     <div class="flex flex-wrap gap-1 text-xs uppercase opacity-60">
@@ -75,8 +76,8 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
     </h2>
     <div
       class={cn(
-        "prose prose-sm prose-invert line-clamp-4 opacity-80",
-        !!newsItem.data.featuredImage && "line-clamp-1",
+        "prose prose-sm prose-invert line-clamp-6 opacity-80",
+        !!newsItem.data.featuredImage && "line-clamp-2",
       )}
     >
       {newsItem.data.excerpt ? <p>{newsItem.data.excerpt}</p> : <Content />}
