@@ -19,13 +19,11 @@ const zEventBase = ({ image }: SchemaContext) =>
       })
       .optional(),
     excerpt: z.string().optional(),
-    image: z
-      .object({
-        src: image(),
-        alt: z.string(),
-        credit: z.string().optional(),
-      })
-      .optional(),
+    image: z.object({
+      src: image(),
+      alt: z.string(),
+      credit: z.string().optional(),
+    }),
 
     organizers: z
       .array(reference("people"))

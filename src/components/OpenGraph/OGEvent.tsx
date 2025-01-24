@@ -7,7 +7,7 @@ import { match } from "ts-pattern";
 export const OGEvent = (props: {
   event: CollectionEntry<"events">;
   site: string;
-  postCover: Buffer | undefined;
+  postCover: Buffer;
 }) => {
   return (
     <div
@@ -47,14 +47,14 @@ export const OGEvent = (props: {
           width: 1920,
           height: 1080,
           objectFit: "cover",
-          filter: "blur(20px)",
+          filter: "blur(10px)",
           maskImage: "linear-gradient(90deg, black 40%, transparent 100%)",
         }}
       />
       <div
         style={{
           background:
-            "linear-gradient(90deg, rgba(0,0,0,1) 0%, transparent 100%)",
+            "linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.3) 100%)",
           position: "absolute",
           top: 0,
           left: 0,

@@ -1,6 +1,8 @@
 import fs from "fs/promises";
 import satori from "satori";
 import sharp from "sharp";
+import path from "node:path";
+import type { ImageMetadata } from "astro";
 
 export const COLORS = {
   primary: "#EBFF11",
@@ -60,4 +62,12 @@ export async function generateOGResponse(component: JSX.Element) {
       "Content-Type": "image/png",
     },
   });
+}
+
+export async function getAstroImageBuffer(image: ImageMetadata) {
+  const fileToRead = import.meta.env.DEV
+    ? path.resolve(image.src.replace(/\?.*/, "").replace("/@fs", ""))
+    : path.resolve(image.src.replace("/", "dist/"));
+
+  return await fs.readFile(fileToRead);
 }
