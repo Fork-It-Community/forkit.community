@@ -3,7 +3,10 @@ import { SEO } from "astro-seo";
 import type { ComponentProps } from "astro/types";
 
 interface Props
-  extends Pick<ComponentProps<typeof SEO>, "title" | "description"> {
+  extends Pick<
+    ComponentProps<typeof SEO>,
+    "title" | "description" | "noindex" | "nofollow"
+  > {
   image?: NonNullable<
     ComponentProps<typeof SEO>["openGraph"]
   >["basic"]["image"];
@@ -16,6 +19,8 @@ const {
   description = "Fork it! Community’s mission is to share computer science knowledge through worldwide events.",
   image = new URL("/opengraph-image.jpg", Astro.site).toString(),
   imageAlt,
+  noindex,
+  nofollow,
   url = Astro.url,
 } = Astro.props;
 
@@ -28,6 +33,8 @@ const titleDefault = "Fork it! Community | Global Developer Community";
   titleTemplate="%s | Fork it! Community"
   titleDefault={titleDefault}
   description={description ?? ""}
+  noindex={noindex ?? false}
+  nofollow={nofollow ?? false}
   openGraph={{
     basic: {
       title: title ?? titleDefault,

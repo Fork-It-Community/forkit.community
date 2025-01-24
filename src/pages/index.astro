@@ -209,49 +209,49 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
 
   <div class="flex flex-col py-24 md:py-32">
     <!-- NEWS -->
-    <div class="flex flex-col py-12">
-      <div class="mx-auto flex w-full max-w-screen-lg flex-col gap-2 px-6">
-        <a href="/news" title="All the podcasts">
-          <h2
-            class="flex items-center gap-2 text-balance font-heading text-3xl font-medium uppercase tracking-wide"
-          >
-            <MdFeed className="opacity-40" />
-            News
-          </h2>
-        </a>
-        <p class="bold max-w-[80ch] text-balance text-sm opacity-60">
-          Latest news about the global developer community.
-        </p>
-      </div>
-
-      <div class="mx-auto flex w-full flex-col gap-2">
-        <div class="hide-scrollbar overflow-auto">
-          <div
-            class="mx-auto flex w-full max-w-screen-lg gap-4 px-6 py-8 md:gap-6"
-          >
-            {news.map((article) => <NewsCardForCarousel newsItem={article} />)}
-            {
-              news.length < 2 && (
-                <div class="relative flex aspect-[3/2] w-[30rem] max-w-[80vw] flex-none items-center justify-center rounded-md bg-white/5 text-xs uppercase tracking-widest text-white/50">
-                  Coming soon
-                </div>
-              )
-            }
-            <a
-              href="/news"
-              class="relative flex aspect-square w-64 flex-none items-center justify-center gap-2 rounded-lg bg-white/5 text-xs uppercase tracking-widest text-white/50 transition duration-500 hover:bg-white/10"
-            >
-              All news
-              <MdArrowForward />
+    {
+      !!news.length && (
+        <div class="flex flex-col py-6 md:py-12">
+          <div class="mx-auto flex w-full max-w-screen-lg flex-col gap-2 px-6">
+            <a href="/news" title="All the podcasts">
+              <h2 class="flex items-center gap-2 text-balance font-heading text-3xl font-medium uppercase tracking-wide">
+                <MdFeed className="opacity-40" />
+                News
+              </h2>
             </a>
-            <div class="w-16 flex-none"></div>
+            <p class="bold max-w-[80ch] text-balance text-sm opacity-60">
+              Latest news about the global developer community.
+            </p>
+          </div>
+
+          <div class="mx-auto flex w-full flex-col gap-2">
+            <div class="hide-scrollbar overflow-auto">
+              <div class="mx-auto flex w-full max-w-screen-lg gap-4 px-6 py-8 md:gap-6">
+                {news.map((article) => (
+                  <NewsCardForCarousel newsItem={article} />
+                ))}
+                {news.length < 2 && (
+                  <div class="relative flex aspect-[3/2] w-[30rem] max-w-[80vw] flex-none items-center justify-center rounded-md bg-white/5 text-xs uppercase tracking-widest text-white/50">
+                    Coming soon
+                  </div>
+                )}
+                <a
+                  href="/news"
+                  class="relative flex aspect-square w-64 flex-none items-center justify-center gap-2 rounded-lg bg-white/5 text-xs uppercase tracking-widest text-white/50 transition duration-500 hover:bg-white/10"
+                >
+                  All news
+                  <MdArrowForward />
+                </a>
+                <div class="w-16 flex-none" />
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      )
+    }
 
     <!-- PODCASTS -->
-    <div class="flex flex-col py-12">
+    <div class="flex flex-col py-6 md:py-12">
       <div class="mx-auto flex w-full max-w-screen-lg flex-col gap-2 px-6">
         <a href="/podcasts" title="All the podcasts">
           <h2
