@@ -12,8 +12,9 @@ import { MdArrowForward } from "react-icons/md";
 interface Props {
   newsItem: CollectionEntry<"news">;
   class?: string;
+  gradientClass?: string | undefined;
 }
-const { newsItem, class: className } = Astro.props;
+const { newsItem, class: className, gradientClass } = Astro.props;
 const { Content } = await render(newsItem);
 
 const authors = (await getEntries(newsItem.data.authors ?? []))
@@ -30,18 +31,23 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
   {
     !!newsItem.data.featuredImage && (
       <div
-        class="relative flex-[10] bg-black transition duration-500 group-hover:scale-105"
+        class="relative flex-1 bg-black transition duration-500 group-hover:scale-105"
         style={{
           maskImage: "linear-gradient(180deg, black 50%, transparent 100%)",
         }}
       >
-        <div class="pointer-events-none absolute inset-0 w-full bg-gradient-to-b from-black/30 to-black" />
+        <div
+          class={cn(
+            "pointer-events-none absolute inset-0 w-full bg-gradient-to-b from-black/0 via-black/70 to-black",
+            gradientClass,
+          )}
+        />
         <a href={`/news/article/${newsItem.id}`} class="flex h-full w-full">
           <Image
             src={newsItem.data.featuredImage}
             alt={newsItem.data.title}
-            width={600}
-            height={400}
+            width={800}
+            height={600}
             class="aspect-video w-full object-cover"
           />
         </a>
@@ -50,7 +56,7 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
   }
   <div
     class={cn(
-      "relative flex-1 flex flex-col gap-1 p-6",
+      "relative flex flex-col gap-1 p-6",
       newsItem.data.featuredImage && "-mt-48 max-sm:pt-24",
     )}
   >

@@ -12,6 +12,7 @@ import { render } from "astro:content";
 import { LogoIcon } from "@/components/LogoIcon";
 import dayjs from "dayjs";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
+import SEO from "@/components/SEO/index.astro";
 
 export async function getStaticPaths() {
   const news = await getNewsCollection();
@@ -29,9 +30,16 @@ export async function getStaticPaths() {
 
 const { article, authors } = Astro.props;
 const { Content } = await render(article);
+const url = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <MainLayout>
+  <SEO
+    slot="seo"
+    title={article.data.title}
+    description={article.data.excerpt ?? ""}
+    url={url}
+  />
   <ImageBackgroundHero
     src={article.data.featuredImage ?? defaultImage}
     alt=""
@@ -50,12 +58,12 @@ const { Content } = await render(article);
             maskImage: "linear-gradient(180deg, black 0%, transparent 100%)",
           }}
         >
-          <div class="pointer-events-none absolute inset-0 flex h-full w-full bg-gradient-to-b from-black/30 to-black" />
+          <div class="pointer-events-none absolute inset-0 flex h-full w-full bg-gradient-to-b from-black/0 to-black" />
           <Image
             src={article.data.featuredImage}
             alt={article.data.title}
-            width={600}
-            height={400}
+            width={895}
+            height={500}
             class="aspect-video w-full object-cover"
           />
         </div>

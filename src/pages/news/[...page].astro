@@ -5,6 +5,7 @@ import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import NewsCard from "@/components/NewsCard/index.astro";
 import SEO from "@/components/SEO/index.astro";
 import { buttonVariants } from "@/components/ui/button";
+import { getSocialsItems } from "@/content/socials";
 import MainLayout from "@/layouts/MainLayout.astro";
 import { getNewsCollection } from "@/lib/news";
 import { cn } from "@/lib/utils";
@@ -78,7 +79,8 @@ let hasHighlighted = false;
             if (
               !!newsItem.data.featuredImage &&
               !hasHighlighted &&
-              page.data.length !== index + 1
+              (page.data.length !== index + 1 ||
+                (page.data.length < 4 && page.currentPage === 1))
             ) {
               hasHighlighted = true;
               shouldHighlight = true;
@@ -87,9 +89,46 @@ let hasHighlighted = false;
               <NewsCard
                 newsItem={newsItem}
                 class={cn(shouldHighlight && "md:row-span-2")}
+                gradientClass={cn(
+                  shouldHighlight && "from-black/0 via-black/10 to-black",
+                )}
               />
             );
           })
+        }
+        {
+          page.currentPage === 1 && page.data.length < 2 && (
+            <div class="relative hidden min-h-56 flex-none items-center justify-center rounded-md bg-white/5 text-xs uppercase tracking-widest text-white/50 md:flex">
+              Coming soon
+            </div>
+          )
+        }
+        {
+          page.currentPage === page.lastPage &&
+            (page.data.length % 2 === 0 || page.data.length === 1) && (
+              <div class="relative flex min-h-56 flex-col items-center justify-center gap-4 rounded-md bg-white/5 px-8 py-6 tracking-widest">
+                <div class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
+                  Keep updated
+                </div>
+                <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-0">
+                  {getSocialsItems("primary").map(
+                    ({ icon: Icon, ...social }) => (
+                      <a
+                        href={social.href}
+                        class="flex items-center gap-2 p-2 opacity-60 transition hover:text-white hover:opacity-100"
+                      >
+                        <span class="text-lg">
+                          <Icon />
+                        </span>
+                        <span class="text-sm uppercase tracking-wide">
+                          {social.label}
+                        </span>
+                      </a>
+                    ),
+                  )}
+                </div>
+              </div>
+            )
         }
         <div class="flex items-center justify-between md:col-span-2">
           {
