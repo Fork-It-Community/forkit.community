@@ -1,8 +1,5 @@
-import { OGEvent } from "@/components/OpenGraph/OGEvent";
-import {
-  generateOGResponse,
-  getAstroImageBuffer,
-} from "@/components/OpenGraph/utils";
+import { OGEvent } from "@/og-images/OGEvent";
+import { generateOGResponse, getAstroImageBuffer } from "@/og-images/utils";
 import type { APIRoute, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
 

@@ -1,5 +1,5 @@
 import { Logo } from "@/components/Logo";
-import { COLORS } from "@/components/OpenGraph/utils";
+import { COLORS } from "@/og-images/utils";
 import type { CollectionEntry } from "astro:content";
 import dayjs from "dayjs";
 import { match } from "ts-pattern";

@@ -1,8 +1,5 @@
-import { OGPodcast } from "@/components/OpenGraph/OGPodcast";
-import {
-  generateOGResponse,
-  getAstroImageBuffer,
-} from "@/components/OpenGraph/utils";
+import { OGPodcast } from "@/og-images/OGPodcast";
+import { generateOGResponse, getAstroImageBuffer } from "@/og-images/utils";
 import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 import type { APIRoute, InferGetStaticPropsType } from "astro";
 import { getEntry } from "astro:content";

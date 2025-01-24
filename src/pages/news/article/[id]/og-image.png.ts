@@ -1,8 +1,5 @@
-import { OGNews } from "@/components/OpenGraph/OGNews";
-import {
-  generateOGResponse,
-  getAstroImageBuffer,
-} from "@/components/OpenGraph/utils";
+import { OGNews } from "@/og-images/OGNews";
+import { generateOGResponse, getAstroImageBuffer } from "@/og-images/utils";
 import type { APIRoute, InferGetStaticPropsType } from "astro";
 import { getNewsCollection } from "@/lib/news";
 import defaultBackgroundImage from "@/assets/images/news.jpeg";
