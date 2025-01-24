@@ -1,10 +1,7 @@
-import { OGEvent } from "@/components/OpenGraph/OGEvent";
-import { generateOGResponse } from "@/components/OpenGraph/utils";
+import { OGEvent } from "@/og-images/OGEvent";
+import { generateOGResponse, getAstroImageBuffer } from "@/og-images/utils";
 import type { APIRoute, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
-import fs from "node:fs";
-import path from "node:path";
-import { match, P } from "ts-pattern";
 
 export async function getStaticPaths() {
   const events = await getCollection("events");
@@ -17,20 +14,10 @@ export async function getStaticPaths() {
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
-export const GET: APIRoute = async ({ props, site }) => {
+export const GET: APIRoute = async ({ props }) => {
   const { event } = props as Props;
 
-  const postCover = match(event.data.image)
-    .with(P.not(P.nullish), (image) => {
-      const fileToRead = import.meta.env.DEV
-        ? path.resolve(image.src.src.replace(/\?.*/, "").replace("/@fs", ""))
-        : path.resolve(image.src.src.replace("/", "dist/"));
+  const postCover = await getAstroImageBuffer(event.data.image.src);
 
-      return fs.readFileSync(fileToRead);
-    })
-    .otherwise(() => undefined);
-
-  return generateOGResponse(
-    OGEvent({ event, site: site?.toString() ?? "", postCover }),
-  );
+  return generateOGResponse(OGEvent({ event, postCover }));
 };

@@ -1,0 +1,165 @@
+---
+import bgImage from "@/assets/images/news.jpeg";
+import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
+import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import NewsCard from "@/components/NewsCard/index.astro";
+import SEO from "@/components/SEO/index.astro";
+import { buttonVariants } from "@/components/ui/button";
+import { getSocialsItems } from "@/content/socials";
+import MainLayout from "@/layouts/MainLayout.astro";
+import { getNewsCollection } from "@/lib/news";
+import { cn } from "@/lib/utils";
+import type { GetStaticPathsOptions } from "astro";
+import { MdArrowBack, MdArrowForward } from "react-icons/md";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const newsPages = await getNewsCollection();
+  return paginate(newsPages, { pageSize: 19 });
+}
+
+const { page } = Astro.props;
+let hasHighlighted = false;
+---
+
+<MainLayout>
+  <SEO
+    slot="seo"
+    title="News"
+    description="All the news about Fork it! Community. Conferences feedback, real life experience, we share it all."
+    noindex={page.data.length === 0}
+  />
+  <div class="mx-auto w-full max-w-screen-sm px-4">
+    <MainPageTitle
+      title="Fork it! News"
+      subtitle="Last news about the community"
+      imageSrc={bgImage}
+    />
+  </div>
+
+  <div class="flex flex-1 flex-col">
+    <div class="mx-auto w-full max-w-screen-lg pb-40">
+      <div class="grid gap-4 px-6 md:grid-cols-2">
+        {
+          page.currentPage !== 1 && (
+            <div class="flex items-center md:col-span-2">
+              <h3 class="text-balance text-sm uppercase tracking-widest opacity-60">
+                Page {page.currentPage}
+              </h3>
+              <div class="ml-auto flex gap-2">
+                {!!page.url.next && (
+                  <a
+                    href={page.url.next}
+                    class={cn(
+                      buttonVariants({ size: "xs", variant: "secondary" }),
+                      "size-8 p-0",
+                    )}
+                  >
+                    <MdArrowBack className="size-4" />
+                    <span class="sr-only">Older articles</span>
+                  </a>
+                )}
+                {!!page.url.prev && (
+                  <a
+                    href={page.url.prev}
+                    class={cn(
+                      buttonVariants({ size: "xs", variant: "secondary" }),
+                      "size-8 p-0",
+                    )}
+                  >
+                    <span class="sr-only">Newer articles</span>
+                    <MdArrowForward className="size-4" />
+                  </a>
+                )}
+              </div>
+            </div>
+          )
+        }
+        {
+          page.data.map((newsItem, index) => {
+            let shouldHighlight = false;
+            if (
+              !!newsItem.data.featuredImage &&
+              !hasHighlighted &&
+              (page.data.length !== index + 1 ||
+                (page.data.length < 4 && page.currentPage === 1))
+            ) {
+              hasHighlighted = true;
+              shouldHighlight = true;
+            }
+            return (
+              <NewsCard
+                newsItem={newsItem}
+                class={cn(shouldHighlight && "md:row-span-2")}
+                gradientClass={cn(
+                  shouldHighlight && "from-black/0 via-black/10 to-black",
+                )}
+              />
+            );
+          })
+        }
+        {
+          page.currentPage === 1 && page.data.length < 2 && (
+            <div class="relative hidden min-h-56 flex-none items-center justify-center rounded-md bg-white/5 text-xs uppercase tracking-widest text-white/50 md:flex">
+              Coming soon
+            </div>
+          )
+        }
+        {
+          page.currentPage === page.lastPage &&
+            (page.data.length % 2 === 0 || page.data.length === 1) && (
+              <div class="relative flex min-h-56 flex-col items-center justify-center gap-4 rounded-md bg-white/5 px-8 py-6 tracking-widest">
+                <div class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
+                  Keep updated
+                </div>
+                <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-0">
+                  {getSocialsItems("primary").map(
+                    ({ icon: Icon, ...social }) => (
+                      <a
+                        href={social.href}
+                        class="flex items-center gap-2 p-2 opacity-60 transition hover:text-white hover:opacity-100"
+                      >
+                        <span class="text-lg">
+                          <Icon />
+                        </span>
+                        <span class="text-sm uppercase tracking-wide">
+                          {social.label}
+                        </span>
+                      </a>
+                    ),
+                  )}
+                </div>
+              </div>
+            )
+        }
+        <div class="flex items-center justify-between md:col-span-2">
+          {
+            !!page.url.next && (
+              <a
+                href={page.url.next}
+                class={cn(buttonVariants({ variant: "secondary" }), "gap-2")}
+              >
+                <MdArrowBack /> Older{" "}
+                <span class="max-xs:sr-only">articles</span>
+              </a>
+            )
+          }
+          {
+            !!page.url.prev && (
+              <a
+                href={page.url.prev}
+                class={cn(buttonVariants({ variant: "secondary" }), "gap-2")}
+              >
+                Newer <span class="max-xs:sr-only">articles</span>
+                <MdArrowForward />
+              </a>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="py-8 md:py-12">
+    <JoinTheCommunity />
+  </div>
+</MainLayout>

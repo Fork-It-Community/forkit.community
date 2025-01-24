@@ -13,6 +13,10 @@ export default defineConfig({
 
   trailingSlash: "never",
 
+  experimental: {
+    contentIntellisense: true,
+  },
+
   integrations: [
     react(),
     tailwind({

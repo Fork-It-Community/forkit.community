@@ -14,6 +14,7 @@ import dayjs from "dayjs";
 import { IoLanguageSharp } from "react-icons/io5";
 import { MdArrowOutward, MdPlace } from "react-icons/md";
 import type { Place } from "schema-dts";
+import Prose from "@/components/Prose/index.astro";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -157,9 +158,7 @@ const endDate =
       }
     </div>
     <main class="flex flex-col items-center gap-14">
-      <div
-        class="prose prose-sm prose-invert md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
-      >
+      <Prose>
         <div
           class="not-prose -mb-1 flex flex-1 flex-wrap items-center gap-x-3 gap-y-1 pt-8 text-white"
         >
@@ -191,7 +190,7 @@ const endDate =
         <div lang={lang(talk.data.contentLanguage)}>
           <Content />
         </div>
-      </div>
+      </Prose>
 
       <div
         class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-3 sm:grid-cols-4"

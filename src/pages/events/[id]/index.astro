@@ -6,6 +6,7 @@ import EventLayout from "@/layouts/EventLayout.astro";
 import Schedule from "@/components/Schedule/index.astro";
 import People from "@/components/People/index.astro";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
+import Prose from "@/components/Prose/index.astro";
 import {
   getEventNavItems,
   getEventsCollection,
@@ -408,7 +409,7 @@ const ogImage = new URL(Astro.url.pathname + "/og-image.png", Astro.site);
           </div>
         )}
         <div class="flex flex-1 flex-col items-center justify-center px-4 md:px-12">
-          <div class="prose prose-sm prose-invert w-full md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white">
+          <Prose>
             <div class="not-prose flex flex-col gap-3">
               <h2 class="font-heading text-2xl font-medium uppercase tracking-widest text-white">
                 Venue
@@ -434,7 +435,7 @@ const ogImage = new URL(Astro.url.pathname + "/og-image.png", Astro.site);
               </div>
             </div>
             <Content />
-          </div>
+          </Prose>
         </div>
       </article>
     )

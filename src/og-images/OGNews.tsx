@@ -1,14 +1,11 @@
 import { Logo } from "@/components/Logo";
-import { COLORS } from "@/components/OpenGraph/utils";
+import { COLORS } from "@/og-images/utils";
 import type { CollectionEntry } from "astro:content";
 import dayjs from "dayjs";
 
-export const OGPodcast = (props: {
-  episode: CollectionEntry<"episodes">;
-  show: CollectionEntry<"podcasts">;
-  site: string;
-  episodeCover: Buffer | undefined;
-  background: Buffer | undefined;
+export const OGNews = (props: {
+  article: CollectionEntry<"news">;
+  background: Buffer;
 }) => {
   return (
     <div
@@ -59,14 +56,14 @@ export const OGPodcast = (props: {
             width: 1920,
             height: 1080,
             objectFit: "cover",
-            filter: "blur(20px)",
-            maskImage: "linear-gradient(90deg, black 40%, transparent 100%)",
+            filter: "blur(10px)",
+            maskImage: "linear-gradient(0deg, black 40%, transparent 100%)",
           }}
         />
         <div
           style={{
             background:
-              "linear-gradient(90deg, rgba(0,0,0,1) 0%, transparent 100%)",
+              "linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.3) 100%)",
             position: "absolute",
             top: 0,
             left: 0,
@@ -81,9 +78,10 @@ export const OGPodcast = (props: {
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: 128,
+          gap: 96,
           flex: 1,
           width: "100%",
+          height: "100%",
           minWidth: 0,
           justifyContent: "center",
           fontFamily: "Tomorrow",
@@ -92,7 +90,7 @@ export const OGPodcast = (props: {
           paddingRight: 60,
         }}
       >
-        <Logo style={{ width: 169 * 3, height: 18 * 3 }} />
+        <Logo style={{ width: 169 * 3, height: 18 * 3, marginTop: "auto" }} />
 
         <div
           style={{
@@ -105,6 +103,17 @@ export const OGPodcast = (props: {
           <div
             style={{
               display: "flex",
+              fontSize: 96,
+              fontWeight: 500,
+              lineHeight: 1,
+              marginLeft: -6, // Visual alignment
+            }}
+          >
+            {props.article.data.title}
+          </div>
+          <div
+            style={{
+              display: "flex",
               fontSize: 32,
               fontWeight: 500,
               textTransform: "uppercase",
@@ -112,46 +121,10 @@ export const OGPodcast = (props: {
               letterSpacing: 4,
             }}
           >
-            {dayjs(props.episode.data.releaseDate).format("MMMM DD, YYYY")}
-          </div>
-          <div
-            style={{
-              display: "flex",
-              fontSize: 96,
-              fontWeight: 500,
-              lineHeight: 1.1,
-              marginLeft: -6, // Visual alignment
-            }}
-          >
-            {props.episode.data.title}
-          </div>
-          <div
-            style={{
-              display: "flex",
-              fontSize: 48,
-              fontWeight: 500,
-              color: COLORS.primary,
-              marginLeft: -2, // Visual alignment
-              textTransform: "uppercase",
-              letterSpacing: 2,
-            }}
-          >
-            {props.episode.data.language} Podcast
+            NEWS · {dayjs(props.article.data.date).format("MMMM DD, YYYY")}
           </div>
         </div>
       </div>
-
-      <img
-        // @ts-expect-error: Type 'ArrayBuffer' is not assignable to type 'string'
-        src={props.episodeCover?.buffer ?? ""}
-        alt=""
-        style={{
-          width: 600,
-          height: 600,
-          objectFit: "cover",
-          borderRadius: 12,
-        }}
-      />
     </div>
   );
 };

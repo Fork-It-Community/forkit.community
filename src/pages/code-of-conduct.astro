@@ -3,6 +3,7 @@ import MainLayout from "@/layouts/MainLayout.astro";
 import SEO from "@/components/SEO/index.astro";
 import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import bgImage from "@/assets/images/events.jpeg";
+import Prose from "@/components/Prose/index.astro";
 ---
 
 <MainLayout>
@@ -16,9 +17,7 @@ import bgImage from "@/assets/images/events.jpeg";
     imageSrc={bgImage}
   />
   <section class="m-auto max-w-7xl px-4 py-16">
-    <div
-      class="prose prose-sm prose-invert m-auto md:prose-base prose-headings:scroll-m-10"
-    >
+    <Prose>
       <h2 id="short-version">Short version</h2>
       <p>
         Fork it! Community is dedicated to providing a harassment-free
@@ -160,6 +159,6 @@ import bgImage from "@/assets/images/events.jpeg";
         </a>{" "}
         created by the Ada Initiative and other volunteers.
       </p>
-    </div>
+    </Prose>
   </section>
 </MainLayout>

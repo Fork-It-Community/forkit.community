@@ -6,7 +6,7 @@ import SEO from "@/components/SEO/index.astro";
 import PartnersBlock from "@/components/PartnersBlock/index.astro";
 import { HOME_CONFIG } from "@/content/home";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
-
+import Prose from "@/components/Prose/index.astro";
 import { getEntries } from "astro:content";
 import { getCollection } from "astro:content";
 
@@ -46,9 +46,7 @@ const partners = await getEntries<"partners">(
       subtitle="Discover the origins of the community"
     />
     <div class="flex flex-col gap-24">
-      <div
-        class="prose prose-sm prose-invert md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
-      >
+      <Prose>
         <p>
           Fork it! is a global tech community where real people share real-life
           experiences. We believe in honest conversations, genuine feedback, and
@@ -60,7 +58,7 @@ const partners = await getEntries<"partners">(
           It’s a space to connect, collaborate, and keep it real in the world of
           tech.
         </p>
-      </div>
+      </Prose>
 
       {
         !!organizers.length && (
@@ -81,45 +79,44 @@ const partners = await getEntries<"partners">(
         )
       }
 
-      <section
-        class="prose prose-sm prose-invert md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
-      >
-        <p>
-          Conferences should be about sharing knowledge, learning from each
-          other, and building community—not about selling products. We believe
-          in fostering authentic connections and offering spaces where
-          developers and tech enthusiasts can come together to exchange ideas,
-          collaborate, and grow.
-        </p>
+      <section>
+        <Prose>
+          <p>
+            Conferences should be about sharing knowledge, learning from each
+            other, and building community—not about selling products. We believe
+            in fostering authentic connections and offering spaces where
+            developers and tech enthusiasts can come together to exchange ideas,
+            collaborate, and grow.
+          </p>
 
-        <p>
-          We organize a variety of <a href="/events">events</a> and content to engage
-          the community, including <strong>meetups</strong>, multi-track <strong
-            >conferences</strong
-          >, hands-on <strong>hackathons</strong>, and <strong
-            >off-trail gatherings</strong
-          > in unique locations. We also produce <a href="/podcasts"
-            ><strong>podcasts</strong></a
-          > featuring insightful conversations with industry experts, with more formats
-          to come as we continue to grow and evolve. Each initiative is designed
-          to promote learning, collaboration, and creativity.
-        </p>
+          <p>
+            We organize a variety of <a href="/events">events</a> and content to
+            engage the community, including <strong>meetups</strong>,
+            multi-track <strong>conferences</strong>, hands-on <strong
+              >hackathons</strong
+            >, and <strong>off-trail gatherings</strong> in unique locations. We
+            also produce <a href="/podcasts"><strong>podcasts</strong></a> featuring
+            insightful conversations with industry experts, with more formats to
+            come as we continue to grow and evolve. Each initiative is designed to
+            promote learning, collaboration, and creativity.
+          </p>
 
-        <p>
-          Our values are simple: no marketing-driven talks, no unnecessary
-          distractions—just real conversations and learning. We’re committed to
-          inclusivity, offering live translations to support non-English
-          speakers, and keeping ticket prices low or free to ensure
-          accessibility for all.
-        </p>
+          <p>
+            Our values are simple: no marketing-driven talks, no unnecessary
+            distractions—just real conversations and learning. We’re committed
+            to inclusivity, offering live translations to support non-English
+            speakers, and keeping ticket prices low or free to ensure
+            accessibility for all.
+          </p>
 
-        <p>
-          Run by developers with real-world experience in event organization, we
-          aim to create spaces where knowledge flows freely, and everyone feels
-          welcome. Whether it’s a local meetup, a global conference, or engaging
-          content online, we invite you to join us in building a community where
-          learning comes first.
-        </p>
+          <p>
+            Run by developers with real-world experience in event organization,
+            we aim to create spaces where knowledge flows freely, and everyone
+            feels welcome. Whether it’s a local meetup, a global conference, or
+            engaging content online, we invite you to join us in building a
+            community where learning comes first.
+          </p></Prose
+        >
       </section>
     </div>
   </div>

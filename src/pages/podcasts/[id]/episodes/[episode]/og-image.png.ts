@@ -1,11 +1,7 @@
-import { OGPodcast } from "@/components/OpenGraph/OGPodcast";
-import { generateOGResponse } from "@/components/OpenGraph/utils";
+import { OGPodcast } from "@/og-images/OGPodcast";
+import { generateOGResponse, getAstroImageBuffer } from "@/og-images/utils";
 import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 import type { APIRoute, InferGetStaticPropsType } from "astro";
-import { getEntry } from "astro:content";
-import fs from "node:fs";
-import path from "node:path";
-import { match, P } from "ts-pattern";
 import backgroundImage from "@/assets/images/podcasts.jpeg";
 
 export async function getStaticPaths() {
@@ -15,16 +11,10 @@ export async function getStaticPaths() {
     episodes.map(async (e) => {
       const [id = "", _, episode] = e.id.split("/");
 
-      const show = await getEntry<"podcasts", string>({
-        collection: "podcasts",
-        id,
-      });
-
       return {
         params: { id, episode },
         props: {
           episode: e,
-          show,
           number: episode,
         },
       };
@@ -34,32 +24,15 @@ export async function getStaticPaths() {
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
-export const GET: APIRoute = async ({ props, site }) => {
-  const { episode, show } = props as Props;
+export const GET: APIRoute = async ({ props }) => {
+  const { episode } = props as Props;
 
-  const episodeCover = match(episode.data.cover)
-    .with(P.not(P.nullish), (image) => {
-      const fileToRead = import.meta.env.DEV
-        ? path.resolve(image.src.replace(/\?.*/, "").replace("/@fs", ""))
-        : path.resolve(image.src.replace("/", "dist/"));
-
-      return fs.readFileSync(fileToRead);
-    })
-    .otherwise(() => undefined);
-
-  const background = fs.readFileSync(
-    import.meta.env.DEV
-      ? path.resolve(
-          backgroundImage.src.replace(/\?.*/, "").replace("/@fs", ""),
-        )
-      : path.resolve(backgroundImage.src.replace("/", "dist/")),
-  );
+  const episodeCover = await getAstroImageBuffer(episode.data.cover);
+  const background = await getAstroImageBuffer(backgroundImage);
 
   return generateOGResponse(
     OGPodcast({
       episode,
-      show,
-      site: site?.toString() ?? "",
       episodeCover,
       background,
     }),

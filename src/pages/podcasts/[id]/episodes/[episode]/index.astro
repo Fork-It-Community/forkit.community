@@ -18,6 +18,7 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { IoLanguageSharp } from "react-icons/io5";
 import { lang } from "@/lib/lang";
+import Prose from "@/components/Prose/index.astro";
 
 export async function getStaticPaths() {
   const episodes = await getPodcastsEpisodesCollection();
@@ -179,11 +180,10 @@ const ogImage = new URL(Astro.url.pathname + "/og-image.png", Astro.site);
 
   <div class="mx-auto w-full max-w-screen-sm px-4 py-8">
     <div class="flex flex-col gap-8 pb-32">
-      <div
-        lang={lang(episode.data.language)}
-        class="prose prose-sm prose-invert md:prose-base prose-headings:scroll-m-10 prose-headings:font-heading prose-h1:mt-6 prose-h3:flex prose-h3:items-center prose-h3:gap-2 prose-h3:font-bold prose-h3:text-white"
-      >
-        <Content />
+      <div lang={lang(episode.data.language)}>
+        <Prose>
+          <Content />
+        </Prose>
       </div>
       {
         !!guests.length && (

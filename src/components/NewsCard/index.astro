@@ -1,0 +1,136 @@
+---
+import { LogoIcon } from "@/components/LogoIcon";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
+import { getEntries } from "astro:content";
+import dayjs from "dayjs";
+import { MdArrowForward } from "react-icons/md";
+
+interface Props {
+  newsItem: CollectionEntry<"news">;
+  class?: string;
+  gradientClass?: string | undefined;
+}
+const { newsItem, class: className, gradientClass } = Astro.props;
+const { Content } = await render(newsItem);
+
+const authors = (await getEntries(newsItem.data.authors ?? []))
+  .filter((p) => !!p)
+  .sort((a, b) => a.data.name.localeCompare(b.data.name));
+---
+
+<article
+  class={cn(
+    "group relative flex w-full flex-1 flex-col overflow-hidden rounded-lg bg-white/5 backdrop-blur-md transition duration-500 hover:bg-white/10",
+    className,
+  )}
+>
+  {
+    !!newsItem.data.featuredImage && (
+      <div
+        class="relative flex-1 bg-black transition duration-500 group-hover:scale-105"
+        style={{
+          maskImage: "linear-gradient(180deg, black 30%, transparent 80%)",
+        }}
+      >
+        <div
+          class={cn(
+            "pointer-events-none absolute inset-0 w-full bg-gradient-to-b from-black/0 via-black/70 to-black",
+            gradientClass,
+          )}
+        />
+        <a href={`/news/article/${newsItem.id}`} class="flex h-full w-full">
+          <Image
+            src={newsItem.data.featuredImage}
+            alt={newsItem.data.title}
+            width={800}
+            height={600}
+            class="aspect-video w-full object-cover"
+          />
+        </a>
+      </div>
+    )
+  }
+  <div
+    class={cn(
+      "relative flex flex-col gap-1 p-6",
+      newsItem.data.featuredImage && "-mt-48 max-sm:pt-24",
+      !newsItem.data.featuredImage && "flex-1",
+    )}
+  >
+    <div class="flex flex-wrap gap-1 text-xs uppercase opacity-60">
+      <time datetime="2020-03-16">
+        {dayjs(newsItem.data.date).format("dddd, MMMM D, YYYY")}
+      </time>
+    </div>
+    <h2
+      class="line-clamp-2 text-balance font-heading text-xl font-medium tracking-wide transition duration-500 group-hover:text-primary"
+    >
+      <a href={`/news/article/${newsItem.id}`}>
+        {newsItem.data.title}
+        <div class="absolute inset-0 z-10"></div>
+      </a>
+    </h2>
+    <div
+      class={cn(
+        "prose prose-sm prose-invert line-clamp-6 opacity-80",
+        !!newsItem.data.featuredImage && "line-clamp-2",
+      )}
+    >
+      {newsItem.data.excerpt ? <p>{newsItem.data.excerpt}</p> : <Content />}
+    </div>
+
+    <div class="mt-auto flex items-center pt-2">
+      {
+        newsItem.data.authors ? (
+          <div class="flex gap-3">
+            {authors.map((author) => (
+              <a
+                href={`/people#${author.id}`}
+                class={cn(
+                  "group/author relative z-20 flex items-center gap-x-2.5 text-sm font-medium",
+                  authors.length > 1 && "-mr-4",
+                )}
+              >
+                <img
+                  src={author.data.avatar?.src}
+                  alt={author.data.name}
+                  class="size-6 flex-none rounded-full bg-black"
+                />
+
+                <span
+                  class={cn(
+                    "opacity-60 transition group-hover/author:opacity-100",
+                    authors.length > 1 && "sr-only",
+                  )}
+                >
+                  {author.data.name}
+                </span>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div class="relative z-20 flex items-center gap-x-2.5 text-sm font-medium">
+            <div class="flex size-6 items-center justify-center rounded-full bg-black text-primary">
+              <LogoIcon className="size-3" />
+            </div>
+            <span class="opacity-60">Fork It! Team</span>
+          </div>
+        )
+      }
+      <a
+        href={`/news/article/${newsItem.id}`}
+        class={cn(
+          buttonVariants({ variant: "link-neutral", size: "sm" }),
+          "relative z-20 ml-auto gap-2 opacity-60 group-hover:opacity-100 transition duration-500 px-0",
+        )}
+      >
+        <span class="max-xs:sr-only">Continue Reading</span>
+        <MdArrowForward />
+      </a>
+    </div>
+  </div>
+</article>

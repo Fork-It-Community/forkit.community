@@ -14,7 +14,9 @@ const buttonVariants = cva(
         secondary: "bg-white/5 text-white backdrop-blur-md hover:bg-white/10",
         "secondary-dark":
           "bg-black/40 backdrop-blur-md text-white/80 hover:bg-black hover:text-foreground",
-        link: "text-primary text-sm underline-offset-4 underline p-0 hover:no-underline",
+        link: "text-primary text-sm underline-offset-4 p-0 hover:underline",
+        "link-neutral":
+          "text-white text-sm underline-offset-4 p-0 hover:underline",
       },
       size: {
         default: "h-10 px-4 py-2 text-sm",
