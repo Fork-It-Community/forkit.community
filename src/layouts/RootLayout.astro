@@ -1,4 +1,5 @@
 ---
+import Analytics from "@vercel/analytics/astro";
 import "@fontsource/tomorrow/400.css";
 import "@fontsource/tomorrow/500.css";
 import "@fontsource-variable/inter";
@@ -18,6 +19,7 @@ import "@/styles/globals.css";
     <meta name="theme-color" content="#171717" />
     <slot name="seo" />
     <slot name="ld+json" />
+    <Analytics />
   </head>
   <body
     class="flex min-h-svh flex-col overflow-x-hidden overflow-y-scroll bg-black text-foreground"
