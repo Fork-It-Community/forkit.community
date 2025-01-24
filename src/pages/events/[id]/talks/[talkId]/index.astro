@@ -65,7 +65,7 @@ const { talk, event, speakers, schedule } = Astro.props;
 const { Content } = await render(talk);
 
 const url = new URL(Astro.url.pathname, Astro.site);
-const title = `${talk.data.title} | ${event.data.city}, ${event.data.country}, ${dayjs(event.data.date).format("YYYY")}`;
+const title = `${talk.data.title} | ${event.data.name}`;
 
 const location: Place | undefined = event.data.location
   ? {

@@ -1,9 +1,9 @@
 ---
+import { BackButton } from "@/components/BackButton";
 import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
 import { getEventsCollection, getEventSubPagesCollection } from "@/lib/events";
-import { render } from "astro:content";
-import { BackButton } from "@/components/BackButton";
 import { SEO } from "astro-seo";
+import { render } from "astro:content";
 import dayjs from "dayjs";
 
 export async function getStaticPaths() {
@@ -36,7 +36,7 @@ export async function getStaticPaths() {
 
 const { subpage, event } = Astro.props;
 const { Content } = await render(subpage);
-const title = `${subpage.data.title} | ${event.data.city}, ${event.data.country}, ${dayjs(event.data.date).format("YYYY")}`;
+const title = `${subpage.data.title} | ${event.data.name}`;
 const description = `${subpage.data.title} page for the ${event.data.city}, ${event.data.country} event, taking place the ${dayjs(event.data.date).format("DD/MM/YYYY")}. Come enjoy content from the community.`;
 ---
 
