@@ -14,12 +14,10 @@ export async function getStaticPaths() {
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
-export const GET: APIRoute = async ({ props, site }) => {
+export const GET: APIRoute = async ({ props }) => {
   const { event } = props as Props;
 
   const postCover = await getAstroImageBuffer(event.data.image.src);
 
-  return generateOGResponse(
-    OGEvent({ event, site: site?.toString() ?? "", postCover }),
-  );
+  return generateOGResponse(OGEvent({ event, postCover }));
 };

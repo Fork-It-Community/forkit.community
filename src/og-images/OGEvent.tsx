@@ -6,7 +6,6 @@ import { match } from "ts-pattern";
 
 export const OGEvent = (props: {
   event: CollectionEntry<"events">;
-  site: string;
   postCover: Buffer;
 }) => {
   return (

@@ -5,7 +5,6 @@ import dayjs from "dayjs";
 
 export const OGNews = (props: {
   article: CollectionEntry<"news">;
-  site: string;
   background: Buffer;
 }) => {
   return (

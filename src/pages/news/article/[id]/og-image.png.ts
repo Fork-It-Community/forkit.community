@@ -19,7 +19,7 @@ export async function getStaticPaths() {
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
-export const GET: APIRoute = async ({ props, site }) => {
+export const GET: APIRoute = async ({ props }) => {
   const { article } = props as Props;
 
   const background = await getAstroImageBuffer(
@@ -29,7 +29,6 @@ export const GET: APIRoute = async ({ props, site }) => {
   return generateOGResponse(
     OGNews({
       article,
-      site: site?.toString() ?? "",
       background,
     }),
   );

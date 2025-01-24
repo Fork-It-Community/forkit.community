@@ -5,8 +5,6 @@ import dayjs from "dayjs";
 
 export const OGPodcast = (props: {
   episode: CollectionEntry<"episodes">;
-  show: CollectionEntry<"podcasts">;
-  site: string;
   episodeCover: Buffer;
   background: Buffer;
 }) => {
