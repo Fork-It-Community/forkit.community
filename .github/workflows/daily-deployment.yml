@@ -1,0 +1,12 @@
+name: Daily Deployment
+on:
+  schedule:
+    - cron: "0 10 * * *"
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Vercel Webhook
+        env:
+          VERCEL_PRODUCTION_BUILD_HOOK: ${{ secrets.VERCEL_PRODUCTION_BUILD_HOOK }}
+        run: curl -X GET "$VERCEL_PRODUCTION_BUILD_HOOK"
