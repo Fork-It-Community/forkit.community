@@ -7,15 +7,17 @@ import SEO from "@/components/SEO/index.astro";
 import { buttonVariants } from "@/components/ui/button";
 import MainLayout from "@/layouts/MainLayout.astro";
 import { getNewsCollection } from "@/lib/news";
+import { cn } from "@/lib/utils";
 import type { GetStaticPathsOptions } from "astro";
+import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const newsPages = await getNewsCollection();
-  // Generate pages from our array of astronauts, with 2 to a page
-  return paginate(newsPages, { pageSize: 2 });
+  return paginate(newsPages, { pageSize: 19 });
 }
 
 const { page } = Astro.props;
+let hasHighlighted = false;
 ---
 
 <MainLayout>
@@ -33,47 +35,86 @@ const { page } = Astro.props;
   </div>
 
   <div class="flex flex-1 flex-col">
-    <!-- TOP NEWS -->
     <div class="mx-auto w-full max-w-screen-lg pb-40">
       <div class="grid gap-4 px-6 md:grid-cols-2">
         {
-          page.data.map((newsItem) => {
-            return <NewsCard newsItem={newsItem} />;
+          page.currentPage !== 1 && (
+            <div class="flex items-center md:col-span-2">
+              <h3 class="text-balance text-sm uppercase tracking-widest opacity-60">
+                Page {page.currentPage}
+              </h3>
+              <div class="ml-auto flex gap-2">
+                {!!page.url.next && (
+                  <a
+                    href={page.url.next}
+                    class={cn(
+                      buttonVariants({ size: "xs", variant: "secondary" }),
+                      "size-8 p-0",
+                    )}
+                  >
+                    <MdArrowBack className="size-4" />
+                    <span class="sr-only">Older articles</span>
+                  </a>
+                )}
+                {!!page.url.prev && (
+                  <a
+                    href={page.url.prev}
+                    class={cn(
+                      buttonVariants({ size: "xs", variant: "secondary" }),
+                      "size-8 p-0",
+                    )}
+                  >
+                    <span class="sr-only">Newer articles</span>
+                    <MdArrowForward className="size-4" />
+                  </a>
+                )}
+              </div>
+            </div>
+          )
+        }
+        {
+          page.data.map((newsItem, index) => {
+            let shouldHighlight = false;
+            if (
+              !!newsItem.data.featuredImage &&
+              !hasHighlighted &&
+              page.data.length !== index + 1
+            ) {
+              hasHighlighted = true;
+              shouldHighlight = true;
+            }
+            return (
+              <NewsCard
+                newsItem={newsItem}
+                class={cn(shouldHighlight && "md:row-span-2")}
+              />
+            );
           })
         }
-      </div>
-      <div>
-        {
-          page.url.first ? (
-            <a
-              href={page.url.first}
-              class={buttonVariants({ variant: "link" })}
-            >
-              First
-            </a>
-          ) : null
-        }
-        {
-          page.url.prev ? (
-            <a href={page.url.prev} class={buttonVariants({ variant: "link" })}>
-              Previous
-            </a>
-          ) : null
-        }
-        {
-          page.url.next ? (
-            <a href={page.url.next} class={buttonVariants({ variant: "link" })}>
-              Next
-            </a>
-          ) : null
-        }
-        {
-          page.url.last ? (
-            <a href={page.url.last} class={buttonVariants({ variant: "link" })}>
-              Last
-            </a>
-          ) : null
-        }
+        <div class="flex items-center justify-between md:col-span-2">
+          {
+            !!page.url.next && (
+              <a
+                href={page.url.next}
+                class={cn(buttonVariants({ variant: "secondary" }), "gap-2")}
+              >
+                <MdArrowBack /> Older{" "}
+                <span class="max-xs:sr-only">articles</span>
+              </a>
+            )
+          }
+          {
+            !!page.url.prev && (
+              <a
+                href={page.url.prev}
+                class={cn(buttonVariants({ variant: "secondary" }), "gap-2")}
+              >
+                Newer <span class="max-xs:sr-only">articles</span>
+                <MdArrowForward />
+              </a>
+            )
+          }
+        </div>
       </div>
     </div>
   </div>
