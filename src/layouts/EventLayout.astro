@@ -1,21 +1,20 @@
 ---
-import { ExploreTheCommunity } from "@/components/ExploreTheCommunity";
-import RootLayout from "@/layouts/RootLayout.astro";
-import type { CollectionEntry } from "astro:content";
-import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import { EventNav } from "@/components/EventNav";
+import EventWarningBanner from "@/components/EventWarningBanner/index.astro";
+import { ExploreTheCommunity } from "@/components/ExploreTheCommunity";
+import Footer from "@/components/Footer/index.astro";
+import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
+import SEO from "@/components/SEO/index.astro";
+import RootLayout from "@/layouts/RootLayout.astro";
 import {
   getEventNavItems,
   shouldShowCFP,
   shouldShowProspectus,
   shouldShowTickets,
 } from "@/lib/events";
-import EventWarningBanner from "@/components/EventWarningBanner/index.astro";
-import Footer from "@/components/Footer/index.astro";
-import dayjs from "dayjs";
-import SEO from "@/components/SEO/index.astro";
-import { match } from "ts-pattern";
+import type { CollectionEntry } from "astro:content";
 import { motion } from "motion/react";
+import { match } from "ts-pattern";
 
 interface Props {
   event: CollectionEntry<"events">;
@@ -26,9 +25,7 @@ const { event, ogImage } = Astro.props;
 const navItems = await getEventNavItems(event.id);
 
 const url = new URL(Astro.url.pathname, Astro.site);
-const title = `${event.data.city}, ${event.data.country}, ${dayjs(event.data.date).format("YYYY")}, ${match(
-  event.data.type,
-)
+const title = `${event.data.name}, ${match(event.data.type)
   .with("event", () => "Full Day Event")
   .with("meetup", () => "Community Meetup")
   .exhaustive()}`;
