@@ -6,7 +6,7 @@ import SEO from "@/components/SEO/index.astro";
 import PodcastEpisodeCard from "@/components/PodcastEpisodeCard/index.astro";
 import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 
-const episodes = await getPodcastsEpisodesCollection();
+const episodes = (await getPodcastsEpisodesCollection()).toReversed();
 ---
 
 <MainLayout>
