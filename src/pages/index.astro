@@ -8,7 +8,6 @@ import { Logo } from "@/components/Logo";
 import { Image } from "astro:assets";
 import defaultImage from "@/assets/images/events.jpeg";
 import aboutBackground from "@/assets/images/about.jpg";
-import dayjs from "dayjs";
 import { MdArrowForward, MdEvent, MdFeed, MdPodcasts } from "react-icons/md";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -145,9 +144,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
                   </h2>
                   <div class="flex flex-col">
                     <div class="font-heading text-lg font-medium sm:text-2xl">
-                      {dayjs(upcomingMajorEvent.data.date).format(
-                        "MMMM DD, YYYY",
-                      )}
+                      {getEventDisplayDate(upcomingMajorEvent)}
                     </div>
                     <div class="-mt-1 font-heading text-sm opacity-60 transition group-hover:text-primary group-hover:opacity-100 sm:text-lg">
                       {upcomingMajorEvent.data.city},{" "}
