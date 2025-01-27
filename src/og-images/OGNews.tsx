@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 
 export const OGNews = (props: {
   article: CollectionEntry<"news">;
-  background: Buffer;
+  background: string;
 }) => {
   return (
     <div
@@ -15,9 +15,10 @@ export const OGNews = (props: {
         justifyContent: "center",
         alignItems: "center",
         fontFamily: "Tomorrow",
-        height: "100%",
         backgroundColor: COLORS.black,
-        width: "100%",
+        width: 1920,
+        height: 1080,
+        boxSizing: "border-box",
         padding: 128,
         position: "relative",
       }}
@@ -33,8 +34,7 @@ export const OGNews = (props: {
         }}
       >
         <img
-          // @ts-expect-error: Type 'ArrayBuffer' is not assignable to type 'string'
-          src={props.background?.buffer ?? ""}
+          src={props.background}
           alt=""
           style={{
             position: "absolute",
@@ -46,8 +46,7 @@ export const OGNews = (props: {
           }}
         />
         <img
-          // @ts-expect-error: Type 'ArrayBuffer' is not assignable to type 'string'
-          src={props.background?.buffer ?? ""}
+          src={props.background}
           alt=""
           style={{
             position: "absolute",

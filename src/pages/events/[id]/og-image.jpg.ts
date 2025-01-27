@@ -1,5 +1,5 @@
 import { OGEvent } from "@/og-images/OGEvent";
-import { generateOGResponse, getAstroImageBuffer } from "@/og-images/utils";
+import { generateOGResponse, getAstroImageBase64 } from "@/og-images/utils";
 import type { APIRoute, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
 
@@ -17,7 +17,6 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 export const GET: APIRoute = async ({ props }) => {
   const { event } = props as Props;
 
-  const postCover = await getAstroImageBuffer(event.data.image.src);
-
+  const postCover = await getAstroImageBase64(event.data.image.src);
   return generateOGResponse(OGEvent({ event, postCover }));
 };

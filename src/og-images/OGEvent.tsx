@@ -6,7 +6,7 @@ import { match } from "ts-pattern";
 
 export const OGEvent = (props: {
   event: CollectionEntry<"events">;
-  postCover: Buffer;
+  postCover: string;
 }) => {
   return (
     <div
@@ -15,16 +15,16 @@ export const OGEvent = (props: {
         justifyContent: "center",
         alignItems: "center",
         fontFamily: "Tomorrow",
-        height: "100%",
         backgroundColor: COLORS.background,
-        width: "100%",
+        width: 1920,
+        height: 1080,
+        boxSizing: "border-box",
         position: "relative",
         padding: 128,
       }}
     >
       <img
-        // @ts-expect-error: Type 'ArrayBuffer' is not assignable to type 'string'
-        src={props.postCover?.buffer ?? ""}
+        src={props.postCover}
         alt=""
         style={{
           position: "absolute",
@@ -36,8 +36,7 @@ export const OGEvent = (props: {
         }}
       />
       <img
-        // @ts-expect-error: Type 'ArrayBuffer' is not assignable to type 'string'
-        src={props.postCover?.buffer ?? ""}
+        src={props.postCover}
         alt=""
         style={{
           position: "absolute",

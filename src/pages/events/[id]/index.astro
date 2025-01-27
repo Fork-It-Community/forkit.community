@@ -76,7 +76,7 @@ const location: Place | undefined = event.data.location
       name: event.data.location.name ?? "",
     }
   : undefined;
-const ogImage = new URL(Astro.url.pathname + "/og-image.png", Astro.site);
+const ogImage = new URL(Astro.url.pathname + "/og-image.jpg", Astro.site);
 ---
 
 <EventLayout event={event} ogImage={ogImage}>

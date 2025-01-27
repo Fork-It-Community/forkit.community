@@ -5,8 +5,8 @@ import dayjs from "dayjs";
 
 export const OGPodcast = (props: {
   episode: CollectionEntry<"episodes">;
-  episodeCover: Buffer;
-  background: Buffer;
+  episodeCover: string;
+  background: string;
 }) => {
   return (
     <div
@@ -16,9 +16,10 @@ export const OGPodcast = (props: {
         justifyContent: "center",
         alignItems: "center",
         fontFamily: "Tomorrow",
-        height: "100%",
         backgroundColor: COLORS.black,
-        width: "100%",
+        width: 1920,
+        height: 1080,
+        boxSizing: "border-box",
         padding: 128,
         position: "relative",
       }}
@@ -34,8 +35,7 @@ export const OGPodcast = (props: {
         }}
       >
         <img
-          // @ts-expect-error: Type 'ArrayBuffer' is not assignable to type 'string'
-          src={props.background?.buffer ?? ""}
+          src={props.background}
           alt=""
           style={{
             position: "absolute",
@@ -47,8 +47,7 @@ export const OGPodcast = (props: {
           }}
         />
         <img
-          // @ts-expect-error: Type 'ArrayBuffer' is not assignable to type 'string'
-          src={props.background?.buffer ?? ""}
+          src={props.background}
           alt=""
           style={{
             position: "absolute",
@@ -140,8 +139,7 @@ export const OGPodcast = (props: {
       </div>
 
       <img
-        // @ts-expect-error: Type 'ArrayBuffer' is not assignable to type 'string'
-        src={props.episodeCover?.buffer ?? ""}
+        src={props.episodeCover}
         alt=""
         style={{
           width: 600,
