@@ -1,6 +1,6 @@
+import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 import { OGPodcast } from "@/og-images/OGPodcast";
 import { generateOGResponse, getAstroImageBase64 } from "@/og-images/utils";
-import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 import type { APIRoute, InferGetStaticPropsType } from "astro";
 import backgroundImage from "@/assets/images/podcasts.jpeg";
 
@@ -23,18 +23,19 @@ export async function getStaticPaths() {
 }
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+export const endpoint: (isDebug?: boolean | undefined) => APIRoute =
+  (isDebug) =>
+  async ({ props }) => {
+    const { episode } = props as Props;
 
-export const GET: APIRoute = async ({ props }) => {
-  const { episode } = props as Props;
+    return generateOGResponse(
+      OGPodcast({
+        episode,
+        episodeCover: await getAstroImageBase64(episode.data.cover),
+        background: await getAstroImageBase64(backgroundImage),
+      }),
+      { isDebug },
+    );
+  };
 
-  const episodeCover = await getAstroImageBase64(episode.data.cover);
-  const background = await getAstroImageBase64(backgroundImage);
-
-  return generateOGResponse(
-    OGPodcast({
-      episode,
-      episodeCover,
-      background,
-    }),
-  );
-};
+export const GET: APIRoute = endpoint();

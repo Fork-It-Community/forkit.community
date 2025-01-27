@@ -146,6 +146,7 @@ export const OGPodcast = (props: {
           height: 600,
           objectFit: "cover",
           borderRadius: 12,
+          zIndex: 10,
         }}
       />
     </div>

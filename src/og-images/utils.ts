@@ -4,6 +4,7 @@ import sharp from "sharp";
 import path from "node:path";
 import type { ImageMetadata } from "astro";
 import { match } from "ts-pattern";
+import { renderToStaticMarkup } from "react-dom/server";
 
 export const COLORS = {
   primary: "#EBFF11",
@@ -55,7 +56,7 @@ export async function JPG(component: JSX.Element) {
     .toBuffer();
 }
 
-export async function generateOGResponse(component: JSX.Element) {
+export async function generateOGResponseJpg(component: JSX.Element) {
   const jpg = await JPG(component);
 
   return new Response(jpg, {
@@ -63,6 +64,71 @@ export async function generateOGResponse(component: JSX.Element) {
       "Content-Type": "image/jpeg",
     },
   });
+}
+
+export async function generateOGResponseDebug(component: JSX.Element) {
+  return new Response(
+    `<!DOCTYPE html>
+      <html>
+        <head>
+          <title>Debug</title>
+          <style>
+            :root {
+              --width: 1920px;
+              --height: 1080px;
+              --scale: 0.4;
+            }
+            body {
+              background: ${COLORS.background} url('/debug.png') repeat;
+              margin: 0;
+              width: 100vw;
+              height: 100vh;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              min-width: calc(var(--width)*var(--scale));
+              min-height: calc(var(--height)*var(--scale));
+            }
+            #screen {
+              width: calc(var(--width)*var(--scale));
+              height: calc(var(--height)*var(--scale));
+            }
+            #render {
+              width: var(--width);
+              height: var(--height);
+              flex: none;
+              transform: scale(var(--scale));
+              transform-origin: top left;
+              background: red;
+            }
+
+          </style>
+        </head>
+        <body>
+          <div id="screen">
+            <div id="render">
+              ${renderToStaticMarkup(component)}
+            </div>
+          </div>
+        </body>
+      </html>`,
+    {
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+      },
+    },
+  );
+}
+
+export async function generateOGResponse(
+  component: JSX.Element,
+  params: { isDebug?: boolean | undefined } = {},
+) {
+  if (params.isDebug) {
+    return generateOGResponseDebug(component);
+  }
+
+  return generateOGResponseJpg(component);
 }
 
 function getAstroImagePath(image: ImageMetadata) {
