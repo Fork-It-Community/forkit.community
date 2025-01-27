@@ -3,7 +3,7 @@ type: meetup
 city: Bangkok
 country: Thailand
 date: 2025-02-06
-status: "published"
+status: "published-without-date"
 location:
   name: Fabbit Global Gateway
   address: 18 Ratchadaphisek Rd, คลองเตย Khlong Toei, Bangkok 10110, Thailand
@@ -44,3 +44,19 @@ eventStatus: EventScheduled
 attendanceMode: OfflineEventAttendanceMode
 isFree: true
 ---
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+
+
+<Alert variant="destructive" className="not-prose my-8">
+  <AlertTitle>Event postponed</AlertTitle>
+  <AlertDescription className="pt-2">
+
+    Dear community,<br />
+    Due to a scheduling issue, we regret to inform you that our upcoming meetup will need to be postponed **(Originally scheduled on February 6th, 2025.)**. We are currently working on setting a new date that works best for everyone.
+    We’ll share the updated date as soon as it’s confirmed and will reopen registrations at that time.
+    We apologize for any inconvenience this may cause and look forward to seeing you at the rescheduled event!
+    Thank you for your understanding.<br /><br />
+
+    The Fork it! Team
+  </AlertDescription>
+</Alert>

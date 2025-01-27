@@ -31,7 +31,6 @@ import { Schema } from "astro-seo-schema";
 import type { Place } from "schema-dts";
 import PartnersBlock from "@/components/PartnersBlock/index.astro";
 import { FAQ } from "@/components/Faq";
-import dayjs from "dayjs";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -429,9 +428,7 @@ const ogImage = new URL(Astro.url.pathname + "/og-image.png", Astro.site);
               </a>
               <div class="flex gap-2">
                 <MdEvent className="size-5 opacity-40" />
-                <p class="text-sm">
-                  {dayjs(event.data.date).format("dddd, MMMM DD, YYYY")}
-                </p>
+                <p class="text-sm">{getEventDisplayDate(event)}</p>
               </div>
             </div>
             <Content />

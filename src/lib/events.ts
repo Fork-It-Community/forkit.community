@@ -77,15 +77,17 @@ export async function getPastEvents({
 export async function getUpcomingMajorEvent() {
   const upcomingEvents = await getUpcomingEvents();
 
-  const notCancelledEvents = upcomingEvents.filter(
-    (event) => event.data.status !== "cancelled",
+  const onlyScheduledEvents = upcomingEvents.filter(
+    (event) =>
+      event.data.status !== "cancelled" &&
+      event.data.status !== "published-without-date",
   );
 
   return (
-    notCancelledEvents.find((event) => event.data.type === "event") ??
-    notCancelledEvents.find((event) => event.data.type === "meetup") ??
+    onlyScheduledEvents.find((event) => event.data.type === "event") ??
+    onlyScheduledEvents.find((event) => event.data.type === "meetup") ??
     // In case we add another type later, like external events
-    notCancelledEvents.at(0)
+    onlyScheduledEvents.at(0)
   );
 }
 
