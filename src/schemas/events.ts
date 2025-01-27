@@ -5,6 +5,12 @@ const zEventBase = ({ image }: SchemaContext) =>
     city: z.string(),
     country: z.string(),
     date: z.date(),
+    postponed: z
+      .object({
+        originalDate: z.date(),
+        message: z.string().optional(),
+      })
+      .optional(),
     status: z.enum([
       "draft",
       "published-without-date",
@@ -24,7 +30,6 @@ const zEventBase = ({ image }: SchemaContext) =>
       alt: z.string(),
       credit: z.string().optional(),
     }),
-
     organizers: z
       .array(reference("people"))
       .optional()
