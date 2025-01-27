@@ -432,21 +432,17 @@ const ogImage = new URL(Astro.url.pathname + "/og-image.png", Astro.site);
                 <p class="text-sm">{getEventDisplayDate(event)}</p>
               </div>
             </div>
-            {!!event.data.postponed &&
-              event.data.status === "published-without-date" && (
-                <EventMessage
-                  type="postponed-without-date"
-                  originalDate={event.data.postponed.originalDate}
-                />
-              )}
-            {!!event.data.postponed &&
-              event.data.status !== "published-without-date" && (
-                <EventMessage
-                  type="postponed-with-date"
-                  originalDate={event.data.postponed.originalDate}
-                  children={event.data.postponed.message}
-                />
-              )}
+            {!!event.data.postponed && (
+              <EventMessage
+                type={
+                  event.data.status === "published-without-date"
+                    ? "postponed-without-date"
+                    : "postponed-with-date"
+                }
+                originalDate={event.data.postponed.originalDate}
+              />
+            )}
+
             <Content />
           </Prose>
         </div>
