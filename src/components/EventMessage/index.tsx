@@ -37,7 +37,7 @@ export const EventMessage = (props: Props) => {
       >
         <MdWarning />
         <AlertTitle className="text-sm italic">
-          <strong>Event postponed</strong> ⋅ Originally scheduled on{" "}
+          <strong>Event postponed</strong> · Originally scheduled on{" "}
           <strong>{dayjs(props.originalDate).format("MMM DD, YYYY")}</strong>
         </AlertTitle>
         {!!message && (

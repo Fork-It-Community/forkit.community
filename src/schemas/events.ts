@@ -7,10 +7,20 @@ const zEventBase = ({ image }: SchemaContext) =>
     date: z.date(),
     postponed: z
       .object({
-        originalDate: z.date(),
-        message: z.string().optional(),
+        originalDate: z
+          .date()
+          .describe("The original date before it was postponed"),
+        message: z
+          .string()
+          .optional()
+          .describe(
+            "A default message will be displayed if the event's status is 'published-without-date'. Use this to override the default or to show a message if the event's status is 'published'",
+          ),
       })
-      .optional(),
+      .optional()
+      .describe(
+        "Makes it possible to show that the event has been postponed. Use in combination with the 'status'.",
+      ),
     status: z.enum([
       "draft",
       "published-without-date",
