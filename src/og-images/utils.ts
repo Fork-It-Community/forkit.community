@@ -3,6 +3,7 @@ import satori from "satori";
 import sharp from "sharp";
 import path from "node:path";
 import type { ImageMetadata } from "astro";
+import { match } from "ts-pattern";
 
 export const COLORS = {
   primary: "#EBFF11",
@@ -48,26 +49,43 @@ export async function SVG(component: JSX.Element) {
   });
 }
 
-export async function PNG(component: JSX.Element) {
+export async function JPG(component: JSX.Element) {
   return await sharp(Buffer.from(await SVG(component)))
-    .png()
+    .jpeg()
     .toBuffer();
 }
 
 export async function generateOGResponse(component: JSX.Element) {
-  const png = await PNG(component);
+  const jpg = await JPG(component);
 
-  return new Response(png, {
+  return new Response(jpg, {
     headers: {
-      "Content-Type": "image/png",
+      "Content-Type": "image/jpeg",
     },
   });
 }
 
-export async function getAstroImageBuffer(image: ImageMetadata) {
-  const fileToRead = import.meta.env.DEV
+function getAstroImagePath(image: ImageMetadata) {
+  return import.meta.env.DEV
     ? path.resolve(image.src.replace(/\?.*/, "").replace("/@fs", ""))
     : path.resolve(image.src.replace("/", "dist/"));
+}
 
-  return await fs.readFile(fileToRead);
+async function getAstroImageBuffer(image: ImageMetadata) {
+  const fileExtension = image.src.match(/.(jpg|jpeg|png)$/)?.[0].slice(1);
+  const fileToRead = getAstroImagePath(image);
+  return {
+    buffer: await fs.readFile(fileToRead),
+    fileType: match(fileExtension)
+      .with("jpg", "jpeg", () => "jpeg")
+      .with("png", () => "png")
+      .otherwise(() => {
+        throw new Error(`Must be a jpg, jpeg or png`);
+      }),
+  };
+}
+
+export async function getAstroImageBase64(image: ImageMetadata) {
+  const { buffer, fileType } = await getAstroImageBuffer(image);
+  return `data:image/${fileType};charset=utf-8;base64, ${buffer.toString("base64")}`;
 }
