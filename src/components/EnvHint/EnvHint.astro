@@ -1,0 +1,14 @@
+---
+const isDisplayed = import.meta.env.ENV_NAME !== "PROD";
+const label = import.meta.env.ENV_NAME;
+---
+
+{
+  isDisplayed && (
+    <div class="fixed left-0 right-0 top-0 z-[9999] h-1 bg-primary">
+      <span class="fixed left-4 top-0 rounded-b-sm p-1 text-[0.6rem] font-bold uppercase">
+        {label}
+      </span>
+    </div>
+  )
+}

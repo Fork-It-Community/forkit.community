@@ -5,6 +5,7 @@ import "@fontsource/tomorrow/500.css";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/inter";
 import "@/styles/globals.css";
+import EnvHint from "@/components/EnvHint/EnvHint.astro";
 ---
 
 <html lang="en" class="dark">
@@ -36,6 +37,7 @@ import "@/styles/globals.css";
   <body
     class="flex min-h-svh flex-col overflow-x-hidden overflow-y-scroll bg-black text-foreground"
   >
+    <EnvHint />
     <slot />
   </body>
 </html>
