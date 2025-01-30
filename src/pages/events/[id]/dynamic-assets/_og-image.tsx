@@ -4,7 +4,7 @@ import {
   COLORS,
   generateImageMethods,
   getAstroImageBase64,
-  TYPES,
+  withType,
 } from "@/lib/dynamic-assets";
 import { getCollection } from "astro:content";
 import { match } from "ts-pattern";
@@ -15,22 +15,16 @@ export default generateImageMethods({
   getStaticPaths: async () => {
     const events = await getCollection("events");
 
-    return events
-      .map((event) => {
-        return TYPES.map((type) =>
-          type === "debug" && import.meta.env.PROD
-            ? undefined
-            : {
-                params: { id: event.id, type },
-                props: {
-                  event,
-                  isDebug: type === "debug" && import.meta.env.DEV,
-                },
-              },
-        );
-      })
-      .flat()
-      .filter((i) => !!i);
+    return withType(
+      events.map((event) => {
+        return {
+          params: { id: event.id },
+          props: {
+            event,
+          },
+        };
+      }),
+    );
   },
   render: async (props) => {
     const postCover = await getAstroImageBase64(props.event.data.image.src);

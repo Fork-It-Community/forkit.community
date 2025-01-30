@@ -2,7 +2,12 @@ import fs from "fs/promises";
 import satori from "satori";
 import sharp from "sharp";
 import path from "node:path";
-import type { ImageMetadata, GetStaticPathsOptions, Params } from "astro";
+import type {
+  ImageMetadata,
+  GetStaticPathsOptions,
+  Params,
+  GetStaticPathsItem,
+} from "astro";
 import { match } from "ts-pattern";
 import { renderToStaticMarkup } from "react-dom/server";
 
@@ -213,3 +218,35 @@ export function generateImageMethods<Props extends { isDebug: boolean }>(
 }
 
 export const TYPES = ["jpg", "debug"];
+
+/**
+ *
+ * @param entries Provide an array of getStaticPaths item so this function will add the required parameters for the assets
+ * @returns An updated array with the value
+ */
+export function withType<T extends GetStaticPathsItem>(
+  entries: Array<T>,
+): Array<T & { props: { isDebug: boolean } }> {
+  return entries
+    .map((entry) => {
+      return TYPES.map((type) =>
+        type === "debug" && import.meta.env.PROD
+          ? undefined
+          : {
+              ...entry,
+
+              params: {
+                ...entry.params,
+                type,
+              },
+
+              props: {
+                ...entry.props,
+                isDebug: type === "debug" && import.meta.env.DEV,
+              },
+            },
+      );
+    })
+    .flat()
+    .filter((i) => !!i);
+}

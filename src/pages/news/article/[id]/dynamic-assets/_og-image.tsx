@@ -4,7 +4,7 @@ import {
   COLORS,
   generateImageMethods,
   getAstroImageBase64,
-  TYPES,
+  withType,
 } from "@/lib/dynamic-assets";
 import dayjs from "dayjs";
 import defaultBackgroundImage from "@/assets/images/news.jpeg";
@@ -14,22 +14,16 @@ export default generateImageMethods({
   height: 1080,
   getStaticPaths: async () => {
     const news = await getNewsCollection();
-    return news
-      .map((article) => {
-        return TYPES.map((type) =>
-          type === "debug" && import.meta.env.PROD
-            ? undefined
-            : {
-                params: { id: article.id, type },
-                props: {
-                  article,
-                  isDebug: type === "debug" && import.meta.env.DEV,
-                },
-              },
-        );
-      })
-      .flat()
-      .filter((i) => !!i);
+    return withType(
+      news.map((article) => {
+        return {
+          params: { id: article.id },
+          props: {
+            article,
+          },
+        };
+      }),
+    );
   },
   render: async (props) => {
     const background = await getAstroImageBase64(

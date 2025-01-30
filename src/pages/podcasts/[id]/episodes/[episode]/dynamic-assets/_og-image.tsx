@@ -3,7 +3,7 @@ import {
   COLORS,
   generateImageMethods,
   getAstroImageBase64,
-  TYPES,
+  withType,
 } from "@/lib/dynamic-assets";
 import dayjs from "dayjs";
 import backgroundImage from "@/assets/images/podcasts.jpeg";
@@ -15,25 +15,19 @@ export default generateImageMethods({
   getStaticPaths: async () => {
     const episodes = await getPodcastsEpisodesCollection();
 
-    return episodes
-      .map((e) => {
+    return withType(
+      episodes.map((e) => {
         const [id = "", _, episode] = e.id.split("/");
 
-        return TYPES.map((type) =>
-          type === "debug" && import.meta.env.PROD
-            ? undefined
-            : {
-                params: { id, episode, type },
-                props: {
-                  episode: e,
-                  number: episode,
-                  isDebug: type === "debug" && import.meta.env.DEV,
-                },
-              },
-        );
-      })
-      .flat()
-      .filter((i) => !!i);
+        return {
+          params: { id, episode },
+          props: {
+            episode: e,
+            number: episode,
+          },
+        };
+      }),
+    );
   },
   render: async (props) => {
     const episodeCover = await getAstroImageBase64(props.episode.data.cover);
