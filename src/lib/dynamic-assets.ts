@@ -13,6 +13,27 @@ export const COLORS = {
   background: "#171717",
 };
 
+const FONTS = [
+  {
+    name: "Tomorrow",
+    url: "/fonts/tomorrow/Tomorrow-Regular.ttf",
+    style: "normal",
+    weight: 400,
+  },
+  {
+    name: "Tomorrow",
+    url: "/fonts/tomorrow/Tomorrow-Medium.ttf",
+    style: "normal",
+    weight: 500,
+  },
+  {
+    name: "Tomorrow",
+    url: "/fonts/tomorrow/Tomorrow-Bold.ttf",
+    style: "normal",
+    weight: 700,
+  },
+] as const;
+
 type ImageParams = {
   width: number;
   height: number;
@@ -23,39 +44,17 @@ export async function SVG(
   component: JSX.Element,
   params: { width: number; height: number },
 ) {
-  const tomorrowData = await fs.readFile(
-    "./public/fonts/tomorrow/Tomorrow-Regular.ttf",
-  );
-  const tomorrowBoldData = await fs.readFile(
-    "./public/fonts/tomorrow/Tomorrow-Bold.ttf",
-  );
-  const tomorrowMediumData = await fs.readFile(
-    "./public/fonts/tomorrow/Tomorrow-Medium.ttf",
+  const fonts = await Promise.all(
+    FONTS.map(async ({ url, ...font }) => ({
+      ...font,
+      data: await fs.readFile(`./public/${url}`),
+    })),
   );
 
   return await satori(component, {
     width: params.width,
     height: params.height,
-    fonts: [
-      {
-        name: "Tomorrow",
-        data: tomorrowData,
-        style: "normal",
-        weight: 400,
-      },
-      {
-        name: "Tomorrow",
-        data: tomorrowMediumData,
-        style: "normal",
-        weight: 500,
-      },
-      {
-        name: "Tomorrow",
-        data: tomorrowBoldData,
-        style: "normal",
-        weight: 700,
-      },
-    ],
+    fonts,
   });
 }
 
@@ -88,6 +87,16 @@ export async function generateImageResponseDebug(
         <head>
           <title>Debug</title>
           <style>
+          ${FONTS.map(
+            (font) => `
+              @font-face {
+                font-family: ${font.name};
+                font-style: ${font.style};
+                font-weight: ${font.weight};
+                src: url("${font.url}") format("truetype");
+              }
+            `,
+          ).join(" ")}
             :root {
               --width: ${params.width}px;
               --height: ${params.height}px;
