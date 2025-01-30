@@ -1,29 +1,43 @@
 import { Logo } from "@/components/Logo";
-import { getNewsCollection } from "@/lib/news";
 import {
   COLORS,
   generateImageMethods,
   getAstroImageBase64,
+  TYPES,
 } from "@/lib/dynamic-assets";
 import dayjs from "dayjs";
-import defaultBackgroundImage from "@/assets/images/news.jpeg";
+import backgroundImage from "@/assets/images/podcasts.jpeg";
+import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 
 export default generateImageMethods({
   width: 1920,
   height: 1080,
   getStaticPaths: async () => {
-    const news = await getNewsCollection();
-    return news.map((article) => {
-      return {
-        params: { id: article.id },
-        props: { article },
-      };
-    });
+    const episodes = await getPodcastsEpisodesCollection();
+
+    return episodes
+      .map((e) => {
+        const [id = "", _, episode] = e.id.split("/");
+
+        return TYPES.map((type) =>
+          type === "debug" && import.meta.env.PROD
+            ? undefined
+            : {
+                params: { id, episode, type },
+                props: {
+                  episode: e,
+                  number: episode,
+                  isDebug: type === "debug" && import.meta.env.DEV,
+                },
+              },
+        );
+      })
+      .flat()
+      .filter((i) => !!i);
   },
   render: async (props) => {
-    const background = await getAstroImageBase64(
-      props.article.data.featuredImage ?? defaultBackgroundImage,
-    );
+    const episodeCover = await getAstroImageBase64(props.episode.data.cover);
+    const background = await getAstroImageBase64(backgroundImage);
     return (
       <div
         style={{
@@ -73,13 +87,13 @@ export default generateImageMethods({
               height: 1080,
               objectFit: "cover",
               filter: "blur(10px)",
-              maskImage: "linear-gradient(0deg, black 40%, transparent 100%)",
+              maskImage: "linear-gradient(90deg, black 40%, transparent 100%)",
             }}
           />
           <div
             style={{
               background:
-                "linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.3) 100%)",
+                "linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.3) 100%)",
               position: "absolute",
               top: 0,
               left: 0,
@@ -94,10 +108,9 @@ export default generateImageMethods({
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: 96,
+            gap: 128,
             flex: 1,
             width: "100%",
-            height: "100%",
             minWidth: 0,
             justifyContent: "center",
             fontFamily: "Tomorrow",
@@ -106,7 +119,7 @@ export default generateImageMethods({
             paddingRight: 60,
           }}
         >
-          <Logo style={{ width: 169 * 3, height: 18 * 3, marginTop: "auto" }} />
+          <Logo style={{ width: 169 * 3, height: 18 * 3 }} />
 
           <div
             style={{
@@ -119,17 +132,6 @@ export default generateImageMethods({
             <div
               style={{
                 display: "flex",
-                fontSize: 96,
-                fontWeight: 500,
-                lineHeight: 1,
-                marginLeft: -6, // Visual alignment
-              }}
-            >
-              {props.article.data.title}
-            </div>
-            <div
-              style={{
-                display: "flex",
                 fontSize: 32,
                 fontWeight: 500,
                 textTransform: "uppercase",
@@ -137,10 +139,46 @@ export default generateImageMethods({
                 letterSpacing: 4,
               }}
             >
-              NEWS · {dayjs(props.article.data.date).format("MMMM DD, YYYY")}
+              {dayjs(props.episode.data.releaseDate).format("MMMM DD, YYYY")}
+            </div>
+            <div
+              style={{
+                display: "flex",
+                fontSize: 96,
+                fontWeight: 500,
+                lineHeight: 1.1,
+                marginLeft: -6, // Visual alignment
+              }}
+            >
+              {props.episode.data.title}
+            </div>
+            <div
+              style={{
+                display: "flex",
+                fontSize: 48,
+                fontWeight: 500,
+                color: COLORS.primary,
+                marginLeft: -2, // Visual alignment
+                textTransform: "uppercase",
+                letterSpacing: 2,
+              }}
+            >
+              {props.episode.data.language} Podcast
             </div>
           </div>
         </div>
+
+        <img
+          src={episodeCover}
+          alt=""
+          style={{
+            width: 600,
+            height: 600,
+            objectFit: "cover",
+            borderRadius: 12,
+            zIndex: 10,
+          }}
+        />
       </div>
     );
   },

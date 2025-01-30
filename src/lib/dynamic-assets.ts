@@ -2,7 +2,7 @@ import fs from "fs/promises";
 import satori from "satori";
 import sharp from "sharp";
 import path from "node:path";
-import type { ImageMetadata } from "astro";
+import type { ImageMetadata, GetStaticPathsOptions, Params } from "astro";
 import { match } from "ts-pattern";
 import { renderToStaticMarkup } from "react-dom/server";
 
@@ -165,7 +165,9 @@ function getAstroImagePath(image: ImageMetadata) {
 }
 
 async function getAstroImageBuffer(image: ImageMetadata) {
-  const fileExtension = image.src.match(/.(jpg|jpeg|png)$/)?.[0].slice(1);
+  const fileExtension = RegExp(/.(jpg|jpeg|png)$/)
+    .exec(image.src)?.[0]
+    .slice(1);
   const fileToRead = getAstroImagePath(image);
   return {
     buffer: await fs.readFile(fileToRead),
@@ -183,9 +185,7 @@ export async function getAstroImageBase64(image: ImageMetadata) {
   return `data:image/${fileType};charset=utf-8;base64, ${buffer.toString("base64")}`;
 }
 
-import type { GetStaticPathsOptions, Params } from "astro";
-
-export function generateImageMethods<Props>(
+export function generateImageMethods<Props extends { isDebug: boolean }>(
   params: ImageParams & {
     getStaticPaths: (options: GetStaticPathsOptions) => Promise<
       Array<{
@@ -198,13 +198,12 @@ export function generateImageMethods<Props>(
     render: (props: Props) => Promise<JSX.Element> | JSX.Element;
   },
 ) {
-  return ({ isDebug }: { isDebug?: boolean | undefined } = {}) => ({
-    getStaticPaths:
-      isDebug && import.meta.env.PROD ? () => [] : params.getStaticPaths,
+  return () => ({
+    getStaticPaths: params.getStaticPaths,
     GET: async function ({ props }: { props: Props }) {
       const jsx = await params.render(props);
       return generateImageResponse(jsx, {
-        isDebug: isDebug,
+        isDebug: props.isDebug,
         width: params.width,
         height: params.height,
         debugScale: params.debugScale,
@@ -212,3 +211,5 @@ export function generateImageMethods<Props>(
     },
   });
 }
+
+export const TYPES = ["jpg", "debug"];
