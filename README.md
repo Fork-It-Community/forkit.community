@@ -1,5 +1,26 @@
 # ↗️ Fork it! Community - Website
 
+## Installation
+
+1. Duplicate the `.env.example` file to a new `.env` file, and update the environment variables
+
+```bash
+cp .env.example .env
+```
+
+2. Install dependencies
+
+```bash
+pnpm install
+```
+
+3. Development
+
+```bash
+# Run the development server
+pnpm dev
+```
+
 ## 🚀 Project Structure
 
 Inside the project, you'll see the following folders and files:
