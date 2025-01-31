@@ -17,9 +17,9 @@ const { event } = Astro.props;
   <slot name="seo" slot="seo" />
   <slot name="ld+json" slot="ld+json" />
   {
-    !!event.data.image?.src && (
+    !!event.data.image?.media && (
       <ImageBackgroundHero
-        src={event.data.image.src}
+        src={event.data.image.media}
         alt={event.data.image.alt}
         blur
       />

@@ -17,6 +17,6 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 export const GET: APIRoute = async ({ props }) => {
   const { event } = props as Props;
 
-  const postCover = await getAstroImageBase64(event.data.image.src);
+  const postCover = await getAstroImageBase64(event.data.image.media);
   return generateOGResponse(OGEvent({ event, postCover }));
 };
