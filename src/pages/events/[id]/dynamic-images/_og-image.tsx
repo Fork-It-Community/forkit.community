@@ -14,7 +14,7 @@ export default generateImageMethods({
   height: 1080,
   getStaticPaths: getEventStaticPaths,
   render: async (props) => {
-    const postCover = await getAstroImageBase64(props.event.data.image.src);
+    const postCover = await getAstroImageBase64(props.event.data.image.media);
     return (
       <Frame {...props.dynamicImage} style={{ padding: 128 }}>
         <BgImage

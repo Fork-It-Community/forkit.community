@@ -36,7 +36,7 @@ const zEventBase = ({ image }: SchemaContext) =>
       .optional(),
     excerpt: z.string().optional(),
     image: z.object({
-      src: image(),
+      media: image(),
       alt: z.string(),
       credit: z.string().optional(),
     }),
