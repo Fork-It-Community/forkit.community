@@ -2,12 +2,7 @@ import fs from "fs/promises";
 import satori from "satori";
 import sharp from "sharp";
 import path from "node:path";
-import type {
-  ImageMetadata,
-  GetStaticPathsOptions,
-  Params,
-  APIRoute,
-} from "astro";
+import type { ImageMetadata, GetStaticPathsOptions, Params } from "astro";
 import { match } from "ts-pattern";
 import { renderToStaticMarkup } from "react-dom/server";
 import { fileURLToPath } from "node:url";
@@ -273,45 +268,4 @@ export async function withType<
 export function getDirname(fromDirectory: string) {
   const __filename = fileURLToPath(fromDirectory);
   return path.resolve(path.dirname(__filename));
-}
-
-export async function apiImageGenerator({
-  fromDirectory,
-}: {
-  fromDirectory: string;
-}) {
-  const result = await fs.readdir(fromDirectory);
-  const tsxFiles = result.filter((file) => file.endsWith(".tsx"));
-  const contents = await Promise.all(
-    tsxFiles.map(async (file) => {
-      const fileName = file.replace(/\.tsx$/, "").replace(/^_/, "");
-      const content = await import(
-        // https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
-        /* @vite-ignore */
-        `${fromDirectory}/_${fileName}.tsx`
-      );
-      return {
-        methods: content.default({ __image: fileName }),
-        fileName,
-      };
-    }),
-  );
-
-  const getStaticPaths = async (options: GetStaticPathsOptions) => {
-    return (
-      await Promise.all(
-        contents.map(
-          async (content) => await content.methods.getStaticPaths(options),
-        ),
-      )
-    ).flat(Infinity);
-  };
-  const GET: APIRoute = (options) => {
-    const { params } = options;
-    return contents
-      .find((content) => content.fileName === params.__image)
-      ?.methods.GET(options);
-  };
-
-  return { getStaticPaths, GET };
 }
