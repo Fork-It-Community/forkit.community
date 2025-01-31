@@ -4,8 +4,8 @@ const env = import.meta.env.ENV_NAME;
 
 {
   !!env && (
-    <div class="fixed left-0 right-0 top-0 z-[9999] h-1 bg-primary">
-      <span class="fixed left-4 top-0 rounded-b-sm bg-primary p-1 text-[0.6rem] font-bold uppercase text-black">
+    <div class="pointer-events-none fixed left-0 right-0 top-0 z-[9999] h-[2px] bg-primary shadow-2xl">
+      <span class="fixed left-0 top-0 rounded-br-sm bg-primary px-1.5 py-0.5 font-heading text-2xs font-medium uppercase tracking-widest text-black">
         {env}
       </span>
     </div>
