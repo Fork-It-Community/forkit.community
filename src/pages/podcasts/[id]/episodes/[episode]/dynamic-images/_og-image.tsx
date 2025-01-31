@@ -7,6 +7,7 @@ import {
 import dayjs from "dayjs";
 import backgroundImage from "@/assets/images/podcasts.jpeg";
 import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
+import { Frame } from "@/dynamic-images/components/Frame";
 
 export default generateImageMethods({
   width: 1920,
@@ -30,20 +31,9 @@ export default generateImageMethods({
     const episodeCover = await getAstroImageBase64(props.episode.data.cover);
     const background = await getAstroImageBase64(backgroundImage);
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          fontFamily: "Tomorrow",
-          backgroundColor: COLORS.black,
-          width: 1920,
-          height: 1080,
-          boxSizing: "border-box",
-          padding: 128,
-          position: "relative",
-        }}
+      <Frame
+        {...props.dynamicImage}
+        style={{ flexDirection: "row", padding: 128 }}
       >
         <div
           style={{
@@ -170,7 +160,7 @@ export default generateImageMethods({
             zIndex: 10,
           }}
         />
-      </div>
+      </Frame>
     );
   },
 });

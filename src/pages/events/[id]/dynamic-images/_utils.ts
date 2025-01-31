@@ -1,14 +1,15 @@
-import { getCollection } from "astro:content";
+import { getCollection, getEntries } from "astro:content";
 
 export const getEventStaticPaths = async () => {
   const events = await getCollection("events");
 
-  return events.map((event) => {
-    return {
+  return Promise.all(
+    events.map(async (event) => ({
       params: { id: event.id },
       props: {
         event,
+        coOrganizers: await getEntries(event.data.coOrganizers ?? []),
       },
-    };
-  });
+    })),
+  );
 };

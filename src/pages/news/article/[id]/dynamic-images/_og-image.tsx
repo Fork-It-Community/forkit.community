@@ -7,6 +7,7 @@ import {
 } from "@/dynamic-images/utils";
 import dayjs from "dayjs";
 import defaultBackgroundImage from "@/assets/images/news.jpeg";
+import { Frame } from "@/dynamic-images/components/Frame";
 
 export default generateImageMethods({
   width: 1920,
@@ -27,21 +28,7 @@ export default generateImageMethods({
       props.article.data.featuredImage ?? defaultBackgroundImage,
     );
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          fontFamily: "Tomorrow",
-          backgroundColor: COLORS.black,
-          width: 1920,
-          height: 1080,
-          boxSizing: "border-box",
-          padding: 128,
-          position: "relative",
-        }}
-      >
+      <Frame {...props.dynamicImage} style={{ padding: 128 }}>
         <div
           style={{
             display: "flex",
@@ -143,7 +130,7 @@ export default generateImageMethods({
             </div>
           </div>
         </div>
-      </div>
+      </Frame>
     );
   },
 });

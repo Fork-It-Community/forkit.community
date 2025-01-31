@@ -125,7 +125,7 @@ export async function generateImageResponseDebug(
               flex: none;
               transform: scale(var(--scale));
               transform-origin: top left;
-              background: red;
+              background: black;
             }
 
           </style>
@@ -193,14 +193,16 @@ type GetStaticPathItemWithGeneric<Props> = {
   props?: Props;
 };
 
-type PropsWithDebug<T> = T & { isDebug: boolean };
+type PropsWithDebug<T> = T & { dynamicImage: { isDebug: boolean } };
+type ExtraProps = { isDebug: boolean; width: number; height: number };
+type PropsForRender<T> = T & { dynamicImage: ExtraProps };
 export function generateImageMethods<Props>(
   params: ImageParams & {
     getStaticPaths: (
       options: GetStaticPathsOptions,
     ) => Promise<Array<GetStaticPathItemWithGeneric<Props>>>;
     render: (
-      props: PropsWithDebug<Props>,
+      props: PropsForRender<Props>,
     ) => Promise<JSX.Element> | JSX.Element;
   },
 ) {
@@ -212,9 +214,16 @@ export function generateImageMethods<Props>(
       });
     },
     GET: async function ({ props }: { props: PropsWithDebug<Props> }) {
-      const jsx = await params.render(props);
+      const jsx = await params.render({
+        ...props,
+        dynamicImage: {
+          ...props.dynamicImage,
+          width: params.width,
+          height: params.height,
+        },
+      });
       return generateImageResponse(jsx, {
-        isDebug: props.isDebug,
+        isDebug: props.dynamicImage.isDebug,
         width: params.width,
         height: params.height,
         debugScale: params.debugScale,
@@ -239,7 +248,7 @@ export async function withType<
 }: {
   entries: Array<T>;
   params: { __image: string };
-}): Promise<Array<T & { props: { isDebug: boolean } }>> {
+}): Promise<Array<T & { props: { dynamicImage: { isDebug: boolean } } }>> {
   return entries
     .map((entry) => {
       return TYPES.map((type) =>
@@ -256,7 +265,9 @@ export async function withType<
 
               props: {
                 ...entry.props,
-                isDebug: type === "debug" && import.meta.env.DEV,
+                dynamicImage: {
+                  isDebug: type === "debug" && import.meta.env.DEV,
+                },
               },
             },
       );
