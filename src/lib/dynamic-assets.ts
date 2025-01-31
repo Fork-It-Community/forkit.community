@@ -2,12 +2,7 @@ import fs from "fs/promises";
 import satori from "satori";
 import sharp from "sharp";
 import path from "node:path";
-import type {
-  ImageMetadata,
-  GetStaticPathsOptions,
-  Params,
-  GetStaticPathsItem,
-} from "astro";
+import type { ImageMetadata, GetStaticPathsOptions, Params } from "astro";
 import { match } from "ts-pattern";
 import { renderToStaticMarkup } from "react-dom/server";
 
@@ -190,22 +185,29 @@ export async function getAstroImageBase64(image: ImageMetadata) {
   return `data:image/${fileType};charset=utf-8;base64, ${buffer.toString("base64")}`;
 }
 
-export function generateImageMethods<Props extends { isDebug: boolean }>(
+type GetStaticPathItemWithGeneric<Props> = {
+  params: {
+    [K in keyof Params]: Params[K] | number | undefined;
+  };
+  props?: Props;
+};
+
+type PropsWithDebug<T> = T & { isDebug: boolean };
+export function generateImageMethods<Props>(
   params: ImageParams & {
-    getStaticPaths: (options: GetStaticPathsOptions) => Promise<
-      Array<{
-        params: {
-          [K in keyof Params]: Params[K] | number;
-        };
-        props?: Props;
-      }>
-    >;
-    render: (props: Props) => Promise<JSX.Element> | JSX.Element;
+    getStaticPaths: (
+      options: GetStaticPathsOptions,
+    ) => Promise<Array<GetStaticPathItemWithGeneric<Props>>>;
+    render: (
+      props: PropsWithDebug<Props>,
+    ) => Promise<JSX.Element> | JSX.Element;
   },
 ) {
   return () => ({
-    getStaticPaths: params.getStaticPaths,
-    GET: async function ({ props }: { props: Props }) {
+    getStaticPaths: async (options: GetStaticPathsOptions) => {
+      return withType(await params.getStaticPaths(options));
+    },
+    GET: async function ({ props }: { props: PropsWithDebug<Props> }) {
       const jsx = await params.render(props);
       return generateImageResponse(jsx, {
         isDebug: props.isDebug,
@@ -224,7 +226,7 @@ export const TYPES = ["jpg", "debug"];
  * @param entries Provide an array of getStaticPaths item so this function will add the required parameters for the assets
  * @returns An updated array with the value
  */
-export function withType<T extends GetStaticPathsItem>(
+export function withType<Props, T extends GetStaticPathItemWithGeneric<Props>>(
   entries: Array<T>,
 ): Array<T & { props: { isDebug: boolean } }> {
   return entries
