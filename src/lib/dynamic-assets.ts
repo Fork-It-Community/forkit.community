@@ -203,9 +203,12 @@ export function generateImageMethods<Props>(
     ) => Promise<JSX.Element> | JSX.Element;
   },
 ) {
-  return () => ({
+  return (p: { __image: string }) => ({
     getStaticPaths: async (options: GetStaticPathsOptions) => {
-      return withType(await params.getStaticPaths(options));
+      return withType({
+        entries: await params.getStaticPaths(options),
+        params: p,
+      });
     },
     GET: async function ({ props }: { props: PropsWithDebug<Props> }) {
       const jsx = await params.render(props);
@@ -226,9 +229,16 @@ export const TYPES = ["jpg", "debug"];
  * @param entries Provide an array of getStaticPaths item so this function will add the required parameters for the assets
  * @returns An updated array with the value
  */
-export function withType<Props, T extends GetStaticPathItemWithGeneric<Props>>(
-  entries: Array<T>,
-): Array<T & { props: { isDebug: boolean } }> {
+export async function withType<
+  Props,
+  T extends GetStaticPathItemWithGeneric<Props>,
+>({
+  entries,
+  params,
+}: {
+  entries: Array<T>;
+  params: { __image: string };
+}): Promise<Array<T & { props: { isDebug: boolean } }>> {
   return entries
     .map((entry) => {
       return TYPES.map((type) =>
@@ -240,6 +250,7 @@ export function withType<Props, T extends GetStaticPathItemWithGeneric<Props>>(
               params: {
                 ...entry.params,
                 __type: type,
+                __image: params.__image,
               },
 
               props: {
@@ -251,4 +262,37 @@ export function withType<Props, T extends GetStaticPathItemWithGeneric<Props>>(
     })
     .flat()
     .filter((i) => !!i);
+}
+
+async function apiImageGenerator() {
+  // const __filename = fileURLToPath(import.meta.url);
+  // const result = await fs.readdir(path.resolve(path.dirname(__filename)));
+  // const tsxFiles = result.filter((file) => file.endsWith(".tsx"));
+  // const contents = await Promise.all(
+  //   tsxFiles.map(async (file) => {
+  //     const fileName = file.replace(/\.tsx$/, "").replace(/^_/, "");
+  //     const content = await import(`./_${fileName}.tsx`);
+  //     return {
+  //       methods: content.default({ __image: fileName }),
+  //       fileName,
+  //     };
+  //   }),
+  // );
+  // // dynamic import pour le rendu et la "collection"
+  // // map pour pour générer les routes et composants
+  // const getStaticPaths = async (options: GetStaticPathsOptions) => {
+  //   return (
+  //     await Promise.all(
+  //       contents.map(
+  //         async (content) => await content.methods.getStaticPaths(options),
+  //       ),
+  //     )
+  //   ).flat(Infinity);
+  // };
+  //  const GET: APIRoute = (options) => {
+  //   const { params } = options;
+  //   return contents
+  //     .find((content) => content.fileName === params.__image)
+  //     ?.methods.GET(options);
+  // };
 }
