@@ -1,13 +1,13 @@
 import { Logo } from "@/components/Logo";
 import { getNewsCollection } from "@/lib/news";
 import {
-  COLORS,
   generateImageMethods,
   getAstroImageBase64,
 } from "@/dynamic-images/utils";
 import dayjs from "dayjs";
 import defaultBackgroundImage from "@/assets/images/news.jpeg";
 import { Frame } from "@/dynamic-images/components/Frame";
+import { BgImage } from "@/dynamic-images/components/BgImage";
 
 export default generateImageMethods({
   width: 1920,
@@ -29,55 +29,12 @@ export default generateImageMethods({
     );
     return (
       <Frame {...props.dynamicImage} style={{ padding: 128 }}>
-        <div
-          style={{
-            display: "flex",
-            position: "absolute",
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-          }}
-        >
-          <img
-            src={background}
-            alt=""
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: 1920,
-              height: 1080,
-              objectFit: "cover",
-            }}
-          />
-          <img
-            src={background}
-            alt=""
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: 1920,
-              height: 1080,
-              objectFit: "cover",
-              filter: "blur(10px)",
-              maskImage: "linear-gradient(0deg, black 40%, transparent 100%)",
-            }}
-          />
-          <div
-            style={{
-              background:
-                "linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.3) 100%)",
-              position: "absolute",
-              top: 0,
-              left: 0,
-              bottom: 0,
-              right: 0,
-              zIndex: 2,
-            }}
-          />
-        </div>
+        <BgImage
+          src={background}
+          width={props.dynamicImage.width}
+          height={props.dynamicImage.height}
+          gradientAngle={10}
+        />
 
         <div
           style={{
@@ -86,13 +43,8 @@ export default generateImageMethods({
             gap: 96,
             flex: 1,
             width: "100%",
-            height: "100%",
-            minWidth: 0,
             justifyContent: "center",
-            fontFamily: "Tomorrow",
-            color: COLORS.white,
             zIndex: 100,
-            paddingRight: 60,
           }}
         >
           <Logo style={{ width: 169 * 3, height: 18 * 3, marginTop: "auto" }} />
@@ -112,6 +64,7 @@ export default generateImageMethods({
                 fontWeight: 500,
                 lineHeight: 1,
                 marginLeft: -6, // Visual alignment
+                textWrap: "balance",
               }}
             >
               {props.article.data.title}

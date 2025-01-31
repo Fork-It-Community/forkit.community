@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import backgroundImage from "@/assets/images/podcasts.jpeg";
 import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 import { Frame } from "@/dynamic-images/components/Frame";
+import { BgImage } from "@/dynamic-images/components/BgImage";
 
 export default generateImageMethods({
   width: 1920,
@@ -35,55 +36,11 @@ export default generateImageMethods({
         {...props.dynamicImage}
         style={{ flexDirection: "row", padding: 128 }}
       >
-        <div
-          style={{
-            display: "flex",
-            position: "absolute",
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-          }}
-        >
-          <img
-            src={background}
-            alt=""
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: 1920,
-              height: 1080,
-              objectFit: "cover",
-            }}
-          />
-          <img
-            src={background}
-            alt=""
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: 1920,
-              height: 1080,
-              objectFit: "cover",
-              filter: "blur(10px)",
-              maskImage: "linear-gradient(90deg, black 40%, transparent 100%)",
-            }}
-          />
-          <div
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.3) 100%)",
-              position: "absolute",
-              top: 0,
-              left: 0,
-              bottom: 0,
-              right: 0,
-              zIndex: 2,
-            }}
-          />
-        </div>
+        <BgImage
+          src={background}
+          width={props.dynamicImage.width}
+          height={props.dynamicImage.height}
+        />
 
         <div
           style={{
@@ -129,6 +86,7 @@ export default generateImageMethods({
                 fontWeight: 500,
                 lineHeight: 1.1,
                 marginLeft: -6, // Visual alignment
+                textWrap: "balance",
               }}
             >
               {props.episode.data.title}

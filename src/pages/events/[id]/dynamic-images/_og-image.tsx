@@ -9,6 +9,7 @@ import {
 import { match } from "ts-pattern";
 import { getEventStaticPaths } from "./_utils";
 import { Frame } from "@/dynamic-images/components/Frame";
+import { BgImage } from "@/dynamic-images/components/BgImage";
 
 export default generateImageMethods({
   width: 1920,
@@ -18,43 +19,10 @@ export default generateImageMethods({
     const postCover = await getAstroImageBase64(props.event.data.image.src);
     return (
       <Frame {...props.dynamicImage} style={{ padding: 128 }}>
-        <img
+        <BgImage
           src={postCover}
-          alt=""
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: props.dynamicImage.width,
-            height: props.dynamicImage.height,
-            objectFit: "cover",
-          }}
-        />
-        <img
-          src={postCover}
-          alt=""
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: props.dynamicImage.width,
-            height: props.dynamicImage.height,
-            objectFit: "cover",
-            filter: "blur(10px)",
-            maskImage: "linear-gradient(90deg, black 40%, transparent 100%)",
-          }}
-        />
-        <div
-          style={{
-            background:
-              "linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.3) 100%)",
-            position: "absolute",
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-            zIndex: 2,
-          }}
+          width={props.dynamicImage.width}
+          height={props.dynamicImage.height}
         />
 
         <div
