@@ -239,7 +239,7 @@ export function withType<Props, T extends GetStaticPathItemWithGeneric<Props>>(
 
               params: {
                 ...entry.params,
-                type,
+                __type: type,
               },
 
               props: {
