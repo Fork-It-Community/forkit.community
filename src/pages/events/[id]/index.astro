@@ -98,7 +98,7 @@ const ogImage = new URL(Astro.url.pathname + "/og-image.jpg", Astro.site);
         validFrom: offer.validFrom.toISOString(),
       })),
       eventStatus: `https://schema.org/${event.data.eventStatus}`,
-      image: event.data.image?.src.src ?? "",
+      image: event.data.image?.media.src ?? "",
       organizer: {
         "@type": "Organization",
         name: "Fork it! Community",
