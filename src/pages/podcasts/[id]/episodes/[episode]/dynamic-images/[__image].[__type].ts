@@ -1,4 +1,4 @@
-import { apiImageGenerator } from "@/lib/api-route";
+import { apiImageGenerator } from "@/dynamic-images";
 
 const methods = await apiImageGenerator({
   modules: import.meta.glob("./_*.tsx", { eager: true }),

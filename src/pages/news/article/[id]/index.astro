@@ -32,7 +32,7 @@ const { article, authors } = Astro.props;
 const { Content } = await render(article);
 const url = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(
-  Astro.url.pathname + "/dynamic-assets/og-image.jpg",
+  Astro.url.pathname + "/dynamic-images/og-image.jpg",
   Astro.site,
 );
 ---

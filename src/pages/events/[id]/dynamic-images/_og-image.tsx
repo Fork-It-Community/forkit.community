@@ -4,25 +4,15 @@ import {
   COLORS,
   generateImageMethods,
   getAstroImageBase64,
-} from "@/lib/dynamic-assets";
-import { getCollection } from "astro:content";
+} from "@/dynamic-images/utils";
+
 import { match } from "ts-pattern";
+import { getEventStaticPaths } from "./_utils";
 
 export default generateImageMethods({
-  width: 1080,
+  width: 1920,
   height: 1080,
-  getStaticPaths: async () => {
-    const events = await getCollection("events");
-
-    return events.map((event) => {
-      return {
-        params: { id: event.id },
-        props: {
-          event,
-        },
-      };
-    });
-  },
+  getStaticPaths: getEventStaticPaths,
   render: async (props) => {
     const postCover = await getAstroImageBase64(props.event.data.image.src);
     return (
@@ -33,7 +23,7 @@ export default generateImageMethods({
           alignItems: "center",
           fontFamily: "Tomorrow",
           backgroundColor: COLORS.background,
-          width: 1080,
+          width: 1920,
           height: 1080,
           boxSizing: "border-box",
           position: "relative",
@@ -47,7 +37,7 @@ export default generateImageMethods({
             position: "absolute",
             top: 0,
             left: 0,
-            width: 1080,
+            width: 1920,
             height: 1080,
             objectFit: "cover",
           }}
@@ -59,7 +49,7 @@ export default generateImageMethods({
             position: "absolute",
             top: 0,
             left: 0,
-            width: 1080,
+            width: 1920,
             height: 1080,
             objectFit: "cover",
             filter: "blur(10px)",

@@ -4,7 +4,7 @@ import {
   COLORS,
   generateImageMethods,
   getAstroImageBase64,
-} from "@/lib/dynamic-assets";
+} from "@/dynamic-images/utils";
 import dayjs from "dayjs";
 import defaultBackgroundImage from "@/assets/images/news.jpeg";
 

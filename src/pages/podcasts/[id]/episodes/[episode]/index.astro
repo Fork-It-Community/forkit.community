@@ -56,7 +56,7 @@ const guests = (await getEntries(episode.data.guests ?? []))
 
 const title = `${episode.data.title} (${number}) | ${show.data.title}`;
 const ogImage = new URL(
-  Astro.url.pathname + "/dynamic-assets/og-image.jpg",
+  Astro.url.pathname + "/dynamic-images/og-image.jpg",
   Astro.site,
 );
 ---
