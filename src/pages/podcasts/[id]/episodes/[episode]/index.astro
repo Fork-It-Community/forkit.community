@@ -55,7 +55,10 @@ const guests = (await getEntries(episode.data.guests ?? []))
   .sort((a, b) => a.data.name.localeCompare(b.data.name));
 
 const title = `${episode.data.title} (${number}) | ${show.data.title}`;
-const ogImage = new URL(Astro.url.pathname + "/og-image.jpg", Astro.site);
+const ogImage = new URL(
+  Astro.url.pathname + "/dynamic-images/og-image.jpg",
+  Astro.site,
+);
 ---
 
 <MainLayout>

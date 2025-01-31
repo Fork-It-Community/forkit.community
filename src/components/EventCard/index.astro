@@ -1,13 +1,16 @@
 ---
 import { buttonVariants } from "@/components/ui/button";
-import { getEventDisplayDate, shouldShowTickets } from "@/lib/events";
+import {
+  getEventDisplayDate,
+  getEventDisplayType,
+  shouldShowTickets,
+} from "@/lib/events";
 import { cn } from "@/lib/utils";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { getEntries } from "astro:content";
 import dayjs from "dayjs";
 import { MdArrowForward } from "react-icons/md";
-import { match } from "ts-pattern";
 
 interface Props {
   event: CollectionEntry<"events">;
@@ -79,12 +82,7 @@ const isUpcomingEvent = dayjs().isBefore(event.data.date);
         <div
           class="text-2xs uppercase tracking-widest opacity-60 transition group-hover:opacity-100"
         >
-          {
-            match(event.data.type)
-              .with("event", () => "Full Day Event")
-              .with("meetup", () => "Community Meetup")
-              .exhaustive()
-          }
+          {getEventDisplayType(event.data.type)}
         </div>
       </div>
       <div class="flex flex-col">
