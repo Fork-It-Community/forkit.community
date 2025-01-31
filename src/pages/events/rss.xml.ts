@@ -1,7 +1,6 @@
-import { getEventsCollection } from "@/lib/events";
+import { getEventDisplayType, getEventsCollection } from "@/lib/events";
 import rss from "@astrojs/rss";
 import type { APIRoute } from "astro";
-import { match } from "ts-pattern";
 
 export const GET: APIRoute = async function get(context) {
   const events = await getEventsCollection();
@@ -12,10 +11,7 @@ export const GET: APIRoute = async function get(context) {
     site: context.site! + "/events",
     trailingSlash: false,
     items: events.map((event) => ({
-      title: `${event.data.name}, ${match(event.data.type)
-        .with("event", () => "Full Day Event")
-        .with("meetup", () => "Community Meetup")
-        .exhaustive()}`,
+      title: `${event.data.name}, ${getEventDisplayType(event.data.type)}`,
       description: event.data.excerpt,
       link: `${context.site}events/${event.id}`,
       pubDate: event.data.date,

@@ -6,6 +6,7 @@ import {
   getEntry,
   type CollectionEntry,
 } from "astro:content";
+import { match } from "ts-pattern";
 
 export function isEventPublished(
   status?: CollectionEntry<"events">["data"]["status"],
@@ -194,6 +195,14 @@ export function getEventDisplayDate(event: CollectionEntry<"events">) {
   if (event.data.status === "published-without-date")
     return `Coming in ${dayjs(event.data.date).format("YYYY")}`;
   return dayjs(event.data.date).format("MMMM DD, YYYY");
+}
+export function getEventDisplayType(
+  eventType: CollectionEntry<"events">["data"]["type"],
+) {
+  return match(eventType)
+    .with("event", () => "Full Day Event")
+    .with("meetup", () => "Community Meetup")
+    .exhaustive();
 }
 
 function personWasInEvent(

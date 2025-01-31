@@ -1,12 +1,10 @@
 import { Logo } from "@/components/Logo";
-import { getEventDisplayDate } from "@/lib/events";
+import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
 import {
   COLORS,
   generateImageMethods,
   getAstroImageBase64,
 } from "@/dynamic-images/utils";
-
-import { match } from "ts-pattern";
 import { getEventStaticPaths } from "./_utils";
 import { Frame } from "@/dynamic-images/components/Frame";
 import { BgImage } from "@/dynamic-images/components/BgImage";
@@ -55,10 +53,7 @@ export default generateImageMethods({
                 letterSpacing: 4,
               }}
             >
-              {match(props.event.data.type)
-                .with("event", () => "Full Day Event")
-                .with("meetup", () => "Community Meetup")
-                .exhaustive()}
+              {getEventDisplayType(props.event.data.type)}
             </div>
             <div
               style={{

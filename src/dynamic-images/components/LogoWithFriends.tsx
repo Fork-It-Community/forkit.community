@@ -40,6 +40,7 @@ export const LogoWithFriends = (props: { logos?: string[] | undefined }) => {
               alignItems: "center",
               fontSize: 48,
               opacity: 0.2,
+              marginRight: 24,
             }}
           >
             &times;

@@ -15,6 +15,7 @@ import {
   shouldShowCFP,
   getEventDisplayDate,
   shouldShowProspectus,
+  getEventDisplayType,
 } from "@/lib/events";
 import { cn, formatDateTime } from "@/lib/utils";
 import { Image } from "astro:assets";
@@ -25,7 +26,6 @@ import {
   MdEvent,
   MdArrowOutward,
 } from "react-icons/md";
-import { match } from "ts-pattern";
 import { motion } from "motion/react";
 import { Schema } from "astro-seo-schema";
 import type { Place } from "schema-dts";
@@ -140,12 +140,7 @@ const ogImage = new URL(
           <span
             class="p-2 text-xs uppercase tracking-widest opacity-60 md:text-sm"
           >
-            {
-              match(event.data.type)
-                .with("event", () => "Full Day Event")
-                .with("meetup", () => "Community Meetup")
-                .exhaustive()
-            }
+            {getEventDisplayType(event.data.type)}
           </span>
         </h1>
       </div>
