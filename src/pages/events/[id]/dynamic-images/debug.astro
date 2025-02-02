@@ -2,6 +2,7 @@
 import { getEventsCollection } from "@/lib/events";
 import { getEventStaticPaths } from "./_utils";
 import MainLayout from "@/layouts/MainLayout.astro";
+import dayjs from "dayjs";
 
 export const getStaticPaths = () =>
   import.meta.env.DEV ? getEventStaticPaths() : [];
@@ -19,7 +20,9 @@ const fileNames = files.map((path) => {
 
 const props = Astro.props;
 
-const allEvents = await getEventsCollection();
+const allEvents = (await getEventsCollection()).sort((a, b) =>
+  dayjs(b.data.date).diff(a.data.date),
+);
 ---
 
 <MainLayout>
