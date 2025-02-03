@@ -1,0 +1,56 @@
+---
+import { getEventsCollection } from "@/lib/events";
+
+import MainLayout from "@/layouts/MainLayout.astro";
+import dayjs from "dayjs";
+import { getEventTalkStaticPaths } from "@/pages/events/[id]/talks/[talkId]/dynamic-images/_utils";
+
+export const getStaticPaths = () =>
+  import.meta.env.DEV ? getEventTalkStaticPaths() : [];
+
+const files = Object.keys(import.meta.glob("./_*.tsx", { eager: true }));
+const fileNames = files.map((path) => {
+  const fileName = path
+    .split("/")
+    .at(-1)
+    ?.replace(/\.tsx$/, "")
+    .replace(/^_/, "");
+
+  return fileName;
+});
+
+const props = Astro.props;
+
+const allEvents = (await getEventsCollection()).sort((a, b) =>
+  dayjs(b.data.date).diff(a.data.date),
+);
+---
+
+<MainLayout>
+  <div class="mx-auto flex w-full max-w-screen-lg gap-8 p-8">
+    <div class="flex w-56 flex-col">
+      {
+        allEvents.map((event) => (
+          <a href={`/events/${event.id}/dynamic-images/debug`} class="p-1">
+            {event.data.name}
+          </a>
+        ))
+      }
+    </div>
+    <div class="flex w-full flex-1 flex-col gap-4">
+      {
+        fileNames.map((fileName) => (
+          <a
+            href={`/events/${props.event.id}/dynamic-images/${fileName}.debug`}
+          >
+            <img
+              alt={fileName}
+              class="w-full max-w-full rounded-md"
+              src={`/events/${props.event.id}/dynamic-images/${fileName}.jpg`}
+            />
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</MainLayout>
