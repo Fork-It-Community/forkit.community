@@ -1,12 +1,12 @@
 ---
-const env = import.meta.env.ENV_NAME;
+import { ENV_NAME } from "astro:env/server";
 ---
 
 {
-  !!env && (
+  !!ENV_NAME && (
     <div class="pointer-events-none fixed left-0 right-0 top-0 z-[9999] h-[2px] bg-primary shadow-2xl">
       <span class="fixed left-0 top-0 rounded-br-sm bg-primary px-1.5 py-0.5 font-heading text-2xs font-medium uppercase tracking-widest text-black">
-        {env}
+        {ENV_NAME}
       </span>
     </div>
   )

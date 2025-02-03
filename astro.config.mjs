@@ -20,7 +20,7 @@ export default defineConfig({
   env: {
     schema: {
       ENV_NAME: envField.string({
-        context: "client",
+        context: "server",
         access: "public",
         optional: true,
       }),
