@@ -4,6 +4,7 @@ import tailwind from "@astrojs/tailwind";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import robotsTxt from "astro-robots-txt";
+import astroDynamicImages from "./astro-dynamic-images.ts";
 
 // https://astro.build/config
 export default defineConfig({
@@ -25,5 +26,8 @@ export default defineConfig({
     mdx(),
     sitemap(),
     robotsTxt(),
+    astroDynamicImages({
+      basePaths: ["/events/[id]/dynamic-images"],
+    }),
   ],
 });

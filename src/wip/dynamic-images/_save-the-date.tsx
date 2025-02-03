@@ -5,17 +5,13 @@ import {
   getAstroImageBase64,
 } from "@/dynamic-images/utils";
 
-import { getEventStaticPaths } from "./_utils";
+import { getEventStaticPaths } from "../../inte/events/_utils";
 import { Frame } from "@/dynamic-images/components/Frame";
 
 import { LogoWithFriends } from "@/dynamic-images/components/LogoWithFriends";
 import { BgImage } from "@/dynamic-images/components/BgImage";
 
-export const ticketsAvailable = (config: {
-  fontScaling: number;
-  width: number;
-  height: number;
-}) =>
+export const saveTheDate = (config: { width: number; height: number }) =>
   generateImageMethods({
     width: config.width,
     height: config.height,
@@ -58,19 +54,19 @@ export const ticketsAvailable = (config: {
             >
               <div
                 style={{
-                  fontSize: 54 * config.fontScaling,
+                  fontSize: 32,
                   fontWeight: 500,
                   textTransform: "uppercase",
                   letterSpacing: 4,
                 }}
               >
-                Tickets Are Available
+                Save the date
               </div>
 
               <div
                 style={{
                   display: "flex",
-                  fontSize: 160 * config.fontScaling,
+                  fontSize: 124,
                   fontWeight: 500,
                   lineHeight: 1,
                   color: COLORS.primary,
@@ -79,51 +75,23 @@ export const ticketsAvailable = (config: {
                   textTransform: "uppercase",
                 }}
               >
-                Register Now
+                {props.event.data.city}
               </div>
               <div
                 style={{
                   display: "flex",
-                  justifyContent: "flex-start",
-                  marginBottom: 24,
-                  marginTop: -12,
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    color: COLORS.primary,
-                    fontSize: 64 * config.fontScaling,
-                    fontWeight: 500,
-                    textTransform: "uppercase",
-                  }}
-                >
-                  www.forkit.community
-                </div>
-              </div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                alignItems: "center",
-                columnGap: 48,
-                rowGap: 24,
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                  fontSize: 48,
+                  fontSize: 60,
                   fontWeight: 500,
                   lineHeight: 1,
+                  marginBottom: 48,
+                  marginTop: -8,
+                  color: COLORS.primary,
                   textTransform: "uppercase",
                 }}
               >
                 {getEventDisplayType(props.event.data.type)}
               </div>
+
               <div
                 style={{
                   display: "flex",
@@ -160,33 +128,68 @@ export const ticketsAvailable = (config: {
                   {getEventDisplayDate(props.event)}
                 </div>
 
-                <div
-                  style={{
-                    display: "flex",
-                    gap: 12,
-                    alignItems: "center",
-                    fontSize: 48,
-                    fontWeight: 500,
-                    lineHeight: 1.2,
-                    textWrap: "balance",
-                  }}
-                >
-                  <svg
-                    viewBox="0 0 24 24"
+                {!!props.event.data.location?.name && (
+                  <div
                     style={{
-                      flex: "none",
-                      opacity: 0.6,
-                      width: "1em",
-                      height: "1em",
+                      display: "flex",
+                      gap: 12,
+                      alignItems: "center",
+                      fontSize: 48,
+                      fontWeight: 500,
+                      lineHeight: 1.2,
+                      textWrap: "balance",
                     }}
                   >
-                    <path
-                      fill="currentColor"
-                      d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7"
-                    />
-                  </svg>
-                  {props.event.data.city}, {props.event.data.country}
-                </div>
+                    <svg
+                      viewBox="0 0 24 24"
+                      style={{
+                        flex: "none",
+                        opacity: 0.6,
+                        width: "1em",
+                        height: "1em",
+                      }}
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7"
+                      />
+                    </svg>
+                    {props.event.data.location.name}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-end",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  fontSize: 32,
+                  fontWeight: 500,
+                  lineHeight: 1.2,
+                  textTransform: "uppercase",
+                  opacity: 0.6,
+                }}
+              >
+                {props.event.data.city}, {props.event.data.country}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  fontSize: 32,
+                  fontWeight: 500,
+                  lineHeight: 1.2,
+                  textTransform: "uppercase",
+                  opacity: 0.6,
+                }}
+              >
+                www.forkit.community
               </div>
             </div>
           </div>
@@ -195,4 +198,4 @@ export const ticketsAvailable = (config: {
     },
   });
 
-export default ticketsAvailable({ fontScaling: 1, width: 1920, height: 1080 });
+export default saveTheDate({ width: 1920, height: 1080 });
