@@ -15,10 +15,12 @@ export function isEventPublished(
   return status !== "draft";
 }
 
-export function getEventsCollection() {
-  return getCollection("events", ({ data }) =>
-    import.meta.env.PROD ? isEventPublished(data.status) : true,
-  );
+export async function getEventsCollection() {
+  return (
+    await getCollection("events", ({ data }) =>
+      import.meta.env.PROD ? isEventPublished(data.status) : true,
+    )
+  ).sort((a, b) => dayjs(b.data.date).diff(a.data.date));
 }
 
 export function getEventSubPagesCollection(
@@ -222,8 +224,6 @@ export async function getPersonEvents(
 ) {
   return (
     (await getEventsCollection())
-      // Order with the most recent first
-      .sort((a, b) => dayjs(b.data.date).diff(a.data.date))
       // We don't want cancelled events and just the one the person is in
       .filter(
         (event) =>

@@ -183,7 +183,7 @@ async function getAstroImageBuffer(image: ImageMetadata) {
 
 export async function getAstroImageBase64(image: ImageMetadata) {
   const { buffer, fileType } = await getAstroImageBuffer(image);
-  return `data:image/${fileType};charset=utf-8;base64, ${buffer.toString("base64")}`;
+  return `data:image/${fileType};base64, ${buffer.toString("base64")}`;
 }
 
 type GetStaticPathItemWithGeneric<Props> = {

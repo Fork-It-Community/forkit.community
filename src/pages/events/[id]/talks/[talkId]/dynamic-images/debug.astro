@@ -1,0 +1,59 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import { getEventTalkStaticPaths } from "@/pages/events/[id]/talks/[talkId]/dynamic-images/_utils";
+import { getEntries } from "astro:content";
+
+export const getStaticPaths = () =>
+  import.meta.env.DEV ? getEventTalkStaticPaths() : [];
+
+const files = Object.keys(import.meta.glob("./_*.tsx", { eager: true }));
+const fileNames = files.map((path) => {
+  const fileName = path
+    .split("/")
+    .at(-1)
+    ?.replace(/\.tsx$/, "")
+    .replace(/^_/, "");
+
+  return fileName;
+});
+
+const props = Astro.props;
+
+const talks = await getEntries(
+  (props.event.data.schedule ?? [])
+    .map((activity) => activity.slug)
+    .filter((s) => !!s),
+);
+---
+
+<MainLayout>
+  <div class="mx-auto flex w-full max-w-screen-lg gap-8 p-8">
+    <div class="flex w-56 flex-col">
+      {
+        talks.map((talk) => (
+          <a
+            href={`/events/${props.event.id}/talks/${talk.id}/dynamic-images/debug`}
+            class="p-1"
+          >
+            {talk.data.title}
+          </a>
+        ))
+      }
+    </div>
+    <div class="flex w-full flex-1 flex-col gap-4">
+      {
+        fileNames.map((fileName) => (
+          <a
+            href={`/events/${props.event.id}/talks/${props.talk.id}/dynamic-images/${fileName}.debug`}
+          >
+            <img
+              alt={fileName}
+              class="w-full max-w-full rounded-md"
+              src={`/events/${props.event.id}/talks/${props.talk.id}/dynamic-images/${fileName}.jpg`}
+            />
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</MainLayout>
