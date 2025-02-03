@@ -17,7 +17,7 @@ export const saveTheDate = (config: { width: number; height: number }) =>
     height: config.height,
     getStaticPaths: getEventStaticPaths,
     render: async (props) => {
-      const postCover = await getAstroImageBase64(props.event.data.image.src);
+      const postCover = await getAstroImageBase64(props.event.data.image.media);
       const coOrganizersLogos = await Promise.all(
         props.coOrganizers.map(
           async (coOrganiser) =>

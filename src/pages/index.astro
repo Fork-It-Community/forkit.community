@@ -59,7 +59,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
   />
   <!-- HERO -->
   <ImageBackgroundHero
-    src={upcomingMajorEvent?.data?.image?.src ?? defaultImage}
+    src={upcomingMajorEvent?.data?.image?.media ?? defaultImage}
     alt={upcomingMajorEvent?.data?.image?.alt ?? ""}
     blur
   />
@@ -117,10 +117,10 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
                   "max-sm:overflow-hidden max-sm:rounded-lg max-sm:bg-background max-sm:p-6 max-sm:shadow-xl",
                 )}
               >
-                {!!upcomingMajorEvent.data.image?.src && (
+                {!!upcomingMajorEvent.data.image?.media && (
                   <div class="pointer-events-none absolute bottom-0 left-0 right-0 top-0 -z-10 overflow-hidden sm:hidden">
                     <Image
-                      src={upcomingMajorEvent.data.image.src}
+                      src={upcomingMajorEvent.data.image.media}
                       alt=""
                       class={cn(
                         "absolute size-full bg-white/20 object-cover object-center transition duration-500 group-hover:scale-110",
@@ -194,7 +194,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
       >
         <Image
           class="aspect-[3/2] w-full bg-background object-cover text-white/40"
-          src={upcomingMajorEvent?.data?.image?.src ?? defaultImage}
+          src={upcomingMajorEvent?.data?.image?.media ?? defaultImage}
           alt={upcomingMajorEvent?.data?.image?.alt ??
             "Speaker giving a tech talk in from of attendees"}
           width={480}

@@ -38,7 +38,7 @@ const title = `${event.data.name}, ${getEventDisplayType(event.data.type)}`;
     image={ogImage.toString()}
   />
   {
-    !!event?.data.image?.src && (
+    !!event?.data.image?.media && (
       <motion.div
         client:load
         initial={{ opacity: 0 }}
@@ -46,7 +46,7 @@ const title = `${event.data.name}, ${getEventDisplayType(event.data.type)}`;
         transition={{ duration: 1 }}
       >
         <ImageBackgroundHero
-          src={event.data.image.src}
+          src={event.data.image.media}
           alt={event.data.image.alt}
         />
       </motion.div>

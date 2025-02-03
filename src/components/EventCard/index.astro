@@ -33,7 +33,7 @@ const isUpcomingEvent = dayjs().isBefore(event.data.date);
   )}
 >
   {
-    !!event.data.image?.src && (
+    !!event.data.image?.media && (
       <div
         class={cn(
           "pointer-events-none absolute bottom-0 left-0 right-0 top-0 -z-10 overflow-hidden",
@@ -41,7 +41,7 @@ const isUpcomingEvent = dayjs().isBefore(event.data.date);
         )}
       >
         <Image
-          src={event.data.image.src}
+          src={event.data.image.media}
           alt=""
           class={cn(
             "absolute size-full bg-white/20 object-cover object-center transition duration-500 group-hover:scale-110",
