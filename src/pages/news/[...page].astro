@@ -28,7 +28,7 @@ let hasHighlighted = false;
     description="All the news about Fork it! Community. Conferences feedback, real life experience, we share it all."
     noindex={page.data.length === 0}
   />
-  <div class="mx-auto w-full max-w-screen-sm px-4">
+  <div class="max-w-(--breakpoint-sm) mx-auto w-full px-4">
     <MainPageTitle
       title="Fork it! News"
       subtitle="Last news about the community"
@@ -37,7 +37,7 @@ let hasHighlighted = false;
   </div>
 
   <div class="flex flex-1 flex-col">
-    <div class="mx-auto w-full max-w-screen-lg pb-40">
+    <div class="max-w-(--breakpoint-lg) mx-auto w-full pb-40">
       <div class="grid gap-4 px-6 md:grid-cols-2">
         {
           page.currentPage !== 1 && (

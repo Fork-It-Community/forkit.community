@@ -37,13 +37,13 @@ export const EventNav = (props: {
         right: "var(--removed-body-scroll-bar-size, 0)",
       }}
     >
-      <div className="mx-auto flex w-full max-w-screen-lg justify-between">
+      <div className="max-w-(--breakpoint-lg) mx-auto flex w-full justify-between">
         <a
           href={`/events/${props.eventId}#`}
           className="group flex flex-col justify-center gap-1 px-6"
         >
           <Logo className="w-28" />
-          <span className="line-clamp-1 font-heading text-2xs font-medium uppercase leading-tight tracking-wide opacity-60 group-hover:opacity-100">
+          <span className="font-heading text-2xs line-clamp-1 font-medium uppercase leading-tight tracking-wide opacity-60 group-hover:opacity-100">
             {props.eventName}
           </span>
         </a>
@@ -53,7 +53,7 @@ export const EventNav = (props: {
             <Button size="xs" asChild>
               <a
                 href={props.eventMetadata.tickets?.href}
-                className="group gap-2 max-xs:hidden"
+                className="max-xs:hidden group gap-2"
               >
                 Get Your Ticket
               </a>
@@ -85,7 +85,7 @@ export const EventNav = (props: {
                   className="group flex flex-col justify-center gap-1 px-6 py-4"
                 >
                   <Logo className="w-28" />
-                  <span className="line-clamp-1 font-heading text-2xs font-medium uppercase leading-tight tracking-wide opacity-60 group-hover:opacity-100">
+                  <span className="font-heading text-2xs line-clamp-1 font-medium uppercase leading-tight tracking-wide opacity-60 group-hover:opacity-100">
                     {props.eventName}
                   </span>
                 </a>

@@ -27,7 +27,7 @@ const talks = await getEntries(
 ---
 
 <MainLayout>
-  <div class="mx-auto flex w-full max-w-screen-lg gap-8 p-8">
+  <div class="max-w-(--breakpoint-lg) mx-auto flex w-full gap-8 p-8">
     <div class="flex w-56 flex-col">
       {
         talks.map((talk) => (

@@ -22,7 +22,7 @@ const { people } = Astro.props;
   </div>
   <div class="flex flex-col gap-2">
     <div class="flex flex-col gap-0.5">
-      <p class="line-clamp-3 font-heading text-sm font-medium tracking-wide">
+      <p class="font-heading line-clamp-3 text-sm font-medium tracking-wide">
         {people.data.name}
       </p>
       {
@@ -41,7 +41,7 @@ const { people } = Astro.props;
             <a
               href={people.data.company.href}
               target="_blank"
-              class="text-xs underline opacity-60 transition hover:text-primary hover:opacity-100"
+              class="hover:text-primary text-xs underline opacity-60 transition hover:opacity-100"
             >
               {people.data.company.title}
             </a>
@@ -62,7 +62,7 @@ const { people } = Astro.props;
                 <li>
                   <a
                     href={social.href}
-                    class="opacity-60 transition hover:text-primary hover:opacity-100"
+                    class="hover:text-primary opacity-60 transition hover:opacity-100"
                     target="_blank"
                   >
                     <span class="sr-only">{social.type}</span>

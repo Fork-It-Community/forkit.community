@@ -123,12 +123,12 @@ const ogImage = new URL(
       <div class="flex flex-col items-center justify-center gap-4">
         <Logo className="w-32 md:w-48" />
         <h1
-          class="flex flex-col gap-1 text-balance text-center font-heading md:gap-2"
+          class="font-heading flex flex-col gap-1 text-balance text-center md:gap-2"
         >
           <span class="text-3xl font-medium md:text-6xl">
             {getEventDisplayDate(event)}
           </span>
-          <span class="text-xl text-primary md:text-4xl">
+          <span class="text-primary text-xl md:text-4xl">
             {event.data.city}, {event.data.country}
           </span>
 
@@ -212,13 +212,13 @@ const ogImage = new URL(
     >
       <p class="text-xs uppercase tracking-widest opacity-40">Quick Access</p>
       <nav
-        class="flex flex-wrap items-center justify-center gap-x-1 xs:gap-x-2 md:gap-x-3"
+        class="xs:gap-x-2 flex flex-wrap items-center justify-center gap-x-1 md:gap-x-3"
       >
         {
           navItems.map((item) => (
             <a
               href={item.href}
-              class="flex p-2 text-sm underline decoration-foreground/40 underline-offset-4 opacity-60 hover:text-primary hover:decoration-current hover:opacity-100 md:text-base"
+              class="decoration-foreground/40 hover:text-primary flex p-2 text-sm underline underline-offset-4 opacity-60 hover:decoration-current hover:opacity-100 md:text-base"
             >
               {item.label}
             </a>
@@ -260,8 +260,9 @@ const ogImage = new URL(
       >
         <div
           class={cn(
-            "mx-auto flex w-full max-w-screen-lg flex-col gap-12",
-            event.data.afterEventContent.afterMovie && "max-w-screen-xl",
+            "max-w-(--breakpoint-lg) mx-auto flex w-full flex-col gap-12",
+            event.data.afterEventContent.afterMovie &&
+              "max-w-(--breakpoint-xl)",
           )}
         >
           <div class="text-center">
@@ -275,7 +276,7 @@ const ogImage = new URL(
 
           <div class="flex flex-1 flex-col justify-center gap-4 md:flex-row">
             {event.data.afterEventContent.afterMovie && (
-              <div class="relative aspect-[1134/640] w-full min-w-0 flex-1">
+              <div class="aspect-1134/640 relative w-full min-w-0 flex-1">
                 <a
                   href={event.data.afterEventContent.afterMovie.href}
                   target="_blank"
@@ -294,12 +295,14 @@ const ogImage = new URL(
             )}
 
             <div
-              class={cn("flex flex-[0.7] flex-col gap-4 md:max-w-screen-sm")}
+              class={cn(
+                "md:max-w-(--breakpoint-sm) flex flex-[0.7] flex-col gap-4",
+              )}
             >
               {!!event.data.afterEventContent.photos.sources?.length && (
                 <div
                   class={cn(
-                    "grid aspect-[640/426] gap-4",
+                    "aspect-640/426 grid gap-4",
                     (event.data.afterEventContent.photos.sources?.length ?? 0) >
                       1 && "grid-cols-2",
                   )}
@@ -390,7 +393,7 @@ const ogImage = new URL(
     event.data.location && (
       <article
         id="venue"
-        class="relative mx-auto flex w-full max-w-screen-2xl scroll-m-8 flex-col gap-8 py-8 md:flex-row md:gap-4 md:py-24"
+        class="max-w-(--breakpoint-2xl) relative mx-auto flex w-full scroll-m-8 flex-col gap-8 py-8 md:flex-row md:gap-4 md:py-24"
       >
         {event.data.location.image && (
           <div class="flex-1 md:-ml-4">
@@ -413,7 +416,7 @@ const ogImage = new URL(
               >
                 <MdLocationPin className="size-5 transition opacity-40 group-hover:opacity-100" />
                 <address class="not-italic leading-tight">
-                  <strong class="transition group-hover:text-primary">
+                  <strong class="group-hover:text-primary transition">
                     {event.data.location.name}
                   </strong>
                   <br />
@@ -451,10 +454,10 @@ const ogImage = new URL(
           href={event.data.cfp.href}
           target="_blank"
           rel="noreferer"
-          class="group mx-auto flex w-full max-w-screen-md flex-col items-start gap-6 rounded-lg bg-white/5 p-8 backdrop-blur-md transition hover:bg-white/10 md:flex-row md:items-center md:px-12 md:py-10"
+          class="max-w-(--breakpoint-md) group mx-auto flex w-full flex-col items-start gap-6 rounded-lg bg-white/5 p-8 backdrop-blur-md transition hover:bg-white/10 md:flex-row md:items-center md:px-12 md:py-10"
         >
           <div class="flex flex-1 flex-col">
-            <h2 class="text-balance font-heading text-xl font-medium uppercase tracking-widest transition group-hover:text-primary">
+            <h2 class="font-heading group-hover:text-primary text-balance text-xl font-medium uppercase tracking-widest transition">
               Submit your talk
             </h2>
             <p class="text-balance text-base tracking-wide opacity-60">
@@ -478,15 +481,15 @@ const ogImage = new URL(
   <!-- Schedule & Speakers -->
   <div
     class={cn(
-      "relative mx-auto flex w-full max-w-screen-sm flex-col gap-24 px-4 py-16 lg:max-w-screen-lg lg:flex-row lg:gap-12",
-      !speakers.length && "lg:max-w-screen-sm",
+      "relative mx-auto flex w-full max-w-(--breakpoint-sm) flex-col gap-24 px-4 py-16 lg:max-w-(--breakpoint-lg) lg:flex-row lg:gap-12",
+      !speakers.length && "lg:max-w-(--breakpoint-sm)",
     )}
   >
     <div class="flex w-full flex-[1.3] flex-col gap-8 pb-4">
       <div class="flex items-center gap-2">
         <h2
           id="schedule"
-          class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+          class="font-heading scroll-mt-32 text-2xl font-medium uppercase tracking-widest"
         >
           Schedule
         </h2>
@@ -506,11 +509,11 @@ const ogImage = new URL(
         <div class="flex w-full flex-1 flex-col gap-8">
           <h2
             id="speakers"
-            class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+            class="font-heading scroll-mt-32 text-2xl font-medium uppercase tracking-widest"
           >
             Speakers
           </h2>
-          <div class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-3">
+          <div class="xs:grid-cols-3 grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-4 md:grid-cols-3">
             {speakers.map((speaker) => (
               <People people={speaker} />
             ))}
@@ -524,10 +527,10 @@ const ogImage = new URL(
 
   {
     !!sponsors.length && (
-      <div class="relative mx-auto flex w-full max-w-screen-lg flex-col gap-8 px-4 py-12 md:py-24">
+      <div class="max-w-(--breakpoint-lg) relative mx-auto flex w-full flex-col gap-8 px-4 py-12 md:py-24">
         <h2
           id="sponsors"
-          class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+          class="font-heading scroll-mt-32 text-2xl font-medium uppercase tracking-widest"
         >
           Sponsors
         </h2>
@@ -588,10 +591,10 @@ const ogImage = new URL(
           href={event.data.prospectus.href}
           target="_blank"
           rel="noreferer"
-          class="group mx-auto flex w-full max-w-screen-md flex-col items-start gap-6 rounded-lg bg-white/5 p-8 backdrop-blur-md transition hover:bg-white/10 md:flex-row md:items-center md:px-12 md:py-10"
+          class="max-w-(--breakpoint-md) group mx-auto flex w-full flex-col items-start gap-6 rounded-lg bg-white/5 p-8 backdrop-blur-md transition hover:bg-white/10 md:flex-row md:items-center md:px-12 md:py-10"
         >
           <div class="flex flex-1 flex-col">
-            <h2 class="text-balance font-heading text-xl font-medium uppercase tracking-widest transition group-hover:text-primary">
+            <h2 class="font-heading group-hover:text-primary text-balance text-xl font-medium uppercase tracking-widest transition">
               Want to support the event?
             </h2>
             <p class="text-balance text-base tracking-wide opacity-60">

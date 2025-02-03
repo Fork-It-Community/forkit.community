@@ -14,7 +14,7 @@ export const FAQ = (
       <article className="mx-auto max-w-3xl px-6 lg:px-8">
         <h2
           id="faq"
-          className="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+          className="font-heading scroll-mt-32 text-2xl font-medium uppercase tracking-widest"
         >
           Frequently Asked Questions
         </h2>
@@ -23,7 +23,7 @@ export const FAQ = (
             {props.faq?.map((item) => (
               <AccordionItem key={item.question} value={item.question}>
                 <dt>
-                  <AccordionTrigger className="hover:text-neutral-400 text-left font-heading text-lg font-semibold tracking-wide transition hover:no-underline">
+                  <AccordionTrigger className="font-heading text-left text-lg font-semibold tracking-wide transition hover:text-neutral-400 hover:no-underline">
                     {item.question}
                   </AccordionTrigger>
                 </dt>

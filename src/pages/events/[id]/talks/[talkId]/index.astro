@@ -135,7 +135,7 @@ const endDate =
       })),
     }}
   />
-  <div class="mx-auto max-w-screen-sm p-4 md:p-8">
+  <div class="max-w-(--breakpoint-sm) mx-auto p-4 md:p-8">
     <div class="flex justify-between">
       <BackButton href={`/events/${event.id}`} client:load />
       {
@@ -180,7 +180,7 @@ const endDate =
         <div class="flex gap-2">
           <div>
             <span
-              class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none"
+              class="text-2xs flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 font-bold uppercase leading-none"
             >
               <IoLanguageSharp className="text-base" />
               <span>Talk in {talk.data.language}</span>
@@ -193,7 +193,7 @@ const endDate =
       </Prose>
 
       <div
-        class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-3 sm:grid-cols-4"
+        class="xs:grid-cols-3 grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-4"
       >
         {
           speakers.map((speaker) => (

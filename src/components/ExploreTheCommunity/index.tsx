@@ -10,15 +10,15 @@ export const ExploreTheCommunity = (props: {
   eventDate?: Date;
 }) => {
   return (
-    <div className="bg-background-blur relative z-10 mx-auto flex h-12 max-w-screen-lg items-center justify-between rounded-md">
+    <div className="bg-background-blur max-w-(--breakpoint-lg) relative z-10 mx-auto flex h-12 items-center justify-between rounded-md">
       <a
         href={props.logoUrl}
         className="group flex min-w-0 flex-1 items-center gap-3 pe-2 ps-5 text-sm tracking-wide"
       >
         {props.eventCity ? (
           <>
-            <LogoIcon className="w-[18px] text-primary" />
-            <span className="line-clamp-1 flex gap-0 font-heading text-xs font-medium uppercase leading-none opacity-60 group-hover:opacity-100 max-sm:flex-col sm:gap-1">
+            <LogoIcon className="text-primary w-[18px]" />
+            <span className="font-heading line-clamp-1 flex gap-0 text-xs font-medium uppercase leading-none opacity-60 group-hover:opacity-100 max-sm:flex-col sm:gap-1">
               <span>
                 {props.eventCity}
                 <span className="max-sm:hidden">,</span>{" "}

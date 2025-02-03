@@ -63,7 +63,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
     alt={upcomingMajorEvent?.data?.image?.alt ?? ""}
     blur
   />
-  <div class="mx-auto w-full max-w-screen-xl px-4">
+  <div class="max-w-(--breakpoint-xl) mx-auto w-full px-4">
     <div class="flex w-full items-center justify-center pb-4 pt-20 md:hidden">
       <Logo className="w-48" />
     </div>
@@ -73,7 +73,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
       <div class="flex w-full flex-1 flex-col gap-16 sm:gap-8">
         <div class="flex flex-col gap-4">
           <h1
-            class="-mx-[2px] text-balance text-center font-heading text-4xl font-medium uppercase 2xs:text-5xl xs:text-6xl sm:text-left sm:text-5xl xl:text-6xl"
+            class="font-heading 2xs:text-5xl xs:text-6xl -mx-[2px] text-balance text-center text-4xl font-medium uppercase sm:text-left sm:text-5xl xl:text-6xl"
           >
             Global<br /> Developer<br />
             <span class="text-primary">Community</span>
@@ -114,7 +114,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
                 title="Upcoming major event"
                 class={cn(
                   "group relative z-10 flex flex-col gap-3",
-                  "max-sm:overflow-hidden max-sm:rounded-lg max-sm:bg-background max-sm:p-6 max-sm:shadow-xl",
+                  "max-sm:bg-background max-sm:overflow-hidden max-sm:rounded-lg max-sm:p-6 max-sm:shadow-xl",
                 )}
               >
                 {!!upcomingMajorEvent.data.image?.media && (
@@ -127,7 +127,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
                       )}
                       width={600}
                     />
-                    <div class="absolute size-full bg-gradient-to-r from-black/90 to-black/0" />
+                    <div class="bg-linear-to-r absolute size-full from-black/90 to-black/0" />
                     <div
                       class="absolute h-full w-full"
                       style={{
@@ -147,7 +147,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
                     <div class="font-heading text-lg font-medium sm:text-2xl">
                       {getEventDisplayDate(upcomingMajorEvent)}
                     </div>
-                    <div class="-mt-1 font-heading text-sm opacity-60 transition group-hover:text-primary group-hover:opacity-100 sm:text-lg">
+                    <div class="font-heading group-hover:text-primary -mt-1 text-sm opacity-60 transition group-hover:opacity-100 sm:text-lg">
                       {upcomingMajorEvent.data.city},{" "}
                       {upcomingMajorEvent.data.country}
                     </div>
@@ -177,7 +177,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
                       <div class="font-heading font-medium tracking-wide opacity-80 transition group-hover:opacity-100 sm:text-sm">
                         {getEventDisplayDate(event)}
                       </div>
-                      <div class="text-xs tracking-wide opacity-60 transition group-hover:text-primary group-hover:opacity-100">
+                      <div class="group-hover:text-primary text-xs tracking-wide opacity-60 transition group-hover:opacity-100">
                         {event.data.city}, {event.data.country}
                       </div>
                     </div>
@@ -193,7 +193,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
         class="forkit-image-mask relative -mx-6 flex-[1.5] max-sm:hidden sm:mx-0"
       >
         <Image
-          class="aspect-[3/2] w-full bg-background object-cover text-white/40"
+          class="aspect-3/2 bg-background w-full object-cover text-white/40"
           src={upcomingMajorEvent?.data?.image?.media ?? defaultImage}
           alt={upcomingMajorEvent?.data?.image?.alt ??
             "Speaker giving a tech talk in from of attendees"}
@@ -212,9 +212,9 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
     {
       !!news.length && (
         <div class="flex flex-col py-6 md:py-12">
-          <div class="mx-auto flex w-full max-w-screen-lg flex-col gap-2 px-6">
+          <div class="max-w-(--breakpoint-lg) mx-auto flex w-full flex-col gap-2 px-6">
             <a href="/news" title="All the podcasts">
-              <h2 class="flex items-center gap-2 text-balance font-heading text-3xl font-medium uppercase tracking-wide">
+              <h2 class="font-heading flex items-center gap-2 text-balance text-3xl font-medium uppercase tracking-wide">
                 <MdFeed className="opacity-40" />
                 News
               </h2>
@@ -226,12 +226,12 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
 
           <div class="mx-auto flex w-full flex-col gap-2">
             <div class="hide-scrollbar overflow-auto">
-              <div class="mx-auto flex w-full max-w-screen-lg gap-4 px-6 py-8 md:gap-6">
+              <div class="max-w-(--breakpoint-lg) mx-auto flex w-full gap-4 px-6 py-8 md:gap-6">
                 {news.map((article) => (
                   <NewsCardForCarousel newsItem={article} />
                 ))}
                 {news.length < 2 && (
-                  <div class="relative flex aspect-[3/2] w-[30rem] max-w-[80vw] flex-none items-center justify-center rounded-md bg-white/5 text-xs uppercase tracking-widest text-white/50">
+                  <div class="aspect-3/2 relative flex w-[30rem] max-w-[80vw] flex-none items-center justify-center rounded-md bg-white/5 text-xs uppercase tracking-widest text-white/50">
                     Coming soon
                   </div>
                 )}
@@ -252,10 +252,12 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
 
     <!-- PODCASTS -->
     <div class="flex flex-col py-6 md:py-12">
-      <div class="mx-auto flex w-full max-w-screen-lg flex-col gap-2 px-6">
+      <div
+        class="max-w-(--breakpoint-lg) mx-auto flex w-full flex-col gap-2 px-6"
+      >
         <a href="/podcasts" title="All the podcasts">
           <h2
-            class="flex items-center gap-2 text-balance font-heading text-3xl font-medium uppercase tracking-wide"
+            class="font-heading flex items-center gap-2 text-balance text-3xl font-medium uppercase tracking-wide"
           >
             <MdPodcasts className="opacity-40" />
             Podcasts
@@ -271,7 +273,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
       <div class="mx-auto flex w-full flex-col gap-2">
         <div class="hide-scrollbar overflow-auto">
           <div
-            class="mx-auto flex w-full max-w-screen-lg gap-4 px-6 py-8 md:gap-6"
+            class="max-w-(--breakpoint-lg) mx-auto flex w-full gap-4 px-6 py-8 md:gap-6"
           >
             {
               podcasts.map((episode) => (
@@ -322,7 +324,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
       width={1200}
     />
     <div
-      class="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/0"
+      class="bg-linear-to-br absolute inset-0 from-black/70 via-black/60 to-black/0"
     >
     </div>
     <div
@@ -334,11 +336,11 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
     >
     </div>
     <div
-      class="relative mx-auto flex max-w-screen-lg flex-col items-center justify-center gap-8 px-4 md:flex-row xl:justify-normal"
+      class="max-w-(--breakpoint-lg) relative mx-auto flex flex-col items-center justify-center gap-8 px-4 md:flex-row xl:justify-normal"
     >
       <div class="relative flex w-full flex-1 flex-col gap-4 px-6 md:px-0">
         <h2
-          class="text-balance font-heading text-3xl font-medium uppercase tracking-wide"
+          class="font-heading text-balance text-3xl font-medium uppercase tracking-wide"
         >
           What is Fork&nbsp;it! Community?
         </h2>
@@ -358,7 +360,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
       </div>
       {
         afterMovie && (
-          <div class="relative aspect-[1134/640] w-full min-w-0 flex-1">
+          <div class="aspect-1134/640 relative w-full min-w-0 flex-1">
             <a href={afterMovie.href} target="_blank">
               <Image
                 alt={afterMovie.thumbnail.alt}

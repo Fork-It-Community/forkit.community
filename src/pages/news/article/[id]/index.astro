@@ -53,17 +53,17 @@ const ogImage = new URL(
   />
   {
     !!article.data.featuredImage && (
-      <div class="relative mx-auto mt-2 w-full max-w-screen-lg px-2 lg:mt-10 lg:px-6">
+      <div class="max-w-(--breakpoint-lg) relative mx-auto mt-2 w-full px-2 lg:mt-10 lg:px-6">
         <div class="absolute left-8 top-8 z-10 lg:left-14">
           <BackButton client:visible href="/news" />
         </div>
         <div
-          class="relative flex-[10] rounded-lg bg-black transition duration-500 group-hover:scale-105"
+          class="flex-10 relative rounded-lg bg-black transition duration-500 group-hover:scale-105"
           style={{
             maskImage: "linear-gradient(180deg, black 20%, transparent 100%)",
           }}
         >
-          <div class="pointer-events-none absolute inset-0 flex h-full w-full bg-gradient-to-b from-black/0 to-black" />
+          <div class="bg-linear-to-b pointer-events-none absolute inset-0 flex h-full w-full from-black/0 to-black" />
           <Image
             src={article.data.featuredImage}
             alt={article.data.title}
@@ -77,7 +77,7 @@ const ogImage = new URL(
   }
   <div
     class={cn(
-      "mx-auto w-full flex-1 max-w-screen-md flex flex-col gap-12 pb-40 relative z-10 pt-24 px-8 md:px-12",
+      "mx-auto w-full flex-1 max-w-(--breakpoint-md) flex flex-col gap-12 pb-40 relative z-10 pt-24 px-8 md:px-12",
       !!article.data.featuredImage && "-mt-36 md:-mt-96",
     )}
   >
@@ -90,7 +90,7 @@ const ogImage = new URL(
         )
       }
       <h1
-        class="text-balance font-heading text-2xl font-medium uppercase tracking-wider md:text-4xl/tight"
+        class="font-heading text-balance text-2xl font-medium uppercase tracking-wider md:text-4xl/tight"
       >
         {article.data.title}
       </h1>
@@ -131,7 +131,7 @@ const ogImage = new URL(
             </div>
           ) : (
             <div class="relative z-20 flex items-center gap-x-2.5 text-sm font-medium">
-              <div class="flex size-6 items-center justify-center rounded-full bg-black text-primary">
+              <div class="text-primary flex size-6 items-center justify-center rounded-full bg-black">
                 <LogoIcon className="size-3" />
               </div>
               <span class="opacity-60">Fork It! Team</span>

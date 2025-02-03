@@ -38,7 +38,7 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
       >
         <div
           class={cn(
-            "pointer-events-none absolute inset-0 w-full bg-gradient-to-b from-black/0 via-black/70 to-black",
+            "bg-linear-to-b pointer-events-none absolute inset-0 w-full from-black/0 via-black/70 to-black",
             gradientClass,
           )}
         />
@@ -67,7 +67,7 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
       </time>
     </div>
     <h2
-      class="line-clamp-2 text-balance font-heading text-xl font-medium tracking-wide transition duration-500 group-hover:text-primary"
+      class="font-heading group-hover:text-primary line-clamp-2 text-balance text-xl font-medium tracking-wide transition duration-500"
     >
       <a href={`/news/article/${newsItem.id}`}>
         {newsItem.data.title}
@@ -114,7 +114,7 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
           </div>
         ) : (
           <div class="relative z-20 flex items-center gap-x-2.5 text-sm font-medium">
-            <div class="flex size-6 items-center justify-center rounded-full bg-black text-primary">
+            <div class="text-primary flex size-6 items-center justify-center rounded-full bg-black">
               <LogoIcon className="size-3" />
             </div>
             <span class="opacity-60">Fork It! Team</span>

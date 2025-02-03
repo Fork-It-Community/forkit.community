@@ -26,12 +26,12 @@ const people = [...hosts, ...guests];
   href={`/podcasts/${episode.id}`}
   class="group relative z-10 flex flex-col gap-4 overflow-hidden rounded-lg bg-white/5 p-4 backdrop-blur-md transition duration-500 hover:bg-white/10"
 >
-  <div class="flex gap-4 max-xs:flex-col">
+  <div class="max-xs:flex-col flex gap-4">
     <div>
       <Image
         src={episode.data.cover}
         alt={episode.data.title}
-        class="rounded-md border-2 border-black/20 xs:size-48"
+        class="xs:size-48 rounded-md border-2 border-black/20"
         width={700}
         height={700}
       />
@@ -42,7 +42,7 @@ const people = [...hosts, ...guests];
           class="flex items-start gap-2 max-sm:flex-col sm:items-center sm:justify-between"
         >
           <div
-            class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none opacity-60 transition group-hover:opacity-100"
+            class="text-2xs flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 font-bold uppercase leading-none opacity-60 transition group-hover:opacity-100"
           >
             <IoLanguageSharp className="text-base" />
             <span>Episode in {episode.data.language}</span>
@@ -52,7 +52,7 @@ const people = [...hosts, ...guests];
           </div>
         </div>
         <div
-          class="font-heading font-medium transition group-hover:text-primary"
+          class="font-heading group-hover:text-primary font-medium transition"
         >
           {episode.data.title}
         </div>
@@ -80,7 +80,7 @@ const people = [...hosts, ...guests];
           {
             people.map((person) => (
               <Image
-                class="aspect-square rounded-full border-2 border-background"
+                class="border-background aspect-square rounded-full border-2"
                 src={person.data.avatar ?? personPlaceholder}
                 alt={person.data.name}
                 width={40}

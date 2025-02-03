@@ -4,8 +4,8 @@ import { ENV_NAME } from "astro:env/server";
 
 {
   !!ENV_NAME && (
-    <div class="pointer-events-none fixed left-0 right-0 top-0 z-[9999] h-[2px] bg-primary shadow-2xl">
-      <span class="fixed left-0 top-0 rounded-br-sm bg-primary px-1.5 py-0.5 font-heading text-2xs font-medium uppercase tracking-widest text-black">
+    <div class="z-9999 bg-primary pointer-events-none fixed left-0 right-0 top-0 h-[2px] shadow-2xl">
+      <span class="bg-primary font-heading text-2xs fixed left-0 top-0 rounded-br-sm px-1.5 py-0.5 font-medium uppercase tracking-widest text-black">
         {ENV_NAME}
       </span>
     </div>

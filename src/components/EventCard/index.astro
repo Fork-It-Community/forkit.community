@@ -50,7 +50,7 @@ const isUpcomingEvent = dayjs().isBefore(event.data.date);
         />
         <div
           class={cn(
-            "absolute size-full bg-gradient-to-r from-black/90 via-black/20",
+            "bg-linear-to-r absolute size-full from-black/90 via-black/20",
             coOrganizers.length && !isUpcomingEvent && "sm:to-black/80",
           )}
         />
@@ -74,7 +74,7 @@ const isUpcomingEvent = dayjs().isBefore(event.data.date);
       <div class="flex items-center gap-3">
         {
           event.data.status === "cancelled" && (
-            <div class="bg-background-blur rounded px-1.5 py-1 text-2xs font-bold uppercase leading-none text-white transition group-hover:bg-primary group-hover:text-black">
+            <div class="bg-background-blur text-2xs group-hover:bg-primary rounded px-1.5 py-1 font-bold uppercase leading-none text-white transition group-hover:text-black">
               Cancelled
             </div>
           )

@@ -36,7 +36,7 @@ const podcastsEpisodes = await getPersonEpisodes(person, { limit: 3 });
         person.data.forkit?.role === "founder" && (
           <a
             href="/about#organizers"
-            class="w-fit rounded bg-primary px-1.5 py-1 text-2xs font-bold uppercase leading-none text-black transition"
+            class="bg-primary text-2xs w-fit rounded px-1.5 py-1 font-bold uppercase leading-none text-black transition"
           >
             Fork It! Founder
           </a>
@@ -44,7 +44,7 @@ const podcastsEpisodes = await getPersonEpisodes(person, { limit: 3 });
       }
 
       <div class="flex flex-col gap-0.5">
-        <p class="line-clamp-3 font-heading text-sm font-medium tracking-wide">
+        <p class="font-heading line-clamp-3 text-sm font-medium tracking-wide">
           {person.data.name}
         </p>
         {
@@ -63,7 +63,7 @@ const podcastsEpisodes = await getPersonEpisodes(person, { limit: 3 });
               <a
                 href={person.data.company.href}
                 target="_blank"
-                class="text-xs underline opacity-60 transition hover:text-primary hover:opacity-100"
+                class="hover:text-primary text-xs underline opacity-60 transition hover:opacity-100"
               >
                 {person.data.company.title}
               </a>
@@ -85,7 +85,7 @@ const podcastsEpisodes = await getPersonEpisodes(person, { limit: 3 });
                   <li>
                     <a
                       href={social.href}
-                      class="opacity-60 transition hover:text-primary hover:opacity-100"
+                      class="hover:text-primary opacity-60 transition hover:opacity-100"
                       target="_blank"
                     >
                       <span class="sr-only">{social.type}</span>
@@ -125,9 +125,9 @@ const podcastsEpisodes = await getPersonEpisodes(person, { limit: 3 });
                   class="group flex gap-2 text-sm"
                 >
                   <MdEvent className="flex-none opacity-40 mt-0.5 transition group-hover:opacity-100" />
-                  <span class="opacity-80 transition group-hover:text-primary group-hover:opacity-100">
+                  <span class="group-hover:text-primary opacity-80 transition group-hover:opacity-100">
                     {event.data.name}{" "}
-                    <span class="flex text-2xs uppercase text-white opacity-80 transition group-hover:opacity-100">
+                    <span class="text-2xs flex uppercase text-white opacity-80 transition group-hover:opacity-100">
                       {[
                         isOrganizer && "Organizer",
                         isSpeaker && "Speaker",
@@ -166,10 +166,10 @@ const podcastsEpisodes = await getPersonEpisodes(person, { limit: 3 });
                   class="group flex gap-2 text-sm"
                 >
                   <MdPodcasts className="flex-none opacity-40 mt-0.5 transition group-hover:opacity-100" />
-                  <span class="opacity-80 transition group-hover:text-primary group-hover:opacity-100">
+                  <span class="group-hover:text-primary opacity-80 transition group-hover:opacity-100">
                     {episode.data.title}
 
-                    <span class="flex text-2xs uppercase text-white opacity-80 transition group-hover:opacity-100">
+                    <span class="text-2xs flex uppercase text-white opacity-80 transition group-hover:opacity-100">
                       {[isHost && "Host", isGuest && "Guest"]
                         .filter(Boolean)
                         .join(", ")}

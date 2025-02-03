@@ -27,7 +27,9 @@ const pastEvents = await getPastEvents();
   <div class="flex flex-col gap-24 pb-40">
     {
       !!upcomingEvents.length && (
-        <div class={cn("mx-auto w-full max-w-screen-lg grid-cols-2 px-4")}>
+        <div
+          class={cn("max-w-(--breakpoint-lg) mx-auto w-full grid-cols-2 px-4")}
+        >
           <div class="flex flex-col gap-2">
             <h2 class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
               Upcoming Events
@@ -71,7 +73,7 @@ const pastEvents = await getPastEvents();
 
     {
       !!pastEvents.length && (
-        <div class="mx-auto w-full max-w-screen-sm px-4">
+        <div class="max-w-(--breakpoint-sm) mx-auto w-full px-4">
           <div class="flex flex-col gap-2">
             <h2 class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
               Past Events

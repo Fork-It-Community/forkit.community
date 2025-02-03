@@ -14,11 +14,11 @@ const { href } = Astro.props;
     href={href}
     target="_blank"
     rel="noreferer"
-    class="group mx-auto flex w-full max-w-screen-md flex-col items-start gap-6 rounded-lg bg-white/5 p-8 backdrop-blur-md transition hover:bg-white/10 md:flex-row md:items-center md:px-12 md:py-10"
+    class="max-w-(--breakpoint-md) group mx-auto flex w-full flex-col items-start gap-6 rounded-lg bg-white/5 p-8 backdrop-blur-md transition hover:bg-white/10 md:flex-row md:items-center md:px-12 md:py-10"
   >
     <div class="flex flex-1 flex-col">
       <h2
-        class="text-balance font-heading text-xl font-medium uppercase tracking-widest transition group-hover:text-primary"
+        class="font-heading group-hover:text-primary text-balance text-xl font-medium uppercase tracking-widest transition"
       >
         We need you!
       </h2>
