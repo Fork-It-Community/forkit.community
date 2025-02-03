@@ -19,7 +19,7 @@ export const LogoWithFriends = (props: { logos?: string[] | undefined }) => {
           style={{
             width: 27 * 5,
             height: 18 * 5,
-            marginRight: 40,
+            marginRight: 24,
             color: COLORS.primary,
           }}
         />
@@ -41,6 +41,7 @@ export const LogoWithFriends = (props: { logos?: string[] | undefined }) => {
               fontSize: 48,
               opacity: 0.2,
               marginRight: 24,
+              marginLeft: 24,
             }}
           >
             &times;
