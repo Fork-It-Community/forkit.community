@@ -1,9 +1,7 @@
 ---
-import { getEventsCollection } from "@/lib/events";
-
 import MainLayout from "@/layouts/MainLayout.astro";
-import dayjs from "dayjs";
 import { getEventTalkStaticPaths } from "@/pages/events/[id]/talks/[talkId]/dynamic-images/_utils";
+import { getEntries } from "astro:content";
 
 export const getStaticPaths = () =>
   import.meta.env.DEV ? getEventTalkStaticPaths() : [];
@@ -21,8 +19,10 @@ const fileNames = files.map((path) => {
 
 const props = Astro.props;
 
-const allEvents = (await getEventsCollection()).sort((a, b) =>
-  dayjs(b.data.date).diff(a.data.date),
+const talks = await getEntries(
+  (props.event.data.schedule ?? [])
+    .map((activity) => activity.slug)
+    .filter((s) => !!s),
 );
 ---
 
@@ -30,9 +30,12 @@ const allEvents = (await getEventsCollection()).sort((a, b) =>
   <div class="mx-auto flex w-full max-w-screen-lg gap-8 p-8">
     <div class="flex w-56 flex-col">
       {
-        allEvents.map((event) => (
-          <a href={`/events/${event.id}/dynamic-images/debug`} class="p-1">
-            {event.data.name}
+        talks.map((talk) => (
+          <a
+            href={`/events/${props.event.id}/talks/${talk.id}/dynamic-images/debug`}
+            class="p-1"
+          >
+            {talk.data.title}
           </a>
         ))
       }
@@ -41,12 +44,12 @@ const allEvents = (await getEventsCollection()).sort((a, b) =>
       {
         fileNames.map((fileName) => (
           <a
-            href={`/events/${props.event.id}/dynamic-images/${fileName}.debug`}
+            href={`/events/${props.event.id}/talks/${props.talk.id}/dynamic-images/${fileName}.debug`}
           >
             <img
               alt={fileName}
               class="w-full max-w-full rounded-md"
-              src={`/events/${props.event.id}/dynamic-images/${fileName}.jpg`}
+              src={`/events/${props.event.id}/talks/${props.talk.id}/dynamic-images/${fileName}.jpg`}
             />
           </a>
         ))

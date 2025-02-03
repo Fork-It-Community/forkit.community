@@ -1,5 +1,5 @@
 import { getEventsCollection } from "@/lib/events";
-import { getEntries } from "astro:content";
+import { getEntries, getEntry } from "astro:content";
 
 export const getEventTalkStaticPaths = async () => {
   const events = await getEventsCollection();
@@ -13,13 +13,21 @@ export const getEventTalkStaticPaths = async () => {
             .filter((s) => !!s),
         );
 
-        return talks.map((s) => ({
-          ...s,
-          __event: event,
-          __schedule: event.data.schedule?.find(
-            (activity) => activity.slug?.id === s.id,
-          ),
-        }));
+        return Promise.all(
+          talks.map(async (s) => ({
+            ...s,
+            speakers: await Promise.all(
+              s.data.speakers.map(async (speaker) => ({
+                ...speaker,
+                ...(await getEntry(speaker.id)),
+              })),
+            ),
+            __event: event,
+            __schedule: event.data.schedule?.find(
+              (activity) => activity.slug?.id === s.id,
+            ),
+          })),
+        );
       }),
     )
   ).flat();
@@ -29,6 +37,7 @@ export const getEventTalkStaticPaths = async () => {
       params: { id: talk.__event.id, talkId: talk.id },
       props: {
         talk,
+        coOrganizers: await getEntries(talk.__event.data.coOrganizers ?? []),
         schedule: talk.__schedule,
         speakers: (
           await getEntries(talk.data.speakers.map((speaker) => speaker.id))
