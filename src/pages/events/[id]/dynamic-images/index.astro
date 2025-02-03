@@ -5,8 +5,12 @@ import RootLayout from "@/layouts/RootLayout.astro";
 import dayjs from "dayjs";
 import { Image } from "astro:assets";
 
-export const getStaticPaths = () =>
-  import.meta.env.DEV ? getEventStaticPaths() : [];
+export const getStaticPaths = () => {
+  if (import.meta.env.DEV) {
+    return getEventStaticPaths();
+  }
+  return [];
+};
 
 const props = Astro.props;
 

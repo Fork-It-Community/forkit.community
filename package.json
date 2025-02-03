@@ -33,6 +33,7 @@
     "@types/react-dom": "18.3.0",
     "@uidotdev/usehooks": "2.4.1",
     "@vercel/analytics": "1.4.1",
+    "adm-zip": "0.5.16",
     "astro": "5.2.3",
     "astro-robots-txt": "1.0.0",
     "astro-seo": "0.8.4",
@@ -58,6 +59,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "0.5.14",
+    "@types/adm-zip": "0.5.7",
     "husky": "9.1.6",
     "lint-staged": "15.2.10",
     "prettier": "3.3.3",
