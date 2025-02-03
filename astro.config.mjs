@@ -1,4 +1,4 @@
-import { defineConfig } from "astro/config";
+import { defineConfig, envField } from "astro/config";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 import mdx from "@astrojs/mdx";
@@ -15,6 +15,16 @@ export default defineConfig({
 
   experimental: {
     contentIntellisense: true,
+  },
+
+  env: {
+    schema: {
+      ENV_NAME: envField.string({
+        context: "server",
+        access: "public",
+        optional: true,
+      }),
+    },
   },
 
   integrations: [
