@@ -86,17 +86,15 @@ export const ticketsAvailable = (config: {
                   display: "flex",
                   justifyContent: "flex-start",
                   marginBottom: 24,
+                  marginTop: -12,
                 }}
               >
                 <div
                   style={{
                     display: "flex",
-                    background: COLORS.primary,
-                    color: COLORS.black,
-                    padding: "32px 48px",
-                    fontSize: 48 * config.fontScaling,
+                    color: COLORS.primary,
+                    fontSize: 64 * config.fontScaling,
                     fontWeight: 500,
-                    borderRadius: 12,
                     textTransform: "uppercase",
                   }}
                 >
