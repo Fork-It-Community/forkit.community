@@ -198,6 +198,7 @@ type ExtraProps = { isDebug: boolean; width: number; height: number };
 type PropsForRender<T> = T & { dynamicImage: ExtraProps };
 export function generateImageMethods<Props>(
   params: ImageParams & {
+    shouldBuild?: (props: Props) => boolean;
     getStaticPaths: (
       options: GetStaticPathsOptions,
     ) => Promise<Array<GetStaticPathItemWithGeneric<Props>>>;
@@ -208,8 +209,15 @@ export function generateImageMethods<Props>(
 ) {
   return (p: { __image: string }) => ({
     getStaticPaths: async (options: GetStaticPathsOptions) => {
+      const entries = await params.getStaticPaths(options);
+
       return withType({
-        entries: await params.getStaticPaths(options),
+        entries:
+          import.meta.env.PROD && params.shouldBuild
+            ? entries.filter(
+                (entry) => !!entry.props && params.shouldBuild?.(entry.props),
+              )
+            : entries,
         params: p,
       });
     },

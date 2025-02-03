@@ -9,10 +9,12 @@ import { getEventTalkStaticPaths } from "./_utils";
 import { Frame } from "@/dynamic-images/components/Frame";
 import { BgImage } from "@/dynamic-images/components/BgImage";
 import { LogoWithFriends } from "@/dynamic-images/components/LogoWithFriends";
+import { shouldBuildEventImage } from "@/pages/events/[id]/dynamic-images/_utils";
 
 export default generateImageMethods({
   width: 1080,
   height: 1080,
+  shouldBuild: shouldBuildEventImage,
   getStaticPaths: getEventTalkStaticPaths,
   render: async (props) => {
     const postCover = await getAstroImageBase64(props.event.data.image.media);

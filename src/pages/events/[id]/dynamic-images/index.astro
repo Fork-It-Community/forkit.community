@@ -1,10 +1,11 @@
 ---
+import { getEventsCollection } from "@/lib/events";
+import { getEventStaticPaths } from "./_utils";
 import MainLayout from "@/layouts/MainLayout.astro";
-import { getEventTalkStaticPaths } from "@/pages/events/[id]/talks/[talkId]/dynamic-images/_utils";
-import { getEntries } from "astro:content";
+import dayjs from "dayjs";
 
 export const getStaticPaths = () =>
-  import.meta.env.DEV ? getEventTalkStaticPaths() : [];
+  import.meta.env.DEV ? getEventStaticPaths() : [];
 
 const files = Object.keys(import.meta.glob("./_*.tsx", { eager: true }));
 const fileNames = files.map((path) => {
@@ -19,10 +20,8 @@ const fileNames = files.map((path) => {
 
 const props = Astro.props;
 
-const talks = await getEntries(
-  (props.event.data.schedule ?? [])
-    .map((activity) => activity.slug)
-    .filter((s) => !!s),
+const allEvents = (await getEventsCollection()).sort((a, b) =>
+  dayjs(b.data.date).diff(a.data.date),
 );
 ---
 
@@ -30,12 +29,9 @@ const talks = await getEntries(
   <div class="mx-auto flex w-full max-w-screen-lg gap-8 p-8">
     <div class="flex w-56 flex-col">
       {
-        talks.map((talk) => (
-          <a
-            href={`/events/${props.event.id}/talks/${talk.id}/dynamic-images/debug`}
-            class="p-1"
-          >
-            {talk.data.title}
+        allEvents.map((event) => (
+          <a href={`/events/${event.id}/dynamic-images`} class="p-1">
+            {event.data.name}
           </a>
         ))
       }
@@ -44,12 +40,12 @@ const talks = await getEntries(
       {
         fileNames.map((fileName) => (
           <a
-            href={`/events/${props.event.id}/talks/${props.talk.id}/dynamic-images/${fileName}.debug`}
+            href={`/events/${props.event.id}/dynamic-images/${fileName}.debug`}
           >
             <img
               alt={fileName}
               class="w-full max-w-full rounded-md"
-              src={`/events/${props.event.id}/talks/${props.talk.id}/dynamic-images/${fileName}.jpg`}
+              src={`/events/${props.event.id}/dynamic-images/${fileName}.jpg`}
             />
           </a>
         ))
