@@ -1,29 +1,16 @@
 ---
 import { getEventsCollection } from "@/lib/events";
-import { getEventStaticPaths } from "./_utils";
+import { getEventStaticPaths, getEventAssetsSources } from "./_utils";
 import RootLayout from "@/layouts/RootLayout.astro";
 import dayjs from "dayjs";
 import { Image } from "astro:assets";
 
-const cleanFileName = (path: string) =>
-  path
-    .split("/")
-    .at(-1)
-    ?.replace(/\.tsx$/, "")
-    .replace(/^_/, "");
-
 export const getStaticPaths = () =>
   import.meta.env.DEV ? getEventStaticPaths() : [];
 
-const eventFiles = Object.keys(import.meta.glob("./_*.tsx", { eager: true }));
-const eventFilesNames = eventFiles.map(cleanFileName);
-
-const talkFiles = Object.keys(
-  import.meta.glob("../talks/[talkId]/dynamic-images/_*.tsx", { eager: true }),
-);
-const talkFilesNames = talkFiles.map(cleanFileName);
-
 const props = Astro.props;
+
+const imagesSrc = getEventAssetsSources(props.event);
 
 const allEvents = (await getEventsCollection()).sort((a, b) =>
   dayjs(b.data.date).diff(a.data.date),
@@ -43,39 +30,17 @@ const allEvents = (await getEventsCollection()).sort((a, b) =>
     </div>
     <div class="flex w-full flex-1 flex-col gap-4">
       {
-        eventFilesNames.map((fileName) => (
-          <a
-            href={`/events/${props.event.id}/dynamic-images/${fileName}.debug`}
-          >
+        imagesSrc.map((src) => (
+          <a href={src?.replace(/.jpg$/, ".debug")}>
             <Image
-              alt={fileName}
+              alt=""
               class="w-full max-w-full rounded-md"
-              src={`/events/${props.event.id}/dynamic-images/${fileName}.jpg`}
+              src={src}
               width={9999}
               height={9999}
             />
           </a>
         ))
-      }
-      {
-        props.event.data.schedule?.map((talk) => {
-          return talkFilesNames.map(
-            (fileName) =>
-              !!talk.slug && (
-                <a
-                  href={`/events/${props.event.id}/talks/${talk.slug.id}/dynamic-images/${fileName}.debug`}
-                >
-                  <Image
-                    alt={fileName}
-                    class="w-full max-w-full rounded-md"
-                    src={`/events/${props.event.id}/talks/${talk.slug.id}/dynamic-images/${fileName}.jpg`}
-                    width={9999}
-                    height={9999}
-                  />
-                </a>
-              ),
-          );
-        })
       }
     </div>
   </div>
