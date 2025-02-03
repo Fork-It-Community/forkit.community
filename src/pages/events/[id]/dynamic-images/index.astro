@@ -1,22 +1,27 @@
 ---
 import { getEventsCollection } from "@/lib/events";
 import { getEventStaticPaths } from "./_utils";
-import MainLayout from "@/layouts/MainLayout.astro";
+import RootLayout from "@/layouts/RootLayout.astro";
 import dayjs from "dayjs";
+import { Image } from "astro:assets";
 
-export const getStaticPaths = () =>
-  import.meta.env.DEV ? getEventStaticPaths() : [];
-
-const files = Object.keys(import.meta.glob("./_*.tsx", { eager: true }));
-const fileNames = files.map((path) => {
-  const fileName = path
+const cleanFileName = (path: string) =>
+  path
     .split("/")
     .at(-1)
     ?.replace(/\.tsx$/, "")
     .replace(/^_/, "");
 
-  return fileName;
-});
+export const getStaticPaths = () =>
+  import.meta.env.DEV ? getEventStaticPaths() : [];
+
+const eventFiles = Object.keys(import.meta.glob("./_*.tsx", { eager: true }));
+const eventFilesNames = eventFiles.map(cleanFileName);
+
+const talkFiles = Object.keys(
+  import.meta.glob("../talks/[talkId]/dynamic-images/_*.tsx", { eager: true }),
+);
+const talkFilesNames = talkFiles.map(cleanFileName);
 
 const props = Astro.props;
 
@@ -25,7 +30,7 @@ const allEvents = (await getEventsCollection()).sort((a, b) =>
 );
 ---
 
-<MainLayout>
+<RootLayout>
   <div class="mx-auto flex w-full max-w-screen-lg gap-8 p-8">
     <div class="flex w-56 flex-col">
       {
@@ -38,18 +43,40 @@ const allEvents = (await getEventsCollection()).sort((a, b) =>
     </div>
     <div class="flex w-full flex-1 flex-col gap-4">
       {
-        fileNames.map((fileName) => (
+        eventFilesNames.map((fileName) => (
           <a
             href={`/events/${props.event.id}/dynamic-images/${fileName}.debug`}
           >
-            <img
+            <Image
               alt={fileName}
               class="w-full max-w-full rounded-md"
               src={`/events/${props.event.id}/dynamic-images/${fileName}.jpg`}
+              width={9999}
+              height={9999}
             />
           </a>
         ))
       }
+      {
+        props.event.data.schedule?.map((talk) => {
+          return talkFilesNames.map(
+            (fileName) =>
+              !!talk.slug && (
+                <a
+                  href={`/events/${props.event.id}/talks/${talk.slug.id}/dynamic-images/${fileName}.debug`}
+                >
+                  <Image
+                    alt={fileName}
+                    class="w-full max-w-full rounded-md"
+                    src={`/events/${props.event.id}/talks/${talk.slug.id}/dynamic-images/${fileName}.jpg`}
+                    width={9999}
+                    height={9999}
+                  />
+                </a>
+              ),
+          );
+        })
+      }
     </div>
   </div>
-</MainLayout>
+</RootLayout>
