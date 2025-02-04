@@ -24,7 +24,7 @@ export const GET: APIRoute = async ({ params, site }) => {
       }
       const blob = await response.blob();
       zip.addFile(
-        src.split("/").at(-1)!, // Clean me
+        `${src.replaceAll("/events/", "").replaceAll("/dynamic-images", "").replaceAll("/", "_")}`,
         Buffer.from(await blob.arrayBuffer()),
       );
     }),
@@ -33,7 +33,7 @@ export const GET: APIRoute = async ({ params, site }) => {
   return new Response(zip.toBuffer(), {
     headers: {
       "Content-Type": "application/zip",
-      "Content-Disposition": `attachment; filename="event-assets-${dayjs().format("YYYYMMDDHHmmss")}.zip"`,
+      "Content-Disposition": `attachment; filename="${event.data.date.getFullYear()}-${event.data.country.toLowerCase()}-${event.data.city.toLowerCase()}-assets-${dayjs().format("YYYYMMDDHHmmss")}.zip"`,
     },
   });
 };
