@@ -63,7 +63,6 @@ export default generateImageMethods({
               display: "flex",
               flexDirection: "column",
               gap: 48,
-              marginTop: -120,
             }}
           >
             <div
