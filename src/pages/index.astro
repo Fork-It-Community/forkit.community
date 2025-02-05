@@ -8,7 +8,6 @@ import {
   getUpcomingMajorEvent,
 } from "@/lib/events";
 import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
-import { Logo } from "@/components/Logo";
 import { Image } from "astro:assets";
 import defaultImage from "@/assets/images/events.jpeg";
 import aboutBackground from "@/assets/images/about.jpg";
@@ -64,9 +63,6 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
     blur
   />
   <div class="mx-auto w-full max-w-screen-xl px-4">
-    <div class="flex w-full items-center justify-center pb-4 pt-20 md:hidden">
-      <Logo className="w-48" />
-    </div>
     <div
       class="relative flex w-full flex-col items-center gap-8 py-16 sm:flex-row sm:py-[12vh] md:px-8 xl:gap-12"
     >
