@@ -20,7 +20,8 @@ export const GET: APIRoute = async ({ params, site }) => {
       const url = new URL(src, site).toString();
       const response = await fetch(url);
       if (!response.ok) {
-        throw new Error(`Failed to fetch image at ${src}`);
+        // Ignore not generated images
+        return;
       }
       const blob = await response.blob();
       zip.addFile(
