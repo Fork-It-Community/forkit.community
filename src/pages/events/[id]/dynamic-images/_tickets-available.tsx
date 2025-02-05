@@ -5,7 +5,7 @@ import {
   getAstroImageBase64,
 } from "@/dynamic-images/utils";
 
-import { getEventStaticPaths } from "./_utils";
+import { getEventStaticPaths, shouldBuildEventImage } from "./_utils";
 import { Frame } from "@/dynamic-images/components/Frame";
 
 import { LogoWithFriends } from "@/dynamic-images/components/LogoWithFriends";
@@ -19,6 +19,7 @@ export const ticketsAvailable = (config: {
   generateImageMethods({
     width: config.width,
     height: config.height,
+    shouldBuild: shouldBuildEventImage,
     getStaticPaths: getEventStaticPaths,
     render: async (props) => {
       const postCover = await getAstroImageBase64(props.event.data.image.media);
