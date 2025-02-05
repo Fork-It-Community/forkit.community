@@ -39,14 +39,24 @@ const cleanFileName = (path: string) =>
     .replace(/^_/, "");
 
 export const getEventAssetsSources = (event: CollectionEntry<"events">) => {
-  const eventFiles = Object.keys(import.meta.glob("./_*.tsx", { eager: true }));
-  const eventFilesNames = eventFiles.map(cleanFileName);
-  const talkFiles = Object.keys(
+  const eventFilesNames = Object.keys(
+    import.meta.glob("./_*.tsx", { eager: true }),
+  ).map(cleanFileName);
+  const talkFilesNames = Object.keys(
     import.meta.glob("../talks/[talkId]/dynamic-images/_*.tsx", {
       eager: true,
     }),
-  );
-  const talkFilesNames = talkFiles.map(cleanFileName);
+  ).map(cleanFileName);
+  const partnersFilesNames = Object.keys(
+    import.meta.glob("../partners/[partnerId]/dynamic-images/_*.tsx", {
+      eager: true,
+    }),
+  ).map(cleanFileName);
+
+  const sponsors = event.data.sponsors?.map((s) => s.slug) ?? [];
+  const partners = event.data.partners ?? [];
+  const coOrganizers = event.data.coOrganizers ?? [];
+
   return [
     eventFilesNames.map(
       (fileName) => `/events/${event.id}/dynamic-images/${fileName}.jpg`,
@@ -56,6 +66,12 @@ export const getEventAssetsSources = (event: CollectionEntry<"events">) => {
         !talk.slug
           ? null
           : `/events/${event.id}/talks/${talk.slug.id}/dynamic-images/${fileName}.jpg`,
+      ),
+    ),
+    [...coOrganizers, ...sponsors, ...partners].flatMap((partner) =>
+      partnersFilesNames.map(
+        (fileName) =>
+          `/events/${event.id}/partners/${partner.id}/dynamic-images/${fileName}.jpg`,
       ),
     ),
   ]
