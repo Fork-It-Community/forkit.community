@@ -51,14 +51,21 @@ const ogImage = new URL(
     className="h-[80vh] opacity-80"
     blur
   />
+  <div
+    class={cn(
+      "mx-auto w-full max-w-screen-md px-8 md:px-12 py-6",
+      article.data.featuredImage &&
+        "max-w-screen-lg px-4 pb-4 sm:px-8 md:px-6 md:py-4",
+    )}
+  >
+    <BackButton client:load href="/news" contextLabel="Fork It! News" />
+  </div>
+
   {
     !!article.data.featuredImage && (
-      <div class="relative mx-auto mt-2 w-full max-w-screen-lg px-2 lg:mt-10 lg:px-6">
-        <div class="absolute left-8 top-8 z-10 lg:left-14">
-          <BackButton client:visible href="/news" />
-        </div>
+      <div class="relative mx-auto w-full max-w-screen-lg px-2 lg:px-6">
         <div
-          class="relative flex-[10] rounded-lg bg-black transition duration-500 group-hover:scale-105"
+          class="relative flex-1 rounded-lg bg-black transition duration-500"
           style={{
             maskImage: "linear-gradient(180deg, black 20%, transparent 100%)",
           }}
@@ -77,20 +84,13 @@ const ogImage = new URL(
   }
   <div
     class={cn(
-      "mx-auto w-full flex-1 max-w-screen-md flex flex-col gap-12 pb-40 relative z-10 pt-24 px-8 md:px-12",
-      !!article.data.featuredImage && "-mt-36 md:-mt-96",
+      "mx-auto w-full flex-1 max-w-screen-md flex flex-col gap-8 pt-4 pb-40 relative z-10 px-8 md:px-12",
+      !!article.data.featuredImage && "-mt-24 sm:-mt-56 md:-mt-72",
     )}
   >
     <div class="flex flex-col gap-4">
-      {
-        !article.data.featuredImage && (
-          <div class="pb-8">
-            <BackButton client:visible href="/news" />
-          </div>
-        )
-      }
       <h1
-        class="text-balance font-heading text-2xl font-medium uppercase tracking-wider md:text-4xl/tight"
+        class="text-balance font-heading text-2xl font-medium tracking-wider md:text-4xl/tight"
       >
         {article.data.title}
       </h1>
@@ -104,7 +104,7 @@ const ogImage = new URL(
         </div>
 
         {
-          authors ? (
+          authors.length ? (
             <div class="flex flex-wrap gap-x-5 gap-y-3">
               {authors.map((author) => (
                 <a
