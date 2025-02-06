@@ -1,7 +1,12 @@
 import type { SVGProps } from "react";
 
 export const Logo = (props: SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 169 18" fill="none" {...props}>
+  <svg
+    viewBox="0 0 169 18"
+    fill="none"
+    aria-label="FORK IT! Community"
+    {...props}
+  >
     <path
       fill="#EBFF11"
       fillRule="evenodd"
