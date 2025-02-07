@@ -137,13 +137,11 @@ function getAstroImagePath(image: ImageMetadata) {
     imageSrc: image.src,
     processCwd: process.cwd(),
     dirname: path.dirname(fileURLToPath(import.meta.url)),
+    resolve: path.resolve(process.cwd(), image.src),
   });
   return import.meta.env.DEV
-    ? resolve(
-        import.meta.url,
-        image.src.replace(/\?.*/, "").replace("/@fs", ""),
-      )
-    : resolve(filePath, image.src.replace("/", "./"));
+    ? path.resolve(image.src.replace(/\?.*/, "").replace("/@fs", ""))
+    : path.resolve(process.cwd(), image.src);
 }
 
 async function getAstroImageBuffer(image: ImageMetadata) {
