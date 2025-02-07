@@ -130,7 +130,11 @@ export function resolve(importMetaUrl: string, ...paths: string[]) {
 }
 
 function getAstroImagePath(image: ImageMetadata) {
-  console.log(import.meta.url, image.src);
+  console.log(
+    import.meta.url,
+    image.src,
+    resolve(import.meta.url, image.src.replace("/", "./")),
+  );
   return import.meta.env.DEV
     ? resolve(
         import.meta.url,
