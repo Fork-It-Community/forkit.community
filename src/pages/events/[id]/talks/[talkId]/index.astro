@@ -15,6 +15,7 @@ import { IoLanguageSharp } from "react-icons/io5";
 import { MdArrowOutward, MdPlace } from "react-icons/md";
 import type { Place } from "schema-dts";
 import Prose from "@/components/Prose/index.astro";
+import Sponsors from "@/components/Sponsors/index.astro";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -56,13 +57,16 @@ export async function getStaticPaths() {
             )?.role,
           },
         })),
+        sponsors: await getEntries(
+          (talk.__event.data.sponsors ?? []).map((s) => s.slug),
+        ),
         event: talk.__event,
       },
     })),
   );
 }
 
-const { talk, event, speakers, schedule } = Astro.props;
+const { talk, event, speakers, schedule, sponsors } = Astro.props;
 const { Content } = await render(talk);
 
 const url = new URL(Astro.url.pathname, Astro.site);
@@ -207,4 +211,18 @@ const endDate =
       </div>
     </main>
   </div>
+
+  {
+    !!sponsors.length && (
+      <div class="relative mx-auto flex w-full max-w-screen-lg flex-col gap-8 px-4 py-12 md:py-24">
+        <h2
+          id="sponsors"
+          class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+        >
+          Sponsors
+        </h2>
+        <Sponsors event={event} sponsors={sponsors} />
+      </div>
+    )
+  }
 </EventSubPageLayout>

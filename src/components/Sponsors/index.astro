@@ -1,0 +1,59 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  event: CollectionEntry<"events">;
+  sponsors: Array<CollectionEntry<"partners">>;
+}
+
+const { event, sponsors } = Astro.props;
+---
+
+<div class="flex flex-col gap-8">
+  {
+    event.data.sponsoringLevels?.map((sponsoringLevel) => {
+      const levelSponsors = event.data.sponsors
+        ?.filter((s) => s.level === sponsoringLevel)
+        .map(({ slug }) => sponsors.find((s) => s.id === slug.id))
+        .filter((s) => !!s);
+
+      if (!levelSponsors?.length) return null;
+
+      return (
+        <div class="flex flex-col gap-2">
+          <h3 class="font-heading text-base font-medium uppercase tracking-widest">
+            {sponsoringLevel}
+          </h3>
+          <div class="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-4">
+            {levelSponsors.map((sponsor) => {
+              if (!sponsor.data.href) {
+                return (
+                  <Image
+                    src={sponsor.data.logos.bgWhite}
+                    alt={sponsor.data.name}
+                    class="rounded-md"
+                    width={500}
+                    height={300}
+                  />
+                );
+              }
+
+              return (
+                <a href={sponsor.data.href}>
+                  <Image
+                    src={sponsor.data.logos.bgWhite}
+                    alt={sponsor.data.name}
+                    class="rounded-md"
+                    width={500}
+                    height={300}
+                  />
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      );
+    })
+  }
+</div>
