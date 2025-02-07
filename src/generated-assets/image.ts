@@ -142,7 +142,8 @@ function getAstroImagePath(image: ImageMetadata) {
   });
   return import.meta.env.DEV
     ? path.resolve(image.src.replace(/\?.*/, "").replace("/@fs", ""))
-    : process.cwd() + image.src;
+    : "https://forkit-community-git-feat-assets-isr-bearstudio.vercel.app" +
+        image.src;
 }
 
 async function getAstroImageBuffer(image: ImageMetadata) {
