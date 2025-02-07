@@ -7,7 +7,7 @@ import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
 import { getEventData } from "./_utils";
-import { LogoWithFriends } from "@/dynamic-images/components/LogoWithFriends";
+import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 
 export const config: AssetImageConfig = {
   width: 1920,

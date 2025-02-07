@@ -1,4 +1,4 @@
-import { COLORS } from "@/dynamic-images/utils";
+import { COLORS } from "@/generated-assets/theme";
 import type { CSSProperties, ReactNode } from "react";
 
 export const Frame = ({

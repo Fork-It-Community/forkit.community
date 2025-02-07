@@ -2,6 +2,7 @@ import fs from "fs/promises";
 import satori from "satori";
 import sharp from "sharp";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import type { ImageMetadata } from "astro";
 import { match } from "ts-pattern";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -116,10 +117,26 @@ export async function generateImageResponseHTML(html: string) {
   });
 }
 
+// src/lib
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const nextJsRootDir = path.resolve(__dirname, "../../");
+
+export function resolve(importMetaUrl: string, ...paths: string[]) {
+  const dirname = path.dirname(fileURLToPath(importMetaUrl));
+  const absPath = path.resolve(dirname, ...paths);
+  // Required for ISR serverless functions to pick up the file path
+  // as a dependency to bundle.
+  return path.resolve(process.cwd(), absPath.replace(nextJsRootDir, "."));
+}
+
 function getAstroImagePath(image: ImageMetadata) {
+  console.log(import.meta.url, image.src);
   return import.meta.env.DEV
-    ? path.resolve(image.src.replace(/\?.*/, "").replace("/@fs", ""))
-    : path.resolve(image.src.replace("/", "dist/"));
+    ? resolve(
+        import.meta.url,
+        image.src.replace(/\?.*/, "").replace("/@fs", ""),
+      )
+    : resolve(import.meta.url, image.src.replace("/", "dist/server/"));
 }
 
 async function getAstroImageBuffer(image: ImageMetadata) {
