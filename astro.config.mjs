@@ -39,5 +39,5 @@ export default defineConfig({
     robotsTxt(),
   ],
 
-  adapter: vercel({ isr: true }),
+  adapter: vercel(),
 });
