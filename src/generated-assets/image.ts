@@ -119,7 +119,7 @@ export async function generateImageResponseHTML(html: string) {
 function getAstroImagePath(image: ImageMetadata) {
   return import.meta.env.DEV
     ? path.resolve(image.src.replace(/\?.*/, "").replace("/@fs", ""))
-    : path.resolve(image.src.replace("/", "dist/server/"));
+    : path.resolve(image.src.replace("/", "dist/"));
 }
 
 async function getAstroImageBuffer(image: ImageMetadata) {
