@@ -1,5 +1,6 @@
 ---
-import { cn, formatTime } from "@/lib/utils";
+import { cn } from "@/lib/utils-client";
+import dayjs from "dayjs";
 
 interface Props {
   startTime?: Date | undefined;
@@ -14,7 +15,7 @@ const { startTime, duration, class: className } = Astro.props;
   startTime && (
     <div class={cn("flex gap-1.5", className)}>
       <time class="font-medium" datetime={startTime.toISOString()}>
-        {formatTime(startTime)}
+        {dayjs(startTime).format("hh:mm A")}
       </time>
 
       {duration && (

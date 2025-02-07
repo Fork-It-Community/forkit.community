@@ -3,7 +3,7 @@ import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { cva, type VariantProps } from "class-variance-authority";
 import { MdClose } from "react-icons/md";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils-client";
 
 const Sheet = SheetPrimitive.Root;
 

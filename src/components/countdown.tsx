@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import type { CollectionEntry } from "astro:content";
 import MotionNumber from "motion-number";
-import { calculateTimeLeft } from "@/lib/utils";
+import { calculateTimeLeft } from "@/lib/utils-client";
 
 const Countdown = (
   props: Readonly<{ date: CollectionEntry<"events">["data"]["date"] }>,

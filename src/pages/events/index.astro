@@ -5,7 +5,7 @@ import bgImage from "@/assets/images/events.jpeg";
 import { getPastEvents, getUpcomingEvents } from "@/lib/events";
 import EventCard from "@/components/EventCard/index.astro";
 import SEO from "@/components/SEO/index.astro";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils-client";
 import { getSocialsItems } from "@/content/socials";
 
 const upcomingEvents = await getUpcomingEvents();
