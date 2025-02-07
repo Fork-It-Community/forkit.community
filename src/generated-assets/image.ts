@@ -120,6 +120,7 @@ export async function generateImageResponseHTML(html: string) {
 // src/lib
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const nextJsRootDir = path.resolve(__dirname, "../../");
+const filePath = import.meta.url;
 
 export function resolve(importMetaUrl: string, ...paths: string[]) {
   const dirname = path.dirname(fileURLToPath(importMetaUrl));
@@ -130,17 +131,19 @@ export function resolve(importMetaUrl: string, ...paths: string[]) {
 }
 
 function getAstroImagePath(image: ImageMetadata) {
-  console.log(
-    import.meta.url,
-    image.src,
-    resolve(import.meta.url, image.src.replace("/", "./")),
-  );
+  console.log({
+    metaUrl: import.meta.url,
+    filePath,
+    imageSrc: image.src,
+    processCwd: process.cwd(),
+    dirname: path.dirname(fileURLToPath(import.meta.url)),
+  });
   return import.meta.env.DEV
     ? resolve(
         import.meta.url,
         image.src.replace(/\?.*/, "").replace("/@fs", ""),
       )
-    : image.src;
+    : resolve(filePath, image.src.replace("/", "./"));
 }
 
 async function getAstroImageBuffer(image: ImageMetadata) {
