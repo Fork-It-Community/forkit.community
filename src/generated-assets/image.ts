@@ -117,7 +117,6 @@ export async function generateImageResponseHTML(html: string) {
   });
 }
 
-// src/lib
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const nextJsRootDir = path.resolve(__dirname, "../../");
 const filePath = import.meta.url;
@@ -131,6 +130,7 @@ export function resolve(importMetaUrl: string, ...paths: string[]) {
 }
 
 function getAstroImagePath(image: ImageMetadata) {
+  // HELP ME
   console.log({
     metaUrl: import.meta.url,
     filePath,
@@ -142,8 +142,7 @@ function getAstroImagePath(image: ImageMetadata) {
   });
   return import.meta.env.DEV
     ? path.resolve(image.src.replace(/\?.*/, "").replace("/@fs", ""))
-    : "https://forkit-community-git-feat-assets-isr-bearstudio.vercel.app" +
-        image.src;
+    : image.src; // FIX ME PLEASE
 }
 
 async function getAstroImageBuffer(image: ImageMetadata) {
