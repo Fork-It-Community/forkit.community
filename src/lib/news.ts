@@ -1,4 +1,4 @@
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import dayjs from "dayjs";
 
 type Params = {
@@ -19,4 +19,17 @@ export async function getNewsCollection({ limit = undefined }: Params = {}) {
   }
 
   return news;
+}
+
+export async function getPersonArticles(
+  person: CollectionEntry<"people">,
+  { limit }: Params,
+) {
+  return (
+    await getCollection("news", (episode) =>
+      episode.data.authors?.some((author) => author.id === person.id),
+    )
+  )
+    .sort((a, b) => dayjs(b.data.date).diff(a.data.date))
+    .slice(0, limit);
 }

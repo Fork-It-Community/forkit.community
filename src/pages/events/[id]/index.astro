@@ -17,7 +17,7 @@ import {
   shouldShowProspectus,
   getEventDisplayType,
 } from "@/lib/events";
-import { cn, formatDateTime } from "@/lib/utils";
+import { cn } from "@/lib/utils-client";
 import { Image } from "astro:assets";
 import { getEntries, render } from "astro:content";
 import {
@@ -32,6 +32,7 @@ import type { Place } from "schema-dts";
 import PartnersBlock from "@/components/PartnersBlock/index.astro";
 import { FAQ } from "@/components/Faq";
 import { EventMessage } from "@/components/EventMessage";
+import dayjs from "dayjs";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -83,7 +84,11 @@ const ogImage = new URL(
     item={{
       "@context": "https://schema.org",
       "@type": "Event",
-      name: `${event.data.date ? formatDateTime(event.data.date) + " " : ""}${event.data.name}`,
+      name: `${
+        event.data.date
+          ? dayjs(event.data.date).format("dddd, MMMM D, YYYY") + " "
+          : ""
+      }${event.data.name}`,
       startDate: event.data.date?.toISOString(),
       endDate: event.data.date?.toISOString(),
       description: event.data.excerpt ?? "",

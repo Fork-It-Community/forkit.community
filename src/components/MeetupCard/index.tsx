@@ -1,5 +1,5 @@
-import { formatTime } from "@/lib/utils";
 import type { Event } from "@/schemas/events";
+import dayjs from "dayjs";
 import { LuMapPin } from "react-icons/lu";
 
 export const MeetupCard = (props: Readonly<{ event: Event }>) => {
@@ -16,7 +16,7 @@ export const MeetupCard = (props: Readonly<{ event: Event }>) => {
             {props.event.date && (
               <div className="text-neutral-400 flex items-center gap-2 text-sm">
                 <time dateTime={props.event.date.toISOString()}>
-                  {formatTime(props.event.date)}
+                  {dayjs(props.event.date).format("hh:mm A")}
                 </time>
               </div>
             )}

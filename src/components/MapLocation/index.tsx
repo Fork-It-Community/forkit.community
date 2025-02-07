@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils-client";
 import { LuMapPin } from "react-icons/lu";
 
 const MapLocation = (

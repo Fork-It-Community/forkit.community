@@ -84,5 +84,7 @@ export async function getPersonEpisodes(
         episode.data.hosts?.some((host) => host.id === person.id) ||
         episode.data.guests?.some((guest) => guest.id === person.id),
     )
-  ).slice(0, limit);
+  )
+    .sort((a, b) => dayjs(b.data.releaseDate).diff(a.data.releaseDate))
+    .slice(0, limit);
 }
