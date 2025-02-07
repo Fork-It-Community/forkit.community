@@ -136,7 +136,7 @@ function getAstroImagePath(image: ImageMetadata) {
         import.meta.url,
         image.src.replace(/\?.*/, "").replace("/@fs", ""),
       )
-    : resolve(import.meta.url, image.src.replace("/", "static/"));
+    : resolve(import.meta.url, image.src);
 }
 
 async function getAstroImageBuffer(image: ImageMetadata) {
