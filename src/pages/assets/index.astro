@@ -1,0 +1,14 @@
+---
+import { JPG, imageBufferToBase64 } from "@/generated-assets/image";
+import RootLayout from "@/layouts/RootLayout.astro";
+import render from "../_test";
+
+const jpg = await JPG(await render(), { width: 100, height: 100 });
+const base64 = imageBufferToBase64(jpg, "jpeg");
+---
+
+<RootLayout>
+  <div class="mx-auto flex w-full max-w-screen-sm gap-8 px-8">
+    <img src={base64} />
+  </div>
+</RootLayout>
