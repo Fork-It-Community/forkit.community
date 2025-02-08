@@ -27,7 +27,7 @@ export async function SVG(
         .with(false, async () => {
           const res = await fetch(new URL(url, import.meta.env.SITE));
 
-          if (res.ok) {
+          if (!res.ok) {
             console.log(res);
             throw new Error(`Failed to fetch font: ${url}`);
           }
