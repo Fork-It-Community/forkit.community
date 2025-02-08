@@ -22,7 +22,17 @@ export async function SVG(
   const fonts = await Promise.all(
     FONTS.map(async ({ url, ...font }) => ({
       ...font,
-      data: await fs.readFile(`./public/${url}`),
+      data: await match(import.meta.env.DEV)
+        .with(true, async () => await fs.readFile(`./public/${url}`))
+        .with(false, async () => {
+          const res = await fetch(new URL(url, import.meta.env.SITE));
+
+          if (res.ok) {
+            throw new Error(`Failed to fetch font: ${url}`);
+          }
+          return Buffer.from(await res.arrayBuffer());
+        })
+        .run(),
     })),
   );
 
