@@ -28,7 +28,6 @@ export async function SVG(
           const res = await fetch(new URL(url, import.meta.env.SITE));
 
           if (!res.ok) {
-            console.log(res);
             throw new Error(`Failed to fetch font: ${url}`);
           }
           return Buffer.from(await res.arrayBuffer());
@@ -130,7 +129,6 @@ export async function generateImageResponseHTML(html: string) {
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const nextJsRootDir = path.resolve(__dirname, "../../");
-const filePath = import.meta.url;
 
 export function resolve(importMetaUrl: string, ...paths: string[]) {
   const dirname = path.dirname(fileURLToPath(importMetaUrl));
@@ -141,19 +139,9 @@ export function resolve(importMetaUrl: string, ...paths: string[]) {
 }
 
 function getAstroImagePath(image: ImageMetadata) {
-  // HELP ME
-  console.log({
-    metaUrl: import.meta.url,
-    filePath,
-    imageSrc: image.src,
-    processCwd: process.cwd(),
-    dirname: path.dirname(fileURLToPath(import.meta.url)),
-    resolve: path.resolve(process.cwd(), image.src),
-    resolve2: process.cwd() + image.src,
-  });
   return import.meta.env.DEV
     ? path.resolve(image.src.replace(/\?.*/, "").replace("/@fs", ""))
-    : image.src; // FIX ME PLEASE
+    : image.src;
 }
 
 async function getAstroImageBuffer(image: ImageMetadata) {
