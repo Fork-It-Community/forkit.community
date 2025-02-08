@@ -150,8 +150,20 @@ async function getAstroImageBuffer(image: ImageMetadata) {
     .exec(image.src)?.[0]
     .slice(1);
   const fileToRead = getAstroImagePath(image);
+
   return {
-    buffer: await fs.readFile(fileToRead),
+    buffer: await match(import.meta.env.DEV)
+      .with(true, async () => await fs.readFile(fileToRead))
+      .with(false, async () => {
+        const res = await fetch(new URL(fileToRead, import.meta.env.SITE));
+
+        if (!res.ok) {
+          throw new Error(`Failed to fetch image: ${fileToRead}`);
+        }
+
+        return Buffer.from(await res.arrayBuffer());
+      })
+      .run(),
     fileType: match(fileExtension)
       .with("jpg", "jpeg", () => "jpeg")
       .with("png", () => "png")
