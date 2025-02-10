@@ -5,9 +5,10 @@ import { getEventAssetsSources } from "./_utils";
 import dayjs from "dayjs";
 import { Image } from "astro:assets";
 import { buttonVariants } from "@/components/ui/button";
+import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import { cn } from "@/lib/utils";
 import { MdDownload } from "react-icons/md";
-import MainLayout from "@/layouts/MainLayout.astro";
+import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
 
 export const prerender = false;
 
@@ -24,31 +25,18 @@ if (!event) {
 const imagesSrc = getEventAssetsSources(event);
 ---
 
-<MainLayout>
-  <div class="mx-auto flex w-full max-w-screen-lg gap-8 px-8">
-    <div class="w-56">
-      <div class="sticky top-6 flex flex-col">
-        {
-          allEvents.map((e) => (
-            <a
-              href={`/events/${e.id}/assets`}
-              class={cn("p-1", e.id === event.id && "text-primary")}
-            >
-              {e.data.name}
-            </a>
-          ))
-        }
-      </div>
-    </div>
-    <div class="flex w-full flex-1 flex-col gap-4 pb-40">
-      <div
-        class="sticky top-0 flex items-center gap-4 bg-gradient-to-t from-black/0 to-black py-6"
-      >
-        <h1 class="flex-1 font-heading text-lg">
-          {event.data.name}
+<EventSubPageLayout event={event}>
+  <ImageBackgroundHero src={event.data.image.media} alt="" blur />
+  <div
+    class="mx-auto flex w-full max-w-screen-lg flex-col gap-8 px-4 pb-40 pt-6 md:flex-row"
+  >
+    <div class="flex w-full flex-1 flex-col gap-4">
+      <div class="flex flex-col gap-4 py-4 sm:flex-row sm:items-center sm:px-2">
+        <h1 class="relative flex-1 font-heading text-xl">
+          Assets · {event.data.name}
         </h1>
         <a
-          class={cn(buttonVariants({ size: "sm" }), "gap-2")}
+          class={cn(buttonVariants({ size: "sm" }), "gap-2 xs:max-w-64")}
           href={`/events/${event.id}/assets/download`}
           target="_blank"
         >
@@ -57,8 +45,18 @@ const imagesSrc = getEventAssetsSources(event);
         </a>
       </div>
       {
-        imagesSrc.map((src) => (
-          <a href={src?.replace(/.jpg$/, ".debug")}>
+        imagesSrc.map((src) =>
+          import.meta.env.DEV ? (
+            <a href={src?.replace(/.jpg$/, ".debug")}>
+              <Image
+                alt=""
+                class="w-full max-w-full rounded-md"
+                src={src}
+                width={9999}
+                height={9999}
+              />
+            </a>
+          ) : (
             <Image
               alt=""
               class="w-full max-w-full rounded-md"
@@ -66,9 +64,26 @@ const imagesSrc = getEventAssetsSources(event);
               width={9999}
               height={9999}
             />
-          </a>
-        ))
+          ),
+        )
       }
     </div>
+    <div class="w-56">
+      <div class="sticky top-12 flex flex-col py-4">
+        <h2 class="p-1 font-heading text-sm uppercase tracking-wider">
+          All events
+        </h2>
+        {
+          allEvents.map((e) => (
+            <a
+              href={`/events/${e.id}/assets`}
+              class={cn("p-1", e.id === event.id && "opacity-60")}
+            >
+              {e.data.name}
+            </a>
+          ))
+        }
+      </div>
+    </div>
   </div>
-</MainLayout>
+</EventSubPageLayout>
