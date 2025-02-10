@@ -28,8 +28,6 @@ export default async function ({ params }: { params: { id: string } }) {
           gap: 128,
           width: "100%",
           justifyContent: "center",
-          fontFamily: "Tomorrow",
-          color: COLORS.white,
           zIndex: 100,
         }}
       >

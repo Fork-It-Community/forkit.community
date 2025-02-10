@@ -1,0 +1,74 @@
+---
+import { getEventsCollection } from "@/lib/events";
+import { getEventAssetsSources } from "./_utils";
+
+import dayjs from "dayjs";
+import { Image } from "astro:assets";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { MdDownload } from "react-icons/md";
+import MainLayout from "@/layouts/MainLayout.astro";
+
+export const prerender = false;
+
+const params = Astro.params;
+
+const allEvents = (await getEventsCollection()).sort((a, b) =>
+  dayjs(b.data.date).diff(a.data.date),
+);
+
+const event = allEvents.find((e) => e.id === params.id);
+if (!event) {
+  return new Response(null, { status: 404 });
+}
+const imagesSrc = getEventAssetsSources(event);
+---
+
+<MainLayout>
+  <div class="mx-auto flex w-full max-w-screen-lg gap-8 px-8">
+    <div class="w-56">
+      <div class="sticky top-6 flex flex-col">
+        {
+          allEvents.map((e) => (
+            <a
+              href={`/events/${e.id}/assets`}
+              class={cn("p-1", e.id === event.id && "text-primary")}
+            >
+              {e.data.name}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+    <div class="flex w-full flex-1 flex-col gap-4 pb-40">
+      <div
+        class="sticky top-0 flex items-center gap-4 bg-gradient-to-t from-black/0 to-black py-6"
+      >
+        <h1 class="flex-1 font-heading text-lg">
+          {event.data.name}
+        </h1>
+        <a
+          class={cn(buttonVariants({ size: "sm" }), "gap-2")}
+          href={`/events/${event.id}/assets/download`}
+          target="_blank"
+        >
+          <MdDownload />
+          Download all assets
+        </a>
+      </div>
+      {
+        imagesSrc.map((src) => (
+          <a href={src?.replace(/.jpg$/, ".debug")}>
+            <Image
+              alt=""
+              class="w-full max-w-full rounded-md"
+              src={src}
+              width={9999}
+              height={9999}
+            />
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</MainLayout>
