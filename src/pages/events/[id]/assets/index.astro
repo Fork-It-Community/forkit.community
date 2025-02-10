@@ -50,7 +50,7 @@ const imagesSrc = getEventAssetsSources(event);
             <a href={src?.replace(/.jpg$/, ".debug")}>
               <Image
                 alt=""
-                class="w-full max-w-full rounded-md"
+                class="bg-background-blur w-full max-w-full rounded-md"
                 src={src}
                 width={9999}
                 height={9999}
@@ -59,7 +59,7 @@ const imagesSrc = getEventAssetsSources(event);
           ) : (
             <Image
               alt=""
-              class="w-full max-w-full rounded-md"
+              class="bg-background-blur w-full max-w-full rounded-md"
               src={src}
               width={9999}
               height={9999}
