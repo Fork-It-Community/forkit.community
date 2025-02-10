@@ -7,11 +7,32 @@ import robotsTxt from "astro-robots-txt";
 
 import vercel from "@astrojs/vercel";
 
+const getSiteUrl = () => {
+  const productionUrl =
+    import.meta.env.VERCEL_PROJECT_PRODUCTION_URL ??
+    "https://www.forkit.community";
+
+  const branchUrl = import.meta.env.VERCEL_BRANCH_URL ?? productionUrl;
+  const localUrl = "http://localhost:4321";
+
+  console.log({
+    productionUrl,
+    branchUrl,
+    localUrl,
+  });
+
+  if (!import.meta.env.PROD) {
+    return localUrl;
+  }
+  if (import.meta.env.PROD && import.meta.env.VERCEL_TARGET_ENV === "preview") {
+    return branchUrl;
+  }
+  return productionUrl;
+};
+
 // https://astro.build/config
 export default defineConfig({
-  site: import.meta.env.PROD
-    ? "https://www.forkit.community"
-    : "http://localhost:4321",
+  site: getSiteUrl(),
 
   trailingSlash: "never",
 
