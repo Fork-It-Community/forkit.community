@@ -15,6 +15,7 @@ const getSiteUrl = () => {
   const branchUrl = process.env.VERCEL_BRANCH_URL
     ? `https://${process.env.VERCEL_BRANCH_URL}`
     : productionUrl;
+
   const localUrl = "http://localhost:4321";
 
   if (!import.meta.env.PROD) {
