@@ -8,29 +8,19 @@ import robotsTxt from "astro-robots-txt";
 import vercel from "@astrojs/vercel";
 
 const getSiteUrl = () => {
-  const productionUrl =
-    import.meta.env.VERCEL_PROJECT_PRODUCTION_URL ??
-    "https://www.forkit.community";
+  const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "https://www.forkit.community";
 
-  const branchUrl = import.meta.env.VERCEL_BRANCH_URL ?? productionUrl;
+  const branchUrl = process.env.VERCEL_BRANCH_URL
+    ? `https://${process.env.VERCEL_BRANCH_URL}`
+    : productionUrl;
   const localUrl = "http://localhost:4321";
-
-  console.log({
-    metaVERCEL_PROJECT_PRODUCTION_URL: import.meta.env
-      .VERCEL_PROJECT_PRODUCTION_URL,
-    metaVERCEL_BRANCH_URL: import.meta.env.VERCEL_BRANCH_URL,
-    processVERCEL_PROJECT_PRODUCTION_URL:
-      process.env.VERCEL_PROJECT_PRODUCTION_URL,
-    processVERCEL_BRANCH_URL: process.env.VERCEL_BRANCH_URL,
-    productionUrl,
-    branchUrl,
-    localUrl,
-  });
 
   if (!import.meta.env.PROD) {
     return localUrl;
   }
-  if (import.meta.env.PROD && import.meta.env.VERCEL_TARGET_ENV === "preview") {
+  if (import.meta.env.PROD && process.env.VERCEL_TARGET_ENV === "preview") {
     return branchUrl;
   }
   return productionUrl;
