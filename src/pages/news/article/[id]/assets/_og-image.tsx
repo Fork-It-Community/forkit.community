@@ -8,6 +8,7 @@ import { Logo } from "@/components/Logo";
 import { getNewsCollection } from "@/lib/news";
 import defaultBackgroundImage from "@/assets/images/news.jpeg";
 import dayjs from "dayjs";
+import { NotFoundAssetError } from "@/generated-assets/api";
 
 export const config: AssetImageConfig = {
   width: 1920,
@@ -19,7 +20,7 @@ export default async function ({ params }: { params: { id: string } }) {
   const article = news.find((n) => n.id === params.id);
 
   if (!article) {
-    throw new Error("Not found");
+    throw new NotFoundAssetError();
   }
 
   const background = await getAstroImageBase64(

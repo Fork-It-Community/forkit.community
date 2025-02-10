@@ -1,9 +1,10 @@
+import { NotFoundAssetError } from "@/generated-assets/api";
 import { getCollection, getEntries, getEntry } from "astro:content";
 
 export const getEventData = async (id: string) => {
   const event = await getEntry("events", id);
   if (!event) {
-    throw new Error("Not found");
+    throw new NotFoundAssetError();
   }
 
   const talksForEvent = await getCollection("talks", (item) =>
