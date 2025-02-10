@@ -151,7 +151,7 @@ async function getAstroImageBuffer(image: ImageMetadata) {
   const fileToRead = getAstroImagePath(image);
 
   return {
-    buffer: await match(import.meta.env.DEV)
+    buffer: await match(import.meta.env.DEV || !import.meta.env.SSR)
       .with(true, async () => await fs.readFile(fileToRead))
       .with(false, async () => {
         const res = await fetch(new URL(fileToRead, import.meta.env.SITE));
