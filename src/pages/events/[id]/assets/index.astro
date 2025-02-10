@@ -69,7 +69,9 @@ const imagesSrc = getEventAssetsSources(event);
       }
     </div>
     <div class="w-56">
-      <div class="sticky top-12 flex flex-col py-4">
+      <div
+        class="hide-scrollbar sticky top-12 flex flex-col overflow-auto py-4 md:max-h-[80vh]"
+      >
         <h2 class="p-1 font-heading text-sm uppercase tracking-wider">
           All events
         </h2>
