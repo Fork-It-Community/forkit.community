@@ -232,3 +232,38 @@ export async function getPersonEvents(
       .slice(0, limit)
   );
 }
+
+export type EventCtaType = "tickets" | "after-event" | "prospectus" | "cfp";
+
+export function getEventCtaTypes(event: CollectionEntry<"events">) {
+  const getButtonType: (
+    excludeTypes?: Array<EventCtaType | null>,
+  ) => EventCtaType | null = (excludeTypes) => {
+    if (shouldShowTickets(event) && !excludeTypes?.includes("tickets")) {
+      return "tickets";
+    }
+    if (shouldShowProspectus(event) && !excludeTypes?.includes("prospectus")) {
+      return "prospectus";
+    }
+    if (shouldShowCFP(event) && !excludeTypes?.includes("cfp")) {
+      return "cfp";
+    }
+    if (
+      event.data.afterEventContent &&
+      !excludeTypes?.includes("after-event")
+    ) {
+      return "after-event";
+    }
+    return null;
+  };
+
+  const primary = getButtonType();
+  const secondary = getButtonType([primary]);
+  const tertiary = getButtonType([primary, secondary]);
+
+  return {
+    primary,
+    secondary,
+    tertiary,
+  } as const;
+}
