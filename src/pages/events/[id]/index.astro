@@ -1,6 +1,7 @@
 ---
 import Sponsors from "@/components/Sponsors/index.astro";
 import { Logo } from "@/components/Logo";
+import { EventCTA } from "@/components/EventCTA";
 import { buttonVariants } from "@/components/ui/button";
 import FeedbackCTA from "@/components/FeedbackCTA/index.astro";
 import EventLayout from "@/layouts/EventLayout.astro";
@@ -12,7 +13,7 @@ import {
   getEventNavItems,
   getEventsCollection,
   getEventSubPagesCollection,
-  shouldShowTickets,
+  getEventCtaTypes,
   shouldShowCFP,
   getEventDisplayDate,
   shouldShowProspectus,
@@ -77,6 +78,8 @@ const ogImage = new URL(
   Astro.url.pathname + "/dynamic-images/og-image.jpg",
   Astro.site,
 );
+
+const ctaTypes = getEventCtaTypes(event);
 ---
 
 <EventLayout event={event} ogImage={ogImage}>
@@ -147,41 +150,21 @@ const ogImage = new URL(
       </div>
 
       <div class="flex flex-wrap items-center justify-center gap-4">
-        {
-          shouldShowTickets(event) ? (
-            <a
-              href={event.data.tickets.href}
-              class={cn(buttonVariants({ size: "lg" }), "group gap-2")}
-            >
-              Get Your Ticket
-              <MdArrowForward className="transition group-hover:translate-x-1" />
-            </a>
-          ) : event.data.afterEventContent ? (
-            <a
-              href="#after-event"
-              class={cn(buttonVariants({ size: "lg" }), "gap-2")}
-            >
-              After Event Insights
-            </a>
-          ) : null
-        }
-        {
-          shouldShowProspectus(event) ? (
-            <a
-              href={event.data.prospectus.href}
-              class={buttonVariants({ size: "lg", variant: "secondary" })}
-            >
-              Become a Sponsor
-            </a>
-          ) : shouldShowCFP(event) ? (
-            <a
-              href={event.data.cfp.href}
-              class={buttonVariants({ size: "lg", variant: "secondary" })}
-            >
-              Call For Paper
-            </a>
-          ) : null
-        }
+        <EventCTA
+          event={event}
+          buttonType={ctaTypes.primary}
+          variant="default"
+        />
+        <EventCTA
+          event={event}
+          buttonType={ctaTypes.secondary}
+          variant="secondary"
+        />
+        <EventCTA
+          event={event}
+          buttonType={ctaTypes.tertiary}
+          variant="secondary"
+        />
       </div>
       {
         !!coOrganizers.length && (
