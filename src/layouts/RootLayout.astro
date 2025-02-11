@@ -32,12 +32,12 @@ import EnvHint from "@/components/EnvHint/EnvHint.astro";
     <meta name="theme-color" content="#171717" />
     <slot name="seo" />
     <slot name="ld+json" />
-    <Analytics />
   </head>
   <body
     class="flex min-h-svh flex-col overflow-x-hidden overflow-y-scroll bg-black text-foreground"
   >
     <EnvHint />
     <slot />
+    <Analytics />
   </body>
 </html>
