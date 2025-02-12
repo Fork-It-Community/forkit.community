@@ -1,7 +1,7 @@
 ---
 import { getEventsCollection } from "@/lib/events";
 import { getEventAssetsSources } from "./_utils";
-
+import SEO from "@/components/SEO/index.astro";
 import dayjs from "dayjs";
 import { Image } from "astro:assets";
 import { buttonVariants } from "@/components/ui/button";
@@ -26,6 +26,7 @@ const imagesSrc = getEventAssetsSources(event);
 ---
 
 <EventSubPageLayout event={event}>
+  <SEO slot="seo" title={`Assets for ${event.data.name}`} noindex nofollow />
   <ImageBackgroundHero src={event.data.image.media} alt="" blur />
   <div
     class="mx-auto flex w-full max-w-screen-lg flex-col gap-8 px-4 pb-40 pt-6 md:flex-row"
