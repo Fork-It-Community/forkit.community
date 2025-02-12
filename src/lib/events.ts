@@ -43,7 +43,7 @@ export async function getUpcomingEvents({
   const events = await getEventsCollection();
   const upcomingEvents =
     events
-      .filter((event) => dayjs().isBefore(event.data.date))
+      .filter((event) => dayjs(event.data.date).endOf("day").isAfter(dayjs()))
       .sort(
         (event1, event2) =>
           (event1.data.date?.valueOf() ?? 0) -
@@ -63,7 +63,7 @@ export async function getPastEvents({
   const events = await getEventsCollection();
   const pastEvents =
     events
-      .filter((event) => dayjs().isAfter(event.data.date))
+      .filter((event) => dayjs(event.data.date).endOf("day").isBefore(dayjs()))
       .sort(
         (event1, event2) =>
           (event2.data.date?.valueOf() ?? 0) -
@@ -161,7 +161,9 @@ export function shouldShowTickets(
 
   return !!(
     event.data.tickets &&
-    dayjs().isBefore(event.data.tickets.endDate ?? event.data.date)
+    dayjs(event.data.tickets.endDate ?? event.data.date)
+      .endOf("day")
+      .isAfter(dayjs())
   );
 }
 
@@ -174,7 +176,10 @@ export function shouldShowCFP(
     return false;
   }
 
-  return !!(event.data.cfp && dayjs().isBefore(event.data.cfp.endDate));
+  return !!(
+    event.data.cfp &&
+    dayjs(event.data.cfp.endDate).endOf("day").isAfter(dayjs())
+  );
 }
 
 export function shouldShowProspectus(
@@ -189,7 +194,8 @@ export function shouldShowProspectus(
   }
 
   return !!(
-    event.data.prospectus && dayjs().isBefore(event.data.prospectus.endDate)
+    event.data.prospectus &&
+    dayjs(event.data.prospectus.endDate).endOf("day").isAfter(dayjs())
   );
 }
 
