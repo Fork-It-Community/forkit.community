@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { RiSpeakLine } from "react-icons/ri";
 
 interface Props {
   event: CollectionEntry<"events">;
@@ -7,7 +8,39 @@ interface Props {
 ---
 
 <div
-  class="flex min-h-32 flex-1 flex-col items-center justify-center gap-2 rounded-lg bg-white/5 p-4"
+  class="flex min-h-32 flex-1 flex-col items-center justify-center gap-6 rounded-lg bg-white/5 p-4"
 >
   <p class="text-lg tracking-wider text-white/60">Schedule is coming soon!</p>
+  <div class="flex w-96 flex-1 flex-col gap-4">
+    <div class="rounded-md border border-white/40 bg-white/20 p-4">
+      <p class="text-lg">Welcome</p>
+      <p class="text-sm">Visitor reception</p>
+    </div>
+    <div
+      class="flex items-center justify-between rounded-md border border-white/20 bg-white/5 p-4"
+    >
+      <div>
+        <p class="text-lg">Conferences</p>
+        <p class="text-sm">Speaker</p>
+      </div>
+      <RiSpeakLine size={32} className="text-white/60" />
+    </div>
+    <div
+      class="flex items-center justify-between rounded-md border border-white/20 bg-white/5 p-4"
+    >
+      <div>
+        <p class="text-lg">Workshops</p>
+        <p class="text-sm">All together</p>
+      </div>
+      <RiSpeakLine size={32} className="text-white/60" />
+    </div>
+    <div class="rounded-md border border-white/40 bg-white/20 p-4">
+      <p class="text-lg">Networking cocktail</p>
+      <p class="text-sm">Have a drink and share your experience</p>
+    </div>
+    <div class="rounded-md border border-white/40 bg-white/20 p-4">
+      <p class="text-lg">Roundtable</p>
+      <p class="text-sm">Have a drink and share your experience</p>
+    </div>
+  </div>
 </div>
