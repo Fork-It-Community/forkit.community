@@ -364,7 +364,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
       {
         afterMovie && (
           <div class="relative aspect-[1134/640] w-full min-w-0 flex-1">
-            <a href={afterMovie.href} target="_blank">
+            <a href={afterMovie.href} target="_blank" rel="noreferrer">
               <Image
                 alt={afterMovie.thumbnail.alt}
                 class="rounded-lg object-cover"
