@@ -22,7 +22,7 @@ const coOrganizers = (await getEntries(event.data.coOrganizers ?? []))
   .filter((p) => !!p)
   .slice(0, 5);
 
-const isUpcomingEvent = dayjs().isBefore(event.data.date);
+const isUpcomingEvent = dayjs(event.data.date).endOf("day").isAfter(dayjs());
 ---
 
 <a
