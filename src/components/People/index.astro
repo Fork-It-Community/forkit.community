@@ -41,6 +41,7 @@ const { people } = Astro.props;
             <a
               href={people.data.company.href}
               target="_blank"
+              rel="noreferrer"
               class="text-xs underline opacity-60 transition hover:text-primary hover:opacity-100"
             >
               {people.data.company.title}
@@ -64,6 +65,7 @@ const { people } = Astro.props;
                     href={social.href}
                     class="opacity-60 transition hover:text-primary hover:opacity-100"
                     target="_blank"
+                    rel="noreferrer"
                   >
                     <span class="sr-only">{social.type}</span>
                     <Icon />

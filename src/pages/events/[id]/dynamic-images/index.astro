@@ -51,6 +51,7 @@ const allEvents = (await getEventsCollection()).sort((a, b) =>
           class={cn(buttonVariants({ size: "sm" }), "gap-2")}
           href={`/events/${props.event.id}/dynamic-images/download`}
           target="_blank"
+          rel="noreferrer"
         >
           <MdDownload />
           Download all assets

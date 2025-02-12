@@ -17,6 +17,7 @@ export const EventCTA = (props: EventCTAProps) => {
     .with("tickets", () => (
       <a
         target="_blank"
+        rel="noreferrer"
         href={props.event.data.tickets?.href}
         className={cn(
           buttonVariants({ size: "lg", variant: props.variant }),
@@ -30,6 +31,7 @@ export const EventCTA = (props: EventCTAProps) => {
     .with("prospectus", () => (
       <a
         target="_blank"
+        rel="noreferrer"
         href={props.event.data.prospectus?.href}
         className={buttonVariants({ size: "lg", variant: props.variant })}
       >
@@ -39,6 +41,7 @@ export const EventCTA = (props: EventCTAProps) => {
     .with("cfp", () => (
       <a
         target="_blank"
+        rel="noreferrer"
         href={props.event.data.cfp?.href}
         className={buttonVariants({ size: "lg", variant: props.variant })}
       >
