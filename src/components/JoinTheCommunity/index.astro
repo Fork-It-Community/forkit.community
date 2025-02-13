@@ -15,6 +15,8 @@ import { getSocialsItems } from "@/content/socials";
       {
         getSocialsItems("primary").map(({ icon: Icon, ...social }) => (
           <a
+            target="_blank"
+            rel="noreferrer"
             href={social.href}
             class="flex items-center gap-2 p-2 opacity-60 transition hover:text-white hover:opacity-100"
           >

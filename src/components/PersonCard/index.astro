@@ -62,6 +62,7 @@ const appearances = await getAppearances(person, 4);
               <a
                 href={person.data.company.href}
                 target="_blank"
+                rel="noreferrer"
                 class="text-xs underline opacity-60 transition hover:text-primary hover:opacity-100"
               >
                 {person.data.company.title}
@@ -86,6 +87,7 @@ const appearances = await getAppearances(person, 4);
                       href={social.href}
                       class="opacity-60 transition hover:text-primary hover:opacity-100"
                       target="_blank"
+                      rel="noreferrer"
                     >
                       <span class="sr-only">{social.type}</span>
                       <Icon />

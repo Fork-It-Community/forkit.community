@@ -40,7 +40,7 @@ const { event, sponsors } = Astro.props;
               }
 
               return (
-                <a href={sponsor.data.href}>
+                <a href={sponsor.data.href} target="_blank" rel="noreferrer">
                   <Image
                     src={sponsor.data.logos.bgWhite}
                     alt={sponsor.data.name}
