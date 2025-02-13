@@ -5,6 +5,7 @@ import { RiSpeakLine } from "react-icons/ri";
 interface Props {
   event: CollectionEntry<"events">;
 }
+const event = Astro.props.event;
 ---
 
 <div
@@ -43,22 +44,16 @@ interface Props {
       <p class="text-sm">Have a drink and share your experience</p>
     </div>
   </div>
-  <div class="flex gap-4">
-    <div class="rounded-sm border border-primary px-6 py-2 text-center">
-      <p class="text-lg font-bold">10+</p>
-      <p class="text-sm">Speakers</p>
-    </div>
-    <div class="rounded-sm border border-primary px-6 py-2 text-center">
-      <p class="text-lg font-bold">4</p>
-      <p class="text-sm">Booths</p>
-    </div>
-    <div class="rounded-sm border border-primary px-6 py-2 text-center">
-      <p class="text-lg font-bold">15+</p>
-      <p class="text-sm">Countries</p>
-    </div>
-    <div class="rounded-sm border border-primary px-6 py-2 text-center">
-      <p class="text-lg font-bold">200+</p>
-      <p class="text-sm">Attendees</p>
-    </div>
-  </div>
+  {
+    event.data.scheduleStatItems && (
+      <div class="flex gap-4">
+        {event.data.scheduleStatItems.map((item) => (
+          <div class="rounded-sm border border-primary px-6 py-2 text-center">
+            <p class="text-lg font-bold">{item.title}</p>
+            <p class="text-sm">{item.subTitle}</p>
+          </div>
+        ))}
+      </div>
+    )
+  }
 </div>

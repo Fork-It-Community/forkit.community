@@ -136,6 +136,9 @@ const zEventBase = ({ image }: SchemaContext) =>
         }),
       )
       .optional(),
+    scheduleStatItems: z
+      .array(z.object({ title: z.string(), subTitle: z.string().optional() }))
+      .optional(),
     feedback: z
       .object({
         link: z.string().url(),
