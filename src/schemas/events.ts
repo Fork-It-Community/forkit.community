@@ -132,7 +132,7 @@ const zEventBase = ({ image }: SchemaContext) =>
           .array(
             z.object({
               // TODO Discriminated union
-              type: z.enum(["conference", "roundtable", "break", "lunch"]),
+              type: z.enum(["conference", "roundtable", "info", "lunch"]),
               sponsors: z.array(reference("partners")).optional(),
               description: z.string().optional(),
               name: z.string().optional(),

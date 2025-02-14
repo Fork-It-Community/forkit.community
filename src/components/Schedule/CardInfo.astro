@@ -4,12 +4,12 @@ import type { CollectionEntry } from "astro:content";
 import { getEntries } from "astro:content";
 
 interface Props {
-  break: NonNullable<
+  info: NonNullable<
     NonNullable<CollectionEntry<"events">["data"]["schedule"]>["items"]
   >[number];
 }
 
-const { break: _break } = Astro.props;
+const { info: _break } = Astro.props;
 
 const sponsors = await getEntries(_break.sponsors ?? []);
 ---

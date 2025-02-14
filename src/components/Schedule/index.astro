@@ -1,5 +1,5 @@
 ---
-import CardBreak from "@/components/Schedule/CardBreak.astro";
+import CardInfo from "@/components/Schedule/CardInfo.astro";
 import CardConference from "@/components/Schedule/CardConference.astro";
 import TimeAndDuration from "@/components/Schedule/TimeAndDuration.astro";
 import ComingSoon from "./ComingSoon.astro";
@@ -8,15 +8,16 @@ import { MdPlace } from "react-icons/md";
 import { match } from "ts-pattern";
 
 interface Props {
+  displayStats?: boolean;
   event: CollectionEntry<"events">;
 }
 
-const { event } = Astro.props;
+const { event, displayStats } = Astro.props;
 ---
 
 <div class="flex flex-col gap-6">
   {
-    !!event.data.schedule?.stats && (
+    displayStats && !!event.data.schedule?.stats && (
       <div class="grid w-full grid-cols-2 flex-wrap gap-4 sm:grid-cols-4">
         {event.data.schedule.stats.map((item) => (
           <div class="flex-1 rounded-lg bg-white/5 p-4 text-center font-heading">
@@ -83,9 +84,7 @@ const { event } = Astro.props;
                       .with("conference", "roundtable", () => (
                         <CardConference activity={activity} event={event} />
                       ))
-                      .with("break", "lunch", () => (
-                        <CardBreak break={activity} />
-                      ))
+                      .with("info", "lunch", () => <CardInfo info={activity} />)
                       .exhaustive()}
                   </div>
                 </div>
