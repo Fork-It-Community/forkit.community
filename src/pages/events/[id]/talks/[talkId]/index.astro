@@ -24,7 +24,7 @@ export async function getStaticPaths() {
     await Promise.all(
       events.map(async (event) => {
         const talks = await getEntries(
-          (event.data.schedule ?? [])
+          (event.data.schedule?.items ?? [])
             .map((activity) => activity.slug)
             .filter((s) => !!s),
         );
@@ -32,7 +32,7 @@ export async function getStaticPaths() {
         return talks.map((s) => ({
           ...s,
           __event: event,
-          __schedule: event.data.schedule?.find(
+          __schedule: event.data.schedule?.items?.find(
             (activity) => activity.slug?.id === s.id,
           ),
         }));

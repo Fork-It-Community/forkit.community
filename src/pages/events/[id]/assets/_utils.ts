@@ -14,7 +14,9 @@ export const getEventData = async (id: string) => {
   }
 
   const talksForEvent = await getCollection("talks", (item) =>
-    event.data.schedule?.map((activity) => activity.slug?.id).includes(item.id),
+    event.data.schedule?.items
+      ?.map((activity) => activity.slug?.id)
+      .includes(item.id),
   );
 
   return {
@@ -47,7 +49,7 @@ export const getEventAssetsSources = (event: CollectionEntry<"events">) => {
     eventFilesNames.map(
       (fileName) => `/events/${event.id}/assets/${fileName}.jpg`,
     ),
-    event.data.schedule?.flatMap((talk) =>
+    event.data.schedule?.items?.flatMap((talk) =>
       talkFilesNames.map((fileName) =>
         !talk.slug
           ? null

@@ -32,15 +32,32 @@ cfp:
   endDate: 2025-02-20T23:59:00.000Z
 eventStatus: EventScheduled
 attendanceMode: OfflineEventAttendanceMode
-scheduleStatItems:
-  - title: 10+
-    subTitle: Speakers
-  - title: "4"
-    subTitle: Booths
-  - title: 15+
-    subTitle: Countries
-  - title: 200+
-    subTitle: Attendees
+
+schedule:
+  status: preview
+  stats:
+    - count: 10+
+      name: Speakers
+    - count: "4"
+      name: Booths
+    - count: 15+
+      name: Countries
+    - count: 200+
+      name: Attendees
+  items:
+    - type: break
+      name: Welcome
+      description: Visitor reception
+    - type: break
+      name: Conferences, Workshops
+      description: Share together
+    - type: break
+      name: Networking cocktail
+      description: Have a drink and share your experience
+    - type: break
+      name: Roundtable
+      description: Debate about a topic with the community
+
 ---
 
 import { buttonVariants } from '@/components/ui/button'

@@ -4,7 +4,9 @@ import type { CollectionEntry } from "astro:content";
 import { getEntries } from "astro:content";
 
 interface Props {
-  break: NonNullable<CollectionEntry<"events">["data"]["schedule"]>[number];
+  break: NonNullable<
+    NonNullable<CollectionEntry<"events">["data"]["schedule"]>["items"]
+  >[number];
 }
 
 const { break: _break } = Astro.props;
