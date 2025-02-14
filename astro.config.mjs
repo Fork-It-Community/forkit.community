@@ -6,12 +6,11 @@ import sitemap from "@astrojs/sitemap";
 import robotsTxt from "astro-robots-txt";
 
 import vercel from "@astrojs/vercel";
+import { getSiteUrl } from "./src/lib/getSiteURL";
 
 // https://astro.build/config
 export default defineConfig({
-  site: import.meta.env.PROD
-    ? "https://www.forkit.community"
-    : "http://localhost:4321",
+  site: getSiteUrl(),
 
   trailingSlash: "never",
 

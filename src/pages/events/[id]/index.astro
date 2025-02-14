@@ -75,7 +75,7 @@ const location: Place | undefined = event.data.location
     }
   : undefined;
 const ogImage = new URL(
-  Astro.url.pathname + "/dynamic-images/og-image.jpg",
+  Astro.url.pathname + "/assets/og-image.jpg",
   Astro.site,
 );
 
@@ -555,6 +555,48 @@ const ctaTypes = getEventCtaTypes(event);
   {event.data.faq && <FAQ client:load faq={event.data.faq} />}
 
   {!!partners.length && <PartnersBlock partners={partners} />}
+
+  <div class="relative flex w-full flex-col gap-6 px-6 py-12">
+    <a
+      href={`/events/${event.id}/assets`}
+      rel="nofollow"
+      class="group mx-auto flex w-full max-w-screen-md flex-col items-start gap-6 rounded-lg bg-white/5 p-8 backdrop-blur-md transition hover:bg-white/10 sm:flex-row sm:items-center sm:px-8 sm:py-6"
+    >
+      <div class="flex flex-1 flex-col">
+        <h2
+          class="text-balance font-heading text-base font-medium uppercase tracking-widest transition duration-500 group-hover:text-primary"
+        >
+          Need visual assets?
+        </h2>
+      </div>
+
+      <div class="relative h-32 w-56 max-xs:mx-auto sm:-mt-24 sm:h-4 sm:w-64">
+        <Image
+          class="absolute -left-4 top-0 max-w-none -rotate-[4deg] rounded bg-background shadow-xl transition duration-500 group-hover:scale-105"
+          src={`/events/${event.id}/assets/tickets-available-square.jpg`}
+          alt=""
+          width={108}
+          height={108}
+        />
+        <Image
+          class="absolute left-12 top-4 max-w-none rotate-[4deg] rounded bg-background shadow-xl transition duration-500 group-hover:scale-105"
+          src={`/events/${event.id}/assets/save-the-date.jpg`}
+          alt=""
+          width={192}
+          height={108}
+        />
+      </div>
+
+      <div
+        class={cn(
+          buttonVariants({ size: "lg", variant: "secondary" }),
+          "max-xs:w-full",
+        )}
+      >
+        View Event Assets
+      </div>
+    </a>
+  </div>
 
   <div class="py-8 md:py-12">
     <JoinTheCommunity />

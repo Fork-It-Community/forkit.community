@@ -1,4 +1,4 @@
-import { getEventAssetsSources } from "@/pages/events/[id]/dynamic-images/_utils";
+import { getEventAssetsSources } from "./_utils";
 import type { APIRoute } from "astro";
 import { getEntry } from "astro:content";
 import dayjs from "dayjs";
@@ -25,7 +25,7 @@ export const GET: APIRoute = async ({ params, site }) => {
       }
       const blob = await response.blob();
       zip.addFile(
-        `${src.replaceAll("/events/", "").replaceAll("/dynamic-images", "").replaceAll("/", "_")}`,
+        `${src.replaceAll("/events/", "").replaceAll("/assets", "").replaceAll("/", "_")}`,
         Buffer.from(await blob.arrayBuffer()),
       );
     }),
