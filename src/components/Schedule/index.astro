@@ -1,5 +1,5 @@
 ---
-import CardBreak from "@/components/Schedule/CardBreak.astro";
+import CardInfo from "@/components/Schedule/CardInfo.astro";
 import CardConference from "@/components/Schedule/CardConference.astro";
 import TimeAndDuration from "@/components/Schedule/TimeAndDuration.astro";
 import ComingSoon from "./ComingSoon.astro";
@@ -8,58 +8,90 @@ import { MdPlace } from "react-icons/md";
 import { match } from "ts-pattern";
 
 interface Props {
+  displayStats?: boolean;
   event: CollectionEntry<"events">;
 }
 
-const { event } = Astro.props;
+const { event, displayStats } = Astro.props;
 ---
 
-{
-  !event.data.schedule ? (
-    <ComingSoon event={event} />
-  ) : (
-    <div class="flex flex-col">
-      {event.data.schedule
-        .toSorted(
-          (talk1, talk2) =>
-            (talk1.startTime?.valueOf() ?? 0) -
-            (talk2.startTime?.valueOf() ?? 0),
-        )
-        .map((activity) => {
-          return (
-            <div class="group flex gap-3">
-              <div class="flex flex-col items-center gap-1 pt-1">
-                <div class="size-2.5 rounded-full border-2 border-white/40" />
-                <div class="flex-1 border-l border-dashed border-white/20 group-last:hidden" />
-              </div>
-              <div class="flex w-full flex-col gap-2 pb-6">
-                <div class="flex flex-1 flex-row flex-wrap items-center justify-between gap-x-3 gap-y-1">
-                  <TimeAndDuration
-                    startTime={activity.startTime}
-                    duration={activity.duration}
-                    class="font-heading text-sm tracking-wide opacity-80"
-                  />
-                  {!!activity.location && (
-                    <span class="flex items-center gap-1.5 text-xs uppercase tracking-wide opacity-60">
-                      <MdPlace className="text-base" />
-                      {activity.location}
-                    </span>
-                  )}
+<div class="flex flex-col gap-6">
+  {
+    displayStats && !!event.data.schedule?.stats && (
+      <div class="grid w-full grid-cols-2 flex-wrap gap-4 sm:grid-cols-4">
+        {event.data.schedule.stats.map((item) => (
+          <div class="flex-1 rounded-lg bg-white/5 p-4 text-center font-heading">
+            <p class="text-xl font-medium">{item.count}</p>
+            <p class="text-xs uppercase tracking-widest opacity-60">
+              {item.name}
+            </p>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    match(event.data.schedule?.status)
+      .with("final", undefined, () => null)
+      .with("not-final", () => (
+        <h4 class="font-heading text-lg tracking-wide opacity-80">
+          Schedule is subject to change
+        </h4>
+      ))
+      .with("preview", () => (
+        <h4 class="font-heading text-lg tracking-wide opacity-80">
+          Full schedule will be announced soon
+        </h4>
+      ))
+      .exhaustive()
+  }
+
+  {
+    !event.data.schedule?.items ? (
+      <ComingSoon />
+    ) : (
+      <div class="flex flex-col">
+        {event.data.schedule.items
+          .toSorted(
+            (talk1, talk2) =>
+              (talk1.startTime?.valueOf() ?? 0) -
+              (talk2.startTime?.valueOf() ?? 0),
+          )
+          .map((activity) => {
+            return (
+              <div class="group flex gap-3">
+                <div class="flex flex-col items-center gap-1 pt-1">
+                  <div class="size-2.5 rounded-full border-2 border-white/40" />
+                  <div class="flex-1 border-l border-dashed border-white/20 group-last:hidden" />
                 </div>
-                <div class="">
-                  {match(activity.type)
-                    .with("conference", "roundtable", () => (
-                      <CardConference activity={activity} event={event} />
-                    ))
-                    .with("break", "lunch", () => (
-                      <CardBreak break={activity} />
-                    ))
-                    .exhaustive()}
+                <div class="flex w-full flex-col gap-2 pb-6">
+                  <div class="flex flex-1 flex-row flex-wrap items-center justify-between gap-x-3 gap-y-1">
+                    <TimeAndDuration
+                      startTime={activity.startTime}
+                      duration={activity.duration}
+                      class="font-heading text-sm tracking-wide opacity-80"
+                    />
+                    {!!activity.location && (
+                      <span class="flex items-center gap-1.5 text-xs uppercase tracking-wide opacity-60">
+                        <MdPlace className="text-base" />
+                        {activity.location}
+                      </span>
+                    )}
+                  </div>
+                  <div class="">
+                    {match(activity.type)
+                      .with("conference", "roundtable", () => (
+                        <CardConference activity={activity} event={event} />
+                      ))
+                      .with("info", "lunch", () => <CardInfo info={activity} />)
+                      .exhaustive()}
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-    </div>
-  )
-}
+            );
+          })}
+      </div>
+    )
+  }
+</div>

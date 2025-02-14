@@ -122,19 +122,28 @@ const zEventBase = ({ image }: SchemaContext) =>
       "MixedEventAttendanceMode",
     ]),
     schedule: z
-      .array(
-        z.object({
-          // TODO Discriminated union
-          type: z.enum(["conference", "roundtable", "break", "lunch"]),
-          sponsors: z.array(reference("partners")).optional(),
-          description: z.string().optional(),
-          name: z.string().optional(),
-          slug: reference("talks").optional(),
-          startTime: z.date().optional(),
-          duration: z.number().optional().describe("Number of minutes"),
-          location: z.string().optional(),
-        }),
-      )
+      .object({
+        status: z.enum(["final", "not-final", "preview"]).default("final"),
+        stats: z
+          .array(z.object({ count: z.string(), name: z.string() }))
+          .length(4)
+          .optional(),
+        items: z
+          .array(
+            z.object({
+              // TODO Discriminated union
+              type: z.enum(["conference", "roundtable", "info", "lunch"]),
+              sponsors: z.array(reference("partners")).optional(),
+              description: z.string().optional(),
+              name: z.string().optional(),
+              slug: reference("talks").optional(),
+              startTime: z.date().optional(),
+              duration: z.number().optional().describe("Number of minutes"),
+              location: z.string().optional(),
+            }),
+          )
+          .optional(),
+      })
       .optional(),
     feedback: z
       .object({
