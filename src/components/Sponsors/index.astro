@@ -1,5 +1,6 @@
 ---
-import { Image } from "astro:assets";
+import SponsorCard from "@/components/Sponsors/SponsorCard.astro";
+import { cn } from "@/lib/utils-client";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
@@ -10,50 +11,44 @@ interface Props {
 const { event, sponsors } = Astro.props;
 ---
 
-<div class="flex flex-col gap-8">
+<div class="flex flex-col gap-12">
   {
-    event.data.sponsoringLevels?.map((sponsoringLevel) => {
-      const levelSponsors = event.data.sponsors
-        ?.filter((s) => s.level === sponsoringLevel)
-        .map(({ slug }) => sponsors.find((s) => s.id === slug.id))
-        .filter((s) => !!s);
+    event.data.sponsoringLevels?.map(
+      (sponsoringLevel, sponsoringLevelIndex) => {
+        const levelSponsors = event.data.sponsors
+          ?.filter((s) => s.level === sponsoringLevel)
+          .map(({ slug }) => sponsors.find((s) => s.id === slug.id))
+          .filter((s) => !!s);
 
-      if (!levelSponsors?.length) return null;
+        if (!levelSponsors?.length) return null;
 
-      return (
-        <div class="flex flex-col gap-2">
-          <h3 class="font-heading text-base font-medium uppercase tracking-widest">
-            {sponsoringLevel}
-          </h3>
-          <div class="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-4">
-            {levelSponsors.map((sponsor) => {
-              if (!sponsor.data.href) {
-                return (
-                  <Image
-                    src={sponsor.data.logos.bgWhite}
-                    alt={sponsor.data.name}
-                    class="rounded-md"
-                    width={500}
-                    height={300}
-                  />
-                );
-              }
+        const priority =
+          sponsoringLevelIndex === 0
+            ? "primary"
+            : sponsoringLevelIndex === 1
+              ? "secondary"
+              : ("default" as const);
 
-              return (
-                <a href={sponsor.data.href}>
-                  <Image
-                    src={sponsor.data.logos.bgWhite}
-                    alt={sponsor.data.name}
-                    class="rounded-md"
-                    width={500}
-                    height={300}
-                  />
-                </a>
-              );
-            })}
+        return (
+          <div class="flex flex-col gap-2">
+            <h3 class="font-heading text-base font-medium uppercase tracking-widest">
+              {sponsoringLevel}
+            </h3>
+            <div
+              class={cn(
+                "grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-4",
+                priority === "secondary" &&
+                  "grid-cols-1 sm:grid-cols-2 md:grid-cols-3",
+                priority === "primary" && "grid-cols-1 md:grid-cols-2",
+              )}
+            >
+              {levelSponsors.map((sponsor) => (
+                <SponsorCard sponsor={sponsor} priority={priority} />
+              ))}
+            </div>
           </div>
-        </div>
-      );
-    })
+        );
+      },
+    )
   }
 </div>

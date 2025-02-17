@@ -1,0 +1,55 @@
+---
+import { Image } from "astro:assets";
+import { render, type CollectionEntry } from "astro:content";
+
+interface Props {
+  sponsor: CollectionEntry<"partners">;
+  priority: "primary" | "secondary" | "default";
+}
+
+const { sponsor, priority } = Astro.props;
+const { Content } = await render(sponsor);
+---
+
+<a
+  href={sponsor.data.href}
+  class="group flex scroll-mt-20 flex-col gap-1 overflow-hidden rounded-lg bg-white/5 p-5 backdrop-blur-md"
+>
+  <div class="relative">
+    <Image
+      src={sponsor.data.logos.noBg}
+      alt={sponsor.data.name}
+      class="rounded-md"
+      width={500}
+      height={300}
+    />
+    <Image
+      src={sponsor.data.logos.noBg}
+      alt={sponsor.data.name}
+      class="absolute left-0 top-0 rounded-md opacity-40 blur-3xl transition duration-500 group-hover:scale-110 group-hover:opacity-80"
+      width={500}
+      height={300}
+    />
+  </div>
+  {
+    priority === "primary" && (
+      <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-1">
+          <div class="line-clamp-3 font-heading text-base font-medium tracking-wide opacity-80 transition group-hover:opacity-100">
+            {sponsor.data.name}
+          </div>
+
+          <div class="text-sm tracking-wider opacity-60">
+            {!!sponsor.body?.trim() ? (
+              <div class="line-clamp-5 sm:line-clamp-3">
+                <Content />
+              </div>
+            ) : (
+              <>Discover more on {new URL(sponsor.data.href).hostname}</>
+            )}
+          </div>
+        </div>
+      </div>
+    )
+  }
+</a>
