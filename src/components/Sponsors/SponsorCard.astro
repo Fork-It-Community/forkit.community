@@ -1,0 +1,38 @@
+---
+import { Image } from "astro:assets";
+import { type CollectionEntry } from "astro:content";
+
+interface Props {
+  sponsor: CollectionEntry<"partners">;
+  priority: "primary" | "secondary" | "default";
+}
+
+const { sponsor, priority } = Astro.props;
+---
+
+<a
+  href={sponsor.data.href}
+  class="group flex scroll-mt-20 flex-col gap-1 overflow-hidden rounded-lg bg-white/5 p-5 backdrop-blur-md transition duration-500 hover:bg-white/10"
+>
+  <div class="relative">
+    <Image
+      src={sponsor.data.logos.noBg}
+      alt={sponsor.data.name}
+      class="relative z-10 rounded-md"
+      width={500}
+      height={300}
+    />
+  </div>
+  {
+    priority === "primary" && (
+      <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-1">
+          <div class="text-center text-sm tracking-wider">
+            <span class="opacity-60">Discover more about</span>{" "}
+            <strong class="font-medium">{sponsor.data.name}</strong>
+          </div>
+        </div>
+      </div>
+    )
+  }
+</a>
