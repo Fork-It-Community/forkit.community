@@ -41,8 +41,15 @@ export const apiImageEndpoint: (modules: Record<string, unknown>) => APIRoute =
         return generateImageResponseHTML(html);
       }
 
-      const jpg = await JPG(component, config);
-      return generateImageResponseJPG(jpg);
+      if (params.__type === "jpg") {
+        const jpg = await JPG(component, config);
+        return generateImageResponseJPG(jpg);
+      }
+
+      return new Response(null, {
+        status: 404,
+        statusText: "Not found",
+      });
     } catch (error) {
       console.log(error);
       if (error instanceof NotFoundAssetError) {
