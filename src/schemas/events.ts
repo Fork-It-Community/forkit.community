@@ -57,7 +57,16 @@ const zEventBase = ({ image }: SchemaContext) =>
       .optional(),
     tickets: z
       .object({
-        href: z.string().url(),
+        link: z.union([
+          z.string().url(),
+          z.array(
+            z.object({
+              title: z.string(),
+              description: z.string().optional(),
+              href: z.string().url().optional(),
+            }),
+          ),
+        ]),
         endDate: z.date().optional(),
         offers: z
           .array(
