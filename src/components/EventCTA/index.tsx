@@ -40,8 +40,7 @@ export const EventCTA = (props: Props) => {
   return match(props.buttonType)
     .with(null, () => null)
     .with("tickets", () => {
-      // TODO change condition (!==)
-      if (typeof props.eventMetadata.tickets?.href === "string") {
+      if (typeof props.eventMetadata.tickets?.link !== "string") {
         const { onClick: _, ...buttonPropsWithoutOnClick } = buttonProps;
         return (
           <ResponsiveDrawer>
@@ -60,60 +59,65 @@ export const EventCTA = (props: Props) => {
                   We offer multiple ways to book your ticket
                 </ResponsiveDrawerDescription>
               </ResponsiveDrawerHeader>
-              <a
-                href={props.eventMetadata.tickets?.href}
-                target="_blank"
-                rel="noreferrer"
-                className="group flex flex-col gap-3 border-t border-black p-4 transition hover:bg-black/20 xs:flex-row xs:items-center"
-              >
-                <div className="flex flex-col xs:flex-1">
-                  <h4 className="font-heading text-base tracking-wide transition group-hover:text-primary">
-                    lu.ma
-                  </h4>
-                  <p className="text-xs tracking-wide opacity-60">
-                    Recommended for international payment
-                  </p>
-                </div>
-                <Button variant="secondary" asChild>
-                  <span>Book on lu.ma</span>
-                </Button>
-              </a>
-              <a
-                href={props.eventMetadata.tickets?.href}
-                target="_blank"
-                rel="noreferrer"
-                className="group flex flex-col gap-3 border-t border-black p-4 transition hover:bg-black/20 xs:flex-row xs:items-center"
-              >
-                <div className="flex flex-col xs:flex-1">
-                  <h4 className="font-heading text-base tracking-wide transition group-hover:text-primary">
-                    Tunis/Events
-                  </h4>
-                  <p className="text-xs tracking-wide opacity-60">
-                    Recommended for tunisians
-                  </p>
-                </div>
-                <Button variant="secondary" asChild>
-                  <span>Book on Tunis/Events</span>
-                </Button>
-              </a>
-              <div className="flex flex-col gap-3 border-t border-black p-4 transition">
-                <div className="flex flex-col xs:flex-1">
-                  <h4 className="font-heading text-base tracking-wide">
-                    Cash only?
-                  </h4>
-                  <p className="text-xs tracking-wide opacity-60">
-                    Contact us by phone 0000000000
-                  </p>
-                </div>
-              </div>
+              {props.eventMetadata.tickets?.link.map((ticket, index) => {
+                if (ticket.href) {
+                  return (
+                    <a
+                      href={ticket.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group flex flex-col gap-3 border-t border-black p-4 transition hover:bg-black/20 xs:flex-row xs:items-center"
+                      key={ticket.href}
+                    >
+                      <div className="flex flex-col xs:flex-1">
+                        {ticket.title && (
+                          <h4 className="font-heading text-base tracking-wide transition group-hover:text-primary">
+                            {ticket.title}
+                          </h4>
+                        )}
+                        {ticket.description && (
+                          <p className="text-xs tracking-wide opacity-60">
+                            {ticket.description}
+                          </p>
+                        )}
+                      </div>
+                      {ticket.title && (
+                        <Button
+                          variant={index === 0 ? "default" : "secondary"}
+                          asChild
+                        >
+                          <span>Book on {ticket.title}</span>
+                        </Button>
+                      )}
+                    </a>
+                  );
+                }
+
+                return (
+                  <div
+                    key={ticket.title}
+                    className="flex flex-col gap-3 border-t border-black p-4 transition"
+                  >
+                    <div className="flex flex-col xs:flex-1">
+                      <h4 className="font-heading text-base tracking-wide">
+                        Cash only?
+                      </h4>
+                      <p className="text-xs tracking-wide opacity-60">
+                        Contact us by phone 0000000000
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
             </ResponsiveDrawerContent>
           </ResponsiveDrawer>
         );
       }
+
       return (
         <a
           {...buttonProps}
-          href={props.eventMetadata.tickets?.href}
+          href={props.eventMetadata.tickets?.link}
           target="_blank"
           rel="noreferrer"
         >
