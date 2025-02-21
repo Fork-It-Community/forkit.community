@@ -240,6 +240,7 @@ export async function getPersonEvents(
 }
 
 export type EventCtaType = "tickets" | "after-event" | "prospectus" | "cfp";
+export type EventCtaTypes = ReturnType<typeof getEventCtaTypes>;
 
 export function getEventCtaTypes(event: CollectionEntry<"events">) {
   const getButtonType: (

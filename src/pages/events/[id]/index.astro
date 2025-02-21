@@ -80,6 +80,13 @@ const ogImage = new URL(
 );
 
 const ctaTypes = getEventCtaTypes(event);
+const ctaEventMetadata = {
+  date: event.data.date,
+  status: event.data.status,
+  cfp: event.data.cfp,
+  tickets: event.data.tickets,
+  prospectus: event.data.prospectus,
+};
 ---
 
 <EventLayout event={event} ogImage={ogImage}>
@@ -151,19 +158,21 @@ const ctaTypes = getEventCtaTypes(event);
 
       <div class="flex flex-wrap items-center justify-center gap-4">
         <EventCTA
-          event={event}
+          eventMetadata={ctaEventMetadata}
           buttonType={ctaTypes.primary}
-          variant="default"
+          size="lg"
         />
         <EventCTA
-          event={event}
+          eventMetadata={ctaEventMetadata}
           buttonType={ctaTypes.secondary}
           variant="secondary"
+          size="lg"
         />
         <EventCTA
-          event={event}
+          eventMetadata={ctaEventMetadata}
           buttonType={ctaTypes.tertiary}
           variant="secondary"
+          size="lg"
         />
       </div>
       {

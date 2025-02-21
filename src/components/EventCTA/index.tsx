@@ -1,26 +1,42 @@
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import type { EventCtaType } from "@/lib/events";
 import { cn } from "@/lib/utils-client";
-import type { CollectionEntry } from "astro:content";
+import type { Event } from "@/schemas/events";
+import type { ComponentProps } from "react";
 import { MdArrowForward } from "react-icons/md";
 import { match } from "ts-pattern";
 
-type EventCTAProps = {
-  variant: "default" | "secondary";
+export type EventMetadataForCta = Pick<
+  Event,
+  "cfp" | "tickets" | "date" | "status" | "prospectus"
+>;
+type Props = {
+  variant?: ComponentProps<typeof Button>["variant"];
+  size?: ComponentProps<typeof Button>["size"];
   buttonType: EventCtaType | null;
-  event: CollectionEntry<"events">;
+  eventMetadata: EventMetadataForCta;
+  className?: string;
+  onClick?: () => void;
 };
 
-export const EventCTA = (props: EventCTAProps) => {
+export const EventCTA = (props: Props) => {
+  const buttonProps = {
+    className: cn(
+      buttonVariants({ size: props.size, variant: props.variant }),
+      "group gap-2",
+      props.className,
+    ),
+    onClick: props.onClick,
+  };
+
   return match(props.buttonType)
     .with(null, () => null)
     .with("tickets", () => (
       <a
-        href={props.event.data.tickets?.href}
-        className={cn(
-          buttonVariants({ size: "lg", variant: props.variant }),
-          "group gap-2",
-        )}
+        {...buttonProps}
+        href={props.eventMetadata.tickets?.href}
+        target="_blank"
+        rel="noreferrer"
       >
         Get Your Ticket
         <MdArrowForward className="transition group-hover:translate-x-1" />
@@ -28,28 +44,26 @@ export const EventCTA = (props: EventCTAProps) => {
     ))
     .with("prospectus", () => (
       <a
-        href={props.event.data.prospectus?.href}
-        className={buttonVariants({ size: "lg", variant: props.variant })}
+        {...buttonProps}
+        href={props.eventMetadata.prospectus?.href}
+        target="_blank"
+        rel="noreferrer"
       >
         Become a Sponsor
       </a>
     ))
     .with("cfp", () => (
       <a
-        href={props.event.data.cfp?.href}
-        className={buttonVariants({ size: "lg", variant: props.variant })}
+        {...buttonProps}
+        href={props.eventMetadata.cfp?.href}
+        target="_blank"
+        rel="noreferrer"
       >
         Call For Paper
       </a>
     ))
     .with("after-event", () => (
-      <a
-        href="#after-event"
-        className={cn(
-          buttonVariants({ size: "lg", variant: props.variant }),
-          "gap-2",
-        )}
-      >
+      <a {...buttonProps} href="#after-event">
         After Event Insights
       </a>
     ))

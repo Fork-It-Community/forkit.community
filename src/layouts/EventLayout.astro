@@ -7,11 +7,9 @@ import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import SEO from "@/components/SEO/index.astro";
 import RootLayout from "@/layouts/RootLayout.astro";
 import {
+  getEventCtaTypes,
   getEventDisplayType,
   getEventNavItems,
-  shouldShowCFP,
-  shouldShowProspectus,
-  shouldShowTickets,
 } from "@/lib/events";
 import type { CollectionEntry } from "astro:content";
 import { motion } from "motion/react";
@@ -71,9 +69,7 @@ const title = `${event.data.name}, ${getEventDisplayType(event.data.type)}`;
       prospectus: event.data.prospectus,
     }}
     items={navItems}
-    shouldShowTicketsButton={shouldShowTickets(event)}
-    shouldShowCFPButton={shouldShowCFP(event)}
-    shouldShowProspectusButton={shouldShowProspectus(event)}
+    ctaTypes={getEventCtaTypes(event)}
     client:load
   />
   <div class="flex flex-1 flex-col">

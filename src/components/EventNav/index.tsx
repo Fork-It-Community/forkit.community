@@ -8,23 +8,19 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { MdArrowForward, MdArrowOutward, MdMenu } from "react-icons/md";
+import { MdArrowOutward, MdMenu } from "react-icons/md";
 import { useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 
-import type { Event } from "@/schemas/events";
+import { EventCTA, type EventMetadataForCta } from "@/components/EventCTA";
+import type { EventCtaTypes } from "@/lib/events";
 
 export const EventNav = (props: {
   eventName: ReactNode;
   eventId: string;
-  eventMetadata: Pick<
-    Event,
-    "cfp" | "tickets" | "date" | "status" | "prospectus"
-  >;
+  eventMetadata: EventMetadataForCta;
   items: Array<{ href: string; label: ReactNode }>;
-  shouldShowTicketsButton: boolean;
-  shouldShowCFPButton: boolean;
-  shouldShowProspectusButton: boolean;
+  ctaTypes: EventCtaTypes;
 }) => {
   const [{ y }] = useWindowScroll();
   const { height } = useWindowSize();
@@ -49,16 +45,12 @@ export const EventNav = (props: {
         </a>
 
         <div className="flex items-center gap-1">
-          {props.shouldShowTicketsButton && (
-            <Button size="xs" asChild>
-              <a
-                href={props.eventMetadata.tickets?.href}
-                className="group gap-2 max-xs:hidden"
-              >
-                Get Your Ticket
-              </a>
-            </Button>
-          )}
+          <EventCTA
+            buttonType={props.ctaTypes.primary}
+            eventMetadata={props.eventMetadata}
+            size="xs"
+            className="max-xs:hidden"
+          />
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
@@ -105,42 +97,29 @@ export const EventNav = (props: {
                 </div>
                 <div className="absolute bottom-0 left-0 h-20 w-full bg-white opacity-15 blur-3xl" />
                 <div className="relative z-10 flex flex-wrap items-center justify-center gap-3 p-6 pb-8">
-                  {props.shouldShowTicketsButton && (
-                    <Button asChild size="lg">
-                      <a
-                        href={props.eventMetadata.tickets?.href}
-                        className="group flex-1 gap-2"
-                        onClick={() => setOpen(false)}
-                      >
-                        Get Your Ticket
-                        <MdArrowForward className="transition group-hover:translate-x-1" />
-                      </a>
-                    </Button>
-                  )}
-                  {props.shouldShowCFPButton &&
-                    props.eventMetadata.cfp?.href && (
-                      <Button asChild size="lg" variant="secondary">
-                        <a
-                          href={props.eventMetadata.cfp.href}
-                          className="flex-1"
-                          onClick={() => setOpen(false)}
-                        >
-                          Call for Paper
-                        </a>
-                      </Button>
-                    )}
-                  {props.shouldShowProspectusButton &&
-                    props.eventMetadata.prospectus?.href && (
-                      <Button asChild size="lg" variant="secondary">
-                        <a
-                          href={props.eventMetadata.prospectus.href}
-                          className="flex-1"
-                          onClick={() => setOpen(false)}
-                        >
-                          Become a Sponsor
-                        </a>
-                      </Button>
-                    )}
+                  <EventCTA
+                    buttonType={props.ctaTypes.primary}
+                    eventMetadata={props.eventMetadata}
+                    className="flex-1"
+                    size="lg"
+                    onClick={() => setOpen(false)}
+                  />
+                  <EventCTA
+                    buttonType={props.ctaTypes.secondary}
+                    eventMetadata={props.eventMetadata}
+                    className="flex-1"
+                    variant="secondary"
+                    size="lg"
+                    onClick={() => setOpen(false)}
+                  />
+                  <EventCTA
+                    buttonType={props.ctaTypes.tertiary}
+                    eventMetadata={props.eventMetadata}
+                    className="flex-1"
+                    variant="secondary"
+                    size="lg"
+                    onClick={() => setOpen(false)}
+                  />
 
                   <Button asChild size="lg" variant="secondary">
                     <a
