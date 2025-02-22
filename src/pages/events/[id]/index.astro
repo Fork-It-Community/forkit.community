@@ -107,7 +107,6 @@ const ctaEventMetadata = {
         "@type": "Offer",
         price: offer.price,
         priceCurrency: offer.priceCurrency,
-        url: event.data.tickets?.href ?? "",
         availability: offer.availability,
         validFrom: offer.validFrom.toISOString(),
       })),
@@ -161,18 +160,21 @@ const ctaEventMetadata = {
           eventMetadata={ctaEventMetadata}
           buttonType={ctaTypes.primary}
           size="lg"
+          client:load
         />
         <EventCTA
           eventMetadata={ctaEventMetadata}
           buttonType={ctaTypes.secondary}
           variant="secondary"
           size="lg"
+          client:load
         />
         <EventCTA
           eventMetadata={ctaEventMetadata}
           buttonType={ctaTypes.tertiary}
           variant="secondary"
           size="lg"
+          client:load
         />
       </div>
       {
