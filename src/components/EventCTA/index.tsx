@@ -11,7 +11,7 @@ import type { EventCtaType } from "@/lib/events";
 import { cn } from "@/lib/utils-client";
 import type { Event } from "@/schemas/events";
 import type { ComponentProps } from "react";
-import { MdArrowForward } from "react-icons/md";
+import { MdArrowOutward } from "react-icons/md";
 import { match } from "ts-pattern";
 
 export type EventMetadataForCta = Pick<
@@ -47,7 +47,7 @@ export const EventCTA = (props: Props) => {
             <ResponsiveDrawerTrigger asChild>
               <Button {...buttonPropsWithoutOnClick}>
                 Get Your Ticket
-                <MdArrowForward className="transition group-hover:translate-x-1" />
+                <MdArrowOutward className="transition group-hover:translate-x-1" />
               </Button>
             </ResponsiveDrawerTrigger>
             <ResponsiveDrawerContent className="gap-0 p-0 max-md:pb-8 md:max-w-md">
@@ -100,11 +100,13 @@ export const EventCTA = (props: Props) => {
                   >
                     <div className="flex flex-col xs:flex-1">
                       <h4 className="font-heading text-base tracking-wide">
-                        Cash only?
+                        {ticket.title}
                       </h4>
-                      <p className="text-xs tracking-wide opacity-60">
-                        Contact us by phone 0000000000
-                      </p>
+                      {!!ticket.description && (
+                        <p className="text-xs tracking-wide opacity-60">
+                          {ticket.description}
+                        </p>
+                      )}
                     </div>
                   </div>
                 );
@@ -122,7 +124,7 @@ export const EventCTA = (props: Props) => {
           rel="noreferrer"
         >
           Get Your Ticket
-          <MdArrowForward className="transition group-hover:translate-x-1" />
+          <MdArrowOutward className="transition group-hover:translate-x-1" />
         </a>
       );
     })
