@@ -1,0 +1,80 @@
+---
+import { Image } from "astro:assets";
+import image1 from "./image-1.jpg";
+import image2 from "./image-2.jpg";
+import image3 from "./image-3.jpg";
+import image4 from "./image-4.jpg";
+import image5 from "./image-5.jpg";
+import image6 from "./image-6.jpg";
+---
+
+<div class="relative flex flex-col gap-8 py-24">
+  <div class="mx-auto w-full max-w-screen-md px-6">
+    <div class="text-center">
+      <h2
+        class="font-heading text-2xl font-medium uppercase tracking-widest text-white md:text-3xl"
+      >
+        Event vibes
+      </h2>
+      <p class="text-balance text-base tracking-wide opacity-60">
+        Some pictures of our other events
+      </p>
+    </div>
+  </div>
+  <div class="grid w-full grid-cols-3 gap-1 md:grid-cols-5">
+    <div class="col-span-2 row-span-2 aspect-square bg-background">
+      <Image
+        src={image1}
+        alt=""
+        width={1200}
+        height={1200}
+        class="h-full w-full object-cover"
+      />
+    </div>
+    <div class="aspect-square bg-background">
+      <Image
+        src={image2}
+        alt=""
+        width={600}
+        height={600}
+        class="h-full w-full object-cover"
+      />
+    </div>
+    <div class="aspect-square bg-background">
+      <Image
+        src={image3}
+        alt=""
+        width={600}
+        height={600}
+        class="h-full w-full object-cover"
+      />
+    </div>
+    <div class="bg-background max-md:aspect-square md:row-span-2">
+      <Image
+        src={image4}
+        alt=""
+        width={1200}
+        height={1200}
+        class="h-full w-full object-cover"
+      />
+    </div>
+    <div class="aspect-square bg-background">
+      <Image
+        src={image5}
+        alt=""
+        width={600}
+        height={600}
+        class="h-full w-full object-cover"
+      />
+    </div>
+    <div class="aspect-square bg-background">
+      <Image
+        src={image6}
+        alt=""
+        width={600}
+        height={600}
+        class="h-full w-full object-cover"
+      />
+    </div>
+  </div>
+</div>
