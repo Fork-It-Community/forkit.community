@@ -1,5 +1,6 @@
 ---
 import SponsorCard from "@/components/Sponsors/SponsorCard.astro";
+import TiltedCard from "@/components/TiltedCard";
 import { cn } from "@/lib/utils-client";
 import type { CollectionEntry } from "astro:content";
 
@@ -43,7 +44,9 @@ const { event, sponsors } = Astro.props;
               )}
             >
               {levelSponsors.map((sponsor) => (
-                <SponsorCard sponsor={sponsor} priority={priority} />
+                <TiltedCard client:visible>
+                  <SponsorCard sponsor={sponsor} priority={priority} />
+                </TiltedCard>
               ))}
             </div>
           </div>

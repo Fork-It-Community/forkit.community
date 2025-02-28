@@ -5,6 +5,7 @@ import bgImage from "@/assets/images/podcasts.jpeg";
 import SEO from "@/components/SEO/index.astro";
 import PodcastEpisodeCard from "@/components/PodcastEpisodeCard/index.astro";
 import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
+import TiltedCard from "@/components/TiltedCard";
 
 const episodes = (await getPodcastsEpisodesCollection()).toReversed();
 ---
@@ -28,7 +29,13 @@ const episodes = (await getPodcastsEpisodesCollection()).toReversed();
         Latest episodes
       </h2>
       <div class="flex flex-col gap-3">
-        {episodes.map((episode) => <PodcastEpisodeCard episode={episode} />)}
+        {
+          episodes.map((episode) => (
+            <TiltedCard client:visible>
+              <PodcastEpisodeCard episode={episode} />
+            </TiltedCard>
+          ))
+        }
       </div>
     </article>
   </div>
