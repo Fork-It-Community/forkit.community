@@ -1,4 +1,5 @@
 ---
+import TiltedCard from "@/components/TiltedCard";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils-client";
 
@@ -10,25 +11,27 @@ const { href } = Astro.props;
 ---
 
 <div class="relative flex w-full flex-col gap-6 px-6 py-12">
-  <a
-    href={href}
-    target="_blank"
-    rel="noreferer"
-    class="group mx-auto flex w-full max-w-screen-md flex-col items-start gap-6 rounded-lg bg-white/5 p-8 backdrop-blur-md transition hover:bg-white/10 md:flex-row md:items-center md:px-12 md:py-10"
-  >
-    <div class="flex flex-1 flex-col">
-      <h2
-        class="text-balance font-heading text-xl font-medium uppercase tracking-widest transition group-hover:text-primary"
-      >
-        We need you!
-      </h2>
-      <p class="text-balance text-base tracking-wide opacity-60">
-        Help speakers by giving them feedbacks about their talks
-      </p>
-    </div>
+  <TiltedCard client:visible className="mx-auto max-w-screen-md">
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferer"
+      class="group flex w-full flex-col items-start gap-6 rounded-lg bg-white/5 p-8 backdrop-blur-md transition hover:bg-white/10 md:flex-row md:items-center md:px-12 md:py-10"
+    >
+      <div class="flex flex-1 flex-col">
+        <h2
+          class="text-balance font-heading text-xl font-medium uppercase tracking-widest transition group-hover:text-primary"
+        >
+          We need you!
+        </h2>
+        <p class="text-balance text-base tracking-wide opacity-60">
+          Help speakers by giving them feedbacks about their talks
+        </p>
+      </div>
 
-    <div class={cn(buttonVariants({ size: "lg" }), "max-xs:w-full")}>
-      Give Talk Feedback
-    </div>
-  </a>
+      <div class={cn(buttonVariants({ size: "lg" }), "max-xs:w-full")}>
+        Give Talk Feedback
+      </div>
+    </a>
+  </TiltedCard>
 </div>

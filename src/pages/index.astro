@@ -24,6 +24,7 @@ import PartnersBlock from "@/components/PartnersBlock/index.astro";
 import { Schema } from "astro-seo-schema";
 import { getEntry } from "astro:content";
 import { getNewsCollection } from "@/lib/news";
+import TiltedCard from "@/components/TiltedCard";
 
 const upcomingMajorEvent = await getUpcomingMajorEvent();
 const upcomingEvents = (await getUpcomingEvents())
@@ -227,7 +228,9 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
             <div class="hide-scrollbar overflow-auto">
               <div class="mx-auto flex w-full max-w-screen-lg gap-4 px-6 py-8 md:gap-6">
                 {news.map((article) => (
-                  <NewsCardForCarousel newsItem={article} />
+                  <TiltedCard client:visible>
+                    <NewsCardForCarousel newsItem={article} />
+                  </TiltedCard>
                 ))}
                 {news.length < 2 && (
                   <div class="relative flex aspect-[3/2] w-[30rem] max-w-[80vw] flex-none items-center justify-center rounded-md bg-white/5 text-xs uppercase tracking-widest text-white/50">
@@ -274,7 +277,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
           >
             {
               podcasts.map((episode) => (
-                <div>
+                <TiltedCard client:visible>
                   <a
                     href={`/podcasts/${episode.id}`}
                     class="group relative block size-48 md:size-64"
@@ -288,7 +291,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
                       height={384}
                     />
                   </a>
-                </div>
+                </TiltedCard>
               ))
             }
             {

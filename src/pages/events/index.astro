@@ -7,6 +7,7 @@ import EventCard from "@/components/EventCard/index.astro";
 import SEO from "@/components/SEO/index.astro";
 import { cn } from "@/lib/utils-client";
 import { getSocialsItems } from "@/content/socials";
+import TiltedCard from "@/components/TiltedCard";
 
 const upcomingEvents = await getUpcomingEvents();
 const pastEvents = await getPastEvents();
@@ -34,10 +35,12 @@ const pastEvents = await getPastEvents();
             </h2>
             <div class={cn("grid grid-cols-1 gap-3 md:grid-cols-2")}>
               {upcomingEvents.map((event) => (
-                <EventCard
-                  event={event}
-                  class={cn(event.data.status !== "cancelled" && "min-h-56")}
-                />
+                <TiltedCard client:visible>
+                  <EventCard
+                    event={event}
+                    class={cn(event.data.status !== "cancelled" && "min-h-56")}
+                  />
+                </TiltedCard>
               ))}
               {upcomingEvents.length % 2 !== 0 && (
                 <div class="relative hidden flex-col items-center justify-center gap-4 rounded-md bg-white/5 px-8 py-6 tracking-widest md:flex">
@@ -78,7 +81,9 @@ const pastEvents = await getPastEvents();
             </h2>
             <div class="flex flex-col gap-3">
               {pastEvents.map((event) => (
-                <EventCard event={event} />
+                <TiltedCard client:visible scaleOnHover={1}>
+                  <EventCard event={event} />
+                </TiltedCard>
               ))}
             </div>
           </div>

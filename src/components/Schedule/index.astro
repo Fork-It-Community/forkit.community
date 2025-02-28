@@ -6,6 +6,7 @@ import ComingSoon from "./ComingSoon.astro";
 import type { CollectionEntry } from "astro:content";
 import { MdPlace } from "react-icons/md";
 import { match } from "ts-pattern";
+import TiltedCard from "@/components/TiltedCard";
 
 interface Props {
   displayStats?: boolean;
@@ -82,7 +83,9 @@ const { event, displayStats } = Astro.props;
                   <div class="">
                     {match(activity.type)
                       .with("conference", "roundtable", () => (
-                        <CardConference activity={activity} event={event} />
+                        <TiltedCard client:visible>
+                          <CardConference activity={activity} event={event} />
+                        </TiltedCard>
                       ))
                       .with("info", "lunch", () => <CardInfo info={activity} />)
                       .exhaustive()}
