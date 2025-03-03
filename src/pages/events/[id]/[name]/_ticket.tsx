@@ -4,7 +4,7 @@ import {
   type AssetImageConfig,
 } from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
-import ticketBg from "./ticket.png";
+import ticketBg from "./_ticket.png";
 import { getEventData } from "../assets/_utils";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate } from "@/lib/events";
