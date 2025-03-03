@@ -9,6 +9,7 @@ import Schedule from "@/components/Schedule/index.astro";
 import People from "@/components/People/index.astro";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import Prose from "@/components/Prose/index.astro";
+import EventVibes from "@/components/EventVibes/index.astro";
 import {
   getEventNavItems,
   getEventsCollection,
@@ -567,6 +568,8 @@ const ctaEventMetadata = {
       </div>
     )
   }
+
+  <EventVibes />
 
   {event.data.faq && <FAQ client:load faq={event.data.faq} />}
 
