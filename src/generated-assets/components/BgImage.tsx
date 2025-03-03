@@ -3,8 +3,12 @@ export const BgImage = (props: {
   width: number;
   height: number;
   gradientAngle?: number | undefined;
+  overlayOpacity?: number | undefined;
+  overlayIntensity?: number | undefined;
 }) => {
   const gradientAngle = props.gradientAngle ?? 45;
+  const overlayIntensity = props.overlayIntensity ?? 1;
+  const overlayOpacity = props.overlayOpacity ?? 1;
   return (
     <div
       style={{
@@ -44,13 +48,14 @@ export const BgImage = (props: {
       />
       <div
         style={{
-          background: `linear-gradient(${gradientAngle}deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.3) 100%)`,
+          background: `linear-gradient(${gradientAngle}deg, rgba(0,0,0,1) 0%, rgba(0,0,0,${overlayIntensity * 0.3}) 100%)`,
           position: "absolute",
           top: 0,
           left: 0,
           bottom: 0,
           right: 0,
           zIndex: 2,
+          opacity: overlayOpacity,
         }}
       />
     </div>
