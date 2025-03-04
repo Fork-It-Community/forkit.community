@@ -4,6 +4,7 @@ import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import NewsCard from "@/components/NewsCard/index.astro";
 import SEO from "@/components/SEO/index.astro";
+import TiltedCard from "@/components/TiltedCard";
 import { buttonVariants } from "@/components/ui/button";
 import { getSocialsItems } from "@/content/socials";
 import MainLayout from "@/layouts/MainLayout.astro";
@@ -87,13 +88,15 @@ let hasHighlighted = false;
               shouldHighlight = true;
             }
             return (
-              <NewsCard
-                newsItem={newsItem}
-                class={cn(shouldHighlight && "md:row-span-2")}
-                gradientClass={cn(
-                  shouldHighlight && "from-black/0 via-black/10 to-black",
-                )}
-              />
+              <TiltedCard client:visible>
+                <NewsCard
+                  newsItem={newsItem}
+                  class={cn(shouldHighlight && "md:row-span-2")}
+                  gradientClass={cn(
+                    shouldHighlight && "from-black/0 via-black/10 to-black",
+                  )}
+                />
+              </TiltedCard>
             );
           })
         }
