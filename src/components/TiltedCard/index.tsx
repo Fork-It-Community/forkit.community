@@ -83,7 +83,7 @@ export default function TiltedCard({
       onMouseLeave={handleMouseLeave}
     >
       <motion.div
-        className="relative [transform-style:preserve-3d]"
+        className="relative flex flex-1 flex-col [transform-style:preserve-3d]"
         style={{
           rotateX,
           rotateY,

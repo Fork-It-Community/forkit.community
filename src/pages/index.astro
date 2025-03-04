@@ -1,7 +1,7 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
-import NewsCardForCarousel from "@/components/NewsCardForCarousel/index.astro";
+import NewsCard from "@/components/NewsCard/index.astro";
 import {
   getEventDisplayDate,
   getEventDisplayType,
@@ -229,11 +229,14 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
               <div class="mx-auto flex w-full max-w-screen-lg gap-4 px-6 py-8 md:gap-6">
                 {news.map((article) => (
                   <TiltedCard client:visible>
-                    <NewsCardForCarousel newsItem={article} />
+                    <NewsCard
+                      newsItem={article}
+                      class="w-[30rem] max-w-[80vw]"
+                    />
                   </TiltedCard>
                 ))}
                 {news.length < 2 && (
-                  <div class="relative flex aspect-[3/2] w-[30rem] max-w-[80vw] flex-none items-center justify-center rounded-md bg-white/5 text-xs uppercase tracking-widest text-white/50">
+                  <div class="relative flex w-[30rem] max-w-[80vw] flex-none items-center justify-center rounded-md bg-white/5 text-xs uppercase tracking-widest text-white/50">
                     Coming soon
                   </div>
                 )}

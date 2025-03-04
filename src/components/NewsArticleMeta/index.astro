@@ -1,0 +1,60 @@
+---
+import { LogoIcon } from "@/components/LogoIcon";
+import { cn } from "@/lib/utils-client";
+import type { CollectionEntry } from "astro:content";
+import { getEntries } from "astro:content";
+import dayjs from "dayjs";
+
+interface Props {
+  newsItem: CollectionEntry<"news">;
+}
+const { newsItem } = Astro.props;
+
+const authors = (await getEntries(newsItem.data.authors ?? []))
+  .filter((p) => !!p)
+  .sort((a, b) => a.data.name.localeCompare(b.data.name));
+---
+
+<div
+  class="flex flex-col flex-wrap gap-2 md:flex-row md:items-center md:gap-x-6"
+>
+  <div class="flex flex-wrap gap-1 text-sm opacity-60">
+    <time datetime="2020-03-16">
+      {dayjs(newsItem.data.date).format("dddd, MMMM D, YYYY")}
+    </time>
+  </div>
+
+  {
+    authors.length ? (
+      <div class="flex flex-wrap gap-x-5 gap-y-3">
+        {authors.map((author) => (
+          <a
+            href={`/people#${author.id}`}
+            class={cn(
+              "group/author relative z-20 flex items-center gap-x-2.5 text-sm font-medium",
+            )}
+          >
+            <img
+              src={author.data.avatar?.src}
+              alt={author.data.name}
+              class="size-6 flex-none rounded-full bg-black"
+            />
+
+            <span
+              class={cn("opacity-60 transition group-hover/author:opacity-100")}
+            >
+              {author.data.name}
+            </span>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <div class="relative z-20 flex items-center gap-x-2.5 text-sm font-medium">
+        <div class="flex size-6 items-center justify-center rounded-full bg-black text-primary">
+          <LogoIcon className="size-3" />
+        </div>
+        <span class="opacity-60">Fork It! Team</span>
+      </div>
+    )
+  }
+</div>

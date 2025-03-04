@@ -88,10 +88,13 @@ let hasHighlighted = false;
               shouldHighlight = true;
             }
             return (
-              <TiltedCard client:visible>
+              <TiltedCard
+                client:visible
+                className={cn(shouldHighlight && "md:row-span-2")}
+              >
                 <NewsCard
                   newsItem={newsItem}
-                  class={cn(shouldHighlight && "md:row-span-2")}
+                  class="flex-1"
                   gradientClass={cn(
                     shouldHighlight && "from-black/0 via-black/10 to-black",
                   )}

@@ -4,7 +4,6 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils-client";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
-import { render } from "astro:content";
 import { getEntries } from "astro:content";
 import dayjs from "dayjs";
 import { MdArrowForward } from "react-icons/md";
@@ -15,7 +14,6 @@ interface Props {
   gradientClass?: string | undefined;
 }
 const { newsItem, class: className, gradientClass } = Astro.props;
-const { Content } = await render(newsItem);
 
 const authors = (await getEntries(newsItem.data.authors ?? []))
   .filter((p) => !!p)
@@ -74,14 +72,18 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
         <div class="absolute inset-0 z-10"></div>
       </a>
     </h2>
-    <div
-      class={cn(
-        "prose prose-sm prose-invert line-clamp-6 opacity-80",
-        !!newsItem.data.featuredImage && "line-clamp-2",
-      )}
-    >
-      {newsItem.data.excerpt ? <p>{newsItem.data.excerpt}</p> : <Content />}
-    </div>
+    {
+      !!newsItem.data.excerpt && (
+        <div
+          class={cn(
+            "prose prose-sm prose-invert line-clamp-6 opacity-80",
+            !!newsItem.data.featuredImage && "line-clamp-2",
+          )}
+        >
+          <p>{newsItem.data.excerpt}</p>
+        </div>
+      )
+    }
 
     <div class="mt-auto flex items-center pt-2">
       {
