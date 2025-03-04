@@ -226,7 +226,7 @@ function personWasInEvent(
 
 export async function getPersonEvents(
   person: CollectionEntry<"people">,
-  { limit }: GetEventsParams,
+  { limit }: GetEventsParams = {},
 ) {
   return (
     (await getEventsCollection())
