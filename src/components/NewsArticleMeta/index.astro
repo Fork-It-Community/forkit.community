@@ -1,9 +1,11 @@
 ---
 import { LogoIcon } from "@/components/LogoIcon";
 import { cn } from "@/lib/utils-client";
+import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { getEntries } from "astro:content";
 import dayjs from "dayjs";
+import defaultPerson from "@/assets/images/people-placeholder.jpeg";
 
 interface Props {
   newsItem: CollectionEntry<"news">;
@@ -34,9 +36,11 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
               "group/author relative z-20 flex items-center gap-x-2.5 text-sm font-medium",
             )}
           >
-            <img
-              src={author.data.avatar?.src}
+            <Image
+              src={author.data.avatar ?? defaultPerson}
               alt={author.data.name}
+              width={48}
+              height={48}
               class="size-6 flex-none rounded-full bg-black"
             />
 
