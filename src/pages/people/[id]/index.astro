@@ -1,0 +1,27 @@
+---
+import { getPersonEvents } from "@/lib/events";
+import { getPersonArticles } from "@/lib/news";
+import { getPersonEpisodes } from "@/lib/podcasts";
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+
+export const getStaticPaths = (async () => {
+  const people = await getCollection("people");
+
+  return Promise.all(
+    people.map(async (person) => ({
+      params: { id: person.id },
+      props: {
+        person: person,
+        events: await getPersonEvents(person),
+        episodes: await getPersonEpisodes(person),
+        articles: await getPersonArticles(person),
+      },
+    })),
+  );
+}) satisfies GetStaticPaths;
+
+const { person } = Astro.props;
+---
+
+<div>{person.data.name}</div>
