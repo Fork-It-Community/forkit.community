@@ -11,6 +11,12 @@ import { BackButton } from "@/components/BackButton";
 import { render } from "astro:content";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import SEO from "@/components/SEO/index.astro";
+import { Schema } from "astro-seo-schema";
+import { experimental_AstroContainer } from "astro/container";
+import { loadRenderers } from "astro:container";
+import { getContainerRenderer as mdxContainerRenderer } from "@astrojs/mdx";
+import dayjs from "dayjs";
+import { getEntry } from "astro:content";
 
 export async function getStaticPaths() {
   const news = await getNewsCollection();
@@ -32,6 +38,17 @@ const ogImage = new URL(
   Astro.url.pathname + "/assets/og-image.jpg",
   Astro.site,
 );
+
+const renderers = await loadRenderers([mdxContainerRenderer()]);
+const container = await experimental_AstroContainer.create({ renderers });
+const articleBody = (await container.renderToString(Content))
+  // strip html tags
+  .replace(/<[^>]*>/g, "")
+  .trim();
+const wordCount = articleBody.split(" ").length;
+const authors = await Promise.all(
+  (article.data.authors ?? []).map(async (author) => await getEntry(author)),
+);
 ---
 
 <MainLayout>
@@ -41,6 +58,24 @@ const ogImage = new URL(
     description={article.data.excerpt ?? ""}
     url={url}
     image={ogImage.toString()}
+  />
+  <Schema
+    slot="ld+json"
+    item={{
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      articleBody,
+      headline: article.data.title,
+      wordCount,
+      datePublished: dayjs(article.data.date).format("YYYY-MM-DD"),
+      abstract: article.data.excerpt ?? "",
+      isAccessibleForFree: "https://schema.org/True",
+      author: authors.map((author) => ({
+        "@type": "Person",
+        name: author.data.name,
+      })),
+      keywords: article.data.tags ?? [],
+    }}
   />
   <ImageBackgroundHero
     src={article.data.featuredImage ?? defaultImage}
