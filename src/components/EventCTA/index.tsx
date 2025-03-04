@@ -40,7 +40,9 @@ export const EventCTA = (props: Props) => {
   return match(props.buttonType)
     .with(null, () => null)
     .with("tickets", () => {
-      if (typeof props.eventMetadata.tickets?.link !== "string") {
+      if (!props.eventMetadata.tickets?.link) return null;
+
+      if (typeof props.eventMetadata.tickets.link !== "string") {
         const { onClick: _, ...buttonPropsWithoutOnClick } = buttonProps;
         return (
           <ResponsiveDrawer>
@@ -59,7 +61,7 @@ export const EventCTA = (props: Props) => {
                   We offer multiple ways to book your ticket
                 </ResponsiveDrawerDescription>
               </ResponsiveDrawerHeader>
-              {props.eventMetadata.tickets?.link.map((ticket, index) => {
+              {props.eventMetadata.tickets.link.map((ticket, index) => {
                 if (ticket.href) {
                   return (
                     <a

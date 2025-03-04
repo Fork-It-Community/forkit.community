@@ -2,7 +2,9 @@ import {
   DEBUG_HTML,
   generateImageResponseHTML,
   generateImageResponseJPG,
+  generateImageResponseSVG,
   JPG,
+  SVG,
 } from "@/generated-assets/image";
 import type { APIRoute } from "astro";
 
@@ -44,6 +46,11 @@ export const apiImageEndpoint: (modules: Record<string, unknown>) => APIRoute =
       if (params.__type === "jpg") {
         const jpg = await JPG(component, config);
         return generateImageResponseJPG(jpg);
+      }
+
+      if (params.__type === "svg") {
+        const svg = await SVG(component, config);
+        return generateImageResponseSVG(svg);
       }
 
       return new Response(null, {

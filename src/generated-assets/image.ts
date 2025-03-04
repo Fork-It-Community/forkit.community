@@ -110,6 +110,14 @@ export async function DEBUG_HTML(
       </html>`;
 }
 
+export async function generateImageResponseSVG(svg: string) {
+  return new Response(svg, {
+    headers: {
+      "Content-Type": "image/svg+xml",
+    },
+  });
+}
+
 export async function generateImageResponseJPG(jpg: Buffer) {
   return new Response(jpg, {
     headers: {

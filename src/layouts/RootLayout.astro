@@ -6,6 +6,7 @@ import "@fontsource-variable/inter";
 import "@fontsource-variable/inter";
 import "@/styles/globals.css";
 import EnvHint from "@/components/EnvHint/EnvHint.astro";
+import { Toaster } from "@/components/ui/sonner";
 ---
 
 <html lang="en" class="dark">
@@ -38,6 +39,7 @@ import EnvHint from "@/components/EnvHint/EnvHint.astro";
   >
     <EnvHint />
     <slot />
+    <Toaster client:load position="top-center" />
     <Analytics />
   </body>
 </html>
