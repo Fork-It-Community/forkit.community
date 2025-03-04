@@ -7,15 +7,17 @@ interface Props {
   title: ReactNode;
   subtitle?: ReactNode;
   imageSrc?: ImageMetadata;
+  blurImage?: boolean | undefined;
 }
 
-const { title, subtitle, imageSrc } = Astro.props;
+const { title, subtitle, imageSrc, blurImage } = Astro.props;
 ---
 
 <ImageBackgroundHero
   src={imageSrc ?? defaultImage}
   alt=""
   className="h-[80vh] opacity-80"
+  blur={blurImage}
 />
 
 <div

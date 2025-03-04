@@ -7,7 +7,7 @@ interface Props {
   src: ImageMetadata;
   alt: string;
   className?: string;
-  blur?: boolean;
+  blur?: boolean | undefined;
 }
 
 const { src, alt, className, blur } = Astro.props;

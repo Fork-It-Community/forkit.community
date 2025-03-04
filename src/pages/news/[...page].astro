@@ -19,6 +19,9 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 }
 
 const { page } = Astro.props;
+const image =
+  page.data.find((newsItem) => !!newsItem.data.featuredImage)?.data
+    .featuredImage ?? bgImage;
 let hasHighlighted = false;
 ---
 
@@ -33,7 +36,8 @@ let hasHighlighted = false;
     <MainPageTitle
       title="Fork it! News"
       subtitle="Last news about the community"
-      imageSrc={bgImage}
+      imageSrc={image}
+      blurImage
     />
   </div>
 
