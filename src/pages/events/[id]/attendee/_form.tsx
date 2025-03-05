@@ -11,13 +11,13 @@ export const Form = () => {
       onSubmit={(e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        const name = formData.get("name");
+        const name = formData.get("name")?.toString();
         if (!name) {
           toast.error("Please, provide your name");
           return;
         }
         setIsSubmitting(true);
-        window.location.href = `${window.location.pathname}/${formData.get("name")}`;
+        window.location.href = `${window.location.pathname}/${encodeURIComponent(name.replaceAll("/", ""))}`;
       }}
     >
       <h1 className="text-center font-heading text-lg font-medium uppercase tracking-widest text-white">
