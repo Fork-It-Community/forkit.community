@@ -188,7 +188,11 @@ const ctaEventMetadata = {
             </div>
             <div class="flex w-full flex-wrap items-center justify-center gap-x-4">
               {coOrganizers.map((coOrganizer) => (
-                <a href={coOrganizer.data.href}>
+                <a
+                  href={coOrganizer.data.href}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <Image
                     class={cn(
                       "size-24 md:size-28",
@@ -235,6 +239,8 @@ const ctaEventMetadata = {
         <div class="mx-auto flex w-fit items-center gap-6 px-8 py-8">
           {sponsors.map((sponsor) => (
             <a
+              target="_blank"
+              rel="noreferrer"
               href={sponsor.data.href}
               class="opacity-60 brightness-200 grayscale transition duration-300 hover:opacity-100 hover:brightness-100 hover:grayscale-0"
               title={sponsor.data.name}
@@ -281,6 +287,7 @@ const ctaEventMetadata = {
                 <a
                   href={event.data.afterEventContent.afterMovie.href}
                   target="_blank"
+                  rel="noreferrer"
                 >
                   <Image
                     alt={event.data.afterEventContent.afterMovie.thumbnail.alt}
@@ -319,6 +326,8 @@ const ctaEventMetadata = {
                               "row-span-2",
                           )}
                           href={event.data.afterEventContent.photos.href}
+                          target="_blank"
+                          rel="noreferrer"
                         >
                           <Image
                             class="absolute inset-0 h-full w-full max-w-none bg-white/5 object-cover"
@@ -357,6 +366,8 @@ const ctaEventMetadata = {
               >
                 {event.data.afterEventContent.photos.href && (
                   <a
+                    target="_blank"
+                    rel="noreferrer"
                     href={event.data.afterEventContent.photos.href}
                     class={cn(
                       buttonVariants({ size: "lg" }),
@@ -369,6 +380,8 @@ const ctaEventMetadata = {
                 )}
                 {event.data.afterEventContent.vods?.href && (
                   <a
+                    target="_blank"
+                    rel="noreferrer"
                     href={event.data.afterEventContent.vods.href}
                     class={cn(
                       buttonVariants({ size: "lg" }),
@@ -412,6 +425,8 @@ const ctaEventMetadata = {
               <a
                 class="group flex gap-2 text-white"
                 href={`https://www.google.com/maps/search/${event.data.location.name},${event.data.location.address}`}
+                target="_blank"
+                rel="noreferrer"
               >
                 <MdLocationPin className="size-5 transition opacity-40 group-hover:opacity-100" />
                 <address class="not-italic leading-tight">
