@@ -39,7 +39,7 @@ export const ShareTicketButton = (props: ShareTicketButtonProps) => {
         <ResponsiveDrawerHeader className="p-4">
           <ResponsiveDrawerTitle>Share this ticket</ResponsiveDrawerTitle>
           <ResponsiveDrawerDescription>
-            Share your venue on social networks
+            Share your attendance on social networks
           </ResponsiveDrawerDescription>
         </ResponsiveDrawerHeader>
         <div className="flex flex-wrap gap-3 p-4 pt-0 max-sm:justify-center">
