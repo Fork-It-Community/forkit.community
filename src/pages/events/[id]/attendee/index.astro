@@ -1,0 +1,54 @@
+---
+import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
+import { getEventsCollection } from "@/lib/events";
+import SEO from "@/components/SEO/index.astro";
+import dayjs from "dayjs";
+import { Form } from "./_form";
+import TiltedCard from "@/components/TiltedCard";
+import { Image } from "astro:assets";
+
+export async function getStaticPaths() {
+  const events = await getEventsCollection();
+
+  return events.map((event) => ({
+    params: { id: event.id },
+    props: {
+      event,
+    },
+  }));
+}
+
+const { event } = Astro.props;
+
+if (!event || event.data.type !== "event") {
+  return new Response(null, {
+    status: 404,
+    statusText: "Not found",
+  });
+}
+
+const title = `Share your venue | ${event.data.name}`;
+const description = `Generate a nice ticket to share your venue for the ${event.data.city}, ${event.data.country} event, taking place the ${dayjs(event.data.date).format("DD/MM/YYYY")}. Come enjoy content from the community.`;
+const ticketImage = new URL(
+  Astro.url.pathname + "/Your name/ticket.svg",
+  Astro.site,
+);
+---
+
+<EventSubPageLayout event={event}>
+  <SEO slot="seo" title={title} description={description} />
+  <div
+    class="mx-auto flex w-full max-w-[30rem] flex-1 flex-col items-center justify-center gap-8 p-4 pb-40 md:px-8 md:pt-8"
+  >
+    <TiltedCard className="relative z-20" client:load>
+      <Image
+        alt={`Ticket example`}
+        class="-mb-16 aspect-video max-w-72"
+        src={ticketImage.toString()}
+        width={1920}
+        height={1080}
+      />
+    </TiltedCard>
+    <Form client:load />
+  </div>
+</EventSubPageLayout>

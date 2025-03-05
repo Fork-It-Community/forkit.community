@@ -2,7 +2,7 @@
 import { BackButton } from "@/components/BackButton";
 import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
 import { getEventsCollection, getEventSubPagesCollection } from "@/lib/events";
-import { SEO } from "astro-seo";
+import SEO from "@/components/SEO/index.astro";
 import { render } from "astro:content";
 import dayjs from "dayjs";
 import Prose from "@/components/Prose/index.astro";
@@ -47,7 +47,7 @@ const description = `${subpage.data.title} page for the ${event.data.city}, ${ev
     title={title}
     description={subpage.data.description ?? description}
   />
-  <div class="mx-auto p-4 md:p-8">
+  <div class="mx-auto p-4 pb-40 md:px-8 md:pt-8">
     <BackButton href={`/events/${event.id}`} client:load />
     <Prose>
       <Content />

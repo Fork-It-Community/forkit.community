@@ -3,9 +3,8 @@ import {
   getAstroImageBase64,
   type AssetImageConfig,
 } from "@/generated-assets/image";
-import { BgImage } from "@/generated-assets/components/BgImage";
 import ticketBg from "./_ticket.png";
-import { getEventData } from "../assets/_utils";
+import { getEventData } from "./_utils";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate } from "@/lib/events";
 
@@ -17,24 +16,16 @@ export const config: AssetImageConfig = {
 export function saveTheDate(options: { width: number; height: number }) {
   return async ({ params }: { params: { id: string; name: string } }) => {
     const event = await getEventData(params.id);
-    const postCover = await getAstroImageBase64(event.data.image.media);
     const ticketImage = await getAstroImageBase64(ticketBg);
 
     return (
-      <Frame {...options} style={{ padding: 96 }}>
-        <BgImage
-          src={postCover}
-          width={options.width}
-          height={options.height}
-          gradientAngle={0}
-          overlayIntensity={0}
-        />
+      <Frame {...options} style={{ padding: 0, background: "transparent" }}>
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             position: "relative",
-            transform: "translate(0,-30px)",
+            transform: "translate(0,-30px) scale(1.18)",
           }}
         >
           <img
@@ -53,7 +44,6 @@ export function saveTheDate(options: { width: number; height: number }) {
               display: "flex",
               flexDirection: "column",
               transform: "rotate(2.7deg)",
-              // background: "rgba(255,0,0,0.4)",
               color: COLORS.white,
             }}
           >
@@ -108,24 +98,6 @@ export function saveTheDate(options: { width: number; height: number }) {
               </div>
             </div>
           </div>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            fontSize: 50,
-            gap: 12,
-            marginTop: -20,
-          }}
-        >
-          Get your ticket on{" "}
-          <span
-            style={{
-              color: COLORS.primary,
-              fontWeight: 500,
-            }}
-          >
-            www.forkit.community
-          </span>
         </div>
       </Frame>
     );
