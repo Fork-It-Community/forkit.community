@@ -44,7 +44,6 @@ const MAIN_MENU: Array<{
     scope: "all",
     level: "primary",
   },
-
   // {
   //   label: "News",
   //   href: "/news",
@@ -52,7 +51,6 @@ const MAIN_MENU: Array<{
   //   scope: "all",
   //   level: "primary",
   // },
-
   {
     label: "Community members",
     href: "/people",

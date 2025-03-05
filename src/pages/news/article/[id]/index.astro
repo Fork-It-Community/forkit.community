@@ -2,17 +2,21 @@
 import MainLayout from "@/layouts/MainLayout.astro";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import Prose from "@/components/Prose/index.astro";
+import NewsArticleMeta from "@/components/NewsArticleMeta/index.astro";
 import { getNewsCollection } from "@/lib/news";
-import { getEntries } from "astro:content";
 import defaultImage from "@/assets/images/news.jpeg";
 import { Image } from "astro:assets";
 import { cn } from "@/lib/utils-client";
 import { BackButton } from "@/components/BackButton";
 import { render } from "astro:content";
-import { LogoIcon } from "@/components/LogoIcon";
-import dayjs from "dayjs";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import SEO from "@/components/SEO/index.astro";
+import { Schema } from "astro-seo-schema";
+import { experimental_AstroContainer } from "astro/container";
+import { loadRenderers } from "astro:container";
+import { getContainerRenderer as mdxContainerRenderer } from "@astrojs/mdx";
+import dayjs from "dayjs";
+import { getEntry } from "astro:content";
 
 export async function getStaticPaths() {
   const news = await getNewsCollection();
@@ -22,18 +26,28 @@ export async function getStaticPaths() {
       params: { id: article.id },
       props: {
         article,
-        authors: await getEntries(article.data.authors ?? []),
       },
     })),
   );
 }
 
-const { article, authors } = Astro.props;
+const { article } = Astro.props;
 const { Content } = await render(article);
 const url = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(
   Astro.url.pathname + "/assets/og-image.jpg",
   Astro.site,
+);
+
+const renderers = await loadRenderers([mdxContainerRenderer()]);
+const container = await experimental_AstroContainer.create({ renderers });
+const articleBody = (await container.renderToString(Content))
+  // strip html tags
+  .replace(/<[^>]*>/g, "")
+  .trim();
+const wordCount = articleBody.split(" ").length;
+const authors = await Promise.all(
+  (article.data.authors ?? []).map(async (author) => await getEntry(author)),
 );
 ---
 
@@ -44,6 +58,24 @@ const ogImage = new URL(
     description={article.data.excerpt ?? ""}
     url={url}
     image={ogImage.toString()}
+  />
+  <Schema
+    slot="ld+json"
+    item={{
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      articleBody,
+      headline: article.data.title,
+      wordCount,
+      datePublished: dayjs(article.data.date).format("YYYY-MM-DD"),
+      abstract: article.data.excerpt ?? "",
+      isAccessibleForFree: "https://schema.org/True",
+      author: authors.map((author) => ({
+        "@type": "Person",
+        name: author.data.name,
+      })),
+      keywords: article.data.tags ?? [],
+    }}
   />
   <ImageBackgroundHero
     src={article.data.featuredImage ?? defaultImage}
@@ -94,55 +126,12 @@ const ogImage = new URL(
       >
         {article.data.title}
       </h1>
-      <div
-        class="flex flex-col flex-wrap gap-2 md:flex-row md:items-center md:gap-x-6"
-      >
-        <div class="flex flex-wrap gap-1 text-sm opacity-60">
-          <time datetime="2020-03-16">
-            {dayjs(article.data.date).format("dddd, MMMM D, YYYY")}
-          </time>
-        </div>
-
-        {
-          authors.length ? (
-            <div class="flex flex-wrap gap-x-5 gap-y-3">
-              {authors.map((author) => (
-                <a
-                  href={`/people#${author.id}`}
-                  class={cn(
-                    "group/author relative z-20 flex items-center gap-x-2.5 text-sm font-medium",
-                  )}
-                >
-                  <img
-                    src={author.data.avatar?.src}
-                    alt={author.data.name}
-                    class="size-6 flex-none rounded-full bg-black"
-                  />
-
-                  <span
-                    class={cn(
-                      "opacity-60 transition group-hover/author:opacity-100",
-                    )}
-                  >
-                    {author.data.name}
-                  </span>
-                </a>
-              ))}
-            </div>
-          ) : (
-            <div class="relative z-20 flex items-center gap-x-2.5 text-sm font-medium">
-              <div class="flex size-6 items-center justify-center rounded-full bg-black text-primary">
-                <LogoIcon className="size-3" />
-              </div>
-              <span class="opacity-60">Fork It! Team</span>
-            </div>
-          )
-        }
-      </div>
+      <NewsArticleMeta newsItem={article} />
     </div>
     <Prose>
       <Content />
     </Prose>
+    <NewsArticleMeta newsItem={article} />
   </div>
   <div class="py-8 md:py-12">
     <JoinTheCommunity />

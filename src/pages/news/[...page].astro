@@ -4,6 +4,7 @@ import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import NewsCard from "@/components/NewsCard/index.astro";
 import SEO from "@/components/SEO/index.astro";
+import TiltedCard from "@/components/TiltedCard";
 import { buttonVariants } from "@/components/ui/button";
 import { getSocialsItems } from "@/content/socials";
 import MainLayout from "@/layouts/MainLayout.astro";
@@ -18,6 +19,9 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 }
 
 const { page } = Astro.props;
+const image =
+  page.data.find((newsItem) => !!newsItem.data.featuredImage)?.data
+    .featuredImage ?? bgImage;
 let hasHighlighted = false;
 ---
 
@@ -32,7 +36,8 @@ let hasHighlighted = false;
     <MainPageTitle
       title="Fork it! News"
       subtitle="Last news about the community"
-      imageSrc={bgImage}
+      imageSrc={image}
+      blurImage
     />
   </div>
 
@@ -87,13 +92,18 @@ let hasHighlighted = false;
               shouldHighlight = true;
             }
             return (
-              <NewsCard
-                newsItem={newsItem}
-                class={cn(shouldHighlight && "md:row-span-2")}
-                gradientClass={cn(
-                  shouldHighlight && "from-black/0 via-black/10 to-black",
-                )}
-              />
+              <TiltedCard
+                client:visible
+                className={cn(shouldHighlight && "md:row-span-2")}
+              >
+                <NewsCard
+                  newsItem={newsItem}
+                  class="flex-1"
+                  gradientClass={cn(
+                    shouldHighlight && "from-black/0 via-black/10 to-black",
+                  )}
+                />
+              </TiltedCard>
             );
           })
         }
