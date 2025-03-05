@@ -75,7 +75,7 @@ export function formatDuration(seconds: number) {
 
 export async function getPersonEpisodes(
   person: CollectionEntry<"people">,
-  { limit }: Params,
+  { limit }: Params = {},
 ) {
   return (
     await getCollection(
