@@ -82,7 +82,7 @@ const ticketImage = new URL(Astro.url.pathname + "/ticket.svg", Astro.site);
       <div class="relative z-10 max-sm:scale-110">
         <TiltedCard client:load rotateAmplitude={20} scaleOnHover={1.1}>
           <Image
-            alt=""
+            alt={`Ticket for ${name}`}
             class="aspect-video max-w-full"
             src={ticketImage.toString()}
             width={1920}
