@@ -2,12 +2,14 @@ import type { SpringOptions } from "motion/react";
 import { useRef, useState, type ReactNode } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
 import { cn } from "@/lib/utils-client";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 interface TiltedCardProps {
   scaleOnHover?: number;
   rotateAmplitude?: number;
   children?: ReactNode;
   className?: string;
+  forceOnMobile?: boolean;
 }
 
 const springValues: SpringOptions = {
@@ -21,7 +23,10 @@ export default function TiltedCard({
   rotateAmplitude = 8,
   children,
   className,
+  forceOnMobile,
 }: TiltedCardProps) {
+  const enabled =
+    !useMediaQuery("only screen and (max-width : 640px)") || !!forceOnMobile;
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -78,9 +83,9 @@ export default function TiltedCard({
         "relative flex flex-col [perspective:800px] hover:z-10",
         className,
       )}
-      onMouseMove={handleMouse}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseMove={enabled ? handleMouse : undefined}
+      onMouseEnter={enabled ? handleMouseEnter : undefined}
+      onMouseLeave={enabled ? handleMouseLeave : undefined}
     >
       <motion.div
         className="relative flex flex-1 flex-col [transform-style:preserve-3d]"

@@ -40,7 +40,7 @@ const ticketImage = new URL(
   <div
     class="mx-auto flex w-full max-w-[30rem] flex-1 flex-col items-center justify-center gap-8 p-4 pb-40 md:px-8 md:pt-8"
   >
-    <TiltedCard className="relative z-20" client:load>
+    <TiltedCard client:load className="relative z-20" forceOnMobile>
       <Image
         alt={`Ticket example`}
         class="-mb-16 aspect-video max-w-72"
