@@ -101,6 +101,9 @@ importers:
       react-icons:
         specifier: 5.5.0
         version: 5.5.0(react@18.3.1)
+      remeda:
+        specifier: 2.21.0
+        version: 2.21.0
       satori:
         specifier: 0.12.1
         version: 0.12.1
@@ -2887,6 +2890,9 @@ packages:
   remark-stringify@11.0.0:
     resolution: {integrity: sha512-1OSmLd3awB/t8qdoEOMazZkNsfVTeY4fTsgzcQFdXNq8ToTN4ZGwrMnlda4K6smTFKD+GRV6O48i6Z4iKgPPpw==}
 
+  remeda@2.21.0:
+    resolution: {integrity: sha512-ANFqOts3BsvW1MrKOv9SVHG3ly0MzzLa0HIu5qLkiRuEPGPuH9ny3sgd7VdHvC2VOUSN/7RkmabPlAda6JtGgg==}
+
   request-light@0.5.8:
     resolution: {integrity: sha512-3Zjgh+8b5fhRJBQZoy+zbVKpAQGLyka0MPgW3zruTF4dFFJ8Fqcfu9YsAvi/rvdcaTeWG3MkbZv4WKxAn/84Lg==}
 
@@ -3174,6 +3180,10 @@ packages:
 
   type-fest@4.30.2:
     resolution: {integrity: sha512-UJShLPYi1aWqCdq9HycOL/gwsuqda1OISdBO3t8RlXQC4QvtuIz4b5FCfe2dQIWEpmlRExKmcTBfP1r9bhY7ig==}
+    engines: {node: '>=16'}
+
+  type-fest@4.37.0:
+    resolution: {integrity: sha512-S/5/0kFftkq27FPNye0XM1e2NsnoD/3FS+pBmbjmmtLT6I+i344KoOf7pvXreaFsDamWeaJX55nczA1m5PsBDg==}
     engines: {node: '>=16'}
 
   typesafe-path@0.2.2:
@@ -6849,6 +6859,10 @@ snapshots:
       mdast-util-to-markdown: 2.1.0
       unified: 11.0.5
 
+  remeda@2.21.0:
+    dependencies:
+      type-fest: 4.37.0
+
   request-light@0.5.8: {}
 
   request-light@0.7.0: {}
@@ -7198,6 +7212,8 @@ snapshots:
   tslib@2.6.3: {}
 
   type-fest@4.30.2: {}
+
+  type-fest@4.37.0: {}
 
   typesafe-path@0.2.2: {}
 

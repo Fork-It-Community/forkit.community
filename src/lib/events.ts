@@ -7,6 +7,7 @@ import {
   type CollectionEntry,
 } from "astro:content";
 import { match } from "ts-pattern";
+import { entries } from "remeda";
 
 export function isEventPublished(
   status?: CollectionEntry<"events">["data"]["status"],
@@ -273,4 +274,25 @@ export function getEventCtaTypes(event: CollectionEntry<"events">) {
     secondary,
     tertiary,
   } as const;
+}
+
+export function getPersonRolesInEvent(
+  event: CollectionEntry<"events">,
+  person: CollectionEntry<"people">,
+) {
+  const ROLE_MAPPINGS = {
+    organizers: "organizer",
+    volunteers: "volunteer",
+    speakers: "speaker",
+  } as const;
+
+  const roles = new Set<(typeof ROLE_MAPPINGS)[keyof typeof ROLE_MAPPINGS]>();
+
+  for (const [key, role] of entries(ROLE_MAPPINGS)) {
+    if (event.data[key]?.some((p) => p.id === person.id)) {
+      roles.add(role);
+    }
+  }
+
+  return roles;
 }
