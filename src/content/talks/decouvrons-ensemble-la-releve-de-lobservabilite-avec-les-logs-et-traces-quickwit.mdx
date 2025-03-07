@@ -11,6 +11,6 @@ Ces deux solutions présentent toute deux des avantages et inconvénients : d'un
 
 Dans cette présentation, nous allons parler d'une nouvelle solution qui réunis le meilleur des deux mondes, Quickwit, et expliquer comment elle y est parvenue : en ré-écrivant un moteur de recherche comparable à Lucene avec de hautes performances et en utilisant le gain pour stocker les données indexée dans de l'object storage, ce qui le rend complètement stateless et plus facile à opérer. On arrive à des performances similaires à celles d'Elasticsearch voire les surpassent avec des coûts d'infrastructure qui sont très largement réduits.
 
-Nous verrons également dans cette présentation que Quickwit peut également servir de backend pour stocker des traces via OpenTelemetry et est compatible avec Jaeger UI ce qui permet également conserver ses traces durablement dans le temps grace à la promesse de l'object storage. 
+Nous verrons également dans cette présentation que Quickwit peut également servir de backend pour stocker des traces via OpenTelemetry et est compatible avec Jaeger UI ce qui permet également conserver ses traces durablement dans le temps grace à la promesse de l'object storage.
 
 Cette présentation s'accompagnera d'une démo dans laquelle Quickwit ingèrera des logs et traces en provenance d'une application Python via OTLP/grpc et on présentera des dashboards avec le plugin Grafana permettant de mettre en corrélation des logs et des traces et se substituer à un APM (_Application Performance Monitoring_, outil pour mesurer la performance de vos applications).
