@@ -9,6 +9,7 @@ import {
   FaLinkedin,
   FaXTwitter,
   FaYoutube,
+  FaFacebook,
 } from "react-icons/fa6";
 
 type SocialsLevel = "primary" | "secondary";
@@ -74,4 +75,5 @@ export const SOCIALS_TYPE_MAP = {
   instagram: FaInstagram,
   linkedin: FaLinkedin,
   x: FaXTwitter,
+  facebook: FaFacebook,
 } satisfies Record<SocialType, FC>;

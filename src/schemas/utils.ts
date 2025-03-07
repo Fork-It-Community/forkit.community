@@ -7,4 +7,5 @@ export const zSocialTypes = z.enum([
   "instagram",
   "github",
   "bluesky",
+  "facebook",
 ]);
