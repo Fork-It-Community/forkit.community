@@ -1,7 +1,7 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
 import type { GetStaticPaths } from "astro";
-import { SEO } from "astro-seo";
+import SEO from "@/components/SEO/index.astro";
 import { getCollection } from "astro:content";
 import defaultImage from "@/assets/images/events.jpeg";
 import defaultPerson from "@/assets/images/people-placeholder.jpeg";
@@ -40,7 +40,7 @@ const contributions = await getAppearances(person, Infinity);
     className="h-[80vh] opacity-80"
   />
 
-  <SEO slot="seo" title="Community Members" />
+  <SEO slot="seo" title={person.data.name} />
 
   <div
     class="my-16 flex h-full flex-1 flex-col justify-between gap-32 md:my-32"
