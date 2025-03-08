@@ -1,0 +1,141 @@
+---
+import { getPersonRolesInEvent } from "@/lib/events";
+import { cn } from "@/lib/utils-client";
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import type { CollectionKey } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import defaultPodcast from "@/assets/images/podcasts.jpeg";
+
+import { capitalize } from "remeda";
+import dayjs from "dayjs";
+import { match } from "ts-pattern";
+
+interface Props {
+  contribution:
+    | CollectionEntry<"episodes">
+    | CollectionEntry<"news">
+    | CollectionEntry<"events">;
+  person: CollectionEntry<"people">;
+  class?: string;
+  gradientClass?: string | undefined;
+}
+const { contribution, person, class: className, gradientClass } = Astro.props;
+
+const item = match(contribution)
+  .returnType<{
+    title: string;
+    date: Date;
+    href: string;
+    image: ImageMetadata | undefined;
+    episodeCover: ImageMetadata | undefined;
+    excerpt: string | undefined;
+    type: Extract<CollectionKey, "news" | "events" | "episodes">;
+  }>()
+  .with({ collection: "news" }, (item) => ({
+    title: item.data.title,
+    date: item.data.date,
+    href: `/news/article/${item.id}`,
+    image: item.data.featuredImage,
+    episodeCover: undefined,
+    excerpt: item.data.excerpt,
+    type: item.collection,
+  }))
+  .with({ collection: "episodes" }, (item) => ({
+    title: item.data.title,
+    date: item.data.releaseDate,
+    excerpt: item.data.description,
+    href: `/podcasts/${item.id}`,
+    image: defaultPodcast,
+    episodeCover: item.data.cover,
+    type: item.collection,
+  }))
+  .with({ collection: "events" }, (item) => ({
+    title: item.data.name,
+    date: item.data.date,
+    excerpt: [...getPersonRolesInEvent(item, person)]
+      .map((i) => capitalize(i))
+      .join(", "),
+    href: `/events/${item.id}`,
+    image: item.data.image.media,
+    episodeCover: undefined,
+    type: item.collection,
+  }))
+  .exhaustive();
+---
+
+<div class="relative">
+  {
+    item.type === "episodes" && (
+      <div class="absolute -top-2 right-4 z-10 aspect-square h-20 w-20 overflow-hidden rounded-md xs:h-32 xs:w-32 sm:h-48 sm:w-48 md:h-24 md:w-24">
+        <Image src={item.episodeCover!} alt="" width="200" height="200" />
+      </div>
+    )
+  }
+  <article
+    class={cn(
+      "group relative flex w-full flex-1 flex-col overflow-hidden rounded-lg bg-white/5 backdrop-blur-md transition duration-500 hover:bg-white/10",
+      className,
+    )}
+  >
+    {
+      !!item.image && (
+        <div
+          class="relative flex-1 bg-black transition duration-500 group-hover:scale-105"
+          style={{
+            maskImage: "linear-gradient(180deg, black 30%, transparent 80%)",
+          }}
+        >
+          <div
+            class={cn(
+              "pointer-events-none absolute inset-0 w-full bg-gradient-to-b from-black/0 via-black/70 to-black",
+              gradientClass,
+            )}
+          />
+          <a href={item.href} class="flex h-full w-full">
+            <Image
+              src={item.image}
+              alt={item.title}
+              width={800}
+              height={600}
+              class="aspect-video w-full object-cover"
+            />
+          </a>
+        </div>
+      )
+    }
+    <div
+      class={cn(
+        "relative flex flex-col gap-1 p-6",
+        item.image && "-mt-48 max-sm:pt-24",
+        !item.image && "flex-1",
+      )}
+    >
+      <div class="flex flex-wrap gap-1 text-xs uppercase opacity-60">
+        <time datetime="2020-03-16">
+          {dayjs(item.date).format("dddd, MMMM D, YYYY")}
+        </time>
+      </div>
+      <h2
+        class="line-clamp-2 text-balance font-heading text-xl font-medium tracking-wide transition duration-500 group-hover:text-primary"
+      >
+        <a href={item.href}>
+          {item.title}
+          <div class="absolute inset-0 z-10"></div>
+        </a>
+      </h2>
+      {
+        !!item.excerpt && (
+          <div
+            class={cn(
+              "prose prose-sm prose-invert line-clamp-6 opacity-80",
+              !!item.image && "line-clamp-2",
+            )}
+          >
+            <p>{item.excerpt}</p>
+          </div>
+        )
+      }
+    </div>
+  </article>
+</div>
