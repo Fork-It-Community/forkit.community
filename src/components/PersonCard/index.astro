@@ -2,10 +2,6 @@
 import { Image } from "astro:assets";
 import SpeakerPlaceholder from "@/assets/images/people-placeholder.jpeg";
 import { type CollectionEntry } from "astro:content";
-import { SOCIALS_TYPE_MAP } from "@/content/socials";
-import { MdEvent, MdNewspaper, MdPodcasts } from "react-icons/md";
-import { match } from "ts-pattern";
-import { getAppearances } from "@/lib/utils";
 
 interface Props {
   person: CollectionEntry<"people">;
@@ -13,13 +9,12 @@ interface Props {
 }
 
 const { person, id } = Astro.props;
-
-const appearances = await getAppearances(person, 4);
 ---
 
-<div
+<a
   id={id}
-  class="flex scroll-mt-20 flex-col gap-5 rounded-lg bg-white/5 p-6 backdrop-blur-md"
+  class="group flex scroll-mt-20 flex-col gap-5 rounded-lg bg-white/5 p-6 backdrop-blur-md"
+  href={`/people/${id}`}
 >
   <div class="flex items-start gap-4">
     <div class="aspect-square size-24 flex-none overflow-hidden rounded-lg">
@@ -33,17 +28,16 @@ const appearances = await getAppearances(person, 4);
     <div class="flex flex-col gap-3">
       {
         person.data.forkit?.role === "founder" && (
-          <a
-            href="/about#organizers"
-            class="w-fit rounded bg-primary px-1.5 py-1 text-2xs font-bold uppercase leading-none text-black transition"
-          >
+          <span class="w-fit rounded bg-primary px-1.5 py-1 text-2xs font-bold uppercase leading-none text-black transition">
             Fork It! Founder
-          </a>
+          </span>
         )
       }
 
       <div class="flex flex-col gap-0.5">
-        <p class="line-clamp-3 font-heading text-sm font-medium tracking-wide">
+        <p
+          class="line-clamp-3 font-heading text-sm font-medium tracking-wide group-hover:text-primary"
+        >
           {person.data.name}
         </p>
         {
@@ -57,142 +51,9 @@ const appearances = await getAppearances(person, 4);
       </div>
       {
         !!person.data.company && (
-          <>
-            {!!person.data.company.href ? (
-              <a
-                href={person.data.company.href}
-                target="_blank"
-                rel="noreferrer"
-                class="text-xs underline opacity-60 transition hover:text-primary hover:opacity-100"
-              >
-                {person.data.company.title}
-              </a>
-            ) : (
-              <p class="text-xs opacity-60">{person.data.company.title}</p>
-            )}
-          </>
-        )
-      }
-
-      {
-        !!person.data.socials && (
-          <ul class="flex gap-x-2">
-            {person.data.socials.map((social) => {
-              const Icon = SOCIALS_TYPE_MAP[social.type];
-
-              return (
-                <Fragment>
-                  <li>
-                    <a
-                      href={social.href}
-                      class="opacity-60 transition hover:text-primary hover:opacity-100"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <span class="sr-only">{social.type}</span>
-                      <Icon />
-                    </a>
-                  </li>
-                </Fragment>
-              );
-            })}
-          </ul>
+          <p class="text-xs opacity-60">{person.data.company.title}</p>
         )
       }
     </div>
   </div>
-
-  {
-    !!appearances.length && (
-      <div class="flex flex-col gap-2">
-        <h4 class="font-heading text-2xs font-medium uppercase tracking-widest opacity-60">
-          Latest contributions
-        </h4>
-        <ul class="flex flex-col gap-2">
-          {appearances.map((appearance) => {
-            return match(appearance)
-              .with({ collection: "events" }, (a) => {
-                const isOrganizer = !!a.data.organizers?.some(
-                  (item) => item.id === person.id,
-                );
-                const isVolunteer = !!a.data.volunteers?.some(
-                  (item) => item.id === person.id,
-                );
-                const isSpeaker = !!a.data.speakers?.some(
-                  (item) => item.id === person.id,
-                );
-
-                return (
-                  <li>
-                    <a
-                      href={`/events/${appearance.id}`}
-                      class="group flex gap-2 text-sm"
-                    >
-                      <MdEvent className="flex-none opacity-40 mt-0.5 transition group-hover:opacity-100" />
-                      <span class="opacity-80 transition group-hover:text-primary group-hover:opacity-100">
-                        {a.data.name}
-                        <span class="flex text-2xs uppercase text-white opacity-80 transition group-hover:opacity-100">
-                          {[
-                            isOrganizer && "Organizer",
-                            isSpeaker && "Speaker",
-                            isVolunteer && "Volunteer",
-                          ]
-                            .filter(Boolean)
-                            .join(", ")}
-                        </span>
-                      </span>
-                    </a>
-                  </li>
-                );
-              })
-              .with({ collection: "episodes" }, (a) => {
-                const isHost = !!a.data.hosts?.some(
-                  (item) => item.id === person.id,
-                );
-                const isGuest = !!a.data.guests?.some(
-                  (item) => item.id === person.id,
-                );
-                return (
-                  <li>
-                    <a
-                      href={`/podcasts/${appearance.id}`}
-                      class="group flex gap-2 text-sm"
-                    >
-                      <MdPodcasts className="flex-none opacity-40 mt-0.5 transition group-hover:opacity-100" />
-                      <span class="opacity-80 transition group-hover:text-primary group-hover:opacity-100">
-                        {a.data.title}
-                        <span class="flex text-2xs uppercase text-white opacity-80 transition group-hover:opacity-100">
-                          {[isHost && "Host", isGuest && "Guest"]
-                            .filter(Boolean)
-                            .join(", ")}
-                        </span>
-                      </span>
-                    </a>
-                  </li>
-                );
-              })
-              .with({ collection: "news" }, (a) => {
-                return (
-                  <li>
-                    <a
-                      href={`/news/article/${appearance.id}`}
-                      class="group flex gap-2 text-sm"
-                    >
-                      <MdNewspaper className="flex-none opacity-40 mt-0.5 transition group-hover:opacity-100" />
-                      <span class="opacity-80 transition group-hover:text-primary group-hover:opacity-100">
-                        {a.data.title}
-                        <span class="flex text-2xs uppercase text-white opacity-80 transition group-hover:opacity-100">
-                          Author
-                        </span>
-                      </span>
-                    </a>
-                  </li>
-                );
-              })
-              .exhaustive();
-          })}
-        </ul>
-      </div>
-    )
-  }
-</div>
+</a>

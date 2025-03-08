@@ -92,7 +92,7 @@ const authors = (await getEntries(newsItem.data.authors ?? []))
           <div class="flex gap-3">
             {authors.map((author) => (
               <a
-                href={`/people#${author.id}`}
+                href={`/people/${author.id}`}
                 class={cn(
                   "group/author relative z-20 flex items-center gap-x-2.5 text-sm font-medium",
                   authors.length > 1 && "-mr-4",

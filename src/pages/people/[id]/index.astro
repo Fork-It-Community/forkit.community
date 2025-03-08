@@ -58,24 +58,34 @@ const contributions = await getAppearances(person, Infinity);
               height={300}
             />
           </div>
-          <div class="flex flex-col gap-1">
+          <div class="flex flex-col gap-2 text-center md:text-left">
             <h2
               class="text-md line-clamp-3 font-heading font-medium tracking-wide"
             >
               {person.data.name}
             </h2>
-            {
-              person.data.job && (
-                <p class="line-clamp-3 text-xs tracking-wide opacity-60">
-                  {person.data.job}
-                </p>
-              )
-            }
+
+            <div class="flex flex-col gap-1">
+              {
+                person.data.job && (
+                  <p class="line-clamp-3 text-xs tracking-wide opacity-60">
+                    {person.data.job}
+                  </p>
+                )
+              }
+              {
+                person.data.company && (
+                  <p class="line-clamp-3 text-xs tracking-wide opacity-60">
+                    {person.data.company.title}
+                  </p>
+                )
+              }
+            </div>
           </div>
 
           {
             !!person.data.socials && (
-              <ul class="flex flex-row gap-2">
+              <ul class="flex flex-row gap-4">
                 {person.data.socials.map((social) => {
                   const Icon = SOCIALS_TYPE_MAP[social.type];
 
@@ -83,7 +93,7 @@ const contributions = await getAppearances(person, Infinity);
                     <li>
                       <a
                         href={social.href}
-                        class="opacity-60 transition hover:text-primary hover:opacity-100"
+                        class="text-lg opacity-60 transition hover:text-primary hover:opacity-100"
                         target="_blank"
                       >
                         <span class="sr-only">{social.type}</span>
