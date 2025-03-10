@@ -85,9 +85,14 @@ const contributions = await getAppearances(person, Infinity);
               }
               {
                 person.data.company && (
-                  <p class="line-clamp-3 text-xs tracking-wide opacity-60">
+                  <a
+                    class="line-clamp-3 text-xs tracking-wide opacity-60 hover:text-primary"
+                    href={person.data.company.href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     {person.data.company.title}
-                  </p>
+                  </a>
                 )
               }
             </div>
