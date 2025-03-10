@@ -13,6 +13,8 @@ import { render } from "astro:content";
 import { SOCIALS_TYPE_MAP } from "@/content/socials";
 import Prose from "@/components/Prose/index.astro";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
+import TiltedCard from "@/components/TiltedCard";
+import { BackButton } from "@/components/BackButton";
 
 export const getStaticPaths = (async () => {
   const people = await getCollection("people");
@@ -41,14 +43,20 @@ const contributions = await getAppearances(person, Infinity);
   />
 
   <SEO slot="seo" title={person.data.name} />
-
   <div
-    class="my-16 flex h-full flex-1 flex-col justify-between gap-32 md:my-32"
+    class="my-16 flex h-full flex-1 flex-col justify-between gap-32 md:my-16"
   >
-    <div class="mx-auto flex max-w-screen-md flex-col">
+    <div class="mx-auto flex max-w-screen-md flex-col gap-6">
+      <div class="px-4">
+        <BackButton
+          client:load
+          href="/people"
+          contextLabel="Fork It! Members"
+        />
+      </div>
       <div class="flex flex-col justify-center gap-8 md:flex-row">
         <section
-          class="flex w-full flex-[0.5] flex-col items-center gap-4 px-4 md:sticky md:top-32 md:items-start md:self-start"
+          class="flex w-full flex-[0.5] flex-col items-center gap-4 px-4 md:sticky md:top-24 md:items-start md:self-start"
         >
           <div
             class="aspect-square size-56 flex-none overflow-hidden rounded-lg"
@@ -114,7 +122,9 @@ const contributions = await getAppearances(person, Infinity);
         </section>
 
         <section class="flex w-full flex-1 flex-col gap-4 px-4">
-          <h2 class="w-full font-heading text-2xl">Community Contributions</h2>
+          <h2 class="w-full font-heading text-xl uppercase tracking-wider">
+            Community Contributions
+          </h2>
 
           <ul>
             {
@@ -125,14 +135,35 @@ const contributions = await getAppearances(person, Infinity);
                     <div class="flex-1 border-l border-dashed border-white/20 group-last:hidden" />
                   </div>
                   <div class="flex w-full flex-col gap-2 pb-6">
-                    <ContributionCard
-                      contribution={contribution}
-                      person={person}
-                    />
+                    <TiltedCard client:load>
+                      <ContributionCard
+                        contribution={contribution}
+                        person={person}
+                      />
+                    </TiltedCard>
                   </div>
                 </li>
               ))
             }
+            <li class="group flex gap-3">
+              <div class="flex flex-col items-center gap-1 pt-1">
+                <div class="size-2.5 rounded-full border-2 border-white/40">
+                </div>
+                <div
+                  class="flex-1 border-l border-dashed border-white/20 group-last:hidden"
+                >
+                </div>
+              </div>
+              <div class="flex w-full flex-col gap-2 pb-6">
+                <p class="text-sm tracking-wide opacity-60">
+                  {
+                    person.data.forkit?.role === "founder"
+                      ? "Founder of "
+                      : "Joined "
+                  } the Fork it! Community
+                </p>
+              </div>
+            </li>
           </ul>
         </section>
       </div>
