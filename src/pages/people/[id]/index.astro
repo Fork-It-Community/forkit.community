@@ -115,56 +115,66 @@ const contributions = await getAppearances(person, Infinity);
               </ul>
             )
           }
-
-          <Prose class="max-w-80 text-sm">
-            <Content />
-          </Prose>
         </section>
 
-        <section class="flex w-full flex-1 flex-col gap-4 px-4">
-          <h2 class="w-full font-heading text-xl uppercase tracking-wider">
-            Community Contributions
-          </h2>
+        <section class="flex w-full flex-1 flex-col gap-8 px-4">
+          {
+            !!person.body && (
+              <div class="flex flex-col gap-4">
+                <h2 class="w-full font-heading text-xl uppercase tracking-wider">
+                  About {person.data.name}
+                </h2>
+                <Prose class="prose-sm">
+                  <Content />
+                </Prose>
+              </div>
+            )
+          }
+          <div class="flex flex-col gap-4">
+            <h2 class="w-full font-heading text-xl uppercase tracking-wider">
+              Community Contributions
+            </h2>
 
-          <ul>
-            {
-              contributions.map((contribution) => (
-                <li class="group flex gap-3">
-                  <div class="flex flex-col items-center gap-1 pt-1">
-                    <div class="size-2.5 rounded-full border-2 border-white/40" />
-                    <div class="flex-1 border-l border-dashed border-white/20 group-last:hidden" />
+            <ul>
+              {
+                contributions.map((contribution) => (
+                  <li class="group flex gap-3">
+                    <div class="flex flex-col items-center gap-1 pt-1">
+                      <div class="size-2.5 rounded-full border-2 border-white/40" />
+                      <div class="flex-1 border-l border-dashed border-white/20 group-last:hidden" />
+                    </div>
+                    <div class="flex w-full flex-col gap-2 pb-6">
+                      <TiltedCard client:load>
+                        <ContributionCard
+                          contribution={contribution}
+                          person={person}
+                        />
+                      </TiltedCard>
+                    </div>
+                  </li>
+                ))
+              }
+              <li class="group flex gap-3">
+                <div class="flex flex-col items-center gap-1 pt-1">
+                  <div class="size-2.5 rounded-full border-2 border-white/40">
                   </div>
-                  <div class="flex w-full flex-col gap-2 pb-6">
-                    <TiltedCard client:load>
-                      <ContributionCard
-                        contribution={contribution}
-                        person={person}
-                      />
-                    </TiltedCard>
+                  <div
+                    class="flex-1 border-l border-dashed border-white/20 group-last:hidden"
+                  >
                   </div>
-                </li>
-              ))
-            }
-            <li class="group flex gap-3">
-              <div class="flex flex-col items-center gap-1 pt-1">
-                <div class="size-2.5 rounded-full border-2 border-white/40">
                 </div>
-                <div
-                  class="flex-1 border-l border-dashed border-white/20 group-last:hidden"
-                >
+                <div class="flex w-full flex-col gap-2 pb-6">
+                  <p class="text-sm tracking-wide opacity-60">
+                    {
+                      person.data.forkit?.role === "founder"
+                        ? "Founder of "
+                        : "Joined "
+                    } the Fork it! Community
+                  </p>
                 </div>
-              </div>
-              <div class="flex w-full flex-col gap-2 pb-6">
-                <p class="text-sm tracking-wide opacity-60">
-                  {
-                    person.data.forkit?.role === "founder"
-                      ? "Founder of "
-                      : "Joined "
-                  } the Fork it! Community
-                </p>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </div>
         </section>
       </div>
     </div>
