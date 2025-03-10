@@ -84,9 +84,9 @@ const contributions = await getAppearances(person, Infinity);
                 )
               }
               {
-                person.data.company && (
+                person.data.company?.title && person.data.company.href && (
                   <a
-                    class="line-clamp-3 text-xs tracking-wide opacity-60 hover:text-primary"
+                    class="line-clamp-3 text-xs tracking-wide underline opacity-60 hover:text-primary hover:opacity-100"
                     href={person.data.company.href}
                     target="_blank"
                     rel="noreferrer"
