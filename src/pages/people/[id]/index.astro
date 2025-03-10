@@ -1,0 +1,184 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import type { GetStaticPaths } from "astro";
+import SEO from "@/components/SEO/index.astro";
+import { getCollection } from "astro:content";
+import defaultImage from "@/assets/images/events.jpeg";
+import defaultPerson from "@/assets/images/people-placeholder.jpeg";
+import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
+import { Image } from "astro:assets";
+import { getAppearances } from "@/lib/utils";
+import ContributionCard from "@/components/ContributionCard/index.astro";
+import { render } from "astro:content";
+import { SOCIALS_TYPE_MAP } from "@/content/socials";
+import Prose from "@/components/Prose/index.astro";
+import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
+import TiltedCard from "@/components/TiltedCard";
+import { BackButton } from "@/components/BackButton";
+
+export const getStaticPaths = (async () => {
+  const people = await getCollection("people");
+
+  return Promise.all(
+    people.map(async (person) => ({
+      params: { id: person.id },
+      props: {
+        person,
+      },
+    })),
+  );
+}) satisfies GetStaticPaths;
+
+const { person } = Astro.props;
+const { Content } = await render(person);
+const contributions = await getAppearances(person, Infinity);
+---
+
+<MainLayout>
+  <ImageBackgroundHero
+    src={defaultImage}
+    alt=""
+    blur
+    className="h-[80vh] opacity-80"
+  />
+
+  <SEO slot="seo" title={person.data.name} />
+  <div
+    class="my-16 flex h-full flex-1 flex-col justify-between gap-32 md:my-16"
+  >
+    <div class="mx-auto flex max-w-screen-md flex-col gap-6">
+      <div class="px-4">
+        <BackButton
+          client:load
+          href="/people"
+          contextLabel="Fork It! Members"
+        />
+      </div>
+      <div class="flex flex-col justify-center gap-8 md:flex-row">
+        <section
+          class="flex w-full flex-[0.5] flex-col items-center gap-4 px-4 md:sticky md:top-24 md:items-start md:self-start"
+        >
+          <div
+            class="aspect-square size-56 flex-none overflow-hidden rounded-lg"
+          >
+            <Image
+              src={person.data.avatar ?? defaultPerson}
+              alt={`${person.data.name} profile picture`}
+              width={300}
+              height={300}
+            />
+          </div>
+          <div class="flex flex-col gap-2 text-center md:text-left">
+            <h2
+              class="text-md line-clamp-3 font-heading font-medium tracking-wide"
+            >
+              {person.data.name}
+            </h2>
+
+            <div class="flex flex-col gap-1">
+              {
+                person.data.job && (
+                  <p class="line-clamp-3 text-xs tracking-wide opacity-60">
+                    {person.data.job}
+                  </p>
+                )
+              }
+              {
+                person.data.company && (
+                  <p class="line-clamp-3 text-xs tracking-wide opacity-60">
+                    {person.data.company.title}
+                  </p>
+                )
+              }
+            </div>
+          </div>
+
+          {
+            !!person.data.socials && (
+              <ul class="flex flex-row gap-4">
+                {person.data.socials.map((social) => {
+                  const Icon = SOCIALS_TYPE_MAP[social.type];
+
+                  return (
+                    <li>
+                      <a
+                        href={social.href}
+                        class="text-lg opacity-60 transition hover:text-primary hover:opacity-100"
+                        target="_blank"
+                      >
+                        <span class="sr-only">{social.type}</span>
+                        <Icon />
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            )
+          }
+        </section>
+
+        <section class="flex w-full flex-1 flex-col gap-8 px-4">
+          {
+            !!person.body && (
+              <div class="flex flex-col gap-4">
+                <h2 class="w-full font-heading text-xl uppercase tracking-wider">
+                  About {person.data.name}
+                </h2>
+                <Prose class="prose-sm">
+                  <Content />
+                </Prose>
+              </div>
+            )
+          }
+          <div class="flex flex-col gap-4">
+            <h2 class="w-full font-heading text-xl uppercase tracking-wider">
+              Community Contributions
+            </h2>
+
+            <ul>
+              {
+                contributions.map((contribution) => (
+                  <li class="group flex gap-3">
+                    <div class="flex flex-col items-center gap-1 pt-1">
+                      <div class="size-2.5 rounded-full border-2 border-white/40" />
+                      <div class="flex-1 border-l border-dashed border-white/20 group-last:hidden" />
+                    </div>
+                    <div class="flex w-full flex-col gap-2 pb-6">
+                      <TiltedCard client:load>
+                        <ContributionCard
+                          contribution={contribution}
+                          person={person}
+                        />
+                      </TiltedCard>
+                    </div>
+                  </li>
+                ))
+              }
+              <li class="group flex gap-3">
+                <div class="flex flex-col items-center gap-1 pt-1">
+                  <div class="size-2.5 rounded-full border-2 border-white/40">
+                  </div>
+                  <div
+                    class="flex-1 border-l border-dashed border-white/20 group-last:hidden"
+                  >
+                  </div>
+                </div>
+                <div class="flex w-full flex-col gap-2 pb-6">
+                  <p class="text-sm tracking-wide opacity-60">
+                    {
+                      person.data.forkit?.role === "founder"
+                        ? "Founder of "
+                        : "Joined "
+                    } the Fork it! Community
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <JoinTheCommunity />
+  </div>
+</MainLayout>

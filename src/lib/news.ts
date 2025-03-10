@@ -23,7 +23,7 @@ export async function getNewsCollection({ limit = undefined }: Params = {}) {
 
 export async function getPersonArticles(
   person: CollectionEntry<"people">,
-  { limit }: Params,
+  { limit }: Params = {},
 ) {
   return (
     await getCollection("news", (episode) =>

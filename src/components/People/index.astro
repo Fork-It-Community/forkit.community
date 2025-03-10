@@ -2,7 +2,6 @@
 import { Image } from "astro:assets";
 import SpeakerPlaceholder from "@/assets/images/people-placeholder.jpeg";
 import type { CollectionEntry } from "astro:content";
-import { SOCIALS_TYPE_MAP } from "@/content/socials";
 
 interface Props {
   people: CollectionEntry<"people">;
@@ -11,7 +10,10 @@ interface Props {
 const { people } = Astro.props;
 ---
 
-<div class="flex h-fit w-fit flex-col items-start gap-2">
+<a
+  class="group flex h-fit w-fit flex-col items-start gap-2"
+  href={`/people/${people.id}`}
+>
   <div class="aspect-square overflow-hidden rounded-lg">
     <Image
       src={people.data.avatar ?? SpeakerPlaceholder}
@@ -22,7 +24,9 @@ const { people } = Astro.props;
   </div>
   <div class="flex flex-col gap-2">
     <div class="flex flex-col gap-0.5">
-      <p class="line-clamp-3 font-heading text-sm font-medium tracking-wide">
+      <p
+        class="line-clamp-3 font-heading text-sm font-medium tracking-wide group-hover:text-primary"
+      >
         {people.data.name}
       </p>
       {
@@ -36,46 +40,8 @@ const { people } = Astro.props;
     </div>
     {
       !!people.data.company && (
-        <>
-          {!!people.data.company.href ? (
-            <a
-              href={people.data.company.href}
-              target="_blank"
-              rel="noreferrer"
-              class="text-xs underline opacity-60 transition hover:text-primary hover:opacity-100"
-            >
-              {people.data.company.title}
-            </a>
-          ) : (
-            <p class="text-xs opacity-60">{people.data.company.title}</p>
-          )}
-        </>
-      )
-    }
-    {
-      !!people.data.socials && (
-        <ul class="flex gap-x-2">
-          {people.data.socials.map((social) => {
-            const Icon = SOCIALS_TYPE_MAP[social.type];
-
-            return (
-              <Fragment>
-                <li>
-                  <a
-                    href={social.href}
-                    class="opacity-60 transition hover:text-primary hover:opacity-100"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <span class="sr-only">{social.type}</span>
-                    <Icon />
-                  </a>
-                </li>
-              </Fragment>
-            );
-          })}
-        </ul>
+        <p class="text-xs opacity-60">{people.data.company.title}</p>
       )
     }
   </div>
-</div>
+</a>
