@@ -34,7 +34,9 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     mdx(),
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.endsWith("/attendee"),
+    }),
     robotsTxt(),
   ],
 
