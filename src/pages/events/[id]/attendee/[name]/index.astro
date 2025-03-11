@@ -40,7 +40,7 @@ const ticketImage = new URL(Astro.url.pathname + "/ticket.svg", Astro.site);
 ---
 
 <EventSubPageLayout event={event}>
-  <SEO slot="seo" title={title} image={ogImage.toString()} />
+  <SEO noindex nofollow slot="seo" title={title} image={ogImage.toString()} />
   <div class="flex flex-1 flex-col overflow-x-hidden">
     <div
       class="relative mx-auto flex w-full max-w-screen-md flex-1 flex-col items-center justify-center gap-4 px-8 py-4 pt-4 md:pt-8"
