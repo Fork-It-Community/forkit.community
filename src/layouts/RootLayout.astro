@@ -1,15 +1,15 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import Analytics from "@vercel/analytics/astro";
 import "@fontsource/tomorrow/400.css";
 import "@fontsource/tomorrow/500.css";
-import "@fontsource-variable/inter";
 import "@fontsource-variable/inter";
 import "@/styles/globals.css";
 import EnvHint from "@/components/EnvHint/EnvHint.astro";
 import { Toaster } from "@/components/ui/sonner";
 ---
 
-<html lang="en" class="dark">
+<html lang="en" class="dark" transition:animate="none">
   <head>
     <meta charset="utf-8" />
     <meta
@@ -31,6 +31,7 @@ import { Toaster } from "@/components/ui/sonner";
     />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#171717" />
+    <ClientRouter />
     <slot name="seo" />
     <slot name="ld+json" />
   </head>
