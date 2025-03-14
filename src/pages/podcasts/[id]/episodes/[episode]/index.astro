@@ -19,6 +19,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { IoLanguageSharp } from "react-icons/io5";
 import { lang } from "@/lib/lang";
 import Prose from "@/components/Prose/index.astro";
+import { match, P } from "ts-pattern";
 
 export async function getStaticPaths() {
   const episodes = await getPodcastsEpisodesCollection();
@@ -60,19 +61,26 @@ const ogImage = new URL(
   Astro.site,
 );
 
-const acastUrl = (episode.data.urls || []).find((url) =>
+const acastUrl = (episode.data.urls ?? []).find((url) =>
   url.url.includes("open.acast.com"),
 )?.url;
 
-let acastEmbedId = null;
-if (acastUrl) {
-  const acastMatch = acastUrl.match(
-    /\/public\/streams\/([^\/]+)\/episodes\/([^\.]+)/,
-  );
-  if (acastMatch && acastMatch.length === 3) {
-    acastEmbedId = `${acastMatch[1]}/${acastMatch[2]}`;
-  }
-}
+const acastEmbedId = match(acastUrl)
+  .with(P.string, (v) => {
+    const splittedPathname = new URL(v).pathname.split("/");
+
+    if (splittedPathname.length === 6 /* the number of part we should get */) {
+      /* ['', 'public', 'streams', 'streamId', 'episodes', 'episodeId'] */
+      const [, , , stream, , episode] = splittedPathname;
+
+      // using replace to remove the extension
+      return `${stream}/${episode?.replace(/\.[a-z0-9]+$/, "")}`;
+    }
+
+    return undefined;
+  })
+  .with(undefined, () => undefined)
+  .exhaustive();
 ---
 
 <MainLayout>
