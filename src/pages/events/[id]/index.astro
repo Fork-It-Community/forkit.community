@@ -13,7 +13,6 @@ import EventVibes from "@/components/EventVibes/index.astro";
 import {
   getEventNavItems,
   getEventsCollection,
-  getEventSubPagesCollection,
   getEventCtaTypes,
   shouldShowCFP,
   getEventDisplayDate,
@@ -46,27 +45,23 @@ export async function getStaticPaths() {
       params: { id: event.id },
       props: {
         event,
-        subPages: await getEventSubPagesCollection(event),
-        speakers: await getEntries(event.data.speakers ?? []),
-        coOrganizers: await getEntries(event.data.coOrganizers ?? []),
-        sponsors: await getEntries(
-          (event.data.sponsors ?? []).map((s) => s.slug),
-        ),
-        partners: await getEntries(event.data.partners ?? []),
       },
     })),
   );
 }
 
-const {
-  event,
-  speakers,
-  coOrganizers: _coOrganizers,
-  sponsors,
-  partners,
-} = Astro.props;
-const coOrganizers = _coOrganizers.filter((p) => !!p);
+const { event } = Astro.props;
+
+const partners = await getEntries(event.data.partners ?? []);
+const speakers = await getEntries(event.data.speakers ?? []);
+const coOrganizers = (await getEntries(event.data.coOrganizers ?? [])).filter(
+  (p) => !!p,
+);
+const sponsors = await getEntries(
+  (event.data.sponsors ?? []).map((s) => s.slug),
+);
 const navItems = await getEventNavItems(event.id);
+
 const { Content } = await render(event);
 
 const location: Place | undefined = event.data.location
