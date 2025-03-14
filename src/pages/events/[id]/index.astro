@@ -36,6 +36,7 @@ import { FAQ } from "@/components/Faq";
 import { EventMessage } from "@/components/EventMessage";
 import dayjs from "dayjs";
 import TiltedCard from "@/components/TiltedCard";
+import { SocialShareButton } from "@/components/SocialShareButton";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -84,6 +85,9 @@ const ctaEventMetadata = {
   tickets: event.data.tickets,
   prospectus: event.data.prospectus,
 };
+
+const url = new URL(Astro.url.pathname, Astro.site);
+const shareMessage = `Join me at ${event.data.name} on ${getEventDisplayDate(event)} in ${event.data.city}, ${event.data.country}!`;
 ---
 
 <EventLayout event={event} ogImage={ogImage}>
@@ -225,6 +229,20 @@ const ctaEventMetadata = {
             </a>
           ))
         }
+        <a
+          class="flex cursor-pointer p-2 text-sm underline decoration-foreground/40 underline-offset-4 opacity-60 hover:text-primary hover:decoration-current hover:opacity-100 md:text-base"
+        >
+          <SocialShareButton
+            client:load
+            pageUrl={url.toString()}
+            title={`${event.data.name} - ${getEventDisplayDate(event)}`}
+            message={shareMessage}
+            variant="custom"
+            className="m-0 bg-transparent p-0 no-underline hover:bg-transparent focus:ring-0"
+          >
+            Share
+          </SocialShareButton>
+        </a>
       </nav>
     </motion.div>
   </div>
