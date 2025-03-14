@@ -82,3 +82,11 @@ html body[data-scroll-locked] {
   overflow-y: scroll !important;
   margin-right: 0 !important;
 }
+
+.iframeContainer {
+  display: flex;
+  justify-content: center;
+}
+iframe {
+  width: 90% !important;
+}
