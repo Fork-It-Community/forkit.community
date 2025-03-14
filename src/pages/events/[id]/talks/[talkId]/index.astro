@@ -40,33 +40,32 @@ export async function getStaticPaths() {
     )
   ).flat();
 
-  return Promise.all(
-    talks.map(async (talk) => ({
-      params: { id: talk.__event.id, talkId: talk.id },
-      props: {
-        talk,
-        schedule: talk.__schedule,
-        speakers: (
-          await getEntries(talk.data.speakers.map((speaker) => speaker.id))
-        ).map((entry) => ({
-          ...entry,
-          data: {
-            ...entry.data,
-            __role: talk.data.speakers.find(
-              (speaker) => speaker.id.id === entry.id,
-            )?.role,
-          },
-        })),
-        sponsors: await getEntries(
-          (talk.__event.data.sponsors ?? []).map((s) => s.slug),
-        ),
-        event: talk.__event,
-      },
-    })),
-  );
+  return talks.map((talk) => ({
+    params: { id: talk.__event.id, talkId: talk.id },
+    props: {
+      talk,
+    },
+  }));
 }
 
-const { talk, event, speakers, schedule, sponsors } = Astro.props;
+const { talk } = Astro.props;
+
+const event = talk.__event;
+const schedule = talk.__schedule;
+const speakers = (
+  await getEntries(talk.data.speakers.map((speaker) => speaker.id))
+).map((entry) => ({
+  ...entry,
+  data: {
+    ...entry.data,
+    __role: talk.data.speakers.find((speaker) => speaker.id.id === entry.id)
+      ?.role,
+  },
+}));
+const sponsors = await getEntries(
+  (talk.__event.data.sponsors ?? []).map((s) => s.slug),
+);
+
 const { Content } = await render(talk);
 
 const url = new URL(Astro.url.pathname, Astro.site);
