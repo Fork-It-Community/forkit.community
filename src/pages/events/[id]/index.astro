@@ -41,21 +41,36 @@ import TiltedCard from "@/components/TiltedCard";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { isEmpty } from "remeda";
+import RelatedEvents from "@/components/RelatedEvents/index.astro";
 
 export async function getStaticPaths() {
-  const events = await getEventsCollection();
+  const allEvents = await getEventsCollection();
 
   return Promise.all(
-    events.map(async (event) => ({
-      params: { id: event.id },
-      props: {
-        event,
-      },
-    })),
+    allEvents.map(async (event) => {
+      const relatedEvents = allEvents
+        .filter(
+          (e) =>
+            e.id !== event.id &&
+            e.data._computed.city?.id === event.data._computed.city?.id &&
+            (dayjs(e.data.date).isAfter(dayjs()) ||
+              dayjs(e.data.date).isAfter(dayjs().subtract(30, "day"))),
+        )
+        .sort((a, b) => dayjs(a.data.date).diff(dayjs(b.data.date)))
+        .slice(0, 3);
+
+      return {
+        params: { id: event.id },
+        props: {
+          event,
+          relatedEvents,
+        },
+      };
+    }),
   );
 }
 
-const { event } = Astro.props;
+const { event, relatedEvents } = Astro.props;
 
 const partners = await getEntries(event.data.partners ?? []);
 const speakers = await getEntries(event.data._computed.speakers ?? []);
@@ -65,7 +80,6 @@ const coOrganizers = (await getEntries(event.data.coOrganizers ?? [])).filter(
 const sponsors = await getEntries(
   (event.data.sponsors ?? []).map((s) => s.slug),
 );
-
 const navItems = await getEventNavItems(event.id);
 
 const { Content } = await render(event);
@@ -677,6 +691,8 @@ const ctaEventMetadata = {
       </div>
     </a>
   </div>
+
+  <RelatedEvents currentEvent={event} relatedEvents={relatedEvents} />
 
   <div class="py-8 md:py-12">
     <JoinTheCommunity />
