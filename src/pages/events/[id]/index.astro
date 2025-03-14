@@ -37,29 +37,45 @@ import { FAQ } from "@/components/Faq";
 import { EventMessage } from "@/components/EventMessage";
 import dayjs from "dayjs";
 import TiltedCard from "@/components/TiltedCard";
+import RelatedEvents from "@/components/RelatedEvents/index.astro";
 
 export async function getStaticPaths() {
-  const events = await getEventsCollection();
+  const allEvents = await getEventsCollection();
 
   return Promise.all(
-    events.map(async (event) => ({
-      params: { id: event.id },
-      props: {
-        event,
-        subPages: await getEventSubPagesCollection(event),
-        speakers: await getEntries(event.data.speakers ?? []),
-        coOrganizers: await getEntries(event.data.coOrganizers ?? []),
-        sponsors: await getEntries(
-          (event.data.sponsors ?? []).map((s) => s.slug),
-        ),
-        partners: await getEntries(event.data.partners ?? []),
-      },
-    })),
+    allEvents.map(async (event) => {
+      const relatedEvents = allEvents
+        .filter(
+          (e) =>
+            e.id !== event.id &&
+            e.data.city === event.data.city &&
+            (dayjs(e.data.date).isAfter(dayjs()) ||
+              dayjs(e.data.date).isAfter(dayjs().subtract(30, "day"))),
+        )
+        .sort((a, b) => dayjs(a.data.date).diff(dayjs(b.data.date)))
+        .slice(0, 3);
+
+      return {
+        params: { id: event.id },
+        props: {
+          event,
+          relatedEvents,
+          subPages: await getEventSubPagesCollection(event),
+          speakers: await getEntries(event.data.speakers ?? []),
+          coOrganizers: await getEntries(event.data.coOrganizers ?? []),
+          sponsors: await getEntries(
+            (event.data.sponsors ?? []).map((s) => s.slug),
+          ),
+          partners: await getEntries(event.data.partners ?? []),
+        },
+      };
+    }),
   );
 }
 
 const {
   event,
+  relatedEvents,
   speakers,
   coOrganizers: _coOrganizers,
   sponsors,
@@ -631,6 +647,8 @@ const ctaEventMetadata = {
       </div>
     </a>
   </div>
+
+  <RelatedEvents currentEvent={event} relatedEvents={relatedEvents} />
 
   <div class="py-8 md:py-12">
     <JoinTheCommunity />
