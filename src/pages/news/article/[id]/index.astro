@@ -17,6 +17,7 @@ import { loadRenderers } from "astro:container";
 import { getContainerRenderer as mdxContainerRenderer } from "@astrojs/mdx";
 import dayjs from "dayjs";
 import { getEntry } from "astro:content";
+import { SocialShareButton } from "@/components/SocialShareButton";
 
 export async function getStaticPaths() {
   const news = await getNewsCollection();
@@ -90,7 +91,15 @@ const authors = await Promise.all(
         "max-w-screen-lg px-4 pb-4 sm:px-8 md:px-6 md:py-4",
     )}
   >
-    <BackButton client:load href="/news" contextLabel="Fork It! News" />
+    <div class="flex items-center justify-between">
+      <BackButton client:load href="/news" contextLabel="Fork It! News" />
+      <SocialShareButton
+        client:load
+        pageUrl={url.toString()}
+        title={article.data.title}
+        message={`Check out this article: ${article.data.title}`}
+      />
+    </div>
   </div>
 
   {
