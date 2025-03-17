@@ -31,12 +31,14 @@ export default async function ({
         await getAstroImageBase64(coOrganiser.data.logos.noBgSquare),
     ),
   );
-  const speakersImages = await Promise.all(
-    talk.__speakers.map(
-      async (speaker) =>
-        await getAstroImageBase64(speaker.data.avatar ?? peoplePlaceholder),
-    ),
-  );
+  const speakersImages = (
+    await Promise.all(
+      talk.__speakers.map(
+        async (speaker) =>
+          await getAstroImageBase64(speaker.data.avatar ?? peoplePlaceholder),
+      ),
+    )
+  ).slice(0, 4);
   return (
     <Frame {...config} style={{ padding: 96 }}>
       <BgImage src={postCover} width={config.width} height={config.height} />
@@ -169,28 +171,21 @@ export default async function ({
               display: "flex",
               flex: "none",
               gap: 20,
-              width: 512,
-              height: 512,
-              top: speakersImages.length > 1 ? -40 : 0,
-              left: speakersImages.length > 1 ? -40 : 0,
-              transform: `scale(${0.1 * speakersImages.length + 1}`,
+              justifyContent: "flex-end",
+              flexWrap: "wrap",
+              maxWidth: "50%",
             }}
           >
             {speakersImages.map((imgSrc, index) => {
-              const size =
-                speakersImages.length > 1
-                  ? 1024 / (speakersImages.length * 1.5)
-                  : 512;
+              const size = speakersImages.length > 1 ? 360 : 512;
               return (
                 <img
+                  key={index}
                   src={imgSrc}
                   style={{
-                    position: "absolute",
-                    top: (400 / speakersImages.length) * index,
-                    left: (400 / speakersImages.length) * index,
                     width: size,
                     height: size,
-                    borderRadius: 20,
+                    borderRadius: 8,
                     boxShadow: "0 10px 20px rgba(0,0,0,0.4)",
                   }}
                 />

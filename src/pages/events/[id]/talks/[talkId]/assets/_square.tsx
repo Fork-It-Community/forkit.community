@@ -31,12 +31,14 @@ export default async function ({
         await getAstroImageBase64(coOrganiser.data.logos.noBgSquare),
     ),
   );
-  const speakersImages = await Promise.all(
-    talk.__speakers.map(
-      async (speaker) =>
-        await getAstroImageBase64(speaker.data.avatar ?? peoplePlaceholder),
-    ),
-  );
+  const speakersImages = (
+    await Promise.all(
+      talk.__speakers.map(
+        async (speaker) =>
+          await getAstroImageBase64(speaker.data.avatar ?? peoplePlaceholder),
+      ),
+    )
+  ).slice(0, 4);
   return (
     <Frame {...config} style={{ padding: 96 }}>
       <BgImage src={postCover} width={config.width} height={config.height} />
@@ -82,31 +84,40 @@ export default async function ({
             {talk.data.title}
           </div>
 
-          <div style={{ display: "flex", gap: 48 }}>
-            {speakersImages.length === 1 && (
-              <div
-                style={{
-                  position: "relative",
-                  display: "flex",
-                  flex: "none",
-                  gap: 20,
-                }}
-              >
-                {speakersImages.map((imgSrc) => {
-                  return (
-                    <img
-                      src={imgSrc}
-                      style={{
-                        width: 256,
-                        height: 256,
-                        borderRadius: 8,
-                        boxShadow: "0 10px 20px rgba(0,0,0,0.4)",
-                      }}
-                    />
-                  );
-                })}
-              </div>
-            )}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: 48,
+            }}
+          >
+            <div
+              style={{
+                position: "relative",
+                display: "flex",
+                flex: "none",
+                gap: 12,
+                flexWrap: "wrap",
+                maxWidth: "50%",
+              }}
+            >
+              {speakersImages.map((imgSrc, index) => {
+                const size = speakersImages.length > 1 ? 192 : 256;
+                return (
+                  <img
+                    key={index}
+                    src={imgSrc}
+                    style={{
+                      width: size,
+                      height: size,
+                      borderRadius: 8,
+                      boxShadow: "0 10px 20px rgba(0,0,0,0.4)",
+                    }}
+                  />
+                );
+              })}
+            </div>
             <div
               style={{
                 display: "flex",
