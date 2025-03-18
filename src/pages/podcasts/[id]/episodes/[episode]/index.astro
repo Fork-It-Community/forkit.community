@@ -19,6 +19,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { IoLanguageSharp } from "react-icons/io5";
 import { lang } from "@/lib/lang";
 import Prose from "@/components/Prose/index.astro";
+import { SocialShareButton } from "@/components/SocialShareButton";
 
 export async function getStaticPaths() {
   const episodes = await getPodcastsEpisodesCollection();
@@ -73,6 +74,8 @@ if (acastUrl) {
     acastEmbedId = `${acastMatch[1]}/${acastMatch[2]}`;
   }
 }
+
+const url = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <MainLayout>
@@ -122,7 +125,19 @@ if (acastUrl) {
 
   <ImageBackgroundHero src={bg} alt="" className="h-[80vh] opacity-80" />
   <div class="mx-auto w-full max-w-screen-lg px-4 pb-4 pt-8">
-    <BackButton client:load href="/podcasts" contextLabel="Fork It! Podcast" />
+    <div class="flex items-center justify-between">
+      <BackButton
+        client:load
+        href="/podcasts"
+        contextLabel="Fork It! Podcast"
+      />
+      <SocialShareButton
+        client:load
+        pageUrl={url.toString()}
+        title={episode.data.title}
+        message={`Listen to this podcast episode: ${episode.data.title}`}
+      />
+    </div>
   </div>
 
   <div class="mx-auto w-full max-w-screen-lg p-4 md:py-8">
