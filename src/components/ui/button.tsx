@@ -11,9 +11,9 @@ const buttonVariants = cva(
       variant: {
         default:
           "bg-primary text-primary-foreground hover:bg-accent hover:text-accent-foreground",
-        secondary: "bg-white/5 text-white backdrop-blur-md hover:bg-white/10",
+        secondary: "bg-white/5 text-white hover:bg-white/10",
         "secondary-dark":
-          "bg-black/40 backdrop-blur-md text-white/80 hover:bg-black hover:text-foreground",
+          "bg-black/40 text-white/80 hover:bg-black hover:text-foreground",
         link: "text-primary text-sm underline-offset-4 p-0 hover:underline",
         "link-neutral":
           "text-white text-sm underline-offset-4 p-0 hover:underline",
