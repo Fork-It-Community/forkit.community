@@ -12,9 +12,9 @@ interface Props {
 }
 const { newsItem } = Astro.props;
 
-const authors = (await getEntries(newsItem.data.authors ?? []))
-  .filter((p) => !!p)
-  .sort((a, b) => a.data.name.localeCompare(b.data.name));
+const authors = (await getEntries(newsItem.data.authors ?? [])).filter(
+  (p) => !!p,
+);
 ---
 
 <div
