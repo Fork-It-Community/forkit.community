@@ -18,6 +18,11 @@ export const zTalk = () =>
       .array(reference("people"))
       .optional()
       .describe("Hosts of the round table"),
-    vod: z.string().url().optional(),
+    vod: z
+      .object({
+        type: z.enum(["youtube"]),
+        youtubeId: z.string(),
+      })
+      .optional(),
     contentLanguage: zLanguage().optional().default("english"),
   });
