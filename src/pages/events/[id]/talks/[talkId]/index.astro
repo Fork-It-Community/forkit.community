@@ -190,15 +190,14 @@ const endDate =
           </div>
         </div>
         {
-          talk.data.vod && (
+          talk.data.vod && talk.data.vod.type === "youtube" && (
             <iframe
-              height="300"
-              src={talk.data.vod}
+              src={`https://www.youtube.com/embed/${talk.data.vod.youtubeId}`}
               title={talk.data.title}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerpolicy="strict-origin-when-cross-origin"
               allowfullscreen
-              class="mx-auto w-full pt-6"
+              class="mx-auto mt-6 aspect-video w-full overflow-hidden rounded-md"
             />
           )
         }
