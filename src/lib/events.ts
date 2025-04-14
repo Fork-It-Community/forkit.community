@@ -196,7 +196,8 @@ export function shouldShowProspectus(
 
   return !!(
     event.data.prospectus &&
-    dayjs(event.data.prospectus.endDate).endOf("day").isAfter(dayjs())
+    dayjs(event.data.prospectus.endDate).endOf("day").isAfter(dayjs()) &&
+    dayjs(event.data.date).startOf("day").isAfter(dayjs())
   );
 }
 
