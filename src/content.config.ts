@@ -7,6 +7,8 @@ import { zPartner } from "@/schemas/partners";
 import { zTalk } from "@/schemas/talks";
 import { zEventSubPage } from "@/schemas/eventsSubPages";
 import { zEpisode, zPodcast } from "@/schemas/podcasts";
+import { zForKidsEvent } from "./schemas/forKidsEvent";
+import { zForKidsWorkshop } from "./schemas/forKidsWorkshop";
 
 export const collections = {
   partners: defineCollection({
@@ -52,5 +54,19 @@ export const collections = {
       base: "./src/content/podcasts",
     }),
     schema: zEpisode,
+  }),
+  forKidsEvent: defineCollection({
+    loader: glob({
+      pattern: ["**/*.mdx"],
+      base: "./src/content/forKidsEvents",
+    }),
+    schema: zForKidsEvent,
+  }),
+  forKidsWorkshop: defineCollection({
+    loader: glob({
+      pattern: "**/*.mdx",
+      base: "./src/content/forKidsWorkshops",
+    }),
+    schema: zForKidsWorkshop,
   }),
 };
