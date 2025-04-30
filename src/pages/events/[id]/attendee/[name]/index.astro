@@ -4,7 +4,7 @@ import { Image } from "astro:assets";
 import { getEntry } from "astro:content";
 import SEO from "@/components/SEO/index.astro";
 import TiltedCard from "@/components/TiltedCard";
-import { ShareTicketButton } from "@/components/ShareTicketButton";
+import { ShareButton } from "@/components/ShareButton";
 import { MdArrowOutward } from "react-icons/md";
 import { cn } from "@/lib/utils-client";
 import { buttonVariants } from "@/components/ui/button";
@@ -61,15 +61,18 @@ const ticketImage = new URL(Astro.url.pathname + "/ticket.svg", Astro.site);
           </h1>
         </div>
         <div class="flex gap-4 max-sm:hidden">
-          <ShareTicketButton
+          <ShareButton
             client:load
             pageUrl={pageUrl.toString()}
             message={shareMessage}
             downloadName={downloadName}
             className="flex-1"
+            actions={["bluesky", "x", "facebook", "copy", "download"]}
+            title="Share this ticket"
+            description="Share your attendance on social networks"
           >
             Share
-          </ShareTicketButton>
+          </ShareButton>
           <a
             href={`/events/${event.id}`}
             class={cn(buttonVariants(), "group gap-2 flex-1")}
@@ -96,15 +99,18 @@ const ticketImage = new URL(Astro.url.pathname + "/ticket.svg", Astro.site);
         </TiltedCard>
       </div>
       <div class="flex w-full gap-4 sm:hidden">
-        <ShareTicketButton
+        <ShareButton
           client:load
           pageUrl={pageUrl.toString()}
           message={shareMessage}
           downloadName={downloadName}
           className="flex-1"
+          actions={["bluesky", "x", "facebook", "copy", "download"]}
+          title="Share this ticket"
+          description="Share your attendance on social networks"
         >
           Share
-        </ShareTicketButton>
+        </ShareButton>
         <a
           href={`/events/${event.id}`}
           class={cn(buttonVariants(), "group gap-2 flex-1")}
