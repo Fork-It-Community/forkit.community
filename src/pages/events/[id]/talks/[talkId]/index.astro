@@ -140,24 +140,26 @@ const endDate =
   <div class="mx-auto max-w-screen-sm p-4 md:p-8">
     <div class="flex justify-between">
       <BackButton href={`/events/${event.id}`} client:load />
-      {
-        event.data.status !== "cancelled" &&
-          talk.data.feedback &&
-          !dayjs().isBefore(event.data.date) && (
-            <a
-              href={talk.data.feedback.link}
-              target="_blank"
-              rel="noreferrer"
-              class={cn(
-                buttonVariants({ variant: "default", size: "xs" }),
-                "flex flex-row gap-2 no-underline",
-              )}
-            >
-              <span>Give feedback</span>
-              <MdArrowOutward className="text-base" />
-            </a>
-          )
-      }
+      <div class="flex gap-2">
+        {
+          event.data.status !== "cancelled" &&
+            talk.data.feedback &&
+            !dayjs().isBefore(event.data.date) && (
+              <a
+                href={talk.data.feedback.link}
+                target="_blank"
+                rel="noreferrer"
+                class={cn(
+                  buttonVariants({ variant: "default", size: "xs" }),
+                  "flex flex-row gap-2 no-underline",
+                )}
+              >
+                <span>Give feedback</span>
+                <MdArrowOutward className="text-base" />
+              </a>
+            )
+        }
+      </div>
     </div>
     <main class="flex flex-col items-center gap-14">
       <Prose>

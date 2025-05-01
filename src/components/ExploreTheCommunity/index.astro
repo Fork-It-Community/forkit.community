@@ -1,0 +1,83 @@
+---
+import { Logo } from "@/components/Logo";
+import { LogoIcon } from "@/components/LogoIcon";
+import { ShareButton } from "@/components/ShareButton";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils-client";
+import dayjs from "dayjs";
+import { LuShare2 } from "react-icons/lu";
+import { MdArrowOutward } from "react-icons/md";
+
+interface Props {
+  logoUrl: string;
+  eventCity?: string;
+  eventCountry?: string;
+  eventDate?: Date;
+  pageUrl?: string;
+}
+
+const props = Astro.props;
+
+const shareMessage = `Join me for a new Fork it! Event on ${dayjs(props.eventDate).format("MMMM DD, YYYY")} in ${props.eventCity}, ${props.eventCountry}!`;
+---
+
+<div
+  class="bg-background-blur relative z-10 mx-auto flex h-12 max-w-screen-lg items-center justify-between rounded-md"
+>
+  <a
+    href={props.logoUrl}
+    class="group flex min-w-0 flex-1 items-center gap-3 pe-2 ps-5 text-sm tracking-wide"
+  >
+    {
+      props.eventCity ? (
+        <>
+          <LogoIcon className="w-[18px] text-primary" />
+          <span class="line-clamp-1 flex gap-0 font-heading text-xs font-medium uppercase leading-none opacity-60 group-hover:opacity-100 max-sm:flex-col sm:gap-1">
+            <span>
+              {props.eventCity}
+              <span class="max-sm:hidden">,</span>{" "}
+            </span>
+            <span class="max-sm:text-2xs">
+              {props.eventCountry}, {props.eventDate?.getFullYear()}
+            </span>
+          </span>
+        </>
+      ) : (
+        <Logo className="h-3" />
+      )
+    }
+  </a>
+
+  <div class="flex items-center justify-center gap-2 pe-3">
+    {
+      props.pageUrl && (
+        <ShareButton
+          client:load
+          actions={["bluesky", "x", "facebook", "linkedin", "copy"]}
+          pageUrl={props.pageUrl}
+          title="Share this event"
+          message={shareMessage}
+          className={buttonVariants({
+            variant: "secondary-dark",
+            size: "xs",
+          })}
+        >
+          <LuShare2 />
+          <span class="sr-only sm:not-sr-only">Share</span>
+        </ShareButton>
+      )
+    }
+    <a
+      href="/"
+      class={cn(
+        "group flex gap-1",
+        buttonVariants({ variant: "secondary-dark", size: "xs" }),
+      )}
+    >
+      <span class="sr-only sm:not-sr-only">Community</span> Hub
+      <MdArrowOutward
+        className="text-lg transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+      />
+    </a>
+  </div>
+</div>
