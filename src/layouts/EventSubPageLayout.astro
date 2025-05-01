@@ -1,5 +1,5 @@
 ---
-import { ExploreTheCommunity } from "@/components/ExploreTheCommunity";
+import ExploreTheCommunity from "@/components/ExploreTheCommunity/index.astro";
 import RootLayout from "@/layouts/RootLayout.astro";
 import type { CollectionEntry } from "astro:content";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
@@ -31,6 +31,7 @@ const { event } = Astro.props;
       eventCountry={event.data.country}
       eventDate={event.data.date}
       logoUrl={`/events/${event.id}`}
+      pageUrl={new URL(Astro.url.pathname, Astro.site).toString()}
     />
   </div>
   <div class="flex flex-1 flex-col">

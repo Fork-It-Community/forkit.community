@@ -16,7 +16,6 @@ import { MdArrowOutward, MdPlace } from "react-icons/md";
 import type { Place } from "schema-dts";
 import Prose from "@/components/Prose/index.astro";
 import Sponsors from "@/components/Sponsors/index.astro";
-import { SocialShareButton } from "@/components/SocialShareButton";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -89,8 +88,6 @@ const endDate =
         .add(schedule?.duration, "minutes")
         .toISOString()
     : "";
-
-const shareMessage = `Check out this talk: "${talk.data.title}" at ${event.data.name} in ${event.data.city}, ${event.data.country}`;
 ---
 
 <EventSubPageLayout event={event}>
@@ -144,14 +141,6 @@ const shareMessage = `Check out this talk: "${talk.data.title}" at ${event.data.
     <div class="flex justify-between">
       <BackButton href={`/events/${event.id}`} client:load />
       <div class="flex gap-2">
-        <SocialShareButton
-          client:load
-          pageUrl={url.toString()}
-          title={title}
-          message={shareMessage}
-          variant="secondary"
-          size="xs"
-        />
         {
           event.data.status !== "cancelled" &&
             talk.data.feedback &&

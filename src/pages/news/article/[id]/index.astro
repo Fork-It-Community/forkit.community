@@ -17,7 +17,9 @@ import { loadRenderers } from "astro:container";
 import { getContainerRenderer as mdxContainerRenderer } from "@astrojs/mdx";
 import dayjs from "dayjs";
 import { getEntry } from "astro:content";
-import { SocialShareButton } from "@/components/SocialShareButton";
+import { ShareButton } from "@/components/ShareButton";
+import { buttonVariants } from "@/components/ui/button";
+import { LuShare2 } from "react-icons/lu";
 
 export async function getStaticPaths() {
   const news = await getNewsCollection();
@@ -93,12 +95,17 @@ const authors = await Promise.all(
   >
     <div class="flex items-center justify-between">
       <BackButton client:load href="/news" contextLabel="Fork It! News" />
-      <SocialShareButton
+      <ShareButton
         client:load
+        actions={["bluesky", "x", "facebook", "linkedin", "copy"]}
+        className={buttonVariants({ variant: "secondary-dark", size: "xs" })}
         pageUrl={url.toString()}
-        title={article.data.title}
-        message={`Check out this article: ${article.data.title}`}
-      />
+        title="Share this article"
+        message={`Checkout this article ${article.data.title} by Fork it!`}
+      >
+        <LuShare2 />
+        <span class="sr-only sm:not-sr-only">Share</span>
+      </ShareButton>
     </div>
   </div>
 

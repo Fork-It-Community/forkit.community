@@ -19,7 +19,8 @@ import { buttonVariants } from "@/components/ui/button";
 import { IoLanguageSharp } from "react-icons/io5";
 import { lang } from "@/lib/lang";
 import Prose from "@/components/Prose/index.astro";
-import { SocialShareButton } from "@/components/SocialShareButton";
+import { ShareButton } from "@/components/ShareButton";
+import { LuShare2 } from "react-icons/lu";
 
 export async function getStaticPaths() {
   const episodes = await getPodcastsEpisodesCollection();
@@ -131,12 +132,17 @@ const url = new URL(Astro.url.pathname, Astro.site);
         href="/podcasts"
         contextLabel="Fork It! Podcast"
       />
-      <SocialShareButton
+      <ShareButton
         client:load
+        actions={["bluesky", "x", "facebook", "linkedin", "copy"]}
         pageUrl={url.toString()}
         title={episode.data.title}
         message={`Listen to this podcast episode: ${episode.data.title}`}
-      />
+        className={buttonVariants({ variant: "secondary-dark", size: "xs" })}
+      >
+        <LuShare2 />
+        <span class="sr-only sm:not-sr-only">Share</span>
+      </ShareButton>
     </div>
   </div>
 
