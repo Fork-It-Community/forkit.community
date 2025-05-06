@@ -25,4 +25,5 @@ export const zTalk = () =>
       })
       .optional(),
     contentLanguage: zLanguage().optional().default("english"),
+    event: reference("events").optional(),
   });
