@@ -219,7 +219,13 @@ export async function getEventNavItems(id: string) {
           },
         ]
       : []),
-    ...(event.data.faq?.length ? [{ href: `${route}#faq`, label: "FAQ" }] : []),
+    {
+      href: `/events/${event.id}/sponsors`,
+      label: "All Sponsors",
+    },
+    ...(event.data.faq?.length
+      ? [{ href: `/events/${event.id}#faq`, label: "FAQ" }]
+      : []),
   ];
 }
 
