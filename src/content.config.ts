@@ -74,14 +74,14 @@ export const collections = {
   forKidsEvent: defineCollection({
     loader: glob({
       pattern: ["**/*.mdx"],
-      base: "./src/content/forKidsEvents",
+      base: "./src/content/for-kids-events",
     }),
     schema: zForKidsEvent,
   }),
   forKidsWorkshop: defineCollection({
     loader: glob({
       pattern: "**/*.mdx",
-      base: "./src/content/forKidsWorkshops",
+      base: "./src/content/for-kids-workshops",
     }),
     schema: zForKidsWorkshop,
   }),
