@@ -219,10 +219,6 @@ export async function getEventNavItems(id: string) {
           },
         ]
       : []),
-    {
-      href: `/events/${event.id}/sponsors`,
-      label: "All Sponsors",
-    },
     ...(event.data.faq?.length
       ? [{ href: `/events/${event.id}#faq`, label: "FAQ" }]
       : []),
