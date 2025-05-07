@@ -218,10 +218,10 @@ const ctaEventMetadata = {
         {
           navItems.map((item) => (
             <a
-              href={item.href}
+              href={item?.href}
               class="flex p-2 text-sm underline decoration-foreground/40 underline-offset-4 opacity-60 hover:text-primary hover:decoration-current hover:opacity-100 md:text-base"
             >
-              {item.label}
+              {item?.label}
             </a>
           ))
         }
