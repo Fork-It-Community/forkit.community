@@ -4,7 +4,7 @@ import { zAgeRange } from "./utils";
 export const zForKidsWorkshop = ({ image }: SchemaContext) =>
   z.object({
     title: z.string(),
-    ageRange: zAgeRange,
+    ageRange: zAgeRange(),
     image: z.object({
       media: image(),
       alt: z.string(),
