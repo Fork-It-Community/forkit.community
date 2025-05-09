@@ -1,0 +1,122 @@
+---
+import { BackButton } from "@/components/BackButton";
+import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
+import { getEventsCollection } from "@/lib/events";
+import { getEntries } from "astro:content";
+import { SEO } from "astro-seo";
+import Sponsors from "@/components/Sponsors/index.astro";
+import TiltedCard from "@/components/TiltedCard";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils-client";
+import dayjs from "dayjs";
+
+export async function getStaticPaths() {
+  const events = await getEventsCollection();
+
+  return Promise.all(
+    events.map(async (event) => ({
+      params: { id: event.id },
+      props: {
+        event,
+      },
+    })),
+  );
+}
+
+const { event } = Astro.props;
+
+const sponsors = await getEntries(
+  (event.data.sponsors ?? []).map((s) => s.slug),
+);
+
+const subject = encodeURIComponent(
+  `Join us as a sponsor for ${event.data.name}`,
+);
+const mailtoLink = `mailto:contact@forkit.community?subject=${subject}`;
+
+const canBeSponsor = dayjs().isBefore(event.data.date);
+
+const title = `Sponsors`;
+const description = `Listing all sponsors of Fork IT Community`;
+---
+
+<EventSubPageLayout event={event}>
+  <SEO slot="seo" title={title} description={description} />
+  <div class="mx-auto w-full max-w-screen-sm space-y-8 p-4 md:p-8">
+    <BackButton href={`/events/${event.id}`} client:load />
+
+    <main class="space-y-2">
+      <h2
+        class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+      >
+        Sponsors for {event.data.name}
+      </h2>
+
+      {
+        sponsors.length > 0 && (
+          <div class="relative mx-auto flex w-full max-w-screen-lg flex-col gap-12 px-4 py-12 md:py-24">
+            <Sponsors event={event} sponsors={sponsors} />
+          </div>
+        )
+      }
+
+      {
+        sponsors.length === 0 && (
+          <div class="flex flex-col gap-8 py-12">
+            <div class="relative flex w-full flex-col gap-6 px-4">
+              <TiltedCard
+                client:visible
+                className="mx-auto w-full max-w-screen-sm"
+              >
+                <div class="flex w-full flex-1 flex-col max-sm:text-center">
+                  <p class="text-balance text-xs tracking-wider opacity-60">
+                    The event has no sponsors.
+                  </p>
+                </div>
+              </TiltedCard>
+            </div>
+          </div>
+        )
+      }
+
+      {
+        canBeSponsor && (
+          <div class="flex flex-col gap-8 py-12">
+            <div class="relative flex w-full flex-col gap-6 px-4">
+              <TiltedCard
+                client:visible
+                className="mx-auto w-full max-w-screen-sm"
+              >
+                <a
+                  href={mailtoLink}
+                  target="_blank"
+                  rel="noreferer"
+                  class="group flex w-full flex-col items-start gap-4 rounded-lg bg-white/5 p-6 backdrop-blur-md transition hover:bg-white/10 sm:flex-row md:items-center md:px-8 md:py-6"
+                >
+                  <div class="flex w-full flex-1 flex-col max-sm:text-center">
+                    <h2 class="text-balance font-heading text-base font-medium uppercase tracking-widest transition group-hover:text-primary">
+                      Fork it! Sponsors
+                    </h2>
+                    <p class="text-balance text-xs tracking-wider opacity-60">
+                      We invite you to join us as an official sponsor of{" "}
+                      {event.data.name}
+                    </p>
+                  </div>
+
+                  <div
+                    class={cn(
+                      buttonVariants({ size: "lg", variant: "secondary" }),
+                      "max-sm:w-full",
+                    )}
+                  >
+                    Participate
+                  </div>
+                </a>
+              </TiltedCard>
+            </div>
+          </div>
+        )
+      }
+    </main>
+  </div>
+</EventSubPageLayout>
