@@ -6,13 +6,13 @@ import { IoLanguageSharp } from "react-icons/io5";
 import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import { SEO } from "astro-seo";
 import TiltedCard from "@/components/TiltedCard";
-
+import { groupBy } from "remeda";
 const events = await getCollection("events");
 const eventsById = Object.fromEntries(events.map((event) => [event.id, event]));
 
 const talks = await getCollection("talks");
 const filteredTalks = talks.filter((talk) => talk.data.vod && talk.data.event);
-const groupedTalks = Object.groupBy(
+const groupedTalks = groupBy(
   filteredTalks,
   (talk) => talk.data.event?.id ?? "noNameEvent",
 );
