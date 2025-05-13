@@ -12,15 +12,12 @@ import dayjs from "dayjs";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
-
-  return Promise.all(
-    events.map(async (event) => ({
-      params: { id: event.id },
-      props: {
-        event,
-      },
-    })),
-  );
+  return events.map((event) => ({
+    params: { id: event.id },
+    props: {
+      event,
+    },
+  }));
 }
 
 const { event } = Astro.props;
@@ -37,7 +34,7 @@ const mailtoLink = `mailto:contact@forkit.community?subject=${subject}`;
 const canBeSponsor = dayjs().isBefore(event.data.date);
 
 const title = `Sponsors`;
-const description = `Listing all sponsors of Fork IT Community`;
+const description = `Listing all sponsors of the event`;
 ---
 
 <EventSubPageLayout event={event}>
@@ -98,8 +95,7 @@ const description = `Listing all sponsors of Fork IT Community`;
                       Fork it! Sponsors
                     </h2>
                     <p class="text-balance text-xs tracking-wider opacity-60">
-                      We invite you to join us as an official sponsor of{" "}
-                      {event.data.name}
+                      Support the community and make your company shine
                     </p>
                   </div>
 
@@ -109,7 +105,7 @@ const description = `Listing all sponsors of Fork IT Community`;
                       "max-sm:w-full",
                     )}
                   >
-                    Participate
+                    Join us
                   </div>
                 </a>
               </TiltedCard>
