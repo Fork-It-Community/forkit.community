@@ -32,8 +32,7 @@ const subject = encodeURIComponent(
 const mailtoLink = `mailto:contact@forkit.community?subject=${subject}`;
 
 const canBeSponsor = dayjs().isBefore(event.data.date);
-const isDisplayableCard =
-  canBeSponsor || (!canBeSponsor && sponsors.length == 0);
+const isDisplayableCard = canBeSponsor || sponsors.length == 0;
 
 const title = `Sponsors`;
 const description = `Listing all sponsors of the event`;
