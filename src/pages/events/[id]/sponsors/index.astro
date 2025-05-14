@@ -32,6 +32,8 @@ const subject = encodeURIComponent(
 const mailtoLink = `mailto:contact@forkit.community?subject=${subject}`;
 
 const canBeSponsor = dayjs().isBefore(event.data.date);
+const isDisplayableCard =
+  canBeSponsor || (!canBeSponsor && sponsors.length == 0);
 
 const title = `Sponsors`;
 const description = `Listing all sponsors of the event`;
@@ -58,37 +60,46 @@ const description = `Listing all sponsors of the event`;
       }
 
       {
-        canBeSponsor && (
+        isDisplayableCard && (
           <div class="flex flex-col gap-8 py-12">
             <div class="relative flex w-full flex-col gap-6 px-4">
               <TiltedCard
                 client:visible
                 className="mx-auto w-full max-w-screen-sm"
               >
-                <a
-                  href={mailtoLink}
-                  target="_blank"
-                  rel="noreferer"
-                  class="group flex w-full flex-col items-start gap-4 rounded-lg bg-white/5 p-6 backdrop-blur-md transition hover:bg-white/10 sm:flex-row md:items-center md:px-8 md:py-6"
-                >
+                {!canBeSponsor && sponsors.length == 0 && (
                   <div class="flex w-full flex-1 flex-col max-sm:text-center">
-                    <h2 class="text-balance font-heading text-base font-medium uppercase tracking-widest transition group-hover:text-primary">
-                      Fork it! Sponsors
-                    </h2>
                     <p class="text-balance text-xs tracking-wider opacity-60">
-                      Support the community and make your company shine
+                      The event has no sponsors.
                     </p>
                   </div>
-
-                  <div
-                    class={cn(
-                      buttonVariants({ size: "lg", variant: "secondary" }),
-                      "max-sm:w-full",
-                    )}
+                )}
+                {canBeSponsor && (
+                  <a
+                    href={mailtoLink}
+                    target="_blank"
+                    rel="noreferer"
+                    class="group flex w-full flex-col items-start gap-4 rounded-lg bg-white/5 p-6 backdrop-blur-md transition hover:bg-white/10 sm:flex-row md:items-center md:px-8 md:py-6"
                   >
-                    Join us
-                  </div>
-                </a>
+                    <div class="flex w-full flex-1 flex-col max-sm:text-center">
+                      <h2 class="text-balance font-heading text-base font-medium uppercase tracking-widest transition group-hover:text-primary">
+                        Fork it! Sponsors
+                      </h2>
+                      <p class="text-balance text-xs tracking-wider opacity-60">
+                        Support the community and make your company shine
+                      </p>
+                    </div>
+
+                    <div
+                      class={cn(
+                        buttonVariants({ size: "lg", variant: "secondary" }),
+                        "max-sm:w-full",
+                      )}
+                    >
+                      Join us
+                    </div>
+                  </a>
+                )}
               </TiltedCard>
             </div>
           </div>

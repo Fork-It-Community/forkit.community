@@ -64,8 +64,6 @@ const sponsors = await getEntries(
   (event.data.sponsors ?? []).map((s) => s.slug),
 );
 const isUpcomingEvent: boolean = dayjs(event.data.date).isAfter(dayjs());
-const isSponsorsDisplayable: boolean =
-  isUpcomingEvent || (!isUpcomingEvent && !!event.data.sponsors);
 
 const navItems = await getEventNavItems(event.id);
 
@@ -256,18 +254,16 @@ const ctaEventMetadata = {
               "md:justify-start",
             )}
           >
-            {isSponsorsDisplayable && (
-              <a
-                href={`/events/${event.id}/sponsors`}
-                class={cn(
-                  buttonVariants({ size: "lg" }),
-                  "sm:max-w-50 group gap-2 md:flex-1",
-                )}
-              >
-                {isUpcomingEvent ? "Join us as sponsors" : "Explore sponsors"}
-                <MdArrowForward className="transition group-hover:translate-x-1" />
-              </a>
-            )}
+            <a
+              href={`/events/${event.id}/sponsors`}
+              class={cn(
+                buttonVariants({ size: "lg" }),
+                "sm:max-w-50 group gap-2 md:flex-1",
+              )}
+            >
+              {isUpcomingEvent ? "Join us as sponsors" : "Explore sponsors"}
+              <MdArrowForward className="transition group-hover:translate-x-1" />
+            </a>
           </div>
         </div>
       </div>
