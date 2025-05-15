@@ -411,3 +411,49 @@ export function without<T extends CollectionEntry<"events">>(
 ) {
   return events.filter((event) => event.data.status !== status);
 }
+
+export async function getPastEventsWithVodTalks() {
+  const events = await getCollection(
+    "events",
+    (event) =>
+      event.data.eventStatus !== "EventCancelled" &&
+      dayjs(event.data.date).endOf("day").isBefore(dayjs()),
+  );
+  const talks = await getCollection("talks", (event) => event.data.vod);
+  const eventWithTalks = events.map((event) => {
+    const talksWithVods = event.data.schedule?.items
+      ?.filter(
+        (item) =>
+          item.type === "conference" &&
+          talks.some((talk) => talk.id === item.slug?.id),
+      )
+      .map((item) => item.slug?.id);
+    return {
+      event,
+      talks: talks.filter(
+        (talk) =>
+          talksWithVods?.includes(talk.id) &&
+          talk.data.vod?.event.id === event.id,
+      ),
+    };
+  });
+  return eventWithTalks.filter((event) => event.talks.length > 0);
+}
+
+export async function getRelatedTalks(talk: CollectionEntry<"talks">) {
+  const event = talk.data.vod?.event;
+  if (!event) {
+    return [];
+  }
+  return (
+    await getCollection(
+      "talks",
+      (_talk) =>
+        _talk.data.vod &&
+        _talk.data.vod.event.id === event.id &&
+        _talk.id !== talk.id,
+    )
+  )
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 2);
+}
