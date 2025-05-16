@@ -32,7 +32,7 @@ const subject = encodeURIComponent(
 const mailtoLink = `mailto:contact@forkit.community?subject=${subject}`;
 
 const canBeSponsor = dayjs().isBefore(event.data.date);
-const isDisplayableCard = canBeSponsor || sponsors.length == 0;
+const isDisplayableCard = canBeSponsor || sponsors.length === 0;
 
 const title = `Sponsors`;
 const description = `Listing all sponsors of the event`;
@@ -66,7 +66,7 @@ const description = `Listing all sponsors of the event`;
                 client:visible
                 className="mx-auto w-full max-w-screen-sm"
               >
-                {!canBeSponsor && sponsors.length == 0 && (
+                {!canBeSponsor && sponsors.length === 0 && (
                   <div class="flex w-full flex-1 flex-col max-sm:text-center">
                     <p class="text-balance text-xs tracking-wider opacity-60">
                       The event has no sponsors.
