@@ -9,3 +9,9 @@ export const zSocialTypes = z.enum([
   "bluesky",
   "facebook",
 ]);
+
+export const zAgeRange = () =>
+  z.object({
+    min: z.number().int().min(0),
+    max: z.number().int().min(0),
+  });
