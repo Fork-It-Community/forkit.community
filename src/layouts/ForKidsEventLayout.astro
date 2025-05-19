@@ -1,0 +1,68 @@
+---
+import { ForKidsEventNav } from "@/components/ForKidsEventNav";
+import ExploreTheCommunity from "@/components/ExploreTheCommunity/index.astro";
+import Footer from "@/components/Footer/index.astro";
+import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
+import SEO from "@/components/SEO/index.astro";
+import RootLayout from "@/layouts/RootLayout.astro";
+import { getForKidsEventNavItems } from "@/lib/forKidsEvent";
+import type { CollectionEntry } from "astro:content";
+import { motion } from "motion/react";
+
+interface Props {
+  forKidsEvent: CollectionEntry<"forKidsEvent">;
+  ogImage: URL;
+}
+
+const { forKidsEvent, ogImage } = Astro.props;
+const navItems = await getForKidsEventNavItems(forKidsEvent.id);
+
+const url = new URL(Astro.url.pathname, Astro.site);
+const title = `${forKidsEvent.data.name}, For Kids`;
+---
+
+<RootLayout>
+  <slot name="ld+json" slot="ld+json" />
+  <SEO
+    slot="seo"
+    title={title}
+    description={forKidsEvent.data.excerpt ?? ""}
+    url={url}
+    image={ogImage.toString()}
+  />
+  {
+    !!forKidsEvent?.data.image?.media && (
+      <motion.div
+        client:load
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <ImageBackgroundHero
+          src={forKidsEvent.data.image.media}
+          alt={forKidsEvent.data.image.alt}
+        />
+      </motion.div>
+    )
+  }
+  <div class="absolute inset-0 p-2">
+    <ExploreTheCommunity
+      eventCity={forKidsEvent.data.city}
+      eventCountry={forKidsEvent.data.country}
+      eventDate={forKidsEvent.data.date}
+      logoUrl={`/for-kids-events/${forKidsEvent.id}`}
+      pageUrl={new URL(Astro.url.pathname, Astro.site).toString()}
+    />
+  </div>
+  <ForKidsEventNav
+    forKidsEventId={forKidsEvent.id}
+    forKidsEventName={forKidsEvent.data.name}
+    forKidsEventTickets={forKidsEvent.data.tickets}
+    items={navItems}
+    client:load
+  />
+  <div class="flex flex-1 flex-col">
+    <slot />
+  </div>
+  <Footer />
+</RootLayout>
