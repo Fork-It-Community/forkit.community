@@ -19,6 +19,6 @@ export const zMediaImage = ({ image }: SchemaContext) =>
 
 export const zAgeRange = () =>
   z.object({
-    min: z.number().int().min(0),
-    max: z.number().int().min(0),
+    from: z.number().int().min(0),
+    to: z.number().int().min(0),
   });
