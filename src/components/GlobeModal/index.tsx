@@ -1,22 +1,20 @@
 import { useState } from "react";
 import GlobeComponent from "../Globe";
+import type { zLocation } from "@/schemas/locations";
 
-export default function GlobeModal() {
+export default function GlobeModal({ points }: { points: zLocation[] }) {
   const [isOpen, setIsOpen] = useState(false);
-
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
 
   return (
     <>
-      <button onClick={isOpen ? closeModal : openModal}>
+      <button onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? "Masquer le globe" : "Afficher le globe"}
       </button>
 
       {isOpen && (
-        <div className="modal-overlay" onClick={closeModal}>
+        <div className="modal-overlay" onClick={() => setIsOpen(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <GlobeComponent />
+            <GlobeComponent points={points} />
           </div>
         </div>
       )}

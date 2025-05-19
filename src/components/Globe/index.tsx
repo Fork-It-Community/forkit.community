@@ -1,17 +1,20 @@
+import type { zLocation } from "@/schemas/locations";
 import Globe from "react-globe.gl";
 
-function GlobeComponent() {
+/**
+ * @param {{ points: { lat: number; lng: number; size: number; color: string }[] }} props
+ */
+export default function GlobeComponent({ points }: { points: zLocation[] }) {
   return (
-    <div style={{ width: "100%", height: "500px" }}>
+    <div style={{ width: "100%", height: "600px" }}>
       <Globe
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
-        pointsData={[
-          { lat: 48.8566, lng: 2.3522, size: 0.1, color: "red" }, // Paris
-          { lat: 40.7128, lng: -74.006, size: 0.1, color: "blue" }, // New York
-        ]}
+        backgroundColor="#000"
+        labelText={String(points.length)}
+        pointsData={points}
+        pointAltitude="size"
+        pointColor="color"
       />
     </div>
   );
 }
-
-export default GlobeComponent;

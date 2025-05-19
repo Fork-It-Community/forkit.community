@@ -1,8 +1,17 @@
-import { getCollection } from "astro:content";
-import { isEventPublished } from "./events";
+import { getEventsCollection } from "./events";
 
 export async function getLocationsCollection() {
-  return await getCollection("events", ({ data }) =>
-    import.meta.env.PROD ? isEventPublished(data.status) : true,
-  );
+  const events = await getEventsCollection();
+
+  return events.map((e) => {
+    const latitude = e.data.location?.coordinates?.latitude ?? 0;
+    const longitude = e.data.location?.coordinates?.longitude ?? 0;
+
+    return {
+      lat: latitude,
+      lng: longitude,
+      size: 0.1,
+      color: "red",
+    };
+  });
 }

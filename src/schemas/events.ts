@@ -32,6 +32,10 @@ const zEventBase = ({ image }: SchemaContext) =>
         name: z.string().optional(),
         address: z.string(),
         image: image().optional(),
+        coordinates: z.object({
+          latitude: z.number(),
+          longitude: z.number(),
+        }),
       })
       .optional(),
     excerpt: z.string().optional(),

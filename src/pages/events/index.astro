@@ -9,9 +9,12 @@ import { cn } from "@/lib/utils-client";
 import { getSocialsItems } from "@/content/socials";
 import TiltedCard from "@/components/TiltedCard";
 import GlobeModal from "@/components/GlobeModal";
+import { getLocationsCollection } from "@/lib/locations";
+import type { zLocation } from "@/schemas/locations";
 
 const upcomingEvents = await getUpcomingEvents();
 const pastEvents = await getPastEvents();
+const locations: zLocation[] = await getLocationsCollection();
 ---
 
 <MainLayout>
@@ -26,7 +29,7 @@ const pastEvents = await getPastEvents();
     imageSrc={bgImage}
   />
 
-  <GlobeModal client:only="react" />
+  <GlobeModal client:only="react" points={locations} />
   <div class="flex flex-col gap-24 pb-40">
     {
       !!upcomingEvents.length && (
