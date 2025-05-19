@@ -1,0 +1,24 @@
+---
+import ForKidsEventLayout from "@/layouts/ForKidsEventLayout.astro";
+import { getForKidsEventsCollection } from "@/lib/forKidsEvent";
+
+export async function getStaticPaths() {
+  const forKidsEvents = await getForKidsEventsCollection();
+  return Promise.all(
+    forKidsEvents.map(async (forKidsEvent) => ({
+      params: { id: forKidsEvent.id },
+      props: {
+        forKidsEvent,
+      },
+    })),
+  );
+}
+const ogImage = new URL(
+  Astro.url.pathname + "/assets/og-image.jpg",
+  Astro.site,
+);
+
+const { forKidsEvent } = Astro.props;
+---
+
+<ForKidsEventLayout forKidsEvent={forKidsEvent} ogImage={ogImage} />
