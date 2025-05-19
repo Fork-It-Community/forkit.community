@@ -8,6 +8,7 @@ import SEO from "@/components/SEO/index.astro";
 import { cn } from "@/lib/utils-client";
 import { getSocialsItems } from "@/content/socials";
 import TiltedCard from "@/components/TiltedCard";
+import GlobeModal from "@/components/GlobeModal";
 
 const upcomingEvents = await getUpcomingEvents();
 const pastEvents = await getPastEvents();
@@ -25,6 +26,7 @@ const pastEvents = await getPastEvents();
     imageSrc={bgImage}
   />
 
+  <GlobeModal client:only="react" />
   <div class="flex flex-col gap-24 pb-40">
     {
       !!upcomingEvents.length && (
