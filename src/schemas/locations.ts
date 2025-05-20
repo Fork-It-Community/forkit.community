@@ -3,8 +3,9 @@ import { z } from "zod";
 export type zLocation = z.infer<ReturnType<typeof zLocation>>;
 const zLocation = () =>
   z.object({
-    latitude: z.number(),
-    longitude: z.number(),
+    lat: z.number(),
+    lng: z.number(),
     size: z.number(),
+    name: z.string(),
     color: z.string(),
   });
