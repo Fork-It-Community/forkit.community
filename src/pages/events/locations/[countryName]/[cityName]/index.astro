@@ -1,0 +1,47 @@
+---
+import TiltedCard from "@/components/TiltedCard";
+import MainLayout from "@/layouts/MainLayout.astro";
+import { getEventsByCountryAndByCity, getEventsCollection } from "@/lib/events";
+import EventCard from "@/components/EventCard/index.astro";
+
+export async function getStaticPaths() {
+  const events = await getEventsCollection();
+
+  return events.map((e) => ({
+    params: { countryName: e.data?.country, cityName: e.data?.city },
+  }));
+}
+
+const countryName = Astro.params?.countryName;
+const cityName = Astro.params?.cityName;
+
+const eventsInCountryAndInCity = await getEventsByCountryAndByCity(
+  countryName,
+  cityName,
+);
+---
+
+<MainLayout>
+  <div class="flex flex-col gap-24 pb-40">
+    <div class="flex justify-between">
+      {
+        !!eventsInCountryAndInCity.length && (
+          <div class="mx-auto w-full max-w-screen-sm px-4">
+            <div class="flex flex-col gap-2">
+              <h2 class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
+                The events of {countryName} in {cityName}
+              </h2>
+              <div class="flex flex-col gap-3">
+                {eventsInCountryAndInCity.map((event) => (
+                  <TiltedCard client:visible scaleOnHover={1}>
+                    <EventCard event={event} />
+                  </TiltedCard>
+                ))}
+              </div>
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</MainLayout>

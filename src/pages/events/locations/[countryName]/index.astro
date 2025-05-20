@@ -1,0 +1,74 @@
+---
+import TiltedCard from "@/components/TiltedCard";
+import MainLayout from "@/layouts/MainLayout.astro";
+import {
+  getAllLocations,
+  getEventsByCountry,
+  getEventsCollection,
+} from "@/lib/events";
+import EventCard from "@/components/EventCard/index.astro";
+
+export async function getStaticPaths() {
+  const events = await getEventsCollection();
+
+  return events.map((e) => ({
+    params: { countryName: e.data.country },
+  }));
+}
+
+const countryName = Astro.params?.countryName;
+
+const locations = await getAllLocations();
+const keys = Array.from(locations.keys());
+
+const eventsInCountry = await getEventsByCountry(countryName);
+---
+
+<MainLayout>
+  <div class="flex flex-col gap-24 pb-40">
+    <div class="flex justify-between">
+      {
+        !!eventsInCountry.length && (
+          <div class="mx-auto w-full max-w-screen-sm px-4">
+            <div class="flex flex-col gap-2">
+              <h2 class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
+                The events of {countryName}
+              </h2>
+              <div class="flex flex-col gap-3">
+                {eventsInCountry.map((event) => (
+                  <TiltedCard client:visible scaleOnHover={1}>
+                    <EventCard event={event} />
+                  </TiltedCard>
+                ))}
+              </div>
+            </div>
+          </div>
+        )
+      }
+    </div>
+    <div class="flex justify-between">
+      <div class="mx-auto w-full max-w-screen-sm px-4">
+        <div class="flex flex-col gap-2">
+          <h2
+            class="font-heading text-sm font-medium uppercase tracking-widest opacity-60"
+          >
+            View events by city in {countryName}
+          </h2>
+          <div class="flex flex-col gap-3">
+            {
+              keys.map(
+                (k) =>
+                  k === countryName &&
+                  Array.from(locations.get(k)!).map((city) => (
+                    <TiltedCard client:visible scaleOnHover={1}>
+                      <a href={`${countryName}/${city}`}>{city}</a>
+                    </TiltedCard>
+                  )),
+              )
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>

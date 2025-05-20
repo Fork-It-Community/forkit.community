@@ -38,6 +38,24 @@ type GetEventsParams = {
   limit?: number;
 };
 
+export async function getEventsByCountry(countryName: string) {
+  const events = await getEventsCollection();
+  return events.filter((event) => event.data?.country === countryName) ?? [];
+}
+
+export async function getEventsByCountryAndByCity(
+  countryName: string,
+  cityName: string,
+) {
+  const events = await getEventsCollection();
+  return (
+    events.filter(
+      (event) =>
+        event.data?.country === countryName && event.data?.city === cityName,
+    ) ?? []
+  );
+}
+
 export async function getUpcomingEvents({
   limit = undefined,
 }: GetEventsParams = {}) {
@@ -296,4 +314,24 @@ export function getPersonRolesInEvent(
   }
 
   return roles;
+}
+
+export async function getAllLocations(): Promise<Map<string, Set<string>>> {
+  const events = await getEventsCollection();
+
+  const mapLocations = new Map();
+
+  events.map((e) => {
+    if (mapLocations.has(e.data.country)) {
+      if (!mapLocations.get(e.data.country).has(e.data.city)) {
+        mapLocations.get(e.data.country).add(e.data.city);
+      }
+    } else {
+      const set = new Set();
+      set.add(e.data.city);
+      mapLocations.set(e.data.country, set);
+    }
+  });
+
+  return mapLocations;
 }
