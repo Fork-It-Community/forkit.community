@@ -1,6 +1,9 @@
 ---
 import TiltedCard from "@/components/TiltedCard";
 import MainLayout from "@/layouts/MainLayout.astro";
+import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import SEO from "@/components/SEO/index.astro";
+import bgImage from "@/assets/images/events.jpeg";
 import { getAllLocations, getEventsCollection } from "@/lib/events";
 
 export async function getStaticPaths() {
@@ -16,6 +19,16 @@ const keys = Array.from(locations.keys());
 ---
 
 <MainLayout>
+  <SEO
+    slot="seo"
+    title="Events"
+    description="All the Fork it! events, from meetups to full day events, come take a look at what is happening near you."
+  />
+  <MainPageTitle
+    title="Locations"
+    subtitle="All the Fork it! tech events by location"
+    imageSrc={bgImage}
+  />
   <div class="flex flex-col gap-24 pb-40">
     <div class="flex justify-between">
       <div class="mx-auto w-full max-w-screen-sm px-4">
