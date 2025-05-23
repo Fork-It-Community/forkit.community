@@ -6,13 +6,11 @@ import { getPastEvents, getUpcomingEvents } from "@/lib/events";
 import SEO from "@/components/SEO/index.astro";
 import EventsGrid from "@/components/EventsGrid/index.astro";
 import EventsList from "@/components/EventsList/index.astro";
+import { getCollection } from "astro:content";
 
 const upcomingEvents = await getUpcomingEvents();
 const pastEvents = await getPastEvents();
-const countries = [
-  { id: "France", data: { name: "France" } },
-  { id: "Tunisia", data: { name: "Tunisia" } },
-];
+const countries = await getCollection("countries");
 ---
 
 <MainLayout>

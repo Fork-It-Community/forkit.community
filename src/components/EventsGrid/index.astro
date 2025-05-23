@@ -2,11 +2,11 @@
 import TiltedCard from "@/components/TiltedCard";
 import EventCard from "@/components/EventCard/index.astro";
 import { cn } from "@/lib/utils-client";
-import type { CollectionEntry } from "astro:content";
 import { getSocialsItems } from "@/content/socials";
+import type { EventComputed } from "@/lib/events";
 
 interface Props {
-  events: Array<CollectionEntry<"events">>;
+  events: Array<EventComputed>;
   title?: string;
   class?: string;
 }
