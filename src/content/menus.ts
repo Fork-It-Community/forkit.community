@@ -6,7 +6,6 @@ import {
   MdFeed,
   MdPodcasts,
   MdBadge,
-  MdCenterFocusStrong,
   // MdBadge,
   // MdHandshake,
   // MdLocalActivity,
@@ -37,14 +36,6 @@ const MAIN_MENU: Array<{
     icon: MdEvent,
     scope: "all",
     level: "primary",
-  },
-  {
-    label: "Locations",
-    href: "/events/locations",
-    exact: true,
-    icon: MdCenterFocusStrong,
-    scope: "all",
-    level: "secondary",
   },
   {
     label: "Podcasts",
