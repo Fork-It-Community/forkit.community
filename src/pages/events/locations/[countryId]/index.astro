@@ -1,0 +1,78 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+
+import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import SEO from "@/components/SEO/index.astro";
+import bgImage from "@/assets/images/events.jpeg";
+import { getEventsByCountry } from "@/lib/events";
+import EventsList from "@/components/EventsList/index.astro";
+import { getCollection } from "astro:content";
+import { getEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const countries = await getCollection("countries");
+  return countries.map((country) => ({
+    params: { countryId: country.id },
+  }));
+}
+
+const { countryId } = Astro.params;
+
+const country = await getEntry("countries", countryId);
+const cities = await getCollection(
+  "cities",
+  (city) => city.data.country.id === countryId,
+);
+const eventsInCountry = await getEventsByCountry(countryId);
+
+if (!country) {
+  return new Response(null, {
+    status: 404,
+    statusText: "Not found",
+  });
+}
+---
+
+<MainLayout>
+  <SEO
+    slot="seo"
+    title="Events"
+    description="All the Fork it! events, from meetups to full day events, come take a look at what is happening near you."
+  />
+  <MainPageTitle
+    title={country.data.name}
+    subtitle=`All the Fork it! tech events in ${country.data.name}`
+    `
+    imageSrc={bgImage}
+  />
+  <div class="flex flex-col gap-16 pb-40">
+    <div
+      class="mx-auto flex w-full max-w-screen-lg flex-col gap-16 px-4 md:flex-row-reverse"
+    >
+      <div class="flex w-full flex-1 flex-col gap-4">
+        <h2
+          class="font-heading text-sm font-medium uppercase tracking-widest opacity-60"
+        >
+          Events by City
+        </h2>
+        <div class="flex flex-col">
+          {
+            cities.map((city) => (
+              <a
+                href={`/events/locations/${country.id}/${city.id}`}
+                class="border-b border-white/10 px-5 py-3 transition duration-500 first:border-t hover:bg-white/5"
+              >
+                {city.data.name}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+      <EventsList
+        events={eventsInCountry}
+        title={`Events in ${country.data.name}`}
+        class="flex-[2]"
+      />
+    </div>
+  </div>
+</MainLayout>
