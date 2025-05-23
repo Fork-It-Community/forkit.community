@@ -26,6 +26,8 @@ import { Schema } from "astro-seo-schema";
 import { getEntry } from "astro:content";
 import { getNewsCollection } from "@/lib/news";
 import TiltedCard from "@/components/TiltedCard";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 const upcomingMajorEvent = await getUpcomingMajorEvent();
 const upcomingEvents = (await getUpcomingEvents())
@@ -169,7 +171,9 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
                 </h2>
                 {upcomingEvents.map((event) => (
                   <a
-                    href={`/events/${event.id}`}
+                    href={lunalink(ROUTES.events[":id"].__path, {
+                      id: event.id,
+                    })}
                     title={`${event.data._computed.city?.data.name}, ${event.data._computed.country?.data.name} event`}
                     class="group flex gap-2"
                   >
@@ -217,7 +221,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
       !!news.length && (
         <div class="flex flex-col py-6 md:py-12">
           <div class="mx-auto flex w-full max-w-screen-lg flex-col gap-2 px-6">
-            <a href="/news" title="All the podcasts">
+            <a href={lunalink(ROUTES.news.__path, {})} title="All the podcasts">
               <h2 class="flex items-center gap-2 text-balance font-heading text-3xl font-medium uppercase tracking-wide">
                 <MdFeed className="opacity-40" />
                 News
