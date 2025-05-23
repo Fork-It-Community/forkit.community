@@ -5,27 +5,22 @@ import MainLayout from "@/layouts/MainLayout.astro";
 import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import SEO from "@/components/SEO/index.astro";
 import bgImage from "@/assets/images/events.jpeg";
-import {
-  getAllLocations,
-  getEventsByCountry,
-  getEventsCollection,
-} from "@/lib/events";
+import { getEventsByCountry } from "@/lib/events";
 import EventCard from "@/components/EventCard/index.astro";
+import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
-  const events = await getEventsCollection();
+  const countries = await getCollection("countries");
 
-  return events.map((e) => ({
-    params: { countryName: e.data.country },
+  return countries.map((country) => ({
+    params: { countryName: country.id },
+    props: { country },
   }));
 }
 
-const countryName = Astro.params?.countryName;
+const { country } = Astro.props;
 
-const locations = await getAllLocations();
-const keys = Array.from(locations.keys());
-
-const eventsInCountry = await getEventsByCountry(countryName);
+const eventsInCountry = await getEventsByCountry(country.id);
 ---
 
 <MainLayout>
@@ -36,7 +31,7 @@ const eventsInCountry = await getEventsByCountry(countryName);
   />
   <MainPageTitle
     title="Locations"
-    subtitle=`All the Fork it! tech events in ${countryName}`
+    subtitle=`All the Fork it! tech events in ${country.data.name}`
     `
     imageSrc={bgImage}
   />
@@ -47,7 +42,7 @@ const eventsInCountry = await getEventsByCountry(countryName);
           <div class="mx-auto w-full max-w-screen-sm px-4">
             <div class="flex flex-col gap-2">
               <h2 class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
-                The events of {countryName}
+                The events of {country.data.name}
               </h2>
               <div class="flex flex-col gap-3">
                 {eventsInCountry.map((event) => (
@@ -67,20 +62,20 @@ const eventsInCountry = await getEventsByCountry(countryName);
           <h2
             class="font-heading text-sm font-medium uppercase tracking-widest opacity-60"
           >
-            View events by city in {countryName}
+            View events by city in {country.data.name}
           </h2>
           <div class="flex flex-col gap-3">
-            {
+            <!-- {
               keys.map(
                 (k) =>
-                  k === countryName &&
+                  k === country.data.name &&
                   Array.from(locations.get(k)!).map((city) => (
                     <TiltedCard client:visible scaleOnHover={1}>
-                      <a href={`${countryName}/${city}`}>{city}</a>
+                      <a href={`${country.data.name}/${city}`}>{city}</a>
                     </TiltedCard>
                   )),
               )
-            }
+            } -->
           </div>
         </div>
       </div>

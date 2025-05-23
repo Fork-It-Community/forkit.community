@@ -7,6 +7,8 @@ import { zPartner } from "@/schemas/partners";
 import { zTalk } from "@/schemas/talks";
 import { zEventSubPage } from "@/schemas/eventsSubPages";
 import { zEpisode, zPodcast } from "@/schemas/podcasts";
+import { zCountry } from "@/schemas/country";
+import { zCity } from "@/schemas/city";
 
 export const collections = {
   partners: defineCollection({
@@ -52,5 +54,19 @@ export const collections = {
       base: "./src/content/podcasts",
     }),
     schema: zEpisode,
+  }),
+  countries: defineCollection({
+    loader: glob({
+      pattern: "**/*.mdx",
+      base: "./src/content/countries",
+    }),
+    schema: zCountry,
+  }),
+  cities: defineCollection({
+    loader: glob({
+      pattern: "**/*.mdx",
+      base: "./src/content/cities",
+    }),
+    schema: zCity,
   }),
 };

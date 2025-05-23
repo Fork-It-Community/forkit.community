@@ -96,7 +96,7 @@ const ctaEventMetadata = {
         event.data.date
           ? dayjs(event.data.date).format("dddd, MMMM D, YYYY") + " "
           : ""
-      }${event.data.name}`,
+      }${event.data._computed.name}`,
       startDate: event.data.date?.toISOString(),
       endDate: event.data.date?.toISOString(),
       description: event.data.excerpt ?? "",
@@ -141,7 +141,9 @@ const ctaEventMetadata = {
             {getEventDisplayDate(event)}
           </span>
           <span class="text-xl text-primary md:text-4xl">
-            {event.data.city}, {event.data.country}
+            {event.data._computed.city?.data.name}, {
+              event.data._computed.country?.data.name
+            }
           </span>
 
           <span

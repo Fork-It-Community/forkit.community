@@ -75,7 +75,7 @@ export function saveTheDate(options: { width: number; height: number }) {
                 textTransform: "uppercase",
               }}
             >
-              {event.data.city}
+              {event.data._computed.city?.data.name}
             </div>
             <div
               style={{
@@ -177,7 +177,8 @@ export function saveTheDate(options: { width: number; height: number }) {
                 opacity: 0.6,
               }}
             >
-              {event.data.city}, {event.data.country}
+              {event.data._computed.city?.data.name},{" "}
+              {event.data._computed.country?.data.name}
             </div>
             <div
               style={{

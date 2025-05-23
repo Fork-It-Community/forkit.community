@@ -69,7 +69,7 @@ const sponsors = await getEntries(
 const { Content } = await render(talk);
 
 const url = new URL(Astro.url.pathname, Astro.site);
-const title = `${talk.data.title} | ${event.data.name}`;
+const title = `${talk.data.title} | ${event.data._computed.name}`;
 
 const location: Place | undefined = event.data.location
   ? {

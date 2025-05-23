@@ -1,27 +1,32 @@
 ---
 import TiltedCard from "@/components/TiltedCard";
 import MainLayout from "@/layouts/MainLayout.astro";
-import { getEventsByCountryAndByCity, getEventsCollection } from "@/lib/events";
+import { getEventByCity, getEventsCollection } from "@/lib/events";
 import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import SEO from "@/components/SEO/index.astro";
 import bgImage from "@/assets/images/events.jpeg";
 import EventCard from "@/components/EventCard/index.astro";
+import { getEntry } from "astro:content";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
 
   return events.map((e) => ({
-    params: { countryName: e.data?.country, cityName: e.data?.city },
+    params: {
+      countryName: e.data?._computed.country?.data.name,
+      cityName: e.data.city.id,
+    },
   }));
 }
 
-const countryName = Astro.params?.countryName;
-const cityName = Astro.params?.cityName;
+const { cityName } = Astro.params;
 
-const eventsInCountryAndInCity = await getEventsByCountryAndByCity(
-  countryName,
-  cityName,
-);
+const city = await getEntry("cities", cityName);
+const country = city
+  ? await getEntry("countries", city?.data.country.id)
+  : null;
+
+const eventsInCountryAndInCity = await getEventByCity(cityName);
 ---
 
 <MainLayout>
@@ -32,7 +37,7 @@ const eventsInCountryAndInCity = await getEventsByCountryAndByCity(
   />
   <MainPageTitle
     title="Locations"
-    subtitle=`All the Fork it! tech events at ${countryName} in ${cityName} `
+    subtitle=`All the Fork it! tech events at ${country?.data.name} in ${cityName} `
     imageSrc={bgImage}
   />
   <div class="flex flex-col gap-24 pb-40">
@@ -42,7 +47,7 @@ const eventsInCountryAndInCity = await getEventsByCountryAndByCity(
           <div class="mx-auto w-full max-w-screen-sm px-4">
             <div class="flex flex-col gap-2">
               <h2 class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
-                The events of {countryName} in {cityName}
+                The events of {country?.data.name} in {cityName}
               </h2>
               <div class="flex flex-col gap-3">
                 {eventsInCountryAndInCity.map((event) => (

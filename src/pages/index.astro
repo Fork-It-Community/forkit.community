@@ -146,8 +146,8 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
                       {getEventDisplayDate(upcomingMajorEvent)}
                     </div>
                     <div class="-mt-1 font-heading text-sm opacity-60 transition group-hover:text-primary group-hover:opacity-100 sm:text-lg">
-                      {upcomingMajorEvent.data.city},{" "}
-                      {upcomingMajorEvent.data.country}
+                      {upcomingMajorEvent.data._computed.city?.data.name},{" "}
+                      {upcomingMajorEvent.data._computed.country?.data.name}
                     </div>
                   </div>
                 </div>
@@ -170,7 +170,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
                 {upcomingEvents.map((event) => (
                   <a
                     href={`/events/${event.id}`}
-                    title={`${event.data.city}, ${event.data.country} event`}
+                    title={`${event.data._computed.city?.data.name}, ${event.data._computed.country?.data.name} event`}
                     class="group flex gap-2"
                   >
                     <MdEvent className="opacity-40 group-hover:opacity-100 transition size-4 mt-0.5" />
@@ -179,7 +179,8 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
                         {getEventDisplayDate(event)}
                       </div>
                       <div class="text-xs tracking-wide opacity-60 transition group-hover:text-primary group-hover:opacity-100">
-                        {event.data.city}, {event.data.country}
+                        {event.data._computed.city?.data.name},{" "}
+                        {event.data._computed.country?.data.name}
                       </div>
                     </div>
                   </a>

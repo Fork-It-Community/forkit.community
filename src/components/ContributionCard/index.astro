@@ -1,5 +1,5 @@
 ---
-import { getPersonRolesInEvent } from "@/lib/events";
+import { getPersonRolesInEvent, type EventComputed } from "@/lib/events";
 import { cn } from "@/lib/utils-client";
 import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
@@ -15,7 +15,7 @@ interface Props {
   contribution:
     | CollectionEntry<"episodes">
     | CollectionEntry<"news">
-    | CollectionEntry<"events">;
+    | EventComputed;
   person: CollectionEntry<"people">;
   class?: string;
   gradientClass?: string | undefined;
@@ -51,7 +51,7 @@ const item = match(contribution)
     type: item.collection,
   }))
   .with({ collection: "events" }, (item) => ({
-    title: item.data.name,
+    title: item.data._computed.name,
     date: item.data.date,
     excerpt: [...getPersonRolesInEvent(item, person)]
       .map((i) => capitalize(i))

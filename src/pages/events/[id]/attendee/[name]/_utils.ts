@@ -1,4 +1,5 @@
 import { NotFoundAssetError } from "@/generated-assets/api";
+import { eventWithComputed } from "@/lib/events";
 import { getEntry } from "astro:content";
 
 export const getEventData = async (id: string) => {
@@ -7,5 +8,5 @@ export const getEventData = async (id: string) => {
     throw new NotFoundAssetError();
   }
 
-  return event;
+  return await eventWithComputed(event);
 };

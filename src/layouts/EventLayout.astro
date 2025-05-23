@@ -10,12 +10,12 @@ import {
   getEventCtaTypes,
   getEventDisplayType,
   getEventNavItems,
+  type EventComputed,
 } from "@/lib/events";
-import type { CollectionEntry } from "astro:content";
 import { motion } from "motion/react";
 
 interface Props {
-  event: CollectionEntry<"events">;
+  event: EventComputed;
   ogImage: URL;
 }
 
@@ -23,7 +23,7 @@ const { event, ogImage } = Astro.props;
 const navItems = await getEventNavItems(event.id);
 
 const url = new URL(Astro.url.pathname, Astro.site);
-const title = `${event.data.name}, ${getEventDisplayType(event.data.type)}`;
+const title = `${event.data._computed.name}, ${getEventDisplayType(event.data.type)}`;
 ---
 
 <RootLayout>
@@ -52,15 +52,15 @@ const title = `${event.data.name}, ${getEventDisplayType(event.data.type)}`;
   }
   <div class="absolute inset-0 p-2">
     <ExploreTheCommunity
-      eventCity={event.data.city}
-      eventCountry={event.data.country}
+      eventCity={event.data._computed.city?.data.name ?? ""}
+      eventCountry={event.data._computed.country?.data.name ?? ""}
       eventDate={event.data.date}
       logoUrl={`/events/${event.id}`}
       pageUrl={new URL(Astro.url.pathname, Astro.site).toString()}
     />
   </div>
   <EventNav
-    eventName={event.data.name}
+    eventName={event.data._computed.name}
     eventId={event.id}
     eventMetadata={{
       date: event.data.date,

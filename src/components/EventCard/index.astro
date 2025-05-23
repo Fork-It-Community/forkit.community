@@ -7,13 +7,13 @@ import {
 } from "@/lib/events";
 import { cn } from "@/lib/utils-client";
 import { Image } from "astro:assets";
-import type { CollectionEntry } from "astro:content";
+import type { EventComputed } from "@/lib/events";
 import { getEntries } from "astro:content";
 import dayjs from "dayjs";
 import { MdArrowForward } from "react-icons/md";
 
 interface Props {
-  event: CollectionEntry<"events">;
+  event: EventComputed;
   class?: string;
 }
 
@@ -104,7 +104,9 @@ const isUpcomingEvent = dayjs(event.data.date).endOf("day").isAfter(dayjs());
               "opacity-50 group-hover:opacity-100",
           )}
         >
-          {event.data.city}, {event.data.country}
+          {event.data._computed.city?.data.name}, {
+            event.data._computed.country?.data.name
+          }
         </div>
       </div>
     </div>
