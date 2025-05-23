@@ -1,13 +1,13 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
 
-import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import SEO from "@/components/SEO/index.astro";
-import bgImage from "@/assets/images/events.jpeg";
 import { getEventsByCountry } from "@/lib/events";
 import EventsList from "@/components/EventsList/index.astro";
 import { getCollection } from "astro:content";
 import { getEntry } from "astro:content";
+import { BackButton } from "@/components/BackButton";
 
 export async function getStaticPaths() {
   const countries = await getCollection("countries");
@@ -39,12 +39,31 @@ if (!country) {
     title="Events"
     description="All the Fork it! events, from meetups to full day events, come take a look at what is happening near you."
   />
-  <MainPageTitle
-    title={country.data.name}
-    subtitle=`All the Fork it! tech events in ${country.data.name}`
-    `
-    imageSrc={bgImage}
+  <ImageBackgroundHero
+    src={country.data.cover.media}
+    alt={country.data.cover.alt}
   />
+
+  <div class="mx-auto w-full max-w-screen-lg px-4 py-4">
+    <BackButton href="/events" client:load contextLabel="Fork It! Events" />
+    <div
+      class="flex w-full flex-col items-center gap-12 py-12 md:min-h-[25svh] md:flex-row md:justify-center"
+    >
+      <div class="flex w-full flex-1 flex-col gap-2">
+        <h1
+          class="w-full text-balance text-left font-heading text-4xl font-medium uppercase tracking-wider max-md:flex-1 md:text-5xl"
+        >
+          {country.data.name}
+        </h1>
+        <h2
+          class="w-full text-balance text-left text-xs tracking-widest opacity-60 md:text-sm"
+        >
+          All the Fork it! tech events in {country.data.name}
+        </h2>
+      </div>
+    </div>
+  </div>
+
   <div class="flex flex-col gap-16 pb-40">
     <div
       class="mx-auto flex w-full max-w-screen-lg flex-col gap-16 px-4 md:flex-row-reverse"
