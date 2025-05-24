@@ -16,12 +16,40 @@ export function isEventPublished(
   return status !== "draft";
 }
 
+export async function eventWithComputed<
+  Event extends CollectionEntry<"events">,
+>(event: Event) {
+  const city = await getEntry("cities", event.data.city.id);
+
+  const country = city
+    ? await getEntry("countries", city.data.country.id)
+    : undefined;
+
+  return {
+    ...event,
+    data: {
+      ...event.data,
+      _computed: {
+        name: `${city?.data.name}, ${country?.data.name}, ${event.data.date.getFullYear()}`,
+        city,
+        country,
+      },
+    },
+  };
+}
+
+export type EventComputed = Awaited<ReturnType<typeof eventWithComputed>>;
+
 export async function getEventsCollection() {
-  return (
-    await getCollection("events", ({ data }) =>
-      import.meta.env.PROD ? isEventPublished(data.status) : true,
+  return Promise.all(
+    (
+      await getCollection("events", ({ data }) =>
+        import.meta.env.PROD ? isEventPublished(data.status) : true,
+      )
     )
-  ).sort((a, b) => dayjs(b.data.date).diff(a.data.date));
+      .sort((a, b) => dayjs(b.data.date).diff(a.data.date))
+      .map(eventWithComputed),
+  );
 }
 
 export function getEventSubPagesCollection(
@@ -37,6 +65,22 @@ export function getEventSubPagesCollection(
 type GetEventsParams = {
   limit?: number;
 };
+
+export async function getEventsByCountry(
+  country: CollectionEntry<"countries">["id"],
+) {
+  const events = await getEventsCollection();
+
+  return (
+    events.filter((event) => event.data._computed.country?.id === country) ?? []
+  );
+}
+
+export async function getEventByCity(city: CollectionEntry<"cities">["id"]) {
+  const events = await getEventsCollection();
+
+  return events.filter((event) => event.data._computed.city?.id === city) ?? [];
+}
 
 export async function getUpcomingEvents({
   limit = undefined,

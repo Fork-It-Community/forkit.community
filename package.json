@@ -3,9 +3,11 @@
   "type": "module",
   "version": "0.0.2",
   "scripts": {
+    "postinstall": "pnpm build:routes",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
+    "build:routes": "tsx scripts/generate-routes.ts && prettier -w ./src/routes.gen.ts",
     "lint": "astro check",
     "preview": "astro preview",
     "astro": "astro",
@@ -22,6 +24,7 @@
     "@astrojs/sitemap": "3.3.0",
     "@astrojs/tailwind": "6.0.2",
     "@astrojs/vercel": "8.1.3",
+    "@bearstudio/lunalink": "0.3.0",
     "@fontsource-variable/inter": "5.2.5",
     "@fontsource/tomorrow": "5.2.5",
     "@radix-ui/react-accordion": "1.2.4",
@@ -65,7 +68,8 @@
     "lint-staged": "15.5.1",
     "prettier": "3.5.3",
     "prettier-plugin-astro": "0.14.1",
-    "prettier-plugin-tailwindcss": "0.6.11"
+    "prettier-plugin-tailwindcss": "0.6.11",
+    "tsx": "4.19.4"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

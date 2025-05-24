@@ -3,6 +3,8 @@ import { getSocialsItems } from "@/content/socials";
 import { getMainMenuItems } from "@/content/menus";
 import dayjs from "dayjs";
 import { MdArrowOutward } from "react-icons/md";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 const menuItems = getMainMenuItems();
 ---
@@ -71,7 +73,7 @@ const menuItems = getMainMenuItems();
           <span class="opacity-20">⋅</span>
           <a
             class="opacity-60 transition hover:opacity-100"
-            href="/code-of-conduct"
+            href={lunalink(ROUTES["code-of-conduct"].__path, {})}
           >
             Code of Conduct
           </a>

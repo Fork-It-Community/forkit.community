@@ -27,8 +27,8 @@ if (!event || event.data.type !== "event") {
   });
 }
 
-const title = `Share your venue | ${event.data.name}`;
-const description = `Generate a nice ticket to share your venue for the ${event.data.city}, ${event.data.country} event, taking place the ${dayjs(event.data.date).format("DD/MM/YYYY")}. Come enjoy content from the community.`;
+const title = `Share your venue | ${event.data._computed.name}`;
+const description = `Generate a nice ticket to share your venue for the ${event.data._computed.city?.data.name}, ${event.data._computed.country?.data.name} event, taking place the ${dayjs(event.data.date).format("DD/MM/YYYY")}. Come enjoy content from the community.`;
 const ticketImage = new URL(
   Astro.url.pathname + "/Your name/ticket.svg",
   Astro.site,

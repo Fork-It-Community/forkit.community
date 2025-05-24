@@ -1,5 +1,6 @@
 import { NotFoundAssetError } from "@/generated-assets/api";
 import { getImageNameFromTsxPath } from "@/generated-assets/image";
+import { eventWithComputed } from "@/lib/events";
 import {
   getCollection,
   getEntries,
@@ -19,11 +20,11 @@ export const getEventData = async (id: string) => {
       .includes(item.id),
   );
 
-  return {
+  return eventWithComputed({
     ...event,
     __talks: talksForEvent,
     __coOrganizers: await getEntries(event.data.coOrganizers ?? []),
-  };
+  });
 };
 
 export const getEventAssetsSources = (event: CollectionEntry<"events">) => {

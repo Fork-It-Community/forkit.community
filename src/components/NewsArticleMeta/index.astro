@@ -6,6 +6,8 @@ import type { CollectionEntry } from "astro:content";
 import { getEntries } from "astro:content";
 import dayjs from "dayjs";
 import defaultPerson from "@/assets/images/people-placeholder.jpeg";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 interface Props {
   newsItem: CollectionEntry<"news">;
@@ -31,7 +33,7 @@ const authors = (await getEntries(newsItem.data.authors ?? [])).filter(
       <div class="flex flex-wrap gap-x-5 gap-y-3">
         {authors.map((author) => (
           <a
-            href={`/people/${author.id}`}
+            href={lunalink(ROUTES.people[":id"].__path, { id: author.id })}
             class={cn(
               "group/author relative z-20 flex items-center gap-x-2.5 text-sm font-medium",
             )}

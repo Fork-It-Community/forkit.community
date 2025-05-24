@@ -1,5 +1,5 @@
 ---
-import { getPersonRolesInEvent } from "@/lib/events";
+import { getPersonRolesInEvent, type EventComputed } from "@/lib/events";
 import { cn } from "@/lib/utils-client";
 import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
@@ -10,12 +10,14 @@ import defaultPodcast from "@/assets/images/podcasts.jpeg";
 import { capitalize } from "remeda";
 import dayjs from "dayjs";
 import { match } from "ts-pattern";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 interface Props {
   contribution:
     | CollectionEntry<"episodes">
     | CollectionEntry<"news">
-    | CollectionEntry<"events">;
+    | EventComputed;
   person: CollectionEntry<"people">;
   class?: string;
   gradientClass?: string | undefined;
@@ -35,7 +37,7 @@ const item = match(contribution)
   .with({ collection: "news" }, (item) => ({
     title: item.data.title,
     date: item.data.date,
-    href: `/news/article/${item.id}`,
+    href: lunalink(ROUTES.news.article[":id"].__path, { id: item.id }),
     image: item.data.featuredImage,
     episodeCover: undefined,
     excerpt: item.data.excerpt,
@@ -45,18 +47,22 @@ const item = match(contribution)
     title: item.data.title,
     date: item.data.releaseDate,
     excerpt: item.data.description,
-    href: `/podcasts/${item.id}`,
+    href: lunalink(
+      ROUTES.podcasts[":id"].__path,
+      { id: item.id },
+      { encodeURIComponent: (v) => String(v) },
+    ),
     image: defaultPodcast,
     episodeCover: item.data.cover,
     type: item.collection,
   }))
   .with({ collection: "events" }, (item) => ({
-    title: item.data.name,
+    title: item.data._computed.name,
     date: item.data.date,
     excerpt: [...getPersonRolesInEvent(item, person)]
       .map((i) => capitalize(i))
       .join(", "),
-    href: `/events/${item.id}`,
+    href: lunalink(ROUTES.events[":id"].__path, { id: item.id }),
     image: item.data.image.media,
     episodeCover: undefined,
     type: item.collection,

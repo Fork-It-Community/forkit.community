@@ -2,8 +2,7 @@ import { z, reference, type SchemaContext } from "astro:content";
 
 const zEventBase = ({ image }: SchemaContext) =>
   z.object({
-    city: z.string(),
-    country: z.string(),
+    city: reference("cities"),
     date: z.date(),
     postponed: z
       .object({
@@ -204,12 +203,7 @@ const zEventClassic = () =>
 
 export type Event = z.infer<ReturnType<typeof zEvent>>;
 export const zEvent = ({ image }: SchemaContext) =>
-  z
-    .discriminatedUnion("type", [
-      zEventBase({ image }).merge(zMeetup()),
-      zEventBase({ image }).merge(zEventClassic()),
-    ])
-    .transform((event) => ({
-      ...event,
-      name: `${event.city}, ${event.country}, ${event.date?.getFullYear()}`,
-    }));
+  z.discriminatedUnion("type", [
+    zEventBase({ image }).merge(zMeetup()),
+    zEventBase({ image }).merge(zEventClassic()),
+  ]);

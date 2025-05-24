@@ -2,6 +2,8 @@
 import { type CollectionEntry, getEntries, getEntry } from "astro:content";
 import { IoLanguageSharp } from "react-icons/io5";
 import SpeakerForCard from "./SpeakerForCard.astro";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 interface Props {
   activity: NonNullable<
@@ -29,7 +31,10 @@ const people = [...hosts, ...speakers];
 {
   talk && (
     <a
-      href={`/events/${event.id}/talks/${talk.id}`}
+      href={lunalink(ROUTES.events[":id"].talks[":talkId"].__path, {
+        id: event.id,
+        talkId: talk.id,
+      })}
       class="group flex w-full flex-col gap-4 rounded-lg bg-white/5 p-4 backdrop-blur-md transition hover:bg-white/10 sm:px-6 sm:py-5"
     >
       <p class="text-balance font-heading text-base font-medium leading-tight tracking-wider text-white transition group-hover:text-primary">

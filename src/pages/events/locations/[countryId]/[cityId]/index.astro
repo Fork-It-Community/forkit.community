@@ -1,0 +1,58 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import { getEventByCity, getEventsCollection } from "@/lib/events";
+import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import SEO from "@/components/SEO/index.astro";
+import bgImage from "@/assets/images/events.jpeg";
+import EventsList from "@/components/EventsList/index.astro";
+import { getEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const events = await getEventsCollection();
+
+  return events.map((e) => ({
+    params: {
+      countryId: e.data._computed.country?.id ?? "",
+      cityId: e.data.city.id,
+    },
+  }));
+}
+
+const { cityId, countryId } = Astro.params;
+
+const city = await getEntry("cities", cityId);
+const country = await getEntry("countries", countryId);
+
+if (!city || !country) {
+  return new Response(null, {
+    status: 404,
+    statusText: "Not found",
+  });
+}
+
+const eventsInCity = await getEventByCity(cityId);
+---
+
+<MainLayout>
+  <SEO
+    slot="seo"
+    title="Events"
+    description="All the Fork it! events, from meetups to full day events, come take a look at what is happening near you."
+  />
+  <MainPageTitle
+    title={city.data.name}
+    subtitle=`All the Fork it! tech events in ${city.data.name}, ${country.data.name}`
+    imageSrc={bgImage}
+  />
+  <div class="flex flex-col gap-16 pb-40">
+    <div
+      class="mx-auto flex w-full max-w-screen-sm flex-col gap-16 px-4 md:flex-row-reverse"
+    >
+      <EventsList
+        events={eventsInCity}
+        title={`Events in ${city.data.name}`}
+        class="flex-[2]"
+      />
+    </div>
+  </div>
+</MainLayout>

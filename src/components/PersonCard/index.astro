@@ -2,6 +2,8 @@
 import { Image } from "astro:assets";
 import SpeakerPlaceholder from "@/assets/images/people-placeholder.jpeg";
 import { type CollectionEntry } from "astro:content";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 interface Props {
   person: CollectionEntry<"people">;
@@ -14,7 +16,7 @@ const { person, id } = Astro.props;
 <a
   id={id}
   class="group flex scroll-mt-20 flex-col gap-5 rounded-lg bg-white/5 p-6 backdrop-blur-md"
-  href={`/people/${id}`}
+  href={lunalink(ROUTES.people[":id"].__path, { id: id ?? "" })}
 >
   <div class="flex items-start gap-4">
     <div class="aspect-square size-24 flex-none overflow-hidden rounded-lg">

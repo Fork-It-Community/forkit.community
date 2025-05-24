@@ -70,7 +70,8 @@ export default async function ({ params }: { params: { id: string } }) {
               marginLeft: -2, // Visual alignment
             }}
           >
-            {event.data.city}, {event.data.country}
+            {event.data._computed.city?.data.name},{" "}
+            {event.data._computed.country?.data.name}
           </div>
         </div>
       </div>

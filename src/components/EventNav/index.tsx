@@ -14,6 +14,8 @@ import { Button } from "@/components/ui/button";
 
 import { EventCTA, type EventMetadataForCta } from "@/components/EventCTA";
 import type { EventCtaTypes } from "@/lib/events";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 export const EventNav = (props: {
   eventName: ReactNode;
@@ -35,7 +37,9 @@ export const EventNav = (props: {
     >
       <div className="mx-auto flex w-full max-w-screen-lg justify-between">
         <a
-          href={`/events/${props.eventId}#`}
+          href={
+            lunalink(ROUTES.events[":id"].__path, { id: props.eventId }) + "#"
+          }
           className="group flex flex-col justify-center gap-1 px-6"
         >
           <Logo className="w-28" />
@@ -72,7 +76,11 @@ export const EventNav = (props: {
               </SheetHeader>
               <div className="flex flex-1 flex-col">
                 <a
-                  href={`/events/${props.eventId}#`}
+                  href={
+                    lunalink(ROUTES.events[":id"].__path, {
+                      id: props.eventId,
+                    }) + "#"
+                  }
                   onClick={() => setOpen(false)}
                   className="group flex flex-col justify-center gap-1 px-6 py-4"
                 >

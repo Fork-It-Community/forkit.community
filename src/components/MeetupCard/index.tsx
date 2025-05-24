@@ -1,8 +1,10 @@
-import type { Event } from "@/schemas/events";
+import type { EventComputed } from "@/lib/events";
 import dayjs from "dayjs";
 import { LuMapPin } from "react-icons/lu";
 
-export const MeetupCard = (props: Readonly<{ event: Event }>) => {
+export const MeetupCard = (
+  props: Readonly<{ event: EventComputed["data"] }>,
+) => {
   return (
     <article
       className="border-neutral-700 bg-neutral-900 relative flex flex-col rounded-lg border p-4 md:p-6"
@@ -28,7 +30,7 @@ export const MeetupCard = (props: Readonly<{ event: Event }>) => {
             )}
           </div>
           <p className="flex flex-col font-heading text-base font-medium text-secondary">
-            {props.event.name}
+            {props.event._computed.name}
           </p>
         </div>
       </div>
