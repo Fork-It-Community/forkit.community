@@ -11,6 +11,8 @@ import type { EventComputed } from "@/lib/events";
 import { getEntries } from "astro:content";
 import dayjs from "dayjs";
 import { MdArrowForward } from "react-icons/md";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 interface Props {
   event: EventComputed;
@@ -26,7 +28,7 @@ const isUpcomingEvent = dayjs(event.data.date).endOf("day").isAfter(dayjs());
 ---
 
 <a
-  href={`/events/${event.id}`}
+  href={lunalink(ROUTES.events[":id"].__path, { id: event.id })}
   class={cn(
     "group relative z-10 flex flex-col gap-4 overflow-hidden rounded-lg bg-background px-6 py-6 shadow-xl",
     className,

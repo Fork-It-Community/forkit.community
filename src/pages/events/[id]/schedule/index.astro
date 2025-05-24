@@ -3,6 +3,8 @@ import { BackButton } from "@/components/BackButton";
 import Schedule from "@/components/Schedule/index.astro";
 import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
 import { getEventsCollection } from "@/lib/events";
+import { ROUTES } from "@/routes.gen";
+import { lunalink } from "@bearstudio/lunalink";
 import { SEO } from "astro-seo";
 import dayjs from "dayjs";
 
@@ -26,7 +28,10 @@ const description = `Schedule for the ${event.data._computed.city?.data.name}, $
 <EventSubPageLayout event={event}>
   <SEO slot="seo" title={title} description={description} />
   <div class="mx-auto w-full max-w-screen-sm space-y-8 p-4 md:p-8">
-    <BackButton href={`/events/${event.id}`} client:load />
+    <BackButton
+      href={lunalink(ROUTES.events[":id"].__path, { id: event.id })}
+      client:load
+    />
 
     <main class="space-y-2">
       <h2

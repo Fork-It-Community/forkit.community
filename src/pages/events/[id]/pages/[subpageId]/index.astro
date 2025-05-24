@@ -6,6 +6,8 @@ import SEO from "@/components/SEO/index.astro";
 import { render } from "astro:content";
 import dayjs from "dayjs";
 import Prose from "@/components/Prose/index.astro";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -48,7 +50,10 @@ const description = `${subpage.data.title} page for the ${event.data._computed.c
     description={subpage.data.description ?? description}
   />
   <div class="mx-auto p-4 pb-40 md:px-8 md:pt-8">
-    <BackButton href={`/events/${event.id}`} client:load />
+    <BackButton
+      href={lunalink(ROUTES.events[":id"].__path, { id: event.id })}
+      client:load
+    />
     <Prose>
       <Content />
     </Prose>

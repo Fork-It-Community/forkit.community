@@ -9,6 +9,8 @@ import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import { cn } from "@/lib/utils-client";
 import { MdDownload } from "react-icons/md";
 import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 export const prerender = false;
 
@@ -43,7 +45,9 @@ const imagesSrc = getEventAssetsSources(event);
         </h1>
         <a
           class={cn(buttonVariants({ size: "sm" }), "gap-2 xs:max-w-64")}
-          href={`/events/${event.id}/assets/download`}
+          href={lunalink(ROUTES.events[":id"].assets.download.__path, {
+            id: event.id,
+          })}
           target="_blank"
         >
           <MdDownload />
@@ -84,7 +88,9 @@ const imagesSrc = getEventAssetsSources(event);
         {
           allEvents.map((e) => (
             <a
-              href={`/events/${e.id}/assets`}
+              href={lunalink(ROUTES.events[":id"].assets.__path, {
+                id: event.id,
+              })}
               class={cn("p-1", e.id === event.id && "opacity-60")}
             >
               {e.data._computed.name}

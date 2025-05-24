@@ -16,6 +16,8 @@ import { MdArrowOutward, MdPlace } from "react-icons/md";
 import type { Place } from "schema-dts";
 import Prose from "@/components/Prose/index.astro";
 import Sponsors from "@/components/Sponsors/index.astro";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -139,7 +141,10 @@ const endDate =
   />
   <div class="mx-auto max-w-screen-sm p-4 md:p-8">
     <div class="flex justify-between">
-      <BackButton href={`/events/${event.id}`} client:load />
+      <BackButton
+        href={lunalink(ROUTES.events[":id"].__path, { id: event.id })}
+        client:load
+      />
       <div class="flex gap-2">
         {
           event.data.status !== "cancelled" &&

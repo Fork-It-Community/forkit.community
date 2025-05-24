@@ -2,8 +2,17 @@ import fs from "node:fs";
 import path from "node:path";
 
 const getKey = (itemName: string) => {
-  // [name] => :name
-  if (itemName.match(/^\[.*\]$/)) return `:${itemName.slice(1, -1)}`;
+  // Handle  [name] => :name, [__image].[__type] => :__image.:__type
+  if (/^\[.*\]$/.test(itemName)) {
+    return itemName
+      .split(".")
+      .map((part) =>
+        part.startsWith("[") && part.endsWith("]")
+          ? `:${part.slice(1, -1)}`
+          : part,
+      )
+      .join(".");
+  }
   return itemName;
 };
 
@@ -27,6 +36,12 @@ const generateRoutes = () => {
               `${dirPath}/${item.name}`,
             );
           }
+        } else if (item.isFile()) {
+          // Skip index files
+          if (item.name.startsWith("index.")) return;
+          // Remove extension from file name
+          const fileNameWithoutExt = item.name.replace(/\.[^.]+$/, "");
+          result[getKey(fileNameWithoutExt)] = {};
         }
       });
 

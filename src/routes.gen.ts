@@ -4,40 +4,71 @@
 import { assignPaths } from "@/lib/routes";
 
 const ROUTES_CONFIG = {
+  "404": {},
   about: {},
+  "code-of-conduct": {},
   events: {
     ":id": {
-      assets: {},
+      assets: {
+        ":__image.:__type": {},
+        "_og-image": {},
+        "_save-the-date-square": {},
+        "_save-the-date": {},
+        "_tickets-available-square": {},
+        "_tickets-available": {},
+        _utils: {},
+        download: {},
+      },
       attendee: {
-        ":name": {},
+        ":name": {
+          ":__image.:__type": {},
+          _social: {},
+          _ticket: {},
+          _utils: {},
+        },
+        _form: {},
       },
       pages: {
         ":subpageId": {},
       },
       partners: {
         ":partnerId": {
-          assets: {},
+          assets: {
+            ":__image.:__type": {},
+            _square: {},
+          },
         },
       },
       schedule: {},
       talks: {
         ":talkId": {
-          assets: {},
+          assets: {
+            ":__image.:__type": {},
+            "_og-image": {},
+            _square: {},
+            _utils: {},
+          },
         },
       },
     },
     locations: {
-      ":countryName": {
-        ":cityName": {},
+      ":countryId": {
+        ":cityId": {},
       },
     },
+    "rss.xml": {},
   },
   news: {
+    "[...page]": {},
     article: {
       ":id": {
-        assets: {},
+        assets: {
+          ":__image.:__type": {},
+          "_og-image": {},
+        },
       },
     },
+    "rss.xml": {},
   },
   people: {
     ":id": {},
@@ -46,10 +77,14 @@ const ROUTES_CONFIG = {
     ":id": {
       episodes: {
         ":episode": {
-          assets: {},
+          assets: {
+            ":__image.:__type": {},
+            "_og-image": {},
+          },
         },
       },
     },
+    "rss.xml": {},
   },
 } as const;
 

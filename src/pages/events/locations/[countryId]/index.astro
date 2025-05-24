@@ -8,6 +8,8 @@ import EventsList from "@/components/EventsList/index.astro";
 import { getCollection } from "astro:content";
 import { getEntry } from "astro:content";
 import { BackButton } from "@/components/BackButton";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 export async function getStaticPaths() {
   const countries = await getCollection("countries");
@@ -45,7 +47,11 @@ if (!country) {
   />
 
   <div class="mx-auto w-full max-w-screen-lg px-4 py-4">
-    <BackButton href="/events" client:load contextLabel="Fork It! Events" />
+    <BackButton
+      href={lunalink(ROUTES.events.__path, {})}
+      client:load
+      contextLabel="Fork It! Events"
+    />
     <div
       class="flex w-full flex-col items-center gap-12 py-12 md:min-h-[25svh] md:flex-row md:justify-center"
     >
@@ -78,7 +84,13 @@ if (!country) {
           {
             cities.map((city) => (
               <a
-                href={`/events/locations/${country.id}/${city.id}`}
+                href={lunalink(
+                  ROUTES["events"].locations[":countryId"][":cityId"].__path,
+                  {
+                    countryId: country.id,
+                    cityId: city.id,
+                  },
+                )}
                 class="border-b border-white/10 px-5 py-3 transition duration-500 first:border-t hover:bg-white/5"
               >
                 {city.data.name}

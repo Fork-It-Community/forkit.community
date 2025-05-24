@@ -21,6 +21,8 @@ import { lang } from "@/lib/lang";
 import Prose from "@/components/Prose/index.astro";
 import { ShareButton } from "@/components/ShareButton";
 import { LuShare2 } from "react-icons/lu";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 export async function getStaticPaths() {
   const episodes = await getPodcastsEpisodesCollection();
@@ -129,7 +131,7 @@ const url = new URL(Astro.url.pathname, Astro.site);
     <div class="flex items-center justify-between">
       <BackButton
         client:load
-        href="/podcasts"
+        href={lunalink(ROUTES.podcasts.__path, {})}
         contextLabel="Fork It! Podcast"
       />
       <ShareButton

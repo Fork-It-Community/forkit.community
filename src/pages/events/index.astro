@@ -7,6 +7,8 @@ import SEO from "@/components/SEO/index.astro";
 import EventsGrid from "@/components/EventsGrid/index.astro";
 import EventsList from "@/components/EventsList/index.astro";
 import { getCollection } from "astro:content";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 const upcomingEvents = await getUpcomingEvents();
 const pastEvents = await getPastEvents();
@@ -46,7 +48,9 @@ const countries = await getCollection("countries");
           {
             countries.map((country) => (
               <a
-                href={`/events/locations/${country.id}`}
+                href={lunalink(ROUTES.events.locations[":countryId"].__path, {
+                  countryId: country.id,
+                })}
                 class="border-b border-white/10 px-5 py-3 transition duration-500 first:border-t hover:bg-white/5"
               >
                 {country.data.name}

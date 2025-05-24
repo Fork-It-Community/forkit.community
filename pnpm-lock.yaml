@@ -30,8 +30,8 @@ importers:
         specifier: 8.1.3
         version: 8.1.3(astro@5.7.3(jiti@2.4.2)(lightningcss@1.29.1)(rollup@4.34.9)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.7.0))(react@18.3.1)(rollup@4.34.9)
       '@bearstudio/lunalink':
-        specifier: 0.2.1
-        version: 0.2.1
+        specifier: 0.3.0
+        version: 0.3.0
       '@fontsource-variable/inter':
         specifier: 5.2.5
         version: 5.2.5
@@ -349,8 +349,8 @@ packages:
     resolution: {integrity: sha512-vN5p+1kl59GVKMvTHt55NzzmYVxprfJD+ql7U9NFIfKCBkYE55LYtS+WtPlaYOyzydrKI8Nezd+aZextrd+FMA==}
     engines: {node: '>=6.9.0'}
 
-  '@bearstudio/lunalink@0.2.1':
-    resolution: {integrity: sha512-IYSr4d+Fi5WBuy6LAIe/c+PSt3juGkWDAfnBMNhyHZLSesrfUi7rdIYhcgvB14YOcUA3QFgmweglQwCSL54+nw==}
+  '@bearstudio/lunalink@0.3.0':
+    resolution: {integrity: sha512-zQIhbF5BG6c6iMwyWFtaqqouFrVOv3fh0g2SKRF8AIv6VLmyLkGuM6bsyHi7PLDGTJ+fiAEGYIM6ku3e9SB+xA==}
 
   '@capsizecss/unpack@2.4.0':
     resolution: {integrity: sha512-GrSU71meACqcmIUxPYOJvGKF0yryjN/L1aCuE9DViCTJI7bfkjgYDPD1zbNDcINJwSSP6UaBZY9GAbYDO7re0Q==}
@@ -4153,7 +4153,7 @@ snapshots:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
 
-  '@bearstudio/lunalink@0.2.1':
+  '@bearstudio/lunalink@0.3.0':
     dependencies:
       query-string: 9.1.1
 

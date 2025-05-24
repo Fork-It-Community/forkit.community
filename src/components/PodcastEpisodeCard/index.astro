@@ -5,6 +5,8 @@ import { getEntries } from "astro:content";
 import personPlaceholder from "@/assets/images/people-placeholder.jpeg";
 import dayjs from "dayjs";
 import { IoLanguageSharp } from "react-icons/io5";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 interface Props {
   episode: CollectionEntry<"episodes">;
@@ -23,7 +25,11 @@ const people = [...hosts, ...guests];
 ---
 
 <a
-  href={`/podcasts/${episode.id}`}
+  href={lunalink(
+    ROUTES.podcasts[":id"].__path,
+    { id: episode.id },
+    { encodeURIComponent: (v) => String(v) },
+  )}
   class="group relative z-10 flex flex-col gap-4 overflow-hidden rounded-lg bg-white/5 p-4 backdrop-blur-md transition duration-500 hover:bg-white/10"
 >
   <div class="flex gap-4 max-xs:flex-col">
