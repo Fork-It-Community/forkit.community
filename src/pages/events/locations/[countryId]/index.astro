@@ -38,8 +38,8 @@ if (!country) {
 <MainLayout>
   <SEO
     slot="seo"
-    title="Events"
-    description="All the Fork it! events, from meetups to full day events, come take a look at what is happening near you."
+    title={`${country.data.name} Events`}
+    description={country.data.excerpt}
   />
   <ImageBackgroundHero
     src={country.data.cover.media}

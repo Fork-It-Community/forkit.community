@@ -11,4 +11,5 @@ export const zCountry = ({ image }: SchemaContext) =>
       credit: z.string().optional(),
     }),
     countryCode: z.string().length(2).describe("ISO 3166-1, Code Alpha-2"),
+    excerpt: z.string(),
   });
