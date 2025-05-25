@@ -1,30 +1,36 @@
 import { Button } from "@/components/ui/button";
 import type { ReactNode } from "react";
 import { MdArrowBack } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+
+const VISITED_PATHS_KEY = "visited-paths";
 
 export const BackButton = (props: {
   href: string;
   buttonLabel?: ReactNode;
   contextLabel?: ReactNode;
 }) => {
-  const [canGoBack, setCanGoBack] = useState(false);
-
   useEffect(() => {
-    const checkBackNavigation = () => {
-      setCanGoBack(window.history.length > 1);
-    };
+    const currentPath = window.location.pathname;
+    const storedPaths = sessionStorage.getItem(VISITED_PATHS_KEY);
+    const visitedPaths = storedPaths ? JSON.parse(storedPaths) : [];
 
-    checkBackNavigation();
-    document.addEventListener("astro:page-load", checkBackNavigation);
-
-    return () => {
-      document.removeEventListener("astro:page-load", checkBackNavigation);
-    };
+    if (!visitedPaths.includes(currentPath)) {
+      visitedPaths.push(currentPath);
+      sessionStorage.setItem(VISITED_PATHS_KEY, JSON.stringify(visitedPaths));
+    }
   }, []);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (canGoBack) {
+    const referrer = document.referrer;
+    const hasReferrer = !!referrer && referrer.includes(window.location.host);
+    const hasHistory = window.history.length > 1;
+
+    const storedPaths = sessionStorage.getItem(VISITED_PATHS_KEY);
+    const visitedPaths = storedPaths ? JSON.parse(storedPaths) : [];
+    const hasVisitedPaths = visitedPaths.length > 1;
+
+    if (hasHistory && (hasReferrer || hasVisitedPaths)) {
       e.preventDefault();
       window.history.back();
     }
