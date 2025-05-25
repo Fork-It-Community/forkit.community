@@ -4,6 +4,7 @@ import { MdArrowBack } from "react-icons/md";
 import { useEffect } from "react";
 
 const VISITED_PATHS_KEY = "visited-paths";
+const MAX_VISITED_PATHS = 10;
 
 export const BackButton = (props: {
   href: string;
@@ -13,10 +14,15 @@ export const BackButton = (props: {
   useEffect(() => {
     const currentPath = window.location.pathname;
     const storedPaths = sessionStorage.getItem(VISITED_PATHS_KEY);
-    const visitedPaths = storedPaths ? JSON.parse(storedPaths) : [];
+    let visitedPaths = storedPaths ? JSON.parse(storedPaths) : [];
 
     if (!visitedPaths.includes(currentPath)) {
       visitedPaths.push(currentPath);
+
+      if (visitedPaths.length > MAX_VISITED_PATHS) {
+        visitedPaths = visitedPaths.slice(-MAX_VISITED_PATHS);
+      }
+
       sessionStorage.setItem(VISITED_PATHS_KEY, JSON.stringify(visitedPaths));
     }
   }, []);
