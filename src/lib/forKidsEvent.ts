@@ -41,3 +41,9 @@ export async function getForKidsEventNavItems(id: string) {
       : []),
   ];
 }
+
+export function getForKidsEventFrenchDisplayDate(forKidsEventDate: Date) {
+  return forKidsEventDate
+    ? dayjs(forKidsEventDate).locale("fr").format("dddd D MMMM YYYY") + " "
+    : "";
+}
