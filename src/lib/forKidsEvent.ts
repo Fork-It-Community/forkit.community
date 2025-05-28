@@ -28,13 +28,13 @@ export async function getForKidsEventNavItems(id: string) {
       ? [
           {
             href: `/for-kids-events/${forKidsEvent.id}#venue`,
-            label: "Venue",
+            label: "Lieu",
           },
         ]
       : []),
     {
       href: `/for-kids-events/${forKidsEvent.id}#schedule`,
-      label: "Schedule",
+      label: "Programme",
     },
     ...(forKidsEvent.data.faq?.length
       ? [{ href: `/events/${forKidsEvent.id}#faq`, label: "FAQ" }]
