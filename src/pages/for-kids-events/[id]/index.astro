@@ -1,5 +1,6 @@
 ---
 import { FAQ } from "@/components/Faq";
+import ForKidsEventSchedule from "@/components/ForKidsEventSchedule/index.astro";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import { Logo } from "@/components/Logo";
 import PartnersBlock from "@/components/PartnersBlock/index.astro";
@@ -16,7 +17,7 @@ import { Image } from "astro:assets";
 import { getEntries } from "astro:content";
 import dayjs from "dayjs";
 import { motion } from "motion/react";
-import { MdEvent, MdLocationPin } from "react-icons/md";
+import { MdArrowOutward, MdEvent, MdLocationPin } from "react-icons/md";
 import type { Place } from "schema-dts";
 import "dayjs/locale/fr";
 
@@ -209,6 +210,32 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
       </article>
     )
   }
+  <!-- Schedule & Speakers -->
+  <div
+    class="relative mx-auto flex w-full max-w-screen-sm flex-col gap-24 px-4 py-16 lg:max-w-screen-lg lg:flex-row lg:gap-12"
+  >
+    <div class="flex w-full flex-[1.3] flex-col gap-8 pb-4">
+      <div class="flex items-center gap-2">
+        <h2
+          id="schedule"
+          class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+        >
+          Programme
+        </h2>
+        {
+          forKidsEvent.data.workshops && (
+            <a
+              href={`${forKidsEvent.id}/schedule`}
+              title="Dedicated schedule page"
+            >
+              <MdArrowOutward className="text-2xl transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </a>
+          )
+        }
+      </div>
+      <ForKidsEventSchedule forKidsEvent={forKidsEvent} />
+    </div>
+  </div>
 
   {forKidsEvent.data.faq && <FAQ client:load faq={forKidsEvent.data.faq} />}
 
