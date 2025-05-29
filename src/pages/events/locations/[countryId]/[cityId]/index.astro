@@ -42,7 +42,7 @@ const eventsInCity = await getEventByCity(cityId);
   <MainPageTitle
     title={city.data.name}
     subtitle=`All the Fork it! tech events in ${city.data.name}, ${country.data.name}`
-    imageSrc={bgImage}
+    imageSrc={city.data.cover.media}
   />
   <div class="flex flex-col gap-16 pb-40">
     <div
