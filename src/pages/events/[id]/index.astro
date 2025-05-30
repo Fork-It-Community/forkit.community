@@ -38,7 +38,7 @@ import dayjs from "dayjs";
 import TiltedCard from "@/components/TiltedCard";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
-
+import StayTuned from "@/components/stayTuned/index.astro";
 export async function getStaticPaths() {
   const events = await getEventsCollection();
 
@@ -178,6 +178,21 @@ const ctaEventMetadata = {
           client:load
         />
       </div>
+      {
+        !event.data.tickets?.link && (
+          <div class="space-y-6 text-center sm:pt-14 md:pt-0">
+            <StayTuned />
+            <a
+              class={cn(buttonVariants({ size: "lg", variant: "secondary" }))}
+              href="https://7dca2c80.sibforms.com/serve/MUIFACNrQwiH7V08ltOYZJGzrh-InrxkJyIqX--5MK_ju3OUx4e9obvACfjo6B1h3HciGVkC6ksErKgvwQHrdLfLpLCq73srDU5vUrCPubh3UaD10lTNebVYU7Dv-8X6QBUM5V9qgLyEcz8EKgYqd3zSCINpfcymQJcI7KwNAVZsoIKEtlEuLqwc0zOdNs-AdoFZemFS7ZS0HplO"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Join the Newsletter
+            </a>
+          </div>
+        )
+      }
       {
         !!coOrganizers.length && (
           <div class="flex flex-col items-center justify-center">

@@ -1,0 +1,37 @@
+---
+import { getSocialsItems } from "@/content/socials";
+---
+
+<div class="mx-auto max-w-screen-lg space-y-2 text-center sm:space-y-4">
+  <div class="space-y-2">
+    <h2
+      class="font-heading text-lg font-medium uppercase tracking-widest text-white md:text-2xl"
+    >
+      Registration Opens Soon
+    </h2>
+
+    <p class="text-balance text-base tracking-wide opacity-60">
+      Follow us on social media or join our newsletter to be notified when
+      registration opens
+    </p>
+  </div>
+  <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-0">
+    {
+      getSocialsItems("primary")
+        .slice(0, 4)
+        .map(({ icon: Icon, ...social }) => (
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href={social.href}
+            class="flex items-center gap-2 p-2 opacity-60 transition hover:text-white hover:opacity-100"
+          >
+            <span class="text-lg">
+              <Icon />
+            </span>
+            <span class="text-sm uppercase tracking-wide">{social.label}</span>
+          </a>
+        ))
+    }
+  </div>
+</div>
