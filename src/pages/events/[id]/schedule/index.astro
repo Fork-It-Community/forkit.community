@@ -5,8 +5,8 @@ import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
 import { getEventsCollection } from "@/lib/events";
 import { ROUTES } from "@/routes.gen";
 import { lunalink } from "@bearstudio/lunalink";
-import { SEO } from "astro-seo";
 import dayjs from "dayjs";
+import SEO from "@/components/SEO/index.astro";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
