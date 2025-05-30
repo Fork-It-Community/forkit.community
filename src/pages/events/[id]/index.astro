@@ -38,7 +38,7 @@ import dayjs from "dayjs";
 import TiltedCard from "@/components/TiltedCard";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
-import StayTuned from "@/components/stayTuned/index.astro";
+import { getSocialsItems } from "@/content/socials";
 export async function getStaticPaths() {
   const events = await getEventsCollection();
 
@@ -178,22 +178,7 @@ const ctaEventMetadata = {
           client:load
         />
       </div>
-      {
-        dayjs(event.data.date).isAfter(dayjs()) &&
-          !event.data.tickets?.link && (
-            <div class="space-y-6 text-center sm:pt-14 md:pt-0">
-              <StayTuned />
-              <a
-                class={cn(buttonVariants({ size: "lg", variant: "secondary" }))}
-                href="https://7dca2c80.sibforms.com/serve/MUIFACNrQwiH7V08ltOYZJGzrh-InrxkJyIqX--5MK_ju3OUx4e9obvACfjo6B1h3HciGVkC6ksErKgvwQHrdLfLpLCq73srDU5vUrCPubh3UaD10lTNebVYU7Dv-8X6QBUM5V9qgLyEcz8EKgYqd3zSCINpfcymQJcI7KwNAVZsoIKEtlEuLqwc0zOdNs-AdoFZemFS7ZS0HplO"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Join the Newsletter
-              </a>
-            </div>
-          )
-      }
+
       {
         !!coOrganizers.length && (
           <div class="flex flex-col items-center justify-center">
@@ -248,6 +233,55 @@ const ctaEventMetadata = {
       </nav>
     </motion.div>
   </div>
+  {
+    dayjs(event.data.date).isAfter(dayjs()) && !event.data.tickets?.link && (
+      <div id="stay-tuned">
+        <TiltedCard client:visible className="mx-auto px-4 max-w-screen-sm">
+          <div class="flex flex-col gap-4 rounded-lg bg-white/5 p-6 backdrop-blur-md md:flex-col">
+            <div class="flex flex-col gap-4 md:flex-row">
+              <div class="flex-1 space-y-2 text-center md:text-left">
+                <h2 class="text-balance font-heading text-base font-medium uppercase tracking-widest transition group-hover:text-primary">
+                  Registration Opens Soon
+                </h2>
+                <p class="max-w-xl text-balance text-xs tracking-wider opacity-60">
+                  Follow us on social media or join our newsletter to be
+                  notified when registration opens
+                </p>
+              </div>
+              <div class="flex items-center justify-center">
+                <a
+                  class={cn(buttonVariants({ size: "lg", variant: "default" }))}
+                  href="https://7dca2c80.sibforms.com/serve/MUIFACNrQwiH7V08ltOYZJGzrh-InrxkJyIqX--5MK_ju3OUx4e9obvACfjo6B1h3HciGVkC6ksErKgvwQHrdLfLpLCq73srDU5vUrCPubh3UaD10lTNebVYU7Dv-8X6QBUM5V9qgLyEcz8EKgYqd3zSCINpfcymQJcI7KwNAVZsoIKEtlEuLqwc0zOdNs-AdoFZemFS7ZS0HplO"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Join the Newsletter
+                </a>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-x-3 gap-y-2">
+              {getSocialsItems("primary")
+                .slice(0, 4)
+                .map(({ icon: Icon, ...social }) => (
+                  <a
+                    href={social.href}
+                    class="flex items-center gap-2 p-1 text-lg opacity-60 transition hover:text-white hover:opacity-100"
+                    aria-label={social.label}
+                    title={social.label}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <Icon />
+                  </a>
+                ))}
+            </div>
+          </div>
+        </TiltedCard>
+      </div>
+    )
+  }
+
   {
     !!sponsors.length && (
       <div class="hide-scrollbar overflow-auto">

@@ -285,7 +285,12 @@ export async function getPersonEvents(
   );
 }
 
-export type EventCtaType = "tickets" | "after-event" | "prospectus" | "cfp";
+export type EventCtaType =
+  | "tickets"
+  | "after-event"
+  | "prospectus"
+  | "cfp"
+  | "tickets-soon";
 export type EventCtaTypes = ReturnType<typeof getEventCtaTypes>;
 
 export function getEventCtaTypes(event: CollectionEntry<"events">) {
@@ -306,6 +311,13 @@ export function getEventCtaTypes(event: CollectionEntry<"events">) {
       !excludeTypes?.includes("after-event")
     ) {
       return "after-event";
+    }
+    if (
+      dayjs(event.data.date).isAfter(dayjs()) &&
+      !event.data.tickets &&
+      !excludeTypes?.includes("tickets-soon")
+    ) {
+      return "tickets-soon";
     }
     return null;
   };
