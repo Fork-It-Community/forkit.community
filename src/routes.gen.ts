@@ -53,7 +53,18 @@ const ROUTES_CONFIG = {
     },
     locations: {
       ":countryId": {
-        ":cityId": {},
+        ":cityId": {
+          assets: {
+            ":__image.:__type": {},
+            "_og-image": {},
+            _utils: {},
+          },
+        },
+        assets: {
+          ":__image.:__type": {},
+          "_og-image": {},
+          _utils: {},
+        },
       },
     },
     "rss.xml": {},
