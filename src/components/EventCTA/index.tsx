@@ -158,6 +158,7 @@ export const EventCTA = (props: Props) => {
     .with("tickets-soon", () => {
       return (
         <a
+          role="button"
           {...buttonProps}
           onClick={() => {
             const element = document.getElementById("stay-tuned");
