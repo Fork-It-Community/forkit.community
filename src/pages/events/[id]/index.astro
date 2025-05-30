@@ -179,19 +179,20 @@ const ctaEventMetadata = {
         />
       </div>
       {
-        !event.data.tickets?.link && (
-          <div class="space-y-6 text-center sm:pt-14 md:pt-0">
-            <StayTuned />
-            <a
-              class={cn(buttonVariants({ size: "lg", variant: "secondary" }))}
-              href="https://7dca2c80.sibforms.com/serve/MUIFACNrQwiH7V08ltOYZJGzrh-InrxkJyIqX--5MK_ju3OUx4e9obvACfjo6B1h3HciGVkC6ksErKgvwQHrdLfLpLCq73srDU5vUrCPubh3UaD10lTNebVYU7Dv-8X6QBUM5V9qgLyEcz8EKgYqd3zSCINpfcymQJcI7KwNAVZsoIKEtlEuLqwc0zOdNs-AdoFZemFS7ZS0HplO"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Join the Newsletter
-            </a>
-          </div>
-        )
+        dayjs(event.data.date).isAfter(dayjs()) &&
+          !event.data.tickets?.link && (
+            <div class="space-y-6 text-center sm:pt-14 md:pt-0">
+              <StayTuned />
+              <a
+                class={cn(buttonVariants({ size: "lg", variant: "secondary" }))}
+                href="https://7dca2c80.sibforms.com/serve/MUIFACNrQwiH7V08ltOYZJGzrh-InrxkJyIqX--5MK_ju3OUx4e9obvACfjo6B1h3HciGVkC6ksErKgvwQHrdLfLpLCq73srDU5vUrCPubh3UaD10lTNebVYU7Dv-8X6QBUM5V9qgLyEcz8EKgYqd3zSCINpfcymQJcI7KwNAVZsoIKEtlEuLqwc0zOdNs-AdoFZemFS7ZS0HplO"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Join the Newsletter
+              </a>
+            </div>
+          )
       }
       {
         !!coOrganizers.length && (
