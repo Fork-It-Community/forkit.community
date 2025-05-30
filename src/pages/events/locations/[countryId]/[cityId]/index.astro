@@ -33,6 +33,10 @@ if (!city || !country) {
 }
 
 const eventsInCity = await getEventByCity(cityId);
+const ogImage = new URL(
+  Astro.url.pathname + "/assets/og-image.jpg",
+  Astro.site,
+);
 ---
 
 <MainLayout>
@@ -40,6 +44,7 @@ const eventsInCity = await getEventByCity(cityId);
     slot="seo"
     title={`${city.data.name} Events`}
     description={city.data.description}
+    image={ogImage.toString()}
   />
   <ImageBackgroundHero src={city.data.cover.media} alt={city.data.cover.alt} />
 

@@ -26,6 +26,10 @@ const cities = await getCollection(
   (city) => city.data.country.id === countryId,
 );
 const eventsInCountry = await getEventsByCountry(countryId);
+const ogImage = new URL(
+  Astro.url.pathname + "/assets/og-image.jpg",
+  Astro.site,
+);
 
 if (!country) {
   return new Response(null, {
@@ -40,6 +44,7 @@ if (!country) {
     slot="seo"
     title={`${country.data.name} Events`}
     description={country.data.description}
+    image={ogImage.toString()}
   />
   <ImageBackgroundHero
     src={country.data.cover.media}

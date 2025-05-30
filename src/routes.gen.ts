@@ -82,7 +82,9 @@ const ROUTES_CONFIG = {
     "rss.xml": {},
   },
   people: {
-    ":id": {},
+    ":id": {
+      assets: {},
+    },
   },
   podcasts: {
     ":id": {
