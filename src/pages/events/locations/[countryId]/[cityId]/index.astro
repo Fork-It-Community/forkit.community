@@ -3,7 +3,6 @@ import MainLayout from "@/layouts/MainLayout.astro";
 import { getEventByCity, getEventsCollection } from "@/lib/events";
 import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import SEO from "@/components/SEO/index.astro";
-import bgImage from "@/assets/images/events.jpeg";
 import EventsList from "@/components/EventsList/index.astro";
 import { getEntry } from "astro:content";
 
@@ -36,8 +35,8 @@ const eventsInCity = await getEventByCity(cityId);
 <MainLayout>
   <SEO
     slot="seo"
-    title="Events"
-    description="All the Fork it! events, from meetups to full day events, come take a look at what is happening near you."
+    title={`${city.data.name} Events`}
+    description={city.data.description}
   />
   <MainPageTitle
     title={city.data.name}

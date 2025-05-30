@@ -18,4 +18,5 @@ export const zCity = ({ image }: SchemaContext) =>
       lng: z.number(),
     }),
     timezone: z.string(),
+    description: z.string(),
   });
