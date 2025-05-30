@@ -155,5 +155,12 @@ export const EventCTA = (props: Props) => {
         After Event Insights
       </a>
     ))
+    .with("stay-updated", () => {
+      return (
+        <a {...buttonProps} href="#stay-updated">
+          Stay updated
+        </a>
+      );
+    })
     .exhaustive();
 };
