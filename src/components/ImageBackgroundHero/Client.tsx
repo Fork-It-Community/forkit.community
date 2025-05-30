@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+
 import { useWindowSize } from "@uidotdev/usehooks";
+import { motion, useScroll, useTransform } from "motion/react";
 
 export const Client = (props: {
   children?: ReactNode;

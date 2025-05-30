@@ -1,9 +1,10 @@
 import type { CollectionEntry } from "astro:content";
-import { getPersonArticles } from "./news";
-import { getPersonEvents } from "./events";
-import { getPersonEpisodes } from "./podcasts";
-import { match } from "ts-pattern";
 import dayjs from "dayjs";
+import { match } from "ts-pattern";
+
+import { getPersonEvents } from "./events";
+import { getPersonArticles } from "./news";
+import { getPersonEpisodes } from "./podcasts";
 
 export async function getAppearances(
   person: CollectionEntry<"people">,

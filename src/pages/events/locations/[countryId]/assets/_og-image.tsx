@@ -1,12 +1,13 @@
+import type { ExtractParams } from "@bearstudio/lunalink";
+
+import { Logo } from "@/components/Logo";
+import { BgImage } from "@/generated-assets/components/BgImage";
 import { Frame } from "@/generated-assets/components/Frame";
 import {
-  getAstroImageBase64,
   type AssetImageConfig,
+  getAstroImageBase64,
 } from "@/generated-assets/image";
-import { BgImage } from "@/generated-assets/components/BgImage";
-import { Logo } from "@/components/Logo";
 import { getCountryData } from "@/pages/events/locations/[countryId]/[cityId]/assets/_utils";
-import type { ExtractParams } from "@bearstudio/lunalink";
 import type { ROUTES } from "@/routes.gen";
 
 export const config: AssetImageConfig = {

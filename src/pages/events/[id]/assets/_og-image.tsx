@@ -1,12 +1,13 @@
+import { Logo } from "@/components/Logo";
+import { BgImage } from "@/generated-assets/components/BgImage";
 import { Frame } from "@/generated-assets/components/Frame";
 import {
-  getAstroImageBase64,
   type AssetImageConfig,
+  getAstroImageBase64,
 } from "@/generated-assets/image";
-import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
-import { Logo } from "@/components/Logo";
 import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
+
 import { getEventData } from "./_utils";
 
 export const config: AssetImageConfig = {

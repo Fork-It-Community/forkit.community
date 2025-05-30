@@ -1,6 +1,7 @@
-import { zMediaImage } from "@/schemas/utils";
 import { type SchemaContext } from "astro:content";
 import { z } from "astro:schema";
+
+import { zMediaImage } from "@/schemas/utils";
 
 export type Country = z.infer<ReturnType<typeof zCountry>>;
 export const zCountry = ({ image }: SchemaContext) =>

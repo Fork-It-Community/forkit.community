@@ -1,3 +1,15 @@
+import { type ComponentProps } from "react";
+
+import { Dialog, DialogFooter, DialogHeader } from "@/components/ui/dialog";
+import {
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogOverlay,
+  DialogPortal,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import {
   Drawer,
   DrawerClose,
@@ -10,17 +22,6 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Dialog, DialogFooter, DialogHeader } from "@/components/ui/dialog";
-import { type ComponentProps } from "react";
-import {
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogOverlay,
-  DialogPortal,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const useIsMobile = () => {

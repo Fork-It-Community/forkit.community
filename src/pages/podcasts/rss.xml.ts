@@ -1,6 +1,7 @@
-import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 import rss from "@astrojs/rss";
 import type { APIRoute } from "astro";
+
+import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 
 export const GET: APIRoute = async function get(context) {
   const podcasts = await getPodcastsEpisodesCollection();

@@ -1,7 +1,8 @@
+import { Fragment } from "react";
+
 import { Logo } from "@/components/Logo";
 import { LogoIcon } from "@/components/LogoIcon";
 import { COLORS } from "@/generated-assets/theme";
-import { Fragment } from "react";
 
 export const LogoWithFriends = (props: { logos?: string[] | undefined }) => {
   return (

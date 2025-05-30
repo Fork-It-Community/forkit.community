@@ -1,14 +1,15 @@
-import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
-import { zEvent } from "@/schemas/events";
-import { zNews } from "@/schemas/news";
-import { zPerson } from "@/schemas/people";
-import { zPartner } from "@/schemas/partners";
-import { zTalk } from "@/schemas/talks";
-import { zEventSubPage } from "@/schemas/eventsSubPages";
-import { zEpisode, zPodcast } from "@/schemas/podcasts";
-import { zCountry } from "@/schemas/country";
+import { defineCollection } from "astro:content";
+
 import { zCity } from "@/schemas/city";
+import { zCountry } from "@/schemas/country";
+import { zEvent } from "@/schemas/events";
+import { zEventSubPage } from "@/schemas/eventsSubPages";
+import { zNews } from "@/schemas/news";
+import { zPartner } from "@/schemas/partners";
+import { zPerson } from "@/schemas/people";
+import { zEpisode, zPodcast } from "@/schemas/podcasts";
+import { zTalk } from "@/schemas/talks";
 
 export const collections = {
   partners: defineCollection({

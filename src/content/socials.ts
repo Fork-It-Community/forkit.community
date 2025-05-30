@@ -1,16 +1,18 @@
-import { IconLuma } from "@/components/CustomIcons/IconLuma";
-import type { SocialType } from "@/schemas/utils";
 import type { FC } from "react";
+
 import {
   FaBluesky,
   FaDiscord,
+  FaFacebook,
   FaGithub,
   FaInstagram,
   FaLinkedin,
   FaXTwitter,
   FaYoutube,
-  FaFacebook,
 } from "react-icons/fa6";
+
+import { IconLuma } from "@/components/CustomIcons/IconLuma";
+import type { SocialType } from "@/schemas/utils";
 
 type SocialsLevel = "primary" | "secondary";
 

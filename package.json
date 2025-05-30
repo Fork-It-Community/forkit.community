@@ -10,6 +10,7 @@
     "build:routes": "tsx scripts/generate-routes.ts && prettier -w ./src/routes.gen.ts",
     "lint": "astro check",
     "preview": "astro preview",
+    "pretty": "prettier -w .",
     "astro": "astro",
     "prepare": "husky"
   },
@@ -63,6 +64,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "0.5.16",
+    "@trivago/prettier-plugin-sort-imports": "5.2.2",
     "@types/adm-zip": "0.5.7",
     "husky": "9.1.7",
     "lint-staged": "15.5.2",

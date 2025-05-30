@@ -1,3 +1,8 @@
+import type { ComponentProps } from "react";
+
+import { MdArrowOutward } from "react-icons/md";
+import { match } from "ts-pattern";
+
 import {
   ResponsiveDrawer,
   ResponsiveDrawerContent,
@@ -10,9 +15,6 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import type { EventCtaType } from "@/lib/events";
 import { cn } from "@/lib/utils-client";
 import type { Event } from "@/schemas/events";
-import type { ComponentProps } from "react";
-import { MdArrowOutward } from "react-icons/md";
-import { match } from "ts-pattern";
 
 export type EventMetadataForCta = Pick<
   Event,

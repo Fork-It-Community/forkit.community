@@ -1,5 +1,6 @@
+import { type SchemaContext, reference, z } from "astro:content";
+
 import { zLanguage } from "@/schemas/language";
-import { reference, z, type SchemaContext } from "astro:content";
 
 export type Platform = z.infer<ReturnType<typeof zPlatform>>;
 const zPlatform = () =>

@@ -1,5 +1,12 @@
-import { Logo } from "@/components/Logo";
+import { type ReactNode, useState } from "react";
+
+import { lunalink } from "@bearstudio/lunalink";
 import { useWindowScroll, useWindowSize } from "@uidotdev/usehooks";
+import { MdArrowOutward, MdMenu } from "react-icons/md";
+
+import { EventCTA, type EventMetadataForCta } from "@/components/EventCTA";
+import { Logo } from "@/components/Logo";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -8,13 +15,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { MdArrowOutward, MdMenu } from "react-icons/md";
-import { useState, type ReactNode } from "react";
-import { Button } from "@/components/ui/button";
-
-import { EventCTA, type EventMetadataForCta } from "@/components/EventCTA";
 import type { EventCtaTypes } from "@/lib/events";
-import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 
 export const EventNav = (props: {

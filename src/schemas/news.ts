@@ -1,4 +1,4 @@
-import { z, reference, type SchemaContext } from "astro:content";
+import { type SchemaContext, reference, z } from "astro:content";
 
 export type News = z.infer<ReturnType<typeof zNews>>;
 export const zNews = ({ image }: SchemaContext) =>

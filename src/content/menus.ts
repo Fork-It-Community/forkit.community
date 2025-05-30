@@ -1,14 +1,15 @@
 import type { FC, ReactNode } from "react";
+
 import {
-  MdHomeFilled,
-  MdEvent,
-  MdInfo,
-  MdFeed,
-  MdPodcasts,
   MdBadge,
   // MdBadge,
   // MdHandshake,
   // MdLocalActivity,
+  MdEvent,
+  MdFeed,
+  MdHomeFilled,
+  MdInfo,
+  MdPodcasts,
 } from "react-icons/md";
 
 type MainMenuScope = "all" | "mobile" | "desktop";

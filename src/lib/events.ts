@@ -1,13 +1,12 @@
-import dayjs from "dayjs";
-
 import {
+  type CollectionEntry,
   getCollection,
   getEntries,
   getEntry,
-  type CollectionEntry,
 } from "astro:content";
-import { match } from "ts-pattern";
+import dayjs from "dayjs";
 import { entries } from "remeda";
+import { match } from "ts-pattern";
 
 export function isEventPublished(
   status?: CollectionEntry<"events">["data"]["status"],

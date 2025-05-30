@@ -1,5 +1,6 @@
-import { cn } from "@/lib/utils-client";
 import { LuMapPin } from "react-icons/lu";
+
+import { cn } from "@/lib/utils-client";
 
 const MapLocation = (
   props: Readonly<{

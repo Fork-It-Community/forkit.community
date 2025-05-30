@@ -1,5 +1,6 @@
-import type { Language } from "@/schemas/language";
 import { match } from "ts-pattern";
+
+import type { Language } from "@/schemas/language";
 
 export function lang(language: Language | undefined) {
   return match(language)

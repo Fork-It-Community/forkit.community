@@ -1,15 +1,16 @@
+import dayjs from "dayjs";
+
+import backgroundImage from "@/assets/images/podcasts.jpeg";
+import { Logo } from "@/components/Logo";
+import { NotFoundAssetError } from "@/generated-assets/api";
+import { BgImage } from "@/generated-assets/components/BgImage";
 import { Frame } from "@/generated-assets/components/Frame";
 import {
-  getAstroImageBase64,
   type AssetImageConfig,
+  getAstroImageBase64,
 } from "@/generated-assets/image";
-import { BgImage } from "@/generated-assets/components/BgImage";
-import { Logo } from "@/components/Logo";
-import dayjs from "dayjs";
-import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
-import backgroundImage from "@/assets/images/podcasts.jpeg";
 import { COLORS } from "@/generated-assets/theme";
-import { NotFoundAssetError } from "@/generated-assets/api";
+import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 
 export const config: AssetImageConfig = {
   width: 1920,

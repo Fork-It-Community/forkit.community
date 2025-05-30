@@ -1,12 +1,13 @@
-import { NotFoundAssetError } from "@/generated-assets/api";
-import { getImageNameFromTsxPath } from "@/generated-assets/image";
-import { eventWithComputed } from "@/lib/events";
 import {
+  type CollectionEntry,
   getCollection,
   getEntries,
   getEntry,
-  type CollectionEntry,
 } from "astro:content";
+
+import { NotFoundAssetError } from "@/generated-assets/api";
+import { getImageNameFromTsxPath } from "@/generated-assets/image";
+import { eventWithComputed } from "@/lib/events";
 
 export const getEventData = async (id: string) => {
   const event = await getEntry("events", id);

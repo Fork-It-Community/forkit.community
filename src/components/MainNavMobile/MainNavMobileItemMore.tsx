@@ -1,4 +1,7 @@
+import type { FC, ReactNode } from "react";
+
 import { MdMoreHoriz } from "react-icons/md";
+
 import {
   Drawer,
   DrawerContent,
@@ -7,7 +10,6 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import type { FC, ReactNode } from "react";
 import { getMainMenuMobileItems } from "@/content/menus";
 
 const MainNavMobileItemMore = (props: { currentPathname: string }) => {

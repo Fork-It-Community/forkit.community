@@ -1,8 +1,10 @@
+import { type ReactNode, useRef, useState } from "react";
+
 import type { SpringOptions } from "motion/react";
-import { useRef, useState, type ReactNode } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
-import { cn } from "@/lib/utils-client";
+
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { cn } from "@/lib/utils-client";
 
 interface TiltedCardProps {
   scaleOnHover?: number;

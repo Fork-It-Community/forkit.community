@@ -1,4 +1,5 @@
 import { type AssetImageConfig } from "@/generated-assets/image";
+
 import { ticketsAvailable } from "./_tickets-available";
 
 export const config: AssetImageConfig = {

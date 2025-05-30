@@ -1,15 +1,16 @@
+import { getEntry } from "astro:content";
+
+import { Logo } from "@/components/Logo";
+import { NotFoundAssetError } from "@/generated-assets/api";
+import { BgImage } from "@/generated-assets/components/BgImage";
 import { Frame } from "@/generated-assets/components/Frame";
 import {
-  getAstroImageBase64,
   type AssetImageConfig,
+  getAstroImageBase64,
 } from "@/generated-assets/image";
-import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate } from "@/lib/events";
 import { getEventData } from "@/pages/events/[id]/assets/_utils";
-import { getEntry } from "astro:content";
-import { NotFoundAssetError } from "@/generated-assets/api";
-import { Logo } from "@/components/Logo";
 
 export const config: AssetImageConfig = {
   width: 1080,

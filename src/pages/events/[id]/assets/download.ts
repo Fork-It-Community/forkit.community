@@ -1,9 +1,11 @@
-import { getEventAssetsSources } from "./_utils";
+import AdmZip from "adm-zip";
 import type { APIRoute } from "astro";
 import { getEntry } from "astro:content";
 import dayjs from "dayjs";
-import AdmZip from "adm-zip";
+
 import { eventWithComputed } from "@/lib/events";
+
+import { getEventAssetsSources } from "./_utils";
 
 export const prerender = false;
 

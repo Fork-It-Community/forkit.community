@@ -1,10 +1,10 @@
+import type { ImageMetadata } from "astro";
 import fs from "fs/promises";
+import path from "node:path";
+import { renderToStaticMarkup } from "react-dom/server";
 import satori from "satori";
 import sharp from "sharp";
-import path from "node:path";
-import type { ImageMetadata } from "astro";
 import { match } from "ts-pattern";
-import { renderToStaticMarkup } from "react-dom/server";
 
 import { COLORS, FONTS } from "./theme";
 

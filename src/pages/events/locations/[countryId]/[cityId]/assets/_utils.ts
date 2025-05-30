@@ -1,5 +1,6 @@
-import { NotFoundAssetError } from "@/generated-assets/api";
 import { getEntry } from "astro:content";
+
+import { NotFoundAssetError } from "@/generated-assets/api";
 
 export const getCityData = async (id: string) => {
   const city = await getEntry("cities", id);

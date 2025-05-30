@@ -1,6 +1,7 @@
-import { getNewsCollection } from "@/lib/news";
 import rss from "@astrojs/rss";
 import type { APIRoute } from "astro";
+
+import { getNewsCollection } from "@/lib/news";
 
 export const GET: APIRoute = async function get(context) {
   const news = await getNewsCollection();

@@ -1,13 +1,14 @@
+import { BgImage } from "@/generated-assets/components/BgImage";
 import { Frame } from "@/generated-assets/components/Frame";
 import {
-  getAstroImageBase64,
   type AssetImageConfig,
+  getAstroImageBase64,
 } from "@/generated-assets/image";
-import { BgImage } from "@/generated-assets/components/BgImage";
-import ticketBg from "./_ticket.png";
-import { getEventData } from "./_utils";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate } from "@/lib/events";
+
+import ticketBg from "./_ticket.png";
+import { getEventData } from "./_utils";
 
 export const config: AssetImageConfig = {
   width: 1920,

@@ -1,12 +1,13 @@
+import type { APIRoute } from "astro";
+
 import {
   DEBUG_HTML,
+  JPG,
+  SVG,
   generateImageResponseHTML,
   generateImageResponseJPG,
   generateImageResponseSVG,
-  JPG,
-  SVG,
 } from "@/generated-assets/image";
-import type { APIRoute } from "astro";
 
 export class NotFoundAssetError extends Error {
   constructor({ cause }: { cause?: unknown } = {}) {

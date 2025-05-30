@@ -1,13 +1,14 @@
-import { Frame } from "@/generated-assets/components/Frame";
-import {
-  getAstroImageBase64,
-  type AssetImageConfig,
-} from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
+import { Frame } from "@/generated-assets/components/Frame";
+import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
+import {
+  type AssetImageConfig,
+  getAstroImageBase64,
+} from "@/generated-assets/image";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
+
 import { getEventData } from "./_utils";
-import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 
 export const config: AssetImageConfig = {
   width: 1920,

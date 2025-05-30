@@ -1,6 +1,7 @@
-import type { EventComputed } from "@/lib/events";
 import dayjs from "dayjs";
 import { LuMapPin } from "react-icons/lu";
+
+import type { EventComputed } from "@/lib/events";
 
 export const MeetupCard = (
   props: Readonly<{ event: EventComputed["data"] }>,

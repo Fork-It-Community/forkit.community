@@ -1,6 +1,7 @@
-import { getEventDisplayType, getEventsCollection } from "@/lib/events";
 import rss from "@astrojs/rss";
 import type { APIRoute } from "astro";
+
+import { getEventDisplayType, getEventsCollection } from "@/lib/events";
 
 export const GET: APIRoute = async function get(context) {
   const events = await getEventsCollection();

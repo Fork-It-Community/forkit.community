@@ -1,5 +1,6 @@
-import { COLORS } from "@/generated-assets/theme";
 import type { CSSProperties, ReactNode } from "react";
+
+import { COLORS } from "@/generated-assets/theme";
 
 export const Frame = ({
   width,

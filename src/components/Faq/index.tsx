@@ -1,10 +1,11 @@
+import type { CollectionEntry } from "astro:content";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import type { CollectionEntry } from "astro:content";
 
 export const FAQ = (
   props: Readonly<{ faq: CollectionEntry<"events">["data"]["faq"] }>,

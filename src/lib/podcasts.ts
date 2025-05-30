@@ -1,7 +1,7 @@
-import type { Platform } from "@/schemas/podcasts";
-import { getCollection, type CollectionEntry } from "astro:content";
-import dayjs from "dayjs";
 import type { FC } from "react";
+
+import { type CollectionEntry, getCollection } from "astro:content";
+import dayjs from "dayjs";
 import {
   FaDeezer,
   FaDownload,
@@ -10,6 +10,8 @@ import {
   FaYoutube,
 } from "react-icons/fa6";
 import { SiPodcastindex } from "react-icons/si";
+
+import type { Platform } from "@/schemas/podcasts";
 
 type Params = {
   limit?: number;

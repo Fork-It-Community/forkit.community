@@ -1,4 +1,5 @@
 import { type AssetImageConfig } from "@/generated-assets/image";
+
 import { saveTheDate } from "./_save-the-date";
 
 export const config: AssetImageConfig = {

@@ -1,14 +1,15 @@
+import dayjs from "dayjs";
+
+import defaultBackgroundImage from "@/assets/images/news.jpeg";
+import { Logo } from "@/components/Logo";
+import { NotFoundAssetError } from "@/generated-assets/api";
+import { BgImage } from "@/generated-assets/components/BgImage";
 import { Frame } from "@/generated-assets/components/Frame";
 import {
-  getAstroImageBase64,
   type AssetImageConfig,
+  getAstroImageBase64,
 } from "@/generated-assets/image";
-import { BgImage } from "@/generated-assets/components/BgImage";
-import { Logo } from "@/components/Logo";
 import { getNewsCollection } from "@/lib/news";
-import defaultBackgroundImage from "@/assets/images/news.jpeg";
-import dayjs from "dayjs";
-import { NotFoundAssetError } from "@/generated-assets/api";
 
 export const config: AssetImageConfig = {
   width: 1920,
