@@ -1,0 +1,116 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+
+import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
+import SEO from "@/components/SEO/index.astro";
+import { getEventsByCountry } from "@/lib/events";
+import EventsList from "@/components/EventsList/index.astro";
+import { getCollection } from "astro:content";
+import { getEntry } from "astro:content";
+import { BackButton } from "@/components/BackButton";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
+
+export async function getStaticPaths() {
+  const countries = await getCollection("countries");
+  return countries.map((country) => ({
+    params: { countryId: country.id },
+  }));
+}
+
+const { countryId } = Astro.params;
+
+const country = await getEntry("countries", countryId);
+const cities = await getCollection(
+  "cities",
+  (city) => city.data.country.id === countryId,
+);
+const eventsInCountry = await getEventsByCountry(countryId);
+
+if (!country) {
+  return new Response(null, {
+    status: 404,
+    statusText: "Not found",
+  });
+}
+---
+
+<MainLayout>
+  <SEO
+    slot="seo"
+    title={`${country.data.name} Events`}
+    description={country.data.description}
+  />
+  <ImageBackgroundHero
+    src={country.data.cover.media}
+    alt={country.data.cover.alt}
+  />
+
+  <div class="mx-auto w-full max-w-screen-lg px-4 py-4">
+    <BackButton
+      href={lunalink(ROUTES.events.__path, {})}
+      client:load
+      contextLabel="Fork It! Events"
+    />
+    <div
+      class="flex w-full flex-col justify-center gap-4 py-12 md:min-h-[40svh]"
+    >
+      <div class="flex w-full flex-col gap-2">
+        <h1
+          class="w-full text-balance text-left font-heading text-4xl font-medium uppercase tracking-wider max-md:flex-1 md:text-5xl"
+        >
+          {country.data.name}
+        </h1>
+        <h2
+          class="w-full text-balance text-left text-base tracking-widest md:text-lg"
+        >
+          All the Fork it! tech events in {country.data.name}
+        </h2>
+      </div>
+      {
+        !!country.data.description && (
+          <p class="max-w-[60ch] text-sm tracking-wide [text-shadow:0_2px_30px_rgba(0,0,0,0.4)]">
+            {country.data.description}
+          </p>
+        )
+      }
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-16 pb-40">
+    <div
+      class="mx-auto flex w-full max-w-screen-lg flex-col gap-16 px-4 md:flex-row-reverse"
+    >
+      <div class="flex w-full flex-1 flex-col gap-4">
+        <h2
+          class="font-heading text-sm font-medium uppercase tracking-widest opacity-60"
+        >
+          Events by City
+        </h2>
+        <div class="flex flex-col">
+          {
+            cities.map((city) => (
+              <a
+                href={lunalink(
+                  ROUTES["events"].locations[":countryId"][":cityId"].__path,
+                  {
+                    countryId: country.id,
+                    cityId: city.id,
+                  },
+                )}
+                class="border-b border-white/10 px-5 py-3 transition duration-500 first:border-t hover:bg-white/5"
+              >
+                {city.data.name}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+      <EventsList
+        events={eventsInCountry}
+        title={`Events in ${country.data.name}`}
+        class="flex-[2]"
+      />
+    </div>
+  </div>
+</MainLayout>

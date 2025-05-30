@@ -15,6 +15,8 @@ import Prose from "@/components/Prose/index.astro";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import TiltedCard from "@/components/TiltedCard";
 import { BackButton } from "@/components/BackButton";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 export const getStaticPaths = (async () => {
   const people = await getCollection("people");
@@ -50,7 +52,7 @@ const contributions = await getAppearances(person, Infinity);
       <div class="px-4">
         <BackButton
           client:load
-          href="/people"
+          href={lunalink(ROUTES.people.__path, {})}
           contextLabel="Fork It! Members"
         />
       </div>

@@ -94,7 +94,8 @@ export function saveTheDate(options: { width: number; height: number }) {
                 {event.data.location?.name
                   ? `${event.data.location.name}, `
                   : ""}
-                {event.data.city}, {event.data.country}
+                {event.data._computed.city?.data.name},{" "}
+                {event.data._computed.country?.data.name}
               </div>
             </div>
           </div>

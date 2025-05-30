@@ -20,6 +20,8 @@ import { getEntry } from "astro:content";
 import { ShareButton } from "@/components/ShareButton";
 import { buttonVariants } from "@/components/ui/button";
 import { LuShare2 } from "react-icons/lu";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 export async function getStaticPaths() {
   const news = await getNewsCollection();
@@ -94,7 +96,11 @@ const authors = await Promise.all(
     )}
   >
     <div class="flex items-center justify-between">
-      <BackButton client:load href="/news" contextLabel="Fork It! News" />
+      <BackButton
+        client:load
+        href={lunalink(ROUTES.news.__path, {})}
+        contextLabel="Fork It! News"
+      />
       <ShareButton
         client:load
         actions={["bluesky", "x", "facebook", "linkedin", "copy"]}

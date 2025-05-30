@@ -8,7 +8,9 @@ import { ShareButton } from "@/components/ShareButton";
 import { MdArrowOutward } from "react-icons/md";
 import { cn } from "@/lib/utils-client";
 import { buttonVariants } from "@/components/ui/button";
-import { getEventDisplayDate } from "@/lib/events";
+import { eventWithComputed, getEventDisplayDate } from "@/lib/events";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 export const prerender = false;
 
@@ -22,20 +24,22 @@ if (!eventId) {
   });
 }
 
-const event = await getEntry("events", eventId);
+const eventEntry = await getEntry("events", eventId);
 
-if (!event || event.data.type !== "event") {
+if (!eventEntry || eventEntry.data.type !== "event") {
   return new Response(null, {
     status: 404,
     statusText: "Not found",
   });
 }
 
-const title = `Attendee ${name} | ${event.data.name}`;
+const event = await eventWithComputed(eventEntry);
+
+const title = `Attendee ${name} | ${event.data._computed.name}`;
 const ogImage = new URL(Astro.url.pathname + "/social.jpg", Astro.site);
 const pageUrl = new URL(Astro.url.pathname, Astro.site);
-const shareMessage = `I'll be at Fork it! ${event.data.city} event on ${getEventDisplayDate(event)}! Join me! `;
-const downloadName = `${name} - Fork it! ${event.data.name}`;
+const shareMessage = `I'll be at Fork it! ${event.data._computed.city?.data.name} event on ${getEventDisplayDate(event)}! Join me!`;
+const downloadName = `${name} - Fork it! ${event.data._computed.name}`;
 const ticketImage = new URL(Astro.url.pathname + "/ticket.svg", Astro.site);
 ---
 
@@ -74,7 +78,7 @@ const ticketImage = new URL(Astro.url.pathname + "/ticket.svg", Astro.site);
             Share
           </ShareButton>
           <a
-            href={`/events/${event.id}`}
+            href={lunalink(ROUTES.events[":id"].__path, { id: event.id })}
             class={cn(buttonVariants(), "group gap-2 flex-1")}
           >
             Get Tickets
@@ -112,7 +116,7 @@ const ticketImage = new URL(Astro.url.pathname + "/ticket.svg", Astro.site);
           Share
         </ShareButton>
         <a
-          href={`/events/${event.id}`}
+          href={lunalink(ROUTES.events[":id"].__path, { id: event.id })}
           class={cn(buttonVariants(), "group gap-2 flex-1")}
         >
           Get Tickets
@@ -123,7 +127,7 @@ const ticketImage = new URL(Astro.url.pathname + "/ticket.svg", Astro.site);
     <p class="text-balance p-8 text-center text-xs leading-relaxed opacity-50">
       This is not a proof of buying. Please use your real ticket to enter this
       event. <a
-        href={`/events/${event.id}`}
+        href={lunalink(ROUTES.events[":id"].__path, { id: event.id })}
         class={cn(
           buttonVariants({ size: "xs", variant: "link-neutral" }),
           "group gap-2 h-auto p-0",

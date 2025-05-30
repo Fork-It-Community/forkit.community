@@ -11,7 +11,7 @@ export const GET: APIRoute = async function get(context) {
     site: context.site! + "/events",
     trailingSlash: false,
     items: events.map((event) => ({
-      title: `${event.data.name}, ${getEventDisplayType(event.data.type)}`,
+      title: `${event.data._computed.name}, ${getEventDisplayType(event.data.type)}`,
       description: event.data.excerpt,
       link: `${context.site}events/${event.id}`,
       pubDate: event.data.date,

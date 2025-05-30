@@ -1,0 +1,91 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import { getEventByCity, getEventsCollection } from "@/lib/events";
+import SEO from "@/components/SEO/index.astro";
+import EventsList from "@/components/EventsList/index.astro";
+import { getEntry } from "astro:content";
+import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
+import { BackButton } from "@/components/BackButton";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
+
+export async function getStaticPaths() {
+  const events = await getEventsCollection();
+
+  return events.map((e) => ({
+    params: {
+      countryId: e.data._computed.country?.id ?? "",
+      cityId: e.data.city.id,
+    },
+  }));
+}
+
+const { cityId, countryId } = Astro.params;
+
+const city = await getEntry("cities", cityId);
+const country = await getEntry("countries", countryId);
+
+if (!city || !country) {
+  return new Response(null, {
+    status: 404,
+    statusText: "Not found",
+  });
+}
+
+const eventsInCity = await getEventByCity(cityId);
+---
+
+<MainLayout>
+  <SEO
+    slot="seo"
+    title={`${city.data.name} Events`}
+    description={city.data.description}
+  />
+  <ImageBackgroundHero src={city.data.cover.media} alt={city.data.cover.alt} />
+
+  <div class="mx-auto w-full max-w-screen-lg px-4 py-4">
+    <BackButton
+      href={lunalink(ROUTES.events.locations[":countryId"].__path, {
+        countryId: country.id,
+      })}
+      client:load
+      contextLabel={`Events in ${country.data.name}`}
+    />
+    <div
+      class="flex w-full flex-col justify-center gap-4 py-12 md:min-h-[40svh]"
+    >
+      <div class="flex w-full flex-col gap-2">
+        <h1
+          class="w-full text-balance text-left font-heading text-4xl font-medium uppercase tracking-wider max-md:flex-1 md:text-5xl"
+        >
+          {city.data.name}
+        </h1>
+        <h2
+          class="w-full text-balance text-left text-base tracking-widest md:text-lg"
+        >
+          All the Fork it! tech events in {city.data.name}
+        </h2>
+      </div>
+      {
+        !!city.data.description && (
+          <p class="max-w-[60ch] text-sm tracking-wide [text-shadow:0_2px_30px_rgba(0,0,0,0.4)]">
+            {city.data.description}
+          </p>
+        )
+      }
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-16 pb-40">
+    <div
+      class="mx-auto flex w-full max-w-screen-lg flex-col gap-16 px-4 md:flex-row"
+    >
+      <EventsList
+        events={eventsInCity}
+        title={`Events in ${city.data.name}`}
+        class="flex-[2]"
+      />
+      <div class="w-full flex-1"></div>
+    </div>
+  </div>
+</MainLayout>

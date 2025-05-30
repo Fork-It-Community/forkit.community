@@ -9,6 +9,8 @@ import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import { cn } from "@/lib/utils-client";
 import { MdDownload } from "react-icons/md";
 import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 export const prerender = false;
 
@@ -26,7 +28,12 @@ const imagesSrc = getEventAssetsSources(event);
 ---
 
 <EventSubPageLayout event={event}>
-  <SEO slot="seo" title={`Assets for ${event.data.name}`} noindex nofollow />
+  <SEO
+    slot="seo"
+    title={`Assets for ${event.data._computed.name}`}
+    noindex
+    nofollow
+  />
   <ImageBackgroundHero src={event.data.image.media} alt="" blur />
   <div
     class="mx-auto flex w-full max-w-screen-lg flex-col gap-8 px-4 pb-40 pt-6 md:flex-row"
@@ -34,11 +41,13 @@ const imagesSrc = getEventAssetsSources(event);
     <div class="flex w-full flex-1 flex-col gap-4">
       <div class="flex flex-col gap-4 py-4 sm:flex-row sm:items-center sm:px-2">
         <h1 class="relative flex-1 font-heading text-xl">
-          Assets · {event.data.name}
+          Assets · {event.data._computed.name}
         </h1>
         <a
           class={cn(buttonVariants({ size: "sm" }), "gap-2 xs:max-w-64")}
-          href={`/events/${event.id}/assets/download`}
+          href={lunalink(ROUTES.events[":id"].assets.download.__path, {
+            id: event.id,
+          })}
           target="_blank"
         >
           <MdDownload />
@@ -79,10 +88,12 @@ const imagesSrc = getEventAssetsSources(event);
         {
           allEvents.map((e) => (
             <a
-              href={`/events/${e.id}/assets`}
+              href={lunalink(ROUTES.events[":id"].assets.__path, {
+                id: event.id,
+              })}
               class={cn("p-1", e.id === event.id && "opacity-60")}
             >
-              {e.data.name}
+              {e.data._computed.name}
             </a>
           ))
         }

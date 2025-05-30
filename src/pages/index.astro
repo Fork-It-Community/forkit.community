@@ -26,6 +26,8 @@ import { Schema } from "astro-seo-schema";
 import { getEntry } from "astro:content";
 import { getNewsCollection } from "@/lib/news";
 import TiltedCard from "@/components/TiltedCard";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 const upcomingMajorEvent = await getUpcomingMajorEvent();
 const upcomingEvents = (await getUpcomingEvents())
@@ -95,7 +97,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
             !upcomingMajorEvent && (
               <div class="flex w-full items-center justify-center sm:justify-start">
                 <a
-                  href="/events"
+                  href={lunalink(ROUTES.events.__path, {})}
                   title="All the events page"
                   class={cn(buttonVariants(), "gap-2 sm:max-w-56")}
                 >
@@ -108,7 +110,9 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
           {
             !!upcomingMajorEvent && (
               <a
-                href={`/events/${upcomingMajorEvent.id}`}
+                href={lunalink(ROUTES.events[":id"].__path, {
+                  id: upcomingMajorEvent.id,
+                })}
                 title="Upcoming major event"
                 class={cn(
                   "group relative z-10 flex flex-col gap-3",
@@ -146,8 +150,8 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
                       {getEventDisplayDate(upcomingMajorEvent)}
                     </div>
                     <div class="-mt-1 font-heading text-sm opacity-60 transition group-hover:text-primary group-hover:opacity-100 sm:text-lg">
-                      {upcomingMajorEvent.data.city},{" "}
-                      {upcomingMajorEvent.data.country}
+                      {upcomingMajorEvent.data._computed.city?.data.name},{" "}
+                      {upcomingMajorEvent.data._computed.country?.data.name}
                     </div>
                   </div>
                 </div>
@@ -169,8 +173,10 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
                 </h2>
                 {upcomingEvents.map((event) => (
                   <a
-                    href={`/events/${event.id}`}
-                    title={`${event.data.city}, ${event.data.country} event`}
+                    href={lunalink(ROUTES.events[":id"].__path, {
+                      id: event.id,
+                    })}
+                    title={`${event.data._computed.city?.data.name}, ${event.data._computed.country?.data.name} event`}
                     class="group flex gap-2"
                   >
                     <MdEvent className="opacity-40 group-hover:opacity-100 transition size-4 mt-0.5" />
@@ -179,7 +185,8 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
                         {getEventDisplayDate(event)}
                       </div>
                       <div class="text-xs tracking-wide opacity-60 transition group-hover:text-primary group-hover:opacity-100">
-                        {event.data.city}, {event.data.country}
+                        {event.data._computed.city?.data.name},{" "}
+                        {event.data._computed.country?.data.name}
                       </div>
                     </div>
                   </a>
@@ -216,7 +223,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
       !!news.length && (
         <div class="flex flex-col py-6 md:py-12">
           <div class="mx-auto flex w-full max-w-screen-lg flex-col gap-2 px-6">
-            <a href="/news" title="All the podcasts">
+            <a href={lunalink(ROUTES.news.__path, {})} title="All the podcasts">
               <h2 class="flex items-center gap-2 text-balance font-heading text-3xl font-medium uppercase tracking-wide">
                 <MdFeed className="opacity-40" />
                 News
@@ -244,7 +251,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
                   </div>
                 )}
                 <a
-                  href="/news"
+                  href={lunalink(ROUTES.news.__path, {})}
                   class="relative flex aspect-square w-64 flex-none items-center justify-center gap-2 rounded-lg bg-white/5 text-xs uppercase tracking-widest text-white/50 transition duration-500 hover:bg-white/10"
                 >
                   All news
@@ -261,7 +268,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
     <!-- PODCASTS -->
     <div class="flex flex-col py-6 md:py-12">
       <div class="mx-auto flex w-full max-w-screen-lg flex-col gap-2 px-6">
-        <a href="/podcasts" title="All the podcasts">
+        <a href={lunalink(ROUTES.podcasts.__path, {})} title="All the podcasts">
           <h2
             class="flex items-center gap-2 text-balance font-heading text-3xl font-medium uppercase tracking-wide"
           >
@@ -285,7 +292,13 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
               podcasts.map((episode) => (
                 <TiltedCard client:visible>
                   <a
-                    href={`/podcasts/${episode.id}`}
+                    href={lunalink(
+                      ROUTES.podcasts[":id"].__path,
+                      {
+                        id: episode.id,
+                      },
+                      { encodeURIComponent: (v) => String(v) },
+                    )}
                     class="group relative block size-48 md:size-64"
                     title={episode.data.title}
                   >
@@ -308,7 +321,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
               )
             }
             <a
-              href="/podcasts"
+              href={lunalink(ROUTES.podcasts.__path, {})}
               class="relative flex w-48 flex-none items-center justify-center gap-2 rounded-md bg-white/5 text-xs uppercase tracking-widest text-white/50 transition duration-500 hover:bg-white/10 md:w-64"
             >
               All podcasts
@@ -356,7 +369,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
         </p>
 
         <a
-          href="/about"
+          href={lunalink(ROUTES.about.__path, {})}
           title="About page"
           class={cn(buttonVariants(), "group gap-2 xs:max-w-44 mt-4")}
         >

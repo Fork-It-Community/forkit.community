@@ -8,6 +8,8 @@ import { getEntries } from "astro:content";
 import dayjs from "dayjs";
 import { MdArrowForward } from "react-icons/md";
 import defaultPerson from "@/assets/images/people-placeholder.jpeg";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 interface Props {
   newsItem: CollectionEntry<"news">;
@@ -41,7 +43,12 @@ const authors = (await getEntries(newsItem.data.authors ?? [])).filter(
             gradientClass,
           )}
         />
-        <a href={`/news/article/${newsItem.id}`} class="flex h-full w-full">
+        <a
+          href={lunalink(ROUTES.news.article[":id"].__path, {
+            id: newsItem.id,
+          })}
+          class="flex h-full w-full"
+        >
           <Image
             src={newsItem.data.featuredImage}
             alt={newsItem.data.title}
@@ -68,7 +75,11 @@ const authors = (await getEntries(newsItem.data.authors ?? [])).filter(
     <h2
       class="line-clamp-2 text-balance font-heading text-xl font-medium tracking-wide transition duration-500 group-hover:text-primary"
     >
-      <a href={`/news/article/${newsItem.id}`}>
+      <a
+        href={lunalink(ROUTES.news.article[":id"].__path, {
+          id: newsItem.id,
+        })}
+      >
         {newsItem.data.title}
         <div class="absolute inset-0 z-10"></div>
       </a>
@@ -92,7 +103,7 @@ const authors = (await getEntries(newsItem.data.authors ?? [])).filter(
           <div class="flex gap-3">
             {authors.map((author) => (
               <a
-                href={`/people/${author.id}`}
+                href={lunalink(ROUTES.people[":id"].__path, { id: author.id })}
                 class={cn(
                   "group/author relative z-20 flex items-center gap-x-2.5 text-sm font-medium",
                   authors.length > 1 && "-mr-4",
@@ -127,7 +138,9 @@ const authors = (await getEntries(newsItem.data.authors ?? [])).filter(
         )
       }
       <a
-        href={`/news/article/${newsItem.id}`}
+        href={lunalink(ROUTES.news.article[":id"].__path, {
+          id: newsItem.id,
+        })}
         class={cn(
           buttonVariants({ variant: "link-neutral", size: "sm" }),
           "relative z-20 ml-auto gap-2 opacity-60 group-hover:opacity-100 transition duration-500 px-0",
