@@ -155,20 +155,10 @@ export const EventCTA = (props: Props) => {
         After Event Insights
       </a>
     ))
-    .with("tickets-soon", () => {
+    .with("stay-updated", () => {
       return (
-        <a
-          role="button"
-          {...buttonProps}
-          onClick={() => {
-            const element = document.getElementById("stay-tuned");
-            if (element) {
-              element.scrollIntoView({ behavior: "smooth", block: "center" });
-            }
-          }}
-        >
-          Get Your Ticket
-          <MdArrowOutward className="transition group-hover:translate-x-1" />
+        <a {...buttonProps} href="#stay-updated">
+          Stay updated
         </a>
       );
     })

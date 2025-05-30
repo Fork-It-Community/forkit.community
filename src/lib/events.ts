@@ -290,7 +290,7 @@ export type EventCtaType =
   | "after-event"
   | "prospectus"
   | "cfp"
-  | "tickets-soon";
+  | "stay-updated";
 export type EventCtaTypes = ReturnType<typeof getEventCtaTypes>;
 
 export function getEventCtaTypes(event: CollectionEntry<"events">) {
@@ -314,10 +314,10 @@ export function getEventCtaTypes(event: CollectionEntry<"events">) {
     }
     if (
       dayjs(event.data.date).isAfter(dayjs()) &&
-      !event.data.tickets &&
-      !excludeTypes?.includes("tickets-soon")
+      !shouldShowTickets(event) &&
+      !excludeTypes?.includes("stay-updated")
     ) {
-      return "tickets-soon";
+      return "stay-updated";
     }
     return null;
   };
