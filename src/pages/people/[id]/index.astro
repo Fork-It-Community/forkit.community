@@ -34,6 +34,10 @@ export const getStaticPaths = (async () => {
 const { person } = Astro.props;
 const { Content } = await render(person);
 const contributions = await getAppearances(person, Infinity);
+const ogImage = new URL(
+  Astro.url.pathname + "/assets/og-image.jpg",
+  Astro.site,
+);
 ---
 
 <MainLayout>
@@ -44,7 +48,7 @@ const contributions = await getAppearances(person, Infinity);
     className="h-[80vh] opacity-80"
   />
 
-  <SEO slot="seo" title={person.data.name} />
+  <SEO slot="seo" title={person.data.name} image={ogImage.toString()} />
   <div
     class="my-16 flex h-full flex-1 flex-col justify-between gap-32 md:my-16"
   >
