@@ -139,7 +139,7 @@ export async function getUpcomingMajorEvent() {
   );
 }
 
-export async function getEvent(id: string) {
+export async function getEvent(id: CollectionEntry<"events">["id"]) {
   const event = await getEntry("events", id);
   if (import.meta.env.PROD && !isEventPublished(event?.data.status)) {
     return undefined;
@@ -352,4 +352,16 @@ export function getPersonRolesInEvent(
   }
 
   return roles;
+}
+
+export async function getEventWithComputed(
+  id: CollectionEntry<"events">["id"],
+) {
+  const event = await getEvent(id);
+
+  if (!event) {
+    throw new Error(`Event ${id} does not exist`);
+  }
+
+  return await eventWithComputed(event);
 }
