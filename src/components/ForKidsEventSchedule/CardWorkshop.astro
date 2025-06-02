@@ -28,14 +28,14 @@ const { Content } = await render(workshop);
       <Image
         src={workshop.data.image.media}
         alt={workshop.data.image.alt || "alt"}
-        class="w-[10rem]"
+        class="h-fit w-[10rem] self-center"
       />
       <div class="flex flex-col gap-2">
         <p class="text-balance font-heading text-lg font-medium leading-tight tracking-wider text-white transition group-hover:text-primary">
           {workshop.data.title}
         </p>
         <p class="text-sm">
-          De {workshop.data.ageRange.from} ans - {workshop.data.ageRange.to} ans
+          De {workshop.data.ageRange.from} ans à {workshop.data.ageRange.to} ans
         </p>
         <Content />
       </div>

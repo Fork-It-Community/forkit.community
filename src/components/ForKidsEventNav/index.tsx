@@ -42,15 +42,17 @@ export const ForKidsEventNav = (props: {
         </a>
 
         <div className="flex items-center gap-1">
-          <a
-            // {...buttonProps}
-            href={props.forKidsEventTickets?.link}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Prendre un ticket
-            <MdArrowOutward className="transition group-hover:translate-x-1" />
-          </a>
+          <Button className="max-xs:hidden">
+            <a
+              href={props.forKidsEventTickets?.link}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center"
+            >
+              Prendre un ticket
+              <MdArrowOutward className="transition group-hover:translate-x-1" />
+            </a>
+          </Button>
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
