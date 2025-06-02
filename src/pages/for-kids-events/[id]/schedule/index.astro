@@ -1,0 +1,40 @@
+---
+import { BackButton } from "@/components/BackButton";
+import ForKidsEventSchedule from "@/components/ForKidsEventSchedule/index.astro";
+import ForKidsEventSubPageLayout from "@/layouts/ForKidsEventSubPageLayout.astro";
+import { getForKidsEventsCollection } from "@/lib/forKidsEvent";
+import { SEO } from "astro-seo";
+import dayjs from "dayjs";
+
+export async function getStaticPaths() {
+  const forKidsEvents = await getForKidsEventsCollection();
+
+  return forKidsEvents.map((forKidsEvent) => ({
+    params: { id: forKidsEvent.id },
+    props: {
+      forKidsEvent,
+    },
+  }));
+}
+
+const { forKidsEvent } = Astro.props;
+
+const title = `Schedule | ${forKidsEvent.data.name}`;
+const description = `Schedule for the ${forKidsEvent.data.city}, ${forKidsEvent.data.country} event, taking place the ${dayjs(forKidsEvent.data.date).format("DD/MM/YYYY")}. Come enjoy content from the community.`;
+---
+
+<ForKidsEventSubPageLayout forKidsEvent={forKidsEvent}>
+  <SEO slot="seo" title={title} description={description} />
+  <div class="mx-auto w-full max-w-screen-sm space-y-8 p-4 md:p-8">
+    <BackButton href={`/for-kids-events/${forKidsEvent.id}`} client:load />
+
+    <main class="space-y-2">
+      <h2
+        class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+      >
+        Programme
+      </h2>
+      <ForKidsEventSchedule forKidsEvent={forKidsEvent} />
+    </main>
+  </div>
+</ForKidsEventSubPageLayout>
