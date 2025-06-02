@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 import { MdArrowForward } from "react-icons/md";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
+import { getCityData } from "@/pages/events/locations/[countryId]/[cityId]/assets/_utils";
 
 interface Props {
   event: EventComputed;
@@ -25,6 +26,7 @@ const coOrganizers = (await getEntries(event.data.coOrganizers ?? []))
   .slice(0, 5);
 
 const isUpcomingEvent = dayjs(event.data.date).endOf("day").isAfter(dayjs());
+const city = await getCityData(event.data.city.id);
 ---
 
 <a
@@ -35,7 +37,7 @@ const isUpcomingEvent = dayjs(event.data.date).endOf("day").isAfter(dayjs());
   )}
 >
   {
-    !!event.data.image?.media && (
+    !!city.data.cover.media && (
       <div
         class={cn(
           "pointer-events-none absolute bottom-0 left-0 right-0 top-0 -z-10 overflow-hidden",
@@ -43,7 +45,7 @@ const isUpcomingEvent = dayjs(event.data.date).endOf("day").isAfter(dayjs());
         )}
       >
         <Image
-          src={event.data.image.media}
+          src={city.data.cover.media}
           alt=""
           class={cn(
             "absolute size-full bg-white/20 object-cover object-center transition duration-500 group-hover:scale-110",

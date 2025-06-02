@@ -1,4 +1,3 @@
-import { zMediaImage } from "@/schemas/utils";
 import { z, reference, type SchemaContext } from "astro:content";
 
 const zEventBase = ({ image }: SchemaContext) =>
@@ -35,7 +34,6 @@ const zEventBase = ({ image }: SchemaContext) =>
       })
       .optional(),
     excerpt: z.string().optional(),
-    image: zMediaImage({ image }),
     organizers: z
       .array(reference("people"))
       .optional()

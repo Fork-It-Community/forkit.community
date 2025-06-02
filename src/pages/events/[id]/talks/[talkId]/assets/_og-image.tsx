@@ -10,6 +10,7 @@ import { getEventDisplayDate } from "@/lib/events";
 import { getEventData } from "@/pages/events/[id]/assets/_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 import { getTalkData } from "@/pages/events/[id]/talks/[talkId]/assets/_utils";
+import { getCityData } from "@/pages/events/locations/[countryId]/[cityId]/assets/_utils";
 
 export const config: AssetImageConfig = {
   width: 1920,
@@ -23,8 +24,9 @@ export default async function ({
 }) {
   const event = await getEventData(params.id);
   const talk = await getTalkData(params.talkId);
+  const city = await getCityData(event.data.city.id);
 
-  const postCover = await getAstroImageBase64(event.data.image.media);
+  const postCover = await getAstroImageBase64(city.data.cover.media);
   const coOrganizersLogos = await Promise.all(
     event.__coOrganizers.map(
       async (coOrganiser) =>

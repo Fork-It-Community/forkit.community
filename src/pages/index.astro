@@ -28,6 +28,7 @@ import { getNewsCollection } from "@/lib/news";
 import TiltedCard from "@/components/TiltedCard";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
+import { getCityData } from "@/pages/events/locations/[countryId]/[cityId]/assets/_utils";
 
 const upcomingMajorEvent = await getUpcomingMajorEvent();
 const upcomingEvents = (await getUpcomingEvents())
@@ -48,6 +49,9 @@ const partners = await getEntries<"partners">(
 );
 const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
   .afterEventContent?.afterMovie;
+const city = upcomingMajorEvent?.data.city.id
+  ? await getCityData(upcomingMajorEvent?.data.city.id)
+  : undefined;
 ---
 
 <MainLayout>
@@ -62,8 +66,8 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
   />
   <!-- HERO -->
   <ImageBackgroundHero
-    src={upcomingMajorEvent?.data?.image?.media ?? defaultImage}
-    alt={upcomingMajorEvent?.data?.image?.alt ?? ""}
+    src={city?.data.cover.media ?? defaultImage}
+    alt={city?.data.cover.alt ?? ""}
     blur
   />
   <div class="mx-auto w-full max-w-screen-xl px-4">
@@ -119,10 +123,10 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
                   "max-sm:overflow-hidden max-sm:rounded-lg max-sm:bg-background max-sm:p-6 max-sm:shadow-xl",
                 )}
               >
-                {!!upcomingMajorEvent.data.image?.media && (
+                {city?.data.cover?.media && (
                   <div class="pointer-events-none absolute bottom-0 left-0 right-0 top-0 -z-10 overflow-hidden sm:hidden">
                     <Image
-                      src={upcomingMajorEvent.data.image.media}
+                      src={city.data.cover.media}
                       alt=""
                       class={cn(
                         "absolute size-full bg-white/20 object-cover object-center transition duration-500 group-hover:scale-110",
@@ -202,8 +206,8 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
       >
         <Image
           class="aspect-[3/2] w-full bg-background object-cover text-white/40"
-          src={upcomingMajorEvent?.data?.image?.media ?? defaultImage}
-          alt={upcomingMajorEvent?.data?.image?.alt ??
+          src={city?.data.cover.media ?? defaultImage}
+          alt={city?.data.cover.alt ??
             "Speaker giving a tech talk in from of attendees"}
           width={480}
           height={320}

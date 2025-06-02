@@ -10,6 +10,7 @@ import { getEventData } from "@/pages/events/[id]/assets/_utils";
 import { getEntry } from "astro:content";
 import { NotFoundAssetError } from "@/generated-assets/api";
 import { Logo } from "@/components/Logo";
+import { getCityData } from "@/pages/events/locations/[countryId]/[cityId]/assets/_utils";
 
 export const config: AssetImageConfig = {
   width: 1080,
@@ -22,7 +23,9 @@ export default async function ({
   params: { id: string; partnerId: string };
 }) {
   const event = await getEventData(params.id);
-  const postCover = await getAstroImageBase64(event.data.image.media);
+  const city = await getCityData(event.data.city.id);
+
+  const postCover = await getAstroImageBase64(city.data.cover.media);
 
   const partner = await getEntry("partners", params.partnerId);
   if (!partner) {

@@ -11,6 +11,7 @@ import { MdDownload } from "react-icons/md";
 import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
+import { getCityData } from "@/pages/events/locations/[countryId]/[cityId]/assets/_utils";
 
 export const prerender = false;
 
@@ -25,6 +26,7 @@ if (!event) {
   return new Response(null, { status: 404 });
 }
 const imagesSrc = getEventAssetsSources(event);
+const city = await getCityData(event.data.city.id);
 ---
 
 <EventSubPageLayout event={event}>
@@ -34,7 +36,7 @@ const imagesSrc = getEventAssetsSources(event);
     noindex
     nofollow
   />
-  <ImageBackgroundHero src={event.data.image.media} alt="" blur />
+  <ImageBackgroundHero src={city.data.cover.media} alt="" blur />
   <div
     class="mx-auto flex w-full max-w-screen-lg flex-col gap-8 px-4 pb-40 pt-6 md:flex-row"
   >

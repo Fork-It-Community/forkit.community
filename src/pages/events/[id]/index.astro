@@ -39,6 +39,7 @@ import TiltedCard from "@/components/TiltedCard";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { getSocialsItems } from "@/content/socials";
+import { getCityData } from "@/pages/events/locations/[countryId]/[cityId]/assets/_utils";
 export async function getStaticPaths() {
   const events = await getEventsCollection();
 
@@ -56,6 +57,8 @@ const { event } = Astro.props;
 
 const partners = await getEntries(event.data.partners ?? []);
 const speakers = await getEntries(event.data.speakers ?? []);
+const city = await getCityData(event.data.city.id);
+console.log("fff", city);
 const coOrganizers = (await getEntries(event.data.coOrganizers ?? [])).filter(
   (p) => !!p,
 );
@@ -110,7 +113,7 @@ const ctaEventMetadata = {
         validFrom: offer.validFrom.toISOString(),
       })),
       eventStatus: `https://schema.org/${event.data.eventStatus}`,
-      image: event.data.image?.media.src ?? "",
+      image: city.data.cover.media.src ?? "",
       organizer: {
         "@type": "Organization",
         name: "Fork it! Community",

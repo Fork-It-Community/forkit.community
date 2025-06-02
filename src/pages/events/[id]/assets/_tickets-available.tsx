@@ -8,6 +8,7 @@ import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
 import { getEventData } from "./_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
+import { getCityData } from "@/pages/events/locations/[countryId]/[cityId]/assets/_utils";
 
 export const config: AssetImageConfig = {
   width: 1920,
@@ -21,7 +22,8 @@ export function ticketsAvailable(options: {
 }) {
   return async ({ params }: { params: { id: string } }) => {
     const event = await getEventData(params.id);
-    const postCover = await getAstroImageBase64(event.data.image.media);
+    const city = await getCityData(event.data.city.id);
+    const postCover = await getAstroImageBase64(city.data.cover.media);
     const coOrganizersLogos = await Promise.all(
       event.__coOrganizers.map(
         async (coOrganiser) =>

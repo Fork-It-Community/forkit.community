@@ -13,6 +13,7 @@ import {
   type EventComputed,
 } from "@/lib/events";
 import { motion } from "motion/react";
+import { getCityData } from "@/pages/events/locations/[countryId]/[cityId]/assets/_utils";
 
 interface Props {
   event: EventComputed;
@@ -24,6 +25,7 @@ const navItems = await getEventNavItems(event.id);
 
 const url = new URL(Astro.url.pathname, Astro.site);
 const title = `${event.data._computed.name}, ${getEventDisplayType(event.data.type)}`;
+const cityData = await getCityData(event.data.city.id);
 ---
 
 <RootLayout>
@@ -35,21 +37,19 @@ const title = `${event.data._computed.name}, ${getEventDisplayType(event.data.ty
     url={url}
     image={ogImage.toString()}
   />
-  {
-    !!event?.data.image?.media && (
-      <motion.div
-        client:load
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-      >
-        <ImageBackgroundHero
-          src={event.data.image.media}
-          alt={event.data.image.alt}
-        />
-      </motion.div>
-    )
-  }
+
+  <motion.div
+    client:load
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 1 }}
+  >
+    <ImageBackgroundHero
+      src={cityData.data.cover.media}
+      alt={cityData.data.cover.alt}
+    />
+  </motion.div>
+
   <div class="absolute inset-0 p-2">
     <ExploreTheCommunity
       eventCity={event.data._computed.city?.data.name ?? ""}

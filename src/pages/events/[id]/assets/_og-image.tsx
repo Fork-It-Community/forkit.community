@@ -8,6 +8,7 @@ import { COLORS } from "@/generated-assets/theme";
 import { Logo } from "@/components/Logo";
 import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
 import { getEventData } from "./_utils";
+import { getCityData } from "@/pages/events/locations/[countryId]/[cityId]/assets/_utils";
 
 export const config: AssetImageConfig = {
   width: 1920,
@@ -16,7 +17,8 @@ export const config: AssetImageConfig = {
 
 export default async function ({ params }: { params: { id: string } }) {
   const event = await getEventData(params.id);
-  const postCover = await getAstroImageBase64(event.data.image.media);
+  const city = await getCityData(event.data.city.id);
+  const postCover = await getAstroImageBase64(city.data.cover.media);
   return (
     <Frame {...config} style={{ padding: 128 }}>
       <BgImage src={postCover} width={config.width} height={config.height} />

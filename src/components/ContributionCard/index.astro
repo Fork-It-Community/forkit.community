@@ -12,6 +12,8 @@ import dayjs from "dayjs";
 import { match } from "ts-pattern";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
+import { getCityData } from "@/pages/events/locations/[countryId]/[cityId]/assets/_utils";
+import { getCollection } from "astro:content";
 
 interface Props {
   contribution:
@@ -63,11 +65,20 @@ const item = match(contribution)
       .map((i) => capitalize(i))
       .join(", "),
     href: lunalink(ROUTES.events[":id"].__path, { id: item.id }),
-    image: item.data.image.media,
+    image: undefined,
     episodeCover: undefined,
+    city: item.data.city,
     type: item.collection,
   }))
   .exhaustive();
+
+if (item.type === "events") {
+  const event = await getCollection("events", (event) => {
+    return event.data.date === item.date;
+  });
+  const city = await getCityData(event[0]?.data.city.id ?? "");
+  if (city) item.image = city.data.cover.media;
+}
 ---
 
 <div class="relative">
