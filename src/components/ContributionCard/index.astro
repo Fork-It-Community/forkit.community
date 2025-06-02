@@ -74,10 +74,12 @@ const item = match(contribution)
 
 if (item.type === "events") {
   const event = await getCollection("events", (event) => {
-    return event.data.date === item.date;
+    return dayjs(event.data.date).isSame(dayjs(item.date), "date");
   });
   const city = await getCityData(event[0]?.data.city.id ?? "");
-  if (city) item.image = city.data.cover.media;
+  if (city.data.cover.media) {
+    item.image = city.data.cover.media;
+  }
 }
 ---
 

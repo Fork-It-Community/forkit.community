@@ -18,7 +18,6 @@ export const config: AssetImageConfig = {
 export function saveTheDate(options: { width: number; height: number }) {
   return async ({ params }: { params: { id: string; name: string } }) => {
     const event = await getEventData(params.id);
-    console.log("fafa", event);
     const city = await getCityData(event.data.city.id);
     const postCover = await getAstroImageBase64(city.data.cover.media);
     const ticketImage = await getAstroImageBase64(ticketBg);
