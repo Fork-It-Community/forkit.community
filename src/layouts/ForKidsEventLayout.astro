@@ -5,7 +5,7 @@ import Footer from "@/components/Footer/index.astro";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import SEO from "@/components/SEO/index.astro";
 import RootLayout from "@/layouts/RootLayout.astro";
-import { getForKidsEventNavItems } from "@/lib/forKidsEvent";
+import { getForKidsEventNavItems } from "@/lib/forKidsEvents";
 import type { CollectionEntry } from "astro:content";
 import { motion } from "motion/react";
 
@@ -50,7 +50,7 @@ const title = `${forKidsEvent.data.name}, For Kids`;
       eventCity={forKidsEvent.data.city}
       eventCountry={forKidsEvent.data.country}
       eventDate={forKidsEvent.data.date}
-      logoUrl={`/for-kids-events/${forKidsEvent.id}`}
+      logoUrl={`/events/for-kids/${forKidsEvent.id}`}
       pageUrl={new URL(Astro.url.pathname, Astro.site).toString()}
     />
   </div>

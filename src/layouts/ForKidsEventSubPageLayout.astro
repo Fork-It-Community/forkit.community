@@ -29,7 +29,7 @@ const { forKidsEvent } = Astro.props;
       eventCity={forKidsEvent.data.city}
       eventCountry={forKidsEvent.data.country}
       eventDate={forKidsEvent.data.date}
-      logoUrl={`/for-kids-event/${forKidsEvent.id}`}
+      logoUrl={`/events/for-kids/${forKidsEvent.id}`}
       pageUrl={new URL(Astro.url.pathname, Astro.site).toString()}
     />
   </div>

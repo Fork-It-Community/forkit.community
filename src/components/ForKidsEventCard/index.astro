@@ -1,0 +1,150 @@
+---
+import {
+  getForKidsEventFrenchDisplayDate,
+  shouldShowForKidsTickets,
+} from "@/lib/forKidsEvents";
+import { cn } from "@/lib/utils-client";
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { getEntries } from "astro:content";
+import dayjs from "dayjs";
+import { MdArrowForward } from "react-icons/md";
+import { buttonVariants } from "@/components/ui/button";
+
+interface Props {
+  forKidsEvent: CollectionEntry<"forKidsEvent">;
+  class?: string;
+}
+
+const { forKidsEvent, class: className } = Astro.props;
+const coOrganizers = (await getEntries(forKidsEvent.data.coOrganizers ?? []))
+  .filter((p) => !!p)
+  .slice(0, 5);
+
+const isUpcomingEvent = dayjs(forKidsEvent.data.date)
+  .endOf("day")
+  .isAfter(dayjs());
+---
+
+<a
+  href={`/events/for-kids/${forKidsEvent.id}`}
+  class={cn(
+    "group relative z-10 flex flex-col gap-4 overflow-hidden rounded-lg bg-background px-6 py-6 shadow-xl",
+    className,
+  )}
+>
+  {
+    !!forKidsEvent.data.image?.media && (
+      <div
+        class={cn(
+          "pointer-events-none absolute bottom-0 left-0 right-0 top-0 -z-10 overflow-hidden",
+          forKidsEvent.data.status === "cancelled" && "grayscale",
+        )}
+      >
+        <Image
+          src={forKidsEvent.data.image.media}
+          alt=""
+          class={cn(
+            "absolute size-full bg-white/20 object-cover object-center transition duration-500 group-hover:scale-110",
+          )}
+          width={600}
+        />
+        <div
+          class={cn(
+            "absolute size-full bg-gradient-to-r from-black/90 via-black/20",
+            coOrganizers.length && !isUpcomingEvent && "sm:to-black/80",
+          )}
+        />
+        <div
+          class="absolute h-full w-full"
+          style={{
+            backdropFilter: "blur(32px)",
+            maskImage: "linear-gradient(90deg, black 30%, transparent 70%)",
+          }}
+        />
+      </div>
+    )
+  }
+  <div
+    class={cn(
+      "flex gap-2 max-sm:flex-col",
+      isUpcomingEvent && "flex-col flex-1",
+    )}
+  >
+    <div class="flex flex-1 flex-col gap-1">
+      <div class="flex items-center gap-3">
+        {
+          forKidsEvent.data.status === "cancelled" && (
+            <div class="bg-background-blur rounded px-1.5 py-1 text-2xs font-bold uppercase leading-none text-white transition group-hover:bg-primary group-hover:text-black">
+              Annulé
+            </div>
+          )
+        }
+      </div>
+      <div class="flex flex-col">
+        <div
+          class={cn(
+            "font-heading font-medium transition",
+            isUpcomingEvent && "text-xl",
+            forKidsEvent.data.status === "cancelled" &&
+              "opacity-50 group-hover:opacity-100",
+          )}
+        >
+          {getForKidsEventFrenchDisplayDate(forKidsEvent.data.date)}
+        </div>
+        <div
+          class={cn(
+            "font-heading text-sm opacity-80 transition group-hover:text-primary group-hover:opacity-100",
+            isUpcomingEvent && "text-base",
+            forKidsEvent.data.status === "cancelled" &&
+              "opacity-50 group-hover:opacity-100",
+          )}
+        >
+          {forKidsEvent.data.city}, {forKidsEvent.data.country}
+        </div>
+      </div>
+    </div>
+    {
+      !!coOrganizers.length && (
+        <div
+          class={cn(
+            "flex flex-wrap items-center gap-2 sm:justify-end",
+            isUpcomingEvent && "sm:justify-start",
+          )}
+        >
+          {coOrganizers.map((coOrganizer) => (
+            <Image
+              class={cn(
+                "size-10 sm:size-12",
+                forKidsEvent.data.status === "cancelled" &&
+                  "brightness-200 grayscale",
+              )}
+              src={coOrganizer.data.logos.noBgSquare}
+              alt={coOrganizer.data.name}
+              width={100}
+            />
+          ))}
+        </div>
+      )
+    }
+  </div>
+  {
+    isUpcomingEvent && forKidsEvent.data.status !== "cancelled" && (
+      <div
+        class={cn(
+          buttonVariants({
+            variant: isUpcomingEvent ? "default" : "secondary-dark",
+          }),
+          "gap-2 sm:max-w-56",
+        )}
+      >
+        {isUpcomingEvent
+          ? shouldShowForKidsTickets(forKidsEvent)
+            ? "Tickets disponibles"
+            : "Découvrez l'événement"
+          : "Explorez les événements précédents"}
+        <MdArrowForward className="group-hover:translate-x-1 transition" />
+      </div>
+    )
+  }
+</a>
