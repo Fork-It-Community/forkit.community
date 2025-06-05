@@ -23,10 +23,10 @@ ${event.data.location?.name}, ${event.data.location?.address}
 
 ## Schedule
 
-${event.data.schedule?.items
+${event.data._computed.talks
   ?.map(
     (item) =>
-      `- [${item.name}](${lunalink(ROUTES.events[":id"].talks[":talkId"].__path, { id: event.id, talkId: item.slug?.id ?? "" })})`,
+      `- [${item?.data.title}](${lunalink(ROUTES.events[":id"].talks[":talkId"].__path, { id: event.id, talkId: item.id ?? "" })})`,
   )
   .join("\n")}
 `,
