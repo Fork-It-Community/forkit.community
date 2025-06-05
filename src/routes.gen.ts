@@ -53,6 +53,7 @@ const ROUTES_CONFIG = {
         },
       },
     },
+    ":id.html.md": {},
     locations: {
       ":countryId": {
         ":cityId": {
@@ -80,6 +81,7 @@ const ROUTES_CONFIG = {
       },
     },
   },
+  "llms.txt": {},
   news: {
     "[...page]": {},
     article: {

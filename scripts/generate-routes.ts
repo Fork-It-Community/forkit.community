@@ -3,7 +3,7 @@ import path from "node:path";
 
 const getKey = (itemName: string) => {
   // Handle  [name] => :name, [__image].[__type] => :__image.:__type
-  if (/^\[.*\]$/.test(itemName)) {
+  if (/\[.*\]/.test(itemName)) {
     return itemName
       .split(".")
       .map((part) =>
