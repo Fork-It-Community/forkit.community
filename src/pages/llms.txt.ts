@@ -26,7 +26,7 @@ export const GET: APIRoute = async ({ request }) => {
 
 ${events
   .map((event) => {
-    return `- [${event.data._computed.name}](${lunalink(ROUTES.events[":id"].__path, { id: event.id })}.hmtl.md)`;
+    return `- [${event.data._computed.name}](${lunalink(ROUTES.events[":id.html.md"].__path, { id: event.id })})`;
   })
   .join("\n")}
 
