@@ -32,7 +32,7 @@ export const ForKidsEventNav = (props: {
     >
       <div className="mx-auto flex w-full max-w-screen-lg justify-between">
         <a
-          href={`/for-kids-events/${props.forKidsEventId}#`}
+          href={`/events/for-kids/${props.forKidsEventId}#`}
           className="group flex flex-col justify-center gap-1 px-6"
         >
           <Logo className="w-28" />
@@ -105,7 +105,7 @@ export const ForKidsEventNav = (props: {
                       className="group flex w-full gap-2"
                       onClick={() => setOpen(false)}
                     >
-                      Community Hub
+                      Hub de la communauté
                       <MdArrowOutward className="text-lg transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                     </a>
                   </Button>
