@@ -2,17 +2,38 @@
 import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import bgImage from "@/assets/images/events.jpeg";
-import { getPastEvents, getUpcomingEvents } from "@/lib/events";
+import {
+  getPastEvents,
+  getUpcomingEvents,
+  getEventsCollection,
+} from "@/lib/events";
 import SEO from "@/components/SEO/index.astro";
 import EventsGrid from "@/components/EventsGrid/index.astro";
 import EventsList from "@/components/EventsList/index.astro";
 import { getCollection } from "astro:content";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
+import dayjs from "dayjs";
 
 const upcomingEvents = await getUpcomingEvents();
 const pastEvents = await getPastEvents();
-const countries = await getCollection("countries");
+const allCountries = await getCollection("countries");
+const events = await getEventsCollection();
+
+const countriesLastEvents = allCountries.map((country) => {
+  const lastEvents = events.find(
+    (event) => event.data._computed.country?.id === country.id,
+  );
+
+  return {
+    ...country,
+    lastDate: dayjs(lastEvents?.data.date),
+  };
+});
+
+const countries = countriesLastEvents.sort((a, b) =>
+  b.lastDate.diff(a.lastDate),
+);
 ---
 
 <MainLayout>
