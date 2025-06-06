@@ -69,6 +69,15 @@ const ROUTES_CONFIG = {
     },
     "rss.xml": {},
   },
+  fr: {
+    events: {
+      "for-kids": {
+        ":id": {
+          schedule: {},
+        },
+      },
+    },
+  },
   news: {
     "[...page]": {},
     article: {
@@ -83,7 +92,11 @@ const ROUTES_CONFIG = {
   },
   people: {
     ":id": {
-      assets: {},
+      assets: {
+        ":__image.:__type": {},
+        "_og-image": {},
+        _utils: {},
+      },
     },
   },
   podcasts: {

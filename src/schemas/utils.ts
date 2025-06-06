@@ -16,3 +16,9 @@ export const zMediaImage = ({ image }: SchemaContext) =>
     alt: z.string(),
     credit: z.string().optional(),
   });
+
+export const zAgeRange = () =>
+  z.object({
+    from: z.number().int().min(0),
+    to: z.number().int().min(0),
+  });
