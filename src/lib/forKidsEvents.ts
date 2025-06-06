@@ -1,6 +1,8 @@
 import { getCollection, getEntry, type CollectionEntry } from "astro:content";
 import { isEventPublished } from "./events";
 import dayjs from "dayjs";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 export async function getForKidsEventsCollection() {
   return Promise.all(
@@ -27,21 +29,25 @@ export async function getForKidsEventNavItems(id: string) {
 
   if (!forKidsEvent) return [];
 
+  const route = lunalink(ROUTES.fr.events["for-kids"][":id"].__path, {
+    id: forKidsEvent.id,
+  });
+
   return [
     ...(forKidsEvent.data.location
       ? [
           {
-            href: `/events/for-kids/${forKidsEvent.id}#venue`,
+            href: `${route}#venue`,
             label: "Lieu",
           },
         ]
       : []),
     {
-      href: `/events/for-kids/${forKidsEvent.id}#schedule`,
+      href: `${route}#schedule`,
       label: "Programme",
     },
     ...(forKidsEvent.data.faq?.length
-      ? [{ href: `/events/${forKidsEvent.id}#faq`, label: "FAQ" }]
+      ? [{ href: `${route}#faq`, label: "FAQ" }]
       : []),
   ];
 }
@@ -136,7 +142,7 @@ export async function forKidsEventWithComputed<
     data: {
       ...event.data,
       _computed: {
-        name: `${city?.data.name}, ${country?.data.name}, ${event.data.date.getFullYear()}`,
+        name: `For Kids ${city?.data.name}, ${country?.data.name}, ${event.data.date.getFullYear()}`,
         city,
         country,
       },

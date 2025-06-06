@@ -53,11 +53,6 @@ const ROUTES_CONFIG = {
         },
       },
     },
-    "for-kids": {
-      ":id": {
-        schedule: {},
-      },
-    },
     locations: {
       ":countryId": {
         ":cityId": {
@@ -75,6 +70,15 @@ const ROUTES_CONFIG = {
       },
     },
     "rss.xml": {},
+  },
+  fr: {
+    events: {
+      "for-kids": {
+        ":id": {
+          schedule: {},
+        },
+      },
+    },
   },
   news: {
     "[...page]": {},

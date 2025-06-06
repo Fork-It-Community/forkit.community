@@ -10,9 +10,13 @@ import { cn } from "@/lib/utils-client";
 import TiltedCard from "@/components/TiltedCard";
 import { getSocialsItems } from "@/content/socials";
 import ForKidsEventCard from "@/components/ForKidsEventCard/index.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
 const upcomingForKidsEvents = await getUpcomingForKidsEvents();
 const pastForKidsEvents = await getPastForKidsEvents();
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <MainLayout>
@@ -28,7 +32,7 @@ const pastForKidsEvents = await getPastForKidsEvents();
         <div class={cn("mx-auto w-full max-w-screen-lg grid-cols-2 px-4")}>
           <div class="flex flex-col gap-2">
             <h2 class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
-              Événements à venir
+              {t("events.upcoming")}
             </h2>
             <div class={cn("grid grid-cols-1 gap-3 md:grid-cols-2")}>
               {upcomingForKidsEvents.map((forKidsEvent) => (
@@ -44,7 +48,7 @@ const pastForKidsEvents = await getPastForKidsEvents();
               {upcomingForKidsEvents.length % 2 !== 0 && (
                 <div class="relative hidden flex-col items-center justify-center gap-4 rounded-md bg-white/5 px-8 py-6 tracking-widest md:flex">
                   <div class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
-                    Restez au courant
+                    {t("social.stayUpdated")}
                   </div>
                   <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-0">
                     {getSocialsItems("primary").map(
@@ -76,7 +80,7 @@ const pastForKidsEvents = await getPastForKidsEvents();
         <div class="mx-auto w-full max-w-screen-sm px-4">
           <div class="flex flex-col gap-2">
             <h2 class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
-              Événements passés
+              {t("events.past")}
             </h2>
             <div class="flex flex-col gap-3">
               {pastForKidsEvents.map((forKidsEvent) => (
