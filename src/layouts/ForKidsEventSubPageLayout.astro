@@ -1,12 +1,13 @@
 ---
 import ExploreTheCommunity from "@/components/ExploreTheCommunity/index.astro";
 import RootLayout from "@/layouts/RootLayout.astro";
-import type { CollectionEntry } from "astro:content";
+
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import Footer from "@/components/Footer/index.astro";
+import type { ForKidsEventComputed } from "@/lib/forKidsEvents";
 
 interface Props {
-  forKidsEvent: CollectionEntry<"forKidsEvent">;
+  forKidsEvent: ForKidsEventComputed;
 }
 
 const { forKidsEvent } = Astro.props;
@@ -26,8 +27,8 @@ const { forKidsEvent } = Astro.props;
   }
   <div class="p-2">
     <ExploreTheCommunity
-      eventCity={forKidsEvent.data.city}
-      eventCountry={forKidsEvent.data.country}
+      eventCity={forKidsEvent.data._computed.city?.data.name ?? ""}
+      eventCountry={forKidsEvent.data._computed.country?.data.name ?? ""}
       eventDate={forKidsEvent.data.date}
       logoUrl={`/events/for-kids/${forKidsEvent.id}`}
       pageUrl={new URL(Astro.url.pathname, Astro.site).toString()}
