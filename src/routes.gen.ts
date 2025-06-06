@@ -51,6 +51,11 @@ const ROUTES_CONFIG = {
         },
       },
     },
+    "for-kids": {
+      ":id": {
+        schedule: {},
+      },
+    },
     locations: {
       ":countryId": {
         ":cityId": {
@@ -83,7 +88,11 @@ const ROUTES_CONFIG = {
   },
   people: {
     ":id": {
-      assets: {},
+      assets: {
+        ":__image.:__type": {},
+        "_og-image": {},
+        _utils: {},
+      },
     },
   },
   podcasts: {
