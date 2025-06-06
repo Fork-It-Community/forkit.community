@@ -14,8 +14,8 @@ import { Button } from "@/components/ui/button";
 import type { ForKidsEvent } from "@/schemas/forKidsEvent";
 
 export const ForKidsEventNav = (props: {
-  forKidsEventName: ReactNode;
   forKidsEventId: string;
+  forKidsEventName: ReactNode;
   forKidsEventTickets: ForKidsEvent["tickets"];
   items: Array<{ href: string; label: ReactNode }>;
 }) => {

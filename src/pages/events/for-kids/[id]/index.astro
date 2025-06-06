@@ -10,6 +10,7 @@ import {
   getForKidsEventNavItems,
   getForKidsEventsCollection,
   getForKidsEventFrenchDisplayDate,
+  type ForKidsEventComputed,
 } from "@/lib/forKidsEvents";
 import { cn } from "@/lib/utils-client";
 import { Schema } from "astro-seo-schema";
@@ -20,6 +21,10 @@ import { motion } from "motion/react";
 import { MdArrowOutward, MdEvent, MdLocationPin } from "react-icons/md";
 import type { Place } from "schema-dts";
 import "dayjs/locale/fr";
+
+interface Props {
+  forKidsEvent: ForKidsEventComputed;
+}
 
 export async function getStaticPaths() {
   const forKidsEvents = await getForKidsEventsCollection();
@@ -32,6 +37,7 @@ export async function getStaticPaths() {
     })),
   );
 }
+
 const { forKidsEvent } = Astro.props;
 
 const location: Place | undefined = forKidsEvent.data.location
@@ -63,7 +69,7 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
         forKidsEvent.data.date
           ? dayjs(forKidsEvent.data.date).format("dddd, MMMM D, YYYY") + " "
           : ""
-      }${forKidsEvent.data.name}`,
+      }${forKidsEvent.data._computed.name}`,
       startDate: forKidsEvent.data.date?.toISOString(),
       endDate: forKidsEvent.data.date?.toISOString(),
       description: forKidsEvent.data.excerpt ?? "",
@@ -96,7 +102,9 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
             {getForKidsEventFrenchDisplayDate(forKidsEvent.data.date)}
           </span>
           <span class="text-xl text-primary md:text-4xl">
-            {forKidsEvent.data.city}, {forKidsEvent.data.country}
+            {forKidsEvent.data._computed.city?.data.name}, {
+              forKidsEvent.data._computed.country?.data.name
+            }
           </span>
         </h1>
       </div>

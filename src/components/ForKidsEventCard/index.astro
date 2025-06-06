@@ -2,17 +2,17 @@
 import {
   getForKidsEventFrenchDisplayDate,
   shouldShowForKidsTickets,
+  type ForKidsEventComputed,
 } from "@/lib/forKidsEvents";
 import { cn } from "@/lib/utils-client";
 import { Image } from "astro:assets";
-import type { CollectionEntry } from "astro:content";
 import { getEntries } from "astro:content";
 import dayjs from "dayjs";
 import { MdArrowForward } from "react-icons/md";
 import { buttonVariants } from "@/components/ui/button";
 
 interface Props {
-  forKidsEvent: CollectionEntry<"forKidsEvent">;
+  forKidsEvent: ForKidsEventComputed;
   class?: string;
 }
 
@@ -100,7 +100,9 @@ const isUpcomingEvent = dayjs(forKidsEvent.data.date)
               "opacity-50 group-hover:opacity-100",
           )}
         >
-          {forKidsEvent.data.city}, {forKidsEvent.data.country}
+          {forKidsEvent.data._computed.city?.data.name}, {
+            forKidsEvent.data._computed.country?.data.name
+          }
         </div>
       </div>
     </div>

@@ -5,12 +5,14 @@ import Footer from "@/components/Footer/index.astro";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import SEO from "@/components/SEO/index.astro";
 import RootLayout from "@/layouts/RootLayout.astro";
-import { getForKidsEventNavItems } from "@/lib/forKidsEvents";
-import type { CollectionEntry } from "astro:content";
+import {
+  getForKidsEventNavItems,
+  type ForKidsEventComputed,
+} from "@/lib/forKidsEvents";
 import { motion } from "motion/react";
 
 interface Props {
-  forKidsEvent: CollectionEntry<"forKidsEvent">;
+  forKidsEvent: ForKidsEventComputed;
   ogImage: URL;
 }
 
@@ -18,7 +20,7 @@ const { forKidsEvent, ogImage } = Astro.props;
 const navItems = await getForKidsEventNavItems(forKidsEvent.id);
 
 const url = new URL(Astro.url.pathname, Astro.site);
-const title = `${forKidsEvent.data.name}, For Kids`;
+const title = `${forKidsEvent.data._computed.name}, For Kids`;
 ---
 
 <RootLayout>
@@ -47,8 +49,8 @@ const title = `${forKidsEvent.data.name}, For Kids`;
   }
   <div class="absolute inset-0 p-2">
     <ExploreTheCommunity
-      eventCity={forKidsEvent.data.city}
-      eventCountry={forKidsEvent.data.country}
+      eventCity={forKidsEvent.data._computed.city?.data.name ?? ""}
+      eventCountry={forKidsEvent.data._computed.country?.data.name ?? ""}
       eventDate={forKidsEvent.data.date}
       logoUrl={`/events/for-kids/${forKidsEvent.id}`}
       pageUrl={new URL(Astro.url.pathname, Astro.site).toString()}
@@ -56,7 +58,7 @@ const title = `${forKidsEvent.data.name}, For Kids`;
   </div>
   <ForKidsEventNav
     forKidsEventId={forKidsEvent.id}
-    forKidsEventName={forKidsEvent.data.name}
+    forKidsEventName={forKidsEvent.data._computed.name}
     forKidsEventTickets={forKidsEvent.data.tickets}
     items={navItems}
     client:load

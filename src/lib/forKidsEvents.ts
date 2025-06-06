@@ -3,11 +3,15 @@ import { isEventPublished } from "./events";
 import dayjs from "dayjs";
 
 export async function getForKidsEventsCollection() {
-  return (
-    await getCollection("forKidsEvent", ({ data }) =>
-      import.meta.env.PROD ? isEventPublished(data.status) : true,
+  return Promise.all(
+    (
+      await getCollection("forKidsEvent", ({ data }) =>
+        import.meta.env.PROD ? isEventPublished(data.status) : true,
+      )
     )
-  ).sort((a, b) => dayjs(b.data.date).diff(a.data.date));
+      .sort((a, b) => dayjs(b.data.date).diff(a.data.date))
+      .map(forKidsEventWithComputed),
+  );
 }
 
 export async function getForKidsEvent(id: string) {
@@ -113,4 +117,29 @@ export function shouldShowForKidsTickets(
       .endOf("day")
       .isAfter(dayjs())
   );
+}
+
+export type ForKidsEventComputed = Awaited<
+  ReturnType<typeof forKidsEventWithComputed>
+>;
+export async function forKidsEventWithComputed<
+  Event extends CollectionEntry<"forKidsEvent">,
+>(event: Event) {
+  const city = await getEntry("cities", event.data.city.id);
+
+  const country = city
+    ? await getEntry("countries", city.data.country.id)
+    : undefined;
+
+  return {
+    ...event,
+    data: {
+      ...event.data,
+      _computed: {
+        name: `${city?.data.name}, ${country?.data.name}, ${event.data.date.getFullYear()}`,
+        city,
+        country,
+      },
+    },
+  };
 }
