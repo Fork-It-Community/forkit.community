@@ -1,3 +1,5 @@
+import { ROUTES } from "@/routes.gen";
+import { lunalink } from "@bearstudio/lunalink";
 import type { FC, ReactNode } from "react";
 import {
   MdHomeFilled,
@@ -6,6 +8,7 @@ import {
   MdFeed,
   MdPodcasts,
   MdBadge,
+  MdOutlineChildCare,
   // MdBadge,
   // MdHandshake,
   // MdLocalActivity,
@@ -72,6 +75,13 @@ const MAIN_MENU: Array<{
   //   scope: "all",
   //   level: "secondary",
   // },
+  {
+    label: "For Kids",
+    href: lunalink(ROUTES.fr.events["for-kids"].__path, {}),
+    icon: MdOutlineChildCare,
+    scope: "all",
+    level: "secondary",
+  },
   {
     label: "About Fork it!",
     href: "/about",

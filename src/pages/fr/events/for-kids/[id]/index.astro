@@ -21,6 +21,9 @@ import { motion } from "motion/react";
 import { MdArrowOutward, MdEvent, MdLocationPin } from "react-icons/md";
 import type { Place } from "schema-dts";
 import "dayjs/locale/fr";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
 interface Props {
   forKidsEvent: ForKidsEventComputed;
@@ -57,6 +60,9 @@ const coOrganizers = (
 ).filter((p) => !!p);
 
 const navItems = await getForKidsEventNavItems(forKidsEvent.id);
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <ForKidsEventLayout forKidsEvent={forKidsEvent} ogImage={ogImage}>
@@ -228,13 +234,15 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
           id="schedule"
           class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
         >
-          Programme
+          {t("event.schedule")}
         </h2>
         {
           forKidsEvent.data.workshops && (
             <a
-              href={`${forKidsEvent.id}/schedule`}
-              title="Dedicated schedule page"
+              href={lunalink(ROUTES.fr.events["for-kids"][":id"].__path, {
+                id: forKidsEvent.id,
+              })}
+              title={t("event.schedule.dedicatedPage")}
             >
               <MdArrowOutward className="text-2xl transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>

@@ -12,6 +12,11 @@ import { getSiteUrl } from "./src/lib/getSiteURL";
 export default defineConfig({
   site: getSiteUrl(),
 
+  i18n: {
+    locales: ["en", "fr"],
+    defaultLocale: "en",
+  },
+
   trailingSlash: "never",
 
   experimental: {

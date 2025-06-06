@@ -8,6 +8,8 @@ import {
 } from "astro:content";
 import { match } from "ts-pattern";
 import { entries } from "remeda";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 export function isEventPublished(
   status?: CollectionEntry<"events">["data"]["status"],
@@ -152,11 +154,13 @@ export async function getEventNavItems(id: string) {
 
   if (!event) return [];
 
+  const route = lunalink(ROUTES.events[":id"].__path, { id: event.id });
+
   return [
     ...(event.data.afterEventContent
       ? [
           {
-            href: `/events/${event.id}#after-event`,
+            href: `${route}#after-event`,
             label: "After Event",
           },
         ]
@@ -164,19 +168,19 @@ export async function getEventNavItems(id: string) {
     ...(event.data.location
       ? [
           {
-            href: `/events/${event.id}#venue`,
+            href: `${route}#venue`,
             label: "Venue",
           },
         ]
       : []),
     {
-      href: `/events/${event.id}#schedule`,
+      href: `${route}#schedule`,
       label: "Schedule",
     },
     ...(event.data.speakers?.length
       ? [
           {
-            href: `/events/${event.id}#speakers`,
+            href: `${route}#speakers`,
             label: "Speakers",
           },
         ]
@@ -184,14 +188,12 @@ export async function getEventNavItems(id: string) {
     ...(event.data.sponsors?.length
       ? [
           {
-            href: `/events/${event.id}#sponsors`,
+            href: `${route}#sponsors`,
             label: "Sponsors",
           },
         ]
       : []),
-    ...(event.data.faq?.length
-      ? [{ href: `/events/${event.id}#faq`, label: "FAQ" }]
-      : []),
+    ...(event.data.faq?.length ? [{ href: `${route}#faq`, label: "FAQ" }] : []),
   ];
 }
 
