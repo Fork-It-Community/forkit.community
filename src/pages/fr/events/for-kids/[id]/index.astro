@@ -24,6 +24,7 @@ import "dayjs/locale/fr";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import ForKidsEventPresentation from "@/components/ForKidsEventPresentation/index.astro";
 
 interface Props {
   forKidsEvent: ForKidsEventComputed;
@@ -113,6 +114,12 @@ const t = useTranslations(lang);
             }
           </span>
         </h1>
+        <p class="text-lg md:text-xl">
+          Pour les enfants de {forKidsEvent.data.ageRange.from} à {
+            forKidsEvent.data.ageRange.to
+          }
+          ans
+        </p>
       </div>
       {
         !!coOrganizers.length && (
@@ -171,6 +178,49 @@ const t = useTranslations(lang);
     </motion.div>
   </div>
 
+  <!-- Presentation -->
+  <div
+    class="relative mx-auto flex w-full max-w-screen-sm flex-col gap-24 px-4 py-16 lg:max-w-screen-lg lg:flex-row lg:gap-12"
+  >
+    <div class="flex w-full flex-[1.3] flex-col gap-8 pb-4">
+      <h2
+        class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+      >
+        Présentation de l'évenement
+      </h2>
+      <ForKidsEventPresentation ageRange={forKidsEvent.data.ageRange} />
+    </div>
+  </div>
+
+  <!-- Schedule -->
+  <div
+    class="relative mx-auto flex w-full max-w-screen-sm flex-col gap-24 px-4 py-16 lg:max-w-screen-lg lg:flex-row lg:gap-12"
+  >
+    <div class="flex w-full flex-[1.3] flex-col gap-8 pb-4">
+      <div class="flex items-center gap-2">
+        <h2
+          id="schedule"
+          class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+        >
+          {t("event.schedule")}
+        </h2>
+        {
+          forKidsEvent.data.workshops && (
+            <a
+              href={lunalink(ROUTES.fr.events["for-kids"][":id"].__path, {
+                id: forKidsEvent.id,
+              })}
+              title={t("event.schedule.dedicatedPage")}
+            >
+              <MdArrowOutward className="text-2xl transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </a>
+          )
+        }
+      </div>
+      <ForKidsEventSchedule forKidsEvent={forKidsEvent} />
+    </div>
+  </div>
+
   <!-- Venue -->
   {
     forKidsEvent.data.location && (
@@ -211,11 +261,7 @@ const t = useTranslations(lang);
               <div class="flex gap-2">
                 <MdEvent className="size-5 opacity-40" />
                 <p class="text-sm">
-                  {forKidsEvent.data.date
-                    ? dayjs(forKidsEvent.data.date).format(
-                        "dddd, MMMM D, YYYY",
-                      ) + " "
-                    : ""}
+                  {getForKidsEventFrenchDisplayDate(forKidsEvent.data.date)}
                 </p>
               </div>
             </div>
@@ -224,34 +270,6 @@ const t = useTranslations(lang);
       </article>
     )
   }
-  <!-- Schedule -->
-  <div
-    class="relative mx-auto flex w-full max-w-screen-sm flex-col gap-24 px-4 py-16 lg:max-w-screen-lg lg:flex-row lg:gap-12"
-  >
-    <div class="flex w-full flex-[1.3] flex-col gap-8 pb-4">
-      <div class="flex items-center gap-2">
-        <h2
-          id="schedule"
-          class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
-        >
-          {t("event.schedule")}
-        </h2>
-        {
-          forKidsEvent.data.workshops && (
-            <a
-              href={lunalink(ROUTES.fr.events["for-kids"][":id"].__path, {
-                id: forKidsEvent.id,
-              })}
-              title={t("event.schedule.dedicatedPage")}
-            >
-              <MdArrowOutward className="text-2xl transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </a>
-          )
-        }
-      </div>
-      <ForKidsEventSchedule forKidsEvent={forKidsEvent} />
-    </div>
-  </div>
 
   {forKidsEvent.data.faq && <FAQ client:load faq={forKidsEvent.data.faq} />}
 

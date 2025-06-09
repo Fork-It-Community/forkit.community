@@ -1,0 +1,60 @@
+---
+import type { ForKidsEvent } from "@/schemas/forKidsEvent";
+
+interface Props {
+  ageRange: ForKidsEvent["ageRange"];
+}
+const { ageRange } = Astro.props;
+---
+
+<p class="text-lg">
+  Plonge dans l’univers passionnant du numérique avec <strong
+    >For It! For Kids</strong
+  >, un événement unique imaginé pour éveiller la curiosité technologique des
+  enfants de <span class="font-semibold"
+    >{ageRange.from} à {ageRange.to} ans</span
+  > ! 🚀
+</p>
+
+<div class="grid gap-8 text-left md:grid-cols-2">
+  <ul class="space-y-4">
+    <li class="flex items-start gap-2">
+      <span class="text-xl">💻</span>
+      <span
+        ><strong>Découverte du code</strong> à travers des jeux ludiques et adaptés</span
+      >
+    </li>
+    <li class="flex items-start gap-2">
+      <span class="text-xl">🤖</span>
+      <span
+        ><strong>Ateliers créatifs</strong> autour de la robotique, du design et
+        du développement</span
+      >
+    </li>
+    <li class="flex items-start gap-2">
+      <span class="text-xl">🎮</span>
+      <span
+        ><strong>Activités interactives</strong> pour apprendre en s’amusant</span
+      >
+    </li>
+    <li class="flex items-start gap-2">
+      <span class="text-xl">🧠</span>
+      <span
+        ><strong>Expériences immersives</strong> pour stimuler logique et créativité</span
+      >
+    </li>
+  </ul>
+
+  <div class="flex flex-col justify-between gap-4">
+    <p class="text-lg">
+      💡 Une aventure technologique accessible à toutes et tous : cet événement
+      est <strong>100% gratuit</strong>, rendu possible grâce à une équipe de <strong
+        >bénévoles passionnée</strong
+      >.
+    </p>
+    <p class="font-semibold">
+      ⚠️ Places limitées : merci de réserver uniquement si vous êtes certains de
+      venir.
+    </p>
+  </div>
+</div>
