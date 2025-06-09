@@ -12,6 +12,7 @@ import { MdArrowOutward, MdMenu } from "react-icons/md";
 import { useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import type { ForKidsEvent } from "@/schemas/forKidsEvent";
+import dayjs from "dayjs";
 
 export const ForKidsEventNav = (props: {
   forKidsEventId: string;
@@ -22,6 +23,10 @@ export const ForKidsEventNav = (props: {
   const [{ y }] = useWindowScroll();
   const { height } = useWindowSize();
   const [open, setOpen] = useState(false);
+
+  const areTicketsAvailable =
+    props.forKidsEventTickets?.link &&
+    dayjs(props.forKidsEventTickets.endDate).endOf("day").isAfter(dayjs());
 
   return (
     <div
@@ -40,19 +45,20 @@ export const ForKidsEventNav = (props: {
             {props.forKidsEventName}
           </span>
         </a>
-
         <div className="flex items-center gap-1">
-          <Button className="max-xs:hidden">
-            <a
-              href={props.forKidsEventTickets?.link}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center"
-            >
-              Prendre un ticket
-              <MdArrowOutward className="transition group-hover:translate-x-1" />
-            </a>
-          </Button>
+          {areTicketsAvailable && (
+            <Button className="max-xs:hidden">
+              <a
+                href={props.forKidsEventTickets?.link}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center"
+              >
+                Prendre un ticket
+                <MdArrowOutward className="transition group-hover:translate-x-1" />
+              </a>
+            </Button>
+          )}
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
