@@ -11,12 +11,18 @@ import TiltedCard from "@/components/TiltedCard";
 import { getSocialsItems } from "@/content/socials";
 import ForKidsEventCard from "@/components/ForKidsEventCard/index.astro";
 import { t } from "@/i18n";
+import { SEO } from "astro-seo";
 
 const upcomingForKidsEvents = await getUpcomingForKidsEvents();
 const pastForKidsEvents = await getPastForKidsEvents();
 ---
 
 <MainLayout>
+  <SEO
+    slot="seo"
+    title="Événements Fork it! For Kids"
+    description="Tous les événements Fork it! For Kids. Des journées dédiées aux enfants, pour leur faire découvir le monde de la tech"
+  />
   <MainPageTitle
     title="Fork it! For Kids"
     subtitle="Tous nos événements pour les enfants"
