@@ -1,5 +1,6 @@
 ---
 import { Logo } from "@/components/Logo";
+import { LogoForKids } from "@/components/LogoForKids";
 import { LogoIcon } from "@/components/LogoIcon";
 import { ShareButton } from "@/components/ShareButton";
 import { buttonVariants } from "@/components/ui/button";
@@ -15,9 +16,10 @@ interface Props {
   eventCountry?: string;
   eventDate?: Date;
   pageUrl?: string;
+  type?: "classic" | "for-kids";
 }
 
-const props = Astro.props;
+const { type = "classic", ...props } = Astro.props;
 
 const shareMessage = `Join me for a new Fork it! Event on ${dayjs(props.eventDate).format("MMMM DD, YYYY")} in ${props.eventCity}, ${props.eventCountry}!`;
 ---
@@ -32,7 +34,11 @@ const shareMessage = `Join me for a new Fork it! Event on ${dayjs(props.eventDat
     {
       props.eventCity ? (
         <>
-          <LogoIcon className="w-[18px] text-primary" />
+          {type === "classic" ? (
+            <LogoIcon className="w-[18px] text-primary" />
+          ) : (
+            <LogoForKids className="w-[98px] text-primary" />
+          )}
           <span class="line-clamp-1 flex gap-0 font-heading text-xs font-medium uppercase leading-none opacity-60 group-hover:opacity-100 max-sm:flex-col sm:gap-1">
             <span>
               {props.eventCity}

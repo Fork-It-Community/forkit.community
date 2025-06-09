@@ -10,6 +10,8 @@ import {
   type ForKidsEventComputed,
 } from "@/lib/forKidsEvents";
 import { motion } from "motion/react";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 interface Props {
   forKidsEvent: ForKidsEventComputed;
@@ -52,8 +54,11 @@ const title = `${forKidsEvent.data._computed.name}, For Kids`;
       eventCity={forKidsEvent.data._computed.city?.data.name ?? ""}
       eventCountry={forKidsEvent.data._computed.country?.data.name ?? ""}
       eventDate={forKidsEvent.data.date}
-      logoUrl={`/events/for-kids/${forKidsEvent.id}`}
+      logoUrl={lunalink(ROUTES.fr.events["for-kids"][":id"].__path, {
+        id: forKidsEvent.id,
+      })}
       pageUrl={new URL(Astro.url.pathname, Astro.site).toString()}
+      type="for-kids"
     />
   </div>
   <ForKidsEventNav
