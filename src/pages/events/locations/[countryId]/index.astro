@@ -10,6 +10,7 @@ import { getEntry } from "astro:content";
 import { BackButton } from "@/components/BackButton";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
+import dayjs from "dayjs";
 
 export async function getStaticPaths() {
   const countries = await getCollection("countries");
@@ -21,11 +22,25 @@ export async function getStaticPaths() {
 const { countryId } = Astro.params;
 
 const country = await getEntry("countries", countryId);
-const cities = await getCollection(
+const allCities = await getCollection(
   "cities",
   (city) => city.data.country.id === countryId,
 );
 const eventsInCountry = await getEventsByCountry(countryId);
+
+const citiesLastEvent = allCities.map((city) => {
+  const lastEvent = eventsInCountry.find(
+    (event) => event.data._computed.city?.id === city.id,
+  );
+
+  return {
+    ...city,
+    lastDate: dayjs(lastEvent?.data.date),
+  };
+});
+
+const cities = citiesLastEvent.sort((a, b) => b.lastDate.diff(a.lastDate));
+
 const ogImage = new URL(
   Astro.url.pathname + "/assets/og-image.jpg",
   Astro.site,
