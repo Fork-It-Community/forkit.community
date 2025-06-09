@@ -159,8 +159,9 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
     <div class="flex w-full flex-[1.3] flex-col gap-8 pb-4">
       <h2
         class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+        id="presentation"
       >
-        Présentation de l'évenement
+        {t("events:presentation")}
       </h2>
       <ForKidsEventPresentation ageRange={forKidsEvent.data.ageRange} />
     </div>
@@ -218,7 +219,7 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
           <Prose>
             <div class="not-prose flex flex-col gap-3">
               <h2 class="font-heading text-2xl font-medium uppercase tracking-widest text-white">
-                Lieu
+                {t("events:venue")}
               </h2>
               <a
                 class="group flex gap-2 text-white"

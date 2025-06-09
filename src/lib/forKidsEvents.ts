@@ -34,6 +34,14 @@ export async function getForKidsEventNavItems(id: string) {
   });
 
   return [
+    {
+      href: `${route}#presentation`,
+      label: "Présentation",
+    },
+    {
+      href: `${route}#schedule`,
+      label: "Programme",
+    },
     ...(forKidsEvent.data.location
       ? [
           {
@@ -42,10 +50,6 @@ export async function getForKidsEventNavItems(id: string) {
           },
         ]
       : []),
-    {
-      href: `${route}#schedule`,
-      label: "Programme",
-    },
     ...(forKidsEvent.data.faq?.length
       ? [{ href: `${route}#faq`, label: "FAQ" }]
       : []),

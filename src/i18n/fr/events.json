@@ -3,6 +3,8 @@
   "events.past": "Événements passés",
   "schedule": "Programme",
   "schedule.dedicatedPage": "Page programme dédié",
+  "presentation": "Présentation de l'événement",
+  "venue": "Lieu",
   "share": {
     "event": "Partager cet événement",
     "social": "Partager sur votre réseau social favori",
