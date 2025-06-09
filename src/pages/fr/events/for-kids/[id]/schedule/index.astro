@@ -1,8 +1,11 @@
 ---
 import { BackButton } from "@/components/BackButton";
 import ForKidsEventSchedule from "@/components/ForKidsEventSchedule/index.astro";
+import { t } from "@/i18n";
 import ForKidsEventSubPageLayout from "@/layouts/ForKidsEventSubPageLayout.astro";
 import { getForKidsEventsCollection } from "@/lib/forKidsEvents";
+import { ROUTES } from "@/routes.gen";
+import { lunalink } from "@bearstudio/lunalink";
 import { SEO } from "astro-seo";
 import dayjs from "dayjs";
 
@@ -26,13 +29,19 @@ const description = `Schedule for the ${forKidsEvent.data._computed.city?.data.n
 <ForKidsEventSubPageLayout forKidsEvent={forKidsEvent}>
   <SEO slot="seo" title={title} description={description} />
   <div class="mx-auto w-full max-w-screen-sm space-y-8 p-4 md:p-8">
-    <BackButton href={`/events/for-kids/${forKidsEvent.id}`} client:load />
+    <BackButton
+      href={lunalink(ROUTES.fr.events["for-kids"][":id"].__path, {
+        id: forKidsEvent.id,
+      })}
+      buttonLabel={t("common:back")}
+      client:load
+    />
 
     <main class="space-y-2">
       <h2
         class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
       >
-        Programme
+        {t("events:schedule")}
       </h2>
       <ForKidsEventSchedule forKidsEvent={forKidsEvent} />
     </main>

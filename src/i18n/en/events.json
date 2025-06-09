@@ -1,0 +1,11 @@
+{
+  "upcoming": "Upcoming events",
+  "events.past": "Past events",
+  "schedule": "Schedule",
+  "schedule.dedicatedPage": "Dedicated schedule page",
+  "share": {
+    "event": "Share this event",
+    "social": "Share on your favorite social networks",
+    "copy": "Copy link"
+  }
+}

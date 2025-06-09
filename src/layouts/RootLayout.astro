@@ -6,12 +6,9 @@ import "@fontsource-variable/inter";
 import "@/styles/globals.css";
 import EnvHint from "@/components/EnvHint/EnvHint.astro";
 import { Toaster } from "@/components/ui/sonner";
-import { getLangFromUrl } from "@/i18n/utils";
-
-const lang = getLangFromUrl(Astro.url);
 ---
 
-<html lang={lang} class="dark">
+<html lang={Astro.currentLocale} class="dark">
   <head>
     <meta charset="utf-8" />
     <meta

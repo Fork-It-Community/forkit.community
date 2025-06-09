@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import { MdArrowOutward } from "react-icons/md";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
+import { t } from "@/i18n";
 
 const menuItems = getMainMenuItems();
 ---
@@ -16,14 +17,14 @@ const menuItems = getMainMenuItems();
     <p
       class="w-full text-balance text-center text-sm tracking-wider sm:text-left"
     >
-      <span class="opacity-60">This website is Open Source</span>
+      <span class="opacity-60">{t("footer:cta.text")}</span>
       <a
         href="https://github.com/Fork-It-Community/forkit.community"
         target="_blank"
         rel="noreferrer"
         class="font-medium text-white transition hover:text-primary"
       >
-        Fork it! on GitHub
+        {t("footer:cta.link")}
       </a>
     </p>
     <div class="flex w-full flex-col items-center gap-4 sm:flex-row">
@@ -79,7 +80,8 @@ const menuItems = getMainMenuItems();
           </a>
         </div>
         <p class="text-center text-xs opacity-50 sm:text-left">
-          © {dayjs().format("YYYY")} Fork it! Community. All rights reserved.
+          © {dayjs().format("YYYY")}
+          {t("footer:credits")}
         </p>
       </div>
     </div>

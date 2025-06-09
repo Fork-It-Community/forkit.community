@@ -3,6 +3,7 @@ import { Logo } from "@/components/Logo";
 import { LogoIcon } from "@/components/LogoIcon";
 import { ShareButton } from "@/components/ShareButton";
 import { buttonVariants } from "@/components/ui/button";
+import { t } from "@/i18n";
 import { cn } from "@/lib/utils-client";
 import dayjs from "dayjs";
 import { LuShare2 } from "react-icons/lu";
@@ -63,7 +64,7 @@ const shareMessage = `Join me for a new Fork it! Event on ${dayjs(props.eventDat
           })}
         >
           <LuShare2 />
-          <span class="sr-only sm:not-sr-only">Share</span>
+          <span class="sr-only sm:not-sr-only">{t("common:share")}</span>
         </ShareButton>
       )
     }
