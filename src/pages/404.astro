@@ -1,25 +1,59 @@
 ---
 import { Button } from "@/components/ui/button";
 import MainLayout from "@/layouts/MainLayout.astro";
+import { getUpcomingEvents } from "@/lib/events";
+import EventsGrid from "@/components/EventsGrid/index.astro";
+import DecryptedText from "@/components/DecryptedText";
+
+const events = await getUpcomingEvents();
 ---
 
 <MainLayout>
   <main class="flex flex-1 flex-col">
-    <div class="grid min-h-full place-items-center px-6 py-24 sm:py-32 lg:px-8">
+    <div
+      class="grid min-h-full place-items-center gap-20 px-6 py-24 sm:py-32 lg:px-8"
+    >
       <div class="text-center">
-        <p class="text-base font-semibold text-primary">404</p>
+        <p class="text-base font-semibold text-primary">
+          <DecryptedText
+            client:visible
+            animateOn="view"
+            useOriginalCharsOnly
+            text="404"
+          />
+        </p>
+
         <h1 class="mt-4 font-heading text-3xl font-bold sm:text-5xl">
-          Page not found
+          <DecryptedText
+            client:visible
+            animateOn="view"
+            useOriginalCharsOnly
+            text="Page not found"
+          />
         </h1>
         <p class="mt-6 text-base leading-7">
-          Sorry, we couldn’t find the page you’re looking for.
+          <DecryptedText
+            animateOn="view"
+            client:visible
+            useOriginalCharsOnly
+            text="Sorry, we couldn’t find the page you’re looking for."
+          />
         </p>
+
         <div class="mt-10 flex items-center justify-center gap-x-6">
           <Button>
             <a href="/">Go back home</a>
           </Button>
         </div>
       </div>
+
+      {
+        !!events.length && (
+          <div class="mx-auto w-full max-w-screen-lg px-4">
+            <EventsGrid events={events} title="Checkout our upcoming events" />
+          </div>
+        )
+      }
     </div>
   </main>
 </MainLayout>
