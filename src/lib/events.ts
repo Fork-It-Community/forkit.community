@@ -85,7 +85,7 @@ export async function getEventByCity(city: CollectionEntry<"cities">["id"]) {
 export async function getUpcomingEvents({
   limit = undefined,
 }: GetEventsParams = {}) {
-  const events = await getEventsCollection();
+  const events = withoutDraft(await getEventsCollection());
   const upcomingEvents =
     events
       .filter((event) => dayjs(event.data.date).endOf("day").isAfter(dayjs()))
@@ -246,8 +246,15 @@ export function shouldShowProspectus(
 }
 
 export function getEventDisplayDate(event: CollectionEntry<"events">) {
-  if (event.data.status === "published-without-date")
+  const DRAFT_STATUSES: Array<CollectionEntry<"events">["data"]["status"]> = [
+    "published-without-date",
+    "draft",
+  ] as const;
+
+  if (DRAFT_STATUSES.includes(event.data.status)) {
     return `Coming in ${dayjs(event.data.date).format("YYYY")}`;
+  }
+
   return dayjs(event.data.date).format("MMMM DD, YYYY");
 }
 export function getEventDisplayType(
@@ -352,4 +359,10 @@ export function getPersonRolesInEvent(
   }
 
   return roles;
+}
+
+export function withoutDraft<T extends CollectionEntry<"events">>(
+  events: Array<T>,
+) {
+  return events.filter((event) => event.data.status !== "draft");
 }
