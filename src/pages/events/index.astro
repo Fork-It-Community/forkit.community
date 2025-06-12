@@ -18,7 +18,7 @@ import dayjs from "dayjs";
 const upcomingEvents = await getUpcomingEvents();
 const pastEvents = await getPastEvents();
 const allCountries = await getCollection("countries");
-const events = await getEventsCollection();
+const events = await getEventsCollection({ without: ["draft"] });
 
 const countriesLastEvents = allCountries.map((country) => {
   const lastEvents = events.find(

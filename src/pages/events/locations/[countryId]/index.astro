@@ -3,7 +3,7 @@ import MainLayout from "@/layouts/MainLayout.astro";
 
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import SEO from "@/components/SEO/index.astro";
-import { getEventsByCountry } from "@/lib/events";
+import { getEventsByCountry, without } from "@/lib/events";
 import EventsList from "@/components/EventsList/index.astro";
 import { getCollection } from "astro:content";
 import { getEntry } from "astro:content";
@@ -26,7 +26,7 @@ const allCities = await getCollection(
   "cities",
   (city) => city.data.country.id === countryId,
 );
-const eventsInCountry = await getEventsByCountry(countryId);
+const eventsInCountry = without(await getEventsByCountry(countryId), "draft");
 
 const citiesLastEvent = allCities.map((city) => {
   const lastEvent = eventsInCountry.find(

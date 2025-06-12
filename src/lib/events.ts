@@ -7,7 +7,7 @@ import {
   type CollectionEntry,
 } from "astro:content";
 import { match } from "ts-pattern";
-import { entries } from "remeda";
+import { entries, isEmpty, isNullish } from "remeda";
 
 export function isEventPublished(
   status?: CollectionEntry<"events">["data"]["status"],
@@ -40,16 +40,28 @@ export async function eventWithComputed<
 
 export type EventComputed = Awaited<ReturnType<typeof eventWithComputed>>;
 
-export async function getEventsCollection() {
-  return Promise.all(
-    (
-      await getCollection("events", ({ data }) =>
-        import.meta.env.PROD ? isEventPublished(data.status) : true,
+export async function getEventsCollection({
+  without,
+}: {
+  without?: Array<CollectionEntry<"events">["data"]["status"]>;
+} = {}) {
+  return (
+    await Promise.all(
+      (
+        await getCollection("events", ({ data }) =>
+          import.meta.env.PROD ? isEventPublished(data.status) : true,
+        )
       )
+        .sort((a, b) => dayjs(b.data.date).diff(a.data.date))
+        .map(eventWithComputed),
     )
-      .sort((a, b) => dayjs(b.data.date).diff(a.data.date))
-      .map(eventWithComputed),
-  );
+  ).filter((event) => {
+    if (isNullish(without) || isEmpty(without)) {
+      return true;
+    }
+
+    return !without.includes(event.data.status);
+  });
 }
 
 export function getEventSubPagesCollection(
@@ -85,7 +97,7 @@ export async function getEventByCity(city: CollectionEntry<"cities">["id"]) {
 export async function getUpcomingEvents({
   limit = undefined,
 }: GetEventsParams = {}) {
-  const events = withoutDraft(await getEventsCollection());
+  const events = without(await getEventsCollection(), "draft");
   const upcomingEvents =
     events
       .filter((event) => dayjs(event.data.date).endOf("day").isAfter(dayjs()))
@@ -361,8 +373,9 @@ export function getPersonRolesInEvent(
   return roles;
 }
 
-export function withoutDraft<T extends CollectionEntry<"events">>(
+export function without<T extends CollectionEntry<"events">>(
   events: Array<T>,
+  status: T["data"]["status"],
 ) {
-  return events.filter((event) => event.data.status !== "draft");
+  return events.filter((event) => event.data.status !== status);
 }
