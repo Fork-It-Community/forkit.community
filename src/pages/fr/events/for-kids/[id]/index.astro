@@ -106,7 +106,7 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
           <span class="text-3xl font-medium md:text-6xl">
             {getForKidsEventFrenchDisplayDate(forKidsEvent.data.date)}
           </span>
-          <span class="text-xl text-primary md:text-4xl">
+          <span class="text-xl text-for-kids-primary-foreground md:text-4xl">
             {forKidsEvent.data._computed.city?.data.name}, {
               forKidsEvent.data._computed.country?.data.name
             }
@@ -229,7 +229,7 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
               >
                 <MdLocationPin className="size-5 transition opacity-40 group-hover:opacity-100" />
                 <address class="not-italic leading-tight">
-                  <strong class="transition group-hover:text-primary">
+                  <strong class="transition group-hover:text-for-kids-primary-foreground">
                     {forKidsEvent.data.location.name}
                   </strong>
                   <br />
