@@ -12,6 +12,8 @@ const ROUTES_CONFIG = {
       assets: {
         ":__image.:__type": {},
         "_og-image": {},
+        "_qrcode-bg": {},
+        _qrcode: {},
         "_save-the-date-square": {},
         "_save-the-date": {},
         "_tickets-available-square": {},
