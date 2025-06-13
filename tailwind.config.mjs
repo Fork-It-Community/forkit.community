@@ -25,6 +25,10 @@ export default {
         DEFAULT: "hsl(var(--secondary))",
         foreground: "hsl(var(--secondary-foreground))",
       },
+      "for-kids-primary": {
+        DEFAULT: "hsl(var(--for-kids-primary))",
+        foreground: "hsl(var(--for-kids-primary-foreground))",
+      },
       destructive: {
         DEFAULT: "hsl(var(--destructive))",
         foreground: "hsl(var(--destructive-foreground))",

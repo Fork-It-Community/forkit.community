@@ -1,0 +1,36 @@
+---
+import { t } from "@/i18n";
+import { motion } from "motion/react";
+
+interface Props {
+  navItems: Array<{ label: string; href: string }>;
+}
+
+const { navItems } = Astro.props;
+---
+
+<motion.div
+  client:load
+  initial={{ opacity: 0, y: -5 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ type: "spring", delay: 0.2 }}
+  className="absolute bottom-0 left-0 right-0 flex flex-col items-center justify-center gap-2 px-6 py-8 md:py-16"
+>
+  <p class="text-xs uppercase tracking-widest opacity-40">
+    {t("common:quickAccess")}
+  </p>
+  <nav
+    class="flex flex-wrap items-center justify-center gap-x-1 xs:gap-x-2 md:gap-x-3"
+  >
+    {
+      navItems.map((item) => (
+        <a
+          href={item.href}
+          class="flex p-2 text-sm underline decoration-foreground/40 underline-offset-4 opacity-60 hover:text-primary hover:decoration-current hover:opacity-100 md:text-base"
+        >
+          {item.label}
+        </a>
+      ))
+    }
+  </nav>
+</motion.div>

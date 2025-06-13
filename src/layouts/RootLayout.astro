@@ -8,7 +8,7 @@ import EnvHint from "@/components/EnvHint/EnvHint.astro";
 import { Toaster } from "@/components/ui/sonner";
 ---
 
-<html lang="en" class="dark">
+<html lang={Astro.currentLocale} class="dark">
   <head>
     <meta charset="utf-8" />
     <meta

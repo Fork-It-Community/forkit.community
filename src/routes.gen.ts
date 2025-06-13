@@ -71,6 +71,15 @@ const ROUTES_CONFIG = {
     },
     "rss.xml": {},
   },
+  fr: {
+    events: {
+      "for-kids": {
+        ":id": {
+          schedule: {},
+        },
+      },
+    },
+  },
   news: {
     "[...page]": {},
     article: {

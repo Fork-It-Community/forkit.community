@@ -1,0 +1,259 @@
+---
+import { FAQ } from "@/components/Faq";
+import ForKidsEventSchedule from "@/components/ForKidsEventSchedule/index.astro";
+import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
+import PartnersBlock from "@/components/PartnersBlock/index.astro";
+import Prose from "@/components/Prose/index.astro";
+import ForKidsEventLayout from "@/layouts/ForKidsEventLayout.astro";
+import QuickAccess from "@/components/QuickAccess/index.astro";
+import {
+  getForKidsEventNavItems,
+  getForKidsEventsCollection,
+  getForKidsEventFrenchDisplayDate,
+  type ForKidsEventComputed,
+} from "@/lib/forKidsEvents";
+import { cn } from "@/lib/utils-client";
+import { Schema } from "astro-seo-schema";
+import { Image } from "astro:assets";
+import { getEntries } from "astro:content";
+import dayjs from "dayjs";
+import { motion } from "motion/react";
+import { MdArrowOutward, MdEvent, MdLocationPin } from "react-icons/md";
+import type { Place } from "schema-dts";
+import "dayjs/locale/fr";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
+import { t } from "@/i18n";
+import ForKidsEventPresentation from "@/components/ForKidsEventPresentation/index.astro";
+import { LogoForkItForKids } from "@/components/LogoForkItForKids";
+
+interface Props {
+  forKidsEvent: ForKidsEventComputed;
+}
+
+export async function getStaticPaths() {
+  const forKidsEvents = await getForKidsEventsCollection();
+  return Promise.all(
+    forKidsEvents.map(async (forKidsEvent) => ({
+      params: { id: forKidsEvent.id },
+      props: {
+        forKidsEvent,
+      },
+    })),
+  );
+}
+
+const { forKidsEvent } = Astro.props;
+
+const location: Place | undefined = forKidsEvent.data.location
+  ? {
+      "@type": "Place",
+      address: forKidsEvent.data.location.address,
+      name: forKidsEvent.data.location.name ?? "",
+    }
+  : undefined;
+const ogImage = new URL(
+  Astro.url.pathname + "/assets/og-image.jpg",
+  Astro.site,
+);
+const partners = await getEntries(forKidsEvent.data.partners ?? []);
+const coOrganizers = (
+  await getEntries(forKidsEvent.data.coOrganizers ?? [])
+).filter((p) => !!p);
+
+const navItems = await getForKidsEventNavItems(forKidsEvent.id);
+---
+
+<ForKidsEventLayout forKidsEvent={forKidsEvent} ogImage={ogImage}>
+  <Schema
+    slot="ld+json"
+    item={{
+      "@context": "https://schema.org",
+      "@type": "Event",
+      name: `${
+        forKidsEvent.data.date
+          ? dayjs(forKidsEvent.data.date).format("dddd, MMMM D, YYYY") + " "
+          : ""
+      }${forKidsEvent.data._computed.name}`,
+      startDate: forKidsEvent.data.date?.toISOString(),
+      endDate: forKidsEvent.data.date?.toISOString(),
+      description: forKidsEvent.data.excerpt ?? "",
+      image: forKidsEvent.data.image?.media.src ?? "",
+      organizer: {
+        "@type": "Organization",
+        name: "Fork it! Community",
+        url: "https://www.forkit.community",
+      },
+      ...(location && { location }),
+    }}
+  />
+  <div
+    class="relative flex h-[100svh] min-h-[600px] flex-col items-center justify-center"
+  >
+    <motion.div
+      client:load
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: "spring" }}
+      className="relative flex flex-1 flex-col items-center justify-center gap-8 p-4 md:gap-12"
+    >
+      <div class="flex flex-col items-center justify-center gap-4">
+        <!-- Use Fork it! for kids logo when available -->
+        <LogoForkItForKids className="w-48 md:w-56" />
+        <h1
+          class="flex flex-col gap-1 text-balance text-center font-heading md:gap-2"
+        >
+          <span class="text-3xl font-medium md:text-6xl">
+            {getForKidsEventFrenchDisplayDate(forKidsEvent.data.date)}
+          </span>
+          <span class="text-xl text-for-kids-primary-foreground md:text-4xl">
+            {forKidsEvent.data._computed.city?.data.name}, {
+              forKidsEvent.data._computed.country?.data.name
+            }
+          </span>
+        </h1>
+        <p class="text-lg md:text-xl">
+          Pour les enfants de {forKidsEvent.data.ageRange.from} à {
+            forKidsEvent.data.ageRange.to
+          }
+          ans
+        </p>
+      </div>
+      {
+        !!coOrganizers.length && (
+          <div class="flex flex-col items-center justify-center">
+            <div class="relative size-8 translate-y-1/2 opacity-20">
+              <div class="h-[1px] w-full rotate-45 bg-white" />
+              <div class="h-[1px] w-full -rotate-45 bg-white" />
+            </div>
+            <div class="flex w-full flex-wrap items-center justify-center gap-x-4">
+              {coOrganizers.map((coOrganizer) => (
+                <a
+                  href={coOrganizer.data.href}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Image
+                    class={cn(
+                      "size-24 md:size-28",
+                      coOrganizers.length > 2 && "size-16 md:size-24",
+                    )}
+                    src={coOrganizer.data.logos.noBgSquare}
+                    alt={coOrganizer.data.name}
+                  />
+                </a>
+              ))}
+            </div>
+          </div>
+        )
+      }
+    </motion.div>
+
+    <QuickAccess navItems={navItems} />
+  </div>
+
+  <!-- Presentation -->
+  <div
+    class="relative mx-auto flex w-full max-w-screen-sm flex-col gap-24 px-4 py-16 lg:max-w-screen-lg lg:flex-row lg:gap-12"
+  >
+    <div class="flex w-full flex-[1.3] flex-col gap-8 pb-4">
+      <h2
+        class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+        id="presentation"
+      >
+        {t("events:presentation")}
+      </h2>
+      <ForKidsEventPresentation ageRange={forKidsEvent.data.ageRange} />
+    </div>
+  </div>
+
+  <!-- Schedule -->
+  <div
+    class="relative mx-auto flex w-full max-w-screen-sm flex-col gap-24 px-4 py-16 lg:max-w-screen-lg lg:flex-row lg:gap-12"
+  >
+    <div class="flex w-full flex-[1.3] flex-col gap-8 pb-4">
+      <div class="flex items-center gap-2">
+        <h2
+          id="schedule"
+          class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+        >
+          {t("events:schedule")}
+        </h2>
+        {
+          forKidsEvent.data.workshops && (
+            <a
+              href={lunalink(
+                ROUTES.fr.events["for-kids"][":id"]["schedule"].__path,
+                {
+                  id: forKidsEvent.id,
+                },
+              )}
+              title={t("events:schedule.dedicatedPage")}
+            >
+              <MdArrowOutward className="text-2xl transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </a>
+          )
+        }
+      </div>
+      <ForKidsEventSchedule forKidsEvent={forKidsEvent} />
+    </div>
+  </div>
+
+  <!-- Venue -->
+  {
+    forKidsEvent.data.location && (
+      <article
+        id="venue"
+        class="relative mx-auto flex w-full max-w-screen-2xl scroll-m-8 flex-col gap-8 py-8 md:flex-row md:gap-4 md:py-24"
+      >
+        {forKidsEvent.data.location.image && (
+          <div class="flex-1 md:-ml-4">
+            <Image
+              class="bg-black/20 md:rounded-sm"
+              src={forKidsEvent.data.location.image}
+              alt={forKidsEvent.data.location.name}
+            />
+          </div>
+        )}
+        <div class="flex flex-1 flex-col items-center justify-center px-4 md:px-12">
+          <Prose>
+            <div class="not-prose flex flex-col gap-3">
+              <h2 class="font-heading text-2xl font-medium uppercase tracking-widest text-white">
+                {t("events:venue")}
+              </h2>
+              <a
+                class="group flex gap-2 text-white"
+                href={`https://www.google.com/maps/search/${forKidsEvent.data.location.name},${forKidsEvent.data.location.address}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <MdLocationPin className="size-5 transition opacity-40 group-hover:opacity-100" />
+                <address class="not-italic leading-tight">
+                  <strong class="transition group-hover:text-for-kids-primary-foreground">
+                    {forKidsEvent.data.location.name}
+                  </strong>
+                  <br />
+                  {forKidsEvent.data.location.address}
+                </address>
+              </a>
+              <div class="flex gap-2">
+                <MdEvent className="size-5 opacity-40" />
+                <p class="text-sm">
+                  {getForKidsEventFrenchDisplayDate(forKidsEvent.data.date)}
+                </p>
+              </div>
+            </div>
+          </Prose>
+        </div>
+      </article>
+    )
+  }
+
+  {forKidsEvent.data.faq && <FAQ client:load faq={forKidsEvent.data.faq} />}
+
+  {!!partners.length && <PartnersBlock partners={partners} />}
+
+  <div class="py-8 md:py-12">
+    <JoinTheCommunity />
+  </div>
+</ForKidsEventLayout>

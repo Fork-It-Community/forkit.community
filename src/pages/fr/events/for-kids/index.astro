@@ -1,0 +1,100 @@
+---
+import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
+import bgImage from "@/assets/images/kids.png";
+import {
+  getUpcomingForKidsEvents,
+  getPastForKidsEvents,
+} from "@/lib/forKidsEvents";
+import { cn } from "@/lib/utils-client";
+import TiltedCard from "@/components/TiltedCard";
+import { getSocialsItems } from "@/content/socials";
+import ForKidsEventCard from "@/components/ForKidsEventCard/index.astro";
+import { t } from "@/i18n";
+import { SEO } from "astro-seo";
+
+const upcomingForKidsEvents = await getUpcomingForKidsEvents();
+const pastForKidsEvents = await getPastForKidsEvents();
+---
+
+<MainLayout>
+  <SEO
+    slot="seo"
+    title="Événements Fork it! For Kids"
+    description="Tous les événements Fork it! For Kids. Des journées dédiées aux enfants, pour leur faire découvir le monde de la tech"
+  />
+  <MainPageTitle
+    title="Fork it! For Kids"
+    subtitle="Tous nos événements pour les enfants"
+    imageSrc={bgImage}
+  />
+
+  <div class="flex flex-col gap-24 pb-40">
+    {
+      !!upcomingForKidsEvents.length && (
+        <div class={cn("mx-auto w-full max-w-screen-lg grid-cols-2 px-4")}>
+          <div class="flex flex-col gap-2">
+            <h2 class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
+              {t("events:upcoming")}
+            </h2>
+            <div class={cn("grid grid-cols-1 gap-3 md:grid-cols-2")}>
+              {upcomingForKidsEvents.map((forKidsEvent) => (
+                <TiltedCard client:visible>
+                  <ForKidsEventCard
+                    forKidsEvent={forKidsEvent}
+                    class={cn(
+                      forKidsEvent.data.status !== "cancelled" && "min-h-56",
+                    )}
+                  />
+                </TiltedCard>
+              ))}
+              {upcomingForKidsEvents.length % 2 !== 0 && (
+                <div class="relative hidden flex-col items-center justify-center gap-4 rounded-md bg-white/5 px-8 py-6 tracking-widest md:flex">
+                  <div class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
+                    {t("social.stayUpdated")}
+                  </div>
+                  <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-0">
+                    {getSocialsItems("primary").map(
+                      ({ icon: Icon, ...social }) => (
+                        <a
+                          href={social.href}
+                          class="flex items-center gap-2 p-2 opacity-60 transition hover:text-white hover:opacity-100"
+                        >
+                          <span class="text-lg">
+                            <Icon />
+                          </span>
+                          <span class="text-sm uppercase tracking-wide">
+                            {social.label}
+                          </span>
+                        </a>
+                      ),
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      !!pastForKidsEvents.length && (
+        <div class="mx-auto w-full max-w-screen-sm px-4">
+          <div class="flex flex-col gap-2">
+            <h2 class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
+              {t("events:past")}
+            </h2>
+            <div class="flex flex-col gap-3">
+              {pastForKidsEvents.map((forKidsEvent) => (
+                <TiltedCard client:visible scaleOnHover={1}>
+                  <ForKidsEventCard forKidsEvent={forKidsEvent} />
+                </TiltedCard>
+              ))}
+            </div>
+          </div>
+        </div>
+      )
+    }
+  </div>
+</MainLayout>
