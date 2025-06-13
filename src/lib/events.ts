@@ -266,10 +266,10 @@ export function getEventDisplayDate(event: CollectionEntry<"events">) {
   ] as const;
 
   if (DRAFT_STATUSES.includes(event.data.status)) {
-    return `Coming in ${dayjs(event.data.date).format("YYYY")}`;
+    return `Coming in ${dayjs(event.data.date).locale("en").format("YYYY")}`;
   }
 
-  return dayjs(event.data.date).format("MMMM DD, YYYY");
+  return dayjs(event.data.date).locale("en").format("MMMM DD, YYYY");
 }
 export function getEventDisplayType(
   eventType: CollectionEntry<"events">["data"]["type"],
