@@ -1,6 +1,9 @@
 import i18next from "i18next";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
+import "dayjs/locale/en";
+import "dayjs/locale/fr";
+
 import commonEn from "./en/common.json";
 import eventsEn from "./en/events.json";
 import footerEn from "./en/footer.json";

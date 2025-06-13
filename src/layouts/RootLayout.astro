@@ -6,6 +6,11 @@ import "@fontsource-variable/inter";
 import "@/styles/globals.css";
 import EnvHint from "@/components/EnvHint/EnvHint.astro";
 import { Toaster } from "@/components/ui/sonner";
+import dayjs from "dayjs";
+
+// While in development, there are some "rest" from one page to another.
+// This works well in production
+dayjs.locale(Astro.currentLocale);
 ---
 
 <html lang={Astro.currentLocale} class="dark">
