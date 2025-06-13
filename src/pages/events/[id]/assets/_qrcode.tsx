@@ -30,15 +30,15 @@ export default async function ({
     width: 880,
     margin: 1,
     color: {
-      dark: COLORS.white,
-      light: "#00000000",
+      light: COLORS.white,
+      dark: "#00000000",
     },
   });
 
   const qrCodeBase64 = imageBufferToBase64(qrCodeBuffer, "png");
 
   return (
-    <Frame {...config} style={{ padding: 64 }}>
+    <Frame {...config}>
       <div
         style={{
           display: "flex",
