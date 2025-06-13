@@ -11,6 +11,7 @@ import {
   getForKidsEventsCollection,
   getForKidsEventFrenchDisplayDate,
   type ForKidsEventComputed,
+  shouldShowForKidsTickets,
 } from "@/lib/forKidsEvents";
 import { cn } from "@/lib/utils-client";
 import { Schema } from "astro-seo-schema";
@@ -18,13 +19,19 @@ import { Image } from "astro:assets";
 import { getEntries } from "astro:content";
 import dayjs from "dayjs";
 import { motion } from "motion/react";
-import { MdArrowOutward, MdEvent, MdLocationPin } from "react-icons/md";
+import {
+  MdArrowForward,
+  MdArrowOutward,
+  MdEvent,
+  MdLocationPin,
+} from "react-icons/md";
 import type { Place } from "schema-dts";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { t } from "@/i18n";
 import ForKidsEventPresentation from "@/components/ForKidsEventPresentation/index.astro";
 import { LogoForkItForKids } from "@/components/LogoForkItForKids";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   forKidsEvent: ForKidsEventComputed;
@@ -97,7 +104,6 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
       className="relative flex flex-1 flex-col items-center justify-center gap-8 p-4 md:gap-12"
     >
       <div class="flex flex-col items-center justify-center gap-4">
-        <!-- Use Fork it! for kids logo when available -->
         <LogoForkItForKids className="w-48 md:w-56" />
         <h1
           class="flex flex-col gap-1 text-balance text-center font-heading md:gap-2"
@@ -144,6 +150,19 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
               ))}
             </div>
           </div>
+        )
+      }
+      {
+        shouldShowForKidsTickets(forKidsEvent) && (
+          <Button className="bg-for-kids-primary sm:max-w-56 text-white">
+            <a
+              href={forKidsEvent.data.tickets.link}
+              class="flex items-center gap-1"
+            >
+              {t("events:tickets.available")}
+              <MdArrowForward className="group-hover:translate-x-1 transition" />
+            </a>
+          </Button>
         )
       }
     </motion.div>
