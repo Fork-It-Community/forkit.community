@@ -67,10 +67,6 @@ const coOrganizers = (
   await getEntries(forKidsEvent.data.coOrganizers ?? [])
 ).filter((p) => !!p);
 
-const isUpcomingEvent = dayjs(forKidsEvent.data.date)
-  .endOf("day")
-  .isAfter(dayjs());
-
 const navItems = await getForKidsEventNavItems(forKidsEvent.id);
 ---
 
@@ -157,7 +153,7 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
         )
       }
       {
-        isUpcomingEvent && shouldShowForKidsTickets(forKidsEvent) && (
+        shouldShowForKidsTickets(forKidsEvent) && (
           <Button className="bg-for-kids-primary sm:max-w-56 text-white">
             <a
               href={forKidsEvent.data.tickets.link}
