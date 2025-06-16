@@ -3,6 +3,9 @@ import { ROUTES } from "@/routes.gen";
 import { lunalink, type ExtractParams } from "@bearstudio/lunalink";
 import type { APIRoute } from "astro";
 import dayjs from "dayjs";
+import { isEmpty } from "remeda";
+
+type EventWithComputed = Awaited<ReturnType<typeof getEventWithComputed>>;
 
 export const GET: APIRoute<
   {},
@@ -17,19 +20,9 @@ Join us on ${dayjs(event.data.date).format("DD/MM/YYYY")} to listen to ${event.d
       event.data.location?.name
     }
 
-## Venue
+${displayVenue(event)}
 
-${event.data.location?.name}, ${event.data.location?.address}
-
-## Schedule
-
-${event.data._computed.talks
-  ?.map(
-    (item) =>
-      `- [${item?.data.title}](${lunalink(ROUTES.events[":id"].talks[":talkId"].__path, { id: event.id, talkId: item.id ?? "" })})`,
-  )
-  .join("\n")}
-`,
+${displaySchedule(event)}`,
     {
       headers: { "Content-Type": "text/plain; charset=utf-8" },
     },
@@ -41,3 +34,24 @@ export async function getStaticPaths() {
 
   return events.map((event) => ({ params: { id: event.id } }));
 }
+
+const displayVenue = (event: EventWithComputed) => {
+  if (!event.data.location) return "";
+
+  return `## Venue
+
+${event.data.location?.name}, ${event.data.location?.address}`;
+};
+
+const displaySchedule = (event: EventWithComputed) => {
+  if (isEmpty(event.data._computed.talks)) return "";
+
+  return `## Schedule
+
+${event.data._computed.talks
+  ?.map(
+    (item) =>
+      `- [${item?.data.title}](${lunalink(ROUTES.events[":id"].talks[":talkId"].__path, { id: event.id, talkId: item.id ?? "" })})`,
+  )
+  .join("\n")}`;
+};
