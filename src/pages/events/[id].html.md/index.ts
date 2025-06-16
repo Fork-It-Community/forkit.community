@@ -22,7 +22,13 @@ Join us on ${dayjs(event.data.date).format("DD/MM/YYYY")} to listen to ${event.d
 
 ${displayVenue(event)}
 
-${displaySchedule(event)}`,
+${displaySchedule(event)}
+
+${displaySpeakers(event)}
+
+${displayAfterEvent(event)}
+
+${displaySponsors(event)}`,
     {
       headers: { "Content-Type": "text/plain; charset=utf-8" },
     },
@@ -54,4 +60,54 @@ ${event.data._computed.talks
       `- [${item?.data.title}](${lunalink(ROUTES.events[":id"].talks[":talkId"].__path, { id: event.id, talkId: item.id ?? "" })})`,
   )
   .join("\n")}`;
+};
+
+const displaySpeakers = (event: EventWithComputed) => {
+  if (!event.data.speakers) return "";
+
+  return `## Speakers
+
+${event.data.speakers
+  .map(
+    (speaker) =>
+      `- ${speaker.id} (${lunalink(ROUTES.people[":id"].__path, { id: speaker.id ?? "" })})`,
+  )
+  .join("\n")}`;
+};
+
+const displayAfterEvent = (event: EventWithComputed) => {
+  if (!event.data.afterEventContent) return "";
+
+  const { afterMovie, photos, vods } = event.data.afterEventContent;
+
+  return `## After event
+
+${
+  afterMovie
+    ? `### afterMovie
+- ${afterMovie.href}`
+    : ""
+}
+
+${
+  photos
+    ? `### Photos 
+- ${photos.href}`
+    : ""
+}      
+
+${
+  vods
+    ? `### VODs 
+- ${vods.href}`
+    : ""
+}`;
+};
+
+const displaySponsors = (event: EventWithComputed) => {
+  if (!event.data.sponsors) return "";
+
+  return `## Sponsors
+
+${event.data.sponsors.map((sponsors) => `- ${sponsors.slug.id}`).join("\n")}`;
 };
