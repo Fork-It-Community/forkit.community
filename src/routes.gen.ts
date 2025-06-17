@@ -102,6 +102,7 @@ const ROUTES_CONFIG = {
         _utils: {},
       },
     },
+    ":id.html.md": {},
   },
   podcasts: {
     ":id": {
