@@ -50,7 +50,7 @@ ${news
 
 ${people
   .map((person) => {
-    return `- [${person.data.name}](${lunalink(ROUTES.people[":id"].__path, { id: person.id })})`;
+    return `- [${person.data.name}](${lunalink(ROUTES.people[":id.html.md"].__path, { id: person.id })})`;
   })
   .join("\n")}
   `,
