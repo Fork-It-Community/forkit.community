@@ -59,7 +59,7 @@ const displayCompany = (person: CollectionEntry<"people">) => {
   if (!person.data.company?.title) return "";
 
   return `## Company
-- (${person?.data.company?.title})${person?.data.company?.href ? `[${person?.data.company?.href}]` : ""}`;
+- [${person?.data.company?.title}]${person?.data.company?.href ? `(${person?.data.company?.href})` : ""}`;
 };
 
 const displaySocial = (person: CollectionEntry<"people">) => {
