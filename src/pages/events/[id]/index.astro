@@ -137,6 +137,34 @@ const ctaEventMetadata = {
     >
       <div class="flex flex-col items-center justify-center gap-4">
         <Logo className="w-32 md:w-48" />
+        {
+          !!coOrganizers.length && (
+            <div class="flex flex-col items-center justify-center">
+              <div class="relative size-8 translate-y-1/2 opacity-20">
+                <div class="h-[1px] w-full rotate-45 bg-white" />
+                <div class="h-[1px] w-full -rotate-45 bg-white" />
+              </div>
+              <div class="flex w-full flex-wrap items-center justify-center gap-x-4">
+                {coOrganizers.map((coOrganizer) => (
+                  <a
+                    href={coOrganizer.data.href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <Image
+                      class={cn(
+                        "size-24 md:size-28",
+                        coOrganizers.length > 2 && "size-16 md:size-24",
+                      )}
+                      src={coOrganizer.data.logos.noBgSquare}
+                      alt={coOrganizer.data.name}
+                    />
+                  </a>
+                ))}
+              </div>
+            </div>
+          )
+        }
         <h1
           class="flex flex-col gap-1 text-balance text-center font-heading md:gap-2"
         >
@@ -179,39 +207,36 @@ const ctaEventMetadata = {
           client:load
         />
       </div>
-
-      {
-        !!coOrganizers.length && (
-          <div class="flex flex-col items-center justify-center">
-            <div class="relative size-8 translate-y-1/2 opacity-20">
-              <div class="h-[1px] w-full rotate-45 bg-white" />
-              <div class="h-[1px] w-full -rotate-45 bg-white" />
-            </div>
-            <div class="flex w-full flex-wrap items-center justify-center gap-x-4">
-              {coOrganizers.map((coOrganizer) => (
-                <a
-                  href={coOrganizer.data.href}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <Image
-                    class={cn(
-                      "size-24 md:size-28",
-                      coOrganizers.length > 2 && "size-16 md:size-24",
-                    )}
-                    src={coOrganizer.data.logos.noBgSquare}
-                    alt={coOrganizer.data.name}
-                  />
-                </a>
-              ))}
-            </div>
-          </div>
-        )
-      }
     </motion.div>
 
     <QuickAccess navItems={navItems} />
   </div>
+
+  {
+    !!sponsors.length && (
+      <div class="hide-scrollbar overflow-auto">
+        <div class="mx-auto flex w-fit items-center gap-6 px-8 py-8">
+          {sponsors.map((sponsor) => (
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={sponsor.data.href}
+              class="opacity-60 brightness-200 grayscale transition duration-300 hover:opacity-100 hover:brightness-100 hover:grayscale-0"
+              title={sponsor.data.name}
+            >
+              <Image
+                class="w-32 max-w-none flex-none"
+                src={sponsor.data.logos.noBg}
+                alt={sponsor.data.name}
+                width={192}
+                height={116}
+              />
+            </a>
+          ))}
+        </div>
+      </div>
+    )
+  }
 
   <!-- Stay tuned  -->
   {
@@ -258,32 +283,6 @@ const ctaEventMetadata = {
               Join the Newsletter
             </a>
           </div>
-        </div>
-      </div>
-    )
-  }
-
-  {
-    !!sponsors.length && (
-      <div class="hide-scrollbar overflow-auto">
-        <div class="mx-auto flex w-fit items-center gap-6 px-8 py-8">
-          {sponsors.map((sponsor) => (
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href={sponsor.data.href}
-              class="opacity-60 brightness-200 grayscale transition duration-300 hover:opacity-100 hover:brightness-100 hover:grayscale-0"
-              title={sponsor.data.name}
-            >
-              <Image
-                class="w-24 max-w-none flex-none"
-                src={sponsor.data.logos.noBg}
-                alt={sponsor.data.name}
-                width={192}
-                height={116}
-              />
-            </a>
-          ))}
         </div>
       </div>
     )
