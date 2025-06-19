@@ -34,7 +34,14 @@ ${events
 
 ${podcasts
   .map((episode) => {
-    return `- [${episode.data.title}](${lunalink(ROUTES.podcasts[":id"].episodes[":episode"].__path, { id: episode.id.split("/").at(0) ?? "", episode: episode.id.split("/").at(2) ?? "" })})`;
+    return `- [${episode.data.title}](${lunalink(
+      ROUTES.podcasts[":id"].episodes[":episode.html.md"].__path,
+      // @ts-ignore : TODO: Fix this type
+      {
+        id: episode.id.split("/").at(0) ?? "",
+        episode: episode.id.split("/").at(2) ?? "",
+      },
+    )})`;
   })
   .join("\n")}
 
