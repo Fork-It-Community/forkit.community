@@ -18,18 +18,14 @@ export const GET: APIRoute<
 
   return new Response(
     `${displayName(person)}
-    
-${displayJob(person)}
 
-${displayCompany(person)}
+${displayParagraph(person)}
+    
+${displayDescription(person)}
 
 ${displaySocial(person)}
 
-${await displayDescription(person)}
-
-${await displayContribution(person)}
-
-${displayForkItRole(person)}`,
+${await displayContribution(person)}`,
     {
       headers: { "Content-Type": "text/plain; charset=utf-8" },
     },
@@ -48,18 +44,36 @@ const displayName = (person: CollectionEntry<"people">) => {
   return `# ${person?.data.name}`;
 };
 
-const displayJob = (person: CollectionEntry<"people">) => {
-  if (!person.data.job) return "";
+const displayParagraph = (person: CollectionEntry<"people">) => {
+  const paragraphCompany = (person: CollectionEntry<"people">) => {
+    return `${
+      person.data.company?.title ? `at ${person.data.company?.title}` : ""
+    }`;
+  };
 
-  return `## Job
-- ${person?.data.job}`;
+  const paragraphJob = (person: CollectionEntry<"people">) => {
+    return `${person.data.job ? `as ${person.data.job}` : ""}`;
+  };
+
+  const paragraphForkitRole = (person: CollectionEntry<"people">) => {
+    return `${person.data.forkit?.role ? `They also are ${person.data.forkit?.role} of Fork it! Community.` : ""}`;
+  };
+
+  if (!person.data.name) return "";
+
+  return `\`\`\`
+${person.data.name} is working ${paragraphCompany(
+    person,
+  )} ${paragraphJob(person)}. ${paragraphForkitRole(person)}
+\`\`\``;
 };
 
-const displayCompany = (person: CollectionEntry<"people">) => {
-  if (!person.data.company?.title) return "";
+const displayDescription = (person: CollectionEntry<"people">) => {
+  if (!person.body) return "";
 
-  return `## Company
-- [${person?.data.company?.title}]${person?.data.company?.href ? `(${person?.data.company?.href})` : ""}`;
+  return `## Description
+- ${person.body}
+`;
 };
 
 const displaySocial = (person: CollectionEntry<"people">) => {
@@ -69,14 +83,6 @@ const displaySocial = (person: CollectionEntry<"people">) => {
 ${person.data.socials
   .map((social) => `- [${social.type}](${social.href})`)
   .join("\n")}`;
-};
-
-const displayDescription = async (person: CollectionEntry<"people">) => {
-  if (!person.body) return "";
-
-  return `## Description
-- ${person.body}
-`;
 };
 
 const displayContribution = async (person: CollectionEntry<"people">) => {
@@ -106,11 +112,4 @@ const displayContribution = async (person: CollectionEntry<"people">) => {
 
   return `## Contributions
 ${contributionList}`;
-};
-
-const displayForkItRole = (person: CollectionEntry<"people">) => {
-  if (!person.data.forkit?.role) return "";
-
-  return `## Fork it role
-- ${person.data.forkit?.role}`;
 };
