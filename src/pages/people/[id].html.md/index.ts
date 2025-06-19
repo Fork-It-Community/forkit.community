@@ -71,9 +71,8 @@ ${person.data.name} is working ${paragraphCompany(
 const displayDescription = (person: CollectionEntry<"people">) => {
   if (!person.body) return "";
 
-  return `## Description
-- ${person.body}
-`;
+  return `## Description 
+\`\`\`${person.body}\`\`\``;
 };
 
 const displaySocial = (person: CollectionEntry<"people">) => {
