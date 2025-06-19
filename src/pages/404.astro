@@ -1,5 +1,5 @@
 ---
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import MainLayout from "@/layouts/MainLayout.astro";
 import { getUpcomingEvents } from "@/lib/events";
 import EventsGrid from "@/components/EventsGrid/index.astro";
@@ -41,8 +41,10 @@ const events = await getUpcomingEvents();
         </p>
 
         <div class="mt-10 flex items-center justify-center gap-x-6">
-          <Button>
-            <a href="/">Go back home</a>
+          <Button asChild>
+            <a href="/" class={buttonVariants({ variant: "default" })}
+              >Go back home</a
+            >
           </Button>
         </div>
       </div>
