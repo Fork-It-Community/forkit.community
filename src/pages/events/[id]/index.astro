@@ -144,7 +144,7 @@ const ctaEventMetadata = {
                 <div class="h-[1px] w-full rotate-45 bg-white" />
                 <div class="h-[1px] w-full -rotate-45 bg-white" />
               </div>
-              <div class="flex w-full flex-wrap items-center justify-center gap-x-4">
+              <div class="-mt-1 flex w-full flex-wrap items-center justify-center gap-x-4">
                 {coOrganizers.map((coOrganizer) => (
                   <a
                     href={coOrganizer.data.href}
@@ -153,10 +153,15 @@ const ctaEventMetadata = {
                   >
                     <Image
                       class={cn(
-                        "size-24 md:size-40",
-                        coOrganizers.length > 2 && "size-16 md:size-24",
+                        coOrganizers.length === 1 && "w-32 md:w-52",
+                        coOrganizers.length === 2 && "size-24 md:size-32",
+                        coOrganizers.length > 2 && "size-20 md:size-24",
                       )}
-                      src={coOrganizer.data.logos.noBgSquare}
+                      src={
+                        coOrganizers.length === 1
+                          ? coOrganizer.data.logos.noBg
+                          : coOrganizer.data.logos.noBgSquare
+                      }
                       alt={coOrganizer.data.name}
                     />
                   </a>
