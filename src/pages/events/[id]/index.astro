@@ -153,7 +153,7 @@ const ctaEventMetadata = {
                   >
                     <Image
                       class={cn(
-                        "size-24 md:size-28",
+                        "size-24 md:size-40",
                         coOrganizers.length > 2 && "size-16 md:size-24",
                       )}
                       src={coOrganizer.data.logos.noBgSquare}
@@ -225,7 +225,7 @@ const ctaEventMetadata = {
               title={sponsor.data.name}
             >
               <Image
-                class="w-40 max-w-none flex-none"
+                class="w-24 max-w-none flex-none md:w-40"
                 src={sponsor.data.logos.noBg}
                 alt={sponsor.data.name}
                 width={192}
