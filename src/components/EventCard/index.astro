@@ -123,10 +123,16 @@ const isUpcomingEvent = dayjs(event.data.date).endOf("day").isAfter(dayjs());
           {coOrganizers.map((coOrganizer) => (
             <Image
               class={cn(
-                "size-10 sm:size-12",
+                coOrganizers.length === 1
+                  ? "w-16 sm:w-20"
+                  : "size-10 sm:size-12",
                 event.data.status === "cancelled" && "brightness-200 grayscale",
               )}
-              src={coOrganizer.data.logos.noBgSquare}
+              src={
+                coOrganizers.length === 1
+                  ? coOrganizer.data.logos.noBg
+                  : coOrganizer.data.logos.noBgSquare
+              }
               alt={coOrganizer.data.name}
               width={100}
             />
