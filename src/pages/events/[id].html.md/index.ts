@@ -102,7 +102,7 @@ const displaySpeakers = async (event: EventWithComputed) => {
 ${speakers
   .map(
     (speaker) =>
-      `- [${speaker.data.name}](${lunalink(ROUTES.people[":id"].__path, { id: speaker.id })})`,
+      `- [${speaker.data.name}](${lunalink(ROUTES.people[":id.html.md"].__path, { id: speaker.id })})`,
   )
   .join("\n")}`;
 };

@@ -4,6 +4,7 @@ import { ROUTES } from "@/routes.gen";
 import { lunalink, type ExtractParams } from "@bearstudio/lunalink";
 import type { APIRoute } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
+import { capitalize } from "remeda";
 import { match } from "ts-pattern";
 
 export const GET: APIRoute<
@@ -20,9 +21,7 @@ export const GET: APIRoute<
     `${displayName(person)}
 
 ${displayParagraph(person)}
-    
 ${displayDescription(person)}
-
 ${displaySocial(person)}
 
 ${await displayContribution(person)}`,
@@ -61,26 +60,27 @@ const displayParagraph = (person: CollectionEntry<"people">) => {
 
   if (!person.data.name) return "";
 
-  return `\`\`\`
-${person.data.name} is working ${paragraphCompany(
+  return `${person.data.name} is working ${paragraphCompany(
     person,
   )} ${paragraphJob(person)}. ${paragraphForkitRole(person)}
-\`\`\``;
+`;
 };
 
 const displayDescription = (person: CollectionEntry<"people">) => {
   if (!person.body) return "";
 
   return `## Description 
-\`\`\`${person.body}\`\`\``;
+
+${person.body}`;
 };
 
 const displaySocial = (person: CollectionEntry<"people">) => {
   if (!person.data.socials) return "";
 
   return `## Socials
+
 ${person.data.socials
-  .map((social) => `- [${social.type}](${social.href})`)
+  .map((social) => `- [${capitalize(social.type)}](${social.href})`)
   .join("\n")}`;
 };
 
@@ -110,5 +110,6 @@ const displayContribution = async (person: CollectionEntry<"people">) => {
     .join("\n");
 
   return `## Contributions
+
 ${contributionList}`;
 };
