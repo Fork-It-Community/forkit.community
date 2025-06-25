@@ -113,7 +113,7 @@ const ROUTES_CONFIG = {
             "_og-image": {},
           },
         },
-        ":episode.html.md": {},
+        ":episodes.html.md": {},
       },
     },
     "rss.xml": {},

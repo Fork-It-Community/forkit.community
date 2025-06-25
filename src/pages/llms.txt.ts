@@ -21,7 +21,6 @@ export const GET: APIRoute = async ({ request }) => {
 - [Podcasts](${lunalink(ROUTES.podcasts.__path, {})})
 - [News](${lunalink(ROUTES.news.__path, {})})
 
-
 ## Events
 
 ${events
@@ -35,11 +34,10 @@ ${events
 ${podcasts
   .map((episode) => {
     return `- [${episode.data.title}](${lunalink(
-      ROUTES.podcasts[":id"].episodes[":episode.html.md"].__path,
-      // @ts-ignore : TODO: Fix this type
+      ROUTES.podcasts[":id"].episodes[":episodes.html.md"].__path,
       {
         id: episode.id.split("/").at(0) ?? "",
-        episode: episode.id.split("/").at(2) ?? "",
+        episodes: episode.id.split("/").at(2) ?? "",
       },
     )})`;
   })

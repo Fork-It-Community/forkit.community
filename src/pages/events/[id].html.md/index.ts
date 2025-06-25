@@ -2,9 +2,11 @@ import { getEventsCollection, getEventWithComputed } from "@/lib/events";
 import { ROUTES } from "@/routes.gen";
 import { lunalink, type ExtractParams } from "@bearstudio/lunalink";
 import type { APIRoute } from "astro";
-import { getEntries } from "astro:content";
+import { getEntries, getEntry } from "astro:content";
 import dayjs from "dayjs";
-import { isEmpty } from "remeda";
+
+import { capitalize, isEmpty, toLowerCase } from "remeda";
+import { match } from "ts-pattern";
 
 type EventWithComputed = Awaited<ReturnType<typeof getEventWithComputed>>;
 
@@ -17,13 +19,24 @@ export const GET: APIRoute<
   return new Response(
     `# ${event?.data._computed.name}
 
-Join us on ${dayjs(event.data.date).format("DD/MM/YYYY")} to listen to ${event.data.speakers?.length} speakers at ${
+${event.data._computed.name} ${match(event.data.date)
+      .when(
+        (date) => dayjs(date).isBefore(dayjs(), "day"),
+        () => "took",
+      )
+      .when(
+        (date) => dayjs(date).isAfter(dayjs().subtract(1, "day"), "day"),
+        () => "will take",
+      )
+      .otherwise(
+        () => "",
+      )} place on ${dayjs(event.data.date).format("DD/MM/YYYY")} to listen to ${event.data.speakers?.length ? `${event.data.speakers?.length} ` : ""}speakers at ${
       event.data.location?.name
     }
 
 ${displayVenue(event)}
 
-${displaySchedule(event)}
+${await displaySchedule(event)}
 
 ${await displaySpeakers(event)}
 
@@ -50,7 +63,7 @@ const displayVenue = (event: EventWithComputed) => {
 ${event.data.location?.name}, ${event.data.location?.address}`;
 };
 
-const displaySchedule = (event: EventWithComputed) => {
+const displaySchedule = async (event: EventWithComputed) => {
   if (isEmpty(event.data._computed.talks)) return "";
 
   const itemsWithTime =
@@ -61,20 +74,22 @@ const displaySchedule = (event: EventWithComputed) => {
     ) ?? [];
 
   const formattedItems = itemsWithTime.map((item) =>
-    dayjs(item.startTime).format("hh:mm A"),
+    dayjs(item.startTime).format("hh:mmA"),
   );
 
   return `## Schedule
 
-${event.data._computed.talks
-  .map((item, index) => {
-    const timeStart = formattedItems[index];
-    return `- ${timeStart} [${item.data.title}](${lunalink(
-      ROUTES.events[":id"].talks[":talkId"].__path,
-      { id: event.id, talkId: item.id },
-    )})`;
-  })
-  .join("\n")}`;
+${(
+  await Promise.all(
+    event.data._computed.talks.map(async (item, index) => {
+      const timeStart = formattedItems[index];
+      return `- [${item.data.title}](${lunalink(
+        ROUTES.events[":id"].talks[":talkId"].__path,
+        { id: event.id, talkId: item.id },
+      )}): ${timeStart} by ${(await Promise.all(item.data.speakers.map(async (speaker) => (await getEntry(speaker.id)).data.name))).join(", ")}`;
+    }),
+  )
+).join("\n")}`;
 };
 
 const displaySpeakers = async (event: EventWithComputed) => {
@@ -97,71 +112,29 @@ const displayAfterEvent = (event: EventWithComputed) => {
 
   const { afterMovie, photos, vods } = event.data.afterEventContent;
 
+  if (!afterMovie && !photos && !vods) return "";
+
   return `## After event
 
-${
-  afterMovie
-    ? `### afterMovie
-- ${afterMovie.href}`
-    : ""
-}
-
-${
-  photos
-    ? `### Photos 
-- ${photos.href}`
-    : ""
-}      
-
-${
-  vods
-    ? `### VODs 
-- ${vods.href}`
-    : ""
-}`;
+Fork it! Community provide multiple resources for this events.
+${afterMovie ? `You can check out our [after movie](${afterMovie.href}). ` : ""}
+${photos ? `Our photographs took really [cool pictures](${photos.href}).` : ""}
+${vods ? `We also have [video on demand](${vods.href}) available.` : ""}`;
 };
 
 const displaySponsors = async (event: EventWithComputed) => {
   if (!event.data.sponsors) return "";
   if (!event.data.sponsoringLevels) return "";
 
-  const silverSponsorSlugs = event.data.sponsors
-    .filter((sponsor) => sponsor.level === "SILVER")
-    .map((sponsor) => sponsor.slug);
-
-  const bronzeSponsorSlugs = event.data.sponsors
-    .filter((sponsor) => sponsor.level === "BRONZE")
-    .map((sponsor) => sponsor.slug);
-
-  const logisticSponsorSlugs = event.data.sponsors
-    .filter((sponsor) => sponsor.level === "LOGISTIC")
-    .map((sponsor) => sponsor.slug);
-
-  const sponsorSilver = await getEntries(silverSponsorSlugs);
-  const sponsorBronze = await getEntries(bronzeSponsorSlugs);
-  const sponsorLogistic = await getEntries(logisticSponsorSlugs);
-
   return `## Sponsors
-${
-  silverSponsorSlugs.length === 0
-    ? ""
-    : `
-### ${event.data.sponsoringLevels[0]}
-${sponsorSilver.map((sponsor) => `- [${sponsor.data.name}](${sponsor.data.href})`).join("\n")}`
-}
-${
-  bronzeSponsorSlugs.length === 0
-    ? ""
-    : `
-### ${event.data.sponsoringLevels[1]}
-${sponsorBronze.map((sponsor) => `- [${sponsor.data.name}](${sponsor.data.href})`).join("\n")}`
-}
-${
-  logisticSponsorSlugs.length === 0
-    ? ""
-    : `
-### ${event.data.sponsoringLevels[2]}
-${sponsorLogistic.map((sponsor) => `- [${sponsor.data.name}](${sponsor.data.href})`).join("\n")}`
-}
+
+Thanks a lot to our sponsors for their trust. ${(
+    await Promise.all(
+      event.data.sponsoringLevels.map(
+        async (level) =>
+          `As ${capitalize(toLowerCase(level))}: ${(await getEntries((event.data.sponsors ?? []).filter((sponsor) => sponsor.level === level).map((sponsor) => sponsor.slug))).map((sponsor) => (sponsor.data.href ? `[${sponsor.data.name}](${sponsor.data.href})` : sponsor.data.name)).join(", ")}`,
+      ),
+    )
+  ).join(". ")}
 `;
 };
