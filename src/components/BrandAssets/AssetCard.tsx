@@ -1,4 +1,4 @@
-import type { Asset } from "@/components/BrandAssetsModal/logos";
+import type { Asset } from "@/components/BrandAssets/logos";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils-client";
 

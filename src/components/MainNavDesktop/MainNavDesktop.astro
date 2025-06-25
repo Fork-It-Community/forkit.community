@@ -2,7 +2,7 @@
 import MainNavDesktopItem from "./MainNavDesktopItem.astro";
 import MainNavDesktopItemMore from "./MainNavDesktopItemMore";
 import { getMainMenuDesktopItems } from "@/content/menus";
-import { LogoWithBrandingModal } from "@/components/BrandAssetsModal";
+import { LogoWithPopOver } from "@/components/BrandAssets";
 ---
 
 <div class="hidden md:block">
@@ -11,7 +11,7 @@ import { LogoWithBrandingModal } from "@/components/BrandAssetsModal";
     <div
       class="bg-background-blur mx-auto flex w-full max-w-screen-lg flex-1 items-center justify-between rounded-md pe-1.5 ps-5"
     >
-      <LogoWithBrandingModal client:load />
+      <LogoWithPopOver client:load />
       <nav class="flex items-center gap-1">
         {
           getMainMenuDesktopItems("primary").map((item) => (
