@@ -14,8 +14,11 @@ import TiltedCard from "@/components/TiltedCard";
 import { MdArrowOutward } from "react-icons/md";
 import { cn } from "@/lib/utils-client";
 import { buttonVariants } from "@/components/ui/button";
-
+import defaultImage from "@/assets/images/events.jpeg";
 import { Image } from "astro:assets";
+import { getEntry } from "astro:content";
+import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
+import { Schema } from "astro-seo-schema";
 
 export async function getStaticPaths() {
   const talks = await getCollection("talks");
@@ -39,6 +42,7 @@ const speakers = (
       ?.role,
   },
 }));
+const event = await getEntry("events", talk.data.vod?.event.id ?? "");
 const relatedTalks = await getRelatedTalks(talk);
 ---
 
@@ -47,6 +51,26 @@ const relatedTalks = await getRelatedTalks(talk);
     slot="seo"
     title={talk.data.title}
     description=`Watch ${talk.data.title} from Fork It!`
+  />
+  <Schema
+    slot="ld+json"
+    item={{
+      "@type": "MediaObject",
+      "@context": "https://schema.org",
+      name: talk.data.title,
+      description: `Replay of the talk "${talk.data.title}" by ${speakers
+        .map((speaker) => speaker.data.name)
+        .join(", ")}`,
+      contentUrl: `https://www.youtube.com/watch?v=${talk.data.vod?.youtubeId}`,
+      embedUrl: `https://www.youtube.com/embed/${talk.data.vod?.youtubeId}`,
+      thumbnailUrl: `https://img.youtube.com/vi/${talk.data.vod?.youtubeId}/maxresdefault.jpg`,
+    }}
+  />
+  <ImageBackgroundHero
+    src={event?.data.image.media ?? defaultImage}
+    alt=""
+    className="h-[80vh] opacity-80"
+    blur
   />
   <div class="mx-auto w-full max-w-screen-sm px-4 pb-4 pt-8">
     <div class="flex items-center justify-between">
