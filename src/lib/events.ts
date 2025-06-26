@@ -27,6 +27,19 @@ export async function eventWithComputed<
     ? await getEntry("countries", city.data.country.id)
     : undefined;
 
+  const talks = (
+    event.data.schedule
+      ? await Promise.all(
+          (event.data.schedule?.items ?? []).map(async (item) => {
+            if (!item.slug) {
+              return;
+            }
+            return await getEntry("talks", item.slug.id);
+          }),
+        )
+      : []
+  ).filter((i) => !!i);
+
   return {
     ...event,
     data: {
@@ -35,6 +48,7 @@ export async function eventWithComputed<
         name: `${city?.data.name}, ${country?.data.name}, ${event.data.date.getFullYear()}`,
         city,
         country,
+        talks,
       },
     },
   };
@@ -153,7 +167,7 @@ export async function getUpcomingMajorEvent() {
   );
 }
 
-export async function getEvent(id: string) {
+export async function getEvent(id: CollectionEntry<"events">["id"]) {
   const event = await getEntry("events", id);
   if (import.meta.env.PROD && !isEventPublished(event?.data.status)) {
     return undefined;
@@ -373,6 +387,18 @@ export function getPersonRolesInEvent(
   }
 
   return roles;
+}
+
+export async function getEventWithComputed(
+  id: CollectionEntry<"events">["id"],
+) {
+  const event = await getEvent(id);
+
+  if (!event) {
+    throw new Error(`Event ${id} does not exist`);
+  }
+
+  return await eventWithComputed(event);
 }
 
 export function without<T extends CollectionEntry<"events">>(

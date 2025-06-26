@@ -53,6 +53,7 @@ const ROUTES_CONFIG = {
         },
       },
     },
+    ":id.html.md": {},
     locations: {
       ":countryId": {
         ":cityId": {
@@ -80,6 +81,7 @@ const ROUTES_CONFIG = {
       },
     },
   },
+  "llms.txt": {},
   news: {
     "[...page]": {},
     article: {
@@ -100,6 +102,7 @@ const ROUTES_CONFIG = {
         _utils: {},
       },
     },
+    ":id.html.md": {},
   },
   podcasts: {
     ":id": {
@@ -110,6 +113,7 @@ const ROUTES_CONFIG = {
             "_og-image": {},
           },
         },
+        ":episodes.html.md": {},
       },
     },
     "rss.xml": {},
