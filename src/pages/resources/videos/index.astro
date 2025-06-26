@@ -1,13 +1,9 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
-import { lang } from "@/lib/lang";
-import { IoLanguageSharp } from "react-icons/io5";
 import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import { SEO } from "astro-seo";
-import TiltedCard from "@/components/TiltedCard";
-
 import { getPastEventsWithVodTalks } from "@/lib/events";
-import { Image } from "astro:assets";
+import { EventVideosCards } from "@/components/EventVideosCards";
 const eventsWithVods = await getPastEventsWithVodTalks();
 ---
 
@@ -25,50 +21,10 @@ const eventsWithVods = await getPastEventsWithVodTalks();
     />
   </div>
   <div class="mx-auto flex max-w-screen-lg px-4 pb-40">
-    <div class="space-y-12">
+    <div class="flex flex-col gap-16">
       {
         eventsWithVods.map((item) => (
-          <section class="space-y-6">
-            <h2 class="mb-6 font-heading text-xl font-medium">
-              {item.event.data.name}
-            </h2>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {item.talks &&
-                item.talks.map((talk) => (
-                  <TiltedCard client:visible>
-                    <a
-                      href={`/resources/videos/${talk.data.vod?.youtubeId}`}
-                      class="group relative z-10 flex h-full flex-col gap-4 overflow-hidden rounded-lg bg-white/5 p-4 backdrop-blur-md transition duration-500 hover:bg-white/10"
-                    >
-                      <div class="aspect-video">
-                        {talk.data.vod && talk.data.vod.type === "youtube" && (
-                          <Image
-                            src={`https://img.youtube.com/vi/${talk.data.vod.youtubeId}/maxresdefault.jpg`}
-                            alt={talk.data.title}
-                            class="h-full w-full object-cover"
-                            width={480}
-                            height={320}
-                          />
-                        )}
-                      </div>
-                      <div class="flex flex-1 flex-col justify-between px-2">
-                        <h3
-                          class="line-clamp-2 text-sm font-medium"
-                          lang={lang(talk.data.contentLanguage)}
-                        >
-                          {talk.data.title}
-                        </h3>
-
-                        <div class="mt-4 flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none opacity-60 transition group-hover:opacity-100">
-                          <IoLanguageSharp className="text-base" />
-                          <span>Talk in {talk.data.language}</span>
-                        </div>
-                      </div>
-                    </a>
-                  </TiltedCard>
-                ))}
-            </div>
-          </section>
+          <EventVideosCards client:load eventWithTalks={item} />
         ))
       }
     </div>

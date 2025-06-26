@@ -61,7 +61,7 @@ const MAIN_MENU: Array<{
     href: "/resources/videos",
     icon: MdOndemandVideo,
     scope: "all",
-    level: "primary",
+    level: "secondary",
   },
   {
     label: "Community members",
