@@ -69,7 +69,8 @@ const displayParagraph = (person: CollectionEntry<"people">) => {
 const displayDescription = (person: CollectionEntry<"people">) => {
   if (!person.body) return "";
 
-  return `## Description 
+  return `
+## Description 
 
 ${person.body}`;
 };
@@ -77,7 +78,8 @@ ${person.body}`;
 const displaySocial = (person: CollectionEntry<"people">) => {
   if (!person.data.socials) return "";
 
-  return `## Socials
+  return `
+## Socials
 
 ${person.data.socials
   .map((social) => `- [${capitalize(social.type)}](${social.href})`)
