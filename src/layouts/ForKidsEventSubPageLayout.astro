@@ -5,6 +5,8 @@ import RootLayout from "@/layouts/RootLayout.astro";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import Footer from "@/components/Footer/index.astro";
 import type { ForKidsEventComputed } from "@/lib/forKidsEvents";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 interface Props {
   forKidsEvent: ForKidsEventComputed;
@@ -30,8 +32,11 @@ const { forKidsEvent } = Astro.props;
       eventCity={forKidsEvent.data._computed.city?.data.name ?? ""}
       eventCountry={forKidsEvent.data._computed.country?.data.name ?? ""}
       eventDate={forKidsEvent.data.date}
-      logoUrl={`/events/for-kids/${forKidsEvent.id}`}
+      logoUrl={lunalink(ROUTES.fr.events["for-kids"][":id"].__path, {
+        id: forKidsEvent.id,
+      })}
       pageUrl={new URL(Astro.url.pathname, Astro.site).toString()}
+      type="for-kids"
     />
   </div>
   <div class="flex flex-1 flex-col">
