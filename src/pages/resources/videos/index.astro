@@ -24,7 +24,7 @@ const eventsWithVods = await getPastEventsWithVodTalks();
     <div class="flex flex-col gap-16">
       {
         eventsWithVods.map((item) => (
-          <EventVideosCards client:load eventWithTalks={item} />
+          <EventVideosCards client:load event={item.event} talks={item.talks} />
         ))
       }
     </div>
