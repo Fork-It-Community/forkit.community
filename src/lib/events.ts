@@ -413,12 +413,12 @@ export function without<T extends CollectionEntry<"events">>(
 }
 
 export async function getPastEventsWithVodTalks() {
-  const events = await getCollection(
-    "events",
-    (event) =>
-      event.data.eventStatus !== "EventCancelled" &&
-      dayjs(event.data.date).endOf("day").isBefore(dayjs()),
+  const events = (await getEventsCollection()).sort(
+    (a, b) =>
+      dayjs(a.data.date).diff(b.data.date) ||
+      (b.data.type === "event" ? 1 : 0) - (a.data.type === "event" ? 1 : 0),
   );
+
   const talks = await getCollection("talks", (event) => event.data.vod);
   const eventWithTalks = events.map((event) => {
     const talksWithVods = event.data.schedule?.items
