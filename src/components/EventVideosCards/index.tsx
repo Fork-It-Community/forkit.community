@@ -9,6 +9,7 @@ import { lang } from "@/lib/lang";
 import { useState } from "react";
 import type { CollectionEntry } from "astro:content";
 import type { EventComputed } from "@/lib/events";
+import dayjs from "dayjs";
 
 export const EventVideosCards = (props: {
   event: EventComputed;
@@ -22,7 +23,7 @@ export const EventVideosCards = (props: {
     <section className="space-y-6">
       <div className="flex flex-row items-center justify-between">
         <h2 className="mb-2 font-heading text-xl font-medium">
-          {`${props.event.data._computed.city?.data.name}, ${props.event.data._computed.country?.data.name}`}
+          {`${props.event.data._computed.city?.data.name}, ${props.event.data._computed.country?.data.name}, ${dayjs(props.event.data.date).year()}`}
         </h2>
         {hasMore && (
           <Collapsible open={open} onOpenChange={setOpen}>
