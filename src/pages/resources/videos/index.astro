@@ -5,7 +5,6 @@ import { SEO } from "astro-seo";
 import { getPastEventsWithComputedWithVodTalks } from "@/lib/events";
 import { EventVideosCards } from "@/components/EventVideosCards";
 const eventsWithVods = await getPastEventsWithComputedWithVodTalks();
-console.log("lena", eventsWithVods);
 ---
 
 <MainLayout>
