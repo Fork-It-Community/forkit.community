@@ -8,22 +8,21 @@ import { IoLanguageSharp } from "react-icons/io5";
 import { lang } from "@/lib/lang";
 import { useState } from "react";
 import type { CollectionEntry } from "astro:content";
+import type { EventComputed } from "@/lib/events";
 
 export const EventVideosCards = (props: {
-  eventWithTalks: {
-    event: CollectionEntry<"events">;
-    talks: CollectionEntry<"talks">[];
-  };
+  event: EventComputed;
+  talks: CollectionEntry<"talks">[];
 }) => {
   const [open, setOpen] = useState(false);
-  const initialTalks = props.eventWithTalks.talks.slice(0, 3);
-  const hasMore = props.eventWithTalks.talks.length > 3;
+  const initialTalks = props.talks.slice(0, 3);
+  const hasMore = props.talks.length > 3;
 
   return (
     <section className="space-y-6">
       <div className="flex flex-row items-center justify-between">
         <h2 className="mb-2 font-heading text-xl font-medium">
-          {props.eventWithTalks.event.data.name}
+          {`${props.event.data._computed.city?.data.name}, ${props.event.data._computed.country?.data.name}`}
         </h2>
         {hasMore && (
           <Collapsible open={open} onOpenChange={setOpen}>
@@ -46,7 +45,7 @@ export const EventVideosCards = (props: {
         <Collapsible open={open} onOpenChange={setOpen}>
           <CollapsibleContent>
             <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {props.eventWithTalks.talks.slice(3).map((talk) => (
+              {props.talks.slice(3).map((talk) => (
                 <VideoCard talk={talk} key={talk.id} />
               ))}
             </div>
