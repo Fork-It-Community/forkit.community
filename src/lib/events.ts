@@ -412,32 +412,28 @@ export function without<T extends CollectionEntry<"events">>(
   return events.filter((event) => event.data.status !== status);
 }
 
-export async function getPastEventsWithVodTalks() {
+export async function getPastEventsWithComputedWithVodTalks() {
   const events = (await getEventsCollection()).sort(
     (a, b) =>
       dayjs(a.data.date).diff(b.data.date) ||
       (b.data.type === "event" ? 1 : 0) - (a.data.type === "event" ? 1 : 0),
   );
 
-  const talks = await getCollection("talks", (event) => event.data.vod);
-  const eventWithTalks = events.map((event) => {
-    const talksWithVods = event.data.schedule?.items
-      ?.filter(
-        (item) =>
-          item.type === "conference" &&
-          talks.some((talk) => talk.id === item.slug?.id),
-      )
-      .map((item) => item.slug?.id);
-    return {
-      event,
-      talks: talks.filter(
-        (talk) =>
-          talksWithVods?.includes(talk.id) &&
-          talk.data.vod?.event.id === event.id,
-      ),
-    };
-  });
-  return eventWithTalks.filter((event) => event.talks.length > 0);
+  const eventsWithComputedWithVodTalks = await Promise.all(
+    events.map(async (event) => {
+      const eventWithComputedData = await eventWithComputed(event);
+      eventWithComputedData.data._computed.talks =
+        eventWithComputedData.data._computed.talks.filter(
+          (talk) =>
+            talk.data.vod?.youtubeId && talk.data.vod?.event.id === event.id,
+        );
+      return eventWithComputedData;
+    }),
+  );
+
+  return eventsWithComputedWithVodTalks.filter(
+    (event) => event.data._computed.talks.length > 0,
+  );
 }
 
 export async function getRelatedTalks(talk: CollectionEntry<"talks">) {
