@@ -40,7 +40,8 @@ export default defineConfig({
     }),
     mdx(),
     sitemap({
-      filter: (page) => !page.endsWith("/attendee"),
+      filter: (page) =>
+        !page.endsWith("/attendee") && !page.endsWith("/events/locations"),
     }),
     robotsTxt(),
   ],
