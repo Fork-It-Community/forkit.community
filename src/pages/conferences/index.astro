@@ -10,6 +10,7 @@ const events = await getEventsCollection();
 
 const eventWithPublicTalks = events.filter(
   (event) =>
+    event.data.status === "published" &&
     event.data.schedule?.status !== "preview" &&
     (event.data.schedule?.items ?? []).length > 0,
 );
