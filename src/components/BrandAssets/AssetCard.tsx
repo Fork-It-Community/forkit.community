@@ -1,59 +1,44 @@
-import type { Asset } from "@/components/BrandAssets/logos";
-import { buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils-client";
 
-export const AssetCard = ({
-  asset,
-  isIcon = false,
-}: {
-  asset: Asset;
-  isIcon?: boolean;
-}) => (
-  <div className="flex w-full flex-col rounded-lg bg-white/5">
+export const AssetCard = (props: {
+  type: "logo" | "icon";
+  color: "default" | "black" | "white";
+  withBackground?: boolean;
+}) => {
+  const pathWithoutExt = `/logo-assets/${props.type}${props.withBackground ? "-background" : ""}${props.color !== "default" ? `-${props.color}` : ""}`;
+  return (
     <div
       className={cn(
-        "relative flex h-40 items-center justify-center p-4",
-        asset.bg,
+        "relative flex w-full flex-col items-center justify-center overflow-hidden rounded-lg",
+
+        !props.withBackground && "bg-white/10",
+        props.withBackground && "border border-white/10",
       )}
     >
       <img
-        src={asset.image}
-        alt={asset.label}
-        className={
-          isIcon
-            ? "h-28 w-28 object-contain"
-            : "h-full w-auto max-w-full object-contain"
-        }
-        height={200}
-        width={200}
+        className={cn("w-full overflow-hidden", !props.withBackground && "p-8")}
+        src={`${pathWithoutExt}.svg`}
       />
-    </div>
-
-    <div className="p-4">
-      <div className="mb-3 flex justify-between text-xs text-gray-500">
-        <span>Color</span>
-        <span>{asset.label}</span>
-      </div>
-      <div className="flex justify-center gap-4">
-        {asset.variants.map((variant) => {
-          return (
-            <a
-              key={variant.type}
-              href={variant.url}
-              download
-              className={cn(
-                buttonVariants({
-                  variant: variant.type === "svg" ? "default" : "secondary",
-                }),
-              )}
-            >
-              <span className="relative z-10">
-                {variant.type.toUpperCase()}
-              </span>
+      <div className="flex w-full items-center justify-center gap-2 p-2">
+        <Button size="sm" asChild className="flex-1" variant="secondary">
+          <a href={`${pathWithoutExt}.svg`} download>
+            SVG
+          </a>
+        </Button>
+        <Button size="sm" className="flex-1" variant="secondary">
+          <a href={`${pathWithoutExt}.png`} download>
+            PNG
+          </a>
+        </Button>
+        {props.withBackground && (
+          <Button size="sm" className="flex-1" variant="secondary">
+            <a href={`${pathWithoutExt}.jpg`} download>
+              JPG
             </a>
-          );
-        })}
+          </Button>
+        )}
       </div>
     </div>
-  </div>
-);
+  );
+};

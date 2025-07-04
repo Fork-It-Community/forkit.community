@@ -20,12 +20,12 @@ export const LogoWithPopOver = () => {
 
   const LogoRightClickContent = [
     {
-      label: "Logo assets",
+      label: "Logo Assets",
       icon: FaImages,
       isModalTrigger: true,
     },
     {
-      label: "full Media Kit",
+      label: "Full Media Kit",
       href: "https://drive.google.com/drive/folders/1JkxgD0f6fetVdzsjGLLMexTRwRdb3Euv",
       icon: FaGoogleDrive,
     },
@@ -47,7 +47,7 @@ export const LogoWithPopOver = () => {
           <div className="sr-only">Hidden trigger</div>
         </PopoverTrigger>
         <PopoverContent
-          className="w-56 px-2 py-2"
+          className="w-48 px-2 py-2"
           align="end"
           alignOffset={-300}
           sideOffset={25}

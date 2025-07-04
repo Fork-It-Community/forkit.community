@@ -1,13 +1,13 @@
 import {
   ResponsiveDrawer,
   ResponsiveDrawerContent,
+  ResponsiveDrawerDescription,
   ResponsiveDrawerHeader,
   ResponsiveDrawerTitle,
-  ResponsiveDrawerTrigger,
 } from "@/components/ResponsiveDrawer";
 import { AssetCard } from "./AssetCard";
-import { logos, icons } from "./logos";
 import dayjs from "dayjs";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface BrandAssetsModalProps {
   open: boolean;
@@ -20,56 +20,64 @@ export const BrandAssetsModal = ({
 }: BrandAssetsModalProps) => {
   return (
     <ResponsiveDrawer open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDrawerTrigger asChild>
-        <div className="sr-only" />
-      </ResponsiveDrawerTrigger>
-      <ResponsiveDrawerContent className="max-w-4xl gap-0 overflow-y-auto p-0 pb-4">
-        <ResponsiveDrawerHeader className="p-4 text-center">
-          <ResponsiveDrawerTitle>
-            Fork it! Assets Collection
-          </ResponsiveDrawerTitle>
-          <p className="mt-2 text-sm text-gray-600">
-            Download our logos and icons in SVG or PNG format
-          </p>
+      <ResponsiveDrawerContent className="max-h-[90vh] max-w-2xl">
+        <ResponsiveDrawerHeader>
+          <ResponsiveDrawerTitle>Logo Assets</ResponsiveDrawerTitle>
+          <ResponsiveDrawerDescription>
+            Quickly download the Fork it! logo
+          </ResponsiveDrawerDescription>
         </ResponsiveDrawerHeader>
-
-        <div className="px-4">
-          <h3 className="text-center text-base font-semibold text-white">
-            Logos
-          </h3>
-          <div className="grid justify-items-center gap-4 sm:grid-cols-3 sm:gap-6">
-            {logos.map((logo, i) => (
-              <div
-                key={i}
-                className="flex w-full flex-col items-center p-6 transition-all duration-300 hover:scale-105"
-              >
-                <AssetCard asset={logo} />
+        <ScrollArea className="max-sm:overflow-auto sm:max-h-[80vh]">
+          <div className="flex flex-col gap-6 overflow-auto">
+            <div className="flex flex-col gap-2">
+              <h3 className="font-heading text-sm uppercase tracking-wider opacity-80 max-sm:px-4 max-sm:text-center">
+                Logo without background
+              </h3>
+              <div className="grid justify-items-center gap-4 max-sm:px-4 sm:grid-cols-3">
+                <AssetCard type="logo" color="default" />
+                <AssetCard type="logo" color="black" />
+                <AssetCard type="logo" color="white" />
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
 
-        <div className="px-6 pb-6">
-          <div className="pt-6">
-            <h3 className="text-center text-base font-semibold text-white">
-              Icons
-            </h3>
-            <div className="mx-auto grid max-w-4xl grid-cols-3 justify-items-center gap-4">
-              {icons.map((icon, i) => (
-                <div
-                  key={i}
-                  className="flex w-full flex-col items-center p-4 transition-all duration-300 hover:scale-105"
-                >
-                  <AssetCard asset={icon} isIcon />
-                </div>
-              ))}
+            <div className="flex flex-col gap-2">
+              <h3 className="font-heading text-sm uppercase tracking-wider opacity-80 max-sm:px-4 max-sm:text-center">
+                Logo with background
+              </h3>
+              <div className="grid justify-items-center gap-4 max-sm:px-4 sm:grid-cols-3">
+                <AssetCard type="logo" color="default" withBackground />
+                <AssetCard type="logo" color="black" withBackground />
+                <AssetCard type="logo" color="white" withBackground />
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <h3 className="font-heading text-sm uppercase tracking-wider opacity-80 max-sm:px-4 max-sm:text-center">
+                Icon without background
+              </h3>
+              <div className="grid justify-items-center gap-4 max-sm:px-4 sm:grid-cols-3">
+                <AssetCard type="icon" color="default" />
+                <AssetCard type="icon" color="black" />
+                <AssetCard type="icon" color="white" />
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <h3 className="font-heading text-sm uppercase tracking-wider opacity-80 max-sm:px-4 max-sm:text-center">
+                Icon with background
+              </h3>
+              <div className="grid justify-items-center gap-4 max-sm:px-4 sm:grid-cols-3">
+                <AssetCard type="icon" color="default" withBackground />
+                <AssetCard type="icon" color="black" withBackground />
+                <AssetCard type="icon" color="white" withBackground />
+              </div>
+            </div>
+
+            <div className="border-t py-4 text-center text-xs text-gray-500 max-sm:pb-8">
+              © {dayjs().year()} Fork it! Community
             </div>
           </div>
-        </div>
-
-        <div className="border-t border-gray-200 px-4 py-3 text-center text-sm text-gray-500">
-          © {dayjs().year()} Fork it! Community
-        </div>
+        </ScrollArea>
       </ResponsiveDrawerContent>
     </ResponsiveDrawer>
   );
