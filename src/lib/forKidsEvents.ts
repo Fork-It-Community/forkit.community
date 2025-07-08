@@ -62,9 +62,15 @@ export function getForKidsEventFrenchDisplayDate(forKidsEventDate: Date) {
     : "";
 }
 
-export function getForKidsEventFrenchDisplayHour(forKidsEventDate?: Date) {
-  return forKidsEventDate
-    ? dayjs(forKidsEventDate).locale("fr").format("HH")
+export function getForKidsEventFrenchDisplayHours(
+  forKidsEventStartTime?: Date,
+  forKidsEventEndTime?: Date,
+) {
+  return forKidsEventStartTime && forKidsEventEndTime
+    ? "de " +
+        dayjs(forKidsEventStartTime).locale("fr").format("HH[h]") +
+        " à " +
+        dayjs(forKidsEventEndTime).locale("fr").format("HH[h]")
     : "";
 }
 
