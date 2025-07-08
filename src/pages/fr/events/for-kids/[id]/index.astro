@@ -12,6 +12,7 @@ import {
   getForKidsEventFrenchDisplayDate,
   type ForKidsEventComputed,
   shouldShowForKidsTickets,
+  getForKidsEventFrenchDisplayHours,
 } from "@/lib/forKidsEvents";
 import { cn } from "@/lib/utils-client";
 import { Schema } from "astro-seo-schema";
@@ -122,6 +123,14 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
             forKidsEvent.data.ageRange.to
           }
           ans
+        </p>
+        <p class="text-lg text-for-kids-primary-foreground md:text-xl">
+          {
+            getForKidsEventFrenchDisplayHours(
+              forKidsEvent.data.startTime,
+              forKidsEvent.data.endTime,
+            )
+          }
         </p>
       </div>
       {
