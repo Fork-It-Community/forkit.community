@@ -62,6 +62,12 @@ export function getForKidsEventFrenchDisplayDate(forKidsEventDate: Date) {
     : "";
 }
 
+export function getForKidsEventFrenchDisplayHour(forKidsEventDate?: Date) {
+  return forKidsEventDate
+    ? dayjs(forKidsEventDate).locale("fr").format("HH")
+    : "";
+}
+
 type GetForKidsEventsParams = {
   limit?: number;
 };
