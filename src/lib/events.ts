@@ -415,3 +415,28 @@ export function without<T extends CollectionEntry<"events">>(
 export function getTalksWithVOD() {
   return getCollection("talks", (talk) => talk.data.vod?.youtubeId);
 }
+
+export async function getUpcomingEventsWithOpenCfp(limit = undefined) {
+  const upcomingEvents = await getUpcomingEvents();
+
+  const cfpEvents =
+    upcomingEvents
+      .filter(
+        (e) =>
+          e.data.cfp &&
+          (!e.data.cfp?.endDate ||
+            (e.data.cfp?.endDate &&
+              dayjs(e.data.cfp.endDate).isAfter(dayjs()))),
+      )
+      .sort(
+        (event1, event2) =>
+          (event1.data.date?.valueOf() ?? 0) -
+          (event2.data.date?.valueOf() ?? 0),
+      ) ?? [];
+
+  if (limit) {
+    return cfpEvents.slice(0, limit);
+  }
+
+  return cfpEvents;
+}
