@@ -5,6 +5,8 @@ import { SEO } from "astro-seo";
 import Prose from "@/components/Prose/index.astro";
 import { getUpcomingEvents } from "@/lib/events";
 import dayjs from "dayjs";
+import EventsList from "@/components/EventsList/index.astro";
+import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 
 const upcomingEvents = await getUpcomingEvents();
 
@@ -30,7 +32,7 @@ console.log(cfpEvents[0]?.data._computed.name);
       title="How to prepare and submit a CFP"
       subtitle="Become a Forkit Speaker: Submission Guide & Best Practices"
     />
-    <div class="flex flex-col gap-8">
+    <dv class="flex flex-col gap-8">
       <section class="flex flex-col gap-24">
         <Prose>
           <p>Thank you for your interest in speaking at Fork it events!</p>
@@ -56,13 +58,27 @@ console.log(cfpEvents[0]?.data._computed.name);
               class="text-primary no-underline hover:underline"
               target="_blank"
               rel="noreferrer">conference-hall.io</a
-            >. Before submitting your proposal, please visit the event’s CFP
+            >. Before submitting your proposal, please visit the event's CFP
             page on that platform to review the full details.
           </p>
+        </Prose>
 
+        {
+          !!cfpEvents.length && (
+            <div class="mx-auto w-full max-w-screen-lg">
+              <EventsList
+                events={cfpEvents}
+                title="Open CFPs for Upcoming Fork it! Events"
+                class="flex-[2]"
+              />
+            </div>
+          )
+        }
+
+        <Prose>
           <h2 class="mb-2">What to Look For in a CFP Description</h2>
           <p>
-            Each event’s CFP will include essential information that you need to
+            Each event's CFP will include essential information that you need to
             carefully consider before preparing your submission. Key details
             typically covered include:
           </p>
@@ -77,7 +93,7 @@ console.log(cfpEvents[0]?.data._computed.name);
             </li>
             <li>
               <strong>Event Theme and Focus:</strong> Understand the topics and themes
-              the event emphasizes. Align your talk to the community’s interests.
+              the event emphasizes. Align your talk to the community's interests.
             </li>
             <li>
               <strong>Who Can Submit:</strong> Some events are open to all, others
@@ -100,7 +116,7 @@ console.log(cfpEvents[0]?.data._computed.name);
           <h2 class="mb-1">Why This Matters</h2>
           <p>
             Reading and understanding the CFP details ensures that your proposal
-            meets the event’s criteria and increases your chances of acceptance.
+            meets the event's criteria and increases your chances of acceptance.
             It also helps you tailor your submission to the community and format
             expectations, making your talk more impactful and relevant.
           </p>
@@ -108,19 +124,19 @@ console.log(cfpEvents[0]?.data._computed.name);
       </section>
       <section>
         <Prose>
-          <h2 class="mb-2">How to Submit a Proposal</h2>
+          <h2 class="mb-4">How to Submit a Proposal</h2>
           <div>
             <img
               src="/guidelines/proposal_submit_screentshot.png"
               alt="Proposel submit screenshot"
               width={640}
               height={98}
-              class="mb-2 mt-0 w-full object-cover"
+              class="mb-3 mt-0 w-full object-cover"
             />
           </div>
           <p>
             To submit your proposal, start by clicking the “Submit a Proposal”
-            button on the event’s Call for Papers page. This will open a
+            button on the event's Call for Papers page. This will open a
             structured four-step submission form designed to guide you through
             the entire process smoothly.
           </p>
@@ -154,7 +170,7 @@ console.log(cfpEvents[0]?.data._computed.name);
                   audience and build a balanced agenda.
                 </li>
                 <li>
-                  <strong>Languages:</strong> Indicate the languages you’ll be presenting
+                  <strong>Languages:</strong> Indicate the languages you'll be presenting
                   in (e.g., English, French).
                 </li>
                 <li>
@@ -171,9 +187,9 @@ console.log(cfpEvents[0]?.data._computed.name);
                   background, and what you do. Markdown is supported.
                 </li>
                 <li>
-                  <strong>Co-speakers (optional):</strong> If you’re presenting with
+                  <strong>Co-speakers (optional):</strong> If you're presenting with
                   someone else, you can invite them here. Once they accept the invite,
-                  they’ll be automatically linked to the proposal.
+                  they'll be automatically linked to the proposal.
                 </li>
               </ul>
             </li>
@@ -181,7 +197,7 @@ console.log(cfpEvents[0]?.data._computed.name);
               <strong>Proposal tracks</strong>
               <ul>
                 <li>
-                  <strong>Select proposal formats:</strong> Choose your talk’s duration
+                  <strong>Select proposal formats:</strong> Choose your talk's duration
                   from the preset options (15, 30, 45 minutes, or 1 hour+), and if
                   none fit, select “Other” and specify your preferred time in a message
                   to organizers for further discussion.
@@ -213,7 +229,7 @@ console.log(cfpEvents[0]?.data._computed.name);
             Crafting a compelling proposal is key to getting selected as a
             speaker. Here are some proven tips to help you present your ideas
             clearly, engage the reviewers, and maximize your chances of being
-            accepted. Whether you’re a first-time speaker or a seasoned
+            accepted. Whether you're a first-time speaker or a seasoned
             presenter, these tips will help you stand out and deliver value to
             the community.
           </p>
@@ -228,7 +244,7 @@ console.log(cfpEvents[0]?.data._computed.name);
               <li>
                 <strong>Focus on Value and Relevance:</strong> Emphasize the practical
                 value your talk will provide. Share real-world lessons, actionable
-                insights, or innovative ideas that resonate with the event’s theme
+                insights, or innovative ideas that resonate with the event's theme
                 and audience interests. Remember, Fork it! is all about honest, no-nonsense
                 discussions.
               </li>
@@ -249,7 +265,7 @@ console.log(cfpEvents[0]?.data._computed.name);
                 <strong>Structure Your Proposal Thoughtfully:</strong> Outline what
                 attendees can expect. Briefly describe the flow of your talk—introduction,
                 key points, and conclusion or takeaways. A well-structured proposal
-                shows you’ve thought through your content.
+                shows you've thought through your content.
               </li>
               <li>
                 <strong>Highlight Your Expertise:</strong> Use the biography section
@@ -269,7 +285,23 @@ console.log(cfpEvents[0]?.data._computed.name);
             </ul>
           </div>
         </Prose>
+        <Prose class="pt-4">
+          <div>
+            <p>
+              We hope this guide has helped you feel confident and prepared to
+              submit your talk. Fork it! is built on community, honesty, and
+              real stories, your experience and perspective matter. Whether
+              you're a first-time speaker or a seasoned presenter, we're excited
+              to hear from you.<br />Don't overthink it, if you have something
+              valuable to share, submit it. The community is waiting to learn
+              from you.
+            </p>
+          </div>
+        </Prose>
       </section>
-    </div>
+    </dv>
+  </div>
+  <div class="py-8 md:py-12">
+    <JoinTheCommunity />
   </div>
 </MainLayout>
