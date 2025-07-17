@@ -118,6 +118,11 @@ const ROUTES_CONFIG = {
     },
     "rss.xml": {},
   },
+  resources: {
+    videos: {
+      ":id": {},
+    },
+  },
 } as const;
 
 export const ROUTES = assignPaths(ROUTES_CONFIG);
