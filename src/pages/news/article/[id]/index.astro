@@ -74,7 +74,7 @@ const authors = await Promise.all(
       wordCount,
       datePublished: dayjs(article.data.date).format("YYYY-MM-DD"),
       abstract: article.data.excerpt ?? "",
-      isAccessibleForFree: "https://schema.org/True",
+      isAccessibleForFree: true,
       author: authors.map((author) => ({
         "@type": "Person",
         name: author.data.name,
