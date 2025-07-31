@@ -273,7 +273,9 @@ export function shouldShowProspectus(
   );
 }
 
-export function getEventDisplayDate(event: CollectionEntry<"events">) {
+export function getEventDisplayDate(
+  event: CollectionEntry<"events"> | CollectionEntry<"forKidsEvent">,
+) {
   const DRAFT_STATUSES: Array<CollectionEntry<"events">["data"]["status"]> = [
     "published-without-date",
     "draft",
