@@ -13,6 +13,8 @@ import { useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import type { ForKidsEvent } from "@/schemas/forKidsEvent";
 import dayjs from "dayjs";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 export const ForKidsEventNav = (props: {
   forKidsEventId: string;
@@ -37,7 +39,9 @@ export const ForKidsEventNav = (props: {
     >
       <div className="mx-auto flex w-full max-w-screen-lg justify-between">
         <a
-          href={`/events/for-kids/${props.forKidsEventId}#`}
+          href={lunalink(ROUTES.fr.events["for-kids"][":id"].__path, {
+            id: props.forKidsEventId,
+          })}
           className="group flex flex-col justify-center gap-1 px-6"
         >
           <Logo className="w-28" />
@@ -80,7 +84,9 @@ export const ForKidsEventNav = (props: {
               </SheetHeader>
               <div className="flex flex-1 flex-col">
                 <a
-                  href={`/events/${props.forKidsEventId}#`}
+                  href={lunalink(ROUTES.fr.events["for-kids"][":id"].__path, {
+                    id: props.forKidsEventId,
+                  })}
                   onClick={() => setOpen(false)}
                   className="group flex flex-col justify-center gap-1 px-6 py-4"
                 >
