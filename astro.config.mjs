@@ -7,6 +7,7 @@ import robotsTxt from "astro-robots-txt";
 
 import vercel from "@astrojs/vercel";
 import { getSiteUrl } from "./src/lib/getSiteURL";
+import astrobook from "astrobook";
 
 // https://astro.build/config
 export default defineConfig({
@@ -44,6 +45,11 @@ export default defineConfig({
         !page.endsWith("/attendee") && !page.endsWith("/events/locations"),
     }),
     robotsTxt(),
+    astrobook({
+      subpath: "/branding/components",
+      css: ["./src/styles/globals.css"],
+      title: "Components | Fork it! Community",
+    }),
   ],
 
   adapter: vercel({ isr: true }),

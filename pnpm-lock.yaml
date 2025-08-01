@@ -83,6 +83,9 @@ importers:
       astro-seo-schema:
         specifier: 5.0.0
         version: 5.0.0(astro@5.12.6(jiti@2.4.2)(lightningcss@1.29.1)(rollup@4.34.9)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.7.0))(schema-dts@1.1.5)
+      astrobook:
+        specifier: 0.8.6
+        version: 0.8.6(astro@5.12.6(jiti@2.4.2)(lightningcss@1.29.1)(rollup@4.34.9)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.7.0))
       class-variance-authority:
         specifier: 0.7.1
         version: 0.7.1
@@ -181,6 +184,20 @@ packages:
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
+
+  '@astrobook/core@0.8.6':
+    resolution: {integrity: sha512-1PGDAWqQBip6WdRfOPDgMthqw61Y7dhnbmeX56YjUOYVFVm0ho8mifkgpkHWU3hiDLRuwxqmaNYUeW8sXDyrmA==}
+
+  '@astrobook/types@0.8.6':
+    resolution: {integrity: sha512-AtTwH5WgUwbGMR9hvXyApeZPPTTljR767iM02EwFYANr0PnxvJv7rk0xb0+D0ZmAnsAayQZmGR+5THQJxZ0Fgw==}
+
+  '@astrobook/ui@0.8.6':
+    resolution: {integrity: sha512-r7nLSSaLNzw/HatSI3XEdyRVIiPbrhNyYCI511PkjmBJmLRnxhus07R4U/jI9PQIkLYqUoFjS8i19POYmYicig==}
+    peerDependencies:
+      astro: '>=4.0.0'
+    peerDependenciesMeta:
+      astro:
+        optional: true
 
   '@astrojs/check@0.5.10':
     resolution: {integrity: sha512-vliHXM9cu/viGeKiksUM4mXfO816ohWtawTl2ADPgTsd4nUMjFiyAl7xFZhF34yy4hq4qf7jvK1F2PlR3b5I5w==}
@@ -1295,6 +1312,11 @@ packages:
     engines: {node: '>= 8.0.0'}
     hasBin: true
 
+  '@sveltejs/acorn-typescript@1.0.5':
+    resolution: {integrity: sha512-IwQk4yfwLdibDlrXVE04jTZYlLnwsTT2PIOQQGNLWfjavGifnk1JD1LcZjZaBTRcxZu2FfPfNLOE04DSu9lqtQ==}
+    peerDependencies:
+      acorn: ^8.9.0
+
   '@swc/helpers@0.5.17':
     resolution: {integrity: sha512-5IKx/Y13RsYd+sauPb2x+U/xZikHjolzfuDgTAl/Tdf3Q8rslRvC19NKDLgAJQ6wsqADk10ntlv08nPFw/gO/A==}
 
@@ -1493,6 +1515,11 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
+  acorn@8.15.0:
+    resolution: {integrity: sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
+
   adm-zip@0.5.16:
     resolution: {integrity: sha512-TGw5yVi4saajsSEgz25grObGHEUaDrniwvA2qwSC060KfqGPdglhvPMA2lPIoxs3PQIItj2iag35fONcQqgUaQ==}
     engines: {node: '>=12.0'}
@@ -1570,10 +1597,21 @@ packages:
   astro-seo@0.8.4:
     resolution: {integrity: sha512-Ou1vzQSXAxa0K8rtNtXNvSpYqOGEgMhh0immMxJeXmbVZac3UKCNWAoXWyOQDFYsZvBugCRSg0N1phBqPMVgCw==}
 
+  astro-theme-toggle@0.6.1:
+    resolution: {integrity: sha512-UkU3ycEHnyl6M39rL3xXXwHfJKEKU0eSQS5dKEL+GInr+JS3jwpt/CCrS3jjc3IN/qVM8lv/gYXZpQx/Bu1Rlw==}
+
   astro@5.12.6:
     resolution: {integrity: sha512-vDtuDYj/XlxyI2Ex63BM4/Awde8Pl3U3wS5I1NhogFIBPohBaJ1g9puu42XEm7GMZxRn9N3xFEpSP9uEO0W9/w==}
     engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
+
+  astrobook@0.8.6:
+    resolution: {integrity: sha512-vc85KUT/pD3j2gw2/LuI8N44GhcVkYCa9fXP9FxWxlXeKonwM6UL7ePZ0DHelWEmKsIgL/WIE1uZHGAt6dbZrQ==}
+    peerDependencies:
+      astro: '>=4.0.0'
+    peerDependenciesMeta:
+      astro:
+        optional: true
 
   async-sema@3.1.1:
     resolution: {integrity: sha512-tLRNUXati5MFePdAk8dw7Qt7DpxPB60ofAgn8WRhW6a2rcimZnYBP9oxHiv0OHy+Wz7kPMG+t4LGdt31+4EmGg==}
@@ -2003,6 +2041,14 @@ packages:
       picomatch:
         optional: true
 
+  fdir@6.4.6:
+    resolution: {integrity: sha512-hiFoqpyZcfNm1yc4u8oWCf9A2c4D3QjCrks3zmoVKVxpQRzmPNar1hUJcBG2RQHvEVGDN+Jm81ZheVLAQMK6+w==}
+    peerDependencies:
+      picomatch: ^3 || ^4
+    peerDependenciesMeta:
+      picomatch:
+        optional: true
+
   fflate@0.7.4:
     resolution: {integrity: sha512-5u2V/CDW15QM1XbbgS+0DfPxVB+jUKhWEKuuFuHncbk3tEEqzmoXL+2KyOFuKGqOnmdIy0/davWF1CkuwtibCw==}
 
@@ -2309,6 +2355,9 @@ packages:
 
   jsonc-parser@3.3.1:
     resolution: {integrity: sha512-HUgH65KyejrUFPvHFPbqOY0rsFip3Bo5wb4ngvdi1EpCYWUQDC5V+Y7mZws+DLkr4M//zQJoanu1SP+87Dv1oQ==}
+
+  just-group-by@2.2.0:
+    resolution: {integrity: sha512-brZocDSmkvDYc+FOr07GiTar4cp7K6OB9huVOrj5LX+iXfCe3hTvn2KGM811LE/SBQkCzuYDDEcG8HA/dKDrnw==}
 
   kleur@3.0.3:
     resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
@@ -2842,6 +2891,10 @@ packages:
     resolution: {integrity: sha512-M7BAV6Rlcy5u+m6oPhAPFgJTzAioX/6B0DxyvDlo9l8+T3nLKbrczg2WLUyzd45L8RqfUMyGPzekbMvX2Ldkwg==}
     engines: {node: '>=12'}
 
+  picomatch@4.0.3:
+    resolution: {integrity: sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==}
+    engines: {node: '>=12'}
+
   pidtree@0.6.0:
     resolution: {integrity: sha512-eG2dWTVw5bzqGRztnHExczNxt5VGsE6OwTeCG3fdUf9KBsZzO3R5OIIIzWR+iZA0NtZ+RDVdaoE2dK1cn6jH4g==}
     engines: {node: '>=0.10'}
@@ -3258,6 +3311,10 @@ packages:
     resolution: {integrity: sha512-+AbdxhM9kJsHtruUF39bwS/B0Fytw6Fr1o4ZAIAEqA6cke2xcoO2GleBw9Zw7nRzILVEgz7zBM5GiTJjie1G9A==}
     engines: {node: '>=14.0.0', npm: '>=6.0.0'}
     hasBin: true
+
+  slash@5.1.0:
+    resolution: {integrity: sha512-ZA6oR3T/pEyuqwMgAKT0/hAv8oAXckzbkmR0UkUosQ+Mc4RxGoJkRmwHgHufaenlyAgE1Mxgpdcrf75y6XcnDg==}
+    engines: {node: '>=14.16'}
 
   slice-ansi@5.0.0:
     resolution: {integrity: sha512-FC+lgizVPfie0kkhqUScwRu1O/lF6NOgJmlCgK+/LYxDCTk8sGelYaHDhFcDN+Sn3Cv+3VSa4Byeo+IMCzpMgQ==}
@@ -3948,6 +4005,27 @@ snapshots:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
+
+  '@astrobook/core@0.8.6':
+    dependencies:
+      '@astrobook/types': 0.8.6
+      '@sveltejs/acorn-typescript': 1.0.5(acorn@8.15.0)
+      acorn: 8.15.0
+      fdir: 6.4.6(picomatch@4.0.3)
+      picomatch: 4.0.3
+      slash: 5.1.0
+      yoctocolors: 2.1.1
+
+  '@astrobook/types@0.8.6': {}
+
+  '@astrobook/ui@0.8.6(astro@5.12.6(jiti@2.4.2)(lightningcss@1.29.1)(rollup@4.34.9)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.7.0))':
+    dependencies:
+      '@astrobook/core': 0.8.6
+      '@astrobook/types': 0.8.6
+      astro-theme-toggle: 0.6.1
+      just-group-by: 2.2.0
+    optionalDependencies:
+      astro: 5.12.6(jiti@2.4.2)(lightningcss@1.29.1)(rollup@4.34.9)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.7.0)
 
   '@astrojs/check@0.5.10(prettier-plugin-astro@0.14.1)(prettier@3.5.3)(typescript@5.8.3)':
     dependencies:
@@ -5068,6 +5146,10 @@ snapshots:
       fflate: 0.7.4
       string.prototype.codepointat: 0.2.1
 
+  '@sveltejs/acorn-typescript@1.0.5(acorn@8.15.0)':
+    dependencies:
+      acorn: 8.15.0
+
   '@swc/helpers@0.5.17':
     dependencies:
       tslib: 2.8.1
@@ -5317,6 +5399,8 @@ snapshots:
 
   acorn@8.14.1: {}
 
+  acorn@8.15.0: {}
+
   adm-zip@0.5.16: {}
 
   agent-base@7.1.3: {}
@@ -5392,6 +5476,8 @@ snapshots:
       - prettier
       - prettier-plugin-astro
       - typescript
+
+  astro-theme-toggle@0.6.1: {}
 
   astro@5.12.6(jiti@2.4.2)(lightningcss@1.29.1)(rollup@4.34.9)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.7.0):
     dependencies:
@@ -5493,6 +5579,14 @@ snapshots:
       - typescript
       - uploadthing
       - yaml
+
+  astrobook@0.8.6(astro@5.12.6(jiti@2.4.2)(lightningcss@1.29.1)(rollup@4.34.9)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.7.0)):
+    dependencies:
+      '@astrobook/core': 0.8.6
+      '@astrobook/types': 0.8.6
+      '@astrobook/ui': 0.8.6(astro@5.12.6(jiti@2.4.2)(lightningcss@1.29.1)(rollup@4.34.9)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.7.0))
+    optionalDependencies:
+      astro: 5.12.6(jiti@2.4.2)(lightningcss@1.29.1)(rollup@4.34.9)(tsx@4.19.4)(typescript@5.8.3)(yaml@2.7.0)
 
   async-sema@3.1.1: {}
 
@@ -5906,6 +6000,10 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.2
 
+  fdir@6.4.6(picomatch@4.0.3):
+    optionalDependencies:
+      picomatch: 4.0.3
+
   fflate@0.7.4: {}
 
   file-uri-to-path@1.0.0: {}
@@ -6259,6 +6357,8 @@ snapshots:
   jsonc-parser@2.3.1: {}
 
   jsonc-parser@3.3.1: {}
+
+  just-group-by@2.2.0: {}
 
   kleur@3.0.3: {}
 
@@ -7020,6 +7120,8 @@ snapshots:
 
   picomatch@4.0.2: {}
 
+  picomatch@4.0.3: {}
+
   pidtree@0.6.0: {}
 
   pify@2.3.0: {}
@@ -7506,6 +7608,8 @@ snapshots:
       '@types/sax': 1.2.7
       arg: 5.0.2
       sax: 1.4.1
+
+  slash@5.1.0: {}
 
   slice-ansi@5.0.0:
     dependencies:
