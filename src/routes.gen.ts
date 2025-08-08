@@ -42,6 +42,7 @@ const ROUTES_CONFIG = {
         },
       },
       schedule: {},
+      sponsors: {},
       talks: {
         ":talkId": {
           assets: {

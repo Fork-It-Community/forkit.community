@@ -10,7 +10,7 @@ import {
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils-client";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
-import { type ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 import { FaFacebook, FaXTwitter, FaBluesky, FaLinkedin } from "react-icons/fa6";
 import { MdCopyAll, MdDownload } from "react-icons/md";
 import { toast } from "sonner";
@@ -50,123 +50,125 @@ export const ShareButton = (props: ShareButtonProps) => {
         </ResponsiveDrawerHeader>
 
         <div className="flex flex-wrap gap-3 p-4 pt-0 max-sm:justify-center">
-          {props.actions.map((action) =>
-            match(action)
-              .with("bluesky", () => (
-                <ResponsiveDrawerClose asChild>
-                  <a
-                    href={getBlueskyShareUrl({
-                      url: props.pageUrl,
-                      message: props.message,
-                    })}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={cn(
-                      buttonVariants({ variant: "secondary" }),
-                      "flex-1 gap-2",
-                    )}
-                  >
-                    <FaBluesky />
-                    Bluesky
-                  </a>
-                </ResponsiveDrawerClose>
-              ))
-              .with("x", () => (
-                <ResponsiveDrawerClose asChild>
-                  <a
-                    href={getTwitterShareUrl({
-                      url: props.pageUrl,
-                      message: props.message,
-                    })}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={cn(
-                      buttonVariants({ variant: "secondary" }),
-                      "flex-1 gap-2",
-                    )}
-                  >
-                    <FaXTwitter />
-                    Twitter
-                  </a>
-                </ResponsiveDrawerClose>
-              ))
-              .with("facebook", () => (
-                <ResponsiveDrawerClose asChild>
-                  <a
-                    href={getFacebookShareUrl({
-                      url: props.pageUrl,
-                    })}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={cn(
-                      buttonVariants({ variant: "secondary" }),
-                      "flex-1 gap-2",
-                    )}
-                  >
-                    <FaFacebook />
-                    Facebook
-                  </a>
-                </ResponsiveDrawerClose>
-              ))
-              .with("linkedin", () => (
-                <ResponsiveDrawerClose asChild>
-                  <a
-                    href={getLinkedinShareUrl({
-                      url: props.pageUrl,
-                      message: props.message || "",
-                    })}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={cn(
-                      buttonVariants({ variant: "secondary" }),
-                      "flex-1 gap-2",
-                    )}
-                  >
-                    <FaLinkedin />
-                    LinkedIn
-                  </a>
-                </ResponsiveDrawerClose>
-              ))
-              .with("copy", () => (
-                <ResponsiveDrawerClose asChild>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      copyToClipboard(props.pageUrl);
-                      toast.success("Link copied to clipboard!");
-                    }}
-                    className={cn(
-                      buttonVariants({ variant: "secondary" }),
-                      "flex-1 gap-2",
-                    )}
-                  >
-                    <MdCopyAll />
-                    Copy link
-                  </button>
-                </ResponsiveDrawerClose>
-              ))
-              .with("download", () => (
-                <ResponsiveDrawerClose asChild>
-                  <a
-                    href={`${props.pageUrl}/social.jpg`}
-                    download={props.downloadName ?? "social.jpg"}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={() => {
-                      toast.success("Image will be downloaded soon...");
-                    }}
-                    className={cn(
-                      buttonVariants({ variant: "secondary" }),
-                      "flex-1 gap-2",
-                    )}
-                  >
-                    <MdDownload />
-                    Download Image
-                  </a>
-                </ResponsiveDrawerClose>
-              ))
-              .exhaustive(),
-          )}
+          {props.actions.map((action) => (
+            <Fragment key={action}>
+              {match(action)
+                .with("bluesky", () => (
+                  <ResponsiveDrawerClose asChild>
+                    <a
+                      href={getBlueskyShareUrl({
+                        url: props.pageUrl,
+                        message: props.message,
+                      })}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={cn(
+                        buttonVariants({ variant: "secondary" }),
+                        "flex-1 gap-2",
+                      )}
+                    >
+                      <FaBluesky />
+                      Bluesky
+                    </a>
+                  </ResponsiveDrawerClose>
+                ))
+                .with("x", () => (
+                  <ResponsiveDrawerClose asChild>
+                    <a
+                      href={getTwitterShareUrl({
+                        url: props.pageUrl,
+                        message: props.message,
+                      })}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={cn(
+                        buttonVariants({ variant: "secondary" }),
+                        "flex-1 gap-2",
+                      )}
+                    >
+                      <FaXTwitter />
+                      Twitter
+                    </a>
+                  </ResponsiveDrawerClose>
+                ))
+                .with("facebook", () => (
+                  <ResponsiveDrawerClose asChild>
+                    <a
+                      href={getFacebookShareUrl({
+                        url: props.pageUrl,
+                      })}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={cn(
+                        buttonVariants({ variant: "secondary" }),
+                        "flex-1 gap-2",
+                      )}
+                    >
+                      <FaFacebook />
+                      Facebook
+                    </a>
+                  </ResponsiveDrawerClose>
+                ))
+                .with("linkedin", () => (
+                  <ResponsiveDrawerClose asChild>
+                    <a
+                      href={getLinkedinShareUrl({
+                        url: props.pageUrl,
+                        message: props.message || "",
+                      })}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={cn(
+                        buttonVariants({ variant: "secondary" }),
+                        "flex-1 gap-2",
+                      )}
+                    >
+                      <FaLinkedin />
+                      LinkedIn
+                    </a>
+                  </ResponsiveDrawerClose>
+                ))
+                .with("copy", () => (
+                  <ResponsiveDrawerClose asChild>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        copyToClipboard(props.pageUrl);
+                        toast.success("Link copied to clipboard!");
+                      }}
+                      className={cn(
+                        buttonVariants({ variant: "secondary" }),
+                        "flex-1 gap-2",
+                      )}
+                    >
+                      <MdCopyAll />
+                      Copy link
+                    </button>
+                  </ResponsiveDrawerClose>
+                ))
+                .with("download", () => (
+                  <ResponsiveDrawerClose asChild>
+                    <a
+                      href={`${props.pageUrl}/social.jpg`}
+                      download={props.downloadName ?? "social.jpg"}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => {
+                        toast.success("Image will be downloaded soon...");
+                      }}
+                      className={cn(
+                        buttonVariants({ variant: "secondary" }),
+                        "flex-1 gap-2",
+                      )}
+                    >
+                      <MdDownload />
+                      Download Image
+                    </a>
+                  </ResponsiveDrawerClose>
+                ))
+                .exhaustive()}
+            </Fragment>
+          ))}
         </div>
       </ResponsiveDrawerContent>
     </ResponsiveDrawer>

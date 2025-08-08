@@ -63,7 +63,6 @@ const coOrganizers = (await getEntries(event.data.coOrganizers ?? [])).filter(
 const sponsors = await getEntries(
   (event.data.sponsors ?? []).map((s) => s.slug),
 );
-const isUpcomingEvent: boolean = dayjs(event.data.date).isAfter(dayjs());
 
 const navItems = await getEventNavItems(event.id);
 
@@ -243,39 +242,6 @@ const ctaEventMetadata = {
         </div>
       </div>
     )
-  }
-
-  {
-    !!sponsors.length ||
-      (isUpcomingEvent && (
-        <motion.div
-          client:load
-          initial={{ opacity: 0, y: -5 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", delay: 0.2 }}
-          className="mx-auto flex w-fit items-center gap-6 px-8 py-8"
-        >
-          <div>
-            <div
-              class={cn(
-                "flex flex-col justify-center gap-4 sm:flex-row",
-                "md:justify-start",
-              )}
-            >
-              <a
-                href={`/events/${event.id}/sponsors`}
-                class={cn(
-                  buttonVariants({ size: "lg" }),
-                  "sm:max-w-50 group gap-2 md:flex-1",
-                )}
-              >
-                {isUpcomingEvent ? "Join us as sponsors" : "Explore sponsors"}
-                <MdArrowForward className="transition group-hover:translate-x-1" />
-              </a>
-            </div>
-          </div>
-        </motion.div>
-      ))
   }
 
   <!-- Stay tuned  -->
