@@ -89,7 +89,7 @@ const imagesSrc = getEventAssetsSources(event);
           allEvents.map((e) => (
             <a
               href={lunalink(ROUTES.events[":id"].assets.__path, {
-                id: event.id,
+                id: e.id,
               })}
               class={cn("p-1", e.id === event.id && "opacity-60")}
             >
