@@ -76,6 +76,11 @@ const ROUTES_CONFIG = {
     events: {
       "for-kids": {
         ":id": {
+          assets: {
+            ":__image.:__type": {},
+            "_og-image": {},
+            _utils: {},
+          },
           schedule: {},
         },
       },
