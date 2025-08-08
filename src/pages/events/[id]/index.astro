@@ -591,7 +591,12 @@ const ctaEventMetadata = {
           >
             Our Sponsors
           </h2>
-          <a href={`${event.id}/sponsors`} title="Dedicated sponsors page">
+          <a
+            href={lunalink(ROUTES.events[":id"].sponsors.__path, {
+              id: event.id,
+            })}
+            title="Dedicated sponsors page"
+          >
             <MdArrowOutward className="text-2xl transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </a>
         </div>
