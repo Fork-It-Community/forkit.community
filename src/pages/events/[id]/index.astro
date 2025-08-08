@@ -63,6 +63,7 @@ const coOrganizers = (await getEntries(event.data.coOrganizers ?? [])).filter(
 const sponsors = await getEntries(
   (event.data.sponsors ?? []).map((s) => s.slug),
 );
+
 const navItems = await getEventNavItems(event.id);
 
 const { Content } = await render(event);
@@ -583,12 +584,22 @@ const ctaEventMetadata = {
   {
     !!sponsors.length && (
       <div class="relative mx-auto flex w-full max-w-screen-lg flex-col gap-12 px-4 py-12 md:py-24">
-        <h2
-          id="sponsors"
-          class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest text-white md:text-3xl"
-        >
-          Our Sponsors
-        </h2>
+        <div class="flex items-center gap-2">
+          <h2
+            id="sponsors"
+            class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest text-white md:text-3xl"
+          >
+            Our Sponsors
+          </h2>
+          <a
+            href={lunalink(ROUTES.events[":id"].sponsors.__path, {
+              id: event.id,
+            })}
+            title="Dedicated sponsors page"
+          >
+            <MdArrowOutward className="text-2xl transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </a>
+        </div>
         <Sponsors event={event} sponsors={sponsors} />
       </div>
     )
