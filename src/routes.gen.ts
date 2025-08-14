@@ -7,6 +7,7 @@ const ROUTES_CONFIG = {
   "404": {},
   about: {},
   "code-of-conduct": {},
+  conferences: {},
   events: {
     ":id": {
       assets: {

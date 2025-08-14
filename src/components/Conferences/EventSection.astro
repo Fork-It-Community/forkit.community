@@ -1,0 +1,27 @@
+---
+import type { EventComputed } from "@/lib/events";
+import ConferenceCard from "./ConferenceCard.astro";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
+
+interface Props {
+  event: EventComputed;
+}
+
+const { event } = Astro.props;
+---
+
+<div class="flex flex-col gap-6">
+  <a href={lunalink(ROUTES.events[":id"].__path, { id: event.id })}>
+    <h2 class="text-xl font-bold hover:underline">
+      {event.data._computed.name}
+    </h2>
+  </a>
+  <div class="flex flex-col gap-8 sm:grid sm:grid-cols-2">
+    {
+      event.data.schedule?.items?.map((conference) => (
+        <ConferenceCard conferenceSlug={conference.slug} event={event} />
+      ))
+    }
+  </div>
+</div>

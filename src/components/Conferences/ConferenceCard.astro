@@ -1,0 +1,85 @@
+---
+import { type CollectionEntry, getEntry } from "astro:content";
+import { IoLanguageSharp } from "react-icons/io5";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
+import { getEntries } from "astro:content";
+import SpeakerForCard from "../Schedule/SpeakerForCard.astro";
+import { render } from "astro:content";
+import { LuSquarePlay } from "react-icons/lu";
+
+interface Props {
+  conferenceSlug: NonNullable<
+    NonNullable<CollectionEntry<"events">["data"]["schedule"]>["items"]
+  >[number]["slug"];
+  event: CollectionEntry<"events">;
+}
+const { conferenceSlug, event } = Astro.props;
+
+const conference = conferenceSlug ? await getEntry(conferenceSlug) : undefined;
+
+if (!conference) {
+  return;
+}
+
+const hosts = await getEntries(conference?.data.hosts ?? []);
+const speakers = (
+  await getEntries(conference?.data.speakers.map((speaker) => speaker.id) ?? [])
+).map((speaker) => ({
+  ...speaker,
+  data: {
+    ...speaker.data,
+    role: conference?.data.speakers.find((s) => s.id.id === speaker.id)?.role,
+  },
+}));
+const people = [...hosts, ...speakers];
+
+const { Content } = await render(conference);
+---
+
+<a
+  href={lunalink(ROUTES.events[":id"].talks[":talkId"].__path, {
+    id: event.id,
+    talkId: conference.id,
+  })}
+  class="group flex w-full flex-col gap-4 rounded-lg bg-white/5 p-4 backdrop-blur-md transition hover:bg-white/10 sm:px-6 sm:py-5"
+>
+  <p
+    class="text-balance font-heading text-base font-medium leading-tight tracking-wider text-white transition group-hover:text-primary"
+  >
+    {conference.data.title}
+  </p>
+  {
+    !!people.length && (
+      <div class="grid grid-cols-2 gap-3 md:grid-cols-3">
+        {speakers.map((speaker) => (
+          <SpeakerForCard
+            name={speaker.data.name}
+            avatar={speaker.data.avatar ?? null}
+            role={speaker.data.role ?? ""}
+          />
+        ))}
+      </div>
+    )
+  }
+  <div class="line-clamp-3 text-ellipsis">
+    <Content />
+  </div>
+
+  <div class="flex flex-row gap-4">
+    <span
+      class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none opacity-60 transition group-hover:opacity-100"
+    >
+      <IoLanguageSharp className="text-base" />
+      <span>Talk in {conference.data.language}</span>
+    </span>
+    {
+      conference.data.vod && conference.data.vod.youtubeId && (
+        <span class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none opacity-60 transition group-hover:opacity-100">
+          <LuSquarePlay className="text-base" />
+          <span>VOD available</span>
+        </span>
+      )
+    }
+  </div>
+</a>

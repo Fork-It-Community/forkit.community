@@ -4,6 +4,7 @@ import { IoLanguageSharp } from "react-icons/io5";
 import SpeakerForCard from "./SpeakerForCard.astro";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
+import { LuSquarePlay } from "react-icons/lu";
 
 interface Props {
   activity: NonNullable<
@@ -52,11 +53,17 @@ const people = [...hosts, ...speakers];
         </div>
       )}
 
-      <div>
+      <div class="flex flex-row gap-2">
         <span class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none opacity-60 transition group-hover:opacity-100">
           <IoLanguageSharp className="text-base" />
           <span>Talk in {talk.data.language}</span>
         </span>
+        {talk.data.vod && talk.data.vod.youtubeId && (
+          <span class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none opacity-60 transition group-hover:opacity-100">
+            <LuSquarePlay className="text-base" />
+            <span>VOD available</span>
+          </span>
+        )}
       </div>
     </a>
   )
