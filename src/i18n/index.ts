@@ -1,8 +1,7 @@
 import i18next from "i18next";
-import { getRelativeLocaleUrl } from "astro:i18n";
 
-import "dayjs/locale/en";
 import "dayjs/locale/fr";
+import "dayjs/locale/en";
 
 import commonEn from "./en/common.json";
 import eventsEn from "./en/events.json";
@@ -53,18 +52,6 @@ export async function init() {
   });
 }
 
-/**
- * Localize navigation path
- */
-function l(path: string, { targetLocale }: { targetLocale?: string } = {}) {
-  if (targetLocale) {
-    return `${targetLocale === "fr" ? "" : "/" + targetLocale}${path}`;
-  }
-
-  const lang = i18next.language;
-  return getRelativeLocaleUrl(lang, path);
-}
-
 export const LOCALE_FULL_NAME: Record<SupportedLang, string> = {
   en: "en_US",
   fr: "fr_FR",
@@ -72,5 +59,5 @@ export const LOCALE_FULL_NAME: Record<SupportedLang, string> = {
 
 const { changeLanguage, t } = i18next;
 
-export { t, changeLanguage, l };
+export { t, changeLanguage };
 export default i18next;

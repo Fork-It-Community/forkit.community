@@ -24,7 +24,7 @@ const authors = (await getEntries(newsItem.data.authors ?? [])).filter(
 >
   <div class="flex flex-wrap gap-1 text-sm opacity-60">
     <time datetime={dayjs(newsItem.data.date).format("YYYY-MM-DD")}>
-      {dayjs(newsItem.data.date).format("dddd, MMMM D, YYYY")}
+      {dayjs(newsItem.data.date).locale("en").format("dddd, MMMM D, YYYY")}
     </time>
   </div>
 
