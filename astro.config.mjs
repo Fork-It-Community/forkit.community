@@ -42,9 +42,19 @@ export default defineConfig({
     mdx(),
     sitemap({
       filter: (page) =>
-        !page.endsWith("/attendee") && !page.endsWith("/events/locations"),
+        !page.endsWith("/attendee") &&
+        !page.endsWith("/events/locations") &&
+        !page.includes("/branding/components"),
     }),
-    robotsTxt(),
+    robotsTxt({
+      policy: [
+        {
+          userAgent: "*",
+          allow: "/",
+          disallow: ["/branding/components"],
+        },
+      ],
+    }),
     astrobook({
       subpath: "/branding/components",
       css: ["./src/styles/globals.css"],
