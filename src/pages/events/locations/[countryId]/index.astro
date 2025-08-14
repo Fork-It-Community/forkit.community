@@ -11,6 +11,7 @@ import { BackButton } from "@/components/BackButton";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import dayjs from "dayjs";
+import OrganizersList from "@/components/OrganizersList/index.astro";
 
 export async function getStaticPaths() {
   const countries = await getCollection("countries");
@@ -40,6 +41,36 @@ const citiesLastEvent = allCities.map((city) => {
 });
 
 const cities = citiesLastEvent.sort((a, b) => b.lastDate.diff(a.lastDate));
+
+const allOrganizers = new Set<string>();
+eventsInCountry.forEach((event) => {
+  event.data.organizers?.forEach((organizerId) => {
+    if (typeof organizerId === "string") {
+      allOrganizers.add(organizerId);
+    } else if (
+      organizerId &&
+      typeof organizerId === "object" &&
+      "id" in organizerId
+    ) {
+      allOrganizers.add(organizerId.id);
+    }
+  });
+});
+
+const organizers = await Promise.all(
+  Array.from(allOrganizers).map(async (organizerId) => {
+    try {
+      const organizer = await getEntry("people", organizerId);
+      return organizer;
+    } catch {
+      return null;
+    }
+  }),
+);
+
+const validOrganizers = organizers.filter(
+  (org): org is NonNullable<typeof org> => org !== null && org !== undefined,
+);
 
 const ogImage = new URL(
   Astro.url.pathname + "/assets/og-image.jpg",
@@ -73,27 +104,30 @@ if (!country) {
       contextLabel="Fork It! Events"
     />
     <div
-      class="flex w-full flex-col justify-center gap-4 py-12 md:min-h-[40svh]"
+      class="flex w-full flex-col justify-between gap-8 py-12 md:min-h-[40svh] md:flex-row"
     >
-      <div class="flex w-full flex-col gap-2">
-        <h1
-          class="w-full text-balance text-left font-heading text-4xl font-medium uppercase tracking-wider max-md:flex-1 md:text-5xl"
-        >
-          {country.data.name}
-        </h1>
-        <h2
-          class="w-full text-balance text-left text-base tracking-widest md:text-lg"
-        >
-          All the Fork it! tech events in {country.data.name}
-        </h2>
+      <div class="flex flex-1 flex-col gap-4">
+        <div class="flex w-full flex-col gap-2">
+          <h1
+            class="w-full text-balance text-left font-heading text-4xl font-medium uppercase tracking-wider md:text-5xl"
+          >
+            {country.data.name}
+          </h1>
+          <h2
+            class="w-full text-balance text-left text-base tracking-widest md:text-lg"
+          >
+            All the Fork it! tech events in {country.data.name}
+          </h2>
+        </div>
+        {
+          !!country.data.description && (
+            <p class="max-w-[60ch] text-sm tracking-wide [text-shadow:0_2px_30px_rgba(0,0,0,0.4)]">
+              {country.data.description}
+            </p>
+          )
+        }
       </div>
-      {
-        !!country.data.description && (
-          <p class="max-w-[60ch] text-sm tracking-wide [text-shadow:0_2px_30px_rgba(0,0,0,0.4)]">
-            {country.data.description}
-          </p>
-        )
-      }
+      <OrganizersList organizers={validOrganizers} />
     </div>
   </div>
 
