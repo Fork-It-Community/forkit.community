@@ -3,6 +3,8 @@ title: "Information"
 description: "Discover the best ways to reach Sunway University in Bandar Sunway, Kuala Lumpur, Malaysia. Explore various transport options including walking, public transit, and driving, with clear directions and practical parking tips"
 ---
 import { LuMapPin } from "react-icons/lu";
+import mapImage from './Klang-Valley-Intergrated-Transit-Map_page-0001.jpg'
+import canopyWalkMap from './canopy-walk-map.png'
 
 # How to get there?
 <div className="flex space-y-0 items-baseline gap-1 text-white ">
@@ -30,7 +32,17 @@ If you're driving, enter <a  href="https://maps.app.goo.gl/YymY9NKXrttixqnJ7" ta
 Use a ride-hailing app like **Grab** (widely used in Malaysia). 
 Simply type **“Sunway University”** as your destination, and the driver will drop you off at the main campus entrance.
 
-## By public transport
-If you're coming by train or bus:
-- The nearest station is **Sunway Lagoon** on the Kelana Jaya LRT line.
-- From there, it's just a short 5-minute walk to the main entrance.
+## By public transport <a href={mapImage.src} target="_blank" rel="noopener noreferrer" className="ml-2 text-sm font-normal">(open map)</a>
+
+1. **Take the LRT Kelana Jaya Line:** Head towards the Kelana Jaya line and alight at USJ 7 station.
+2. **Transfer to the BRT Sunway Line:** At the USJ 7 station, follow the signs to transfer to the BRT Sunway Line.
+3. **Alight at SunU-Monash Station:** Take the BRT to the SunU-Monash station.
+4. **Walk to Sunway University:** The SunU-Monash station is directly connected to the Sunway University campus.
+
+## By foot:
+
+**Canopy Walk:**
+
+<img src={canopyWalkMap.src} alt="Canopy Walk Map" className="rounded-lg" />
+
+The University is connected to Bandar Sunway via the **Canopy Walk**, a sheltered and elevated pedestrian walkway. It offers a **safe**, **shaded**, and **eco-friendly** route linking the campus to nearby facilities such as malls, hospitals, and hotels.
