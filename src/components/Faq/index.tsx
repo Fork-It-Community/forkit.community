@@ -28,8 +28,11 @@ export const FAQ = (
                   </AccordionTrigger>
                 </dt>
                 <dd>
-                  <AccordionContent className="text-base text-gray-300">
-                    {item.answer}
+                  <AccordionContent>
+                    <div
+                      className="text-base text-gray-300"
+                      dangerouslySetInnerHTML={{ __html: item.answer }}
+                    />
                   </AccordionContent>
                 </dd>
               </AccordionItem>
