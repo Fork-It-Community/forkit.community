@@ -1,0 +1,48 @@
+---
+import { FaBell } from "react-icons/fa6";
+import { IoMail } from "react-icons/io5";
+import { LuMessageCircle } from "react-icons/lu";
+
+interface Props {
+  whatsApp: string;
+  newsLetter: string;
+}
+const { newsLetter, whatsApp } = Astro.props;
+---
+
+<div class="relative mx-auto max-w-screen-sm rounded-lg bg-white/5 py-4">
+  <div class="flex items-center justify-between p-4 text-base">
+    <div>
+      <h3 class="font-heading text-lg">Stay Updated</h3>
+      <p class="text-md opacity-90">Never miss important announcements</p>
+    </div>
+    <FaBell className="h-6 w-6" />
+  </div>
+
+  <p class="px-6 py-3 text-center text-sm opacity-60">
+    Get notified about schedule updates, speaker announcements, and networking
+    opportunities
+  </p>
+
+  <div class="flex items-center justify-center gap-4">
+    <a
+      target="_blank"
+      rel="noreferrer"
+      href={whatsApp}
+      class="flex flex-col items-center p-2 opacity-60 hover:opacity-100"
+    >
+      <LuMessageCircle className="mb-1 h-6 w-6" />
+      <span class="text-sm">WhatsApp</span>
+    </a>
+
+    <a
+      target="_blank"
+      rel="noreferrer"
+      href={newsLetter}
+      class="flex flex-col items-center p-2 opacity-60 hover:opacity-100"
+    >
+      <IoMail className="mb-1 h-6 w-6" />
+      <span class="text-sm">Newsletter</span>
+    </a>
+  </div>
+</div>

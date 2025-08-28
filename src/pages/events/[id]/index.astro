@@ -40,6 +40,7 @@ import TiltedCard from "@/components/TiltedCard";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { getSocialsItems } from "@/content/socials";
+import StayUpdated from "@/components/stayUpdated/index.astro";
 export async function getStaticPaths() {
   const events = await getEventsCollection();
 
@@ -243,10 +244,19 @@ const ctaEventMetadata = {
       </div>
     )
   }
+  {
+    event.data.eventUpdatesChannels?.newsletter &&
+      event.data.eventUpdatesChannels?.whatsapp && (
+        <StayUpdated
+          newsLetter={event.data.eventUpdatesChannels.newsletter}
+          whatsApp={event.data.eventUpdatesChannels.whatsapp}
+        />
+      )
+  }
 
   <!-- Stay tuned  -->
   {
-    dayjs(event.data.date).isAfter(dayjs()) && !event.data.tickets?.link && (
+    !event.data.tickets?.link && (
       <div id="stay-updated" class="relative scroll-mt-12 py-24 md:py-12">
         <div class="mx-auto max-w-screen-lg bg-black/40 px-6 py-12 md:p-16 lg:rounded-lg">
           <div class="flex flex-col items-center gap-4 md:flex-col md:p-10">
