@@ -40,6 +40,7 @@ import TiltedCard from "@/components/TiltedCard";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { getSocialsItems } from "@/content/socials";
+import StayUpdated from "@/components/stayUpdated/index.astro";
 export async function getStaticPaths() {
   const events = await getEventsCollection();
 
@@ -241,6 +242,15 @@ const ctaEventMetadata = {
           ))}
         </div>
       </div>
+    )
+  }
+  {
+    (event.data.eventUpdatesChannels?.newsletter ||
+      event.data.eventUpdatesChannels?.whatsapp) && (
+      <StayUpdated
+        newsLetter={event.data.eventUpdatesChannels?.newsletter}
+        whatsApp={event.data.eventUpdatesChannels?.whatsapp}
+      />
     )
   }
 

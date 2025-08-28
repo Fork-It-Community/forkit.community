@@ -197,6 +197,12 @@ const zEventBase = ({ image }: SchemaContext) =>
         .optional(),
       subPages: z.array(reference("eventsSubPages")).optional(),
       sponsoringLevels: z.array(z.string()).optional(),
+      eventUpdatesChannels: z
+        .object({
+          newsletter: z.string().url().optional(),
+          whatsapp: z.string().optional(),
+        })
+        .optional(),
     }),
   );
 
