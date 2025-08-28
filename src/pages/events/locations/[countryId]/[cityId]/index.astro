@@ -8,6 +8,8 @@ import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import { BackButton } from "@/components/BackButton";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
+import OrganizersList from "@/components/OrganizersList/index.astro";
+import { getPeopleFromReference } from "@/lib/people";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -33,6 +35,9 @@ if (!city || !country) {
 }
 
 const eventsInCity = await getEventByCity(cityId);
+
+const organizers = await getPeopleFromReference(city.data.organizers ?? []);
+
 const ogImage = new URL(
   Astro.url.pathname + "/assets/og-image.jpg",
   Astro.site,
@@ -56,28 +61,29 @@ const ogImage = new URL(
       client:load
       contextLabel={`Events in ${country.data.name}`}
     />
-    <div
-      class="flex w-full flex-col justify-center gap-4 py-12 md:min-h-[40svh]"
-    >
-      <div class="flex w-full flex-col gap-2">
-        <h1
-          class="w-full text-balance text-left font-heading text-4xl font-medium uppercase tracking-wider max-md:flex-1 md:text-5xl"
-        >
-          {city.data.name}
-        </h1>
-        <h2
-          class="w-full text-balance text-left text-base tracking-widest md:text-lg"
-        >
-          All the Fork it! tech events in {city.data.name}
-        </h2>
+    <div class="flex w-full flex-col justify-between gap-8 py-12 lg:flex-row">
+      <div class="flex flex-1 flex-col gap-4">
+        <div class="flex w-full flex-col gap-2">
+          <h1
+            class="w-full text-balance text-left font-heading text-4xl font-medium uppercase tracking-wider md:text-5xl"
+          >
+            {city.data.name}
+          </h1>
+          <h2
+            class="w-full text-balance text-left text-base tracking-widest md:text-lg"
+          >
+            All the Fork it! tech events in {city.data.name}
+          </h2>
+        </div>
+        {
+          !!city.data.description && (
+            <p class="max-w-[60ch] text-sm tracking-wide [text-shadow:0_2px_30px_rgba(0,0,0,0.4)]">
+              {city.data.description}
+            </p>
+          )
+        }
       </div>
-      {
-        !!city.data.description && (
-          <p class="max-w-[60ch] text-sm tracking-wide [text-shadow:0_2px_30px_rgba(0,0,0,0.4)]">
-            {city.data.description}
-          </p>
-        )
-      }
+      <OrganizersList organizers={organizers} />
     </div>
   </div>
 

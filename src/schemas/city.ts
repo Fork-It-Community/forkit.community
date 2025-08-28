@@ -14,4 +14,5 @@ export const zCity = ({ image }: SchemaContext) =>
     }),
     timezone: z.string(),
     description: z.string(),
+    organizers: z.array(reference("people")).optional(),
   });

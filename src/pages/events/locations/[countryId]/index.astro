@@ -11,6 +11,8 @@ import { BackButton } from "@/components/BackButton";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import dayjs from "dayjs";
+import OrganizersList from "@/components/OrganizersList/index.astro";
+import { getPeopleFromReference } from "@/lib/people";
 
 export async function getStaticPaths() {
   const countries = await getCollection("countries");
@@ -22,6 +24,14 @@ export async function getStaticPaths() {
 const { countryId } = Astro.params;
 
 const country = await getEntry("countries", countryId);
+
+if (!country) {
+  return new Response(null, {
+    status: 404,
+    statusText: "Not found",
+  });
+}
+
 const allCities = await getCollection(
   "cities",
   (city) => city.data.country.id === countryId,
@@ -46,12 +56,7 @@ const ogImage = new URL(
   Astro.site,
 );
 
-if (!country) {
-  return new Response(null, {
-    status: 404,
-    statusText: "Not found",
-  });
-}
+const organizers = await getPeopleFromReference(country.data.organizers ?? []);
 ---
 
 <MainLayout>
@@ -73,27 +78,30 @@ if (!country) {
       contextLabel="Fork It! Events"
     />
     <div
-      class="flex w-full flex-col justify-center gap-4 py-12 md:min-h-[40svh]"
+      class="flex w-full flex-col justify-between gap-8 py-12 md:min-h-[40svh] md:flex-row"
     >
-      <div class="flex w-full flex-col gap-2">
-        <h1
-          class="w-full text-balance text-left font-heading text-4xl font-medium uppercase tracking-wider max-md:flex-1 md:text-5xl"
-        >
-          {country.data.name}
-        </h1>
-        <h2
-          class="w-full text-balance text-left text-base tracking-widest md:text-lg"
-        >
-          All the Fork it! tech events in {country.data.name}
-        </h2>
+      <div class="flex flex-1 flex-col gap-4">
+        <div class="flex w-full flex-col gap-2">
+          <h1
+            class="w-full text-balance text-left font-heading text-4xl font-medium uppercase tracking-wider md:text-5xl"
+          >
+            {country.data.name}
+          </h1>
+          <h2
+            class="w-full text-balance text-left text-base tracking-widest md:text-lg"
+          >
+            All the Fork it! tech events in {country.data.name}
+          </h2>
+        </div>
+        {
+          !!country.data.description && (
+            <p class="max-w-[60ch] text-sm tracking-wide [text-shadow:0_2px_30px_rgba(0,0,0,0.4)]">
+              {country.data.description}
+            </p>
+          )
+        }
       </div>
-      {
-        !!country.data.description && (
-          <p class="max-w-[60ch] text-sm tracking-wide [text-shadow:0_2px_30px_rgba(0,0,0,0.4)]">
-            {country.data.description}
-          </p>
-        )
-      }
+      <OrganizersList organizers={organizers} />
     </div>
   </div>
 
