@@ -12,6 +12,7 @@ import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import dayjs from "dayjs";
 import OrganizersList from "@/components/OrganizersList/index.astro";
+import { getPeopleFromReference } from "@/lib/people";
 
 export async function getStaticPaths() {
   const countries = await getCollection("countries");
@@ -23,6 +24,14 @@ export async function getStaticPaths() {
 const { countryId } = Astro.params;
 
 const country = await getEntry("countries", countryId);
+
+if (!country) {
+  return new Response(null, {
+    status: 404,
+    statusText: "Not found",
+  });
+}
+
 const allCities = await getCollection(
   "cities",
   (city) => city.data.country.id === countryId,
@@ -42,47 +51,12 @@ const citiesLastEvent = allCities.map((city) => {
 
 const cities = citiesLastEvent.sort((a, b) => b.lastDate.diff(a.lastDate));
 
-const allOrganizers = new Set<string>();
-eventsInCountry.forEach((event) => {
-  event.data.organizers?.forEach((organizerId) => {
-    if (typeof organizerId === "string") {
-      allOrganizers.add(organizerId);
-    } else if (
-      organizerId &&
-      typeof organizerId === "object" &&
-      "id" in organizerId
-    ) {
-      allOrganizers.add(organizerId.id);
-    }
-  });
-});
-
-const organizers = await Promise.all(
-  Array.from(allOrganizers).map(async (organizerId) => {
-    try {
-      const organizer = await getEntry("people", organizerId);
-      return organizer;
-    } catch {
-      return null;
-    }
-  }),
-);
-
-const validOrganizers = organizers.filter(
-  (org): org is NonNullable<typeof org> => org !== null && org !== undefined,
-);
-
 const ogImage = new URL(
   Astro.url.pathname + "/assets/og-image.jpg",
   Astro.site,
 );
 
-if (!country) {
-  return new Response(null, {
-    status: 404,
-    statusText: "Not found",
-  });
-}
+const organizers = await getPeopleFromReference(country.data.organizers ?? []);
 ---
 
 <MainLayout>
@@ -127,7 +101,7 @@ if (!country) {
           )
         }
       </div>
-      <OrganizersList organizers={validOrganizers} />
+      <OrganizersList organizers={organizers} />
     </div>
   </div>
 

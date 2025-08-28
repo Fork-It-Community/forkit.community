@@ -11,20 +11,16 @@ interface Props {
 }
 
 const { organizers, title = "Organized by" } = Astro.props;
-
-const sortedOrganizers = organizers.sort((a, b) =>
-  a.data.name.localeCompare(b.data.name),
-);
 ---
 
 {
-  sortedOrganizers.length > 0 && (
+  organizers.length > 0 && (
     <div class="flex flex-col gap-3 md:max-w-xs">
       <h3 class="text-xs font-medium uppercase tracking-widest opacity-60">
         {title}
       </h3>
       <div class="flex flex-wrap gap-2">
-        {sortedOrganizers.map((organizer) => (
+        {organizers.map((organizer) => (
           <a
             href={lunalink(ROUTES.people[":id"].__path, {
               id: organizer.id,

@@ -9,6 +9,7 @@ import { BackButton } from "@/components/BackButton";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import OrganizersList from "@/components/OrganizersList/index.astro";
+import { getPeopleFromReference } from "@/lib/people";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -35,37 +36,7 @@ if (!city || !country) {
 
 const eventsInCity = await getEventByCity(cityId);
 
-// Get unique organizers from all events in the city
-const allOrganizers = new Set<string>();
-eventsInCity.forEach((event) => {
-  event.data.organizers?.forEach((organizerId) => {
-    if (typeof organizerId === "string") {
-      allOrganizers.add(organizerId);
-    } else if (
-      organizerId &&
-      typeof organizerId === "object" &&
-      "id" in organizerId
-    ) {
-      allOrganizers.add(organizerId.id);
-    }
-  });
-});
-
-// Fetch organizer data
-const organizers = await Promise.all(
-  Array.from(allOrganizers).map(async (organizerId) => {
-    try {
-      const organizer = await getEntry("people", organizerId);
-      return organizer;
-    } catch {
-      return null;
-    }
-  }),
-);
-
-const validOrganizers = organizers.filter(
-  (org): org is NonNullable<typeof org> => org !== null && org !== undefined,
-);
+const organizers = await getPeopleFromReference(city.data.organizers ?? []);
 
 const ogImage = new URL(
   Astro.url.pathname + "/assets/og-image.jpg",
@@ -112,7 +83,7 @@ const ogImage = new URL(
           )
         }
       </div>
-      <OrganizersList organizers={validOrganizers} />
+      <OrganizersList organizers={organizers} />
     </div>
   </div>
 
