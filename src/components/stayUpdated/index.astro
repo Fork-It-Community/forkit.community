@@ -4,8 +4,8 @@ import { IoMail } from "react-icons/io5";
 import { LuMessageCircle } from "react-icons/lu";
 
 interface Props {
-  whatsApp: string;
-  newsLetter: string;
+  whatsApp?: string | undefined;
+  newsLetter?: string | undefined;
 }
 const { newsLetter, whatsApp } = Astro.props;
 ---
@@ -25,24 +25,31 @@ const { newsLetter, whatsApp } = Astro.props;
   </p>
 
   <div class="flex items-center justify-center gap-4">
-    <a
-      target="_blank"
-      rel="noreferrer"
-      href={whatsApp}
-      class="flex flex-col items-center p-2 opacity-60 hover:opacity-100"
-    >
-      <LuMessageCircle className="mb-1 h-6 w-6" />
-      <span class="text-sm">WhatsApp</span>
-    </a>
-
-    <a
-      target="_blank"
-      rel="noreferrer"
-      href={newsLetter}
-      class="flex flex-col items-center p-2 opacity-60 hover:opacity-100"
-    >
-      <IoMail className="mb-1 h-6 w-6" />
-      <span class="text-sm">Newsletter</span>
-    </a>
+    {
+      whatsApp && (
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href={whatsApp}
+          class="flex flex-col items-center p-2 opacity-60 hover:opacity-100"
+        >
+          <LuMessageCircle className="mb-1 h-6 w-6" />
+          <span class="text-sm">WhatsApp</span>
+        </a>
+      )
+    }
+    {
+      newsLetter && (
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href={newsLetter}
+          class="flex flex-col items-center p-2 opacity-60 hover:opacity-100"
+        >
+          <IoMail className="mb-1 h-6 w-6" />
+          <span class="text-sm">Newsletter</span>
+        </a>
+      )
+    }
   </div>
 </div>
