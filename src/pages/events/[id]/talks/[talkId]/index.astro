@@ -18,6 +18,7 @@ import Prose from "@/components/Prose/index.astro";
 import Sponsors from "@/components/Sponsors/index.astro";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
+import { AddToCalender } from "@/components/AddToCalender";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -141,10 +142,11 @@ const endDate =
   />
   <div class="mx-auto max-w-screen-sm p-4 md:p-8">
     <div class="flex justify-between">
-      <BackButton
-        href={lunalink(ROUTES.events[":id"].__path, { id: event.id })}
-        client:load
-      />
+
+  <BackButton
+    href={lunalink(ROUTES.events[":id"].__path, { id: event.id })}
+    client:load
+  />
       <div class="flex gap-2">
         {
           event.data.status !== "cancelled" &&
@@ -184,6 +186,13 @@ const endDate =
               </span>
             )
           }
+           <AddToCalender 
+               startTime={talk.__schedule?.startTime} 
+               duration={talk.__schedule?.duration}  
+               title={talk.data.title} 
+               location={talk.__schedule?.location} 
+               client:load
+          />
         </div>
         <h1 lang={lang(talk.data.contentLanguage)}>{talk.data.title}</h1>
         <div class="flex gap-2">
