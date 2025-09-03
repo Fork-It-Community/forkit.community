@@ -1,6 +1,6 @@
 export const HOME_CONFIG = {
   partners: [
-    "bejs",
+    "react-paris",
     "city-js",
     "codeurs-en-seine",
     "dot-js",
