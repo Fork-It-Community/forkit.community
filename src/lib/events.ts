@@ -424,32 +424,13 @@ export async function getPastEventsWithComputedWithVodTalks() {
       const eventWithComputedData = await eventWithComputed(event);
       eventWithComputedData.data._computed.talks =
         eventWithComputedData.data._computed.talks.filter(
-          (talk) =>
-            talk.data.vod?.youtubeId && talk.data.vod?.event.id === event.id,
+          (talk) => talk.data.vod?.youtubeId,
         );
       return eventWithComputedData;
     }),
   );
 
-  return eventsWithComputedWithVodTalks.filter(
-    (event) => event.data._computed.talks.length > 0,
-  );
-}
-
-export async function getRelatedTalks(talk: CollectionEntry<"talks">) {
-  const event = talk.data.vod?.event;
-  if (!event) {
-    return [];
-  }
-  return (
-    await getCollection(
-      "talks",
-      (_talk) =>
-        _talk.data.vod &&
-        _talk.data.vod.event.id === event.id &&
-        _talk.id !== talk.id,
-    )
-  )
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 2);
+  return eventsWithComputedWithVodTalks
+    .filter((event) => event.data._computed.talks.length > 0)
+    .flatMap((event) => event.data._computed.talks);
 }

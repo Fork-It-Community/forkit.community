@@ -7,7 +7,9 @@ const ROUTES_CONFIG = {
   "404": {},
   about: {},
   "code-of-conduct": {},
-  conferences: {},
+  conferences: {
+    "[...page]": {},
+  },
   events: {
     ":id": {
       assets: {
@@ -126,9 +128,7 @@ const ROUTES_CONFIG = {
     "rss.xml": {},
   },
   resources: {
-    videos: {
-      ":id": {},
-    },
+    videos: {},
   },
 } as const;
 
