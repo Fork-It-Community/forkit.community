@@ -22,7 +22,6 @@ export const zTalk = () =>
       .object({
         type: z.enum(["youtube"]),
         youtubeId: z.string(),
-        event: reference("events"),
       })
       .optional(),
     contentLanguage: zLanguage().optional().default("english"),

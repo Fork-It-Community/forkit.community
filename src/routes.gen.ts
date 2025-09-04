@@ -128,9 +128,7 @@ const ROUTES_CONFIG = {
     "rss.xml": {},
   },
   resources: {
-    videos: {
-      ":id": {},
-    },
+    videos: {},
   },
 } as const;
 
