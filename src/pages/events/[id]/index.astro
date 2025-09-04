@@ -245,12 +245,8 @@ const ctaEventMetadata = {
     )
   }
   {
-    (event.data.eventUpdatesChannels?.newsletter ||
-      event.data.eventUpdatesChannels?.whatsapp) && (
-      <StayUpdated
-        newsLetter={event.data.eventUpdatesChannels?.newsletter}
-        whatsApp={event.data.eventUpdatesChannels?.whatsapp}
-      />
+    event.data.updatesChannels && event.data.updatesChannels?.length > 0 && (
+      <StayUpdated updatesChannels={event.data.updatesChannels} />
     )
   }
 

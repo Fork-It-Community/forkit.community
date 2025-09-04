@@ -1,55 +1,51 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import { FaBell } from "react-icons/fa6";
-import { IoMail } from "react-icons/io5";
-import { LuMessageCircle } from "react-icons/lu";
-
+import { channels } from "@/content/updateChannels";
 interface Props {
-  whatsApp?: string | undefined;
-  newsLetter?: string | undefined;
+  updatesChannels: Array<
+    NonNullable<
+      NonNullable<CollectionEntry<"events">["data"]["updatesChannels"]>[number]
+    >
+  >;
 }
-const { newsLetter, whatsApp } = Astro.props;
+
+const { updatesChannels } = Astro.props;
 ---
 
 <div class="relative mx-auto max-w-screen-sm rounded-lg bg-white/5 py-4">
   <div class="flex items-center justify-between p-4 text-base">
     <div>
-      <h3 class="font-heading text-lg font-medium uppercase">Stay Updated</h3>
+      <h3 class="font-heading text-lg font-medium uppercase">
+        Stay in the loop
+      </h3>
       <p class="text-md opacity-90">Never miss important announcements</p>
     </div>
     <FaBell className="h-6 w-6" />
   </div>
 
-  <p class="px-6 py-3 text-center text-sm opacity-60">
+  <p class="px-16 py-3 text-center text-sm leading-relaxed opacity-60 sm:px-6">
     Get notified about schedule updates, speaker announcements, and networking
     opportunities
   </p>
 
   <div class="flex items-center justify-center gap-4">
     {
-      whatsApp && (
-        <a
-          target="_blank"
-          rel="noreferrer"
-          href={whatsApp}
-          class="flex flex-col items-center p-2 opacity-60 hover:opacity-100"
-        >
-          <LuMessageCircle className="mb-1 h-6 w-6" />
-          <span class="text-sm">WhatsApp</span>
-        </a>
-      )
-    }
-    {
-      newsLetter && (
-        <a
-          target="_blank"
-          rel="noreferrer"
-          href={newsLetter}
-          class="flex flex-col items-center p-2 opacity-60 hover:opacity-100"
-        >
-          <IoMail className="mb-1 h-6 w-6" />
-          <span class="text-sm">Newsletter</span>
-        </a>
-      )
+      updatesChannels.map((channel) => {
+        const Icon = channels.find((c) => c.type === channel.type)?.icon;
+        if (!Icon) return;
+        return (
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href={channel.link.href}
+            class="flex flex-col items-center p-2 opacity-60 hover:opacity-100"
+          >
+            <Icon className="mb-1 h-6 w-6" />
+            <span class="text-sm">{channel.link.title}</span>
+          </a>
+        );
+      })
     }
   </div>
 </div>
