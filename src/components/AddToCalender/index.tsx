@@ -3,10 +3,10 @@ import { SlCalender } from "react-icons/sl";
 
 
 interface addtoCalenderInfo{
-    startTime?:Date | undefined,
-    duration?:number | undefined ,
-    title:string,
-    location?:string
+    startTime:Date | undefined ,
+    duration:number | undefined ,
+    title:string | undefined,
+    location:string | undefined
 }
 
 export const AddToCalender = ({startTime,duration,
@@ -18,13 +18,13 @@ export const AddToCalender = ({startTime,duration,
 }
 
     const handleAddToCalender = () =>{
-        const start = new Date(startTime);
-        const end = new Date(start.getTime() + duration * 60000);
+        const start = new Date(startTime || '');
+        const end = new Date(start.getTime() + (duration || 0) * 60000);
         const eventUrl =
       `https://calendar.google.com/calendar/render?action=TEMPLATE` +
-      `&text=${encodeURIComponent(title)}` +
+      `&text=${encodeURIComponent(title || "")}` +
       `&dates=${toGoogleCalendarDate(start)}/${toGoogleCalendarDate(end)}` +
-      `&location=${encodeURIComponent(location)}`;
+      `&location=${encodeURIComponent(location || "")}`;
         window.open(eventUrl, "_blank");
     }
 
