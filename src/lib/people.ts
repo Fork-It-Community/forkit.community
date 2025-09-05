@@ -4,6 +4,6 @@ export async function getPeopleFromReference(
   people: Array<ReferenceDataEntry<"people">>,
 ) {
   return Promise.all(
-    await people.map(async (organizer) => await getEntry(organizer)),
+    people.map(async (organizer) => await getEntry(organizer)),
   );
 }

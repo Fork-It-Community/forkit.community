@@ -1,3 +1,4 @@
+// @ts-check
 import { defineConfig, envField } from "astro/config";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
@@ -8,6 +9,8 @@ import robotsTxt from "astro-robots-txt";
 import vercel from "@astrojs/vercel";
 import { getSiteUrl } from "./src/lib/getSiteURL";
 import astrobook from "astrobook";
+
+import bearstudiotypedRoutes from "@bearstudio/astro-typed-routes";
 
 // https://astro.build/config
 export default defineConfig({
@@ -60,6 +63,7 @@ export default defineConfig({
       css: ["./src/styles/globals.css"],
       title: "Components | Fork it! Community",
     }),
+    bearstudiotypedRoutes(),
   ],
 
   adapter: vercel({ isr: true }),
