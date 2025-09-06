@@ -9,6 +9,7 @@ import {
   MdPodcasts,
   MdBadge,
   MdOutlineChildCare,
+  MdOndemandVideo,
   MdMic,
   // MdBadge,
   // MdHandshake,
@@ -54,6 +55,13 @@ const MAIN_MENU: Array<{
     icon: MdFeed,
     scope: "all",
     level: "primary",
+  },
+  {
+    label: "Videos",
+    href: "/resources/videos",
+    icon: MdOndemandVideo,
+    scope: "all",
+    level: "secondary",
   },
   {
     label: "Community members",

@@ -1,0 +1,14 @@
+---
+import VideoCard from "@/components/EventVideosCards/videoCard.astro";
+import type { CollectionEntry } from "astro:content";
+interface Props {
+  talks: CollectionEntry<"talks">[];
+}
+const { talks } = Astro.props;
+---
+
+<section class="space-y-6">
+  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {talks.map((talk) => <VideoCard talk={talk} />)}
+  </div>
+</section>
