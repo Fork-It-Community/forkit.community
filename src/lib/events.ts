@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-
 import {
   getCollection,
   getEntries,
@@ -16,6 +15,28 @@ export function isEventPublished(
 ) {
   if (!status) return false;
   return status !== "draft";
+}
+
+export interface eventDetails {
+  startTime: Date | undefined;
+  duration: number | undefined;
+  title: string | undefined;
+  location: string | undefined;
+}
+
+function toGoogleCalendarDate(date: Date) {
+  return date.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+}
+
+export function getGoogleCalendarNewEventUrl(talk: eventDetails) {
+  const start = new Date(talk.startTime || "");
+  const end = new Date(start.getTime() + (talk.duration || 0) * 60000);
+  const eventUrl =
+    `https://calendar.google.com/calendar/render?action=TEMPLATE` +
+    `&text=${encodeURIComponent(talk.title || "")}` +
+    `&dates=${toGoogleCalendarDate(start)}/${toGoogleCalendarDate(end)}` +
+    `&location=${encodeURIComponent(talk.location || "")}`;
+  return eventUrl;
 }
 
 export async function eventWithComputed<
