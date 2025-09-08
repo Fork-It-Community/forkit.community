@@ -412,25 +412,6 @@ export function without<T extends CollectionEntry<"events">>(
   return events.filter((event) => event.data.status !== status);
 }
 
-export async function getPastEventsWithComputedWithVodTalks() {
-  const events = (await getEventsCollection()).sort(
-    (a, b) =>
-      dayjs(a.data.date).diff(b.data.date) ||
-      (b.data.type === "event" ? 1 : 0) - (a.data.type === "event" ? 1 : 0),
-  );
-
-  const eventsWithComputedWithVodTalks = await Promise.all(
-    events.map(async (event) => {
-      const eventWithComputedData = await eventWithComputed(event);
-      eventWithComputedData.data._computed.talks =
-        eventWithComputedData.data._computed.talks.filter(
-          (talk) => talk.data.vod?.youtubeId,
-        );
-      return eventWithComputedData;
-    }),
-  );
-
-  return eventsWithComputedWithVodTalks
-    .filter((event) => event.data._computed.talks.length > 0)
-    .flatMap((event) => event.data._computed.talks);
+export function getTalksWithVOD() {
+  return getCollection("talks", (talk) => talk.data.vod?.youtubeId);
 }

@@ -2,9 +2,9 @@
 import MainLayout from "@/layouts/MainLayout.astro";
 import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import { SEO } from "astro-seo";
-import { getPastEventsWithComputedWithVodTalks } from "@/lib/events";
+import { getTalksWithVOD } from "@/lib/events";
 import EventVideosCards from "@/components/EventVideosCards/index.astro";
-const allTalks = await getPastEventsWithComputedWithVodTalks();
+const allTalks = await getTalksWithVOD();
 ---
 
 <MainLayout>
