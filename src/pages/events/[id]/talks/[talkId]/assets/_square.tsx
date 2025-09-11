@@ -13,7 +13,7 @@ import { getTalkData } from "@/pages/events/[id]/talks/[talkId]/assets/_utils";
 
 export const config: AssetImageConfig = {
   width: 1080,
-  height: 1080,
+  height: 1350,
 };
 
 export default async function ({
@@ -33,14 +33,21 @@ export default async function ({
   );
   const speakersImages = (
     await Promise.all(
-      talk.__speakers.map(
-        async (speaker) =>
-          await getAstroImageBase64(speaker.data.avatar ?? peoplePlaceholder),
-      ),
+      talk.__speakers.map(async (speaker) => {
+        const speakerImage = await getAstroImageBase64(
+          speaker.data.avatar ?? peoplePlaceholder,
+        );
+        const flag = speaker.data._computed.country?.data.flag;
+        const speakerFlag = flag ? await getAstroImageBase64(flag) : undefined;
+        return {
+          speakerImage,
+          speakerFlag,
+        };
+      }),
     )
   ).slice(0, 4);
   return (
-    <Frame {...config} style={{ padding: 96 }}>
+    <Frame {...config} style={{ padding: 160 }}>
       <BgImage src={postCover} width={config.width} height={config.height} />
 
       <div
@@ -102,21 +109,69 @@ export default async function ({
                 maxWidth: "50%",
               }}
             >
-              {speakersImages.map((imgSrc, index) => {
-                const size = speakersImages.length > 1 ? 192 : 256;
-                return (
-                  <img
-                    key={index}
-                    src={imgSrc}
-                    style={{
-                      width: size,
-                      height: size,
-                      borderRadius: 8,
-                      boxShadow: "0 10px 20px rgba(0,0,0,0.4)",
-                    }}
-                  />
-                );
-              })}
+              {speakersImages.map(
+                ({ speakerImage: imgSrc, speakerFlag: flagSrc }, index) => {
+                  const size = speakersImages.length > 1 ? 192 : 256;
+                  return flagSrc ? (
+                    <div
+                      key={index}
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-end",
+                        width: size,
+                        height: size,
+                      }}
+                    >
+                      <img
+                        src={imgSrc}
+                        style={{
+                          width: size,
+                          height: size,
+                          borderRadius: 8,
+                          boxShadow: "0 10px 20px rgba(0,0,0,0.4)",
+                        }}
+                      />
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "flex-end",
+                          width: size,
+                          marginTop: -62,
+                          marginRight: 8,
+                        }}
+                      >
+                        <img
+                          src={flagSrc}
+                          style={{
+                            width: 48,
+                            height: 35,
+                            marginRight: 8,
+                            borderRadius: 4,
+                            boxShadow: `
+                              0 0 0 8px rgba(42, 43, 43, 0.7),
+                              0 4px 12px rgba(0, 0, 0, 0.5)
+                            `,
+                            display: "block",
+                          }}
+                          alt="Nationality flag"
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    <img
+                      key={index}
+                      src={imgSrc}
+                      style={{
+                        width: size,
+                        height: size,
+                        borderRadius: 8,
+                        boxShadow: "0 10px 20px rgba(0,0,0,0.4)",
+                      }}
+                    />
+                  );
+                },
+              )}
             </div>
             <div
               style={{
@@ -237,6 +292,7 @@ export default async function ({
               lineHeight: 1.2,
               textTransform: "uppercase",
               opacity: 0.6,
+              marginLeft: -54,
             }}
           >
             www.forkit.community
