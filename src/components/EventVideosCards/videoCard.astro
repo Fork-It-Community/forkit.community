@@ -1,5 +1,6 @@
 ---
 import { lang } from "@/lib/lang";
+import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { IoLanguageSharp } from "react-icons/io5";
 
@@ -18,7 +19,7 @@ const { talk } = Astro.props;
   <div class="aspect-video">
     {
       talk.data.vod?.type === "youtube" && (
-        <img
+        <Image
           src={`https://img.youtube.com/vi/${talk.data.vod.youtubeId}/maxresdefault.jpg`}
           alt={talk.data.title}
           class="h-full w-full object-cover"
