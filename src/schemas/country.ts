@@ -8,6 +8,7 @@ export const zCountry = ({ image }: SchemaContext) =>
     name: z.string(),
     cover: zMediaImage({ image }),
     countryCode: z.string().length(2).describe("ISO 3166-1, Code Alpha-2"),
-    description: z.string(),
+    description: z.string().optional(),
     organizers: z.array(reference("people")).optional().default([]),
+    flag: image().optional(),
   });
