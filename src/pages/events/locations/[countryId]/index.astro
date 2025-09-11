@@ -3,7 +3,7 @@ import MainLayout from "@/layouts/MainLayout.astro";
 
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import SEO from "@/components/SEO/index.astro";
-import { getEventsByCountry, without } from "@/lib/events";
+import { getEventsByCountry, getEventsCollection, without } from "@/lib/events";
 import EventsList from "@/components/EventsList/index.astro";
 import { getCollection } from "astro:content";
 import { getEntry } from "astro:content";
@@ -16,9 +16,14 @@ import { getPeopleFromReference } from "@/lib/people";
 
 export async function getStaticPaths() {
   const countries = await getCollection("countries");
-  return countries.map((country) => ({
-    params: { countryId: country.id },
-  }));
+  const events = await getEventsCollection();
+  return countries
+    .filter((country) =>
+      events.some((event) => event.data._computed.country?.id === country.id),
+    )
+    .map((country) => ({
+      params: { countryId: country.id },
+    }));
 }
 
 const { countryId } = Astro.params;
@@ -63,7 +68,7 @@ const organizers = await getPeopleFromReference(country.data.organizers ?? []);
   <SEO
     slot="seo"
     title={`${country.data.name} Events`}
-    description={country.data.description}
+    description={country.data.description ?? ""}
     image={ogImage.toString()}
   />
   <ImageBackgroundHero

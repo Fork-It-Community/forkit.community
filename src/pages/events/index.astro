@@ -20,16 +20,20 @@ const pastEvents = await getPastEvents();
 const allCountries = await getCollection("countries");
 const events = await getEventsCollection({ without: ["draft"] });
 
-const countriesLastEvents = allCountries.map((country) => {
-  const lastEvents = events.find(
-    (event) => event.data._computed.country?.id === country.id,
-  );
+const countriesLastEvents = allCountries
+  .filter((country) =>
+    events.some((event) => event.data._computed.country?.id === country.id),
+  )
+  .map((country) => {
+    const lastEvents = events.find(
+      (event) => event.data._computed.country?.id === country.id,
+    );
 
-  return {
-    ...country,
-    lastDate: dayjs(lastEvents?.data.date),
-  };
-});
+    return {
+      ...country,
+      lastDate: dayjs(lastEvents?.data.date),
+    };
+  });
 
 const countries = countriesLastEvents.sort((a, b) =>
   b.lastDate.diff(a.lastDate),
