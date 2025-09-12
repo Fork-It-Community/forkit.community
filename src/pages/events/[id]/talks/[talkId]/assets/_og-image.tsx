@@ -206,30 +206,22 @@ export default async function ({
                         boxShadow: "0 10px 20px rgba(0,0,0,0.4)",
                       }}
                     />
-                    <div
+
+                    <img
+                      src={flagSrc}
                       style={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        marginTop: -96,
-                        marginRight: 24,
-                      }}
-                    >
-                      <img
-                        src={flagSrc}
-                        style={{
-                          width: 90,
-                          height: 65,
-                          marginRight: 8,
-                          borderRadius: 12,
-                          boxShadow: `
+                        position: "absolute",
+                        bottom: 20,
+                        right: 20,
+                        width: 90,
+                        borderRadius: 12,
+                        boxShadow: `
                             0 0 0 10px rgba(42, 43, 43, 0.7),
                             0 4px 12px rgba(0, 0, 0, 0.5)
                           `,
-                          display: "block",
-                        }}
-                        alt="Nationality flag"
-                      />
-                    </div>
+                      }}
+                      alt="Nationality flag"
+                    />
                   </div>
                 ) : (
                   <img

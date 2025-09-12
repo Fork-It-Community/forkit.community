@@ -47,7 +47,7 @@ export default async function ({
     )
   ).slice(0, 4);
   return (
-    <Frame {...config} style={{ padding: 160 }}>
+    <Frame {...config} style={{ padding: 80 }}>
       <BgImage src={postCover} width={config.width} height={config.height} />
 
       <div
@@ -74,7 +74,7 @@ export default async function ({
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: 48,
+            gap: 24,
           }}
         >
           <div
@@ -132,31 +132,22 @@ export default async function ({
                           boxShadow: "0 10px 20px rgba(0,0,0,0.4)",
                         }}
                       />
-                      <div
+
+                      <img
+                        src={flagSrc}
+                        alt="Nationality flag"
                         style={{
-                          display: "flex",
-                          justifyContent: "flex-end",
-                          width: size,
-                          marginTop: -62,
-                          marginRight: 8,
-                        }}
-                      >
-                        <img
-                          src={flagSrc}
-                          style={{
-                            width: 48,
-                            height: 35,
-                            marginRight: 8,
-                            borderRadius: 4,
-                            boxShadow: `
+                          position: "absolute",
+                          bottom: 20,
+                          right: 20,
+                          width: 48,
+                          borderRadius: 4,
+                          boxShadow: `
                               0 0 0 8px rgba(42, 43, 43, 0.7),
                               0 4px 12px rgba(0, 0, 0, 0.5)
                             `,
-                            display: "block",
-                          }}
-                          alt="Nationality flag"
-                        />
-                      </div>
+                        }}
+                      />
                     </div>
                   ) : (
                     <img
@@ -264,13 +255,7 @@ export default async function ({
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-end",
-          }}
-        >
+        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div
             style={{
               display: "flex",
@@ -292,7 +277,6 @@ export default async function ({
               lineHeight: 1.2,
               textTransform: "uppercase",
               opacity: 0.6,
-              marginLeft: -54,
             }}
           >
             www.forkit.community

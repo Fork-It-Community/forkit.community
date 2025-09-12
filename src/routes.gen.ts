@@ -8,7 +8,7 @@ const ROUTES_CONFIG = {
   about: {},
   "code-of-conduct": {},
   conferences: {
-    "[...page]": {},
+    ":page": {},
   },
   events: {
     ":id": {
@@ -50,8 +50,8 @@ const ROUTES_CONFIG = {
         ":talkId": {
           assets: {
             ":__image.:__type": {},
+            _instagram: {},
             "_og-image": {},
-            _square: {},
             _utils: {},
           },
         },
@@ -92,7 +92,7 @@ const ROUTES_CONFIG = {
   },
   "llms.txt": {},
   news: {
-    "[...page]": {},
+    ":page": {},
     article: {
       ":id": {
         assets: {
