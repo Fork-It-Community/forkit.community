@@ -411,3 +411,7 @@ export function without<T extends CollectionEntry<"events">>(
 ) {
   return events.filter((event) => event.data.status !== status);
 }
+
+export function getTalksWithVOD() {
+  return getCollection("talks", (talk) => talk.data.vod?.youtubeId);
+}

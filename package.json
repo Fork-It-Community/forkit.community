@@ -22,7 +22,7 @@
     "@astrojs/sitemap": "3.4.2",
     "@astrojs/tailwind": "6.0.2",
     "@astrojs/vercel": "8.2.5",
-    "@bearstudio/astro-typed-routes": "0.1.1",
+    "@bearstudio/astro-typed-routes": "0.1.3",
     "@bearstudio/lunalink": "0.3.1",
     "@fontsource-variable/inter": "5.2.6",
     "@fontsource/tomorrow": "5.2.6",
