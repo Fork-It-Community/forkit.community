@@ -33,10 +33,17 @@ export default async function ({
   );
   const speakersImages = (
     await Promise.all(
-      talk.__speakers.map(
-        async (speaker) =>
-          await getAstroImageBase64(speaker.data.avatar ?? peoplePlaceholder),
-      ),
+      talk.__speakers.map(async (speaker) => {
+        const speakerImage = await getAstroImageBase64(
+          speaker.data.avatar ?? peoplePlaceholder,
+        );
+        const flag = speaker.data._computed.country?.data.flag;
+        const speakerFlag = flag ? await getAstroImageBase64(flag) : undefined;
+        return {
+          speakerImage,
+          speakerFlag,
+        };
+      }),
     )
   ).slice(0, 4);
   return (
@@ -176,21 +183,60 @@ export default async function ({
               maxWidth: "50%",
             }}
           >
-            {speakersImages.map((imgSrc, index) => {
-              const size = speakersImages.length > 1 ? 360 : 512;
-              return (
-                <img
-                  key={index}
-                  src={imgSrc}
-                  style={{
-                    width: size,
-                    height: size,
-                    borderRadius: 8,
-                    boxShadow: "0 10px 20px rgba(0,0,0,0.4)",
-                  }}
-                />
-              );
-            })}
+            {speakersImages.map(
+              ({ speakerImage: imgSrc, speakerFlag: flagSrc }, index) => {
+                const size = speakersImages.length > 1 ? 360 : 512;
+                return flagSrc ? (
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-end",
+                      width: size,
+                      height: size,
+                    }}
+                  >
+                    <img
+                      src={imgSrc}
+                      style={{
+                        width: size,
+                        height: size,
+                        borderRadius: 8,
+                        boxShadow: "0 10px 20px rgba(0,0,0,0.4)",
+                      }}
+                    />
+
+                    <img
+                      src={flagSrc}
+                      style={{
+                        position: "absolute",
+                        bottom: 20,
+                        right: 20,
+                        width: 90,
+                        borderRadius: 12,
+                        boxShadow: `
+                            0 0 0 10px rgba(42, 43, 43, 0.7),
+                            0 4px 12px rgba(0, 0, 0, 0.5)
+                          `,
+                      }}
+                      alt="Nationality flag"
+                    />
+                  </div>
+                ) : (
+                  <img
+                    key={index}
+                    src={imgSrc}
+                    style={{
+                      width: size,
+                      height: size,
+                      borderRadius: 8,
+                      boxShadow: "0 10px 20px rgba(0,0,0,0.4)",
+                    }}
+                  />
+                );
+              },
+            )}
           </div>
         </div>
 

@@ -1,5 +1,5 @@
 import { zSocialTypes } from "@/schemas/utils";
-import { z, type SchemaContext } from "astro:content";
+import { reference, z, type SchemaContext } from "astro:content";
 
 export type Person = z.infer<ReturnType<typeof zPerson>>;
 export const zPerson = ({ image }: SchemaContext) =>
@@ -27,4 +27,5 @@ export const zPerson = ({ image }: SchemaContext) =>
         avatar: image().optional(),
       })
       .optional(),
+    country: reference("countries").optional(),
   });

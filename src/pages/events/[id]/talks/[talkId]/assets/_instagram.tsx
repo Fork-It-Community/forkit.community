@@ -13,7 +13,7 @@ import { getTalkData } from "@/pages/events/[id]/talks/[talkId]/assets/_utils";
 
 export const config: AssetImageConfig = {
   width: 1080,
-  height: 1080,
+  height: 1350,
 };
 
 export default async function ({
@@ -33,14 +33,21 @@ export default async function ({
   );
   const speakersImages = (
     await Promise.all(
-      talk.__speakers.map(
-        async (speaker) =>
-          await getAstroImageBase64(speaker.data.avatar ?? peoplePlaceholder),
-      ),
+      talk.__speakers.map(async (speaker) => {
+        const speakerImage = await getAstroImageBase64(
+          speaker.data.avatar ?? peoplePlaceholder,
+        );
+        const flag = speaker.data._computed.country?.data.flag;
+        const speakerFlag = flag ? await getAstroImageBase64(flag) : undefined;
+        return {
+          speakerImage,
+          speakerFlag,
+        };
+      }),
     )
   ).slice(0, 4);
   return (
-    <Frame {...config} style={{ padding: 96 }}>
+    <Frame {...config} style={{ padding: 80 }}>
       <BgImage src={postCover} width={config.width} height={config.height} />
 
       <div
@@ -67,7 +74,7 @@ export default async function ({
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: 48,
+            gap: 24,
           }}
         >
           <div
@@ -102,21 +109,60 @@ export default async function ({
                 maxWidth: "50%",
               }}
             >
-              {speakersImages.map((imgSrc, index) => {
-                const size = speakersImages.length > 1 ? 192 : 256;
-                return (
-                  <img
-                    key={index}
-                    src={imgSrc}
-                    style={{
-                      width: size,
-                      height: size,
-                      borderRadius: 8,
-                      boxShadow: "0 10px 20px rgba(0,0,0,0.4)",
-                    }}
-                  />
-                );
-              })}
+              {speakersImages.map(
+                ({ speakerImage: imgSrc, speakerFlag: flagSrc }, index) => {
+                  const size = speakersImages.length > 1 ? 192 : 256;
+                  return flagSrc ? (
+                    <div
+                      key={index}
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-end",
+                        width: size,
+                        height: size,
+                      }}
+                    >
+                      <img
+                        src={imgSrc}
+                        style={{
+                          width: size,
+                          height: size,
+                          borderRadius: 8,
+                          boxShadow: "0 10px 20px rgba(0,0,0,0.4)",
+                        }}
+                      />
+
+                      <img
+                        src={flagSrc}
+                        alt="Nationality flag"
+                        style={{
+                          position: "absolute",
+                          bottom: 20,
+                          right: 20,
+                          width: 48,
+                          borderRadius: 4,
+                          boxShadow: `
+                              0 0 0 8px rgba(42, 43, 43, 0.7),
+                              0 4px 12px rgba(0, 0, 0, 0.5)
+                            `,
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <img
+                      key={index}
+                      src={imgSrc}
+                      style={{
+                        width: size,
+                        height: size,
+                        borderRadius: 8,
+                        boxShadow: "0 10px 20px rgba(0,0,0,0.4)",
+                      }}
+                    />
+                  );
+                },
+              )}
             </div>
             <div
               style={{
@@ -209,13 +255,7 @@ export default async function ({
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-end",
-          }}
-        >
+        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div
             style={{
               display: "flex",

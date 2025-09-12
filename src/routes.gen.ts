@@ -50,8 +50,8 @@ const ROUTES_CONFIG = {
         ":talkId": {
           assets: {
             ":__image.:__type": {},
+            _instagram: {},
             "_og-image": {},
-            _square: {},
             _utils: {},
           },
         },
