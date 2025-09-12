@@ -1,0 +1,115 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import { SEO } from "astro-seo";
+import { getTalksWithVOD } from "@/lib/events";
+import VideoCard from "@/components/VideoCard/index.astro";
+import type { GetStaticPathsOptions } from "astro";
+import { isEmpty } from "remeda";
+import { cn } from "@/lib/utils-client";
+import { buttonVariants } from "@/components/ui/button";
+import { MdArrowBack, MdArrowForward } from "react-icons/md";
+import TiltedCard from "@/components/TiltedCard";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const allTalks = await getTalksWithVOD();
+  return paginate(allTalks, { pageSize: 18 });
+}
+
+const { page } = Astro.props;
+---
+
+<MainLayout>
+  <SEO
+    slot="seo"
+    title="Videos"
+    description="Catch up on past Fork It! talks"
+    noindex={isEmpty(page.data)}
+  />
+  <div class="mx-auto w-full max-w-screen-sm px-4">
+    <MainPageTitle
+      title="Fork it! Vods"
+      subtitle="Watch the community in action"
+      blurImage
+    />
+  </div>
+  <div class="flex flex-1 flex-col">
+    <div class="mx-auto flex w-full max-w-screen-lg flex-col gap-8 pb-40">
+      {
+        page.currentPage !== 1 && (
+          <div class="flex items-center md:col-span-2">
+            <h3 class="text-balance text-sm uppercase tracking-widest opacity-60">
+              Page {page.currentPage}
+            </h3>
+            <div class="ml-auto flex gap-2">
+              {!!page.url.prev && (
+                <a
+                  href={page.url.prev}
+                  class={cn(
+                    buttonVariants({ size: "xs", variant: "secondary" }),
+                    "size-8 p-0",
+                  )}
+                >
+                  <MdArrowBack className="size-4" />
+                  <span class="sr-only">Newer videos</span>
+                </a>
+              )}
+              {!!page.url.next && (
+                <a
+                  href={page.url.next}
+                  class={cn(
+                    buttonVariants({ size: "xs", variant: "secondary" }),
+                    "size-8 p-0",
+                  )}
+                >
+                  <span class="sr-only">Older videos</span>
+                  <MdArrowForward className="size-4" />
+                </a>
+              )}
+            </div>
+          </div>
+        )
+      }
+
+      <section class="space-y-6">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            page.data.map((talk) => (
+              <TiltedCard client:visible>
+                <VideoCard talk={talk} />
+              </TiltedCard>
+            ))
+          }
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between md:col-span-2">
+        {
+          !!page.url.prev && (
+            <a
+              href={page.url.prev}
+              class={cn(buttonVariants({ variant: "secondary" }), "gap-2")}
+            >
+              <MdArrowBack />
+              Newer <span class="max-xs:sr-only">videos</span>
+            </a>
+          )
+        }
+        {
+          !!page.url.next && (
+            <a
+              href={page.url.next}
+              class={cn(
+                buttonVariants({ variant: "secondary" }),
+                "ml-auto gap-2",
+              )}
+            >
+              Older <span class="max-xs:sr-only">videos</span>
+              <MdArrowForward />
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</MainLayout>
