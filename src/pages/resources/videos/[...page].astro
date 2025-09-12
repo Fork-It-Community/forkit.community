@@ -51,7 +51,7 @@ const { page } = Astro.props;
                   )}
                 >
                   <MdArrowBack className="size-4" />
-                  <span class="sr-only">Newer videos</span>
+                  <span class="sr-only">Next videos</span>
                 </a>
               )}
               {!!page.url.next && (
@@ -62,7 +62,7 @@ const { page } = Astro.props;
                     "size-8 p-0",
                   )}
                 >
-                  <span class="sr-only">Older videos</span>
+                  <span class="sr-only">Previous videos</span>
                   <MdArrowForward className="size-4" />
                 </a>
               )}
@@ -91,7 +91,7 @@ const { page } = Astro.props;
               class={cn(buttonVariants({ variant: "secondary" }), "gap-2")}
             >
               <MdArrowBack />
-              Newer <span class="max-xs:sr-only">videos</span>
+              Previous <span class="max-xs:sr-only">videos</span>
             </a>
           )
         }
@@ -104,7 +104,7 @@ const { page } = Astro.props;
                 "ml-auto gap-2",
               )}
             >
-              Older <span class="max-xs:sr-only">videos</span>
+              Next <span class="max-xs:sr-only">videos</span>
               <MdArrowForward />
             </a>
           )
