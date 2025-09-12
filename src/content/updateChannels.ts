@@ -10,10 +10,10 @@ export const channels: Array<{
 }> = [
   {
     type: "newsletter",
-    icon: LuMessageCircle,
+    icon: IoMail,
   },
   {
     type: "whatsapp",
-    icon: IoMail,
+    icon: LuMessageCircle,
   },
 ];
