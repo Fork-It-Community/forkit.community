@@ -8,7 +8,7 @@ const ROUTES_CONFIG = {
   about: {},
   "code-of-conduct": {},
   conferences: {
-    "[...page]": {},
+    ":page": {},
   },
   events: {
     ":id": {
@@ -92,7 +92,7 @@ const ROUTES_CONFIG = {
   },
   "llms.txt": {},
   news: {
-    "[...page]": {},
+    ":page": {},
     article: {
       ":id": {
         assets: {
@@ -128,7 +128,9 @@ const ROUTES_CONFIG = {
     "rss.xml": {},
   },
   resources: {
-    videos: {},
+    videos: {
+      ":page": {},
+    },
   },
 } as const;
 
