@@ -489,9 +489,8 @@ export const getCoverImage = async (
     .exhaustive();
 };
 
-export async function getUpcomingEventsWithOpenCfp(limit = undefined) {
+export async function getUpcomingEventsWithOpenCfp(limit?: number) {
   const upcomingEvents = await getUpcomingEvents();
-
   const cfpEvents =
     upcomingEvents
       .filter(
@@ -506,10 +505,5 @@ export async function getUpcomingEventsWithOpenCfp(limit = undefined) {
           (event1.data.date?.valueOf() ?? 0) -
           (event2.data.date?.valueOf() ?? 0),
       ) ?? [];
-
-  if (limit) {
-    return cfpEvents.slice(0, limit);
-  }
-
-  return cfpEvents;
+  return cfpEvents.slice(0, limit);
 }
