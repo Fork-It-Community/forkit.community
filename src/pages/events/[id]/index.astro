@@ -286,7 +286,7 @@ const ctaEventMetadata = {
                   </a>
                 ))}
               </div>
-              <div class="flex gap-4">
+              <div class="flex flex-col items-center gap-4 sm:flex-row">
                 {event.data._computed.country?.data.channels?.map((item) =>
                   match(item)
                     .with({ type: "newsletter" }, (data) => {
