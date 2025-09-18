@@ -144,8 +144,9 @@ const organizers = await getPeopleFromReference(country.data.organizers ?? []);
         events={eventsInCountry}
         title={`Events in ${country.data.name}`}
         class="flex-[2]"
-      />
+      >
+        <StayTuned country={country} class="md:p-4" />
+      </EventsList>
     </div>
-    <StayTuned country={country} />
   </div>
 </MainLayout>

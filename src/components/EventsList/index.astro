@@ -3,6 +3,7 @@ import TiltedCard from "@/components/TiltedCard";
 import EventCard from "@/components/EventCard/index.astro";
 import { cn } from "@/lib/utils-client";
 import type { EventComputed } from "@/lib/events";
+import dayjs from "dayjs";
 
 interface Props {
   events: Array<EventComputed>;
@@ -11,6 +12,11 @@ interface Props {
 }
 
 const { events, title, class: className } = Astro.props;
+
+const upcoming = events.filter((item) =>
+  dayjs(item.data.date).endOf("day").isAfter(dayjs()),
+);
+const past = events.filter((item) => dayjs(item.data.date).isBefore(dayjs()));
 ---
 
 <div class={cn("flex w-full flex-col gap-4", className)}>
@@ -23,7 +29,15 @@ const { events, title, class: className } = Astro.props;
   }
   <div class="flex flex-col gap-3">
     {
-      events.map((event) => (
+      upcoming.map((event) => (
+        <TiltedCard client:visible scaleOnHover={1}>
+          <EventCard event={event} />
+        </TiltedCard>
+      ))
+    }
+    <slot />
+    {
+      past.map((event) => (
         <TiltedCard client:visible scaleOnHover={1}>
           <EventCard event={event} />
         </TiltedCard>
