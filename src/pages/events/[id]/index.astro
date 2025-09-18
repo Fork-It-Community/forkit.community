@@ -39,7 +39,7 @@ import dayjs from "dayjs";
 import TiltedCard from "@/components/TiltedCard";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
-import { getSocialsItems } from "@/content/socials";
+import { CHANNELS_TYPE_MAP, getSocialsItems } from "@/content/socials";
 import { GLOBAL_NEWSLETTER_LINK } from "@/content/socials";
 import { isEmpty } from "remeda";
 import { match } from "ts-pattern";
@@ -289,39 +289,49 @@ const ctaEventMetadata = {
               <div class="flex gap-4">
                 {event.data._computed.country?.data.channels?.map((item) =>
                   match(item)
-                    .with({ type: "newsletter" }, (data) => (
-                      <a
-                        class={cn(
-                          buttonVariants({
-                            size: "lg",
-                            variant: "default",
-                          }),
-                          "w-fit",
-                        )}
-                        href={data.link.href}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        Join the {event.data._computed.country?.data.name}{" "}
-                        Newsletter
-                      </a>
-                    ))
-                    .with({ type: "whatsapp" }, (data) => (
-                      <a
-                        class={cn(
-                          buttonVariants({
-                            size: "lg",
-                            variant: "default",
-                          }),
-                          "w-fit",
-                        )}
-                        href={data.link.href}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        Join the Whatsapp
-                      </a>
-                    ))
+                    .with({ type: "newsletter" }, (data) => {
+                      const Icon = CHANNELS_TYPE_MAP[data.type];
+                      return (
+                        <Fragment>
+                          <a
+                            class={cn(
+                              buttonVariants({
+                                size: "lg",
+                                variant: "default",
+                              }),
+                              "flex w-fit gap-1",
+                            )}
+                            href={data.link.href}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <Icon /> Join the{" "}
+                            {event.data._computed.country?.data.name} Newsletter
+                          </a>
+                        </Fragment>
+                      );
+                    })
+                    .with({ type: "whatsapp" }, (data) => {
+                      const Icon = CHANNELS_TYPE_MAP[data.type];
+                      return (
+                        <Fragment>
+                          <a
+                            class={cn(
+                              buttonVariants({
+                                size: "lg",
+                                variant: "default",
+                              }),
+                              "flex w-fit gap-1",
+                            )}
+                            href={data.link.href}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <Icon /> Join the Whatsapp
+                          </a>
+                        </Fragment>
+                      );
+                    })
                     .exhaustive(),
                 )}
                 {!hasCountryChannels && (

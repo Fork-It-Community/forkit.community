@@ -12,7 +12,6 @@ import {
   FaYoutube,
   FaFacebook,
 } from "react-icons/fa6";
-import type { IconType } from "react-icons/lib";
 import { LuMail, LuMessageCircle } from "react-icons/lu";
 
 type SocialsLevel = "primary" | "secondary";
@@ -84,16 +83,7 @@ export const SOCIALS_TYPE_MAP = {
 export const GLOBAL_NEWSLETTER_LINK =
   "https://7dca2c80.sibforms.com/serve/MUIFACNrQwiH7V08ltOYZJGzrh-InrxkJyIqX--5MK_ju3OUx4e9obvACfjo6B1h3HciGVkC6ksErKgvwQHrdLfLpLCq73srDU5vUrCPubh3UaD10lTNebVYU7Dv-8X6QBUM5V9qgLyEcz8EKgYqd3zSCINpfcymQJcI7KwNAVZsoIKEtlEuLqwc0zOdNs-AdoFZemFS7ZS0HplO";
 
-export const channels: Array<{
-  type: Channel["type"];
-  icon: IconType;
-}> = [
-  {
-    type: "newsletter",
-    icon: LuMail,
-  },
-  {
-    type: "whatsapp",
-    icon: LuMessageCircle,
-  },
-];
+export const CHANNELS_TYPE_MAP = {
+  newsletter: LuMail,
+  whatsapp: LuMessageCircle,
+} satisfies Record<Channel["type"], FC>;
