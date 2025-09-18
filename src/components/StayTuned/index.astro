@@ -1,0 +1,130 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { match } from "ts-pattern";
+import { isEmpty } from "remeda";
+
+import {
+  CHANNELS_TYPE_MAP,
+  getSocialsItems,
+  GLOBAL_NEWSLETTER_LINK,
+} from "@/content/socials";
+import { cn } from "@/lib/utils-client";
+import { buttonVariants } from "@/components/ui/button";
+
+interface Props {
+  class?: string;
+  country: CollectionEntry<"countries">;
+}
+
+const { country, class: _class } = Astro.props;
+
+const hasCountryChannels =
+  country?.data.channels && !isEmpty(country?.data.channels);
+---
+
+<div
+  class={cn(
+    "mx-auto max-w-screen-lg bg-black/40 px-6 py-12 md:p-16 lg:rounded-lg",
+    _class,
+  )}
+>
+  <div class="flex flex-col items-center gap-4 md:flex-col md:p-10">
+    <div class="flex-1 space-y-2 text-center">
+      <h2
+        class="text-balance font-heading text-2xl font-medium uppercase tracking-widest"
+      >
+        Stay Updated
+      </h2>
+      <p class="max-w-lg text-balance text-xs tracking-wider opacity-60">
+        Follow us on social media or join our newsletter to be notified when
+        registration opens
+      </p>
+    </div>
+
+    <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-0">
+      {
+        getSocialsItems("primary").map(({ icon: Icon, ...social }) => (
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href={social.href}
+            class="flex items-center gap-2 p-2 opacity-60 transition hover:text-white hover:opacity-100"
+          >
+            <span class="text-lg">
+              <Icon />
+            </span>
+            <span class="text-sm uppercase tracking-wide">{social.label}</span>
+          </a>
+        ))
+      }
+    </div>
+    <div class="flex flex-col items-center gap-4 sm:flex-row">
+      {
+        country?.data.channels?.map((item) =>
+          match(item)
+            .with({ type: "newsletter" }, (data) => {
+              const Icon = CHANNELS_TYPE_MAP[data.type];
+              return (
+                <Fragment>
+                  <a
+                    class={cn(
+                      buttonVariants({
+                        size: "lg",
+                        variant: "default",
+                      }),
+                      "flex w-fit gap-1",
+                    )}
+                    href={data.link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <Icon /> Join the {country?.data.name} Newsletter
+                  </a>
+                </Fragment>
+              );
+            })
+            .with({ type: "whatsapp" }, (data) => {
+              const Icon = CHANNELS_TYPE_MAP[data.type];
+              return (
+                <Fragment>
+                  <a
+                    class={cn(
+                      buttonVariants({
+                        size: "lg",
+                        variant: "default",
+                      }),
+                      "flex w-fit gap-1",
+                    )}
+                    href={data.link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <Icon /> Join the Whatsapp
+                  </a>
+                </Fragment>
+              );
+            })
+            .exhaustive(),
+        )
+      }
+      {
+        !hasCountryChannels && (
+          <a
+            class={cn(
+              buttonVariants({
+                size: "lg",
+                variant: "default",
+              }),
+              "w-fit",
+            )}
+            href={GLOBAL_NEWSLETTER_LINK}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Join the Global Newsletter
+          </a>
+        )
+      }
+    </div>
+  </div>
+</div>

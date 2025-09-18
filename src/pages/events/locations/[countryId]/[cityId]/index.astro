@@ -10,6 +10,7 @@ import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import OrganizersList from "@/components/OrganizersList/index.astro";
 import { getPeopleFromReference } from "@/lib/people";
+import StayTuned from "@/components/StayTuned/index.astro";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -95,7 +96,9 @@ const ogImage = new URL(
         events={eventsInCity}
         title={`Events in ${city.data.name}`}
         class="flex-[2]"
-      />
+      >
+        <StayTuned country={country} class="md:p-4" />
+      </EventsList>
       <div class="w-full flex-1"></div>
     </div>
   </div>
