@@ -13,6 +13,7 @@ import { ROUTES } from "@/routes.gen";
 import dayjs from "dayjs";
 import OrganizersList from "@/components/OrganizersList/index.astro";
 import { getPeopleFromReference } from "@/lib/people";
+import StayTuned from "@/components/StayTuned/index.astro";
 
 export async function getStaticPaths() {
   const countries = await getCollection("countries");
@@ -145,5 +146,6 @@ const organizers = await getPeopleFromReference(country.data.organizers ?? []);
         class="flex-[2]"
       />
     </div>
+    <StayTuned country={country} />
   </div>
 </MainLayout>
