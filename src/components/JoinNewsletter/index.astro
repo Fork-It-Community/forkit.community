@@ -1,13 +1,14 @@
 ---
 import TiltedCard from "@/components/TiltedCard";
 import { buttonVariants } from "@/components/ui/button";
+import { GLOBAL_NEWSLETTER_LINK } from "@/content/socials";
 import { cn } from "@/lib/utils-client";
 ---
 
 <div class="relative flex w-full flex-col gap-6 px-4">
   <TiltedCard client:visible className="mx-auto w-full max-w-screen-sm">
     <a
-      href="https://7dca2c80.sibforms.com/serve/MUIFACNrQwiH7V08ltOYZJGzrh-InrxkJyIqX--5MK_ju3OUx4e9obvACfjo6B1h3HciGVkC6ksErKgvwQHrdLfLpLCq73srDU5vUrCPubh3UaD10lTNebVYU7Dv-8X6QBUM5V9qgLyEcz8EKgYqd3zSCINpfcymQJcI7KwNAVZsoIKEtlEuLqwc0zOdNs-AdoFZemFS7ZS0HplO"
+      href={GLOBAL_NEWSLETTER_LINK}
       target="_blank"
       rel="noreferer"
       class="group flex w-full flex-col items-start gap-4 rounded-lg bg-white/5 p-6 backdrop-blur-md transition hover:bg-white/10 sm:flex-row md:items-center md:px-8 md:py-6"

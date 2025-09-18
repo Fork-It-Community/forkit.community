@@ -39,7 +39,11 @@ import dayjs from "dayjs";
 import TiltedCard from "@/components/TiltedCard";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
-import { getSocialsItems } from "@/content/socials";
+import { CHANNELS_TYPE_MAP, getSocialsItems } from "@/content/socials";
+import { GLOBAL_NEWSLETTER_LINK } from "@/content/socials";
+import { isEmpty } from "remeda";
+import { match } from "ts-pattern";
+
 export async function getStaticPaths() {
   const events = await getEventsCollection();
 
@@ -79,6 +83,10 @@ const ogImage = new URL(
   Astro.url.pathname + "/assets/og-image.jpg",
   Astro.site,
 );
+
+const hasCountryChannels =
+  event.data._computed.country?.data.channels &&
+  !isEmpty(event.data._computed.country?.data.channels);
 
 const ctaTypes = getEventCtaTypes(event);
 const ctaEventMetadata = {
@@ -246,52 +254,107 @@ const ctaEventMetadata = {
 
   <!-- Stay tuned  -->
   {
-    dayjs(event.data.date).isAfter(dayjs()) && !event.data.tickets?.link && (
-      <div id="stay-updated" class="relative scroll-mt-12 py-24 md:py-12">
-        <div class="mx-auto max-w-screen-lg bg-black/40 px-6 py-12 md:p-16 lg:rounded-lg">
-          <div class="flex flex-col items-center gap-4 md:flex-col md:p-10">
-            <div class="flex-1 space-y-2 text-center">
-              <h2 class="text-balance font-heading text-2xl font-medium uppercase tracking-widest">
-                Stay Updated
-              </h2>
-              <p class="max-w-lg text-balance text-xs tracking-wider opacity-60">
-                Follow us on social media or join our newsletter to be notified
-                when registration opens
-              </p>
-            </div>
+    dayjs(event.data.date).isAfter(dayjs()) &&
+      (!event.data.tickets?.link || !event.data.schedule) && (
+        <div id="stay-updated" class="relative scroll-mt-12 py-24 md:py-12">
+          <div class="mx-auto max-w-screen-lg bg-black/40 px-6 py-12 md:p-16 lg:rounded-lg">
+            <div class="flex flex-col items-center gap-4 md:flex-col md:p-10">
+              <div class="flex-1 space-y-2 text-center">
+                <h2 class="text-balance font-heading text-2xl font-medium uppercase tracking-widest">
+                  Stay Updated
+                </h2>
+                <p class="max-w-lg text-balance text-xs tracking-wider opacity-60">
+                  Follow us on social media or join our newsletter to be
+                  notified when registration opens
+                </p>
+              </div>
 
-            <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-0">
-              {getSocialsItems("primary").map(({ icon: Icon, ...social }) => (
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  href={social.href}
-                  class="flex items-center gap-2 p-2 opacity-60 transition hover:text-white hover:opacity-100"
-                >
-                  <span class="text-lg">
-                    <Icon />
-                  </span>
-                  <span class="text-sm uppercase tracking-wide">
-                    {social.label}
-                  </span>
-                </a>
-              ))}
+              <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-0">
+                {getSocialsItems("primary").map(({ icon: Icon, ...social }) => (
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href={social.href}
+                    class="flex items-center gap-2 p-2 opacity-60 transition hover:text-white hover:opacity-100"
+                  >
+                    <span class="text-lg">
+                      <Icon />
+                    </span>
+                    <span class="text-sm uppercase tracking-wide">
+                      {social.label}
+                    </span>
+                  </a>
+                ))}
+              </div>
+              <div class="flex flex-col items-center gap-4 sm:flex-row">
+                {event.data._computed.country?.data.channels?.map((item) =>
+                  match(item)
+                    .with({ type: "newsletter" }, (data) => {
+                      const Icon = CHANNELS_TYPE_MAP[data.type];
+                      return (
+                        <Fragment>
+                          <a
+                            class={cn(
+                              buttonVariants({
+                                size: "lg",
+                                variant: "default",
+                              }),
+                              "flex w-fit gap-1",
+                            )}
+                            href={data.link.href}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <Icon /> Join the{" "}
+                            {event.data._computed.country?.data.name} Newsletter
+                          </a>
+                        </Fragment>
+                      );
+                    })
+                    .with({ type: "whatsapp" }, (data) => {
+                      const Icon = CHANNELS_TYPE_MAP[data.type];
+                      return (
+                        <Fragment>
+                          <a
+                            class={cn(
+                              buttonVariants({
+                                size: "lg",
+                                variant: "default",
+                              }),
+                              "flex w-fit gap-1",
+                            )}
+                            href={data.link.href}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <Icon /> Join the Whatsapp
+                          </a>
+                        </Fragment>
+                      );
+                    })
+                    .exhaustive(),
+                )}
+                {!hasCountryChannels && (
+                  <a
+                    class={cn(
+                      buttonVariants({
+                        size: "lg",
+                        variant: "default",
+                      }),
+                      "w-fit",
+                    )}
+                    href={GLOBAL_NEWSLETTER_LINK}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Join the Global Newsletter
+                  </a>
+                )}
+              </div>
             </div>
-            <a
-              class={cn(
-                buttonVariants({ size: "lg", variant: "default" }),
-                "w-fit",
-              )}
-              href="https://7dca2c80.sibforms.com/serve/MUIFACNrQwiH7V08ltOYZJGzrh-InrxkJyIqX--5MK_ju3OUx4e9obvACfjo6B1h3HciGVkC6ksErKgvwQHrdLfLpLCq73srDU5vUrCPubh3UaD10lTNebVYU7Dv-8X6QBUM5V9qgLyEcz8EKgYqd3zSCINpfcymQJcI7KwNAVZsoIKEtlEuLqwc0zOdNs-AdoFZemFS7ZS0HplO"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Join the Newsletter
-            </a>
           </div>
         </div>
-      </div>
-    )
+      )
   }
 
   <!-- After event  -->

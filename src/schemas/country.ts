@@ -1,3 +1,4 @@
+import { zChannel } from "@/schemas/channel";
 import { zMediaImage } from "@/schemas/utils";
 import { reference, type SchemaContext } from "astro:content";
 import { z } from "astro:schema";
@@ -11,4 +12,5 @@ export const zCountry = ({ image }: SchemaContext) =>
     description: z.string().optional(),
     organizers: z.array(reference("people")).optional().default([]),
     flag: image().optional(),
+    channels: z.array(zChannel()).optional(),
   });
