@@ -119,7 +119,7 @@ export async function generateImageResponseSVG(svg: string) {
 }
 
 export async function generateImageResponseJPG(jpg: Buffer) {
-  return new Response(jpg, {
+  return new Response(new Uint8Array(jpg), {
     headers: {
       "Content-Type": "image/jpeg",
     },

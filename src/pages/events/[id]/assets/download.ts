@@ -34,7 +34,7 @@ export const GET: APIRoute = async ({ params, site }) => {
     }),
   );
 
-  return new Response(zip.toBuffer(), {
+  return new Response(new Uint8Array(zip.toBuffer()), {
     headers: {
       "Content-Type": "application/zip",
       "Content-Disposition": `attachment; filename="${event.data.date.getFullYear()}-${event.data._computed.country?.id}-${event.data.city.id}-assets-${dayjs().format("YYYYMMDDHHmmss")}.zip"`,
