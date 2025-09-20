@@ -65,6 +65,10 @@
       scrollbar-width: none; /* Firefox */
     }
   }
+
+  .h-nav-safe {
+    height: calc(4rem + env(safe-area-inset-bottom));
+  }
 }
 
 /* Shadcn config */
