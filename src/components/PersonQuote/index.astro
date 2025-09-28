@@ -1,0 +1,39 @@
+---
+import { Image } from "astro:assets";
+import { getEntry } from "astro:content";
+import defaultPerson from "@/assets/images/people-placeholder.jpeg";
+
+interface Props {
+  person: string;
+  class: string;
+}
+
+const { person, class: _class } = Astro.props;
+
+const personEntry = await getEntry("people", person);
+---
+
+<div
+  class:list={[
+    "not-prose 5 my-2 flex flex-row gap-4 rounded-md bg-white/5 p-2 md:p-4",
+    _class,
+  ]}
+>
+  <Image
+    src={personEntry?.data.avatar ?? defaultPerson}
+    alt={`${personEntry?.data.name ?? "Default"} profile picture`}
+    width={100}
+    height={100}
+    class="hidden rounded-md md:block"
+  />
+
+  <div class="flex flex-col gap-2 text-sm">
+    <blockquote class="italic">
+      "<slot />"
+    </blockquote>
+
+    <p class="font-medium capitalize">
+      {personEntry?.data.name ?? person.split("-").join(" ")}
+    </p>
+  </div>
+</div>
