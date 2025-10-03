@@ -17,5 +17,25 @@
   ],
   "theme_color": "#101010",
   "background_color": "#101010",
-  "display": "standalone"
+  "display": "standalone",
+  "shortcuts": [
+    {
+      "name": "Events",
+      "short_name": "Events",
+      "description": "All the Fork it! tech events",
+      "url": "/events"
+    },
+    {
+      "name": "Podcasts",
+      "short_name": "Podcasts",
+      "description": "Listen to the Fork it! Community",
+      "url": "/podcasts"
+    },
+    {
+      "name": "News",
+      "short_name": "News",
+      "description": "Latest news about the community",
+      "url": "/news"
+    }
+  ]
 }
