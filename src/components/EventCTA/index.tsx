@@ -31,7 +31,7 @@ export const EventCTA = (props: Props) => {
   const buttonProps = {
     className: cn(
       buttonVariants({ size: props.size, variant: props.variant }),
-      "group gap-2",
+      "group gap-2 z-10",
       props.className,
     ),
     onClick: props.onClick,
