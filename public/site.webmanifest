@@ -18,6 +18,8 @@
   "theme_color": "#101010",
   "background_color": "#101010",
   "display": "standalone",
+  "start_url": "/",
+  "prefer_related_applications": true,
   "shortcuts": [
     {
       "name": "Events",
