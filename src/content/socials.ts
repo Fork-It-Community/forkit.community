@@ -35,10 +35,22 @@ const SOCIALS: Array<{
     level: "primary",
   },
   {
+    label: "Instagram",
+    href: "https://www.instagram.com/forkit.community",
+    icon: FaInstagram,
+    level: "primary",
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/forkit.community",
+    icon: FaFacebook,
+    level: "primary",
+  },
+  {
     label: "BlueSky",
     href: "https://bsky.app/profile/forkit.community",
     icon: FaBluesky,
-    level: "primary",
+    level: "secondary",
   },
   {
     label: "X Twitter",
