@@ -34,6 +34,7 @@ export const zEventBasicInfo = ({ image }: SchemaContext) =>
       .array(z.object({ question: z.string(), answer: z.string() }))
       .optional()
       .describe("Frequently Asked Questions for the event"),
+    lumaEventId: z.string().optional(),
   });
 
 const zEventBase = ({ image }: SchemaContext) =>

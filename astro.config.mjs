@@ -34,6 +34,11 @@ export default defineConfig({
         access: "public",
         optional: true,
       }),
+      LUMA_API_KEY: envField.string({
+        context: "server",
+        access: "secret",
+        optional: false,
+      }),
     },
   },
 
@@ -47,7 +52,8 @@ export default defineConfig({
       filter: (page) =>
         !page.endsWith("/attendee") &&
         !page.endsWith("/events/locations") &&
-        !page.includes("/branding/components"),
+        !page.includes("/branding/components") &&
+        !page.includes("/dashboard"),
     }),
     robotsTxt({
       policy: [

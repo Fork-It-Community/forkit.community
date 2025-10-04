@@ -34,6 +34,7 @@ const ROUTES_CONFIG = {
         },
         "_form": {}
       },
+      "dashboard": {},
       "pages": {
         ":subpageId": {}
       },

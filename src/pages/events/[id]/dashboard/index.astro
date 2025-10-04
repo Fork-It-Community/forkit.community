@@ -1,0 +1,120 @@
+---
+import { BackButton } from "@/components/BackButton";
+import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
+import { getEventsCollection } from "@/lib/events";
+import { getAllGuests } from "@/lib/luma/api/guest";
+import { ROUTES } from "@/routes.gen";
+import { lunalink } from "@bearstudio/lunalink";
+import { isNonNullish } from "remeda";
+import SEO from "@/components/SEO/index.astro";
+
+export async function getStaticPaths() {
+  const events = await getEventsCollection();
+
+  return events.map((event) => ({
+    params: { id: event.id },
+    props: {
+      event,
+    },
+  }));
+}
+
+const { event } = Astro.props;
+
+const guests = isNonNullish(event.data.lumaEventId)
+  ? await getAllGuests({
+      event_api_id: event.data.lumaEventId,
+      sort_direction: "desc nulls last",
+      sort_column: "registered_at",
+    })
+  : [];
+---
+
+<EventSubPageLayout event={event}>
+  <SEO
+    slot="seo"
+    title={`Dashboard for ${event.data._computed.name}`}
+    noindex
+    nofollow
+  />
+  <div class="mx-auto w-full max-w-screen-lg space-y-8 p-4 md:p-8">
+    <BackButton
+      href={lunalink(ROUTES.events[":id"].__path, { id: event.id })}
+      client:load
+    />
+    <h1
+      class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+    >
+      Organizer Dashboard
+    </h1>
+    <main>
+      {
+        !event.data.lumaEventId && (
+          <p class="rounded-md bg-white/10 p-4 backdrop-blur-sm">
+            Please provide the <code>lumaEventId</code> of this event to enable
+            metrics.
+          </p>
+        )
+      }
+      {
+        event.data.lumaEventId && (
+          <div class="mx-auto lg:max-w-none">
+            <h2 class="font-heading text-lg font-medium uppercase tracking-widest">
+              Guests metrics
+            </h2>
+            <dl class="mt-4 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-4">
+              <div class="flex flex-col bg-gray-400/5 p-8 dark:bg-white/5">
+                <dt class="text-sm/6 font-semibold text-gray-600 dark:text-gray-300">
+                  Approved
+                </dt>
+                <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                  {
+                    guests.filter(
+                      (guest) => guest.approval_status === "approved",
+                    ).length
+                  }
+                </dd>
+              </div>
+              <div class="flex flex-col bg-gray-400/5 p-8 dark:bg-white/5">
+                <dt class="text-sm/6 font-semibold text-gray-600 dark:text-gray-300">
+                  Invited
+                </dt>
+                <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                  {
+                    guests.filter(
+                      (guest) => guest.approval_status === "invited",
+                    ).length
+                  }
+                </dd>
+              </div>
+              <div class="flex flex-col bg-gray-400/5 p-8 dark:bg-white/5">
+                <dt class="text-sm/6 font-semibold text-gray-600 dark:text-gray-300">
+                  Pending Approval
+                </dt>
+                <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                  {
+                    guests.filter(
+                      (guest) => guest.approval_status === "pending_approval",
+                    ).length
+                  }
+                </dd>
+              </div>
+              <div class="flex flex-col bg-gray-400/5 p-8 dark:bg-white/5">
+                <dt class="text-sm/6 font-semibold text-gray-600 dark:text-gray-300">
+                  Waitlist
+                </dt>
+                <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                  {
+                    guests.filter(
+                      (guest) => guest.approval_status === "waitlist",
+                    ).length
+                  }
+                </dd>
+              </div>
+            </dl>
+          </div>
+        )
+      }
+    </main>
+  </div>
+</EventSubPageLayout>
