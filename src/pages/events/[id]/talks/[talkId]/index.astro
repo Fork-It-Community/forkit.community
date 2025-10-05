@@ -96,10 +96,10 @@ const endDate =
     : "";
 
 const talks: eventDetails = {
-  startTime: talk.__schedule?.startTime,
-  duration: talk.__schedule?.duration,
-  title: talk.data.title,
-  location: talk.__schedule?.location,
+  event_startTime: talk.__schedule?.startTime,
+  event_duration: talk.__schedule?.duration,
+  event_title: talk.data.title,
+  event_location: talk.__schedule?.location,
 };
 ---
 
@@ -198,8 +198,9 @@ const talks: eventDetails = {
           {
             event.data.status === "published" &&
               dayjs().isBefore(event.data.date) &&
-              talks.startTime &&
-              !talks.duration && (
+              talks.event_startTime &&
+              !talks.event_duration &&
+               (
                 <Button size="xs" asChild>
                   <a rel="nofollow" href={getGoogleCalendarNewEventUrl(talks)}>
                     <SiGooglecalendar />
