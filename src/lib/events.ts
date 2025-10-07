@@ -18,10 +18,10 @@ export function isEventPublished(
 }
 
 export interface eventDetails {
-  event_startTime: Date | undefined;
-  event_duration: number | undefined;
-  event_title: string | undefined;
-  event_location: string | undefined;
+  startTime: Date | undefined;
+  duration: number | undefined;
+  title: string | undefined;
+  location: string | undefined;
 }
 
 function toGoogleCalendarDate(date: Date) {
@@ -29,13 +29,13 @@ function toGoogleCalendarDate(date: Date) {
 }
 
 export function getGoogleCalendarNewEventUrl(talk: eventDetails) {
-  const start = new Date(talk.event_startTime || "");
-  const end = new Date(start.getTime() + (talk.event_duration || 0) * 60000);
+  const start = new Date(talk.startTime || "");
+  const end = new Date(start.getTime() + (talk.duration || 0) * 60000);
   const eventUrl =
     `https://calendar.google.com/calendar/render?action=TEMPLATE` +
-    `&text=${encodeURIComponent(talk.event_title || "")}` +
+    `&text=${encodeURIComponent(talk.title || "")}` +
     `&dates=${toGoogleCalendarDate(start)}/${toGoogleCalendarDate(end)}` +
-    `&location=${encodeURIComponent(talk.event_location || "")}`;
+    `&location=${encodeURIComponent(talk.location || "")}`;
   return eventUrl;
 }
 
