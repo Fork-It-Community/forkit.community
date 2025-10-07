@@ -1,0 +1,77 @@
+---
+import {
+  FOR_KIDS_NEWSLETTER_LINK,
+  getSocialsItems,
+  FOR_KIDS_WHATSAPP_LINK,
+} from "@/content/socials";
+import { cn } from "@/lib/utils-client";
+import { buttonVariants } from "@/components/ui/button";
+import { LuMail, LuMessageCircle } from "react-icons/lu";
+---
+
+<div
+  class="mx-auto max-w-screen-md bg-black/40 px-6 py-12 md:p-16 lg:rounded-lg"
+>
+  <div class="flex flex-col items-center gap-4 md:flex-col md:p-10">
+    <div class="flex-1 space-y-2 text-center">
+      <h2
+        class="text-balance font-heading text-2xl font-medium uppercase tracking-widest"
+      >
+        Restez connectés
+      </h2>
+      <p class="max-w-lg text-balance text-xs tracking-wider opacity-60">
+        Suivez nous sur les réseaux sociaux ou rejoignez notre newsletter dédiée
+        à Fork it! For Kids pour rester au courant des nouveaux événements !
+      </p>
+    </div>
+
+    <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-0">
+      {
+        getSocialsItems("primary").map(({ icon: Icon, ...social }) => (
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href={social.href}
+            class="flex items-center gap-2 p-2 opacity-60 transition hover:text-white hover:opacity-100"
+          >
+            <span class="text-lg">
+              <Icon />
+            </span>
+            <span class="text-sm uppercase tracking-wide">{social.label}</span>
+          </a>
+        ))
+      }
+    </div>
+    <div class="flex flex-col items-center gap-4 sm:flex-row">
+      <a
+        class={cn(
+          buttonVariants({
+            size: "lg",
+            variant: "default",
+          }),
+          "flex w-fit gap-1",
+        )}
+        href={FOR_KIDS_NEWSLETTER_LINK}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <LuMail /> Rejoignez la newsletter For Kids
+      </a>
+
+      <a
+        class={cn(
+          buttonVariants({
+            size: "lg",
+            variant: "default",
+          }),
+          "flex w-fit gap-1",
+        )}
+        href={FOR_KIDS_WHATSAPP_LINK}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <LuMessageCircle /> Rejoignez le Whatsapp
+      </a>
+    </div>
+  </div>
+</div>

@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils-client";
 import TiltedCard from "@/components/TiltedCard";
 import { getSocialsItems } from "@/content/socials";
 import ForKidsEventCard from "@/components/ForKidsEventCard/index.astro";
+import ForKidsStayTuned from "@/components/ForKidsStayTuned/index.astro";
 import { t } from "@/i18n";
 import { SEO } from "astro-seo";
 
@@ -77,7 +78,9 @@ const pastForKidsEvents = await getPastForKidsEvents();
         </div>
       )
     }
-
+    <div class="p-4">
+      <ForKidsStayTuned />
+    </div>
     {
       !!pastForKidsEvents.length && (
         <div class="mx-auto w-full max-w-screen-sm px-4">

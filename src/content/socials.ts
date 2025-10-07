@@ -95,6 +95,12 @@ export const SOCIALS_TYPE_MAP = {
 export const GLOBAL_NEWSLETTER_LINK =
   "https://7dca2c80.sibforms.com/serve/MUIFACNrQwiH7V08ltOYZJGzrh-InrxkJyIqX--5MK_ju3OUx4e9obvACfjo6B1h3HciGVkC6ksErKgvwQHrdLfLpLCq73srDU5vUrCPubh3UaD10lTNebVYU7Dv-8X6QBUM5V9qgLyEcz8EKgYqd3zSCINpfcymQJcI7KwNAVZsoIKEtlEuLqwc0zOdNs-AdoFZemFS7ZS0HplO";
 
+export const FOR_KIDS_NEWSLETTER_LINK =
+  "https://7dca2c80.sibforms.com/serve/MUIFAF4lBlcqY1YSNjXGicH9V4mlM17ZJJukvfyws_lpby7sSIZDRjR7GQgoWki1Xsympeji8jMEaEyi5Z0qlWrLlgJfGdlZAcsTySeZCHz5LNpiOE-s4jw0pBpPp8AvKhy10zDJtJi8HB0jQHIqbqPeftorZYxkFs65gNwk1Y47gpNu8jtqLwY9-oVuKXLjKghVsUgqU-gyBI8R";
+
+export const FOR_KIDS_WHATSAPP_LINK =
+  "https://chat.whatsapp.com/BcXf26yAcg27dGcTXyYvfl?mode=wwt";
+
 export const CHANNELS_TYPE_MAP = {
   newsletter: LuMail,
   whatsapp: LuMessageCircle,
