@@ -18,6 +18,10 @@ import Prose from "@/components/Prose/index.astro";
 import Sponsors from "@/components/Sponsors/index.astro";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
+import { getGoogleCalendarNewEventUrl } from "@/lib/events.ts";
+import type { eventDetails } from "@/lib/events.ts";
+import { SiGooglecalendar } from "react-icons/si";
+import { Button } from "@/components/ui/button";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -90,6 +94,13 @@ const endDate =
         .add(schedule?.duration, "minutes")
         .toISOString()
     : "";
+
+const talks: eventDetails = {
+  event_startTime: talk.__schedule?.startTime,
+  event_duration: talk.__schedule?.duration,
+  event_title: talk.data.title,
+  event_location: talk.__schedule?.location,
+};
 ---
 
 <EventSubPageLayout event={event}>
@@ -183,6 +194,19 @@ const endDate =
                 {talk.__schedule?.location}
               </span>
             )
+          }
+          {
+            event.data.status === "published" &&
+              dayjs().isBefore(event.data.date) &&
+              talks.event_startTime &&
+              !talks.event_duration &&
+               (
+                <Button size="xs" asChild>
+                  <a rel="nofollow" href={getGoogleCalendarNewEventUrl(talks)}>
+                    <SiGooglecalendar />
+                  </a>
+                </Button>
+              )
           }
         </div>
         <h1 lang={lang(talk.data.contentLanguage)}>{talk.data.title}</h1>
