@@ -19,7 +19,7 @@ import Sponsors from "@/components/Sponsors/index.astro";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { getGoogleCalendarNewEventUrl } from "@/lib/events.ts";
-import type { eventDetails } from "@/lib/events.ts";
+import type { EventDetails } from "@/lib/events.ts";
 import { SiGooglecalendar } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 
@@ -95,7 +95,7 @@ const endDate =
         .toISOString()
     : "";
 
-const talkDetails: eventDetails = {
+const talkDetails: EventDetails = {
   startTime: talk.__schedule?.startTime,
   duration: talk.__schedule?.duration,
   title: talk.data.title,

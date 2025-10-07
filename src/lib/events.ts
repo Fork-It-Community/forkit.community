@@ -17,7 +17,7 @@ export function isEventPublished(
   return status !== "draft";
 }
 
-export interface eventDetails {
+export interface EventDetails {
   startTime: Date | undefined;
   duration: number | undefined;
   title: string | undefined;
@@ -28,7 +28,7 @@ function toGoogleCalendarDate(date: Date) {
   return date.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
 }
 
-export function getGoogleCalendarNewEventUrl(talk: eventDetails) {
+export function getGoogleCalendarNewEventUrl(talk: EventDetails) {
   const start = new Date(talk.startTime || "");
   const end = new Date(start.getTime() + (talk.duration || 0) * 60000);
   const eventUrl =
