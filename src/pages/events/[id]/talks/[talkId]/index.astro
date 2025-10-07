@@ -19,7 +19,7 @@ import Sponsors from "@/components/Sponsors/index.astro";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { getGoogleCalendarNewEventUrl } from "@/lib/events.ts";
-import type { eventDetails } from "@/lib/events.ts";
+import type { EventDetails } from "@/lib/events.ts";
 import { SiGooglecalendar } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 
@@ -95,11 +95,11 @@ const endDate =
         .toISOString()
     : "";
 
-const talks: eventDetails = {
-  event_startTime: talk.__schedule?.startTime,
-  event_duration: talk.__schedule?.duration,
-  event_title: talk.data.title,
-  event_location: talk.__schedule?.location,
+const talkDetails: EventDetails = {
+  startTime: talk.__schedule?.startTime,
+  duration: talk.__schedule?.duration,
+  title: talk.data.title,
+  location: talk.__schedule?.location,
 };
 ---
 
@@ -198,11 +198,13 @@ const talks: eventDetails = {
           {
             event.data.status === "published" &&
               dayjs().isBefore(event.data.date) &&
-              talks.event_startTime &&
-              !talks.event_duration &&
-               (
+              talkDetails.startTime &&
+              talkDetails.duration && (
                 <Button size="xs" asChild>
-                  <a rel="nofollow" href={getGoogleCalendarNewEventUrl(talks)}>
+                  <a
+                    rel="nofollow"
+                    href={getGoogleCalendarNewEventUrl(talkDetails)}
+                  >
                     <SiGooglecalendar />
                   </a>
                 </Button>
