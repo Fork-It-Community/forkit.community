@@ -140,7 +140,7 @@ export default async function ({
                           position: "absolute",
                           bottom: 20,
                           right: 20,
-                          width: 48,
+                          width: 54,
                           borderRadius: 4,
                           boxShadow: `
                               0 0 0 8px rgba(42, 43, 43, 0.7),
