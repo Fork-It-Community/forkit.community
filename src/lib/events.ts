@@ -5,7 +5,7 @@ import {
   getEntry,
   type CollectionEntry,
 } from "astro:content";
-import { match } from "ts-pattern";
+import { match, P } from "ts-pattern";
 import { entries, isEmpty, isNullish } from "remeda";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
@@ -61,6 +61,18 @@ export async function eventWithComputed<
       : []
   ).filter((i) => !!i);
 
+  const speakers = (
+    await Promise.all(
+      talks.flatMap(
+        (talk) =>
+          talk.data.speakers?.map(async (speaker) => {
+            if (!speaker) return;
+            return await getEntry("people", speaker.id.id);
+          }) ?? [],
+      ),
+    )
+  ).filter((i) => !!i);
+
   return {
     ...event,
     data: {
@@ -70,6 +82,7 @@ export async function eventWithComputed<
         city,
         country,
         talks,
+        speakers,
       },
     },
   };
@@ -197,7 +210,7 @@ export async function getEvent(id: CollectionEntry<"events">["id"]) {
 }
 
 export async function getEventNavItems(id: string) {
-  const event = await getEvent(id);
+  const event = await getEventWithComputed(id);
 
   if (!event) return [];
 
@@ -224,7 +237,7 @@ export async function getEventNavItems(id: string) {
       href: `${route}#schedule`,
       label: "Schedule",
     },
-    ...(event.data.speakers?.length
+    ...(event.data._computed.speakers?.length
       ? [
           {
             href: `${route}#speakers`,
@@ -321,12 +334,12 @@ export function getEventDisplayType(
 
 function personWasInEvent(
   person: CollectionEntry<"people">,
-  event: CollectionEntry<"events">,
+  event: EventComputed,
 ) {
   return (
     event.data.organizers?.some((organizer) => organizer.id === person.id) ||
     event.data.volunteers?.some((volunteer) => volunteer.id === person.id) ||
-    event.data.speakers?.some((speaker) => speaker.id === person.id)
+    event.data._computed.speakers?.some((speaker) => speaker.id === person.id)
   );
 }
 
@@ -394,7 +407,7 @@ export function getEventCtaTypes(event: CollectionEntry<"events">) {
 }
 
 export function getPersonRolesInEvent(
-  event: CollectionEntry<"events">,
+  event: EventComputed,
   person: CollectionEntry<"people">,
 ) {
   const ROLE_MAPPINGS = {
@@ -406,7 +419,12 @@ export function getPersonRolesInEvent(
   const roles = new Set<(typeof ROLE_MAPPINGS)[keyof typeof ROLE_MAPPINGS]>();
 
   for (const [key, role] of entries(ROLE_MAPPINGS)) {
-    if (event.data[key]?.some((p) => p.id === person.id)) {
+    const people = match(key)
+      .with("speakers", (k) => event.data._computed[k])
+      .with(P._, (k) => event.data[k])
+      .exhaustive();
+
+    if (people?.some((p) => p.id === person.id)) {
       roles.add(role);
     }
   }

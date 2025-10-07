@@ -30,7 +30,7 @@ ${event.data._computed.name} ${match(event.data.date)
       )
       .otherwise(
         () => "",
-      )} place on ${dayjs(event.data.date).format("DD/MM/YYYY")} to listen to ${event.data.speakers?.length ? `${event.data.speakers?.length} ` : ""}speakers at ${
+      )} place on ${dayjs(event.data.date).format("DD/MM/YYYY")} to listen to ${event.data._computed.speakers?.length ? `${event.data._computed.speakers?.length} ` : ""}speakers at ${
       event.data.location?.name
     }
 
@@ -93,9 +93,9 @@ ${(
 };
 
 const displaySpeakers = async (event: EventWithComputed) => {
-  if (!event.data.speakers) return "";
+  if (!event.data._computed.speakers) return "";
 
-  const speakers = await getEntries(event.data.speakers ?? []);
+  const speakers = await getEntries(event.data._computed.speakers ?? []);
 
   return `## Speakers
 

@@ -116,12 +116,6 @@ const zEventBase = ({ image }: SchemaContext) =>
           }),
         )
         .optional(),
-      speakers: z
-        .array(reference("people"))
-        .optional()
-        .describe(
-          "Collection of people to be added in addition to the schedule",
-        ),
       eventStatus: z.enum([
         "EventCancelled",
         "EventMovedOnline",
