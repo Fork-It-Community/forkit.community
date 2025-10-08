@@ -13,4 +13,5 @@ export const zCountry = ({ image }: SchemaContext) =>
     organizers: z.array(reference("people")).optional().default([]),
     flag: image().optional(),
     channels: z.array(zChannel()).optional(),
+    eventVibesImages: z.array(image()).length(6).optional(),
   });
