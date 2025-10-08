@@ -15,6 +15,7 @@ const ROUTES_CONFIG = {
     ":id": {
       "assets": {
         ":__image.:__type": {},
+        "_cfp-cover": {},
         "_og-image": {},
         "_qrcode-bg": {},
         "_qrcode": {},
