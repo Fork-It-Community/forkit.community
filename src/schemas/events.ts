@@ -13,7 +13,7 @@ export const zEventBasicInfo = ({ image }: SchemaContext) =>
       })
       .optional(),
     excerpt: z.string().optional(),
-    image: zMediaImage({ image }),
+    image: zMediaImage({ image }).optional(),
     status: z.enum([
       "draft",
       "published-without-date",

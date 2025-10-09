@@ -6,7 +6,7 @@ export type City = z.infer<ReturnType<typeof zCity>>;
 export const zCity = ({ image }: SchemaContext) =>
   z.object({
     name: z.string(),
-    cover: zMediaImage({ image }),
+    cover: zMediaImage({ image }).optional(),
     country: reference("countries"),
     location: z.object({
       lat: z.number(),
