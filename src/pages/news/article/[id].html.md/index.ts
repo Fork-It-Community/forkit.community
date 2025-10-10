@@ -1,8 +1,9 @@
 import type { ROUTES } from "@/routes.gen";
-
 import type { ExtractParams } from "@bearstudio/lunalink";
 import type { APIRoute } from "astro";
-import { getCollection, type CollectionEntry } from "astro:content";
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import { experimental_AstroContainer } from "astro/container";
+import mdxServer from "@astrojs/mdx/server.js";
 
 export const GET: APIRoute<
   ExtractParams<(typeof ROUTES.news)[":page"]["__path"]>
@@ -15,42 +16,31 @@ export const GET: APIRoute<
   }
 
   return new Response(
-    `${getArticleTitle(article)} 
-    \n${getArticleContent(article)}`,
+    `${getArticleTitle(article)}\n\n${await getContent(article)}`,
+    {
+      headers: { "Content-Type": "text/markdown; charset=utf-8" },
+    },
   );
 };
+
 export async function getStaticPaths() {
   const news = await getCollection("news");
-
-  return news.map((article) => ({
-    params: { id: article.id },
-  }));
+  return news.map((article) => ({ params: { id: article.id } }));
 }
 
 export const getArticleTitle = (article: CollectionEntry<"news">) => {
   return `# ${article.data.title}`;
 };
 
-export const getArticleContent = (article: CollectionEntry<"news">) => {
-  if (!article.body) return;
+export const getContent = async (article: CollectionEntry<"news">) => {
+  const { Content } = await render(article);
 
-  return `${stripMdxContent(article.body)}`;
+  const container = await experimental_AstroContainer.create();
+
+  container.addServerRenderer({
+    renderer: mdxServer,
+    name: "",
+  });
+
+  return await container.renderToString(Content);
 };
-
-export function stripMdxContent(input: string) {
-  let output = input;
-
-  // Remove import / export
-  output = output.replace(/^\s*(?:import|export)\b.*$/gm, "");
-
-  // Remove components
-  output = output.replace(/<([A-Z][\w.]*)\b[^>]*>[\s\S]*?<\/\1>/g, "");
-
-  // Clean line break
-  output = output
-    .replace(/[ \t]+\n/g, "\n")
-    .replace(/\n{3,}/g, "\n\n")
-    .trim();
-
-  return output;
-}
