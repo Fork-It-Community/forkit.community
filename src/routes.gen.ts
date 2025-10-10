@@ -101,7 +101,8 @@ const ROUTES_CONFIG = {
           ":__image.:__type": {},
           "_og-image": {}
         }
-      }
+      },
+      ":id.html.md": {}
     },
     "rss.xml": {}
   },
