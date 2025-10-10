@@ -8,6 +8,7 @@ import { getEventData } from "./_utils";
 import { LogoIcon } from "@/components/LogoIcon";
 import { CfpCoverNoFlag } from "@/generated-assets/components/CfpCoverNoFlag";
 import worldImage from "@/assets/images/world.png";
+import { getCoverImage } from "@/lib/events";
 
 export const config: AssetImageConfig = {
   width: 1080,
@@ -19,15 +20,17 @@ export default async function cfpCover({ params }: { params: { id: string } }) {
   const flag = event.data._computed.country?.data.flag;
 
   const noFlagImage = await getAstroImageBase64(worldImage);
-  if (!flag)
+  if (!flag) {
     return (
       <Frame {...config} style={{ padding: 128 }}>
         <CfpCoverNoFlag image={noFlagImage} config={config} />
       </Frame>
     );
+  }
 
+  const cover = await getCoverImage("events", event.id);
   const eventflag = await getAstroImageBase64(flag);
-  const postCover = await getAstroImageBase64(event.data.image.media);
+  const postCover = await getAstroImageBase64(cover.media);
 
   return (
     <Frame {...config} style={{ padding: 128 }}>
@@ -92,7 +95,8 @@ export default async function cfpCover({ params }: { params: { id: string } }) {
               borderColor: "rgba(0,0,0,0.9)",
               borderWidth: 4,
               borderStyle: "solid",
-              filter: "blur(5px)",
+              filter: "blur(4px)",
+              backdropFilter: "blur(4px)",
               borderRadius: 20,
               position: "absolute",
               inset: 0,
@@ -106,7 +110,8 @@ export default async function cfpCover({ params }: { params: { id: string } }) {
               height: 82 * 2,
               color: COLORS.primary,
               inset: 0,
-              margin: 30,
+              margin: 40,
+              zIndex: 10,
             }}
           />
         </div>
