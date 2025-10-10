@@ -25,6 +25,7 @@ if (!event) {
   return new Response(null, { status: 404 });
 }
 const imagesSrc = getEventAssetsSources(event);
+const promotionalVideo = event.data.promotionalVideo;
 ---
 
 <EventSubPageLayout event={event}>
@@ -68,6 +69,45 @@ const imagesSrc = getEventAssetsSources(event);
         >
         so we can prioritize its development.
       </p>
+      {
+        promotionalVideo && (
+          <div
+            class={cn("flex flex-col", promotionalVideo.thumbnail && "gap-2")}
+          >
+            <h2 class="flex-1 font-heading text-lg">
+              Download the event promotional video
+            </h2>
+
+            {promotionalVideo.thumbnail ? (
+              <a
+                href={promotionalVideo.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Image
+                  alt={
+                    promotionalVideo.thumbnail.alt ??
+                    "Promotional video thumbnail"
+                  }
+                  src={promotionalVideo.thumbnail.image}
+                  width={promotionalVideo.thumbnail.image.width}
+                  height={promotionalVideo.thumbnail.image.height}
+                />
+              </a>
+            ) : (
+              <a
+                href={promotionalVideo.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm text-primary underline"
+              >
+                Find it here
+              </a>
+            )}
+          </div>
+        )
+      }
+
       {
         imagesSrc.map((src) =>
           import.meta.env.DEV ? (
