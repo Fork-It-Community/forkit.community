@@ -192,6 +192,17 @@ const zEventBase = ({ image }: SchemaContext) =>
         .optional(),
       subPages: z.array(reference("eventsSubPages")).optional(),
       sponsoringLevels: z.array(z.string()).optional(),
+      promotionalVideo: z
+        .object({
+          href: z.string().url(),
+          thumbnail: z
+            .object({
+              image: image(),
+              alt: z.string(),
+            })
+            .optional(),
+        })
+        .optional(),
     }),
   );
 
