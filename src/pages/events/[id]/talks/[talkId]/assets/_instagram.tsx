@@ -112,7 +112,9 @@ export default async function ({
               {speakersImages.map(
                 ({ speakerImage: imgSrc, speakerFlag: flagSrc }, index) => {
                   const size = speakersImages.length > 1 ? 192 : 256;
-                  return flagSrc ? (
+                  const displayFlags =
+                    event.data.marketing?.withFlags && flagSrc;
+                  return displayFlags ? (
                     <div
                       key={index}
                       style={{
