@@ -1,7 +1,11 @@
 import { LogoIcon } from "@/components/LogoIcon";
+import type { AssetImageConfig } from "@/generated-assets/image";
 import { COLORS } from "@/generated-assets/theme";
 
-export const CfpCoverNoFlag = (props: { image: string; config: any }) => {
+export const CfpCoverNoFlag = (props: {
+  image: string;
+  config: AssetImageConfig;
+}) => {
   return (
     <div
       style={{
@@ -11,7 +15,6 @@ export const CfpCoverNoFlag = (props: { image: string; config: any }) => {
         left: 0,
         width: props.config.width,
         height: props.config.height,
-        objectFit: "cover",
         justifyContent: "center",
         alignItems: "center",
       }}
@@ -21,6 +24,9 @@ export const CfpCoverNoFlag = (props: { image: string; config: any }) => {
         alt=""
         style={{
           position: "absolute",
+          inset: 0,
+          width: "100%",
+          objectFit: "cover",
         }}
       />
 
@@ -31,6 +37,7 @@ export const CfpCoverNoFlag = (props: { image: string; config: any }) => {
           color: COLORS.primary,
           inset: 0,
           margin: 30,
+          zIndex: 10,
         }}
       />
     </div>
