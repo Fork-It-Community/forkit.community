@@ -1,11 +1,14 @@
 import { LogoIcon } from "@/components/LogoIcon";
-import type { AssetImageConfig } from "@/generated-assets/image";
+import {
+  getAstroImageBase64,
+  type AssetImageConfig,
+} from "@/generated-assets/image";
 import { COLORS } from "@/generated-assets/theme";
+import worldImage from "@/assets/images/world.png";
 
-export const CfpCoverNoFlag = (props: {
-  image: string;
-  config: AssetImageConfig;
-}) => {
+export const CfpCoverNoFlag = async (props: { config: AssetImageConfig }) => {
+  const noFlagImage = await getAstroImageBase64(worldImage);
+
   return (
     <div
       style={{
@@ -20,13 +23,14 @@ export const CfpCoverNoFlag = (props: {
       }}
     >
       <img
-        src={props.image}
+        src={noFlagImage}
         alt=""
         style={{
           position: "absolute",
           inset: 0,
           width: "100%",
           objectFit: "cover",
+          zIndex: 1,
         }}
       />
 

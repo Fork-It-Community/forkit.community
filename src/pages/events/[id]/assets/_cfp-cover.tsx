@@ -7,7 +7,6 @@ import { COLORS } from "@/generated-assets/theme";
 import { getEventData } from "./_utils";
 import { LogoIcon } from "@/components/LogoIcon";
 import { CfpCoverNoFlag } from "@/generated-assets/components/CfpCoverNoFlag";
-import worldImage from "@/assets/images/world.png";
 import { getCoverImage } from "@/lib/events";
 
 export const config: AssetImageConfig = {
@@ -19,15 +18,16 @@ export default async function cfpCover({ params }: { params: { id: string } }) {
   const event = await getEventData(params.id);
   const flag = event.data._computed.country?.data.flag;
 
-  const noFlagImage = await getAstroImageBase64(worldImage);
   if (!flag) {
+    // because of a type issue, calling first then display (await component)
+    const noFlagElement = await CfpCoverNoFlag({ config });
+
     return (
       <Frame {...config} style={{ padding: 128 }}>
-        <CfpCoverNoFlag image={noFlagImage} config={config} />
+        {noFlagElement}
       </Frame>
     );
   }
-
   const cover = await getCoverImage("events", event.id);
   const eventflag = await getAstroImageBase64(flag);
   const postCover = await getAstroImageBase64(cover.media);
