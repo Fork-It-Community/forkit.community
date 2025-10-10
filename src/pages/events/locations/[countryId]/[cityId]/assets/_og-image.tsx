@@ -11,6 +11,7 @@ import {
 } from "@/pages/events/locations/[countryId]/[cityId]/assets/_utils";
 import type { ExtractParams } from "@bearstudio/lunalink";
 import type { ROUTES } from "@/routes.gen";
+import { getCoverImage } from "@/lib/events";
 
 export const config: AssetImageConfig = {
   width: 1920,
@@ -26,7 +27,8 @@ export default async function ({
 }) {
   const city = await getCityData(params.cityId);
   const country = await getCountryData(city.data.country.id);
-  const postCover = await getAstroImageBase64(city.data.cover.media);
+  const coverImage = await getCoverImage("cities", params.cityId);
+  const postCover = await getAstroImageBase64(coverImage.media);
 
   return (
     <Frame {...config} style={{ padding: 128 }}>

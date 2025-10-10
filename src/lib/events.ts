@@ -4,11 +4,13 @@ import {
   getEntries,
   getEntry,
   type CollectionEntry,
+  type CollectionKey,
 } from "astro:content";
 import { match, P } from "ts-pattern";
 import { entries, isEmpty, isNullish } from "remeda";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
+import defaultImage from "@/assets/images/events.jpeg";
 
 export function isEventPublished(
   status?: CollectionEntry<"events">["data"]["status"],
@@ -72,11 +74,12 @@ export async function eventWithComputed<
       ),
     )
   ).filter((i) => !!i);
-
+  const coverImage = await getCoverImage("events", event.id);
   return {
     ...event,
     data: {
       ...event.data,
+      image: coverImage,
       _computed: {
         name: `${city?.data.name}, ${country?.data.name}, ${event.data.date.getFullYear()}`,
         city,
@@ -454,3 +457,34 @@ export function without<T extends CollectionEntry<"events">>(
 export function getTalksWithVOD() {
   return getCollection("talks", (talk) => talk.data.vod?.youtubeId);
 }
+
+export const getCoverImage = async (
+  collection: Extract<CollectionKey, "events" | "cities">,
+  id: CollectionEntry<"events">["id"] | CollectionEntry<"cities">["id"],
+) => {
+  const image = {
+    media: defaultImage,
+    alt: "Fork it Community's",
+  };
+  return await match(collection)
+    .with("events", async () => {
+      const event = await getEntry("events", id);
+      const city = event
+        ? await getEntry("cities", event.data.city.id)
+        : undefined;
+      const country = city
+        ? await getEntry("countries", city.data.country.id)
+        : undefined;
+      return (
+        event?.data.image ?? city?.data.cover ?? country?.data.cover ?? image
+      );
+    })
+    .with("cities", async () => {
+      const city = await getEntry("cities", id);
+      const country = city
+        ? await getEntry("countries", city.data.country.id)
+        : undefined;
+      return city?.data.cover ?? country?.data.cover ?? image;
+    })
+    .exhaustive();
+};
