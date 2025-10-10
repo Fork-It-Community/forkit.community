@@ -596,7 +596,7 @@ const ctaEventMetadata = {
     )
   }
 
-  <EventVibes />
+  <EventVibes countryId={event.data._computed.country?.id ?? ""} />
 
   {event.data.faq && <FAQ client:load faq={event.data.faq} />}
 
