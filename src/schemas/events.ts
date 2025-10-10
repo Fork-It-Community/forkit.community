@@ -192,15 +192,20 @@ const zEventBase = ({ image }: SchemaContext) =>
         .optional(),
       subPages: z.array(reference("eventsSubPages")).optional(),
       sponsoringLevels: z.array(z.string()).optional(),
-      promotionalVideo: z
+      marketing: z
         .object({
-          href: z.string().url(),
-          thumbnail: z
-            .object({
-              image: image(),
-              alt: z.string(),
-            })
-            .optional(),
+          videos: z.array(
+            z.object({
+              title: z.string(),
+              href: z.string().url(),
+              thumbnail: z
+                .object({
+                  image: image(),
+                  alt: z.string(),
+                })
+                .optional(),
+            }),
+          ),
         })
         .optional(),
     }),
