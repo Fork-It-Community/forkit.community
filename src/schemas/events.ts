@@ -192,6 +192,11 @@ const zEventBase = ({ image }: SchemaContext) =>
         .optional(),
       subPages: z.array(reference("eventsSubPages")).optional(),
       sponsoringLevels: z.array(z.string()).optional(),
+      marketing: z
+        .object({
+          withFlags: z.boolean().optional().default(false),
+        })
+        .optional(),
     }),
   );
 
