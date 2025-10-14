@@ -1,11 +1,15 @@
 ---
+import { getCountryData } from "@/pages/events/locations/[countryId]/assets/_utils";
 import { Image } from "astro:assets";
-import image1 from "./image-1.jpg";
-import image2 from "./image-2.jpg";
-import image3 from "./image-3.jpg";
-import image4 from "./image-4.jpg";
-import image5 from "./image-5.jpg";
-import image6 from "./image-6.jpg";
+import type { CollectionEntry } from "astro:content";
+import { DEFAULT_EVENT_VIBES_IMAGES } from "@/content/eventVibes";
+interface Props {
+  countryId: CollectionEntry<"countries">["id"];
+}
+const { countryId } = Astro.props;
+const images =
+  (await getCountryData(countryId)).data.eventVibesImages ??
+  DEFAULT_EVENT_VIBES_IMAGES;
 ---
 
 <div class="relative flex flex-col gap-8 py-24">
@@ -24,7 +28,7 @@ import image6 from "./image-6.jpg";
   <div class="grid w-full grid-cols-3 gap-1 md:grid-cols-5">
     <div class="col-span-2 row-span-2 aspect-square bg-background">
       <Image
-        src={image1}
+        src={images[0]}
         alt=""
         width={1200}
         height={1200}
@@ -33,7 +37,7 @@ import image6 from "./image-6.jpg";
     </div>
     <div class="aspect-square bg-background">
       <Image
-        src={image2}
+        src={images[1]}
         alt=""
         width={600}
         height={600}
@@ -42,7 +46,7 @@ import image6 from "./image-6.jpg";
     </div>
     <div class="aspect-square bg-background">
       <Image
-        src={image3}
+        src={images[2]}
         alt=""
         width={600}
         height={600}
@@ -51,7 +55,7 @@ import image6 from "./image-6.jpg";
     </div>
     <div class="bg-background max-md:aspect-square md:row-span-2">
       <Image
-        src={image4}
+        src={images[3]}
         alt=""
         width={1200}
         height={1200}
@@ -60,7 +64,7 @@ import image6 from "./image-6.jpg";
     </div>
     <div class="aspect-square bg-background">
       <Image
-        src={image5}
+        src={images[4]}
         alt=""
         width={600}
         height={600}
@@ -69,7 +73,7 @@ import image6 from "./image-6.jpg";
     </div>
     <div class="aspect-square bg-background">
       <Image
-        src={image6}
+        src={images[5]}
         alt=""
         width={600}
         height={600}
