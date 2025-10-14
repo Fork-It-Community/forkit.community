@@ -12,7 +12,7 @@ export const GET: APIRoute<
   const article = news.find((article) => article.id === params.id);
 
   if (!article) {
-    return new Response(`Article not found`);
+    return new Response("Article not found", { status: 404 });
   }
 
   return new Response(
