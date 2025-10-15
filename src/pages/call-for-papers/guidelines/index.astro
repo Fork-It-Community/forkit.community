@@ -6,6 +6,11 @@ import Prose from "@/components/Prose/index.astro";
 import { getUpcomingEventsWithOpenCfp } from "@/lib/events";
 import EventsList from "@/components/EventsList/index.astro";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
+import cfpguidelines from "@/assets/guidelines/cfp-guidelines.png";
+import callForPaper from "@/assets/guidelines/sumbit-proposal.png";
+import { Image } from "astro:assets";
 
 const upcomingEventsWithOpenCfp = await getUpcomingEventsWithOpenCfp();
 ---
@@ -13,54 +18,78 @@ const upcomingEventsWithOpenCfp = await getUpcomingEventsWithOpenCfp();
 <MainLayout>
   <SEO
     slot="seo"
-    title="Call for papers submission guidelines"
-    description="Step-by-step guidelines for event speakers who wish to submit a Call for Papers proposal and speak at Forkit Community events"
+    title="Call for Papers Submission Guidelines"
+    description="Simple step-by-step guide for anyone who wants to share their story or talk at a Fork it! community event."
   />
 
   <div class="mx-auto w-full max-w-screen-sm px-4">
     <MainPageTitle
-      title="How to prepare and submit a CFP"
-      subtitle="Become a Forkit Speaker: Submission Guide & Best Practices"
+      title="How to Prepare and Submit a CFP"
+      subtitle="Become a Fork it! Speaker and Share What You've Learned"
     />
-    <dv class="flex flex-col gap-8">
+
+    <div class="flex flex-col gap-8">
       <section class="flex flex-col gap-24">
         <Prose>
           <p>
-            This guide will help you navigate the Call for Papers process and
-            submit a proposal that clearly communicates your ideas.<br />whether
-            you're a first-time speaker or a seasoned presenter this guide is
-            for you.
+            Sharing what you've learned helps others grow and that's what Fork
+            it! is all about. This page walks you through how to prepare and
+            submit your Call for Papers (CFP) proposal in a few simple steps.
+          </p>
+          <p>
+            Whether it's your first time speaking or you've been on stage
+            before, this article will help you clearly present your ideas and
+            submit a proposal that stands out.
           </p>
         </Prose>
       </section>
 
-      <section class="flex flex-col gap-24">
+      <section class="flex flex-col gap-12">
         <Prose>
-          <h2 class="mb-2">Where to Find active call for papers:</h2>
-          <p>
-            All upcoming Fork it! events with an open Call for Papers are listed
-            on our
-            <a
-              href="https://conference-hall.io"
-              class="text-primary no-underline hover:underline"
-              target="_blank"
-              rel="noreferrer">Events page</a
-            >. We encourage potential speakers to regularly check this page to
-            discover opportunities in their region or the list of events with
-            open CFPs below. <br />
-            If there are no open CFPs in your area yet, you can still submit a proposal
-            through
-            <a
-              href="https://conference-hall.io/fork-it-meetup-worldwide"
-              class="text-primary no-underline hover:underline"
-              target="_blank"
-              rel="noreferrer">Fork it! Meetup - Worldwide</a
-            > portal. Just indicate your preferred location and topic, and we'll
-            take your proposal into consideration as soon as an event is planned
-            near you.
+          <h2>Where to Find CFPs</h2>
+          <p class="mb-3">
+            Check all open Call for Papers (CFPs) for upcoming events:
           </p>
+          <ul class="mb-4 space-y-2">
+            <li>
+              <strong>🌎 Worldwide:</strong>{" "}
+              <a
+                href="https://conference-hall.io/fork-it-meetup-worldwide"
+                class="text-primary no-underline hover:underline"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Submit your talk here
+              </a>{" "}
+              share your preferred topic and location. When a new meetup is organized
+              near you, we'll contact you!
+            </li>
+            <li>
+              <strong>📅 Upcoming Events:</strong>{" "}
+              <a
+                href={lunalink(ROUTES.events.__path, {})}
+                class="text-primary no-underline hover:underline"
+                target="_blank"
+                rel="noreferrer"
+              >
+                See open CFPs here
+              </a>{" "}
+              check if a CFP is currently open or coming soon.
+            </li>
+          </ul>
+          <p class="text-sm text-gray-600">
+            To save time, here's the <strong
+              >list of upcoming events with an open CFP</strong
+            > below 👇
+          </p>
+          {
+            !upcomingEventsWithOpenCfp.length && (
+              <div class="text-balance rounded-lg bg-black/40 p-4 text-center tracking-wider opacity-80">
+                No CFPs are currently open for upcoming events. Check back soon!
+              </div>
+            )
+          }
         </Prose>
-
         {
           !!upcomingEventsWithOpenCfp.length && (
             <div class="mx-auto w-full max-w-screen-lg">
@@ -72,191 +101,149 @@ const upcomingEventsWithOpenCfp = await getUpcomingEventsWithOpenCfp();
             </div>
           )
         }
-
-        <Prose>
-          <h2 class="mb-2">What to Look For in a CFP Description</h2>
-          <p>
-            Each event's CFP will include essential information that you need to
-            carefully consider before preparing your submission. Key details
-            typically covered include:
-          </p>
-          <ul>
-            <li>
-              <strong>Submission Deadlines:</strong> Know the exact date and time
-              by which proposals must be submitted to be considered.
-            </li>
-            <li>
-              <strong>Event Date and Location:</strong> Be sure the event timing
-              and venue work for you.
-            </li>
-            <li>
-              <strong>Additional Guidelines:</strong> These may include expectations
-              about content, style, or how to handle co-speakers.
-            </li>
-          </ul>
-
-          <p>
-            <strong class="text-warning">Why This Matters: </strong>Reviewing
-            the CFP details ensures your proposal meets the event's criteria and
-            aligns with the audience's expectations, increasing its relevance
-            and chance of acceptance.
-          </p>
-        </Prose>
       </section>
+
       <section>
         <Prose>
-          <h2 class="mb-4">How to Submit a Proposal</h2>
-          <div>
-            <img
-              src="/guidelines/proposal_submit_screentshot.png"
-              alt="Proposel submit screenshot"
-              width={640}
-              height={98}
-              class="mb-3 mt-0 w-full object-cover"
+          <h2>How to Submit Your Proposal</h2>
+
+          <div class="mb-12">
+            <p class="text-sm text-gray-600">
+              This is how the event page looks — click the <strong
+                >"Call for Paper”</strong
+              > button to start.
+            </p>
+            <Image
+              src={callForPaper}
+              alt="Full page screenshot of event with CFP button highlighted"
+              class="h-auto w-full rounded-md object-cover shadow-md"
             />
           </div>
           <p>
-            To submit your proposal, start by clicking the “Submit a Proposal”
-            button on the event's Call for Papers page. This will open a
-            structured four-step submission form designed to guide you through
-            the entire process smoothly.
+            Click “Submit a Proposal” on the event's CFP page to open a simple
+            4-step form. It guides you through everything you need to share
+            about your talk.
           </p>
-          <p>
-            Each step of the form captures essential details to help organizers
-            understand your topic, background, and how your talk fits into the
-            event. Even if you're submitting for the first time, the process is
-            simple and speaker-friendly.
-          </p>
-          <p>Here's what to expect in each step:</p>
+          <Image
+            src={cfpguidelines}
+            alt="Proposel submit screenshot"
+            width={640}
+            height={98}
+            class="mb-3 mt-0 w-full object-cover"
+          />
+
           <ol>
             <li>
-              <strong>Your Proposal</strong>
+              <strong>Step 1 - Your Proposal</strong>
               <ul>
                 <li>
-                  <strong>Title:</strong> Keep it short, clear, and engaging. A strong
-                  title gives your talk visibility and appeal.
+                  <strong>Title:</strong> Short, clear, and catchy — make people
+                  curious to learn more.
                 </li>
                 <li>
-                  <strong>Abstract:</strong> A concise summary of what your talk
-                  is about. Think of this as the “pitch” that will appear in the
-                  event program. Markdown is supported.
+                  <strong>Abstract:</strong> A 2-3 sentence summary of what you'll
+                  cover and what attendees will gain.
                 </li>
                 <li>
-                  <strong>Level:</strong> Choose the appropriate level of difficulty
-                  and experience: <span class="rounded bg-white/20 px-2"
-                    >Beginner</span
-                  >, <span class="rounded bg-white/20 px-2">Intermediate</span>, <span
-                    class="rounded bg-white/20 px-2">Advanced</span
-                  >.<br />This helps organizers match your talk with the right
-                  audience and build a balanced agenda.
+                  <strong>Level:</strong> Beginner, Intermediate, or Advanced — this
+                  helps balance the event program.
                 </li>
                 <li>
-                  <strong>Languages:</strong> Indicate the languages you'll be presenting
-                  in (e.g., English, French).
+                  <strong>Language:</strong> Let us know which language you'll present
+                  in.
                 </li>
                 <li>
-                  <strong>References:</strong> Include any relevant links to blog
-                  posts, videos, slides, or past talks. Markdown is supported.
+                  <strong>References:</strong> Add links to previous talks, videos,
+                  or blog posts if you have them.
                 </li>
               </ul>
             </li>
+
             <li>
-              <strong>Speaker Information</strong>
+              <strong>Step 2 - Speaker Info</strong>
               <ul>
                 <li>
-                  <strong>Biography:</strong> A short introduction about you, your
-                  background, and what you do. Markdown is supported.
+                  <strong>Bio:</strong> A few lines about who you are, what you do,
+                  and why this topic excites you.
                 </li>
                 <li>
-                  <strong>Co-speakers (optional):</strong> If you're presenting with
-                  someone else, you can invite them here. Once they accept the invite,
-                  they'll be automatically linked to the proposal.
+                  <strong>Co-speakers:</strong> Add collaborators if you're presenting
+                  together. Once they accept, they'll be linked to your proposal
+                  automatically.
                 </li>
               </ul>
             </li>
+
             <li>
-              <strong>Proposal tracks</strong>
+              <strong>Step 3 - Tracks & Format</strong>
               <ul>
                 <li>
-                  <strong>Select proposal formats:</strong> Choose your talk's duration
-                  from the preset options (15, 30, 45 minutes, or 1 hour+), and if
-                  none fit, select “Other” and specify your preferred time in a message
-                  to organizers for further discussion.
+                  <strong>Duration:</strong> Choose 15, 30, or 45 minutes — or “Other”
+                  if you'd like to suggest a different format.
                 </li>
                 <li>
-                  <strong>Select proposal categories:</strong> Select the proposal
-                  category that best fits your talk—Real Life Feedback for sharing
-                  experiences, Technical Presentation for tech deep dives or demos,
-                  or Other if none of these apply.
+                  <strong>Category:</strong> Pick what fits best — Real Life Feedback,
+                  Technical Presentation, or Other.
                 </li>
               </ul>
             </li>
+
             <li>
-              <strong>Submission</strong>
+              <strong>Step 4 - Review & Submit</strong>
               <ul>
                 <li>
-                  Review all your information carefully, confirm your choices,
-                  and submit your proposal to complete the process.
+                  Double-check your info, then hit submit! You'll get an email
+                  confirmation once it's received.
                 </li>
               </ul>
             </li>
           </ol>
         </Prose>
       </section>
+
       <section>
-        <Prose>
-          <h2 class="mb-2">Tips for a Great Proposal</h2>
-          <p>
-            Crafting a compelling proposal is key to getting selected as a
-            speaker. Here are some proven tips to help you present your ideas
-            clearly, engage the reviewers, and maximize your chances of being
-            accepted. Whether you're a first-time speaker or a seasoned
-            presenter, these tips will help you stand out and deliver value to
-            the community.
-          </p>
-          <div>
-            <ul>
-              <li>
-                <strong>Be Clear and Concise:</strong> Your title and abstract are
-                often the first things reviewers and attendees see. Make sure they
-                clearly convey what your talk is about and what the audience will
-                gain. Avoid jargon or vague phrases, and focus on the core message.
-              </li>
-              <li>
-                <strong>Structure Your Proposal Thoughtfully:</strong> Outline what
-                attendees can expect. Briefly describe the flow of your talk—introduction,
-                key points, and conclusion or takeaways. A well-structured proposal
-                shows you've thought through your content.
-              </li>
-              <li>
-                <strong>Highlight Your Expertise:</strong> Use the biography section
-                to introduce yourself and establish credibility. Share your background,
-                relevant experience, and what makes you passionate about the topic.
-              </li>
-              <li>
-                <strong>Prepare for questions:</strong> All standard talk formats
-                include time for questions. Think about potential audience questions
-                and how you might address them, it shows readiness and confidence.
-              </li>
-            </ul>
-          </div>
-        </Prose>
         <Prose class="pt-4">
-          <div>
-            <p>
-              We hope this guide has helped you feel confident and prepared to
-              submit your talk. Fork it! is built on community, honesty, and
-              real stories, your experience and perspective matter. Whether
-              you're a first-time speaker or a seasoned presenter, we're excited
-              to hear from you.<br /><br />Don't overthink it, if you have
-              something valuable to share, submit it. The community is waiting
-              to learn from you.
-            </p>
-          </div>
+          <h2>After You Submit</h2>
+          <p>
+            Once you've submitted, our review team will go through all
+            proposals. You'll hear back within a few weeks. If selected, we'll
+            reach out with next steps and speaker resources.
+          </p>
+          <p>
+            Don't stress about perfection Fork it! is built on sharing real
+            stories, honest lessons, and the things you've learned along the
+            way. If you've got something worth sharing, we'd love to hear it.
+          </p>
         </Prose>
       </section>
-    </dv>
+      <Prose>
+        <h2>Tips for a Great Proposal</h2>
+        <p>
+          You don't need to be a pro speaker to share something valuable. These
+          quick tips can help your submission shine:
+        </p>
+        <ul>
+          <li>
+            <strong>✨ Be clear:</strong> Keep your abstract simple and focused on
+            what attendees will learn.
+          </li>
+          <li>
+            <strong>🧩 Structure your story:</strong> Outline your flow — intro,
+            key ideas, and takeaways.
+          </li>
+          <li>
+            <strong>💬 Be yourself:</strong> Authentic experiences and real lessons
+            resonate more than perfect slides.
+          </li>
+          <li>
+            <strong>🙋‍♀️ Expect questions:</strong> Think ahead about what the audience
+            might ask — it shows confidence and preparation.
+          </li>
+        </ul>
+      </Prose>
+    </div>
   </div>
+
   <div class="py-8 md:py-12">
     <JoinTheCommunity />
   </div>
