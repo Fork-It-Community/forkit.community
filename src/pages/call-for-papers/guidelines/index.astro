@@ -47,32 +47,28 @@ const upcomingEventsWithOpenCfp = await getUpcomingEventsWithOpenCfp();
       <section class="flex flex-col gap-12">
         <Prose>
           <h2>Where to Find CFPs</h2>
-          <p class="mb-3">
-            Check all open Call for Papers (CFPs) for upcoming events:
-          </p>
           <ul class="mb-4 space-y-2">
             <li>
-              <strong>🌎 Worldwide:</strong>{" "}
               <a
                 href="https://conference-hall.io/fork-it-meetup-worldwide"
                 class="text-primary no-underline hover:underline"
                 target="_blank"
                 rel="noreferrer"
               >
-                Submit your talk here
-              </a>{" "}
-              share your preferred topic and location. When a new meetup is organized
-              near you, we'll contact you!
+                🌎 Fork it! Meetups - Worldwide:
+              </a>
+              CFP is <strong class="text-success">always open</strong> 💡<br />
+              You can submit your talk anytime, just share your talk and location.
+              When a new meetup is organized near you, we'll contact you!
             </li>
             <li>
-              <strong>📅 Upcoming Events:</strong>{" "}
               <a
                 href={lunalink(ROUTES.events.__path, {})}
                 class="text-primary no-underline hover:underline"
                 target="_blank"
                 rel="noreferrer"
               >
-                See open CFPs here
+                📅 Upcoming Events
               </a>{" "}
               check if a CFP is currently open or coming soon.
             </li>
