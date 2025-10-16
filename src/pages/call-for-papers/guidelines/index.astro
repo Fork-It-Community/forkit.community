@@ -1,0 +1,246 @@
+---
+import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
+import { SEO } from "astro-seo";
+import Prose from "@/components/Prose/index.astro";
+import { getUpcomingEventsWithOpenCfp } from "@/lib/events";
+import EventsList from "@/components/EventsList/index.astro";
+import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
+import cfpguidelines from "@/assets/guidelines/cfp-guidelines.png";
+import callForPaper from "@/assets/guidelines/sumbit-proposal.png";
+import { Image } from "astro:assets";
+
+const upcomingEventsWithOpenCfp = await getUpcomingEventsWithOpenCfp();
+---
+
+<MainLayout>
+  <SEO
+    slot="seo"
+    title="Call for Papers Submission Guidelines"
+    description="Simple step-by-step guide for anyone who wants to share their story or talk at a Fork it! community event."
+  />
+
+  <div class="mx-auto w-full max-w-screen-sm px-4">
+    <MainPageTitle
+      title="How to Prepare and Submit a CFP"
+      subtitle="Become a Fork it! Speaker and Share What You've Learned"
+    />
+
+    <div class="flex flex-col gap-8">
+      <section class="flex flex-col gap-24">
+        <Prose>
+          <p>
+            Sharing what you've learned helps others grow and that's what Fork
+            it! is all about. This page walks you through how to prepare and
+            submit your Call for Papers (CFP) proposal in a few simple steps.
+          </p>
+          <p>
+            Whether it's your first time speaking or you've been on stage
+            before, this article will help you clearly present your ideas and
+            submit a proposal that stands out.
+          </p>
+        </Prose>
+      </section>
+
+      <section class="flex flex-col gap-12">
+        <Prose>
+          <h2>Where to Find CFPs</h2>
+          <ul class="mb-4 space-y-2">
+            <li>
+              <a
+                href="https://conference-hall.io/fork-it-meetup-worldwide"
+                class="text-primary no-underline hover:underline"
+                target="_blank"
+                rel="noreferrer"
+              >
+                🌎 Fork it! Meetups - Worldwide:
+              </a>
+              CFP is <strong class="text-success">always open</strong> 💡<br />
+              You can submit your talk anytime, just share your talk and location.
+              When a new meetup is organized near you, we'll contact you!
+            </li>
+            <li>
+              <a
+                href={lunalink(ROUTES.events.__path, {})}
+                class="text-primary no-underline hover:underline"
+                target="_blank"
+                rel="noreferrer"
+              >
+                📅 Upcoming Events
+              </a>{" "}
+              check if a CFP is currently open or coming soon.
+            </li>
+          </ul>
+          <p class="text-sm text-gray-600">
+            To save time, here's the <strong
+              >list of upcoming events with an open CFP</strong
+            > below 👇
+          </p>
+          {
+            !upcomingEventsWithOpenCfp.length && (
+              <div class="text-balance rounded-lg bg-black/40 p-4 text-center tracking-wider opacity-80">
+                No CFPs are currently open for upcoming events. Check back soon!
+              </div>
+            )
+          }
+        </Prose>
+        {
+          !!upcomingEventsWithOpenCfp.length && (
+            <div class="mx-auto w-full max-w-screen-lg">
+              <EventsList
+                events={upcomingEventsWithOpenCfp}
+                title="Open CFPs for Upcoming Fork it! Events"
+                class="flex-[2]"
+              />
+            </div>
+          )
+        }
+      </section>
+
+      <section>
+        <Prose>
+          <h2>How to Submit Your Proposal</h2>
+
+          <div class="mb-12">
+            <p class="text-sm text-gray-600">
+              This is how the event page looks — click the <strong
+                >"Call for Paper”</strong
+              > button to start.
+            </p>
+            <Image
+              src={callForPaper}
+              alt="Full page screenshot of event with CFP button highlighted"
+              class="h-auto w-full rounded-md object-cover shadow-md"
+            />
+          </div>
+          <p>
+            Click “Submit a Proposal” on the event's CFP page to open a simple
+            4-step form. It guides you through everything you need to share
+            about your talk.
+          </p>
+          <Image
+            src={cfpguidelines}
+            alt="Proposel submit screenshot"
+            width={640}
+            height={98}
+            class="mb-3 mt-0 w-full object-cover"
+          />
+
+          <ol>
+            <li>
+              <strong>Step 1 - Your Proposal</strong>
+              <ul>
+                <li>
+                  <strong>Title:</strong> Short, clear, and catchy — make people
+                  curious to learn more.
+                </li>
+                <li>
+                  <strong>Abstract:</strong> A 2-3 sentence summary of what you'll
+                  cover and what attendees will gain.
+                </li>
+                <li>
+                  <strong>Level:</strong> Beginner, Intermediate, or Advanced — this
+                  helps balance the event program.
+                </li>
+                <li>
+                  <strong>Language:</strong> Let us know which language you'll present
+                  in.
+                </li>
+                <li>
+                  <strong>References:</strong> Add links to previous talks, videos,
+                  or blog posts if you have them.
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <strong>Step 2 - Speaker Info</strong>
+              <ul>
+                <li>
+                  <strong>Bio:</strong> A few lines about who you are, what you do,
+                  and why this topic excites you.
+                </li>
+                <li>
+                  <strong>Co-speakers:</strong> Add collaborators if you're presenting
+                  together. Once they accept, they'll be linked to your proposal
+                  automatically.
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <strong>Step 3 - Tracks & Format</strong>
+              <ul>
+                <li>
+                  <strong>Duration:</strong> Choose 15, 30, or 45 minutes — or “Other”
+                  if you'd like to suggest a different format.
+                </li>
+                <li>
+                  <strong>Category:</strong> Pick what fits best — Real Life Feedback,
+                  Technical Presentation, or Other.
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <strong>Step 4 - Review & Submit</strong>
+              <ul>
+                <li>
+                  Double-check your info, then hit submit! You'll get an email
+                  confirmation once it's received.
+                </li>
+              </ul>
+            </li>
+          </ol>
+        </Prose>
+      </section>
+
+      <section>
+        <Prose class="pt-4">
+          <h2>After You Submit</h2>
+          <p>
+            Once you've submitted, our review team will go through all
+            proposals. You'll hear back within a few weeks. If selected, we'll
+            reach out with next steps and speaker resources.
+          </p>
+          <p>
+            Don't stress about perfection Fork it! is built on sharing real
+            stories, honest lessons, and the things you've learned along the
+            way. If you've got something worth sharing, we'd love to hear it.
+          </p>
+        </Prose>
+      </section>
+      <Prose>
+        <h2>Tips for a Great Proposal</h2>
+        <p>
+          You don't need to be a pro speaker to share something valuable. These
+          quick tips can help your submission shine:
+        </p>
+        <ul>
+          <li>
+            <strong>✨ Be clear:</strong> Keep your abstract simple and focused on
+            what attendees will learn.
+          </li>
+          <li>
+            <strong>🧩 Structure your story:</strong> Outline your flow — intro,
+            key ideas, and takeaways.
+          </li>
+          <li>
+            <strong>💬 Be yourself:</strong> Authentic experiences and real lessons
+            resonate more than perfect slides.
+          </li>
+          <li>
+            <strong>🙋‍♀️ Expect questions:</strong> Think ahead about what the audience
+            might ask — it shows confidence and preparation.
+          </li>
+        </ul>
+      </Prose>
+    </div>
+  </div>
+
+  <div class="py-8 md:py-12">
+    <JoinTheCommunity />
+  </div>
+</MainLayout>

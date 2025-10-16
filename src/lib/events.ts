@@ -488,3 +488,22 @@ export const getCoverImage = async (
     })
     .exhaustive();
 };
+
+export async function getUpcomingEventsWithOpenCfp(limit?: number) {
+  const upcomingEvents = await getUpcomingEvents();
+  const cfpEvents =
+    upcomingEvents
+      .filter(
+        (e) =>
+          e.data.cfp &&
+          (!e.data.cfp?.endDate ||
+            (e.data.cfp?.endDate &&
+              dayjs(e.data.cfp.endDate).isAfter(dayjs()))),
+      )
+      .sort(
+        (event1, event2) =>
+          (event1.data.date?.valueOf() ?? 0) -
+          (event2.data.date?.valueOf() ?? 0),
+      ) ?? [];
+  return cfpEvents.slice(0, limit);
+}
