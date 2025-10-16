@@ -5,6 +5,7 @@ import RootLayout from "@/layouts/RootLayout.astro";
 
 import Footer from "@/components/Footer/index.astro";
 import { Logo } from "@/components/Logo";
+import { Search } from "@/components/Search";
 ---
 
 <RootLayout>
@@ -15,6 +16,7 @@ import { Logo } from "@/components/Logo";
     <a href="/"><Logo className="w-48" /></a>
   </div>
   <div class="flex flex-1 flex-col"><slot /></div>
+  <Search client:load />
   <Footer />
   <MainNavMobile />
 </RootLayout>
