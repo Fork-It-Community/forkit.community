@@ -72,8 +72,6 @@ const marketinVideos = event.data.marketing?.videos;
       {
         marketinVideos?.map((video) => (
           <div class={cn("flex flex-col", video.thumbnail && "gap-2")}>
-            <h2 class="flex-1 font-heading text-lg">{video.title}</h2>
-
             {video.thumbnail ? (
               <a href={video.href} target="_blank" rel="noopener noreferrer">
                 <Image
@@ -88,9 +86,9 @@ const marketinVideos = event.data.marketing?.videos;
                 href={video.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-fit text-sm text-primary underline"
+                class="w-fit text-lg text-primary underline"
               >
-                Find it here
+                {video.title}
               </a>
             )}
           </div>
