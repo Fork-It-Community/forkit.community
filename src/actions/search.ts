@@ -22,7 +22,7 @@ export const search = async () => {
   const events = eventsCollection.map((event) => {
     return {
       slug: lunalink(ROUTES.events[":id"].__path, { id: event.id }),
-      title: `${event.data._computed.name} - ${dayjs(event.data.date).format("MMMM DD,  YYYY")}`,
+      title: `${event.data._computed.name} - ${dayjs(event.data.date).format("MMMM DD, YYYY")}`,
       type: "events",
       metadata: {
         date: event.data.date,

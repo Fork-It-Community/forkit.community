@@ -1,11 +1,9 @@
 import { Search } from "@/components/Search";
-import { cn } from "@/lib/utils-client";
-import { useEffect, useState, type ComponentProps } from "react";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 import { LuSearch } from "react-icons/lu";
 
-export const SearchButton = (
-  props: Pick<ComponentProps<"button">, "className">,
-) => {
+export const SearchButton = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -21,15 +19,9 @@ export const SearchButton = (
 
   return (
     <>
-      <button
-        className={cn(
-          "hidden h-9 w-9 items-center justify-center rounded px-3 py-2 opacity-50 transition hover:bg-black/30 hover:opacity-100 md:flex",
-          props.className,
-        )}
-        onClick={() => setIsOpen(true)}
-      >
+      <Button variant="ghost" size="icon-sm" onClick={() => setIsOpen(true)}>
         <LuSearch />
-      </button>
+      </Button>
       {isOpen && <Search onOpenChange={setIsOpen} />}
     </>
   );

@@ -17,6 +17,7 @@ const buttonVariants = cva(
         link: "text-primary text-sm underline-offset-4 p-0 hover:underline",
         "link-neutral":
           "text-white text-sm underline-offset-4 p-0 hover:underline",
+        ghost: "opacity-50 transition hover:bg-black/30 hover:opacity-100",
       },
       size: {
         default: "h-10 px-4 py-2 text-sm",

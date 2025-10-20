@@ -1,5 +1,6 @@
 import {
   CommandDialog,
+  CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
@@ -7,9 +8,10 @@ import {
 } from "@/components/ui/command";
 import { getMainMenuDesktopItems } from "@/content/menus";
 import { actions } from "astro:actions";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { capitalize, entries, groupBy } from "remeda";
 import MiniSearch, { type SearchResult } from "minisearch";
+import { useSessionStorage } from "@uidotdev/usehooks";
 
 type Data = NonNullable<Awaited<ReturnType<typeof actions.search>>["data"]>;
 type SearchResultWithStoreField = SearchResult &
@@ -17,11 +19,12 @@ type SearchResultWithStoreField = SearchResult &
 
 export const Search = (props: { onOpenChange: (open: boolean) => void }) => {
   const [search, setSearch] = useState<string>("");
-  const [items, setItems] = useState<
-    Array<Pick<Data[number], "title" | "type" | "slug">>
-  >([]);
   const [searchResults, setSearchResults] =
     useState<Array<SearchResultWithStoreField> | null>(null);
+
+  const [items, setItems] = useSessionStorage<
+    Array<Pick<Data[number], "title" | "type" | "slug">>
+  >("forkit.community-search-index", []);
 
   const miniSearchRef = useRef<MiniSearch>(
     new MiniSearch({
@@ -32,15 +35,19 @@ export const Search = (props: { onOpenChange: (open: boolean) => void }) => {
     }),
   );
 
-  const MENUS = [
-    ...getMainMenuDesktopItems("primary"),
-    ...getMainMenuDesktopItems("secondary"),
-  ].map((item) => ({
-    ...item,
-    type: "menu" as const,
-    title: item.label,
-    slug: item.href,
-  }));
+  const MENUS = useMemo(
+    () =>
+      [
+        ...getMainMenuDesktopItems("primary"),
+        ...getMainMenuDesktopItems("secondary"),
+      ].map((item) => ({
+        ...item,
+        type: "menu" as const,
+        title: item.label,
+        slug: item.href,
+      })),
+    [],
+  );
 
   useEffect(() => {
     async function get() {
@@ -54,6 +61,11 @@ export const Search = (props: { onOpenChange: (open: boolean) => void }) => {
       }
 
       miniSearchRef.current.addAll(MENUS);
+    }
+
+    if (items.length) {
+      miniSearchRef.current.addAll(items);
+      return;
     }
 
     if (miniSearchRef.current.documentCount === 0) {
@@ -84,6 +96,9 @@ export const Search = (props: { onOpenChange: (open: boolean) => void }) => {
         onValueChange={handleOnValueChange}
       />
       <CommandList>
+        {search.trim().length !== 0 && searchResults?.length === 0 && (
+          <CommandEmpty>No result for "{search.trim()}"</CommandEmpty>
+        )}
         {entries(searchGrouppedByType).map(([key, values]) => (
           <CommandGroup key={key} heading={capitalize(key)}>
             {values.map((item) => (
