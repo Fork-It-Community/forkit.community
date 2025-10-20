@@ -12,6 +12,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { capitalize, entries, groupBy } from "remeda";
 import MiniSearch, { type SearchResult } from "minisearch";
 import { useSessionStorage } from "@uidotdev/usehooks";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 type Data = NonNullable<Awaited<ReturnType<typeof actions.search>>["data"]>;
 type SearchResultWithStoreField = SearchResult &
@@ -90,6 +91,9 @@ export const Search = (props: { onOpenChange: (open: boolean) => void }) => {
 
   return (
     <CommandDialog open onOpenChange={props.onOpenChange}>
+      <DialogTitle className="sr-only">
+        Search for events, people, news...
+      </DialogTitle>
       <CommandInput
         placeholder={`Search for events, people, news...  (${modifierKey}+k)`}
         value={search}
