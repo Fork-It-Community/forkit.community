@@ -4,6 +4,7 @@ import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 import { ROUTES } from "@/routes.gen";
 import { lunalink } from "@bearstudio/lunalink";
 import { getCollection } from "astro:content";
+import dayjs from "dayjs";
 
 export const search = async () => {
   const eventsCollection = await getEventsCollection();
@@ -15,7 +16,7 @@ export const search = async () => {
     eventsCollection.map(async (event) => {
       return {
         slug: lunalink(ROUTES.events[":id"].__path, { id: event.id }),
-        title: event.data._computed.name,
+        title: `${event.data._computed.name} - ${dayjs(event.data.date).format("MMMM DD,  YYYY")}`,
         type: "events",
         metadata: {
           date: event.data.date,
@@ -67,10 +68,5 @@ export const search = async () => {
     }),
   );
 
-  return {
-    events,
-    news,
-    podcasts,
-    people,
-  };
+  return [...events, ...news, ...podcasts, ...people];
 };
