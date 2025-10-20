@@ -8,8 +8,8 @@ import EventsList from "@/components/EventsList/index.astro";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
-import cfpguidelines from "@/assets/guidelines/cfp-guidelines.png";
-import callForPaper from "@/assets/guidelines/sumbit-proposal.png";
+import cfpguidelines from "@/assets/guidelines/conference-hall-fork-it-malaysia.png";
+import callForPaper from "@/assets/guidelines/submit-proposal.png";
 import { Image } from "astro:assets";
 
 const upcomingEventsWithOpenCfp = await getUpcomingEventsWithOpenCfp();
@@ -19,13 +19,13 @@ const upcomingEventsWithOpenCfp = await getUpcomingEventsWithOpenCfp();
   <SEO
     slot="seo"
     title="Call for Papers Submission Guidelines"
-    description="Simple step-by-step guide for anyone who wants to share their story or talk at a Fork it! community event."
+    description="Step-by-step guide for anyone who wants to share their story or talk at a Fork it! Community event."
   />
 
   <div class="mx-auto w-full max-w-screen-sm px-4">
     <MainPageTitle
       title="How to Prepare and Submit a CFP"
-      subtitle="Become a Fork it! Speaker and Share What You've Learned"
+      subtitle="Become a Fork it! Community Speaker and Share What You've Learned"
     />
 
     <div class="flex flex-col gap-8">
@@ -34,7 +34,7 @@ const upcomingEventsWithOpenCfp = await getUpcomingEventsWithOpenCfp();
           <p>
             Sharing what you've learned helps others grow and that's what Fork
             it! is all about. This page walks you through how to prepare and
-            submit your Call for Papers (CFP) proposal in a few simple steps.
+            submit your Call for Papers (CFP) proposal in a few steps.
           </p>
           <p>
             Whether it's your first time speaking or you've been on stage
@@ -122,7 +122,7 @@ const upcomingEventsWithOpenCfp = await getUpcomingEventsWithOpenCfp();
           </p>
           <Image
             src={cfpguidelines}
-            alt="Proposel submit screenshot"
+            alt="Proposal submit screenshot"
             width={640}
             height={98}
             class="mb-3 mt-0 w-full object-cover"
