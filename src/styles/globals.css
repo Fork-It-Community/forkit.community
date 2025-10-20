@@ -40,6 +40,11 @@
 
     --radius: 0.5rem;
   }
+
+  html,
+  body {
+    color-scheme: dark;
+  }
 }
 
 @layer utilities {

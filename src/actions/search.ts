@@ -7,66 +7,65 @@ import { getCollection } from "astro:content";
 import dayjs from "dayjs";
 
 export const search = async () => {
-  const eventsCollection = await getEventsCollection();
-  const newsCollection = await getNewsCollection();
-  const podcastsCollection = await getPodcastsEpisodesCollection();
-  const peopleCollection = await getCollection("people");
+  const [
+    eventsCollection,
+    newsCollection,
+    podcastsCollection,
+    peopleCollection,
+  ] = await Promise.all([
+    getEventsCollection(),
+    getNewsCollection(),
+    getPodcastsEpisodesCollection(),
+    getCollection("people"),
+  ]);
 
-  const events = await Promise.all(
-    eventsCollection.map(async (event) => {
-      return {
-        slug: lunalink(ROUTES.events[":id"].__path, { id: event.id }),
-        title: `${event.data._computed.name} - ${dayjs(event.data.date).format("MMMM DD,  YYYY")}`,
-        type: "events",
-        metadata: {
-          date: event.data.date,
-        },
-      };
-    }),
-  );
+  const events = eventsCollection.map((event) => {
+    return {
+      slug: lunalink(ROUTES.events[":id"].__path, { id: event.id }),
+      title: `${event.data._computed.name} - ${dayjs(event.data.date).format("MMMM DD,  YYYY")}`,
+      type: "events",
+      metadata: {
+        date: event.data.date,
+      },
+    };
+  });
 
-  const news = await Promise.all(
-    newsCollection.map(async (news) => {
-      return {
-        slug: lunalink(ROUTES.news.article[":id"].__path, { id: news.id }),
-        title: news.data.title,
-        type: "news",
-        metadata: {
-          date: news.data.date,
-        },
-      };
-    }),
-  );
+  const news = newsCollection.map((news) => {
+    return {
+      slug: lunalink(ROUTES.news.article[":id"].__path, { id: news.id }),
+      title: news.data.title,
+      type: "news",
+      metadata: {
+        date: news.data.date,
+      },
+    };
+  });
 
-  const podcasts = await Promise.all(
-    podcastsCollection.map(async (episode) => {
-      return {
-        slug: lunalink(
-          ROUTES.podcasts[":id"].__path,
-          { id: episode.id },
-          { encodeURIComponent: (v) => String(v) },
-        ),
-        title: episode.data.title,
-        type: "podcasts",
-        metadata: {
-          date: episode.data.releaseDate,
-        },
-      };
-    }),
-  );
+  const podcasts = podcastsCollection.map((episode) => {
+    return {
+      slug: lunalink(
+        ROUTES.podcasts[":id"].__path,
+        { id: episode.id },
+        { encodeURIComponent: (v) => String(v) },
+      ),
+      title: episode.data.title,
+      type: "podcasts",
+      metadata: {
+        date: episode.data.releaseDate,
+      },
+    };
+  });
 
-  const people = await Promise.all(
-    peopleCollection.map(async (item) => {
-      return {
-        slug: lunalink(ROUTES.people[":id"].__path, { id: item.id }),
-        title: item.data.name,
-        type: "people",
-        metadata: {
-          avatar: item.data.avatar,
-        },
-      };
-    }),
-  );
+  const people = peopleCollection.map((item) => {
+    return {
+      slug: lunalink(ROUTES.people[":id"].__path, { id: item.id }),
+      title: item.data.name,
+      type: "people",
+      metadata: {
+        avatar: item.data.avatar,
+      },
+    };
+  });
 
   return [...events, ...news, ...podcasts, ...people];
 };
