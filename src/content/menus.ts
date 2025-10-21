@@ -1,6 +1,6 @@
 import { ROUTES } from "@/routes.gen";
 import { lunalink } from "@bearstudio/lunalink";
-import type { FC, ReactNode } from "react";
+import type { FC } from "react";
 import {
   MdHomeFilled,
   MdEvent,
@@ -21,7 +21,7 @@ type MainMenuLevel = "primary" | "secondary";
 
 const MAIN_MENU: Array<{
   icon: FC;
-  label: ReactNode;
+  label: string;
   href: string;
   exact?: boolean;
   scope: MainMenuScope;
@@ -29,7 +29,7 @@ const MAIN_MENU: Array<{
 }> = [
   {
     label: "Home",
-    href: "/",
+    href: lunalink(ROUTES.__path, {}),
     exact: true,
     icon: MdHomeFilled,
     scope: "mobile",
@@ -37,42 +37,42 @@ const MAIN_MENU: Array<{
   },
   {
     label: "Events",
-    href: "/events",
+    href: lunalink(ROUTES.events.__path, {}),
     icon: MdEvent,
     scope: "all",
     level: "primary",
   },
   {
     label: "Podcasts",
-    href: "/podcasts",
+    href: lunalink(ROUTES.podcasts.__path, {}),
     icon: MdPodcasts,
     scope: "all",
     level: "primary",
   },
   {
     label: "News",
-    href: "/news",
+    href: lunalink(ROUTES.news.__path, {}),
     icon: MdFeed,
     scope: "all",
     level: "primary",
   },
   {
     label: "Videos",
-    href: "/resources/videos",
+    href: lunalink(ROUTES.resources.videos.__path, {}),
     icon: MdOndemandVideo,
     scope: "all",
     level: "secondary",
   },
   {
     label: "Community members",
-    href: "/people",
+    href: lunalink(ROUTES.people.__path, {}),
     icon: MdBadge,
     scope: "all",
     level: "secondary",
   },
   {
     label: "Conferences",
-    href: "/conferences",
+    href: lunalink(ROUTES.conferences.__path, {}),
     icon: MdMic,
     scope: "all",
     level: "secondary",
@@ -100,7 +100,7 @@ const MAIN_MENU: Array<{
   },
   {
     label: "About Fork it!",
-    href: "/about",
+    href: lunalink(ROUTES.about.__path, {}),
     icon: MdInfo,
     scope: "all",
     level: "secondary",

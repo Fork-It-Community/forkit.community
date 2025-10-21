@@ -17,6 +17,7 @@ const buttonVariants = cva(
         link: "text-primary text-sm underline-offset-4 p-0 hover:underline",
         "link-neutral":
           "text-white text-sm underline-offset-4 p-0 hover:underline",
+        ghost: "opacity-50 transition hover:bg-black/30 hover:opacity-100",
       },
       size: {
         default: "h-10 px-4 py-2 text-sm",
@@ -24,6 +25,10 @@ const buttonVariants = cva(
         sm: "h-9 rounded-md px-3 text-sm",
         lg: "h-11 rounded-md px-6 text-sm",
         icon: "h-10 w-10",
+        "icon-xs":
+          "size-6 rounded-sm text-xs [&_svg:not([class*='size-'])]:size-3",
+        "icon-sm": "size-8",
+        "icon-lg": "size-10",
       },
     },
     compoundVariants: [
