@@ -13,6 +13,7 @@ import { capitalize, entries, groupBy } from "remeda";
 import MiniSearch, { type SearchResult } from "minisearch";
 import { useSessionStorage } from "@uidotdev/usehooks";
 import { DialogTitle } from "@radix-ui/react-dialog";
+import { CommandLoading } from "cmdk";
 
 type Data = NonNullable<Awaited<ReturnType<typeof actions.search>>["data"]>;
 type SearchResultWithStoreField = SearchResult &
@@ -23,9 +24,9 @@ export const Search = (props: { onOpenChange: (open: boolean) => void }) => {
   const [searchResults, setSearchResults] =
     useState<Array<SearchResultWithStoreField> | null>(null);
 
-  const [items, setItems] = useSessionStorage<
-    Array<Pick<Data[number], "title" | "type" | "slug">>
-  >("forkit.community-search-index", []);
+  const [items, setItems] = useSessionStorage<Array<
+    Pick<Data[number], "title" | "type" | "slug">
+  > | null>("forkit.community-search-index", null);
 
   const miniSearchRef = useRef<MiniSearch>(
     new MiniSearch({
@@ -61,10 +62,12 @@ export const Search = (props: { onOpenChange: (open: boolean) => void }) => {
         return;
       }
 
+      console.error("Failed to fetch search data:", error);
       miniSearchRef.current.addAll(MENUS);
+      setItems(MENUS);
     }
 
-    if (items.length) {
+    if (items?.length) {
       miniSearchRef.current.addAll(items);
       return;
     }
@@ -85,7 +88,7 @@ export const Search = (props: { onOpenChange: (open: boolean) => void }) => {
   };
 
   const searchGrouppedByType = groupBy(
-    search.trim().length === 0 ? items : (searchResults ?? []),
+    search.trim().length === 0 ? (items ?? []) : (searchResults ?? []),
     (item) => item.type,
   );
 
@@ -102,6 +105,11 @@ export const Search = (props: { onOpenChange: (open: boolean) => void }) => {
       <CommandList>
         {search.trim().length !== 0 && searchResults?.length === 0 && (
           <CommandEmpty>No result for "{search.trim()}"</CommandEmpty>
+        )}
+        {items === null && (
+          <CommandLoading className="py-6 text-center text-sm text-muted-foreground">
+            Loading data...
+          </CommandLoading>
         )}
         {entries(searchGrouppedByType).map(([key, values]) => (
           <CommandGroup key={key} heading={capitalize(key)}>
