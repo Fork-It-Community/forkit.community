@@ -12,6 +12,8 @@ import astrobook from "astrobook";
 
 import bearstudiotypedRoutes from "@bearstudio/astro-typed-routes";
 
+import sentry from "@sentry/astro";
+
 // https://astro.build/config
 export default defineConfig({
   site: getSiteUrl(),
@@ -38,6 +40,11 @@ export default defineConfig({
         context: "server",
         access: "secret",
         optional: false,
+      }),
+      SENTRY_AUTH_TOKEN: envField.string({
+        context: "server",
+        access: "secret",
+        optional: true,
       }),
     },
   },
@@ -70,6 +77,13 @@ export default defineConfig({
       title: "Components | Fork it! Community",
     }),
     bearstudiotypedRoutes(),
+    sentry({
+      dsn: "https://6a0a01bf72307a132c7aa8a8e91577c0@sentry.bearstudio.info/8",
+      sourceMapsUploadOptions: {
+        project: "forkit-community",
+        authToken: process.env.SENTRY_AUTH_TOKEN ?? "",
+      },
+    }),
   ],
 
   adapter: vercel({ isr: true }),
