@@ -12,6 +12,7 @@ import { MdArrowForward } from "react-icons/md";
 import { buttonVariants } from "@/components/ui/button";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
+import forKidsEventImage from "@/assets/images/for-kids-event.jpg";
 
 interface Props {
   forKidsEvent: ForKidsEventComputed;
@@ -37,38 +38,37 @@ const isUpcomingEvent = dayjs(forKidsEvent.data.date)
     className,
   )}
 >
-  {
-    !!forKidsEvent.data.image?.media && (
-      <div
-        class={cn(
-          "pointer-events-none absolute bottom-0 left-0 right-0 top-0 -z-10 overflow-hidden",
-          forKidsEvent.data.status === "cancelled" && "grayscale",
-        )}
-      >
-        <Image
-          src={forKidsEvent.data.image.media}
-          alt=""
-          class={cn(
-            "absolute size-full bg-white/20 object-cover object-center transition duration-500 group-hover:scale-110",
-          )}
-          width={600}
-        />
-        <div
-          class={cn(
-            "absolute size-full bg-gradient-to-r from-black/90 via-black/20",
-            coOrganizers.length && !isUpcomingEvent && "sm:to-black/80",
-          )}
-        />
-        <div
-          class="absolute h-full w-full"
-          style={{
-            backdropFilter: "blur(32px)",
-            maskImage: "linear-gradient(90deg, black 30%, transparent 70%)",
-          }}
-        />
-      </div>
-    )
-  }
+  <div
+    class={cn(
+      "pointer-events-none absolute bottom-0 left-0 right-0 top-0 -z-10 overflow-hidden",
+      forKidsEvent.data.status === "cancelled" && "grayscale",
+    )}
+  >
+    <Image
+      src={forKidsEventImage}
+      alt=""
+      class={cn(
+        "absolute size-full bg-white/20 object-cover object-center transition duration-500 group-hover:scale-110",
+      )}
+      width={600}
+    />
+    <div
+      class={cn(
+        "absolute size-full bg-gradient-to-r from-black/90 via-black/20",
+        coOrganizers.length && !isUpcomingEvent && "sm:to-black/80",
+      )}
+    >
+    </div>
+    <div
+      class="absolute h-full w-full"
+      style={{
+        backdropFilter: "blur(32px)",
+        maskImage: "linear-gradient(90deg, black 30%, transparent 70%)",
+      }}
+    >
+    </div>
+  </div>
+
   <div
     class={cn(
       "flex gap-2 max-sm:flex-col",
