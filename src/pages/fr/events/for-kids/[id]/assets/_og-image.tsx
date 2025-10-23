@@ -6,9 +6,10 @@ import {
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 
-import { getCoverImage, getEventDisplayDate } from "@/lib/events";
 import { getEventData } from "./_utils";
 import { LogoForKids } from "@/components/LogoForKids";
+import coverImage from "@/assets/images/for-kids-event.jpg";
+import { getForKidsEventFrenchDisplayDate } from "@/lib/forKidsEvents";
 
 export const config: AssetImageConfig = {
   width: 1920,
@@ -17,8 +18,7 @@ export const config: AssetImageConfig = {
 
 export default async function ({ params }: { params: { id: string } }) {
   const event = await getEventData(params.id);
-  const coverImage = await getCoverImage("events", params.id);
-  const postCover = await getAstroImageBase64(coverImage.media);
+  const postCover = await getAstroImageBase64(coverImage);
   return (
     <Frame {...config} style={{ padding: 128 }}>
       <BgImage src={postCover} width={config.width} height={config.height} />
@@ -49,7 +49,7 @@ export default async function ({ params }: { params: { id: string } }) {
               marginLeft: -6, // Visual alignment
             }}
           >
-            {getEventDisplayDate(event)}
+            {getForKidsEventFrenchDisplayDate(event.data.date)}
           </div>
           <div
             style={{
