@@ -19,6 +19,8 @@ const ROUTES_CONFIG = {
       "assets": {
         ":__image.:__type": {},
         "_cfp-cover": {},
+        "_d-1-announcement-insta": {},
+        "_d-1-announcement": {},
         "_og-image": {},
         "_qrcode-bg": {},
         "_qrcode": {},
