@@ -47,6 +47,7 @@ const ROUTES_CONFIG = {
           "assets": {
             ":__image.:__type": {},
             "_instagram": {},
+            "_large": {},
             "_square": {}
           }
         }
