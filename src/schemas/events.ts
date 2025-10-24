@@ -195,6 +195,18 @@ const zEventBase = ({ image }: SchemaContext) =>
       marketing: z
         .object({
           withFlags: z.boolean().optional().default(false),
+          videos: z.array(
+            z.object({
+              title: z.string(),
+              href: z.string().url(),
+              thumbnail: z
+                .object({
+                  image: image(),
+                  alt: z.string(),
+                })
+                .optional(),
+            }),
+          ),
         })
         .optional(),
     }),
