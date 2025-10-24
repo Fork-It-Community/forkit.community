@@ -20,8 +20,7 @@ import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { getGoogleCalendarNewEventUrl } from "@/lib/events.ts";
 import type { EventDetails } from "@/lib/events.ts";
-import { SiGooglecalendar } from "react-icons/si";
-import { Button } from "@/components/ui/button";
+import { AddToGoogleCalendar } from "@/components/AddToGoogleCalendar";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -200,14 +199,10 @@ const talkDetails: EventDetails = {
               dayjs().isBefore(event.data.date) &&
               talkDetails.startTime &&
               talkDetails.duration && (
-                <Button size="xs" asChild>
-                  <a
-                    rel="nofollow"
-                    href={getGoogleCalendarNewEventUrl(talkDetails)}
-                  >
-                    <SiGooglecalendar />
-                  </a>
-                </Button>
+                <AddToGoogleCalendar
+                  href={getGoogleCalendarNewEventUrl(talkDetails)}
+                  client:load
+                />
               )
           }
         </div>
