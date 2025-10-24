@@ -1,9 +1,9 @@
 import { Search } from "@/components/Search";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ComponentProps } from "react";
 import { LuSearch } from "react-icons/lu";
 
-export const SearchButton = () => {
+export const SearchButton = (props: ComponentProps<"button">) => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -19,7 +19,12 @@ export const SearchButton = () => {
 
   return (
     <>
-      <Button variant="ghost" size="icon-sm" onClick={() => setIsOpen(true)}>
+      <Button
+        variant="ghost"
+        size="icon-sm"
+        onClick={() => setIsOpen(true)}
+        {...props}
+      >
         <LuSearch />
       </Button>
       {isOpen && <Search onOpenChange={setIsOpen} />}
