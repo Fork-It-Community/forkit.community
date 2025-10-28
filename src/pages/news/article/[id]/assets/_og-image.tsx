@@ -1,14 +1,14 @@
 import { Frame } from "@/generated-assets/components/Frame";
-import {
-  getAstroImageBase64,
-  type AssetImageConfig,
-} from "@/generated-assets/image";
+import { getAstroImageBase64 } from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { Logo } from "@/components/Logo";
 import { getNewsCollection } from "@/lib/news";
 import defaultBackgroundImage from "@/assets/images/news.jpeg";
 import dayjs from "dayjs";
-import { NotFoundAssetError } from "@/generated-assets/api";
+import {
+  NotFoundAssetError,
+  type AssetImageConfig,
+} from "@bearstudio/astro-dynamic-assets";
 
 export const config: AssetImageConfig = {
   width: 1920,

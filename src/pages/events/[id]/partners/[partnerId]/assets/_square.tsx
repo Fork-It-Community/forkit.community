@@ -1,15 +1,15 @@
 import { Frame } from "@/generated-assets/components/Frame";
-import {
-  getAstroImageBase64,
-  type AssetImageConfig,
-} from "@/generated-assets/image";
+import { getAstroImageBase64 } from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate } from "@/lib/events";
 import { getEventData } from "@/pages/events/[id]/assets/_utils";
 import { getEntry } from "astro:content";
-import { NotFoundAssetError } from "@/generated-assets/api";
 import { Logo } from "@/components/Logo";
+import {
+  NotFoundAssetError,
+  type AssetImageConfig,
+} from "@bearstudio/astro-dynamic-assets";
 
 export const config: AssetImageConfig = {
   width: 1080,

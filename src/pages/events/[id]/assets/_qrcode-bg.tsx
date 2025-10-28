@@ -2,7 +2,6 @@ import { Frame } from "@/generated-assets/components/Frame";
 import {
   getAstroImageBase64,
   imageBufferToBase64,
-  type AssetImageConfig,
 } from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
@@ -11,6 +10,7 @@ import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import QRCode from "qrcode";
 import type { APIContext } from "astro";
+import type { AssetImageConfig } from "@bearstudio/astro-dynamic-assets";
 
 export const config: AssetImageConfig = {
   width: 1080,

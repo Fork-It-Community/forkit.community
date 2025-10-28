@@ -1,12 +1,10 @@
 import { Frame } from "@/generated-assets/components/Frame";
-import {
-  getAstroImageBase64,
-  type AssetImageConfig,
-} from "@/generated-assets/image";
+import { getAstroImageBase64 } from "@/generated-assets/image";
 import ticketBg from "./_ticket.png";
 import { getEventData } from "./_utils";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate } from "@/lib/events";
+import type { AssetImageConfig } from "@bearstudio/astro-dynamic-assets";
 
 export const config: AssetImageConfig = {
   width: 1920,

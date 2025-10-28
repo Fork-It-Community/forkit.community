@@ -1,5 +1,5 @@
-import { NotFoundAssetError } from "@/generated-assets/api";
 import { eventWithComputed } from "@/lib/events";
+import { NotFoundAssetError } from "@bearstudio/astro-dynamic-assets";
 import { getEntry } from "astro:content";
 
 export const getEventData = async (id: string) => {

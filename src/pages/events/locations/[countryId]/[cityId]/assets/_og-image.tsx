@@ -1,8 +1,5 @@
 import { Frame } from "@/generated-assets/components/Frame";
-import {
-  getAstroImageBase64,
-  type AssetImageConfig,
-} from "@/generated-assets/image";
+import { getAstroImageBase64 } from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { Logo } from "@/components/Logo";
 import {
@@ -12,6 +9,7 @@ import {
 import type { ExtractParams } from "@bearstudio/lunalink";
 import type { ROUTES } from "@/routes.gen";
 import { getCoverImage } from "@/lib/events";
+import type { AssetImageConfig } from "@bearstudio/astro-dynamic-assets";
 
 export const config: AssetImageConfig = {
   width: 1920,

@@ -1,4 +1,4 @@
-import { type AssetImageConfig } from "@/generated-assets/image";
+import type { AssetImageConfig } from "@bearstudio/astro-dynamic-assets";
 import { ticketsAvailable } from "./_tickets-available";
 
 export const config: AssetImageConfig = {
