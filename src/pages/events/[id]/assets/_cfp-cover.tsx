@@ -1,11 +1,11 @@
 import { Frame } from "@/generated-assets/components/Frame";
-import { getAstroImageBase64 } from "@/generated-assets/image";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventData } from "./_utils";
 import { LogoIcon } from "@/components/LogoIcon";
 import { CfpCoverNoFlag } from "@/generated-assets/components/CfpCoverNoFlag";
 import { getCoverImage } from "@/lib/events";
 import type { AssetImageConfig } from "@bearstudio/astro-dynamic-assets";
+import { getAstroImageBase64 } from "@/lib/astro-dynamic-assets";
 
 export const config: AssetImageConfig = {
   width: 1080,

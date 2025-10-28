@@ -28,4 +28,7 @@ export const dynamicAssets = astroDynamicAssets({
     white: "#FFFFFF",
     background: "#171717",
   },
+  ssr: import.meta.env.SSR,
 });
+
+export const { getAstroImageBase64 } = dynamicAssets;

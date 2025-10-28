@@ -1,5 +1,4 @@
 import { Frame } from "@/generated-assets/components/Frame";
-import { getAstroImageBase64 } from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import peoplePlaceholder from "@/assets/images/people-placeholder.jpeg";
@@ -8,6 +7,7 @@ import { getEventData } from "@/pages/events/[id]/assets/_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 import { getTalkData } from "@/pages/events/[id]/talks/[talkId]/assets/_utils";
 import type { AssetImageConfig } from "@bearstudio/astro-dynamic-assets";
+import { dynamicAssets, getAstroImageBase64 } from "@/lib/astro-dynamic-assets";
 
 export const config: AssetImageConfig = {
   width: 1080,
@@ -22,7 +22,9 @@ export default async function ({
   const event = await getEventData(params.id);
   const talk = await getTalkData(params.talkId);
 
-  const postCover = await getAstroImageBase64(event.data.image.media);
+  const postCover = await dynamicAssets.getAstroImageBase64(
+    event.data.image.media,
+  );
   const coOrganizersLogos = await Promise.all(
     event.__coOrganizers.map(
       async (coOrganiser) =>

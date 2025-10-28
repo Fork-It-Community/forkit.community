@@ -1,11 +1,11 @@
 import { Frame } from "@/generated-assets/components/Frame";
-import { getAstroImageBase64 } from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import peoplePlaceholder from "@/assets/images/people-placeholder.jpeg";
 import { getPersonData } from "@/pages/people/[id]/assets/_utils";
 import { Logo } from "@/components/Logo";
 import type { AssetImageConfig } from "@bearstudio/astro-dynamic-assets";
+import { dynamicAssets } from "@/lib/astro-dynamic-assets";
 
 export const config: AssetImageConfig = {
   width: 1920,
@@ -19,7 +19,7 @@ export default async function ({
 }) {
   const person = await getPersonData(params.id);
 
-  const avatar = await getAstroImageBase64(
+  const avatar = await dynamicAssets.getAstroImageBase64(
     person.data.avatar ?? peoplePlaceholder,
   );
 

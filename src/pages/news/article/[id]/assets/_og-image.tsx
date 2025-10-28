@@ -1,5 +1,4 @@
 import { Frame } from "@/generated-assets/components/Frame";
-import { getAstroImageBase64 } from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { Logo } from "@/components/Logo";
 import { getNewsCollection } from "@/lib/news";
@@ -9,6 +8,7 @@ import {
   NotFoundAssetError,
   type AssetImageConfig,
 } from "@bearstudio/astro-dynamic-assets";
+import { dynamicAssets } from "@/lib/astro-dynamic-assets";
 
 export const config: AssetImageConfig = {
   width: 1920,
@@ -23,7 +23,7 @@ export default async function ({ params }: { params: { id: string } }) {
     throw new NotFoundAssetError();
   }
 
-  const background = await getAstroImageBase64(
+  const background = await dynamicAssets.getAstroImageBase64(
     article.data.featuredImage ?? defaultBackgroundImage,
   );
   return (

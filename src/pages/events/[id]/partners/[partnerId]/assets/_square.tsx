@@ -1,5 +1,4 @@
 import { Frame } from "@/generated-assets/components/Frame";
-import { getAstroImageBase64 } from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate } from "@/lib/events";
@@ -10,6 +9,7 @@ import {
   NotFoundAssetError,
   type AssetImageConfig,
 } from "@bearstudio/astro-dynamic-assets";
+import { getAstroImageBase64 } from "@/lib/astro-dynamic-assets";
 
 export const config: AssetImageConfig = {
   width: 1080,

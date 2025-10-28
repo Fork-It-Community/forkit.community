@@ -1,5 +1,4 @@
 import { Frame } from "@/generated-assets/components/Frame";
-import { getAstroImageBase64 } from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import peoplePlaceholder from "@/assets/images/people-placeholder.jpeg";
@@ -8,6 +7,7 @@ import { getEventData } from "@/pages/events/[id]/assets/_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 import { getTalkData } from "@/pages/events/[id]/talks/[talkId]/assets/_utils";
 import type { AssetImageConfig } from "@bearstudio/astro-dynamic-assets";
+import { dynamicAssets } from "@/lib/astro-dynamic-assets";
 
 export const config: AssetImageConfig = {
   width: 1920,
@@ -22,21 +22,27 @@ export default async function ({
   const event = await getEventData(params.id);
   const talk = await getTalkData(params.talkId);
 
-  const postCover = await getAstroImageBase64(event.data.image.media);
+  const postCover = await dynamicAssets.getAstroImageBase64(
+    event.data.image.media,
+  );
   const coOrganizersLogos = await Promise.all(
     event.__coOrganizers.map(
       async (coOrganiser) =>
-        await getAstroImageBase64(coOrganiser.data.logos.noBgSquare),
+        await dynamicAssets.getAstroImageBase64(
+          coOrganiser.data.logos.noBgSquare,
+        ),
     ),
   );
   const speakersImages = (
     await Promise.all(
       talk.__speakers.map(async (speaker) => {
-        const speakerImage = await getAstroImageBase64(
+        const speakerImage = await dynamicAssets.getAstroImageBase64(
           speaker.data.avatar ?? peoplePlaceholder,
         );
         const flag = speaker.data._computed.country?.data.flag;
-        const speakerFlag = flag ? await getAstroImageBase64(flag) : undefined;
+        const speakerFlag = flag
+          ? await dynamicAssets.getAstroImageBase64(flag)
+          : undefined;
         return {
           speakerImage,
           speakerFlag,
