@@ -10,8 +10,7 @@ import {
   NotFoundAssetError,
   type AssetImageConfig,
 } from "@bearstudio/astro-dynamic-assets";
-import { getAstroImageBase64 } from "@/lib/astro-dynamic-assets";
-
+import DynamicAssets from "@/lib/astro-dynamic-assets";
 export const config: AssetImageConfig = {
   width: 1080,
   height: 1350,
@@ -23,13 +22,17 @@ export default async function ({
   params: { id: string; partnerId: string };
 }) {
   const event = await getEventData(params.id);
-  const postCover = await getAstroImageBase64(event.data.image.media);
+  const postCover = await DynamicAssets.getAstroImageBase64(
+    event.data.image.media,
+  );
 
   const partner = await getEntry("partners", params.partnerId);
   if (!partner) {
     throw new NotFoundAssetError();
   }
-  const partnerLogo = await getAstroImageBase64(partner.data.logos.bgWhite);
+  const partnerLogo = await DynamicAssets.getAstroImageBase64(
+    partner.data.logos.bgWhite,
+  );
 
   return (
     <Frame {...config} style={{ padding: 64 }}>

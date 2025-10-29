@@ -8,8 +8,7 @@ import {
   NotFoundAssetError,
   type AssetImageConfig,
 } from "@bearstudio/astro-dynamic-assets";
-import { dynamicAssets } from "@/lib/astro-dynamic-assets";
-
+import DynamicAssets from "@/lib/astro-dynamic-assets";
 export const config: AssetImageConfig = {
   width: 1920,
   height: 1080,
@@ -23,7 +22,7 @@ export default async function ({ params }: { params: { id: string } }) {
     throw new NotFoundAssetError();
   }
 
-  const background = await dynamicAssets.getAstroImageBase64(
+  const background = await DynamicAssets.getAstroImageBase64(
     article.data.featuredImage ?? defaultBackgroundImage,
   );
   return (

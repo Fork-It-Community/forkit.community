@@ -11,8 +11,7 @@ import {
   imageBufferToBase64,
   type AssetImageConfig,
 } from "@bearstudio/astro-dynamic-assets";
-import { dynamicAssets } from "@/lib/astro-dynamic-assets";
-
+import DynamicAssets from "@/lib/astro-dynamic-assets";
 export const config: AssetImageConfig = {
   width: 1080,
   height: 1080,
@@ -23,7 +22,7 @@ export default async function ({
   site,
 }: { params: { id: string } } & APIContext) {
   const event = await getEventData(params.id);
-  const postCover = await dynamicAssets.getAstroImageBase64(
+  const postCover = await DynamicAssets.getAstroImageBase64(
     event.data.image.media,
   );
   const url = new URL(

@@ -1,6 +1,6 @@
 import { astroDynamicAssets } from "@bearstudio/astro-dynamic-assets";
 
-export const dynamicAssets = astroDynamicAssets({
+export default astroDynamicAssets({
   site: import.meta.env.SITE,
   fonts: [
     {
@@ -22,13 +22,5 @@ export const dynamicAssets = astroDynamicAssets({
       weight: 700,
     },
   ],
-  theme: {
-    primary: "#EBFF11",
-    black: "#000000",
-    white: "#FFFFFF",
-    background: "#171717",
-  },
   ssr: import.meta.env.SSR,
 });
-
-export const { getAstroImageBase64 } = dynamicAssets;

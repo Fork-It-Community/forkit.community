@@ -9,7 +9,7 @@ import {
   NotFoundAssetError,
   type AssetImageConfig,
 } from "@bearstudio/astro-dynamic-assets";
-import { dynamicAssets } from "@/lib/astro-dynamic-assets";
+import DynamicAssets from "@/lib/astro-dynamic-assets";
 
 export const config: AssetImageConfig = {
   width: 1920,
@@ -30,10 +30,10 @@ export default async function ({
     throw new NotFoundAssetError();
   }
 
-  const episodeCover = await dynamicAssets.getAstroImageBase64(
+  const episodeCover = await DynamicAssets.getAstroImageBase64(
     episode.data.cover,
   );
-  const background = await dynamicAssets.getAstroImageBase64(backgroundImage);
+  const background = await DynamicAssets.getAstroImageBase64(backgroundImage);
   return (
     <Frame {...config} style={{ flexDirection: "row", padding: 128 }}>
       <BgImage src={background} width={config.width} height={config.height} />

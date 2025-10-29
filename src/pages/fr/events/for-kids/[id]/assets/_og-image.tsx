@@ -7,8 +7,7 @@ import { LogoForKids } from "@/components/LogoForKids";
 import coverImage from "@/assets/images/for-kids-event.jpg";
 import { getForKidsEventFrenchDisplayDate } from "@/lib/forKidsEvents";
 import type { AssetImageConfig } from "@bearstudio/astro-dynamic-assets";
-import { dynamicAssets } from "@/lib/astro-dynamic-assets";
-
+import DynamicAssets from "@/lib/astro-dynamic-assets";
 export const config: AssetImageConfig = {
   width: 1920,
   height: 1080,
@@ -16,7 +15,7 @@ export const config: AssetImageConfig = {
 
 export default async function ({ params }: { params: { id: string } }) {
   const event = await getEventData(params.id);
-  const postCover = await dynamicAssets.getAstroImageBase64(coverImage);
+  const postCover = await DynamicAssets.getAstroImageBase64(coverImage);
   return (
     <Frame {...config} style={{ padding: 128 }}>
       <BgImage src={postCover} width={config.width} height={config.height} />

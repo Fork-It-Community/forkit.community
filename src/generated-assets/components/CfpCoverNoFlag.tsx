@@ -2,10 +2,9 @@ import { LogoIcon } from "@/components/LogoIcon";
 import { COLORS } from "@/generated-assets/theme";
 import worldImage from "@/assets/images/world.png";
 import type { AssetImageConfig } from "@bearstudio/astro-dynamic-assets";
-import { getAstroImageBase64 } from "@/lib/astro-dynamic-assets";
-
+import DynamicAssets from "@/lib/astro-dynamic-assets";
 export const CfpCoverNoFlag = async (props: { config: AssetImageConfig }) => {
-  const noFlagImage = await getAstroImageBase64(worldImage);
+  const noFlagImage = await DynamicAssets.getAstroImageBase64(worldImage);
 
   return (
     <div

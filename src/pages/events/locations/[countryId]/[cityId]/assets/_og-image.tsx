@@ -9,8 +9,7 @@ import type { ExtractParams } from "@bearstudio/lunalink";
 import type { ROUTES } from "@/routes.gen";
 import { getCoverImage } from "@/lib/events";
 import type { AssetImageConfig } from "@bearstudio/astro-dynamic-assets";
-import { dynamicAssets } from "@/lib/astro-dynamic-assets";
-
+import DynamicAssets from "@/lib/astro-dynamic-assets";
 export const config: AssetImageConfig = {
   width: 1920,
   height: 1080,
@@ -26,7 +25,7 @@ export default async function ({
   const city = await getCityData(params.cityId);
   const country = await getCountryData(city.data.country.id);
   const coverImage = await getCoverImage("cities", params.cityId);
-  const postCover = await dynamicAssets.getAstroImageBase64(coverImage.media);
+  const postCover = await DynamicAssets.getAstroImageBase64(coverImage.media);
 
   return (
     <Frame {...config} style={{ padding: 128 }}>

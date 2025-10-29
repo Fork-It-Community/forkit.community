@@ -5,7 +5,7 @@ import { Logo } from "@/components/Logo";
 import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
 import { getEventData } from "./_utils";
 import type { AssetImageConfig } from "@bearstudio/astro-dynamic-assets";
-import { getAstroImageBase64 } from "@/lib/astro-dynamic-assets";
+import DynamicAssets from "@/lib/astro-dynamic-assets";
 
 export const config: AssetImageConfig = {
   width: 1920,
@@ -14,7 +14,9 @@ export const config: AssetImageConfig = {
 
 export default async function ({ params }: { params: { id: string } }) {
   const event = await getEventData(params.id);
-  const postCover = await getAstroImageBase64(event.data.image.media);
+  const postCover = await DynamicAssets.getAstroImageBase64(
+    event.data.image.media,
+  );
   return (
     <Frame {...config} style={{ padding: 128 }}>
       <BgImage src={postCover} width={config.width} height={config.height} />
