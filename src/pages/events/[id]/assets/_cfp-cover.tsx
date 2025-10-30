@@ -1,13 +1,11 @@
 import { Frame } from "@/generated-assets/components/Frame";
-import {
-  getAstroImageBase64,
-  type AssetImageConfig,
-} from "@/generated-assets/image";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventData } from "./_utils";
 import { LogoIcon } from "@/components/LogoIcon";
 import { CfpCoverNoFlag } from "@/generated-assets/components/CfpCoverNoFlag";
 import { getCoverImage } from "@/lib/events";
+import type { AssetImageConfig } from "@bearstudio/astro-dynamic-assets";
+import DynamicAssets from "@/lib/astro-dynamic-assets";
 
 export const config: AssetImageConfig = {
   width: 1080,
@@ -29,8 +27,8 @@ export default async function cfpCover({ params }: { params: { id: string } }) {
     );
   }
   const cover = await getCoverImage("events", event.id);
-  const eventflag = await getAstroImageBase64(flag);
-  const postCover = await getAstroImageBase64(cover.media);
+  const eventflag = await DynamicAssets.getAstroImageBase64(flag);
+  const postCover = await DynamicAssets.getAstroImageBase64(cover.media);
 
   return (
     <Frame {...config} style={{ padding: 128 }}>
