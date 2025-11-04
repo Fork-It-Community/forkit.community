@@ -10,11 +10,9 @@ import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 import backgroundImage from "@/assets/images/podcasts.jpeg";
 import { COLORS } from "@/generated-assets/theme";
 import { NotFoundAssetError } from "@/generated-assets/api";
+import { OG_IMAGE } from "@/assets/consts";
 
-export const config: AssetImageConfig = {
-  width: 1920,
-  height: 1080,
-};
+export const config: AssetImageConfig = OG_IMAGE;
 
 export default async function ({
   params,

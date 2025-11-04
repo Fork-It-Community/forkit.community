@@ -8,11 +8,9 @@ import { COLORS } from "@/generated-assets/theme";
 import peoplePlaceholder from "@/assets/images/people-placeholder.jpeg";
 import { getPersonData } from "@/pages/people/[id]/assets/_utils";
 import { Logo } from "@/components/Logo";
+import { OG_IMAGE } from "@/assets/consts";
 
-export const config: AssetImageConfig = {
-  width: 1920,
-  height: 1080,
-};
+export const config: AssetImageConfig = OG_IMAGE;
 
 export default async function ({
   params,

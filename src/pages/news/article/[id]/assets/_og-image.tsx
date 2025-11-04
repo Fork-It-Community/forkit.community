@@ -9,11 +9,9 @@ import { getNewsCollection } from "@/lib/news";
 import defaultBackgroundImage from "@/assets/images/news.jpeg";
 import dayjs from "dayjs";
 import { NotFoundAssetError } from "@/generated-assets/api";
+import { OG_IMAGE } from "@/assets/consts";
 
-export const config: AssetImageConfig = {
-  width: 1920,
-  height: 1080,
-};
+export const config: AssetImageConfig = OG_IMAGE;
 
 export default async function ({ params }: { params: { id: string } }) {
   const news = await getNewsCollection();
