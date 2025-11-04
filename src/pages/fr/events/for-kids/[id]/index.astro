@@ -167,6 +167,8 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
             <a
               href={forKidsEvent.data.tickets.link}
               class="flex items-center gap-1"
+              target="_blank"
+              rel="noreferrer"
             >
               {t("events:tickets.available")}
               <MdArrowForward className="group-hover:translate-x-1 transition" />
