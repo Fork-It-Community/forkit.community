@@ -1,9 +1,8 @@
 import type { ROUTES } from "@/routes.gen";
 import type { ExtractParams } from "@bearstudio/lunalink";
 import type { APIRoute } from "astro";
-import { getCollection, render, type CollectionEntry } from "astro:content";
-import { experimental_AstroContainer } from "astro/container";
-import mdxServer from "@astrojs/mdx/server.js";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { mdxToPlainText } from "@/lib/markdown-clean";
 
 export const GET: APIRoute<
   ExtractParams<(typeof ROUTES.news)[":page"]["__path"]>
@@ -33,14 +32,7 @@ export const getArticleTitle = (article: CollectionEntry<"news">) => {
 };
 
 export const getContent = async (article: CollectionEntry<"news">) => {
-  const { Content } = await render(article);
+  const response = await mdxToPlainText(article.body ?? "");
 
-  const container = await experimental_AstroContainer.create();
-
-  container.addServerRenderer({
-    renderer: mdxServer,
-    name: "",
-  });
-
-  return await container.renderToString(Content);
+  return response.text;
 };
