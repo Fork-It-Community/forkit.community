@@ -10,11 +10,9 @@ import { getEventDisplayDate } from "@/lib/events";
 import { getEventData } from "@/pages/events/[id]/assets/_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 import { getTalkData } from "@/pages/events/[id]/talks/[talkId]/assets/_utils";
+import { OG_IMAGE } from "@/assets/consts";
 
-export const config: AssetImageConfig = {
-  width: 1920,
-  height: 1080,
-};
+export const config: AssetImageConfig = OG_IMAGE;
 
 export default async function ({
   params,

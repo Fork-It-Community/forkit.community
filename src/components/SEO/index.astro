@@ -1,4 +1,5 @@
 ---
+import { OG_IMAGE } from "@/assets/consts";
 import { SEO } from "astro-seo";
 import type { ComponentProps } from "astro/types";
 
@@ -47,6 +48,7 @@ const titleDefault = "Fork it! Community | Global Developer Community";
     },
     image: {
       alt: imageAlt ?? ogImageAlt,
+      ...OG_IMAGE,
     },
   }}
   twitter={{

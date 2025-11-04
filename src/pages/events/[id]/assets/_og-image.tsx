@@ -8,11 +8,9 @@ import { COLORS } from "@/generated-assets/theme";
 import { Logo } from "@/components/Logo";
 import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
 import { getEventData } from "./_utils";
+import { OG_IMAGE } from "@/assets/consts";
 
-export const config: AssetImageConfig = {
-  width: 1920,
-  height: 1080,
-};
+export const config: AssetImageConfig = OG_IMAGE;
 
 export default async function ({ params }: { params: { id: string } }) {
   const event = await getEventData(params.id);

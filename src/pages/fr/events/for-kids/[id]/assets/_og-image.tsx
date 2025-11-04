@@ -10,11 +10,9 @@ import { getEventData } from "./_utils";
 import { LogoForKids } from "@/components/LogoForKids";
 import coverImage from "@/assets/images/for-kids-event.jpg";
 import { getForKidsEventFrenchDisplayDate } from "@/lib/forKidsEvents";
+import { OG_IMAGE } from "@/assets/consts";
 
-export const config: AssetImageConfig = {
-  width: 1920,
-  height: 1080,
-};
+export const config: AssetImageConfig = OG_IMAGE;
 
 export default async function ({ params }: { params: { id: string } }) {
   const event = await getEventData(params.id);
