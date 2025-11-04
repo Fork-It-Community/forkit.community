@@ -1,14 +1,11 @@
 import { Frame } from "@/generated-assets/components/Frame";
-import {
-  getAstroImageBase64,
-  type AssetImageConfig,
-} from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
 import { getEventData } from "./_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
-
+import type { AssetImageConfig } from "@bearstudio/astro-dynamic-assets";
+import DynamicAssets from "@/lib/astro-dynamic-assets";
 export const config: AssetImageConfig = {
   width: 1920,
   height: 1080,
@@ -17,11 +14,15 @@ export const config: AssetImageConfig = {
 export function saveTheDate(options: { width: number; height: number }) {
   return async ({ params }: { params: { id: string } }) => {
     const event = await getEventData(params.id);
-    const postCover = await getAstroImageBase64(event.data.image.media);
+    const postCover = await DynamicAssets.getAstroImageBase64(
+      event.data.image.media,
+    );
     const coOrganizersLogos = await Promise.all(
       event.__coOrganizers.map(
         async (coOrganiser) =>
-          await getAstroImageBase64(coOrganiser.data.logos.noBgSquare),
+          await DynamicAssets.getAstroImageBase64(
+            coOrganiser.data.logos.noBgSquare,
+          ),
       ),
     );
 

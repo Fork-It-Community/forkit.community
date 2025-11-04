@@ -1,15 +1,14 @@
 import { Frame } from "@/generated-assets/components/Frame";
-import {
-  getAstroImageBase64,
-  type AssetImageConfig,
-} from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { Logo } from "@/components/Logo";
 import { getNewsCollection } from "@/lib/news";
 import defaultBackgroundImage from "@/assets/images/news.jpeg";
 import dayjs from "dayjs";
-import { NotFoundAssetError } from "@/generated-assets/api";
-
+import {
+  NotFoundAssetError,
+  type AssetImageConfig,
+} from "@bearstudio/astro-dynamic-assets";
+import DynamicAssets from "@/lib/astro-dynamic-assets";
 export const config: AssetImageConfig = {
   width: 1920,
   height: 1080,
@@ -23,7 +22,7 @@ export default async function ({ params }: { params: { id: string } }) {
     throw new NotFoundAssetError();
   }
 
-  const background = await getAstroImageBase64(
+  const background = await DynamicAssets.getAstroImageBase64(
     article.data.featuredImage ?? defaultBackgroundImage,
   );
   return (

@@ -1,4 +1,4 @@
-import { type AssetImageConfig } from "@/generated-assets/image";
+import type { AssetImageConfig } from "@bearstudio/astro-dynamic-assets";
 import { saveTheDate } from "./_save-the-date";
 
 export const config: AssetImageConfig = {

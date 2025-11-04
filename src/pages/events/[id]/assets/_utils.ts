@@ -1,6 +1,8 @@
-import { NotFoundAssetError } from "@/generated-assets/api";
-import { getImageNameFromTsxPath } from "@/generated-assets/image";
 import { eventWithComputed } from "@/lib/events";
+import {
+  getImageNameFromTsxPath,
+  NotFoundAssetError,
+} from "@bearstudio/astro-dynamic-assets";
 import {
   getCollection,
   getEntries,

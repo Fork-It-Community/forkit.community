@@ -1,9 +1,5 @@
 import { Frame } from "@/generated-assets/components/Frame";
-import {
-  getAstroImageBase64,
-  imageBufferToBase64,
-  type AssetImageConfig,
-} from "@/generated-assets/image";
+
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventData } from "./_utils";
@@ -11,7 +7,11 @@ import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import QRCode from "qrcode";
 import type { APIContext } from "astro";
-
+import {
+  imageBufferToBase64,
+  type AssetImageConfig,
+} from "@bearstudio/astro-dynamic-assets";
+import DynamicAssets from "@/lib/astro-dynamic-assets";
 export const config: AssetImageConfig = {
   width: 1080,
   height: 1080,
@@ -22,7 +22,9 @@ export default async function ({
   site,
 }: { params: { id: string } } & APIContext) {
   const event = await getEventData(params.id);
-  const postCover = await getAstroImageBase64(event.data.image.media);
+  const postCover = await DynamicAssets.getAstroImageBase64(
+    event.data.image.media,
+  );
   const url = new URL(
     lunalink(ROUTES.events[":id"].__path, { id: event.id }),
     site,
