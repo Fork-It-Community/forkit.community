@@ -6,8 +6,8 @@ import {
   type CollectionEntry,
   type CollectionKey,
 } from "astro:content";
-import { match, P } from "ts-pattern";
-import { entries, isEmpty, isNullish } from "remeda";
+import { match } from "ts-pattern";
+import { entries, isEmpty, isNonNullish, isNullish } from "remeda";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import defaultImage from "@/assets/images/events.jpeg";
@@ -53,11 +53,11 @@ export async function eventWithComputed<
   const talks = (
     event.data.schedule
       ? await Promise.all(
-          (event.data.schedule?.items ?? []).map(async (item) => {
+          (event.data.schedule?.items ?? []).map((item) => {
             if (!item.slug) {
               return;
             }
-            return await getEntry("talks", item.slug.id);
+            return getEntry("talks", item.slug.id);
           }),
         )
       : []
@@ -69,12 +69,74 @@ export async function eventWithComputed<
         (talk) =>
           talk.data.speakers?.map(async (speaker) => {
             if (!speaker) return;
-            return await getEntry("people", speaker.id.id);
+            const person = await getEntry("people", speaker.id.id);
+
+            if (!person) {
+              return;
+            }
+
+            return {
+              ...person,
+              data: {
+                ...person.data,
+                _computed: {},
+              },
+            };
           }) ?? [],
       ),
     )
   ).filter((i) => !!i);
+
+  const organizers = (
+    await Promise.all(
+      (event.data.organizers ?? []).map(async (organizer) => {
+        if (!organizer.person || !organizer.person.id) {
+          return;
+        }
+
+        const person = await getEntry("people", organizer.person.id);
+
+        if (isNullish(person)) {
+          return;
+        }
+
+        return {
+          ...person,
+          data: {
+            ...person.data,
+            _computed: { role: organizer.role },
+          },
+        };
+      }),
+    )
+  ).filter(isNonNullish);
+
+  const volunteers = (
+    await Promise.all(
+      (event.data.volunteers ?? []).map(async (volunteer) => {
+        if (!volunteer || !volunteer.id) {
+          return;
+        }
+
+        const person = await getEntry("people", volunteer.id);
+
+        if (isNullish(person)) {
+          return;
+        }
+
+        return {
+          ...person,
+          data: {
+            ...person.data,
+            _computed: {},
+          },
+        };
+      }),
+    )
+  ).filter(isNonNullish);
+
   const coverImage = await getCoverImage("events", event.id);
+
   return {
     ...event,
     data: {
@@ -86,6 +148,8 @@ export async function eventWithComputed<
         country,
         talks,
         speakers,
+        organizers,
+        volunteers,
       },
     },
   };
@@ -340,7 +404,9 @@ function personWasInEvent(
   event: EventComputed,
 ) {
   return (
-    event.data.organizers?.some((organizer) => organizer.id === person.id) ||
+    event.data._computed.organizers?.some(
+      (organizer) => organizer.id === person.id,
+    ) ||
     event.data.volunteers?.some((volunteer) => volunteer.id === person.id) ||
     event.data._computed.speakers?.some((speaker) => speaker.id === person.id)
   );
@@ -409,26 +475,50 @@ export function getEventCtaTypes(event: CollectionEntry<"events">) {
   } as const;
 }
 
+const ROLE_MAPPINGS = {
+  organizers: "organizer",
+  volunteers: "volunteer",
+  speakers: "speaker",
+} as const;
+
 export function getPersonRolesInEvent(
   event: EventComputed,
   person: CollectionEntry<"people">,
 ) {
-  const ROLE_MAPPINGS = {
-    organizers: "organizer",
-    volunteers: "volunteer",
-    speakers: "speaker",
-  } as const;
-
-  const roles = new Set<(typeof ROLE_MAPPINGS)[keyof typeof ROLE_MAPPINGS]>();
+  const roles = new Set<string>();
 
   for (const [key, role] of entries(ROLE_MAPPINGS)) {
     const people = match(key)
-      .with("speakers", (k) => event.data._computed[k])
-      .with(P._, (k) => event.data[k])
+      .with("speakers", (k) =>
+        event.data._computed[k].map((i) => ({
+          ...i,
+          type: "speakers" as const,
+        })),
+      )
+      .with("organizers", (k) =>
+        event.data._computed[k].map((i) => ({
+          ...i,
+          type: "organizers" as const,
+        })),
+      )
+      .with("volunteers", (k) =>
+        event.data._computed[k].map((i) => ({
+          ...i,
+          type: "volunteers" as const,
+        })),
+      )
       .exhaustive();
 
-    if (people?.some((p) => p.id === person.id)) {
+    const foundPerson = people.find((p) => p.id === person.id);
+    if (foundPerson) {
       roles.add(role);
+
+      if (
+        foundPerson.type === "organizers" &&
+        foundPerson.data._computed.role
+      ) {
+        roles.add(foundPerson.data._computed.role);
+      }
     }
   }
 

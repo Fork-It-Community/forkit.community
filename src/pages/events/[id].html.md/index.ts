@@ -38,7 +38,9 @@ ${displayVenue(event)}
 
 ${await displaySchedule(event)}
 
-${await displaySpeakers(event)}
+${displaySpeakers(event)}
+
+${displayOrganizers(event)}
 
 ${displayAfterEvent(event)}
 
@@ -92,17 +94,28 @@ ${(
 ).join("\n")}`;
 };
 
-const displaySpeakers = async (event: EventWithComputed) => {
-  if (!event.data._computed.speakers) return "";
-
-  const speakers = await getEntries(event.data._computed.speakers ?? []);
+const displaySpeakers = (event: EventWithComputed) => {
+  if (!event.data._computed.speakers.length) return "";
 
   return `## Speakers
 
-${speakers
+${event.data._computed.speakers
   .map(
     (speaker) =>
       `- [${speaker.data.name}](${lunalink(ROUTES.people[":id.html.md"].__path, { id: speaker.id })})`,
+  )
+  .join("\n")}`;
+};
+
+const displayOrganizers = (event: EventWithComputed) => {
+  if (!event.data._computed.organizers.length) return "";
+
+  return `## Organizers
+
+${event.data._computed.organizers
+  .map(
+    (organizer) =>
+      `- [${organizer.data.name}](${lunalink(ROUTES.people[":id.html.md"].__path, { id: organizer.id })})${organizer.data._computed.role ? `: ${organizer.data._computed.role}` : ""}`,
   )
   .join("\n")}`;
 };
