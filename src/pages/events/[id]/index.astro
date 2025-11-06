@@ -52,6 +52,7 @@ export async function getStaticPaths() {
         .filter(
           (e) =>
             e.id !== event.id &&
+            event.data._computed.city?.id !== undefined &&
             e.data._computed.city?.id === event.data._computed.city?.id &&
             (dayjs(e.data.date).isAfter(dayjs()) ||
               dayjs(e.data.date).isAfter(dayjs().subtract(30, "day"))),
