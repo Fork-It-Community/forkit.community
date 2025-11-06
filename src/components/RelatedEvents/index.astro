@@ -1,0 +1,29 @@
+---
+import EventCard from "@/components/EventCard/index.astro";
+import TiltedCard from "@/components/TiltedCard";
+import type { EventComputed } from "@/lib/events";
+
+interface Props {
+  currentEvent: EventComputed;
+  relatedEvents: EventComputed[];
+}
+
+const { currentEvent, relatedEvents } = Astro.props;
+---
+
+{
+  relatedEvents.length > 0 && currentEvent.data._computed.city?.data.name && (
+    <div class="relative mx-auto flex w-full max-w-screen-lg flex-col gap-8 px-4 py-12 md:py-24">
+      <h2 class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest">
+        More Events in {currentEvent.data._computed.city.data.name}
+      </h2>
+      <div class="grid gap-4 md:grid-cols-3">
+        {relatedEvents.map((event) => (
+          <TiltedCard client:visible>
+            <EventCard event={event} />
+          </TiltedCard>
+        ))}
+      </div>
+    </div>
+  )
+}
