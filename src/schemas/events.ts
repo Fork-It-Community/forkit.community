@@ -23,7 +23,12 @@ export const zEventBasicInfo = ({ image }: SchemaContext) =>
     coOrganizers: z.array(reference("partners")).optional(),
     partners: z.array(reference("partners")).optional(),
     organizers: z
-      .array(reference("people"))
+      .array(
+        z.object({
+          person: reference("people"),
+          role: z.string().optional(),
+        }),
+      )
       .optional()
       .describe("Collection of people that organize the event"),
     volunteers: z
