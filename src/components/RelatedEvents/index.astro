@@ -1,11 +1,11 @@
 ---
 import EventCard from "@/components/EventCard/index.astro";
 import TiltedCard from "@/components/TiltedCard";
-import type { CollectionEntry } from "astro:content";
+import type { EventComputed } from "@/lib/events";
 
 interface Props {
-  currentEvent: CollectionEntry<"events">;
-  relatedEvents: CollectionEntry<"events">[];
+  currentEvent: EventComputed;
+  relatedEvents: EventComputed[];
 }
 
 const { currentEvent, relatedEvents } = Astro.props;
