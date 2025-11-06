@@ -80,7 +80,7 @@ const zEventBase = ({ image }: SchemaContext) =>
             .array(
               z.object({
                 name: z.string(),
-                price: z.number().positive(),
+                price: z.number().nonnegative(),
                 priceCurrency: z.string(),
                 availability: z.enum([
                   "BackOrder",
