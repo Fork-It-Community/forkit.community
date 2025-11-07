@@ -5,9 +5,22 @@ import {
 } from "@/generated-assets/image";
 import { COLORS } from "@/generated-assets/theme";
 import worldImage from "@/assets/images/world.png";
+import { getImage } from "astro:assets";
 
 export const CfpCoverNoFlag = async (props: { config: AssetImageConfig }) => {
-  const noFlagImage = await getAstroImageBase64(worldImage);
+  const worldImageResult = await getImage({
+    format: worldImage.format,
+    src: worldImage,
+  });
+
+  const defaultBackgroundImage = {
+    src: worldImageResult.src,
+    width: worldImage.width,
+    height: worldImage.height,
+    format: worldImage.format,
+  };
+
+  const noFlagImage = await getAstroImageBase64(defaultBackgroundImage);
 
   return (
     <div
