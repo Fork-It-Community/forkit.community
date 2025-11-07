@@ -32,7 +32,6 @@ const people = [...hosts, ...speakers];
 const scheduleItem = (event.data.schedule?.items ?? []).find(
   (conference) => conference.slug?.id === talk?.id,
 );
-console.log("lena", scheduleItem);
 ---
 
 {
@@ -44,25 +43,6 @@ console.log("lena", scheduleItem);
       })}
       class="group flex w-full flex-col gap-4 rounded-lg bg-white/5 p-4 backdrop-blur-md transition hover:bg-white/10 sm:px-6 sm:py-5"
     >
-      {scheduleItem?.status === "cancelled" && (
-        <div class="h-full w-fit rounded-full bg-gradient-to-r from-destructive to-destructive/80 px-2 py-1 text-destructive-foreground">
-          <div class="flex items-center gap-2">
-            <FiXCircle className="h-4 w-4" />
-            <span class="text-sm font-medium">
-              TALK CANCELLED - Speaker Withdrawal
-            </span>
-          </div>
-        </div>
-      )}
-      {scheduleItem?.status === "replacement" && (
-        <div class="h-full w-fit justify-center rounded-full bg-success from-accent px-2 py-1 text-accent-foreground text-white">
-          <div class="flex items-center gap-2">
-            <FiPlus className="h-4 w-4 text-white" />
-            <span class="text-sm font-medium text-white">New Talk</span>
-          </div>
-        </div>
-      )}
-
       <div class="flex justify-between">
         <p
           class={cn(
@@ -72,6 +52,22 @@ console.log("lena", scheduleItem);
         >
           {talk.data.title}
         </p>
+        {scheduleItem?.status === "cancelled" && (
+          <div class="h-full w-fit rounded-full bg-gradient-to-r from-destructive to-destructive/80 px-2 py-1 text-destructive-foreground">
+            <div class="flex items-center gap-1">
+              <FiXCircle className="h-4 w-4" />
+              <span class="text-sm font-medium">Cancelled</span>
+            </div>
+          </div>
+        )}
+        {scheduleItem?.status === "replacement" && (
+          <div class="isolate h-full w-fit justify-center rounded-full bg-success from-accent px-2 py-1 text-accent-foreground text-white">
+            <div class="flex items-center gap-1">
+              <FiPlus className="h-4 w-4 text-white" />
+              <span class="text-sm font-medium text-white">New</span>
+            </div>
+          </div>
+        )}
       </div>
 
       {!!people.length && (
@@ -91,8 +87,13 @@ console.log("lena", scheduleItem);
         </div>
       )}
 
-      <div class="flex flex-row gap-2">
-        <span class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none opacity-60 transition group-hover:opacity-100">
+      <div
+        class={cn(
+          "flex flex-row gap-2",
+          scheduleItem?.status === "cancelled" ? "grayscale" : "",
+        )}
+      >
+        <span class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none opacity-60 grayscale transition group-hover:opacity-100">
           <IoLanguageSharp className="text-base" />
           <span>Talk in {talk.data.language}</span>
         </span>
