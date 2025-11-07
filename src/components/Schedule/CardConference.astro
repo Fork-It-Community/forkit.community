@@ -29,7 +29,7 @@ const speakers = (
   },
 }));
 const people = [...hosts, ...speakers];
-const scheduleItem = await (event.data.schedule?.items ?? []).find(
+const scheduleItem = (event.data.schedule?.items ?? []).find(
   (conference) => conference.slug?.id === talk?.id,
 );
 console.log("lena", scheduleItem);
