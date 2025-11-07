@@ -147,6 +147,9 @@ const zEventBase = ({ image }: SchemaContext) =>
                 startTime: z.date().optional(),
                 duration: z.number().optional().describe("Number of minutes"),
                 location: z.string().optional(),
+                status: z
+                  .enum(["cancelled", "replacement", "published"])
+                  .default("published"),
               }),
             )
             .optional(),

@@ -5,6 +5,8 @@ import SpeakerForCard from "./SpeakerForCard.astro";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { LuSquarePlay } from "react-icons/lu";
+import { FiPlus, FiXCircle } from "react-icons/fi";
+import { cn } from "@/lib/utils-client";
 
 interface Props {
   activity: NonNullable<
@@ -27,6 +29,10 @@ const speakers = (
   },
 }));
 const people = [...hosts, ...speakers];
+const scheduleItem = await (event.data.schedule?.items ?? []).find(
+  (conference) => conference.slug?.id === talk?.id,
+);
+console.log("lena", scheduleItem);
 ---
 
 {
@@ -38,11 +44,43 @@ const people = [...hosts, ...speakers];
       })}
       class="group flex w-full flex-col gap-4 rounded-lg bg-white/5 p-4 backdrop-blur-md transition hover:bg-white/10 sm:px-6 sm:py-5"
     >
-      <p class="text-balance font-heading text-base font-medium leading-tight tracking-wider text-white transition group-hover:text-primary">
-        {talk.data.title}
-      </p>
+      {scheduleItem?.status === "cancelled" && (
+        <div class="h-full w-fit rounded-full bg-gradient-to-r from-destructive to-destructive/80 px-2 py-1 text-destructive-foreground">
+          <div class="flex items-center gap-2">
+            <FiXCircle className="h-4 w-4" />
+            <span class="text-sm font-medium">
+              TALK CANCELLED - Speaker Withdrawal
+            </span>
+          </div>
+        </div>
+      )}
+      {scheduleItem?.status === "replacement" && (
+        <div class="h-full w-fit justify-center rounded-full bg-success from-accent px-2 py-1 text-accent-foreground text-white">
+          <div class="flex items-center gap-2">
+            <FiPlus className="h-4 w-4 text-white" />
+            <span class="text-sm font-medium text-white">New Talk</span>
+          </div>
+        </div>
+      )}
+
+      <div class="flex justify-between">
+        <p
+          class={cn(
+            "text-balance font-heading text-base font-medium leading-tight tracking-wider text-white transition group-hover:text-primary",
+            scheduleItem?.status === "cancelled" ? "line-through" : "",
+          )}
+        >
+          {talk.data.title}
+        </p>
+      </div>
+
       {!!people.length && (
-        <div class="grid grid-cols-2 gap-3 md:grid-cols-3">
+        <div
+          class={cn(
+            "grid grid-cols-2 gap-3 md:grid-cols-3",
+            scheduleItem?.status === "cancelled" ? "grayscale" : "",
+          )}
+        >
           {speakers.map((speaker) => (
             <SpeakerForCard
               name={speaker.data.name}
