@@ -2,7 +2,7 @@ import { AssetCard } from "./AssetCard";
 
 export const AssetsContent = () => {
   return (
-    <div className="flex flex-col gap-6 overflow-auto">
+    <div className="flex max-w-2xl flex-col gap-6 overflow-auto">
       <div className="flex flex-col gap-2">
         <h3 className="font-heading text-sm uppercase tracking-wider opacity-80 max-sm:px-4 max-sm:text-center">
           Logo without background
