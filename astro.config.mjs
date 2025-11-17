@@ -6,11 +6,17 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import robotsTxt from "astro-robots-txt";
 
+import node from "@astrojs/node";
 import vercel from "@astrojs/vercel";
 import { getSiteUrl } from "./src/lib/getSiteURL";
 import astrobook from "astrobook";
 
 import bearstudiotypedRoutes from "@bearstudio/astro-typed-routes";
+
+const adapter =
+  process.argv[3] === "--node" || process.argv[4] === "--node"
+    ? node({ mode: "standalone" })
+    : vercel({ isr: true });
 
 // https://astro.build/config
 export default defineConfig({
@@ -72,5 +78,5 @@ export default defineConfig({
     bearstudiotypedRoutes(),
   ],
 
-  adapter: vercel({ isr: true }),
+  adapter,
 });
