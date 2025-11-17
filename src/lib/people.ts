@@ -19,11 +19,11 @@ export async function peopleWithComputed<
   const personEvents = await getPersonEvents(people);
 
   const personEventsAsSpeakerCount = personEvents.filter((event) =>
-    event.data._computed.speakers.map((speaker) => speaker.id === people.id),
+    event.data._computed.speakers.some((speaker) => speaker.id === people.id),
   ).length;
 
   const personEventsAsOrganizerCount = personEvents.filter((event) =>
-    event.data.organizers?.map((organizer) => organizer.id === people.id),
+    event.data.organizers?.some((organizer) => organizer.id === people.id),
   ).length;
 
   return {
