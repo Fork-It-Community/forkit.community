@@ -33,6 +33,7 @@ const ROUTES_CONFIG = {
         "_qrcode": {},
         "_save-the-date-square": {},
         "_save-the-date": {},
+        "_schedule-short": {},
         "_tickets-available-square": {},
         "_tickets-available": {},
         "_utils": {},
