@@ -6,7 +6,6 @@ import { MdArrowOutward } from "react-icons/md";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { t } from "@/i18n";
-import { AssetsModalTrigger } from "@/components/BrandAssets/ModalTrigger";
 
 const menuItems = getMainMenuItems();
 ---
@@ -65,13 +64,12 @@ const menuItems = getMainMenuItems();
             ))
           }
           <span class="opacity-20">⋅</span>
-          <AssetsModalTrigger client:load>
-            <button
-              class="flex items-center gap-1 opacity-60 transition hover:opacity-100"
-            >
-              Logo Assets
-            </button>
-          </AssetsModalTrigger>
+          <a
+            class="opacity-60 transition hover:opacity-100"
+            href={lunalink(ROUTES["brand-assets"].__path, {})}
+          >
+            Logo Assets
+          </a>
           <span class="opacity-20">⋅</span>
           <a
             class="flex items-center gap-1 opacity-60 transition hover:opacity-100"
