@@ -1,4 +1,4 @@
-import { DEFAULT_NUMBER_OF_PARTICIPANTS } from "@/assets/consts";
+import { DEFAULT_NUMBER_OF_GUESTS } from "@/assets/consts";
 import type { EventComputed } from "@/lib/events";
 import { getAllGuests } from "@/lib/luma/api/guest";
 import { LUMA_API_KEY } from "astro:env/server";
@@ -21,7 +21,7 @@ export async function getNumberOfApprovedGuests(event: EventComputed) {
     : [];
   return isEmpty(guests)
     ? event.data.type === "event"
-      ? DEFAULT_NUMBER_OF_PARTICIPANTS.event
-      : DEFAULT_NUMBER_OF_PARTICIPANTS.meetup
+      ? DEFAULT_NUMBER_OF_GUESTS.event
+      : DEFAULT_NUMBER_OF_GUESTS.meetup
     : guests.filter((guest) => guest.approval_status === "approved").length;
 }
