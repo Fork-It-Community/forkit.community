@@ -8,6 +8,9 @@ export const zSocialTypes = z.enum([
   "github",
   "bluesky",
   "facebook",
+  "mastodon",
+  "source",
+  "openstreetmap",
 ]);
 
 export const zMediaImage = ({ image }: SchemaContext) =>
