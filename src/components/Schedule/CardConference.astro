@@ -1,11 +1,11 @@
 ---
 import { type CollectionEntry, getEntries, getEntry } from "astro:content";
-import { IoLanguageSharp } from "react-icons/io5";
+import { IoLanguageSharp, IoSparklesSharp } from "react-icons/io5";
 import SpeakerForCard from "./SpeakerForCard.astro";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { LuSquarePlay } from "react-icons/lu";
-import { FiPlus, FiXCircle } from "react-icons/fi";
+import { FiXCircle } from "react-icons/fi";
 import { cn } from "@/lib/utils-client";
 
 interface Props {
@@ -63,7 +63,7 @@ const scheduleItem = (event.data.schedule?.items ?? []).find(
         {scheduleItem?.status === "replacement" && (
           <div class="isolate h-full w-fit justify-center rounded-full bg-success from-accent px-2 py-1 text-accent-foreground text-white">
             <div class="flex items-center gap-1">
-              <FiPlus className="h-4 w-4 text-white" />
+              <IoSparklesSharp className="h-4 w-4 text-white" />
               <span class="text-sm font-medium text-white">New</span>
             </div>
           </div>
