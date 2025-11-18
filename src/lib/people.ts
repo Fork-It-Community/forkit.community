@@ -22,9 +22,21 @@ export async function peopleWithComputed<
     event.data._computed.speakers.some((speaker) => speaker.id === people.id),
   ).length;
 
-  const personEventsAsOrganizerCount = personEvents.filter((event) =>
-    event.data.organizers?.some((organizer) => organizer.id === people.id),
+  const personFullDayEventsAsOrganizerCount = personEvents.filter(
+    (event) =>
+      event.data.organizers?.some((organizer) => organizer.id === people.id) &&
+      event.data.type === "event",
   ).length;
+
+  const personMeetupsAsOrganizerCount = personEvents.filter(
+    (event) =>
+      event.data.organizers?.some((organizer) => organizer.id === people.id) &&
+      event.data.type === "meetup",
+  ).length;
+
+  const personEventsCountryCount = new Set(
+    personEvents.map((event) => event.data._computed.country?.id),
+  ).size;
 
   return {
     ...people,
@@ -32,7 +44,9 @@ export async function peopleWithComputed<
       ...people.data,
       _computed: {
         speakingCount: personEventsAsSpeakerCount,
-        organizingCount: personEventsAsOrganizerCount,
+        fullDayEventsOrganizingCount: personFullDayEventsAsOrganizerCount,
+        meetupOrganizingCount: personMeetupsAsOrganizerCount,
+        visitedCountryCount: personEventsCountryCount,
       },
     },
   };
