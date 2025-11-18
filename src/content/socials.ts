@@ -13,8 +13,9 @@ import {
   FaFacebook,
   FaMastodon,
 } from "react-icons/fa6";
+import { IoGitBranch } from "react-icons/io5";
 import { LuMail, LuMessageCircle } from "react-icons/lu";
-import { SiForgejo, SiOpenstreetmap } from "react-icons/si";
+import { SiOpenstreetmap } from "react-icons/si";
 
 type SocialsLevel = "primary" | "secondary";
 
@@ -93,7 +94,7 @@ export const SOCIALS_TYPE_MAP = {
   x: FaXTwitter,
   facebook: FaFacebook,
   mastodon: FaMastodon,
-  source: SiForgejo,
+  source: IoGitBranch,
   openstreetmap: SiOpenstreetmap,
 } satisfies Record<SocialType, FC>;
 
