@@ -73,7 +73,9 @@ export async function eventWithComputed<
               (item) => item.slug?.id === talk.id,
             );
             const isSpeakerTalkCanceled = scheduleTalk?.status === "cancelled";
-            if (isSpeakerTalkCanceled) return;
+            if (isSpeakerTalkCanceled) {
+              return;
+            }
             const person = await getEntry("people", speaker.id.id);
 
             if (!person) {
