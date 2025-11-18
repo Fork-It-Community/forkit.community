@@ -181,9 +181,6 @@ export function scheduleShort(options: { width: number; height: number }) {
                       display: "flex",
                       gap: 20,
                       padding: 24,
-                      borderRadius: 32,
-                      background: "rgba(0,0,0,0.55)",
-                      boxShadow: "0 24px 60px rgba(0,0,0,0.6)",
                       alignItems: "center",
                       maxWidth: 900,
                     }}
@@ -218,7 +215,7 @@ export function scheduleShort(options: { width: number; height: number }) {
                       style={{
                         display: "flex",
                         flexDirection: "column",
-                        gap: 16,
+                        gap: 8,
                         minWidth: 0,
                       }}
                     >
@@ -229,7 +226,7 @@ export function scheduleShort(options: { width: number; height: number }) {
                           fontWeight: 500,
                           lineHeight: 1.1,
                           flexWrap: "wrap",
-                          maxWidth: 700,
+                          maxWidth: 800,
                           textWrap: "balance",
                           wordBreak: "break-word",
                         }}
