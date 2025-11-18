@@ -17,8 +17,6 @@ export async function getNumberOfApprovedGuests(event: EventComputed) {
   }
   const guests = await getAllGuests({
     event_api_id: event.data.lumaEventId,
-    sort_direction: "desc nulls last",
-    sort_column: "registered_at",
   });
 
   const guestNumber = guests.filter(

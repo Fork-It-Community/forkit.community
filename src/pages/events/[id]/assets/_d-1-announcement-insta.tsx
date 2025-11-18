@@ -41,7 +41,7 @@ export function d1announcementInsta(options: {
         .map((s) => getAstroImageBase64(s.data.avatar)),
     );
 
-    const ApprovedGuestsNumber = await getNumberOfApprovedGuests(event);
+    const approvedGuestsNumber = await getNumberOfApprovedGuests(event);
 
     return (
       <Frame {...options} style={{ padding: 96 }}>
@@ -134,7 +134,7 @@ export function d1announcementInsta(options: {
               <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
                 <RoundedSpeakers speakerImages={speakerImages} />
                 <div style={{ display: "flex", height: "fit-content" }}>
-                  Join us to meet {ApprovedGuestsNumber} people
+                  Join us to meet {approvedGuestsNumber} people
                 </div>
               </div>
               <div style={{ display: "flex" }}>

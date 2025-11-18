@@ -37,7 +37,7 @@ export function d1announcement(options: { width: number; height: number }) {
         .slice(0, 3)
         .map((s) => getAstroImageBase64(s.data.avatar)),
     );
-    const ApprovedGuestsNumber = await getNumberOfApprovedGuests(event);
+    const approvedGuestsNumber = await getNumberOfApprovedGuests(event);
 
     return (
       <Frame {...options} style={{ padding: 96 }}>
@@ -130,7 +130,7 @@ export function d1announcement(options: { width: number; height: number }) {
               <div style={{ display: "flex", gap: 12 }}>
                 <RoundedSpeakers speakerImages={speakerImages} />
                 <div style={{ display: "flex" }}>
-                  Join us to meet {ApprovedGuestsNumber} people
+                  Join us to meet {approvedGuestsNumber} people
                 </div>
               </div>
               <div style={{ display: "flex" }}>
