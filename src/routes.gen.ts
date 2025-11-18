@@ -36,6 +36,7 @@ const ROUTES_CONFIG = {
         "_tickets-available-square": {},
         "_tickets-available": {},
         "_utils": {},
+        "_youtube_banner": {},
         "download": {}
       },
       "attendee": {
