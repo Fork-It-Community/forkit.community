@@ -10,6 +10,7 @@ import { getEventData } from "./_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 import { RoundedSpeakers } from "@/generated-assets/components/RoundedSpeakers";
 import type { ImageMetadata } from "astro";
+import { getNumberOfApprovedGuests } from "@/lib/luma/utils";
 
 export const config: AssetImageConfig = {
   width: 1080,
@@ -39,6 +40,8 @@ export function d1announcementInsta(options: {
         .slice(0, 3)
         .map((s) => getAstroImageBase64(s.data.avatar)),
     );
+
+    const ApprovedGuestsNumber = await getNumberOfApprovedGuests(event);
 
     return (
       <Frame {...options} style={{ padding: 96 }}>
@@ -131,7 +134,7 @@ export function d1announcementInsta(options: {
               <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
                 <RoundedSpeakers speakerImages={speakerImages} />
                 <div style={{ display: "flex", height: "fit-content" }}>
-                  Join us to meet 100+ people
+                  Join us to meet {ApprovedGuestsNumber} people
                 </div>
               </div>
               <div style={{ display: "flex" }}>
