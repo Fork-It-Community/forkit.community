@@ -11,8 +11,10 @@ import {
   FaXTwitter,
   FaYoutube,
   FaFacebook,
+  FaMastodon,
 } from "react-icons/fa6";
 import { LuMail, LuMessageCircle } from "react-icons/lu";
+import { SiForgejo, SiOpenstreetmap } from "react-icons/si";
 
 type SocialsLevel = "primary" | "secondary";
 
@@ -90,6 +92,9 @@ export const SOCIALS_TYPE_MAP = {
   linkedin: FaLinkedin,
   x: FaXTwitter,
   facebook: FaFacebook,
+  mastodon: FaMastodon,
+  source: SiForgejo,
+  openstreetmap: SiOpenstreetmap,
 } satisfies Record<SocialType, FC>;
 
 export const GLOBAL_NEWSLETTER_LINK =
