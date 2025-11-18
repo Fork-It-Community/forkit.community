@@ -43,10 +43,11 @@ export function scheduleShort(options: { width: number; height: number }) {
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: 128,
+
             width: "100%",
-            justifyContent: "center",
+            justifyContent: "space-between",
             zIndex: 100,
+            height: "100%",
           }}
         >
           <LogoWithFriends logos={coOrganizersLogos} />
@@ -67,18 +68,6 @@ export function scheduleShort(options: { width: number; height: number }) {
             >
               <div
                 style={{
-                  fontSize: 32,
-                  fontWeight: 500,
-                  textTransform: "uppercase",
-                  letterSpacing: 4,
-                  opacity: 0.9,
-                }}
-              >
-                Save the date
-              </div>
-
-              <div
-                style={{
                   display: "flex",
                   fontSize: 124,
                   fontWeight: 500,
@@ -88,6 +77,7 @@ export function scheduleShort(options: { width: number; height: number }) {
                   marginLeft: -6, // Visual alignment
                   textTransform: "uppercase",
                   textShadow: "0 12px 40px rgba(0,0,0,0.7)",
+                  maxWidth: 800,
                 }}
               >
                 {event.data._computed.city?.data.name}
