@@ -5,4 +5,4 @@ export const OG_IMAGE = {
 export const DEFAULT_NUMBER_OF_GUESTS = {
   meetup: 30,
   event: 100,
-};
+} as const;
