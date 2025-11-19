@@ -229,6 +229,7 @@ export function scheduleShort(options: { width: number; height: number }) {
                           maxWidth: 800,
                           textWrap: "balance",
                           wordBreak: "break-word",
+                          color: COLORS.primary,
                         }}
                       >
                         {talk.data.title}
@@ -240,6 +241,7 @@ export function scheduleShort(options: { width: number; height: number }) {
                           fontWeight: 500,
                           lineHeight: 1.2,
                           opacity: 0.9,
+                          color: "lightgray",
                         }}
                       >
                         {talk.__speakers
