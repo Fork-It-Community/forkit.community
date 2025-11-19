@@ -6,6 +6,7 @@ import { MdArrowOutward } from "react-icons/md";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { t } from "@/i18n";
+import { TicketsHuntIcon } from "@/components/TicketsHuntIcon";
 
 const menuItems = getMainMenuItems();
 ---
@@ -91,6 +92,15 @@ const menuItems = getMainMenuItems();
             href={lunalink(ROUTES["call-for-papers"].guidelines.__path, {})}
           >
             Call For Paper Guidelines
+          </a>
+          <span class="opacity-20">⋅</span>
+          <a
+            href="https://forkit-tickets-hunt-ces2025.vercel.app/app/achievements/complete?id=cmi2zkkp10001jm0447dnz4df"
+            rel="nofollow"
+            target="_blank"
+            class="flex gap-1 opacity-60 transition hover:opacity-100"
+          >
+            <TicketsHuntIcon /> Tickets hunt
           </a>
         </div>
         <p class="text-center text-xs opacity-50 sm:text-left">
