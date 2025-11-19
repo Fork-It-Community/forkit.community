@@ -103,45 +103,32 @@ export function youtubeBanner(options: { width: number; height: number }) {
               overflow: "hidden",
               boxShadow: "0 20px 60px rgba(0, 0, 0, 0.5)",
               borderRadius: "16px",
+              inset: 0,
             }}
           >
+            <img
+              src={eventCover}
+              style={{
+                position: "absolute",
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                zIndex: 1,
+              }}
+            />
             <div
               style={{
-                display: "flex",
-                flexDirection: "column",
+                background:
+                  "linear-gradient(45deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.3) 100%)",
+                position: "absolute",
                 top: 0,
                 left: 0,
-                position: "absolute",
-                height: "100%",
-                width: "100%",
-                borderRadius: "16px",
+                bottom: 0,
+                right: 0,
+                zIndex: 2,
+                opacity: 1,
               }}
-            >
-              <img
-                src={eventCover}
-                style={{
-                  position: "absolute",
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  zIndex: 1,
-                  borderRadius: "16px",
-                }}
-              />
-              <div
-                style={{
-                  background:
-                    "linear-gradient(45deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.3) 100%)",
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  bottom: 0,
-                  right: 0,
-                  zIndex: 2,
-                  opacity: 1,
-                }}
-              />
-            </div>
+            />
             <div
               style={{
                 position: "relative",
