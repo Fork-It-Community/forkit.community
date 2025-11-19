@@ -107,13 +107,14 @@ export function youtubeBanner(options: { width: number; height: number }) {
                 objectFit: "cover",
                 zIndex: 1,
                 borderRadius: 16,
+                border: "1px solid rgba(255, 255, 255, 1)",
               }}
             />
             <div
               style={{
                 position: "absolute",
                 background:
-                  "linear-gradient(45deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.3) 100%)",
+                  "linear-gradient(45deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 70%)",
                 top: 0,
                 left: 0,
                 bottom: 0,
@@ -130,7 +131,7 @@ export function youtubeBanner(options: { width: number; height: number }) {
                 display: "flex",
                 flexDirection: "column",
                 height: "100%",
-                justifyContent: "flex-start", // Use "flex-start" because Satori doesn't support "start"
+                justifyContent: "flex-start", //  "flex-start" because Satori doesn't support "start"
                 borderRadius: "16px",
                 overflow: "hidden",
               }}
@@ -168,12 +169,13 @@ export function youtubeBanner(options: { width: number; height: number }) {
               </div>
               <div
                 style={{
-                  backgroundColor: "black",
+                  backgroundColor: "rgba(0, 0, 0, 1)",
                   fontSize: 25,
                   padding: "8px 16px",
-                  border: "1px solid rgba(255, 255, 255, 0.2)",
+                  border: "1px solid rgba(0, 0, 0, 1)",
                   marginRight: "auto",
                   marginTop: 120,
+                  borderRadius: 16,
                 }}
               >
                 Tickets available soon
