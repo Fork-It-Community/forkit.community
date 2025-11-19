@@ -8,6 +8,7 @@ import { COLORS } from "@/generated-assets/theme";
 import { getEventData } from "./_utils";
 import { Logo } from "@/components/Logo";
 import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
+import youtubeBannerCover from "@/assets/images/youtube-banner-cover.jpg";
 
 export const config: AssetImageConfig = {
   width: 2560,
@@ -18,7 +19,8 @@ export function youtubeBanner(options: { width: number; height: number }) {
   return async ({ params }: { params: { id: string } }) => {
     const event = await getEventData(params.id);
 
-    const postCover = await getAstroImageBase64(event.data.image.media);
+    const eventCover = await getAstroImageBase64(event.data.image.media);
+    const postCover = await getAstroImageBase64(youtubeBannerCover);
 
     return (
       <Frame {...options} style={{ padding: 96 }}>
@@ -116,7 +118,7 @@ export function youtubeBanner(options: { width: number; height: number }) {
               }}
             >
               <img
-                src={postCover}
+                src={eventCover}
                 style={{
                   position: "absolute",
                   width: "100%",
