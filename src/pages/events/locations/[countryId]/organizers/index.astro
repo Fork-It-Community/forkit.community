@@ -1,0 +1,93 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import SEO from "@/components/SEO/index.astro";
+import { getEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
+import { getPeopleFromReference } from "@/lib/people";
+import { BackButton } from "@/components/BackButton";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
+import PeopleWithDescription from "@/components/PeopleWithDescription/index.astro";
+
+export async function getStaticPaths() {
+  const countries = await getCollection("countries");
+
+  return countries.map((country) => ({
+    params: { countryId: country.id },
+  }));
+}
+const { countryId } = Astro.params;
+
+const country = await getEntry("countries", countryId);
+
+if (!country) {
+  return new Response(null, {
+    status: 404,
+    statusText: "Not found",
+  });
+}
+
+const ogImage = new URL(
+  Astro.url.pathname + "/assets/og-image.jpg",
+  Astro.site,
+);
+
+const organizers = await getPeopleFromReference(country.data.organizers ?? []);
+---
+
+<MainLayout>
+  <SEO
+    slot="seo"
+    title={`All the organizers in ${country.data.name}`}
+    description={country.data.description ?? ""}
+    image={ogImage.toString()}
+  />
+  <ImageBackgroundHero
+    src={country.data.cover.media}
+    alt={country.data.cover.alt}
+  />
+  <div class="mx-auto w-full max-w-screen-lg px-4 py-4">
+    <BackButton
+      href={lunalink(ROUTES["events"].locations[":countryId"].__path, {
+        countryId,
+      })}
+      client:load
+      contextLabel={`Fork It! Events in ${country.data.name}`}
+    />
+    <div
+      class="flex w-full flex-col justify-between gap-8 py-12 md:min-h-[40svh] md:flex-row"
+    >
+      <div class="flex flex-1 flex-col gap-8">
+        <div class="flex w-full flex-col gap-2">
+          <h1
+            class="w-full text-balance text-left font-heading text-4xl font-medium uppercase tracking-wider md:text-5xl"
+          >
+            {country.data.name}
+          </h1>
+          <h2
+            class="w-full text-balance text-left text-base tracking-widest md:text-lg"
+          >
+            All the Fork it! events organizers in {country.data.name}
+          </h2>
+          <p
+            class="max-w-[60ch] text-sm tracking-wide [text-shadow:0_2px_30px_rgba(0,0,0,0.4)]"
+          >
+            Fork it! Community is the result of the hard work of four
+            experienced professionals who have combined their strengths and
+            skills to create a dynamic and innovative community. This community
+            is determined to share real experiences, inspire innovation and
+            connect creative minds in the tech world.
+          </p>
+        </div>
+        <div class="flex flex-col gap-6">
+          {
+            organizers.map((organizer) => (
+              <PeopleWithDescription organizer={organizer} />
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>

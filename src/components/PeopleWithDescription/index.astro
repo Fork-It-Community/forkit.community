@@ -1,0 +1,82 @@
+---
+import { Image } from "astro:assets";
+import SpeakerPlaceholder from "@/assets/images/people-placeholder.jpeg";
+import type { CollectionEntry } from "astro:content";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
+import { SOCIALS_TYPE_MAP } from "@/content/socials";
+import { render } from "astro:content";
+import Prose from "@/components/Prose/index.astro";
+
+interface Props {
+  organizer: CollectionEntry<"people">;
+}
+
+const { organizer } = Astro.props;
+
+const { Content } = await render(organizer);
+---
+
+<div class="group flex h-fit w-fit items-start gap-4">
+  <a
+    href={lunalink(ROUTES.people[":id"].__path, {
+      id: organizer.id,
+    })}
+  >
+    <div class="aspect-square overflow-hidden rounded-lg">
+      <Image
+        src={organizer.data.avatar ?? SpeakerPlaceholder}
+        alt={organizer.data.name}
+        width={160}
+        height={160}
+      />
+    </div>
+  </a>
+  <div class="flex flex-col gap-2">
+    <a
+      href={lunalink(ROUTES.people[":id"].__path, {
+        id: organizer.id,
+      })}
+      class="flex flex-col gap-0.5"
+    >
+      <p
+        class="line-clamp-3 font-heading text-xl font-medium tracking-wide text-primary"
+      >
+        {organizer.data.name}
+      </p>
+      {
+        !!organizer.data.job && (
+          <p class="line-clamp-3 text-sm tracking-wide opacity-60">
+            {organizer.data.job}
+          </p>
+        )
+      }
+    </a>
+
+    {
+      !!organizer.data.socials && (
+        <ul class="flex flex-row gap-4">
+          {organizer.data.socials.map((social) => {
+            const Icon = SOCIALS_TYPE_MAP[social.type];
+
+            return (
+              <li>
+                <a
+                  href={social.href}
+                  class="text-lg opacity-60 transition hover:text-primary hover:opacity-100"
+                  target="_blank"
+                >
+                  <span class="sr-only">{social.type}</span>
+                  <Icon />
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      )
+    }
+    <Prose class="prose-sm hidden md:block">
+      <Content />
+    </Prose>
+  </div>
+</div>
