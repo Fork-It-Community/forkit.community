@@ -33,6 +33,7 @@ const ROUTES_CONFIG = {
         "_og-image": {},
         "_qrcode-bg": {},
         "_qrcode": {},
+        "_save-the-date-insta": {},
         "_save-the-date-square": {},
         "_save-the-date": {},
         "_schedule-short": {},
