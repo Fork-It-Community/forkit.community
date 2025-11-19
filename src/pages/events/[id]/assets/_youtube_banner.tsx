@@ -18,7 +18,6 @@ export const config: AssetImageConfig = {
 export function youtubeBanner(options: { width: number; height: number }) {
   return async ({ params }: { params: { id: string } }) => {
     const event = await getEventData(params.id);
-
     const eventCover = await getAstroImageBase64(event.data.image.media);
     const postCover = await getAstroImageBase64(youtubeBannerCover);
 
@@ -50,8 +49,8 @@ export function youtubeBanner(options: { width: number; height: number }) {
           >
             <Logo
               style={{
-                width: 169 * 3,
-                height: 18 * 3,
+                width: 507,
+                height: 54,
               }}
             />
 
@@ -64,7 +63,7 @@ export function youtubeBanner(options: { width: number; height: number }) {
                 marginTop: -16,
                 marginLeft: -6,
                 textTransform: "uppercase",
-                width: "1000px",
+                width: 1000,
               }}
             >
               global developer conferences
@@ -80,7 +79,7 @@ export function youtubeBanner(options: { width: number; height: number }) {
             >
               <div
                 style={{
-                  opacity: "0.6",
+                  opacity: 0.6,
                 }}
               >
                 keep in touch on
@@ -98,8 +97,8 @@ export function youtubeBanner(options: { width: number; height: number }) {
             style={{
               position: "relative",
               display: "flex",
-              width: "800px",
-              height: "400px",
+              width: 800,
+              height: 400,
               overflow: "hidden",
               boxShadow: "0 20px 60px rgba(0, 0, 0, 0.5)",
               borderRadius: "16px",
@@ -150,7 +149,7 @@ export function youtubeBanner(options: { width: number; height: number }) {
                 display: "flex",
                 flexDirection: "column",
                 height: "100%",
-                justifyContent: "flex-start", // flex-start not start because there is no "start" in satori
+                justifyContent: "flex-start", // Use "flex-start" because Satori doesn't support "start"
                 borderRadius: "16px",
                 overflow: "hidden",
               }}
@@ -204,9 +203,8 @@ export function youtubeBanner(options: { width: number; height: number }) {
                   fontSize: 25,
                   padding: "8px 16px",
                   border: "1px solid rgba(255, 255, 255, 0.2)",
-                  marginTop: "auto",
-                  marginBottom: "auto",
                   marginRight: "auto",
+                  marginTop: "auto",
                 }}
               >
                 Tickets available soon
