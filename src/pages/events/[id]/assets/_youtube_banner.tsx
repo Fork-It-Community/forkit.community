@@ -112,8 +112,7 @@ export function youtubeBanner(options: { width: number; height: number }) {
                 position: "absolute",
                 height: "100%",
                 width: "100%",
-                borderRadius: "16px", // Add here
-                overflow: "hidden",
+                borderRadius: "16px",
               }}
             >
               <img
@@ -121,11 +120,10 @@ export function youtubeBanner(options: { width: number; height: number }) {
                 style={{
                   position: "absolute",
                   width: "100%",
-                  height: "120%",
+                  height: "100%",
                   objectFit: "cover",
                   zIndex: 1,
-                  borderRadius: "16px", // Add here
-                  overflow: "hidden",
+                  borderRadius: "16px",
                 }}
               />
               <div
@@ -139,8 +137,6 @@ export function youtubeBanner(options: { width: number; height: number }) {
                   right: 0,
                   zIndex: 2,
                   opacity: 1,
-                  borderRadius: "16px", // Add here
-                  overflow: "hidden",
                 }}
               />
             </div>
@@ -152,8 +148,8 @@ export function youtubeBanner(options: { width: number; height: number }) {
                 display: "flex",
                 flexDirection: "column",
                 height: "100%",
-                justifyContent: "flex-start",
-                borderRadius: "16px", // Add here
+                justifyContent: "flex-start", // flex-start not start because there is no "start" in satori
+                borderRadius: "16px",
                 overflow: "hidden",
               }}
             >
