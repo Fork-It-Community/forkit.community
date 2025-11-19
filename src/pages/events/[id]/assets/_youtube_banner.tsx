@@ -22,7 +22,7 @@ export function youtubeBanner(options: { width: number; height: number }) {
     const postCover = await getAstroImageBase64(youtubeBannerCover);
 
     return (
-      <Frame {...options} style={{ padding: 96 }}>
+      <Frame {...options}>
         <BgImage
           src={postCover}
           width={options.width}
@@ -68,6 +68,7 @@ export function youtubeBanner(options: { width: number; height: number }) {
                 display: "flex",
                 fontSize: 40,
                 letterSpacing: "0.05rem",
+
                 gap: 8,
               }}
             >
@@ -94,8 +95,7 @@ export function youtubeBanner(options: { width: number; height: number }) {
               width: 800,
               height: 400,
               overflow: "hidden",
-              boxShadow: "0 20px 60px rgba(0, 0, 0, 0.5)",
-              borderRadius: "16px",
+              borderRadius: 16,
             }}
           >
             <img
@@ -106,7 +106,7 @@ export function youtubeBanner(options: { width: number; height: number }) {
                 height: "100%",
                 objectFit: "cover",
                 zIndex: 1,
-                borderRadius: "16px",
+                borderRadius: 16,
               }}
             />
             <div
@@ -151,14 +151,12 @@ export function youtubeBanner(options: { width: number; height: number }) {
                   fontSize: 60,
                   fontWeight: 500,
                   marginTop: 8,
-                  marginBottom: 0,
                 }}
               >
                 {getEventDisplayDate(event)}
               </div>
               <div
                 style={{
-                  color: "rgba(255, 255, 255, 0.9)",
                   fontSize: 40,
                   fontWeight: 300,
                   marginTop: 8,
