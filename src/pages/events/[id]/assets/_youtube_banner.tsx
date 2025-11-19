@@ -18,7 +18,6 @@ export const config: AssetImageConfig = {
 export function youtubeBanner(options: { width: number; height: number }) {
   return async ({ params }: { params: { id: string } }) => {
     const event = await getEventData(params.id);
-    console.log("youtubeBannerCover", youtubeBannerCover);
     const eventCover = await getAstroImageBase64(event.data.image.media);
 
     const postCover = await getAstroImageBase64(youtubeBannerCover);
