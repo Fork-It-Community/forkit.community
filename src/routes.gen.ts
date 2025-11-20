@@ -20,6 +20,8 @@ const ROUTES_CONFIG = {
       "assets": {
         ":__image.:__type": {},
         "_cfp-cover": {},
+        "_cfp_open-insta": {},
+        "_cfp_open": {},
         "_d-1-announcement-insta": {},
         "_d-1-announcement": {},
         "_d-10-announcement-insta": {},
