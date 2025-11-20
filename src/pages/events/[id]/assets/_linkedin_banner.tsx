@@ -154,7 +154,7 @@ export function linkedinBanner(options: { width: number; height: number }) {
               <div
                 style={{
                   fontSize: 48,
-                  fontWeight: 300,
+                  fontWeight: 500,
                   marginTop: 0,
                   display: "flex",
                 }}

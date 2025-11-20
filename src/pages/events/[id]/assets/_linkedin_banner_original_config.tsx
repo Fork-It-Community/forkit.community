@@ -21,7 +21,7 @@ export function linkedinBanner(options: { width: number; height: number }) {
     const postCover = await getAstroImageBase64(youtubeBannerCover);
 
     return (
-      <Frame {...options} style={{ paddingRight: 48 }}>
+      <Frame {...options} style={{ paddingRight: 32 }}>
         <BgImage
           src={postCover}
           width={options.width}
