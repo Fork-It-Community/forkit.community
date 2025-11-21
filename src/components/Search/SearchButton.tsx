@@ -23,6 +23,7 @@ export const SearchButton = (props: ComponentProps<"button">) => {
         variant="ghost"
         size="icon-sm"
         onClick={() => setIsOpen(true)}
+        aria-label="Open search modal"
         {...props}
       >
         <LuSearch />

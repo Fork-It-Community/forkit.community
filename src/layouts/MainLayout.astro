@@ -8,13 +8,19 @@ import { Logo } from "@/components/Logo";
 ---
 
 <RootLayout>
+  <a
+    class="text-primary-content absolute left-0 m-3 -translate-y-16 bg-primary p-3 text-black transition focus:translate-y-0"
+    href="#main-content">Skip to content</a
+  >
   <slot name="seo" slot="seo" />
   <slot name="ld+json" slot="ld+json" />
   <MainNavDesktop />
   <div class="flex w-full items-center justify-center pb-4 pt-16 md:hidden">
     <a href="/"><Logo className="w-48" /></a>
   </div>
-  <div class="flex flex-1 flex-col"><slot /></div>
+  <div class="flex flex-1 scroll-mt-14 flex-col" id="main-content">
+    <slot />
+  </div>
   <Footer />
   <MainNavMobile />
 </RootLayout>
