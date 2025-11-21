@@ -47,11 +47,11 @@ export async function SVG(
 }
 
 export async function JPG(component: JSX.Element, params: AssetImageConfig) {
-  const imgSharp = await sharp(Buffer.from(await SVG(component, params)));
+  const imgSharp = sharp(Buffer.from(await SVG(component, params)));
   if (!params.resizeConfig) {
-    return imgSharp.jpeg().toBuffer();
+    return await imgSharp.jpeg().toBuffer();
   }
-  return imgSharp
+  return await imgSharp
     .resize(params.resizeConfig.width, params.resizeConfig.height)
     .jpeg()
     .toBuffer();
