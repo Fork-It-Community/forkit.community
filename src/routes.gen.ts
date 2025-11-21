@@ -30,6 +30,8 @@ const ROUTES_CONFIG = {
         "_d-30-announcement": {},
         "_d-7-announcement-insta": {},
         "_d-7-announcement": {},
+        "_linkedin-banner-original-config": {},
+        "_linkedin-banner": {},
         "_og-image": {},
         "_qrcode-bg": {},
         "_qrcode": {},

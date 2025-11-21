@@ -12,6 +12,10 @@ export type AssetImageConfig = {
   width: number;
   height: number;
   debugScale?: number | undefined;
+  resizeConfig?: {
+    width: number;
+    height: number;
+  };
 };
 
 export async function SVG(
@@ -43,7 +47,12 @@ export async function SVG(
 }
 
 export async function JPG(component: JSX.Element, params: AssetImageConfig) {
-  return await sharp(Buffer.from(await SVG(component, params)))
+  const imgSharp = sharp(Buffer.from(await SVG(component, params)));
+  if (!params.resizeConfig) {
+    return await imgSharp.jpeg().toBuffer();
+  }
+  return await imgSharp
+    .resize(params.resizeConfig.width, params.resizeConfig.height)
     .jpeg()
     .toBuffer();
 }
