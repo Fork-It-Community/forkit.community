@@ -69,6 +69,13 @@ export async function eventWithComputed<
         (talk) =>
           talk.data.speakers?.map(async (speaker) => {
             if (!speaker) return;
+            const scheduleTalk = event.data.schedule?.items?.find(
+              (item) => item.slug?.id === talk.id,
+            );
+            const isSpeakerTalkCanceled = scheduleTalk?.status === "cancelled";
+            if (isSpeakerTalkCanceled) {
+              return;
+            }
             const person = await getEntry("people", speaker.id.id);
 
             if (!person) {

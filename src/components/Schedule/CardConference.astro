@@ -1,10 +1,12 @@
 ---
 import { type CollectionEntry, getEntries, getEntry } from "astro:content";
-import { IoLanguageSharp } from "react-icons/io5";
+import { IoLanguageSharp, IoSparklesSharp } from "react-icons/io5";
 import SpeakerForCard from "./SpeakerForCard.astro";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { LuSquarePlay } from "react-icons/lu";
+import { FiXCircle } from "react-icons/fi";
+import { cn } from "@/lib/utils-client";
 
 interface Props {
   activity: NonNullable<
@@ -27,6 +29,9 @@ const speakers = (
   },
 }));
 const people = [...hosts, ...speakers];
+const scheduleItem = (event.data.schedule?.items ?? []).find(
+  (conference) => conference.slug?.id === talk?.id,
+);
 ---
 
 {
@@ -36,13 +41,45 @@ const people = [...hosts, ...speakers];
         id: event.id,
         talkId: talk.id,
       })}
-      class="group flex w-full flex-col gap-4 rounded-lg bg-white/5 p-4 backdrop-blur-md transition hover:bg-white/10 sm:px-6 sm:py-5"
+      class={cn(
+        "group flex w-full flex-col gap-4 rounded-lg bg-white/5 p-4 backdrop-blur-md transition hover:bg-white/10 sm:px-6 sm:py-5",
+        scheduleItem?.status === "cancelled" && "opacity-60",
+      )}
     >
-      <p class="text-balance font-heading text-base font-medium leading-tight tracking-wider text-white transition group-hover:text-primary">
-        {talk.data.title}
-      </p>
+      <div class="flex justify-between">
+        <p
+          class={cn(
+            "text-balance font-heading text-base font-medium leading-tight tracking-wider text-white transition group-hover:text-primary",
+            scheduleItem?.status === "cancelled" ? "line-through" : "",
+          )}
+        >
+          {talk.data.title}
+        </p>
+        {scheduleItem?.status === "cancelled" && (
+          <div class="h-full w-fit rounded-full bg-white/10 px-2 py-1 text-white">
+            <div class="flex items-center gap-1">
+              <FiXCircle className="h-3 w-3" />
+              <span class="text-xs font-medium">Cancelled</span>
+            </div>
+          </div>
+        )}
+        {scheduleItem?.status === "replacement" && (
+          <div class="isolate h-full w-fit justify-center rounded-full bg-white from-accent px-2 py-1 text-background">
+            <div class="flex items-center gap-1">
+              <IoSparklesSharp className="h-3 w-3" />
+              <span class="text-xs font-medium">New</span>
+            </div>
+          </div>
+        )}
+      </div>
+
       {!!people.length && (
-        <div class="grid grid-cols-2 gap-3 md:grid-cols-3">
+        <div
+          class={cn(
+            "grid grid-cols-2 gap-3 md:grid-cols-3",
+            scheduleItem?.status === "cancelled" ? "grayscale" : "",
+          )}
+        >
           {speakers.map((speaker) => (
             <SpeakerForCard
               name={speaker.data.name}
@@ -53,8 +90,13 @@ const people = [...hosts, ...speakers];
         </div>
       )}
 
-      <div class="flex flex-row gap-2">
-        <span class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none opacity-60 transition group-hover:opacity-100">
+      <div
+        class={cn(
+          "flex flex-row gap-2",
+          scheduleItem?.status === "cancelled" ? "grayscale" : "",
+        )}
+      >
+        <span class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none opacity-60 grayscale transition group-hover:opacity-100">
           <IoLanguageSharp className="text-base" />
           <span>Talk in {talk.data.language}</span>
         </span>

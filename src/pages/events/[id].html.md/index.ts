@@ -67,12 +67,18 @@ ${event.data.location?.name}, ${event.data.location?.address}`;
 
 const displaySchedule = async (event: EventWithComputed) => {
   if (isEmpty(event.data._computed.talks)) return "";
-
+  const talks = event.data._computed.talks.filter((talk) => {
+    const scheduleTalk = event.data.schedule?.items?.find(
+      (item) => item.slug?.id === talk.id,
+    );
+    return scheduleTalk?.status !== "cancelled";
+  });
   const itemsWithTime =
     event.data.schedule?.items?.filter(
       (item) =>
         (item.type === "conference" || item.type === "roundtable") &&
-        item.startTime,
+        item.startTime &&
+        item.status !== "cancelled",
     ) ?? [];
 
   const formattedItems = itemsWithTime.map((item) =>
@@ -83,7 +89,7 @@ const displaySchedule = async (event: EventWithComputed) => {
 
 ${(
   await Promise.all(
-    event.data._computed.talks.map(async (item, index) => {
+    talks.map(async (item, index) => {
       const timeStart = formattedItems[index];
       return `- [${item.data.title}](${lunalink(
         ROUTES.events[":id"].talks[":talkId"].__path,

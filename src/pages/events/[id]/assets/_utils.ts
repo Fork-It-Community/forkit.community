@@ -45,12 +45,14 @@ export const getEventAssetsSources = (event: CollectionEntry<"events">) => {
   const sponsors = event.data.sponsors?.map((s) => s.slug) ?? [];
   const partners = event.data.partners ?? [];
   const coOrganizers = event.data.coOrganizers ?? [];
-
+  const talks = event.data.schedule?.items?.filter(
+    (talk) => talk.status !== "cancelled",
+  );
   return [
     eventFilesNames.map(
       (fileName) => `/events/${event.id}/assets/${fileName}.jpg`,
     ),
-    event.data.schedule?.items?.flatMap((talk) =>
+    talks?.flatMap((talk) =>
       talkFilesNames.map((fileName) =>
         !talk.slug
           ? null
