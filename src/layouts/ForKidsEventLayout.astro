@@ -53,9 +53,7 @@ const title = `${forKidsEvent.data._computed.name}, For Kids`;
       eventCity={forKidsEvent.data._computed.city?.data.name ?? ""}
       eventCountry={forKidsEvent.data._computed.country?.data.name ?? ""}
       eventDate={forKidsEvent.data.date}
-      logoUrl={lunalink(ROUTES.fr.events["for-kids"][":id"].__path, {
-        id: forKidsEvent.id,
-      })}
+      logoUrl={lunalink(ROUTES.__path, {})}
       pageUrl={new URL(Astro.url.pathname, Astro.site).toString()}
       type="for-kids"
     />

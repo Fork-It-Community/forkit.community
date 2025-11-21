@@ -12,6 +12,8 @@ import {
   getEventNavItems,
   type EventComputed,
 } from "@/lib/events";
+import { ROUTES } from "@/routes.gen";
+import { lunalink } from "@bearstudio/lunalink";
 import { motion } from "motion/react";
 
 interface Props {
@@ -55,7 +57,7 @@ const title = `${event.data._computed.name}, ${getEventDisplayType(event.data.ty
       eventCity={event.data._computed.city?.data.name ?? ""}
       eventCountry={event.data._computed.country?.data.name ?? ""}
       eventDate={event.data.date}
-      logoUrl={`/events/${event.id}`}
+      logoUrl={lunalink(ROUTES.__path, {})}
       pageUrl={new URL(Astro.url.pathname, Astro.site).toString()}
     />
   </div>

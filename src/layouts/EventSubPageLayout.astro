@@ -5,6 +5,8 @@ import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import EventWarningBanner from "@/components/EventWarningBanner/index.astro";
 import Footer from "@/components/Footer/index.astro";
 import type { EventComputed } from "@/lib/events";
+import { ROUTES } from "@/routes.gen";
+import { lunalink } from "@bearstudio/lunalink";
 
 interface Props {
   event: EventComputed;
@@ -30,7 +32,7 @@ const { event } = Astro.props;
       eventCity={event.data._computed.city?.data.name ?? ""}
       eventCountry={event.data._computed.country?.data.name ?? ""}
       eventDate={event.data.date}
-      logoUrl={`/events/${event.id}`}
+      logoUrl={lunalink(ROUTES.__path, {})}
       pageUrl={new URL(Astro.url.pathname, Astro.site).toString()}
     />
   </div>
