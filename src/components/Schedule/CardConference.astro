@@ -41,7 +41,10 @@ const scheduleItem = (event.data.schedule?.items ?? []).find(
         id: event.id,
         talkId: talk.id,
       })}
-      class="group flex w-full flex-col gap-4 rounded-lg bg-white/5 p-4 backdrop-blur-md transition hover:bg-white/10 sm:px-6 sm:py-5"
+      class={cn(
+        "group flex w-full flex-col gap-4 rounded-lg bg-white/5 p-4 backdrop-blur-md transition hover:bg-white/10 sm:px-6 sm:py-5",
+        scheduleItem?.status === "cancelled" && "opacity-60",
+      )}
     >
       <div class="flex justify-between">
         <p
@@ -53,18 +56,18 @@ const scheduleItem = (event.data.schedule?.items ?? []).find(
           {talk.data.title}
         </p>
         {scheduleItem?.status === "cancelled" && (
-          <div class="h-full w-fit rounded-full bg-gradient-to-r from-destructive to-destructive/80 px-2 py-1 text-destructive-foreground">
+          <div class="h-full w-fit rounded-full bg-white/10 px-2 py-1 text-white">
             <div class="flex items-center gap-1">
-              <FiXCircle className="h-4 w-4" />
-              <span class="text-sm font-medium">Cancelled</span>
+              <FiXCircle className="h-3 w-3" />
+              <span class="text-xs font-medium">Cancelled</span>
             </div>
           </div>
         )}
         {scheduleItem?.status === "replacement" && (
-          <div class="isolate h-full w-fit justify-center rounded-full bg-success from-accent px-2 py-1 text-accent-foreground text-white">
+          <div class="isolate h-full w-fit justify-center rounded-full bg-white from-accent px-2 py-1 text-background">
             <div class="flex items-center gap-1">
-              <IoSparklesSharp className="h-4 w-4 text-white" />
-              <span class="text-sm font-medium text-white">New</span>
+              <IoSparklesSharp className="h-3 w-3" />
+              <span class="text-xs font-medium">New</span>
             </div>
           </div>
         )}
