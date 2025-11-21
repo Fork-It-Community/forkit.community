@@ -1,5 +1,5 @@
 import type { AssetImageConfig } from "@/generated-assets/image";
-import { cfpOpen } from "@/pages/events/[id]/assets/_cfp_open";
+import { cfpOpen } from "@/pages/events/[id]/assets/_cfp-open";
 
 export const config: AssetImageConfig = {
   width: 1080,
