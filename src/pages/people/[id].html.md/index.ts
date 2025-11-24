@@ -105,6 +105,12 @@ const displayContribution = async (person: CollectionEntry<"people">) => {
           title: item.data._computed.name,
           href: lunalink(ROUTES.events[":id.html.md"].__path, { id: item.id }),
         }))
+        .with({ collection: "forKidsEvent" }, (item) => ({
+          title: item.data._computed.name,
+          href: lunalink(ROUTES.fr.events["for-kids"][":id"].__path, {
+            id: item.id,
+          }),
+        }))
         .exhaustive();
 
       return `- [${item.title}](${item.href})`;

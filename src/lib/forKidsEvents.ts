@@ -153,6 +153,12 @@ export async function forKidsEventWithComputed<
     ? await getEntry("countries", city.data.country.id)
     : undefined;
 
+  const workshops = await Promise.all(
+    event.data.workshops?.map((workshopRef) =>
+      getEntry("forKidsWorkshop", workshopRef.id),
+    ) || [],
+  );
+
   return {
     ...event,
     data: {
@@ -161,7 +167,27 @@ export async function forKidsEventWithComputed<
         name: `For Kids ${city?.data.name}, ${country?.data.name}, ${event.data.date.getFullYear()}`,
         city,
         country,
+        speakers: workshops.flatMap(
+          (workshop) =>
+            workshop?.data.speakers?.map((speaker) => ({ id: speaker.id })) ||
+            [],
+        ),
       },
     },
   };
+}
+
+export async function getPersonForKids(
+  person: CollectionEntry<"people">,
+  { limit }: { limit?: number } = {},
+) {
+  const forKidsEvents = await getForKidsEventsCollection();
+
+  return forKidsEvents
+    .filter((forKidsEvent) =>
+      forKidsEvent.data._computed.speakers?.some(
+        (speaker) => speaker.id.id === person.id,
+      ),
+    )
+    .slice(0, limit);
 }

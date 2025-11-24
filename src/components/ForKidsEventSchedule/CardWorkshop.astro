@@ -1,6 +1,7 @@
 ---
+import SpeakerForCard from "@/components/Schedule/SpeakerForCard.astro";
 import { Image } from "astro:assets";
-import { render } from "astro:content";
+import { getEntries, render } from "astro:content";
 import { type CollectionEntry, getEntry } from "astro:content";
 
 interface Props {
@@ -20,6 +21,16 @@ if (!workshop) {
 }
 
 const { Content } = await render(workshop);
+
+const speakers = (
+  await getEntries(workshop.data.speakers?.map((speaker) => speaker.id) ?? [])
+).map((speaker) => ({
+  ...speaker,
+  data: {
+    ...speaker.data,
+    role: workshop.data.speakers?.find((s) => s.id.id === speaker.id)?.role,
+  },
+}));
 ---
 
 {
@@ -34,9 +45,20 @@ const { Content } = await render(workshop);
         <p class="text-balance font-heading text-lg font-medium leading-tight tracking-wider text-white transition group-hover:text-for-kids-primary-foreground">
           {workshop.data.title}
         </p>
-        <p class="text-sm">
+        <p class="text-md">
           De {workshop.data.ageRange.from} ans à {workshop.data.ageRange.to} ans
         </p>
+        {!!speakers.length && (
+          <div class="grid grid-cols-2 gap-3 md:grid-cols-3">
+            {speakers.map((speaker) => (
+              <SpeakerForCard
+                name={speaker.data.name}
+                avatar={speaker.data.avatar ?? null}
+                role={speaker.data.role ?? ""}
+              />
+            ))}
+          </div>
+        )}
         <Content />
       </div>
     </div>

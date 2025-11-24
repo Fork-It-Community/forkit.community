@@ -6,6 +6,7 @@ import { Image } from "astro:assets";
 import type { CollectionKey } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import defaultPodcast from "@/assets/images/podcasts.jpeg";
+import type { ForKidsEventComputed } from "@/lib/forKidsEvents";
 
 import { capitalize } from "remeda";
 import dayjs from "dayjs";
@@ -17,7 +18,8 @@ interface Props {
   contribution:
     | CollectionEntry<"episodes">
     | CollectionEntry<"news">
-    | EventComputed;
+    | EventComputed
+    | ForKidsEventComputed;
   person: CollectionEntry<"people">;
   class?: string;
   gradientClass?: string | undefined;
@@ -32,7 +34,10 @@ const item = match(contribution)
     image: ImageMetadata | undefined;
     episodeCover: ImageMetadata | undefined;
     excerpt: string | undefined;
-    type: Extract<CollectionKey, "news" | "events" | "episodes">;
+    type: Extract<
+      CollectionKey,
+      "news" | "events" | "episodes" | "forKidsEvent"
+    >;
   }>()
   .with({ collection: "news" }, (item) => ({
     title: item.data.title,
@@ -64,6 +69,17 @@ const item = match(contribution)
       .join(", "),
     href: lunalink(ROUTES.events[":id"].__path, { id: item.id }),
     image: item.data.image.media,
+    episodeCover: undefined,
+    type: item.collection,
+  }))
+  .with({ collection: "forKidsEvent" }, (item) => ({
+    title: item.data._computed.name,
+    date: item.data.date,
+    excerpt: undefined,
+    href: lunalink(ROUTES.fr.events["for-kids"][":id"].__path, {
+      id: item.id,
+    }),
+    image: item.data.image?.media,
     episodeCover: undefined,
     type: item.collection,
   }))
