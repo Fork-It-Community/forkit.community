@@ -4,7 +4,7 @@ import defaultPerson from "@/assets/images/people-placeholder.jpeg";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import type { CollectionEntry } from "astro:content";
-import { MdArrowForward } from "react-icons/md";
+import { MdArrowOutward } from "react-icons/md";
 
 interface Props {
   organizers: CollectionEntry<"people">[];
@@ -29,7 +29,7 @@ const { countryId } = Astro.params;
       >
         <h3 class="flex items-center gap-1 text-xs font-medium uppercase tracking-widest opacity-60 hover:underline">
           {title}
-          <MdArrowForward />
+          <MdArrowOutward />
         </h3>
       </a>
       <div class="flex flex-wrap gap-2">
