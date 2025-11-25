@@ -6,7 +6,10 @@ import { Image } from "astro:assets";
 import type { CollectionKey } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import defaultPodcast from "@/assets/images/podcasts.jpeg";
-import type { ForKidsEventComputed } from "@/lib/forKidsEvents";
+import {
+  getPersonRolesInEventForKids,
+  type ForKidsEventComputed,
+} from "@/lib/forKidsEvents";
 
 import { capitalize } from "remeda";
 import dayjs from "dayjs";
@@ -75,7 +78,9 @@ const item = match(contribution)
   .with({ collection: "forKidsEvent" }, (item) => ({
     title: item.data._computed.name,
     date: item.data.date,
-    excerpt: undefined,
+    excerpt: [...getPersonRolesInEventForKids(item, person)]
+      .map((i) => capitalize(i))
+      .join(", "),
     href: lunalink(ROUTES.fr.events["for-kids"][":id"].__path, {
       id: item.id,
     }),
