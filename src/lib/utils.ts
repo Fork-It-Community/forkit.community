@@ -1,21 +1,10 @@
 import type { CollectionEntry } from "astro:content";
 import { getPersonArticles } from "./news";
-import { getPersonEvents, type EventComputed } from "./events";
+import { getPersonEvents } from "./events";
 import { getPersonEpisodes } from "./podcasts";
-import {
-  getPersonForKids,
-  type ForKidsEventComputed,
-} from "@/lib/forKidsEvents";
+import { getPersonForKids } from "@/lib/forKidsEvents";
 import { match } from "ts-pattern";
 import dayjs from "dayjs";
-
-type Appearance =
-  | CollectionEntry<"episodes">
-  | CollectionEntry<"news">
-  | EventComputed
-  | ForKidsEventComputed;
-
-type AppearanceWithSort = Appearance & { sortDate: Date };
 
 export async function getAppearances(
   person: CollectionEntry<"people">,
@@ -37,5 +26,5 @@ export async function getAppearances(
         .exhaustive(),
     }))
     .sort((a, b) => dayjs(b.sortDate).diff(a.sortDate))
-    .slice(0, limit) as AppearanceWithSort[];
+    .slice(0, limit);
 }
