@@ -42,6 +42,7 @@ import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { isEmpty } from "remeda";
 import RelatedEvents from "@/components/RelatedEvents/index.astro";
+import { t } from "@/i18n";
 
 export async function getStaticPaths() {
   const allEvents = await getEventsCollection();
@@ -591,7 +592,7 @@ const ctaEventMetadata = {
             id="organizers"
             class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest text-white md:text-3xl"
           >
-            Organizers
+            {t("events:organizer")}
           </h2>
         </div>
         <div class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5">
