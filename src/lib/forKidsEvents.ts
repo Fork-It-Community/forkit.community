@@ -165,6 +165,30 @@ export async function forKidsEventWithComputed<
     ) || [],
   );
 
+  const animators = (
+    await Promise.all(
+      workshops.flatMap(
+        (workshop) =>
+          workshop?.data.animators?.map(async (animator) => {
+            if (!animator) return;
+            const person = await getEntry("people", animator.id.id);
+
+            if (!person) {
+              return;
+            }
+
+            return {
+              ...person,
+              data: {
+                ...person.data,
+                _computed: {},
+              },
+            };
+          }) ?? [],
+      ),
+    )
+  ).filter((i) => !!i);
+
   const organizers = (
     await Promise.all(
       (event.data.organizers ?? []).map(async (organizer) => {
@@ -196,12 +220,7 @@ export async function forKidsEventWithComputed<
         name: `For Kids ${city?.data.name}, ${country?.data.name}, ${event.data.date.getFullYear()}`,
         city,
         country,
-        animators: workshops.flatMap(
-          (workshop) =>
-            workshop?.data.animators?.map((animator) => ({
-              id: animator.id.id,
-            })) || [],
-        ),
+        animators,
         organizers,
       },
     },
