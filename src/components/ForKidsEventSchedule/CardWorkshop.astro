@@ -22,13 +22,14 @@ if (!workshop) {
 
 const { Content } = await render(workshop);
 
-const speakers = (
-  await getEntries(workshop.data.speakers?.map((speaker) => speaker.id) ?? [])
-).map((speaker) => ({
-  ...speaker,
+const animator = (
+  await getEntries(
+    workshop.data.animators?.map((animator) => animator.id) ?? [],
+  )
+).map((animator) => ({
+  ...animator,
   data: {
-    ...speaker.data,
-    role: workshop.data.speakers?.find((s) => s.id.id === speaker.id)?.role,
+    ...animator.data,
   },
 }));
 ---
@@ -48,13 +49,12 @@ const speakers = (
         <p class="text-md">
           De {workshop.data.ageRange.from} ans à {workshop.data.ageRange.to} ans
         </p>
-        {!!speakers.length && (
+        {!!animator.length && (
           <div class="grid grid-cols-2 gap-3 md:grid-cols-3">
-            {speakers.map((speaker) => (
+            {animator.map((animator) => (
               <SpeakerForCard
-                name={speaker.data.name}
-                avatar={speaker.data.avatar ?? null}
-                role={speaker.data.role ?? ""}
+                name={animator.data.name}
+                avatar={animator.data.avatar ?? null}
               />
             ))}
           </div>

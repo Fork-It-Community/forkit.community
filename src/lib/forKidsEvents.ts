@@ -196,10 +196,10 @@ export async function forKidsEventWithComputed<
         name: `For Kids ${city?.data.name}, ${country?.data.name}, ${event.data.date.getFullYear()}`,
         city,
         country,
-        speakers: workshops.flatMap(
+        animators: workshops.flatMap(
           (workshop) =>
-            workshop?.data.speakers?.map((speaker) => ({
-              id: speaker.id.id,
+            workshop?.data.animators?.map((animator) => ({
+              id: animator.id.id,
             })) || [],
         ),
         organizers,
@@ -216,20 +216,20 @@ export async function getPersonForKids(
 
   return forKidsEvents
     .filter((forKidsEvent) => {
-      const isSpeaker = forKidsEvent.data._computed.speakers?.some(
-        (speaker) => speaker.id === person.id,
+      const isAnimator = forKidsEvent.data._computed.animators?.some(
+        (animator) => animator.id === person.id,
       );
       const isOrganizer = forKidsEvent.data._computed.organizers?.some(
         (organizer) => organizer.id === person.id,
       );
-      return isSpeaker || isOrganizer;
+      return isAnimator || isOrganizer;
     })
     .slice(0, limit);
 }
 
 const ROLE_MAPPINGS = {
   organizers: "organizer",
-  speakers: "speaker",
+  animators: "animator",
 } as const;
 
 export function getPersonRolesInEventForKids(
@@ -240,10 +240,10 @@ export function getPersonRolesInEventForKids(
 
   for (const [key, role] of entries(ROLE_MAPPINGS)) {
     const people = match(key)
-      .with("speakers", (k) =>
+      .with("animators", (k) =>
         event.data._computed[k].map((i) => ({
           ...i,
-          type: "speakers" as const,
+          type: "animators" as const,
         })),
       )
       .with("organizers", (k) =>
