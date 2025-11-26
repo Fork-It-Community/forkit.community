@@ -4,21 +4,34 @@ import defaultPerson from "@/assets/images/people-placeholder.jpeg";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import type { CollectionEntry } from "astro:content";
+import { MdArrowOutward } from "react-icons/md";
 
 interface Props {
   organizers: CollectionEntry<"people">[];
   title?: string;
 }
 
-const { organizers, title = "Organized by" } = Astro.props;
+const { organizers, title = "Your local organizers" } = Astro.props;
+
+const { countryId } = Astro.params;
 ---
 
 {
   organizers.length > 0 && (
     <div class="flex flex-col gap-3 md:max-w-xs">
-      <h3 class="text-xs font-medium uppercase tracking-widest opacity-60">
-        {title}
-      </h3>
+      <a
+        href={lunalink(
+          ROUTES["events"].locations[":countryId"]["organizers"].__path,
+          {
+            countryId: countryId ?? "",
+          },
+        )}
+      >
+        <h3 class="flex items-center gap-1 text-xs font-medium uppercase tracking-widest opacity-60 hover:underline">
+          {title}
+          <MdArrowOutward />
+        </h3>
+      </a>
       <div class="flex flex-wrap gap-2">
         {organizers.map((organizer) => (
           <a

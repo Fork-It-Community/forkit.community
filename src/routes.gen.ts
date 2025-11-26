@@ -93,6 +93,13 @@ const ROUTES_CONFIG = {
           ":__image.:__type": {},
           "_og-image": {},
           "_utils": {}
+        },
+        "organizers": {
+          "assets": {
+            ":__image.:__type": {},
+            "_og-image": {},
+            "_utils": {}
+          }
         }
       }
     },
