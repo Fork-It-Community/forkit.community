@@ -198,36 +198,6 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
     </div>
   </div>
 
-  <!-- Organizers -->
-  {
-    !isEmpty(forKidsEvent.data._computed.organizers) && (
-      <section class="relative mx-auto flex w-full max-w-screen-lg flex-col gap-12 px-4 py-12 md:py-24">
-        <div class="flex items-center gap-2">
-          <h2
-            id="organizers"
-            class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
-          >
-            {t("events:organizers")}
-          </h2>
-        </div>
-        <div class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5">
-          {forKidsEvent.data._computed.organizers.map((organizer) => (
-            <People
-              people={{
-                ...organizer,
-                data: {
-                  ...organizer.data,
-                  job: organizer.data._computed.role,
-                  company: undefined,
-                },
-              }}
-            />
-          ))}
-        </div>
-      </section>
-    )
-  }
-
   <!-- Schedule -->
   <div
     class="relative mx-auto flex w-full max-w-screen-sm flex-col gap-24 px-4 py-16 lg:max-w-screen-lg lg:flex-row lg:gap-12"
@@ -259,6 +229,36 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
       <ForKidsEventSchedule forKidsEvent={forKidsEvent} />
     </div>
   </div>
+
+  <!-- Organizers -->
+  {
+    !isEmpty(forKidsEvent.data._computed.organizers) && (
+      <section class="relative mx-auto flex w-full max-w-screen-lg flex-col gap-12 px-4 py-12 md:py-24">
+        <div class="flex items-center gap-2">
+          <h2
+            id="organizers"
+            class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
+          >
+            {t("events:organizers")}
+          </h2>
+        </div>
+        <div class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5">
+          {forKidsEvent.data._computed.organizers.map((organizer) => (
+            <People
+              people={{
+                ...organizer,
+                data: {
+                  ...organizer.data,
+                  job: organizer.data._computed.role,
+                  company: undefined,
+                },
+              }}
+            />
+          ))}
+        </div>
+      </section>
+    )
+  }
 
   <!-- Venue -->
   {
