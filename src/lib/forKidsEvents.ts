@@ -160,8 +160,8 @@ export async function forKidsEventWithComputed<
     : undefined;
 
   const workshops = await Promise.all(
-    event.data.workshops?.map((workshopRef) =>
-      getEntry("forKidsWorkshop", workshopRef.id),
+    event.data.workshops?.map((workshop) =>
+      getEntry("forKidsWorkshop", workshop.id),
     ) || [],
   );
 
