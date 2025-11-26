@@ -22,16 +22,9 @@ if (!workshop) {
 
 const { Content } = await render(workshop);
 
-const animator = (
-  await getEntries(
-    workshop.data.animators?.map((animator) => animator.id) ?? [],
-  )
-).map((animator) => ({
-  ...animator,
-  data: {
-    ...animator.data,
-  },
-}));
+const animator = await getEntries(
+  workshop.data.animators?.map((animator) => animator.id) ?? [],
+);
 ---
 
 {
