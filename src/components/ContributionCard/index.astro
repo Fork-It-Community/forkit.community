@@ -84,7 +84,7 @@ const item = match(contribution)
     href: lunalink(ROUTES.fr.events["for-kids"][":id"].__path, {
       id: item.id,
     }),
-    image: item.data.image?.media,
+    image: item.data.location?.image,
     episodeCover: undefined,
     type: item.collection,
   }))

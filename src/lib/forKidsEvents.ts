@@ -171,7 +171,7 @@ export async function forKidsEventWithComputed<
         (workshop) =>
           workshop?.data.animators?.map(async (animator) => {
             if (!animator) return;
-            const person = await getEntry("people", animator.id.id);
+            const person = await getEntry("people", animator.id);
 
             if (!person) {
               return;
