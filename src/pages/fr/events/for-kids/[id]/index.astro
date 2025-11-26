@@ -69,9 +69,6 @@ const partners = await getEntries(forKidsEvent.data.partners ?? []);
 const coOrganizers = (
   await getEntries(forKidsEvent.data.coOrganizers ?? [])
 ).filter((p) => !!p);
-const organizers = (
-  await getEntries(forKidsEvent.data.organizers?.map((o) => o.person) ?? [])
-).filter((p) => !!p);
 
 const navItems = await getForKidsEventNavItems(forKidsEvent.id);
 ---
@@ -203,33 +200,29 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
 
   <!-- Organizers -->
   {
-    !isEmpty(forKidsEvent.data.organizers ?? []) && (
+    !isEmpty(forKidsEvent.data._computed.organizers) && (
       <section class="relative mx-auto flex w-full max-w-screen-lg flex-col gap-12 px-4 py-12 md:py-24">
         <div class="flex items-center gap-2">
           <h2
             id="organizers"
             class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
           >
-            {t("events:organizer")}
+            {t("events:organizers")}
           </h2>
         </div>
         <div class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5">
-          {forKidsEvent.data.organizers?.map((organizer, index) => {
-            const resolvedPerson = organizers[index];
-            return (
-              resolvedPerson && (
-                <People
-                  people={{
-                    ...resolvedPerson,
-                    data: {
-                      ...resolvedPerson.data,
-                      job: organizer.role,
-                    },
-                  }}
-                />
-              )
-            );
-          })}
+          {forKidsEvent.data._computed.organizers.map((organizer) => (
+            <People
+              people={{
+                ...organizer,
+                data: {
+                  ...organizer.data,
+                  job: organizer.data._computed.role,
+                  company: undefined,
+                },
+              }}
+            />
+          ))}
         </div>
       </section>
     )
