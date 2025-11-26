@@ -41,7 +41,7 @@ export async function getForKidsEventNavItems(id: string) {
       label: "Présentation",
     },
     {
-      href: `${route}#organisateurs`,
+      href: `${route}#organizers`,
       label: "Organisateurs",
     },
     {
