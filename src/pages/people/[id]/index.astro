@@ -18,7 +18,7 @@ import { BackButton } from "@/components/BackButton";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { getPeopleWithComputed } from "@/lib/people";
-import { ACHIEVEMENTS, DEFAULT_ACHIEVEMENT_LEVELS } from "@/lib/achievements";
+import { getPersonAchievements } from "@/lib/achievements";
 
 export const getStaticPaths = (async () => {
   const people = await getCollection("people");
@@ -43,21 +43,7 @@ const ogImage = new URL(
 
 const personComputed = await getPeopleWithComputed(person);
 
-const personAchievements = ACHIEVEMENTS.map((achievement) => {
-  const value = personComputed.data._computed[achievement.slug] ?? 0;
-
-  const levels = achievement.achievementLevels ?? DEFAULT_ACHIEVEMENT_LEVELS;
-
-  const reachedLevel =
-    [...levels]
-      .sort((a, b) => b.limit - a.limit)
-      .find((level) => value >= level.limit)?.label ?? null;
-
-  return {
-    slug: achievement.slug,
-    level: reachedLevel,
-  };
-});
+const personAchievements = getPersonAchievements(personComputed);
 
 console.log(personAchievements);
 ---
