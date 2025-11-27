@@ -18,6 +18,7 @@ import { BackButton } from "@/components/BackButton";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { getPeopleWithComputed } from "@/lib/people";
+import { ACHIEVEMENTS, DEFAULT_ACHIEVEMENT_LEVELS } from "@/lib/achievements";
 
 export const getStaticPaths = (async () => {
   const people = await getCollection("people");
@@ -40,8 +41,25 @@ const ogImage = new URL(
   Astro.site,
 );
 
-const peopleComputed = await getPeopleWithComputed(person);
-console.log(peopleComputed.data._computed.githubContributionCount);
+const personComputed = await getPeopleWithComputed(person);
+
+const personAchievements = ACHIEVEMENTS.map((achievement) => {
+  const value = personComputed.data._computed[achievement.slug] ?? 0;
+
+  const levels = achievement.achievementLevels ?? DEFAULT_ACHIEVEMENT_LEVELS;
+
+  const reachedLevel =
+    [...levels]
+      .sort((a, b) => b.limit - a.limit)
+      .find((level) => value >= level.limit)?.label ?? null;
+
+  return {
+    slug: achievement.slug,
+    level: reachedLevel,
+  };
+});
+
+console.log(personAchievements);
 ---
 
 <MainLayout>
@@ -84,6 +102,13 @@ console.log(peopleComputed.data._computed.githubContributionCount);
             >
               {person.data.name}
             </h1>
+            <!-- {
+              personAchievements.map((achievement) => (
+                <p>
+                  {achievement.slug} : {achievement.level}
+                </p>
+              ))
+            } -->
 
             <div class="flex flex-col gap-1">
               {
