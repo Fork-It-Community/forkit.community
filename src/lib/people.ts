@@ -48,8 +48,9 @@ export async function peopleWithComputed<
 
   const handle = getPeopleGithubHandle(people);
 
-  const personGithubContributionsCount =
-    handle && (await getPersonGithubContributionsCountWithHandle(handle));
+  const personGithubContributionsCount = handle
+    ? await getPersonGithubContributionsCountWithHandle(handle)
+    : 0;
 
   return {
     ...people,
@@ -60,7 +61,7 @@ export async function peopleWithComputed<
         fullDayEventsOrganizingCount: personFullDayEventsAsOrganizerCount,
         meetupOrganizingCount: personMeetupsAsOrganizerCount,
         visitedCountryCount: personEventsCountryCount,
-        githubContributionCount: personGithubContributionsCount ?? 0,
+        githubContributionCount: personGithubContributionsCount,
       },
     },
   };
@@ -102,3 +103,7 @@ const getPersonGithubContributionsCountWithHandle = async (handle: string) => {
     return 0;
   }
 };
+
+export type PersonWithComputed = Awaited<
+  ReturnType<typeof peopleWithComputed<CollectionEntry<"people">>>
+>;
