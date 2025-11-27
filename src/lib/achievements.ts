@@ -12,14 +12,14 @@ type Achievement = {
   achievementLevels?: AchievementLevel[];
 };
 
-export const DEFAULT_ACHIEVEMENT_LEVELS = [
+const DEFAULT_ACHIEVEMENT_LEVELS = [
   { label: "stone", limit: 1 },
   { label: "bronze", limit: 2 },
   { label: "silver", limit: 5 },
   { label: "gold", limit: 10 },
 ];
 
-export const ACHIEVEMENTS: Achievement[] = [
+const ACHIEVEMENTS: Achievement[] = [
   { slug: "speakingCount" },
   { slug: "fullDayEventsOrganizingCount" },
   { slug: "meetupOrganizingCount" },
@@ -34,3 +34,21 @@ export const ACHIEVEMENTS: Achievement[] = [
     ],
   },
 ];
+
+export const getPersonAchievements = (personComputed: PersonWithComputed) => {
+  return ACHIEVEMENTS.map((achievement) => {
+    const value = personComputed.data._computed[achievement.slug] ?? 0;
+
+    const levels = achievement.achievementLevels ?? DEFAULT_ACHIEVEMENT_LEVELS;
+
+    const reachedLevel =
+      [...levels]
+        .sort((a, b) => b.limit - a.limit)
+        .find((level) => value >= level.limit)?.label ?? null;
+
+    return {
+      slug: achievement.slug,
+      level: reachedLevel,
+    };
+  });
+};
