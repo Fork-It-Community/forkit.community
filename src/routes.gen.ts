@@ -22,6 +22,8 @@ const ROUTES_CONFIG = {
         "_cfp-cover": {},
         "_cfp-open-insta": {},
         "_cfp-open": {},
+        "_cfp-still-open-insta": {},
+        "_cfp-still-open": {},
         "_d-1-announcement-insta": {},
         "_d-1-announcement": {},
         "_d-10-announcement-insta": {},
