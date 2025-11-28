@@ -16,6 +16,7 @@ import {
 import { IoGitBranch } from "react-icons/io5";
 import { LuMail, LuMessageCircle } from "react-icons/lu";
 import { SiOpenstreetmap } from "react-icons/si";
+import { TbWorld } from "react-icons/tb";
 
 type SocialsLevel = "primary" | "secondary";
 
@@ -96,6 +97,7 @@ export const SOCIALS_TYPE_MAP = {
   mastodon: FaMastodon,
   source: IoGitBranch,
   openstreetmap: SiOpenstreetmap,
+  website: TbWorld,
 } satisfies Record<SocialType, FC>;
 
 export const GLOBAL_NEWSLETTER_LINK =
