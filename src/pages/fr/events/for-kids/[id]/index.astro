@@ -244,7 +244,16 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
         </div>
         <div class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5">
           {forKidsEvent.data._computed.organizers.map((organizer) => (
-            <People people={organizer} />
+            <People
+              people={{
+                ...organizer,
+                data: {
+                  ...organizer.data,
+                  job: undefined,
+                  company: undefined,
+                },
+              }}
+            />
           ))}
         </div>
       </section>
