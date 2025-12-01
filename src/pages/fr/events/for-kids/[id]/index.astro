@@ -249,7 +249,7 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
                 ...organizer,
                 data: {
                   ...organizer.data,
-                  job: undefined,
+                  job: organizer.data._computed.role,
                   company: undefined,
                 },
               }}
