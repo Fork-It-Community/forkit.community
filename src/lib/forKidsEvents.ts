@@ -170,7 +170,9 @@ export async function forKidsEventWithComputed<
       workshops.flatMap(
         (workshop) =>
           workshop?.data.animators?.map(async (animator) => {
-            if (!animator) return;
+            if (!animator) {
+              return;
+            }
             const person = await getEntry("people", animator.id);
 
             if (!person) {
