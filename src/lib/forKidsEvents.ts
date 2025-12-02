@@ -3,6 +3,8 @@ import { isEventPublished } from "./events";
 import dayjs from "dayjs";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
+import { match } from "ts-pattern";
+import { entries, isNonNullish, isNullish } from "remeda";
 
 export async function getForKidsEventsCollection() {
   return Promise.all(
@@ -37,6 +39,10 @@ export async function getForKidsEventNavItems(id: string) {
     {
       href: `${route}#presentation`,
       label: "Présentation",
+    },
+    {
+      href: `${route}#organizers`,
+      label: "Organisateurs",
     },
     {
       href: `${route}#schedule`,
@@ -153,6 +159,61 @@ export async function forKidsEventWithComputed<
     ? await getEntry("countries", city.data.country.id)
     : undefined;
 
+  const workshops = await Promise.all(
+    event.data.workshops?.map((workshop) =>
+      getEntry("forKidsWorkshop", workshop.id),
+    ) || [],
+  );
+
+  const animators = (
+    await Promise.all(
+      workshops.flatMap(
+        (workshop) =>
+          workshop?.data.animators?.map(async (animator) => {
+            if (!animator) {
+              return;
+            }
+            const person = await getEntry("people", animator.id);
+
+            if (!person) {
+              return;
+            }
+
+            return {
+              ...person,
+              data: {
+                ...person.data,
+                _computed: {},
+              },
+            };
+          }) ?? [],
+      ),
+    )
+  ).filter((i) => !!i);
+
+  const organizers = (
+    await Promise.all(
+      (event.data.organizers ?? []).map(async (organizer) => {
+        if (!organizer.person || !organizer.person.id) {
+          return;
+        }
+        const person = await getEntry("people", organizer.person.id);
+
+        if (isNullish(person)) {
+          return;
+        }
+
+        return {
+          ...person,
+          data: {
+            ...person.data,
+            _computed: { role: organizer.role },
+          },
+        };
+      }),
+    )
+  ).filter(isNonNullish);
+
   return {
     ...event,
     data: {
@@ -161,7 +222,71 @@ export async function forKidsEventWithComputed<
         name: `For Kids ${city?.data.name}, ${country?.data.name}, ${event.data.date.getFullYear()}`,
         city,
         country,
+        animators,
+        organizers,
       },
     },
   };
+}
+
+export async function getPersonForKids(
+  person: CollectionEntry<"people">,
+  { limit }: { limit?: number } = {},
+) {
+  const forKidsEvents = await getForKidsEventsCollection();
+
+  return forKidsEvents
+    .filter((forKidsEvent) => {
+      const isAnimator = forKidsEvent.data._computed.animators?.some(
+        (animator) => animator.id === person.id,
+      );
+      const isOrganizer = forKidsEvent.data._computed.organizers?.some(
+        (organizer) => organizer.id === person.id,
+      );
+      return isAnimator || isOrganizer;
+    })
+    .slice(0, limit);
+}
+
+const ROLE_MAPPINGS = {
+  organizers: "organizer",
+  animators: "animator",
+} as const;
+
+export function getPersonRolesInEventForKids(
+  event: ForKidsEventComputed,
+  person: CollectionEntry<"people">,
+) {
+  const roles = new Set<string>();
+
+  for (const [key, role] of entries(ROLE_MAPPINGS)) {
+    const people = match(key)
+      .with("animators", (k) =>
+        event.data._computed[k].map((i) => ({
+          ...i,
+          type: "animators" as const,
+        })),
+      )
+      .with("organizers", (k) =>
+        event.data._computed[k].map((i) => ({
+          ...i,
+          type: "organizers" as const,
+        })),
+      )
+      .exhaustive();
+
+    const foundPerson = people.find((p) => p.id === person.id);
+    if (foundPerson) {
+      roles.add(role);
+
+      if (
+        foundPerson.type === "organizers" &&
+        foundPerson.data._computed.role
+      ) {
+        roles.add(foundPerson.data._computed.role);
+      }
+    }
+  }
+
+  return roles;
 }

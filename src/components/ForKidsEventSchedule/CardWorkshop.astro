@@ -1,6 +1,7 @@
 ---
+import SpeakerForCard from "@/components/Schedule/SpeakerForCard.astro";
 import { Image } from "astro:assets";
-import { render } from "astro:content";
+import { getEntries, render } from "astro:content";
 import { type CollectionEntry, getEntry } from "astro:content";
 
 interface Props {
@@ -20,6 +21,8 @@ if (!workshop) {
 }
 
 const { Content } = await render(workshop);
+
+const animators = await getEntries(workshop.data.animators ?? []);
 ---
 
 {
@@ -34,9 +37,19 @@ const { Content } = await render(workshop);
         <p class="text-balance font-heading text-lg font-medium leading-tight tracking-wider text-white transition group-hover:text-for-kids-primary-foreground">
           {workshop.data.title}
         </p>
-        <p class="text-sm">
+        <p class="text-md">
           De {workshop.data.ageRange.from} ans à {workshop.data.ageRange.to} ans
         </p>
+        {!!animators.length && (
+          <div class="grid grid-cols-2 gap-3 md:grid-cols-3">
+            {animators.map((animator) => (
+              <SpeakerForCard
+                name={animator.data.name}
+                avatar={animator.data.avatar ?? null}
+              />
+            ))}
+          </div>
+        )}
         <Content />
       </div>
     </div>

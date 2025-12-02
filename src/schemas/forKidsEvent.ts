@@ -15,6 +15,15 @@ export const zForKidsEvent = ({ image }: SchemaContext) =>
           endDate: z.date().optional(),
         })
         .optional(),
+      organizers: z
+        .array(
+          z.object({
+            person: reference("people"),
+            role: z.string().optional(),
+          }),
+        )
+        .optional()
+        .describe("Collection of people that organize the event"),
     }),
   );
 export type ForKidsEvent = z.infer<ReturnType<typeof zForKidsEvent>>;
