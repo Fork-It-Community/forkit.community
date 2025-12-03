@@ -98,6 +98,7 @@ const ROUTES_CONFIG = {
           "_og-image": {},
           "_utils": {}
         },
+        "organize-new-event": {},
         "organizers": {
           "assets": {
             ":__image.:__type": {},

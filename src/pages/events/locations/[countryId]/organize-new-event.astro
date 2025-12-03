@@ -1,0 +1,146 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import { SEO } from "astro-seo";
+import bgImage from "@/assets/images/events.jpeg";
+import { BackButton } from "@/components/BackButton";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
+import { getUpcomingEvents } from "@/lib/events";
+import EventsGrid from "@/components/EventsGrid/index.astro";
+import StayTuned from "@/components/StayTuned/index.astro";
+import { getCollection } from "astro:content";
+import { getEntry } from "astro:content";
+import People from "@/components/People/index.astro";
+
+export async function getStaticPaths() {
+  const countries = await getCollection("countries");
+
+  return countries.map((country) => {
+    return {
+      params: { countryId: country.id },
+    };
+  });
+}
+const events = await getUpcomingEvents();
+
+const { countryId } = Astro.params;
+
+const country = await getEntry("countries", countryId);
+
+if (!country) {
+  return new Response(null, {
+    status: 404,
+    statusText: "Not found",
+  });
+}
+
+const people = await getCollection("people");
+
+const organizers = people.filter(
+  (org) => org.id === "rudy-baer" || org.id === "aziz-ouertani",
+);
+
+const peopleFromCountry = people.filter(
+  (person) => person.data.country?.id === countryId,
+);
+---
+
+<MainLayout>
+  <SEO slot="seo" title={`Organize new event`} description={""} />
+  <div class="mx-auto w-full max-w-screen-lg px-4 py-4">
+    <BackButton
+      href={lunalink(ROUTES.events.__path, {})}
+      client:load
+      contextLabel="Fork It! Events"
+    />
+    <MainPageTitle
+      title=`There is no event in ${country.data.name} yet`
+      subtitle="If you want to organize one, feel free to contact us and become the first organizer in this country"
+      imageSrc={bgImage}
+    />
+
+    <section
+      class="relative mx-auto flex w-full max-w-screen-lg flex-col gap-12 px-4 pb-12 md:pb-24"
+    >
+      <div class="flex flex-col gap-2">
+        <h2
+          id="organizers"
+          class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest text-white md:text-3xl"
+        >
+          People in the community from {country.data.name}
+        </h2>
+        <p class="text-balance text-xs tracking-widest opacity-60 md:text-sm">
+          Feel free to extand the community in {country.data.name}
+        </p>
+      </div>
+      <div
+        class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5"
+      >
+        {
+          peopleFromCountry?.map((people) => {
+            return (
+              <People
+                people={{
+                  ...people,
+                  data: {
+                    ...people.data,
+                    job: undefined,
+                    company: undefined,
+                  },
+                }}
+              />
+            );
+          })
+        }
+      </div>
+    </section>
+
+    <section
+      class="relative mx-auto flex w-full max-w-screen-lg flex-col gap-12 px-4 pb-12 md:pb-24"
+    >
+      <div class="flex flex-col gap-2">
+        <h2
+          id="organizers"
+          class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest text-white md:text-3xl"
+        >
+          Other worldwide organizers
+        </h2>
+        <p class="text-balance text-xs tracking-widest opacity-60 md:text-sm">
+          Contact them if you want more information on event organization
+        </p>
+      </div>
+      <div
+        class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5"
+      >
+        {
+          organizers?.map((organizer) => {
+            return (
+              <People
+                people={{
+                  ...organizer,
+                  data: {
+                    ...organizer.data,
+                    job: undefined,
+                    company: undefined,
+                  },
+                }}
+              />
+            );
+          })
+        }
+      </div>
+    </section>
+
+    <div class="flex flex-col gap-12 md:gap-24">
+      <StayTuned />
+      {
+        !!events.length && (
+          <div class="mx-auto w-full max-w-screen-lg px-4">
+            <EventsGrid events={events} title="Checkout our upcoming events" />
+          </div>
+        )
+      }
+    </div>
+  </div>
+</MainLayout>
