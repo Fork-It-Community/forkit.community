@@ -14,11 +14,10 @@ const { name, avatar, role } = Astro.props;
 
 <div class="flex items-center gap-2 sm:gap-3">
   <Image
-    class="aspect-square rounded-sm"
+    class="aspect-square w-10 rounded-sm"
     src={avatar ?? placeholder}
     alt={name}
-    width={40}
-    height={40}
+    width={250}
   />
   <div class="flex flex-col">
     <p
