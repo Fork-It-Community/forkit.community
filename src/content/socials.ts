@@ -12,6 +12,7 @@ import {
   FaYoutube,
   FaFacebook,
   FaMastodon,
+  FaTiktok,
 } from "react-icons/fa6";
 import { IoGitBranch } from "react-icons/io5";
 import { LuMail, LuMessageCircle } from "react-icons/lu";
@@ -98,6 +99,7 @@ export const SOCIALS_TYPE_MAP = {
   source: IoGitBranch,
   openstreetmap: SiOpenstreetmap,
   website: TbWorld,
+  tiktok: FaTiktok,
 } satisfies Record<SocialType, FC>;
 
 export const GLOBAL_NEWSLETTER_LINK =
