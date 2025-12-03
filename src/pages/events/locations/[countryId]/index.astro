@@ -1,12 +1,10 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
-
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import SEO from "@/components/SEO/index.astro";
 import { getEventsByCountry, getEventsCollection, without } from "@/lib/events";
 import EventsList from "@/components/EventsList/index.astro";
-import { getCollection } from "astro:content";
-import { getEntry } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import { BackButton } from "@/components/BackButton";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
@@ -18,16 +16,25 @@ import StayTuned from "@/components/StayTuned/index.astro";
 export async function getStaticPaths() {
   const countries = await getCollection("countries");
   const events = await getEventsCollection();
-  return countries
-    .filter((country) =>
-      events.some((event) => event.data._computed.country?.id === country.id),
-    )
-    .map((country) => ({
+
+  return countries.map((country) => {
+    const hasEvents = events.some(
+      (event) => event.data._computed.country?.id === country.id,
+    );
+
+    return {
       params: { countryId: country.id },
-    }));
+      props: { hasEvents },
+    };
+  });
 }
 
 const { countryId } = Astro.params;
+const { hasEvents } = Astro.props;
+
+if (!hasEvents) {
+  return Astro.redirect(`/events/locations/${countryId}/organize-new-event`);
+}
 
 const country = await getEntry("countries", countryId);
 
