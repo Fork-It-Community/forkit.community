@@ -1,5 +1,7 @@
 ---
 import SpeakerForCard from "@/components/Schedule/SpeakerForCard.astro";
+import { ROUTES } from "@/routes.gen";
+import { lunalink } from "@bearstudio/lunalink";
 import { Image } from "astro:assets";
 import { getEntries, render } from "astro:content";
 import { type CollectionEntry, getEntry } from "astro:content";
@@ -43,10 +45,17 @@ const animators = await getEntries(workshop.data.animators ?? []);
         {!!animators.length && (
           <div class="grid grid-cols-2 gap-3 md:grid-cols-3">
             {animators.map((animator) => (
-              <SpeakerForCard
-                name={animator.data.name}
-                avatar={animator.data.avatar ?? null}
-              />
+              <a
+                href={lunalink(ROUTES.people[":id"].__path, {
+                  id: animator.id,
+                })}
+                class="hover:underline"
+              >
+                <SpeakerForCard
+                  name={animator.data.name}
+                  avatar={animator.data.avatar ?? null}
+                />
+              </a>
             ))}
           </div>
         )}
