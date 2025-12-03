@@ -36,10 +36,7 @@ const ogImage = new URL(
 const organizers = await getPeopleFromReference(country.data.organizers ?? []);
 
 if (organizers.length === 0) {
-  return new Response(null, {
-    status: 404,
-    statusText: "Not found",
-  });
+  return Astro.redirect(`/events/locations/${countryId}/organize-new-event`);
 }
 ---
 
