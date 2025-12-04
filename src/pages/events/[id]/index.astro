@@ -23,7 +23,7 @@ import {
 } from "@/lib/events";
 import { cn } from "@/lib/utils-client";
 import { Image } from "astro:assets";
-import { getEntries, render } from "astro:content";
+import { getEntries, getEntry, render } from "astro:content";
 import {
   MdArrowForward,
   MdLocationPin,
@@ -42,7 +42,6 @@ import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { isEmpty } from "remeda";
 import RelatedEvents from "@/components/RelatedEvents/index.astro";
-import { getEntry } from "astro:content";
 
 export async function getStaticPaths() {
   const allEvents = await getEventsCollection();
@@ -417,7 +416,12 @@ const ctaEventMetadata = {
           !!event.data.location?.image && "md:flex-row-reverse",
         )}
       >
-        <div class="flex-1 md:-mr-4">
+        <div
+          class={cn(
+            "flex-1 md:-ml-4",
+            !!event.data.location?.image && "md:-mr-4",
+          )}
+        >
           <Image
             class="aspect-video w-full bg-black/20 object-cover md:rounded-sm"
             src={mathiasArlaudForHanoi2026.data.avatar}
