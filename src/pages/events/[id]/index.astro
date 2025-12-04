@@ -121,7 +121,10 @@ const eventCustomBlocks = await Promise.all(
 
 const getEventBlockFor = (
   slot: CollectionEntry<"eventsCustomBlocks">["data"]["slot"],
-) => eventCustomBlocks.filter((b) => b.data.slot === slot);
+) =>
+  eventCustomBlocks
+    .filter((b) => b.data.slot === slot)
+    .sort((a, b) => a.data.order - b.data.order);
 ---
 
 <EventLayout event={event} ogImage={ogImage}>
