@@ -1,0 +1,27 @@
+---
+import type { AstroComponentFactory } from "astro/runtime/server/render/astro/factory.js";
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+  blocks: (CollectionEntry<"eventsCustomBlocks"> & {
+    Content: AstroComponentFactory;
+  })[];
+  className?: string;
+};
+
+const { blocks, className = "" } = Astro.props;
+---
+
+{
+  blocks.length > 0 && (
+    <div class={`flex flex-col gap-24 py-24 ${className}`}>
+      {blocks.map((block) => {
+        return (
+          <div>
+            <block.Content />
+          </div>
+        );
+      })}
+    </div>
+  )
+}
