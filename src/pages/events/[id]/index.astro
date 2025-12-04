@@ -42,6 +42,7 @@ import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { isEmpty } from "remeda";
 import RelatedEvents from "@/components/RelatedEvents/index.astro";
+import { getEntry } from "astro:content";
 
 export async function getStaticPaths() {
   const allEvents = await getEventsCollection();
@@ -81,6 +82,10 @@ const coOrganizers = (await getEntries(event.data.coOrganizers ?? [])).filter(
 const sponsors = await getEntries(
   (event.data.sponsors ?? []).map((s) => s.slug),
 );
+const mathiasArlaudForHanoi2026 =
+  event.id === "2026-vietnam-hanoi"
+    ? await getEntry("people", "mathias-arlaud")
+    : null;
 const navItems = await getEventNavItems(event.id);
 
 const { Content } = await render(event);
@@ -261,17 +266,6 @@ const ctaEventMetadata = {
     )
   }
 
-  <!-- Stay tuned  -->
-  {
-    dayjs(event.data.date).isAfter(dayjs()) &&
-      (!event.data.tickets?.link || !event.data.schedule) &&
-      event.data._computed.country && (
-        <div id="stay-updated" class="relative scroll-mt-12 py-24 md:py-12">
-          <StayTuned country={event.data._computed.country} />
-        </div>
-      )
-  }
-
   <!-- After event  -->
   {
     !!event.data.afterEventContent && (
@@ -413,6 +407,57 @@ const ctaEventMetadata = {
     )
   }
 
+  <!-- TODO REFACTO -->
+  {
+    !!mathiasArlaudForHanoi2026 && !!mathiasArlaudForHanoi2026.data.avatar && (
+      <article
+        id="venue"
+        class={cn(
+          "relative mx-auto flex w-full max-w-screen-2xl scroll-m-8 flex-col gap-8 py-8 md:flex-row md:gap-4 md:py-24",
+          !!event.data.location?.image && "md:flex-row-reverse",
+        )}
+      >
+        <div class="flex-1 md:-mr-4">
+          <Image
+            class="aspect-video w-full bg-black/20 object-cover md:rounded-sm"
+            src={mathiasArlaudForHanoi2026.data.avatar}
+            alt={mathiasArlaudForHanoi2026.data.name}
+            width={512}
+            height={512}
+          />
+        </div>
+        <div class="flex flex-1 flex-col items-center justify-center px-4 md:px-12">
+          <Prose>
+            <div class="not-prose flex flex-col gap-3">
+              <h2 class="font-heading text-2xl font-medium uppercase tracking-widest text-white">
+                Opening Keynote
+              </h2>
+              <div class="flex gap-2 text-white">
+                <div class="not-italic leading-tight">
+                  <strong>{mathiasArlaudForHanoi2026.data.name}</strong>
+                  <br />
+                  Symphony Core Team
+                </div>
+              </div>
+            </div>
+
+            <p>
+              Mathias Arlaud is a member of the Symfony Core Team and a
+              passionate advocate for clean, maintainable PHP architecture.
+              Known for his pragmatic approach to software design, Mathias has
+              contributed significantly to the Symfony ecosystem.
+            </p>
+            <p>
+              He’s also a regular conference speaker, sharing insights on domain
+              modeling, modern Symfony features, and long-term maintainability
+              with a focus on practical, business-oriented design.
+            </p>
+          </Prose>
+        </div>
+      </article>
+    )
+  }
+
   <!-- Venue -->
   {
     event.data.location && (
@@ -505,6 +550,17 @@ const ctaEventMetadata = {
         </TiltedCard>
       </div>
     )
+  }
+
+  <!-- Stay tuned  -->
+  {
+    dayjs(event.data.date).isAfter(dayjs()) &&
+      (!event.data.tickets?.link || !event.data.schedule) &&
+      event.data._computed.country && (
+        <div id="stay-updated" class="relative scroll-mt-12 py-24 md:py-12">
+          <StayTuned country={event.data._computed.country} />
+        </div>
+      )
   }
 
   <!-- Schedule & Speakers -->
