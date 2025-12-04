@@ -20,10 +20,11 @@ import {
   getEventDisplayDate,
   shouldShowProspectus,
   getEventDisplayType,
+  getEventCustomBlocks,
 } from "@/lib/events";
 import { cn } from "@/lib/utils-client";
 import { Image } from "astro:assets";
-import { getEntries, getEntry, render } from "astro:content";
+import { getEntries, render } from "astro:content";
 import {
   MdArrowForward,
   MdLocationPin,
@@ -42,6 +43,8 @@ import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { isEmpty } from "remeda";
 import RelatedEvents from "@/components/RelatedEvents/index.astro";
+import type { CollectionEntry } from "astro:content";
+import CustomBlockEventSlot from "@/components/CustomBlockEventSlot/index.astro";
 
 export async function getStaticPaths() {
   const allEvents = await getEventsCollection();
@@ -81,13 +84,10 @@ const coOrganizers = (await getEntries(event.data.coOrganizers ?? [])).filter(
 const sponsors = await getEntries(
   (event.data.sponsors ?? []).map((s) => s.slug),
 );
-const mathiasArlaudForHanoi2026 =
-  event.id === "2026-vietnam-hanoi"
-    ? await getEntry("people", "mathias-arlaud")
-    : null;
+
 const navItems = await getEventNavItems(event.id);
 
-const { Content } = await render(event);
+const { Content: EventContent } = await render(event);
 
 const location: Place | undefined = event.data.location
   ? {
@@ -109,6 +109,19 @@ const ctaEventMetadata = {
   tickets: event.data.tickets,
   prospectus: event.data.prospectus,
 };
+
+const eventCustomBlocksData = await getEventCustomBlocks(event);
+
+const eventCustomBlocks = await Promise.all(
+  eventCustomBlocksData.map(async (entry) => {
+    const { Content } = await render(entry);
+    return { ...entry, Content };
+  }),
+);
+
+const getEventBlockFor = (
+  slot: CollectionEntry<"eventsCustomBlocks">["data"]["slot"],
+) => eventCustomBlocks.filter((b) => b.data.slot === slot);
 ---
 
 <EventLayout event={event} ogImage={ogImage}>
@@ -239,6 +252,8 @@ const ctaEventMetadata = {
     <QuickAccess navItems={navItems} />
   </div>
 
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterHero")} />
+
   {
     !!sponsors.length && (
       <div class="hide-scrollbar overflow-auto">
@@ -264,6 +279,8 @@ const ctaEventMetadata = {
       </div>
     )
   }
+
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterFirstSponsors")} />
 
   <!-- After event  -->
   {
@@ -405,8 +422,9 @@ const ctaEventMetadata = {
       </div>
     )
   }
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterAfterEvent")} />
 
-  <!-- TODO REFACTO -->
+  <!-- TODO REFACTO
   {
     !!mathiasArlaudForHanoi2026 && !!mathiasArlaudForHanoi2026.data.avatar && (
       <article
@@ -460,7 +478,7 @@ const ctaEventMetadata = {
         </div>
       </article>
     )
-  }
+  } -->
 
   <!-- Venue -->
   {
@@ -515,12 +533,14 @@ const ctaEventMetadata = {
               />
             )}
 
-            <Content />
+            <EventContent />
           </Prose>
         </div>
       </article>
     )
   }
+
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterVenue")} />
 
   <!-- CFP -->
   {
@@ -555,6 +575,7 @@ const ctaEventMetadata = {
       </div>
     )
   }
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterCFP")} />
 
   <!-- Stay tuned  -->
   {
@@ -566,6 +587,7 @@ const ctaEventMetadata = {
         </div>
       )
   }
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterStayTuned")} />
 
   <!-- Schedule & Speakers -->
   <div
@@ -616,8 +638,11 @@ const ctaEventMetadata = {
       )
     }
   </div>
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterScheduleAndSpeaker")} />
 
   {event.data.feedback && <FeedbackCTA href={event.data.feedback.link} />}
+
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterFeedback")} />
 
   {
     !!sponsors.length && (
@@ -642,6 +667,7 @@ const ctaEventMetadata = {
       </div>
     )
   }
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterSecondSponsors")} />
 
   {
     !isEmpty(event.data._computed.organizers) && (
@@ -673,6 +699,7 @@ const ctaEventMetadata = {
       </section>
     )
   }
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterOrganizers")} />
 
   <!-- Prospectus -->
   {
@@ -702,12 +729,19 @@ const ctaEventMetadata = {
       </div>
     )
   }
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterProspectus")} />
 
   <EventVibes countryId={event.data._computed.country?.id ?? ""} />
 
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterEventVibes")} />
+
   {event.data.faq && <FAQ client:load faq={event.data.faq} />}
 
+  <CustomBlockEventSlot blocks={getEventBlockFor("AfterFAQ")} />
+
   {!!partners.length && <PartnersBlock partners={partners} />}
+
+  <CustomBlockEventSlot blocks={getEventBlockFor("AfterPartners")} />
 
   <div class="relative flex w-full flex-col gap-6 px-6 py-12">
     <a
@@ -753,7 +787,11 @@ const ctaEventMetadata = {
     </a>
   </div>
 
+  <CustomBlockEventSlot blocks={getEventBlockFor("AfterAssets")} />
+
   <RelatedEvents currentEvent={event} relatedEvents={relatedEvents} />
+
+  <CustomBlockEventSlot blocks={getEventBlockFor("AfterRelatedEvents")} />
 
   <div class="py-8 md:py-12">
     <JoinTheCommunity />
