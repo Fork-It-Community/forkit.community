@@ -3,7 +3,7 @@ import type { AstroComponentFactory } from "astro/runtime/server/render/astro/fa
 import type { CollectionEntry } from "astro:content";
 
 type Props = {
-  blocks: (CollectionEntry<"eventsCustomBlocks"> & {
+  blocks: (CollectionEntry<"eventsBlocks"> & {
     Content: AstroComponentFactory;
   })[];
   className?: string;

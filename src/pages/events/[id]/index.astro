@@ -20,7 +20,7 @@ import {
   getEventDisplayDate,
   shouldShowProspectus,
   getEventDisplayType,
-  getEventCustomBlocks,
+  getEventBlocks,
 } from "@/lib/events";
 import { cn } from "@/lib/utils-client";
 import { Image } from "astro:assets";
@@ -110,19 +110,19 @@ const ctaEventMetadata = {
   prospectus: event.data.prospectus,
 };
 
-const eventCustomBlocksData = await getEventCustomBlocks(event);
+const eventBlocksData = await getEventBlocks(event);
 
-const eventCustomBlocks = await Promise.all(
-  eventCustomBlocksData.map(async (entry) => {
+const eventBlocks = await Promise.all(
+  eventBlocksData.map(async (entry) => {
     const { Content } = await render(entry);
     return { ...entry, Content };
   }),
 );
 
 const getEventBlockFor = (
-  slot: CollectionEntry<"eventsCustomBlocks">["data"]["slot"],
+  slot: CollectionEntry<"eventsBlocks">["data"]["slot"],
 ) =>
-  eventCustomBlocks
+  eventBlocks
     .filter((b) => b.data.slot === slot)
     .sort((a, b) => a.data.order - b.data.order);
 ---
