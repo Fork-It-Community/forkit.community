@@ -19,8 +19,8 @@ const SLOTS_ENUM = z.enum([
   "AfterRelatedEvents",
 ]);
 
-export type EventCustomBlocks = z.infer<ReturnType<typeof zEventCustomBlocks>>;
-export const zEventCustomBlocks = () =>
+export type EventBlocks = z.infer<ReturnType<typeof zEventBlocks>>;
+export const zEventBlocks = () =>
   z.object({
     title: z.string().optional(),
     slot: SLOTS_ENUM,
