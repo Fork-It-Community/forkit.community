@@ -4,7 +4,6 @@ import type { SocialType } from "@/schemas/utils";
 import type { FC } from "react";
 import {
   FaBluesky,
-  FaDiscord,
   FaGithub,
   FaInstagram,
   FaLinkedin,
@@ -13,6 +12,7 @@ import {
   FaFacebook,
   FaMastodon,
   FaTiktok,
+  FaWhatsapp,
 } from "react-icons/fa6";
 import { IoGitBranch } from "react-icons/io5";
 import { LuMail, LuMessageCircle } from "react-icons/lu";
@@ -52,16 +52,10 @@ const SOCIALS: Array<{
     level: "primary",
   },
   {
-    label: "BlueSky",
-    href: "https://bsky.app/profile/forkit.community",
-    icon: FaBluesky,
-    level: "secondary",
-  },
-  {
     label: "X Twitter",
     href: "https://twitter.com/ForkitCommunity",
     icon: FaXTwitter,
-    level: "primary",
+    level: "secondary",
   },
   {
     label: "Youtube",
@@ -70,10 +64,10 @@ const SOCIALS: Array<{
     level: "primary",
   },
   {
-    label: "Discord",
-    href: "https://discord.gg/MEJ6TfJC2H",
-    icon: FaDiscord,
-    level: "secondary",
+    label: "WhatsApp",
+    href: "https://chat.whatsapp.com/HCiI5g0idD50cpx1yqD12Z",
+    icon: FaWhatsapp,
+    level: "primary",
   },
   {
     label: "GitHub",
