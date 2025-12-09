@@ -41,7 +41,6 @@ const ROUTES_CONFIG = {
         "_save-the-date": {},
         "_schedule-short": {},
         "_tickets-available-insta": {},
-        "_tickets-available-square": {},
         "_tickets-available": {},
         "_utils": {},
         "_youtube-banner": {},
