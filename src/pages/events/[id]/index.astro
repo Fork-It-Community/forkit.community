@@ -252,11 +252,15 @@ const ctaEventMetadata = {
               title={sponsor.data.name}
             >
               <Image
-                class="w-24 max-w-none flex-none md:w-40"
+                class={cn(
+                  "w-24 max-w-none flex-none md:w-40",
+                  sponsors.length <= 3 && "w-32 md:w-52",
+                  sponsors.length === 1 && "-my-8 w-48 md:w-64",
+                )}
                 src={sponsor.data.logos.noBg}
                 alt={sponsor.data.name}
-                width={192}
-                height={116}
+                width={384}
+                height={230}
               />
             </a>
           ))}
