@@ -1,4 +1,5 @@
 ---
+import { cn } from "@/lib/utils-client";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 
@@ -20,7 +21,11 @@ const { partners } = Astro.props;
   </h2>
 
   <div
-    class="flex flex-wrap items-center justify-center gap-2 *:w-32 md:gap-4 md:*:w-40"
+    class={cn(
+      "flex flex-wrap items-center justify-center gap-2 *:w-32 md:gap-4 md:*:w-40",
+      partners.length <= 3 && "*:w-48 md:*:w-64",
+      partners.length === 1 && "*:w-64 md:*:w-96",
+    )}
   >
     {
       partners.map((partner) => {
