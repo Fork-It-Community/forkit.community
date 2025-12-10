@@ -36,9 +36,7 @@ const upcomingEvents = (await getUpcomingEvents())
       event.id !== upcomingMajorEvent?.id && event.data.status !== "cancelled",
   )
   .slice(0, 3);
-const podcasts = (
-  await getPodcastsEpisodesCollection({ limit: 5 })
-).toReversed();
+const podcasts = await getPodcastsEpisodesCollection({ limit: 5 });
 const news = await getNewsCollection({ limit: 3 });
 const partners = await getEntries<"partners">(
   (HOME_CONFIG.partners ?? []).map((partner) => ({
