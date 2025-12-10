@@ -22,7 +22,7 @@ export async function getPodcastsEpisodesCollection({
     (await getCollection("episodes", ({ data }) =>
       import.meta.env.PROD ? dayjs().isAfter(data.releaseDate) : true,
     )) ?? []
-  ).sort((a, b) => dayjs(a.data.releaseDate).diff(b.data.releaseDate));
+  ).sort((a, b) => dayjs(b.data.releaseDate).diff(a.data.releaseDate));
 
   if (limit) {
     return episodes.slice(0, limit);
