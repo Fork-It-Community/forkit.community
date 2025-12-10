@@ -20,10 +20,11 @@ import {
   getEventDisplayDate,
   shouldShowProspectus,
   getEventDisplayType,
+  getEventBlocks,
 } from "@/lib/events";
 import { cn } from "@/lib/utils-client";
 import { Image } from "astro:assets";
-import { getEntries, getEntry, render } from "astro:content";
+import { getEntries, render } from "astro:content";
 import {
   MdArrowForward,
   MdLocationPin,
@@ -42,6 +43,8 @@ import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { isEmpty } from "remeda";
 import RelatedEvents from "@/components/RelatedEvents/index.astro";
+import type { CollectionEntry } from "astro:content";
+import CustomBlockEventSlot from "@/components/CustomBlockEventSlot/index.astro";
 
 export async function getStaticPaths() {
   const allEvents = await getEventsCollection();
@@ -81,13 +84,10 @@ const coOrganizers = (await getEntries(event.data.coOrganizers ?? [])).filter(
 const sponsors = await getEntries(
   (event.data.sponsors ?? []).map((s) => s.slug),
 );
-const mathiasArlaudForHanoi2026 =
-  event.id === "2026-vietnam-hanoi"
-    ? await getEntry("people", "mathias-arlaud")
-    : null;
+
 const navItems = await getEventNavItems(event.id);
 
-const { Content } = await render(event);
+const { Content: EventContent } = await render(event);
 
 const location: Place | undefined = event.data.location
   ? {
@@ -109,6 +109,22 @@ const ctaEventMetadata = {
   tickets: event.data.tickets,
   prospectus: event.data.prospectus,
 };
+
+const eventBlocksData = await getEventBlocks(event);
+
+const eventBlocks = await Promise.all(
+  eventBlocksData.map(async (entry) => {
+    const { Content } = await render(entry);
+    return { ...entry, Content };
+  }),
+);
+
+const getEventBlockFor = (
+  slot: CollectionEntry<"eventsBlocks">["data"]["slot"],
+) =>
+  eventBlocks
+    .filter((b) => b.data.slot === slot)
+    .sort((a, b) => a.data.order - b.data.order);
 ---
 
 <EventLayout event={event} ogImage={ogImage}>
@@ -239,6 +255,8 @@ const ctaEventMetadata = {
     <QuickAccess navItems={navItems} />
   </div>
 
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterHero")} />
+
   {
     !!sponsors.length && (
       <div class="hide-scrollbar overflow-auto">
@@ -268,6 +286,8 @@ const ctaEventMetadata = {
       </div>
     )
   }
+
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterFirstSponsors")} />
 
   <!-- After event  -->
   {
@@ -409,62 +429,7 @@ const ctaEventMetadata = {
       </div>
     )
   }
-
-  <!-- TODO REFACTO -->
-  {
-    !!mathiasArlaudForHanoi2026 && !!mathiasArlaudForHanoi2026.data.avatar && (
-      <article
-        id="venue"
-        class={cn(
-          "relative mx-auto flex w-full max-w-screen-2xl scroll-m-8 flex-col gap-8 py-8 md:flex-row md:gap-4 md:py-24",
-          !!event.data.location?.image && "md:flex-row-reverse",
-        )}
-      >
-        <div
-          class={cn(
-            "flex-1 md:-ml-4",
-            !!event.data.location?.image && "md:-mr-4",
-          )}
-        >
-          <Image
-            class="aspect-video w-full bg-black/20 object-cover md:rounded-sm"
-            src={mathiasArlaudForHanoi2026.data.avatar}
-            alt={mathiasArlaudForHanoi2026.data.name}
-            width={512}
-            height={512}
-          />
-        </div>
-        <div class="flex flex-1 flex-col items-center justify-center px-4 md:px-12">
-          <Prose>
-            <div class="not-prose flex flex-col gap-3">
-              <h2 class="font-heading text-2xl font-medium uppercase tracking-widest text-white">
-                Opening Keynote
-              </h2>
-              <div class="flex gap-2 text-white">
-                <div class="not-italic leading-tight">
-                  <strong>{mathiasArlaudForHanoi2026.data.name}</strong>
-                  <br />
-                  Symphony Core Team
-                </div>
-              </div>
-            </div>
-
-            <p>
-              Mathias Arlaud is a member of the Symfony Core Team and a
-              passionate advocate for clean, maintainable PHP architecture.
-              Known for his pragmatic approach to software design, Mathias has
-              contributed significantly to the Symfony ecosystem.
-            </p>
-            <p>
-              He’s also a regular conference speaker, sharing insights on domain
-              modeling, modern Symfony features, and long-term maintainability
-              with a focus on practical, business-oriented design.
-            </p>
-          </Prose>
-        </div>
-      </article>
-    )
-  }
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterAfterEvent")} />
 
   <!-- Venue -->
   {
@@ -519,12 +484,14 @@ const ctaEventMetadata = {
               />
             )}
 
-            <Content />
+            <EventContent />
           </Prose>
         </div>
       </article>
     )
   }
+
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterVenue")} />
 
   <!-- CFP -->
   {
@@ -559,6 +526,7 @@ const ctaEventMetadata = {
       </div>
     )
   }
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterCFP")} />
 
   <!-- Stay tuned  -->
   {
@@ -570,6 +538,7 @@ const ctaEventMetadata = {
         </div>
       )
   }
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterStayTuned")} />
 
   <!-- Schedule & Speakers -->
   <div
@@ -620,8 +589,11 @@ const ctaEventMetadata = {
       )
     }
   </div>
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterScheduleAndSpeaker")} />
 
   {event.data.feedback && <FeedbackCTA href={event.data.feedback.link} />}
+
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterFeedback")} />
 
   {
     !!sponsors.length && (
@@ -646,6 +618,7 @@ const ctaEventMetadata = {
       </div>
     )
   }
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterSecondSponsors")} />
 
   {
     !isEmpty(event.data._computed.organizers) && (
@@ -677,6 +650,7 @@ const ctaEventMetadata = {
       </section>
     )
   }
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterOrganizers")} />
 
   <!-- Prospectus -->
   {
@@ -706,12 +680,19 @@ const ctaEventMetadata = {
       </div>
     )
   }
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterProspectus")} />
 
   <EventVibes countryId={event.data._computed.country?.id ?? ""} />
 
+  <CustomBlockEventSlot blocks={getEventBlockFor("afterEventVibes")} />
+
   {event.data.faq && <FAQ client:load faq={event.data.faq} />}
 
+  <CustomBlockEventSlot blocks={getEventBlockFor("AfterFAQ")} />
+
   {!!partners.length && <PartnersBlock partners={partners} />}
+
+  <CustomBlockEventSlot blocks={getEventBlockFor("AfterPartners")} />
 
   <div class="relative flex w-full flex-col gap-6 px-6 py-12">
     <a
@@ -757,7 +738,11 @@ const ctaEventMetadata = {
     </a>
   </div>
 
+  <CustomBlockEventSlot blocks={getEventBlockFor("AfterAssets")} />
+
   <RelatedEvents currentEvent={event} relatedEvents={relatedEvents} />
+
+  <CustomBlockEventSlot blocks={getEventBlockFor("AfterRelatedEvents")} />
 
   <div class="py-8 md:py-12">
     <JoinTheCommunity />
