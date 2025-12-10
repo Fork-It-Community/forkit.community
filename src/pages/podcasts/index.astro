@@ -7,7 +7,7 @@ import PodcastEpisodeCard from "@/components/PodcastEpisodeCard/index.astro";
 import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 import TiltedCard from "@/components/TiltedCard";
 
-const episodes = (await getPodcastsEpisodesCollection()).toReversed();
+const episodes = await getPodcastsEpisodesCollection();
 ---
 
 <MainLayout>
