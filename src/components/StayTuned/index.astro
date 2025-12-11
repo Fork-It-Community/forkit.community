@@ -13,7 +13,7 @@ import { buttonVariants } from "@/components/ui/button";
 
 interface Props {
   class?: string;
-  country: CollectionEntry<"countries">;
+  country?: CollectionEntry<"countries">;
 }
 
 const { country, class: _class } = Astro.props;
