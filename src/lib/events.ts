@@ -608,9 +608,7 @@ export async function getUpcomingEventsWithOpenCfp(limit?: number) {
 export const getEventBlocks = async (event: EventComputed) => {
   const allBlocks = await getCollection("eventsBlocks");
 
-  const eventBasePath = event.id.replace(/\/index$/, "");
-
   return allBlocks.filter((block) =>
-    block.id.startsWith(`${eventBasePath}/blocks/`),
+    block.id.startsWith(`${event.id}/blocks/`),
   );
 };

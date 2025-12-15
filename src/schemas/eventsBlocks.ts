@@ -1,6 +1,6 @@
 import { z } from "astro:content";
 
-const SLOTS_ENUM = z.enum([
+const zEventMarketingSlot = z.enum([
   "afterHero",
   "afterFirstSponsors",
   "afterStayTuned",
@@ -23,6 +23,6 @@ export type EventBlocks = z.infer<ReturnType<typeof zEventBlocks>>;
 export const zEventBlocks = () =>
   z.object({
     title: z.string().optional(),
-    slot: SLOTS_ENUM,
+    slot: zEventMarketingSlot,
     order: z.number().default(0),
   });
