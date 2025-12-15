@@ -4,7 +4,11 @@ import SEO from "@/components/SEO/index.astro";
 import { getEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
-import { getPeopleFromReference } from "@/lib/people";
+import {
+  getPeopleFromReference,
+  getWorldwideOrganizers,
+  getPeopleFromCountry,
+} from "@/lib/people";
 import { BackButton } from "@/components/BackButton";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
@@ -41,13 +45,9 @@ const organizers = await getPeopleFromReference(country.data.organizers ?? []);
 
 const people = await getCollection("people");
 
-const worldwideOrganizers = people.filter(
-  (org) => org.id === "rudy-baer" || org.id === "aziz-ouertani",
-);
+const worldwideOrganizers = getWorldwideOrganizers(people);
 
-const peopleFromCountry = people.filter(
-  (person) => person.data.country?.id === countryId,
-);
+const peopleFromCountry = getPeopleFromCountry(people, countryId);
 
 const events = await getUpcomingEvents();
 ---
