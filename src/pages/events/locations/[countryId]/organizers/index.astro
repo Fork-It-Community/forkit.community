@@ -4,11 +4,16 @@ import SEO from "@/components/SEO/index.astro";
 import { getEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
-import { getPeopleFromReference } from "@/lib/people";
+import { getPeopleFromReference, getPeopleFromCountry } from "@/lib/people";
+import { WORLDWIDE_ORGANIZER_IDS } from "@/config/organizers";
 import { BackButton } from "@/components/BackButton";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import PeopleWithDescription from "@/components/PeopleWithDescription/index.astro";
+import EventsGrid from "@/components/EventsGrid/index.astro";
+import StayTuned from "@/components/StayTuned/index.astro";
+import People from "@/components/People/index.astro";
+import { getUpcomingEvents } from "@/lib/events";
 
 export async function getStaticPaths() {
   const countries = await getCollection("countries");
@@ -35,19 +40,25 @@ const ogImage = new URL(
 
 const organizers = await getPeopleFromReference(country.data.organizers ?? []);
 
-if (organizers.length === 0) {
-  return new Response(null, {
-    status: 404,
-    statusText: "Not found",
-  });
-}
+const people = await getCollection("people");
+
+const worldwideOrganizers = people.filter((org) =>
+  WORLDWIDE_ORGANIZER_IDS.includes(
+    org.id as (typeof WORLDWIDE_ORGANIZER_IDS)[number],
+  ),
+);
+
+const peopleFromCountry = getPeopleFromCountry(people, countryId);
+
+const events = await getUpcomingEvents();
 ---
 
 <MainLayout>
   <SEO
     slot="seo"
     title={`Tech events organizers ${country.data.name}`}
-    description={country.data.description ?? ""}
+    description={country.data.description ??
+      `Discover tech event organizers in ${country.data.name}. Meet the local Fork it! community and explore local and worldwide organizers.`}
     image={ogImage.toString()}
   />
   <ImageBackgroundHero
@@ -63,41 +74,118 @@ if (organizers.length === 0) {
       client:load
       contextLabel={`Fork It! Events in ${country.data.name}`}
     />
-    <div
-      class="flex w-full flex-col justify-between gap-8 py-12 md:min-h-[40svh] md:flex-row"
-    >
-      <div class="flex flex-1 flex-col gap-8">
-        <div class="flex w-full flex-col gap-2">
-          <h1
-            class="w-full text-balance text-left font-heading text-4xl font-medium uppercase tracking-wider md:text-5xl"
-          >
-            {country.data.name} organizers
-          </h1>
-          <h2
-            class="w-full text-balance text-left text-base tracking-widest md:text-lg"
-          >
-            Meet the Fork it! events organizers in {country.data.name}
-          </h2>
-          <p
-            class="max-w-[60ch] text-sm tracking-wide [text-shadow:0_2px_30px_rgba(0,0,0,0.4)]"
-          >
-            Fork it! Community is the result of the hard work of four
-            experienced professionals who have combined their strengths and
-            skills to create a dynamic and innovative community. This community
-            is determined to share real experiences, inspire innovation and
-            connect creative minds in the tech world. Organizing tech events in {
-              country.data.name
-            } would not be possible without the following community members.
-          </p>
+    {
+      organizers.length !== 0 ? (
+        <div class="flex w-full flex-col justify-between gap-8 py-12 md:min-h-[40svh] md:flex-row">
+          <div class="flex flex-1 flex-col gap-8">
+            <div class="flex w-full flex-col gap-2">
+              <h1 class="w-full text-balance text-left font-heading text-4xl font-medium uppercase tracking-wider md:text-5xl">
+                {country.data.name} organizers
+              </h1>
+              <h2 class="w-full text-balance text-left text-base tracking-widest md:text-lg">
+                Meet the Fork it! events organizers in {country.data.name}
+              </h2>
+              <p class="max-w-[60ch] text-sm tracking-wide [text-shadow:0_2px_30px_rgba(0,0,0,0.4)]">
+                Fork it! Community is the result of the hard work of four
+                experienced professionals who have combined their strengths and
+                skills to create a dynamic and innovative community. This
+                community is determined to share real experiences, inspire
+                innovation and connect creative minds in the tech world.
+                Organizing tech events in {country.data.name} would not be
+                possible without the following community members.
+              </p>
+            </div>
+            <div class="flex flex-col gap-6">
+              {organizers.map((organizer) => (
+                <PeopleWithDescription organizer={organizer} />
+              ))}
+            </div>
+          </div>
         </div>
-        <div class="flex flex-col gap-6">
-          {
-            organizers.map((organizer) => (
-              <PeopleWithDescription organizer={organizer} />
-            ))
-          }
-        </div>
-      </div>
-    </div>
+      ) : (
+        <>
+          <section class="flex w-full flex-col items-center gap-12 py-12 md:min-h-[35svh] md:justify-center">
+            <div class="flex flex-col items-center gap-2">
+              <h1 class="text-balance text-center font-heading text-3xl font-medium uppercase tracking-wider max-md:flex-1 md:text-5xl">
+                Be the first organizer in {country.data.name}
+              </h1>
+
+              <p class="text-balance text-center text-xs tracking-widest opacity-60 md:text-sm">
+                Bring Fork It! Community to {country.data.name}: reach out and
+                become the very first local organizer.
+              </p>
+            </div>
+          </section>
+
+          <section class="relative mx-auto flex w-full max-w-screen-lg flex-col gap-12 px-4 pb-12 md:pb-24">
+            <div class="flex flex-col gap-2">
+              <h2 class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest text-white md:text-3xl">
+                Community Members in {country.data.name}
+              </h2>
+              <p class="text-balance text-xs tracking-widest opacity-60 md:text-sm">
+                Help grow our community in {country.data.name} by joining or
+                organizing your own event.
+              </p>
+            </div>
+            <div class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5">
+              {peopleFromCountry?.map((people) => {
+                return (
+                  <People
+                    people={{
+                      ...people,
+                      data: {
+                        ...people.data,
+                        job: undefined,
+                        company: undefined,
+                      },
+                    }}
+                  />
+                );
+              })}
+            </div>
+          </section>
+
+          <section class="relative mx-auto flex w-full max-w-screen-lg flex-col gap-12 px-4 pb-12 md:pb-24">
+            <div class="flex flex-col gap-2">
+              <h2 class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest text-white md:text-3xl">
+                Meet Our Worldwide Organizers
+              </h2>
+              <p class="text-balance text-xs tracking-widest opacity-60 md:text-sm">
+                Reach out to them for insights and tips on running your own
+                successful event.
+              </p>
+            </div>
+            <div class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5">
+              {worldwideOrganizers?.map((organizer) => {
+                return (
+                  <People
+                    people={{
+                      ...organizer,
+                      data: {
+                        ...organizer.data,
+                        job: undefined,
+                        company: undefined,
+                      },
+                    }}
+                  />
+                );
+              })}
+            </div>
+          </section>
+
+          <div class="flex flex-col gap-12 md:gap-24">
+            <StayTuned />
+            {!!events.length && (
+              <div class="mx-auto w-full max-w-screen-lg px-4">
+                <EventsGrid
+                  events={events}
+                  title="Checkout our upcoming events"
+                />
+              </div>
+            )}
+          </div>
+        </>
+      )
+    }
   </div>
 </MainLayout>

@@ -1,12 +1,10 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
-
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import SEO from "@/components/SEO/index.astro";
 import { getEventsByCountry, getEventsCollection, without } from "@/lib/events";
 import EventsList from "@/components/EventsList/index.astro";
-import { getCollection } from "astro:content";
-import { getEntry } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import { BackButton } from "@/components/BackButton";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
@@ -14,20 +12,28 @@ import dayjs from "dayjs";
 import OrganizersList from "@/components/OrganizersList/index.astro";
 import { getPeopleFromReference } from "@/lib/people";
 import StayTuned from "@/components/StayTuned/index.astro";
+import { FaArrowRight } from "react-icons/fa6";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils-client";
 
 export async function getStaticPaths() {
   const countries = await getCollection("countries");
   const events = await getEventsCollection();
-  return countries
-    .filter((country) =>
-      events.some((event) => event.data._computed.country?.id === country.id),
-    )
-    .map((country) => ({
+
+  return countries.map((country) => {
+    const hasEvents = events.some(
+      (event) => event.data._computed.country?.id === country.id,
+    );
+
+    return {
       params: { countryId: country.id },
-    }));
+      props: { hasEvents },
+    };
+  });
 }
 
 const { countryId } = Astro.params;
+const { hasEvents } = Astro.props;
 
 const country = await getEntry("countries", countryId);
 
@@ -69,7 +75,8 @@ const organizers = await getPeopleFromReference(country.data.organizers ?? []);
   <SEO
     slot="seo"
     title={`Top Upcoming ${country.data.name} Tech Events`}
-    description={country.data.description ?? ""}
+    description={country.data.description ??
+      `Find upcoming tech events in ${country.data.name}. Browse events by city, connect with Fork it! organizers, and discover new meetups and conferences.`}
     image={ogImage.toString()}
   />
   <ImageBackgroundHero
@@ -106,47 +113,77 @@ const organizers = await getPeopleFromReference(country.data.organizers ?? []);
             </p>
           )
         }
+        {
+          !hasEvents && (
+            <div class="flex flex-col items-center gap-6 pt-12">
+              <div class="flex flex-col items-center gap-2">
+                <h2 class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest text-white md:text-3xl">
+                  Be the first organizer in {country.data.name}
+                </h2>
+                <p class="text-balance text-xs tracking-widest opacity-60 md:text-sm">
+                  Bring Fork It! Community to {country.data.name}: reach out and
+                  become the very first local organizer.
+                </p>
+              </div>
+
+              <a
+                class={cn(
+                  buttonVariants({ variant: "secondary" }),
+                  "flex items-center gap-1",
+                )}
+                href={lunalink(
+                  ROUTES["events"].locations[":countryId"]["organizers"].__path,
+                  {
+                    countryId: countryId ?? "",
+                  },
+                )}
+              >
+                Become organizer <FaArrowRight />
+              </a>
+            </div>
+          )
+        }
       </div>
       <OrganizersList organizers={organizers} />
     </div>
   </div>
 
   <div class="flex flex-col gap-16 pb-40">
-    <div
-      class="mx-auto flex w-full max-w-screen-lg flex-col gap-16 px-4 md:flex-row-reverse"
-    >
-      <div class="flex w-full flex-1 flex-col gap-4">
-        <h2
-          class="font-heading text-sm font-medium uppercase tracking-widest opacity-60"
-        >
-          Events by City
-        </h2>
-        <div class="flex flex-col">
-          {
-            cities.map((city) => (
-              <a
-                href={lunalink(
-                  ROUTES["events"].locations[":countryId"][":cityId"].__path,
-                  {
-                    countryId: country.id,
-                    cityId: city.id,
-                  },
-                )}
-                class="border-b border-white/10 px-5 py-3 transition duration-500 first:border-t hover:bg-white/5"
-              >
-                {city.data.name}
-              </a>
-            ))
-          }
+    {
+      hasEvents ? (
+        <div class="mx-auto flex w-full max-w-screen-lg flex-col gap-16 px-4 md:flex-row-reverse">
+          <div class="flex w-full flex-1 flex-col gap-4">
+            <h2 class="font-heading text-sm font-medium uppercase tracking-widest opacity-60">
+              Events by City
+            </h2>
+            <div class="flex flex-col">
+              {cities.map((city) => (
+                <a
+                  href={lunalink(
+                    ROUTES["events"].locations[":countryId"][":cityId"].__path,
+                    {
+                      countryId: country.id,
+                      cityId: city.id,
+                    },
+                  )}
+                  class="border-b border-white/10 px-5 py-3 transition duration-500 first:border-t hover:bg-white/5"
+                >
+                  {city.data.name}
+                </a>
+              ))}
+            </div>
+          </div>
+          <EventsList
+            events={eventsInCountry}
+            title={`Events in ${country.data.name}`}
+            class="flex-[2]"
+          >
+            <StayTuned country={country} class="md:p-4" />
+          </EventsList>
         </div>
-      </div>
-      <EventsList
-        events={eventsInCountry}
-        title={`Events in ${country.data.name}`}
-        class="flex-[2]"
-      >
+      ) : (
         <StayTuned country={country} class="md:p-4" />
-      </EventsList>
-    </div>
+      )
+    }
   </div>
 </MainLayout>
