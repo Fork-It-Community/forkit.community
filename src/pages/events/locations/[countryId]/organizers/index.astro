@@ -4,11 +4,8 @@ import SEO from "@/components/SEO/index.astro";
 import { getEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
-import {
-  getPeopleFromReference,
-  getWorldwideOrganizers,
-  getPeopleFromCountry,
-} from "@/lib/people";
+import { getPeopleFromReference, getPeopleFromCountry } from "@/lib/people";
+import { WORLDWIDE_ORGANIZER_IDS } from "@/config/organizers";
 import { BackButton } from "@/components/BackButton";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
@@ -45,7 +42,11 @@ const organizers = await getPeopleFromReference(country.data.organizers ?? []);
 
 const people = await getCollection("people");
 
-const worldwideOrganizers = getWorldwideOrganizers(people);
+const worldwideOrganizers = people.filter((org) =>
+  WORLDWIDE_ORGANIZER_IDS.includes(
+    org.id as (typeof WORLDWIDE_ORGANIZER_IDS)[number],
+  ),
+);
 
 const peopleFromCountry = getPeopleFromCountry(people, countryId);
 
@@ -56,7 +57,8 @@ const events = await getUpcomingEvents();
   <SEO
     slot="seo"
     title={`Tech events organizers ${country.data.name}`}
-    description={country.data.description ?? ""}
+    description={country.data.description ??
+      `Discover tech event organizers in ${country.data.name}. Meet the local Fork it! community and explore local and worldwide organizers.`}
     image={ogImage.toString()}
   />
   <ImageBackgroundHero

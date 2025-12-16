@@ -74,7 +74,8 @@ const organizers = await getPeopleFromReference(country.data.organizers ?? []);
   <SEO
     slot="seo"
     title={`Top Upcoming ${country.data.name} Tech Events`}
-    description={country.data.description ?? ""}
+    description={country.data.description ??
+      `Find upcoming tech events in ${country.data.name}. Browse events by city, connect with Fork it! organizers, and discover new meetups and conferences.`}
     image={ogImage.toString()}
   />
   <ImageBackgroundHero
