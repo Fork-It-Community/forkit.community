@@ -13,7 +13,8 @@ import OrganizersList from "@/components/OrganizersList/index.astro";
 import { getPeopleFromReference } from "@/lib/people";
 import StayTuned from "@/components/StayTuned/index.astro";
 import { FaArrowRight } from "react-icons/fa6";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils-client";
 
 export async function getStaticPaths() {
   const countries = await getCollection("countries");
@@ -124,20 +125,21 @@ const organizers = await getPeopleFromReference(country.data.organizers ?? []);
                   become the very first local organizer.
                 </p>
               </div>
-              <Button variant="secondary">
-                <a
-                  class="flex items-center gap-1"
-                  href={lunalink(
-                    ROUTES["events"].locations[":countryId"]["organizers"]
-                      .__path,
-                    {
-                      countryId: countryId ?? "",
-                    },
-                  )}
-                >
-                  Become organizer <FaArrowRight />
-                </a>
-              </Button>
+
+              <a
+                class={cn(
+                  buttonVariants({ variant: "secondary" }),
+                  "flex items-center gap-1",
+                )}
+                href={lunalink(
+                  ROUTES["events"].locations[":countryId"]["organizers"].__path,
+                  {
+                    countryId: countryId ?? "",
+                  },
+                )}
+              >
+                Become organizer <FaArrowRight />
+              </a>
             </div>
           )
         }
