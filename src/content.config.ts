@@ -20,7 +20,7 @@ export const collections = {
   }),
   events: defineCollection({
     loader: glob({
-      pattern: ["**/*.mdx", "!**/pages/*.mdx", "!**/blocks/*.mdx"],
+      pattern: "**/!(blocks|pages)/*.mdx",
       base: "./src/content/events",
     }),
     schema: zEvent,
