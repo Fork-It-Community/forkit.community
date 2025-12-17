@@ -47,11 +47,24 @@ const ogImage = new URL(
 
 const allNews = await getNewsCollection();
 const currentTags = article.data.tags ?? [];
+const matchingTags = (tagsA: string[], tagsB: string[]) =>
+  tagsA.filter((tag) => tagsB.includes(tag)).length;
+const getRelatedTags = (
+  article: (typeof allNews)[number],
+  currentTags: string[],
+) => {
+  return matchingTags(currentTags, article.data.tags ?? []);
+};
 const relatedNews = allNews
   .filter(
     (otherArticle) =>
       otherArticle.id !== article.id &&
-      (otherArticle.data.tags ?? []).some((tag) => currentTags.includes(tag)),
+      matchingTags(currentTags, otherArticle.data.tags ?? []),
+  )
+  .sort(
+    (articleA, articleB) =>
+      getRelatedTags(articleB, currentTags) -
+      getRelatedTags(articleA, currentTags),
   )
   .slice(0, 3);
 
