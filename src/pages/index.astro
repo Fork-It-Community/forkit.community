@@ -1,7 +1,6 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
-import NewsCard from "@/components/NewsCard/index.astro";
 import {
   getEventDisplayDate,
   getEventDisplayType,
@@ -16,6 +15,7 @@ import { cn } from "@/lib/utils-client";
 import { buttonVariants } from "@/components/ui/button";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import JoinNewsletter from "@/components/JoinNewsletter/index.astro";
+import ArticleSlider from "@/components/ArticleSlider/index.astro";
 
 import { getUpcomingEvents } from "@/lib/events";
 import SEO from "@/components/SEO/index.astro";
@@ -231,34 +231,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
               Latest news about the global developer community.
             </p>
           </div>
-
-          <div class="mx-auto flex w-full flex-col gap-2">
-            <div class="hide-scrollbar overflow-auto">
-              <div class="mx-auto flex w-full max-w-screen-lg gap-4 px-6 py-8 md:gap-6">
-                {news.map((article) => (
-                  <TiltedCard client:visible>
-                    <NewsCard
-                      newsItem={article}
-                      class="w-[30rem] max-w-[80vw]"
-                    />
-                  </TiltedCard>
-                ))}
-                {news.length < 2 && (
-                  <div class="relative flex w-[30rem] max-w-[80vw] flex-none items-center justify-center rounded-md bg-white/5 text-xs uppercase tracking-widest text-white/50">
-                    Coming soon
-                  </div>
-                )}
-                <a
-                  href={lunalink(ROUTES.news.__path, {})}
-                  class="relative flex aspect-square w-64 flex-none items-center justify-center gap-2 rounded-lg bg-white/5 text-xs uppercase tracking-widest text-white/50 transition duration-500 hover:bg-white/10"
-                >
-                  All news
-                  <MdArrowForward />
-                </a>
-                <div class="w-16 flex-none" />
-              </div>
-            </div>
-          </div>
+          <ArticleSlider items={news} />
         </div>
       )
     }

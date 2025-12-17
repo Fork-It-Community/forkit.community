@@ -1,9 +1,12 @@
+import type { News } from "@/schemas/news";
 import { getCollection, type CollectionEntry } from "astro:content";
 import dayjs from "dayjs";
 
 type Params = {
   limit?: number;
 };
+
+export type NewsEntry = CollectionEntry<"news"> & { data: News };
 
 export async function getNewsCollection({ limit = undefined }: Params = {}) {
   const news = (await getCollection("news"))
@@ -31,4 +34,12 @@ export async function getPersonArticles(
   )
     .sort((a, b) => dayjs(b.data.date).diff(a.data.date))
     .slice(0, limit);
+}
+
+const allNews = await getNewsCollection();
+export function countMatchingTagsWithArticle(
+  article: (typeof allNews)[number],
+  currentTags: string[],
+) {
+  return currentTags.filter((tag) => article.data.tags?.includes(tag)).length;
 }
