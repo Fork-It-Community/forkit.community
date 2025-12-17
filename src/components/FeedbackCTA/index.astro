@@ -24,24 +24,28 @@ const { href, date } = Astro.props;
         <h2
           class="text-balance font-heading text-xl font-medium uppercase tracking-widest transition group-hover:text-primary"
         >
-          We need you!
+          {
+            dayjs().isAfter(dayjs(date).add(1, "day"))
+              ? "Talk reviews"
+              : "We need you!"
+          }
         </h2>
         <p class="text-balance text-base tracking-wide opacity-60">
-          Help speakers by giving them feedbacks about their talks
+          {
+            dayjs().isAfter(dayjs(date).add(1, "day"))
+              ? "See feedback shared by the audience"
+              : "Help speakers by giving them feedbacks about their talks"
+          }
         </p>
       </div>
 
-      {
-        dayjs().isAfter(dayjs(date).add(1, "day")) ? (
-          <div class={cn(buttonVariants({ size: "lg" }), "max-xs:w-full")}>
-            Check Feedback
-          </div>
-        ) : (
-          <div class={cn(buttonVariants({ size: "lg" }), "max-xs:w-full")}>
-            Give Talk Feedback
-          </div>
-        )
-      }
+      <div class={cn(buttonVariants({ size: "lg" }), "max-xs:w-full")}>
+        {
+          dayjs().isAfter(dayjs(date).add(1, "day"))
+            ? "Check Feedback"
+            : "Give Talk Feedback"
+        }
+      </div>
     </a>
   </TiltedCard>
 </div>
