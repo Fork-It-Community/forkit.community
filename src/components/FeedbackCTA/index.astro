@@ -2,12 +2,14 @@
 import TiltedCard from "@/components/TiltedCard";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils-client";
+import dayjs from "dayjs";
 
 interface Props {
   href: string;
+  date: Date;
 }
 
-const { href } = Astro.props;
+const { href, date } = Astro.props;
 ---
 
 <div class="relative flex w-full flex-col gap-6 px-6 py-12">
@@ -29,9 +31,17 @@ const { href } = Astro.props;
         </p>
       </div>
 
-      <div class={cn(buttonVariants({ size: "lg" }), "max-xs:w-full")}>
-        Give Talk Feedback
-      </div>
+      {
+        dayjs().isAfter(dayjs(date).add(1, "day")) ? (
+          <div class={cn(buttonVariants({ size: "lg" }), "max-xs:w-full")}>
+            Check Feedback
+          </div>
+        ) : (
+          <div class={cn(buttonVariants({ size: "lg" }), "max-xs:w-full")}>
+            Give Talk Feedback
+          </div>
+        )
+      }
     </a>
   </TiltedCard>
 </div>

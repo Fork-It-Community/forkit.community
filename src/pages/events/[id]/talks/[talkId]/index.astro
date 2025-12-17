@@ -169,7 +169,11 @@ const talkDetails: EventDetails = {
                   "flex flex-row gap-2 no-underline",
                 )}
               >
-                <span>Give feedback</span>
+                {dayjs().isAfter(dayjs(event.data.date).add(1, "day")) ? (
+                  <span>Check feedback</span>
+                ) : (
+                  <span>Give feedback</span>
+                )}
                 <MdArrowOutward className="text-base" />
               </a>
             )
