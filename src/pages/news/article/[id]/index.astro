@@ -4,7 +4,7 @@ import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import Prose from "@/components/Prose/index.astro";
 import NewsArticleMeta from "@/components/NewsArticleMeta/index.astro";
 import ArticleSlider from "@/components/ArticleSlider/index.astro";
-import { getNewsCollection } from "@/lib/news";
+import { countMatchingTagsWithArticle, getNewsCollection } from "@/lib/news";
 import defaultImage from "@/assets/images/news.jpeg";
 import { Image } from "astro:assets";
 import { cn } from "@/lib/utils-client";
@@ -47,24 +47,19 @@ const ogImage = new URL(
 
 const allNews = await getNewsCollection();
 const currentTags = article.data.tags ?? [];
-const matchingTags = (tagsA: string[], tagsB: string[]) =>
-  tagsA.filter((tag) => tagsB.includes(tag)).length;
-const getRelatedTags = (
-  article: (typeof allNews)[number],
-  currentTags: string[],
-) => {
-  return matchingTags(currentTags, article.data.tags ?? []);
-};
 const relatedNews = allNews
-  .filter(
-    (otherArticle) =>
-      otherArticle.id !== article.id &&
-      matchingTags(currentTags, otherArticle.data.tags ?? []),
-  )
+  .filter((otherArticle) => {
+    if (otherArticle.id === article.id) return false;
+    const matchingTagsCount = countMatchingTagsWithArticle(
+      otherArticle,
+      currentTags,
+    );
+    return matchingTagsCount > 0;
+  })
   .sort(
     (articleA, articleB) =>
-      getRelatedTags(articleB, currentTags) -
-      getRelatedTags(articleA, currentTags),
+      countMatchingTagsWithArticle(articleB, currentTags) -
+      countMatchingTagsWithArticle(articleA, currentTags),
   )
   .slice(0, 3);
 
