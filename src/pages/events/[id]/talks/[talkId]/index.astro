@@ -165,15 +165,23 @@ const talkDetails: EventDetails = {
                 target="_blank"
                 rel="noreferrer"
                 class={cn(
-                  buttonVariants({ variant: "secondary", size: "xs" }),
+                  buttonVariants({
+                    variant: dayjs().isAfter(
+                      dayjs(event.data.date).add(1, "day"),
+                    )
+                      ? "secondary"
+                      : "default",
+                    size: "xs",
+                  }),
                   "flex flex-row gap-2 no-underline",
                 )}
               >
-                {dayjs().isAfter(dayjs(event.data.date).add(1, "day")) ? (
-                  <span>Check feedback</span>
-                ) : (
-                  <span>Give feedback</span>
-                )}
+                <span>
+                  {dayjs().isAfter(dayjs(event.data.date).add(1, "day"))
+                    ? "Check feedback"
+                    : "Give feedback"}
+                </span>
+
                 <MdArrowOutward className="text-base" />
               </a>
             )
