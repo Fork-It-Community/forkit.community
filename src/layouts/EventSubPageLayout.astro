@@ -32,7 +32,7 @@ const { event } = Astro.props;
       eventCity={event.data._computed.city?.data.name ?? ""}
       eventCountry={event.data._computed.country?.data.name ?? ""}
       eventDate={event.data.date}
-      logoUrl={lunalink(ROUTES.__path, {})}
+      logoUrl={lunalink(ROUTES.fr.events["for-kids"].__path, {})}
       pageUrl={new URL(Astro.url.pathname, Astro.site).toString()}
     />
   </div>
