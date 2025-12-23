@@ -11,5 +11,10 @@
     "event": "Partager cet événement",
     "social": "Partager sur votre réseau social favori",
     "copy": "Copier le lien"
+  },
+  "afterEventContent": {
+    "title": "Retours après l'événement",
+    "description": "Temps forts de l'événement",
+    "photos": "Photos de l'événement"
   }
 }
