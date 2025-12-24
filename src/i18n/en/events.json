@@ -11,5 +11,10 @@
     "event": "Share this event",
     "social": "Share on your favorite social networks",
     "copy": "Copy link"
+  },
+  "afterEventContent": {
+    "title": "After event insights",
+    "description": "Key moments of the event",
+    "photos": "Event photos"
   }
 }

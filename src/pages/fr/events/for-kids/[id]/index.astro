@@ -35,6 +35,7 @@ import { LogoForkItForKids } from "@/components/LogoForkItForKids";
 import { Button } from "@/components/ui/button";
 import { isEmpty } from "remeda";
 import People from "@/components/People/index.astro";
+import { buttonVariants } from "@/components/ui/button";
 
 interface Props {
   forKidsEvent: ForKidsEventComputed;
@@ -178,11 +179,115 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
           </Button>
         )
       }
+      {
+        forKidsEvent.data.afterEventContent && (
+          <Button className="bg-for-kids-primary sm:max-w-56 text-white">
+            <a href="#after-event" class="flex items-center gap-1">
+              {t("events:afterEventContent.title")}
+              <MdArrowForward className="group-hover:translate-x-1 transition" />
+            </a>
+          </Button>
+        )
+      }
     </motion.div>
 
     <QuickAccess navItems={navItems} />
   </div>
+  {
+    !!forKidsEvent.data.afterEventContent && (
+      <div
+        id="after-event"
+        class="relative flex w-full scroll-m-12 flex-col gap-6 px-6 py-24 md:py-32"
+      >
+        <div class={cn("mx-auto flex w-full max-w-screen-lg flex-col gap-12")}>
+          <div class="text-center">
+            <h2 class="font-heading text-2xl font-medium uppercase tracking-widest text-white md:text-3xl">
+              {t("events:afterEventContent.title")}
+            </h2>
+            <p class="text-balance text-base tracking-wide opacity-60">
+              {t("events:afterEventContent.description")}
+            </p>
+          </div>
 
+          <div class="flex flex-1 flex-col justify-center gap-4 md:flex-row">
+            <div
+              class={cn("flex flex-[0.7] flex-col gap-4 md:max-w-screen-sm")}
+            >
+              {!!forKidsEvent.data.afterEventContent.photos.sources?.length && (
+                <div
+                  class={cn(
+                    "grid aspect-[640/426] gap-4",
+                    (forKidsEvent.data.afterEventContent.photos.sources
+                      ?.length ?? 0) > 1 && "grid-cols-2",
+                  )}
+                >
+                  {forKidsEvent.data.afterEventContent.photos.sources?.map(
+                    (item, index) =>
+                      !item ? null : forKidsEvent.data.afterEventContent?.photos
+                          .href ? (
+                        <a
+                          class={cn(
+                            "relative flex h-full overflow-hidden rounded-md",
+                            (forKidsEvent.data.afterEventContent?.photos.sources
+                              ?.length ?? 0) === 3 &&
+                              index === 1 &&
+                              "row-span-2",
+                          )}
+                          href={forKidsEvent.data.afterEventContent.photos.href}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <Image
+                            class="absolute inset-0 h-full w-full max-w-none bg-white/5 object-cover"
+                            src={item.image}
+                            alt={item.alt}
+                            width={800}
+                          />
+                        </a>
+                      ) : (
+                        <div
+                          class={cn(
+                            "relative overflow-hidden rounded-md",
+                            (forKidsEvent.data.afterEventContent?.photos.sources
+                              ?.length ?? 0) === 3 &&
+                              index === 1 &&
+                              "row-span-2",
+                          )}
+                        >
+                          <Image
+                            class="absolute inset-0 h-full w-full max-w-none bg-white/5 object-cover"
+                            src={item.image}
+                            alt={item.alt}
+                            width={800}
+                          />
+                        </div>
+                      ),
+                  )}
+                </div>
+              )}
+
+              <div class={cn("flex flex-col justify-center gap-4 sm:flex-row")}>
+                {forKidsEvent.data.afterEventContent.photos.href && (
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href={forKidsEvent.data.afterEventContent.photos.href}
+                    class={cn(
+                      buttonVariants({ size: "lg" }),
+                      "group gap-2 bg-for-kids-primary text-white sm:max-w-56 md:flex-1",
+                    )}
+                  >
+                    {t("events:afterEventContent.photos")}
+                    <MdArrowForward className="transition group-hover:translate-x-1" />
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
   <!-- Presentation -->
   <div
     class="relative mx-auto flex w-full max-w-screen-sm flex-col gap-24 px-4 py-16 lg:max-w-screen-lg lg:flex-row lg:gap-12"

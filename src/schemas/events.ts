@@ -40,6 +40,39 @@ export const zEventBasicInfo = ({ image }: SchemaContext) =>
       .optional()
       .describe("Frequently Asked Questions for the event"),
     lumaEventId: z.string().optional(),
+    afterEventContent: z
+      .object({
+        afterMovie: z
+          .object({
+            href: z.string().url(),
+            thumbnail: z.object({
+              image: image(),
+              alt: z.string(),
+            }),
+          })
+          .optional(),
+        vods: z
+          .object({
+            href: z.string().url().describe("The playlist of the VODs"),
+          })
+          .optional(),
+        photos: z.object({
+          href: z.string().url().optional(),
+          sources: z
+            .array(
+              z
+                .object({
+                  image: image(),
+                  alt: z.string().optional(),
+                })
+                .optional(),
+            )
+
+            .max(4)
+            .optional(),
+        }),
+      })
+      .optional(),
   });
 
 const zEventBase = ({ image }: SchemaContext) =>
@@ -163,39 +196,6 @@ const zEventBase = ({ image }: SchemaContext) =>
       feedback: z
         .object({
           link: z.string().url(),
-        })
-        .optional(),
-      afterEventContent: z
-        .object({
-          afterMovie: z
-            .object({
-              href: z.string().url(),
-              thumbnail: z.object({
-                image: image(),
-                alt: z.string(),
-              }),
-            })
-            .optional(),
-          vods: z
-            .object({
-              href: z.string().url().describe("The playlist of the VODs"),
-            })
-            .optional(),
-          photos: z.object({
-            href: z.string().url().optional(),
-            sources: z
-              .array(
-                z
-                  .object({
-                    image: image(),
-                    alt: z.string().optional(),
-                  })
-                  .optional(),
-              )
-
-              .max(4)
-              .optional(),
-          }),
         })
         .optional(),
       subPages: z.array(reference("eventsSubPages")).optional(),
