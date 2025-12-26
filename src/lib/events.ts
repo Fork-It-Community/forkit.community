@@ -604,3 +604,11 @@ export async function getUpcomingEventsWithOpenCfp(limit?: number) {
       ) ?? [];
   return cfpEvents.slice(0, limit);
 }
+
+export const getEventBlocks = async (event: EventComputed) => {
+  const allBlocks = await getCollection("eventsBlocks");
+
+  return allBlocks.filter((block) =>
+    block.id.startsWith(`${event.id}/blocks/`),
+  );
+};
