@@ -36,9 +36,8 @@ export async function getPersonArticles(
     .slice(0, limit);
 }
 
-const allNews = await getNewsCollection();
 export function countMatchingTagsWithArticle(
-  article: (typeof allNews)[number],
+  article: CollectionEntry<"news">,
   currentTags: string[],
 ) {
   return currentTags.filter((tag) => article.data.tags?.includes(tag)).length;
