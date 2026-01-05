@@ -1,8 +1,8 @@
 ---
 import TiltedCard from "@/components/TiltedCard";
 import { buttonVariants } from "@/components/ui/button";
+import { pastEvent } from "@/lib/utils";
 import { cn } from "@/lib/utils-client";
-import dayjs from "dayjs";
 
 interface Props {
   href: string;
@@ -24,15 +24,11 @@ const { href, date } = Astro.props;
         <h2
           class="text-balance font-heading text-xl font-medium uppercase tracking-widest transition group-hover:text-primary"
         >
-          {
-            dayjs().isAfter(dayjs(date).add(1, "day"))
-              ? "Talk reviews"
-              : "We need you!"
-          }
+          {pastEvent(date) ? "Talk reviews" : "We need you!"}
         </h2>
         <p class="text-balance text-base tracking-wide opacity-60">
           {
-            dayjs().isAfter(dayjs(date).add(1, "day"))
+            pastEvent(date)
               ? "See feedback shared by the audience"
               : "Help speakers by giving them feedbacks about their talks"
           }
@@ -40,11 +36,7 @@ const { href, date } = Astro.props;
       </div>
 
       <div class={cn(buttonVariants({ size: "lg" }), "max-xs:w-full")}>
-        {
-          dayjs().isAfter(dayjs(date).add(1, "day"))
-            ? "Check Feedback"
-            : "Give Talk Feedback"
-        }
+        {pastEvent(date) ? "Check Feedback" : "Give Talk Feedback"}
       </div>
     </a>
   </TiltedCard>

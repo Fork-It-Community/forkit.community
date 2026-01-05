@@ -21,6 +21,7 @@ import { ROUTES } from "@/routes.gen";
 import { getGoogleCalendarNewEventUrl } from "@/lib/events.ts";
 import type { EventDetails } from "@/lib/events.ts";
 import { AddToGoogleCalendar } from "@/components/AddToGoogleCalendar";
+import { pastEvent } from "@/lib/utils";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -166,9 +167,7 @@ const talkDetails: EventDetails = {
                 rel="noreferrer"
                 class={cn(
                   buttonVariants({
-                    variant: dayjs().isAfter(
-                      dayjs(event.data.date).add(1, "day"),
-                    )
+                    variant: pastEvent(event.data.date)
                       ? "secondary"
                       : "default",
                     size: "xs",
@@ -177,7 +176,7 @@ const talkDetails: EventDetails = {
                 )}
               >
                 <span>
-                  {dayjs().isAfter(dayjs(event.data.date).add(1, "day"))
+                  {pastEvent(event.data.date)
                     ? "Check feedback"
                     : "Give feedback"}
                 </span>
