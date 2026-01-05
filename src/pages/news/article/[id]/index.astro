@@ -45,17 +45,14 @@ const ogImage = new URL(
   Astro.site,
 );
 
-const allNews = await getNewsCollection();
+const allArticles = await getNewsCollection();
 const currentTags = article.data.tags ?? [];
-const relatedNews = allNews
-  .filter((otherArticle) => {
-    if (otherArticle.id === article.id) return false;
-    const matchingTagsCount = countMatchingTagsWithArticle(
-      otherArticle,
-      currentTags,
-    );
-    return matchingTagsCount > 0;
-  })
+const relatedArticles = allArticles
+  .filter(
+    (relatedArticle) =>
+      relatedArticle.id !== article.id &&
+      relatedArticle.data.tags?.some((tag) => currentTags.includes(tag)),
+  )
   .sort(
     (articleA, articleB) =>
       countMatchingTagsWithArticle(articleB, currentTags) -
@@ -175,14 +172,14 @@ const authors = await Promise.all(
     <NewsArticleMeta newsItem={article} />
   </div>
   {
-    !!relatedNews.length && (
+    !!relatedArticles.length && (
       <div class="flex flex-col py-6 md:py-12">
         <div class="mx-auto flex w-full max-w-screen-lg flex-col gap-2 px-6">
           <h2 class="flex items-center gap-2 text-balance font-heading text-3xl font-medium uppercase tracking-wide">
             Related Articles
           </h2>
         </div>
-        <ArticleSlider items={relatedNews} />
+        <ArticleSlider items={relatedArticles} />
       </div>
     )
   }

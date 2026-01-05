@@ -4,10 +4,10 @@ import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import NewsCard from "@/components/NewsCard/index.astro";
 import TiltedCard from "@/components/TiltedCard";
-import type { NewsEntry } from "@/lib/news";
+import type { CollectionEntry } from "astro:content";
 
 interface Props {
-  items: NewsEntry[];
+  items: CollectionEntry<"news">[];
 }
 
 const { items } = Astro.props;

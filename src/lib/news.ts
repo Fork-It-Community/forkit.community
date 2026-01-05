@@ -1,12 +1,9 @@
-import type { News } from "@/schemas/news";
 import { getCollection, type CollectionEntry } from "astro:content";
 import dayjs from "dayjs";
 
 type Params = {
   limit?: number;
 };
-
-export type NewsEntry = CollectionEntry<"news"> & { data: News };
 
 export async function getNewsCollection({ limit = undefined }: Params = {}) {
   const news = (await getCollection("news"))
