@@ -1,0 +1,41 @@
+---
+import { MdArrowForward } from "react-icons/md";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
+import NewsCard from "@/components/NewsCard/index.astro";
+import TiltedCard from "@/components/TiltedCard";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  items: CollectionEntry<"news">[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="hide-scrollbar overflow-auto">
+  <div class="mx-auto flex w-full max-w-screen-lg gap-4 px-6 py-8 md:gap-6">
+    {
+      items.map((article) => (
+        <TiltedCard client:visible>
+          <NewsCard newsItem={article} class="w-[30rem] max-w-[80vw]" />
+        </TiltedCard>
+      ))
+    }
+    {
+      items.length < 2 && (
+        <div class="relative flex w-[30rem] max-w-[80vw] flex-none items-center justify-center rounded-md bg-white/5 text-xs uppercase tracking-widest text-white/50">
+          Coming soon
+        </div>
+      )
+    }
+    <a
+      href={lunalink(ROUTES.news.__path, {})}
+      class="relative flex aspect-square w-64 flex-none items-center justify-center gap-2 rounded-lg bg-white/5 text-xs uppercase tracking-widest text-white/50 transition duration-500 hover:bg-white/10"
+    >
+      All news
+      <MdArrowForward />
+    </a>
+    <div class="w-16 flex-none"></div>
+  </div>
+</div>

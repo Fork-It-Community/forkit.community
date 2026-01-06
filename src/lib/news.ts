@@ -32,3 +32,10 @@ export async function getPersonArticles(
     .sort((a, b) => dayjs(b.data.date).diff(a.data.date))
     .slice(0, limit);
 }
+
+export function countMatchingTagsWithArticle(
+  article: CollectionEntry<"news">,
+  currentTags: string[],
+) {
+  return currentTags.filter((tag) => article.data.tags?.includes(tag)).length;
+}
