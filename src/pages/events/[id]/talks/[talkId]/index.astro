@@ -21,6 +21,7 @@ import { ROUTES } from "@/routes.gen";
 import { getGoogleCalendarNewEventUrl } from "@/lib/events.ts";
 import type { EventDetails } from "@/lib/events.ts";
 import { AddToGoogleCalendar } from "@/components/AddToGoogleCalendar";
+import { pastEvent } from "@/lib/utils";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -165,11 +166,21 @@ const talkDetails: EventDetails = {
                 target="_blank"
                 rel="noreferrer"
                 class={cn(
-                  buttonVariants({ variant: "default", size: "xs" }),
+                  buttonVariants({
+                    variant: pastEvent(event.data.date)
+                      ? "secondary"
+                      : "default",
+                    size: "xs",
+                  }),
                   "flex flex-row gap-2 no-underline",
                 )}
               >
-                <span>Give feedback</span>
+                <span>
+                  {pastEvent(event.data.date)
+                    ? "Check feedback"
+                    : "Give feedback"}
+                </span>
+
                 <MdArrowOutward className="text-base" />
               </a>
             )

@@ -621,7 +621,11 @@ const ctaEventMetadata = {
     }
   </div>
 
-  {event.data.feedback && <FeedbackCTA href={event.data.feedback.link} />}
+  {
+    event.data.feedback && (
+      <FeedbackCTA href={event.data.feedback.link} date={event.data.date} />
+    )
+  }
 
   {
     !!sponsors.length && (

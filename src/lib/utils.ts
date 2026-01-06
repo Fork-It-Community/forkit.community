@@ -28,3 +28,7 @@ export async function getAppearances(
     .sort((a, b) => dayjs(b.sortDate).diff(a.sortDate))
     .slice(0, limit);
 }
+
+export function pastEvent(date: Date) {
+  return dayjs().isAfter(dayjs(date).add(1, "day"));
+}
