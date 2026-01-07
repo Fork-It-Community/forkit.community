@@ -88,10 +88,13 @@ const openingKeynoteSpeakersForHanoi2026 =
         getEntry("people", "robin-chalas"),
       ])
     : [];
-const openingKeynoteTalkForHanoi2026 = await getEntry(
-  "talks",
-  "shaping-symfony-8-shipping-symfony-8-lessons-from-the-inside",
-);
+const openingKeynoteTalkForHanoi2026 =
+  event.id === "2026-vietnam-hanoi"
+    ? await getEntry(
+        "talks",
+        "shaping-symfony-8-shipping-symfony-8-lessons-from-the-inside",
+      )
+    : undefined;
 const ContentKeyNote = openingKeynoteTalkForHanoi2026
   ? (await render(openingKeynoteTalkForHanoi2026)).Content
   : undefined;
