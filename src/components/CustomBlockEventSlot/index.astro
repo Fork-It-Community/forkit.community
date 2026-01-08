@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { getSecret } from "astro:env/server";
 import { getCollection, render } from "astro:content";
 import { cn } from "@/lib/utils-client";
 
@@ -25,7 +24,7 @@ const eventBlocksData = (
   )
 ).sort((a, b) => a.data.order - b.data.order);
 
-const showLocalHelpers = getSecret("NODE_ENV") === "development";
+const showLocalHelpers = import.meta.env.DEV;
 ---
 
 <>
@@ -47,11 +46,7 @@ const showLocalHelpers = getSecret("NODE_ENV") === "development";
     eventBlocksData.length > 0 && (
       <div class={cn("flex flex-col gap-24 py-24", className)}>
         {eventBlocksData.map((block) => {
-          return (
-            <div>
-              <block.Content />
-            </div>
-          );
+          return <block.Content />;
         })}
       </div>
     )
