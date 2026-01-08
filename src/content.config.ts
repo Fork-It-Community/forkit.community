@@ -11,6 +11,7 @@ import { zCountry } from "@/schemas/country";
 import { zCity } from "@/schemas/city";
 import { zForKidsEvent } from "./schemas/forKidsEvent";
 import { zForKidsWorkshop } from "./schemas/forKidsWorkshop";
+import { zEventBlocks } from "./schemas/eventsBlocks";
 
 export const collections = {
   partners: defineCollection({
@@ -19,7 +20,11 @@ export const collections = {
   }),
   events: defineCollection({
     loader: glob({
-      pattern: ["**/*.mdx", "!**/pages/*.mdx"],
+      /**
+       * Using only index.mdx, we are sure to take the main page only and not
+       * the custom pages and custom blocks
+       */
+      pattern: ["**/index.mdx"],
       base: "./src/content/events",
     }),
     schema: zEvent,
@@ -30,6 +35,13 @@ export const collections = {
       base: "./src/content/events",
     }),
     schema: zEventSubPage,
+  }),
+  eventsBlocks: defineCollection({
+    loader: glob({
+      pattern: "**/blocks/*.mdx",
+      base: "./src/content/events",
+    }),
+    schema: zEventBlocks,
   }),
   talks: defineCollection({
     loader: glob({ pattern: "**/*.mdx", base: "./src/content/talks" }),

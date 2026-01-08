@@ -42,7 +42,7 @@ import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { isEmpty } from "remeda";
 import RelatedEvents from "@/components/RelatedEvents/index.astro";
-import Keynotes from "@/components/FutureCustomBlocks/Keynotes/index.astro";
+import CustomBlockEventSlot from "@/components/CustomBlockEventSlot/index.astro";
 
 export async function getStaticPaths() {
   const allEvents = await getEventsCollection();
@@ -85,7 +85,7 @@ const sponsors = await getEntries(
 
 const navItems = await getEventNavItems(event.id);
 
-const { Content } = await render(event);
+const { Content: EventContent } = await render(event);
 
 const location: Place | undefined = event.data.location
   ? {
@@ -237,6 +237,8 @@ const ctaEventMetadata = {
     <QuickAccess navItems={navItems} />
   </div>
 
+  <CustomBlockEventSlot eventId={event.id} slotName="afterHero" />
+
   {
     !!sponsors.length && (
       <div class="hide-scrollbar overflow-auto">
@@ -266,6 +268,8 @@ const ctaEventMetadata = {
       </div>
     )
   }
+
+  <CustomBlockEventSlot eventId={event.id} slotName="afterFirstSponsors" />
 
   <!-- After event  -->
   {
@@ -407,9 +411,7 @@ const ctaEventMetadata = {
       </div>
     )
   }
-  <!-- TODO REFACTO -->
-
-  {event.id === "2026-vietnam-hanoi" && <Keynotes event={event} />}
+  <CustomBlockEventSlot eventId={event.id} slotName="afterAfterEvent" />
 
   <!-- Venue -->
   {
@@ -464,12 +466,14 @@ const ctaEventMetadata = {
               />
             )}
 
-            <Content />
+            <EventContent />
           </Prose>
         </div>
       </article>
     )
   }
+
+  <CustomBlockEventSlot eventId={event.id} slotName="afterVenue" />
 
   <!-- CFP -->
   {
@@ -504,6 +508,7 @@ const ctaEventMetadata = {
       </div>
     )
   }
+  <CustomBlockEventSlot eventId={event.id} slotName="afterCFP" />
 
   <!-- Stay tuned  -->
   {
@@ -515,6 +520,7 @@ const ctaEventMetadata = {
         </div>
       )
   }
+  <CustomBlockEventSlot eventId={event.id} slotName="afterStayTuned" />
 
   <!-- Schedule & Speakers -->
   <div
@@ -565,12 +571,15 @@ const ctaEventMetadata = {
       )
     }
   </div>
+  <CustomBlockEventSlot eventId={event.id} slotName="afterScheduleAndSpeaker" />
 
   {
     event.data.feedback && (
       <FeedbackCTA href={event.data.feedback.link} date={event.data.date} />
     )
   }
+
+  <CustomBlockEventSlot eventId={event.id} slotName="afterFeedback" />
 
   {
     !!sponsors.length && (
@@ -595,6 +604,7 @@ const ctaEventMetadata = {
       </div>
     )
   }
+  <CustomBlockEventSlot eventId={event.id} slotName="afterSecondSponsors" />
 
   {
     !isEmpty(event.data._computed.organizers) && (
@@ -626,6 +636,7 @@ const ctaEventMetadata = {
       </section>
     )
   }
+  <CustomBlockEventSlot eventId={event.id} slotName="afterOrganizers" />
 
   <!-- Prospectus -->
   {
@@ -655,12 +666,19 @@ const ctaEventMetadata = {
       </div>
     )
   }
+  <CustomBlockEventSlot eventId={event.id} slotName="afterProspectus" />
 
   <EventVibes countryId={event.data._computed.country?.id ?? ""} />
 
+  <CustomBlockEventSlot eventId={event.id} slotName="afterEventVibes" />
+
   {event.data.faq && <FAQ client:load faq={event.data.faq} />}
 
+  <CustomBlockEventSlot eventId={event.id} slotName="afterFAQ" />
+
   {!!partners.length && <PartnersBlock partners={partners} />}
+
+  <CustomBlockEventSlot eventId={event.id} slotName="afterPartners" />
 
   <div class="relative flex w-full flex-col gap-6 px-6 py-12">
     <a
@@ -706,7 +724,11 @@ const ctaEventMetadata = {
     </a>
   </div>
 
+  <CustomBlockEventSlot eventId={event.id} slotName="afterAssets" />
+
   <RelatedEvents currentEvent={event} relatedEvents={relatedEvents} />
+
+  <CustomBlockEventSlot eventId={event.id} slotName="afterRelatedEvents" />
 
   <div class="py-8 md:py-12">
     <JoinTheCommunity />
