@@ -20,7 +20,11 @@ export const collections = {
   }),
   events: defineCollection({
     loader: glob({
-      pattern: ["**/*.mdx", "!**/pages/*.mdx", "!**/blocks/*.mdx"],
+      /**
+       * Using only index.mdx, we are sure to take the main page only and not
+       * the custom pages and custom blocks
+       */
+      pattern: ["**/index.mdx"],
       base: "./src/content/events",
     }),
     schema: zEvent,

@@ -1,27 +1,59 @@
 ---
-import type { AstroComponentFactory } from "astro/runtime/server/render/astro/factory.js";
 import type { CollectionEntry } from "astro:content";
+import { getSecret } from "astro:env/server";
+import { getCollection, render } from "astro:content";
+import { cn } from "@/lib/utils-client";
 
 type Props = {
-  blocks: (CollectionEntry<"eventsBlocks"> & {
-    Content: AstroComponentFactory;
-  })[];
+  eventId: CollectionEntry<"events">["id"];
+  slotName: CollectionEntry<"eventsBlocks">["data"]["slot"];
   className?: string;
 };
 
-const { blocks, className = "" } = Astro.props;
+const { className = "", eventId, slotName } = Astro.props;
+
+const eventBlocksData = (
+  await Promise.all(
+    (
+      await getCollection("eventsBlocks", (block) => {
+        return block.id.startsWith(eventId) && block.data.slot === slotName;
+      })
+    ).map(async (entry) => {
+      const { Content } = await render(entry);
+      return { ...entry, Content };
+    }),
+  )
+).sort((a, b) => a.data.order - b.data.order);
+
+const showLocalHelpers = getSecret("NODE_ENV") === "development";
 ---
 
-{
-  blocks.length > 0 && (
-    <div class={`flex flex-col gap-24 py-24 ${className}`}>
-      {blocks.map((block) => {
-        return (
-          <div>
-            <block.Content />
+<p>
+  {
+    showLocalHelpers && (
+      <div class="relative z-0 text-center text-xs">
+        <div class="absolute left-0 right-0 top-2 border border-dashed border-gray-500" />
+
+        <code class="group relative z-10 bg-primary-foreground p-1">
+          {slotName}
+          <div class="invisible absolute left-[100%] w-[10rem] bg-primary-foreground p-1 group-hover:visible">
+            Use this key for custom blocks placement
           </div>
-        );
-      })}
-    </div>
-  )
-}
+        </code>
+      </div>
+    )
+  }
+  {
+    eventBlocksData.length > 0 && (
+      <div class={cn("flex flex-col gap-24 py-24", className)}>
+        {eventBlocksData.map((block) => {
+          return (
+            <div>
+              <block.Content />
+            </div>
+          );
+        })}
+      </div>
+    )
+  }
+</p>

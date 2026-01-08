@@ -6,51 +6,51 @@ import { getEntry } from "astro:content";
 
 export default async function CustomBlock() {
 
-  const mathiasArlaud = await getEntry("people", "mathias-arlaud")
+    const mathiasArlaud = await getEntry("people", "mathias-arlaud")
 
-  return (
+    return (
         <article
-          class="relative mx-auto flex w-full max-w-screen-2xl scroll-m-8 flex-col gap-8 py-8 md:flex-row md:gap-4 md:py-24"
+            class="relative mx-auto flex w-full max-w-screen-2xl scroll-m-8 flex-col gap-8 py-8 md:flex-row md:gap-4 md:py-24"
         >
-          <div
-            class="flex-1 md:-ml-4"
-          >
-            <img
-              class="aspect-video w-full bg-black/20 object-cover md:rounded-sm"
-              src={mathiasArlaud.data.avatar.src}
-              alt={mathiasArlaud.data.name}
-              width={512}
-              height={512}
-            />
-          </div>
-          <div class="flex flex-1 flex-col items-center justify-center px-4 md:px-12">
-            <Prose>
-              <div class="not-prose flex flex-col gap-3">
-                <h2 class="font-heading text-2xl font-medium uppercase tracking-widest text-white">
-                  Opening Keynote
-                </h2>
-                <div class="flex gap-2 text-white">
-                  <div class="not-italic leading-tight">
-                    <strong>{mathiasArlaud.data.name}</strong>
-                    <br />
-                    Symphony Core Team
-                  </div>
-                </div>
-              </div>
+            <div
+                class="flex-1 md:-ml-4"
+            >
+                <img
+                    class="aspect-video w-full bg-black/20 object-cover md:rounded-sm"
+                    src={mathiasArlaud.data.avatar.src}
+                    alt={mathiasArlaud.data.name}
+                    width={512}
+                    height={512}
+                />
+            </div>
+            <div class="flex flex-1 flex-col items-center justify-center px-4 md:px-12">
+                <Prose>
+                    <div class="not-prose flex flex-col gap-3">
+                        <h2 class="font-heading text-2xl font-medium uppercase tracking-widest text-white">
+                            Opening Keynote
+                        </h2>
+                        <div class="flex gap-2 text-white">
+                            <div class="not-italic leading-tight">
+                                <strong>{mathiasArlaud.data.name}</strong>
+                                <br />
+                                Symphony Core Team
+                            </div>
+                        </div>
+                    </div>
 
-              <p>
-                Mathias Arlaud is a member of the Symfony Core Team and a
-                passionate advocate for clean, maintainable PHP architecture.
-                Known for his pragmatic approach to software design, Mathias has
-                contributed significantly to the Symfony ecosystem.
-              </p>
-              <p>
-                He’s also a regular conference speaker, sharing insights on domain
-                modeling, modern Symfony features, and long-term maintainability
-                with a focus on practical, business-oriented design.
-              </p>
-            </Prose>
-          </div>
+                    <p>
+                        Mathias Arlaud is a member of the Symfony Core Team and a
+                        passionate advocate for clean, maintainable PHP architecture.
+                        Known for his pragmatic approach to software design, Mathias has
+                        contributed significantly to the Symfony ecosystem.
+                    </p>
+                    <p>
+                        He’s also a regular conference speaker, sharing insights on domain
+                        modeling, modern Symfony features, and long-term maintainability
+                        with a focus on practical, business-oriented design.
+                    </p>
+                </Prose>
+            </div>
         </article>
-      )
+    )
 }
