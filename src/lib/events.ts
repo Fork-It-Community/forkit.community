@@ -401,7 +401,11 @@ export function getEventDisplayType(
   eventType: CollectionEntry<"events">["data"]["type"],
 ) {
   return match(eventType)
-    .with("event", () => "Full Day Event")
+    .with(
+      "event",
+      () =>
+        "One full day to learn, practice, and exchange with developers who build real products. Training humans, not machines.",
+    )
     .with("meetup", () => "Community Meetup")
     .exhaustive();
 }
