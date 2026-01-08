@@ -23,7 +23,7 @@ import {
 } from "@/lib/events";
 import { cn } from "@/lib/utils-client";
 import { Image } from "astro:assets";
-import { getEntries, getEntry, render } from "astro:content";
+import { getEntries, render } from "astro:content";
 import {
   MdArrowForward,
   MdLocationPin,
@@ -42,6 +42,7 @@ import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { isEmpty } from "remeda";
 import RelatedEvents from "@/components/RelatedEvents/index.astro";
+import Keynotes from "@/components/FutureCustomBlocks/Keynotes/index.astro";
 
 export async function getStaticPaths() {
   const allEvents = await getEventsCollection();
@@ -81,10 +82,7 @@ const coOrganizers = (await getEntries(event.data.coOrganizers ?? [])).filter(
 const sponsors = await getEntries(
   (event.data.sponsors ?? []).map((s) => s.slug),
 );
-const mathiasArlaudForHanoi2026 =
-  event.id === "2026-vietnam-hanoi"
-    ? await getEntry("people", "mathias-arlaud")
-    : null;
+
 const navItems = await getEventNavItems(event.id);
 
 const { Content } = await render(event);
@@ -409,62 +407,9 @@ const ctaEventMetadata = {
       </div>
     )
   }
-
   <!-- TODO REFACTO -->
-  {
-    !!mathiasArlaudForHanoi2026 && !!mathiasArlaudForHanoi2026.data.avatar && (
-      <article
-        id="venue"
-        class={cn(
-          "relative mx-auto flex w-full max-w-screen-2xl scroll-m-8 flex-col gap-8 py-8 md:flex-row md:gap-4 md:py-24",
-          !!event.data.location?.image && "md:flex-row-reverse",
-        )}
-      >
-        <div
-          class={cn(
-            "flex-1 md:-ml-4",
-            !!event.data.location?.image && "md:-mr-4",
-          )}
-        >
-          <Image
-            class="aspect-video w-full bg-black/20 object-cover md:rounded-sm"
-            src={mathiasArlaudForHanoi2026.data.avatar}
-            alt={mathiasArlaudForHanoi2026.data.name}
-            width={512}
-            height={512}
-          />
-        </div>
-        <div class="flex flex-1 flex-col items-center justify-center px-4 md:px-12">
-          <Prose>
-            <div class="not-prose flex flex-col gap-3">
-              <h2 class="font-heading text-2xl font-medium uppercase tracking-widest text-white">
-                Opening Keynote
-              </h2>
-              <div class="flex gap-2 text-white">
-                <div class="not-italic leading-tight">
-                  <strong>{mathiasArlaudForHanoi2026.data.name}</strong>
-                  <br />
-                  Symphony Core Team
-                </div>
-              </div>
-            </div>
 
-            <p>
-              Mathias Arlaud is a member of the Symfony Core Team and a
-              passionate advocate for clean, maintainable PHP architecture.
-              Known for his pragmatic approach to software design, Mathias has
-              contributed significantly to the Symfony ecosystem.
-            </p>
-            <p>
-              He’s also a regular conference speaker, sharing insights on domain
-              modeling, modern Symfony features, and long-term maintainability
-              with a focus on practical, business-oriented design.
-            </p>
-          </Prose>
-        </div>
-      </article>
-    )
-  }
+  {event.id === "2026-vietnam-hanoi" && <Keynotes event={event} />}
 
   <!-- Venue -->
   {
