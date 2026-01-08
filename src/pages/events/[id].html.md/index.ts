@@ -161,18 +161,35 @@ const displaySponsors = async (event: EventWithComputed) => {
 
   const sponsorLevels = (
     await Promise.all(
-      event.data.sponsoringLevels.map(
-        async (level) =>
-          `As ${capitalize(toLowerCase(level))}: ${(await getEntries((event.data.sponsors ?? []).filter((sponsor) => sponsor.level === level).map((sponsor) => sponsor.slug))).map((sponsor) => (sponsor.data.href ? `[${sponsor.data.name}](${sponsor.data.href})` : sponsor.data.name)).join(", ")}`,
-      ),
+      event.data.sponsoringLevels.map(async (level) => {
+        const sponsorsForLevel = await getEntries(
+          (event.data.sponsors ?? [])
+            .filter((sponsor) => sponsor.level === level)
+            .map((sponsor) => sponsor.slug),
+        );
+
+        // Only return the level string if there are sponsors for this level
+        if (sponsorsForLevel.length === 0) return null;
+
+        const sponsorNames = sponsorsForLevel
+          .map((sponsor) =>
+            sponsor.data.href
+              ? `[${sponsor.data.name}](${sponsor.data.href})`
+              : sponsor.data.name,
+          )
+          .join(", ");
+
+        return `As ${capitalize(toLowerCase(level))}: ${sponsorNames}`;
+      }),
     )
-  ).filter((sponsorLevel) => !sponsorLevel.match(/^As [^:]+: $/));
+  ).filter((sponsorLevel) => sponsorLevel !== null);
 
   // Return empty string if no sponsor levels remain after filtering
   if (sponsorLevels.length === 0) return "";
 
   return `## Sponsors
 
-Thanks a lot to our sponsors for their trust. ${sponsorLevels.join(". ")}
+Thanks a lot to our sponsors for their trust.
+${sponsorLevels.join(". ")}
 `;
 };
