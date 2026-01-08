@@ -43,6 +43,7 @@ import { ROUTES } from "@/routes.gen";
 import { isEmpty } from "remeda";
 import RelatedEvents from "@/components/RelatedEvents/index.astro";
 import CustomBlockEventSlot from "@/components/CustomBlockEventSlot/index.astro";
+import { CiCircleQuestion } from "react-icons/ci";
 
 export async function getStaticPaths() {
   const allEvents = await getEventsCollection();
@@ -480,51 +481,49 @@ const ctaEventMetadata = {
     shouldShowCFP(event) && (
       <div class="relative flex w-full flex-col gap-6 px-6 py-12">
         <TiltedCard client:visible className="max-w-screen-md mx-auto">
-          <div class="flex flex-col items-start gap-4 rounded-lg bg-white/5 p-8 backdrop-blur-md transition hover:bg-white/10 md:px-12 md:py-10">
-            <a
-              href={event.data.cfp.href}
-              target="_blank"
-              rel="noreferrer"
-              class="group flex w-full flex-col items-start gap-6 md:flex-row md:items-center"
+          <a
+            href={event.data.cfp.href}
+            target="_blank"
+            rel="noreferrer"
+            class="group flex w-full flex-col items-start gap-6 rounded-lg bg-white/5 p-8 backdrop-blur-md transition hover:bg-white/10 md:flex-row md:items-center md:px-12 md:py-10"
+          >
+            <div class="flex flex-1 flex-col">
+              <h2 class="text-balance font-heading text-xl font-medium uppercase tracking-widest transition group-hover:text-primary">
+                Submit your talk
+              </h2>
+              <p class="text-balance text-base tracking-wide opacity-60">
+                Propose your subject, we accept speakers of all levels.
+              </p>
+            </div>
+            <div
+              class={cn(
+                buttonVariants({ size: "lg", variant: "secondary" }),
+                "max-xs:w-full",
+              )}
             >
-              <div class="flex flex-1 flex-col">
-                <h2 class="text-balance font-heading text-xl font-medium uppercase tracking-widest transition group-hover:text-primary">
-                  Submit your talk
-                </h2>
-                <p class="text-balance text-base tracking-wide opacity-60">
-                  Propose your subject, we accept speakers of all levels.
-                </p>
-              </div>
-
-              <div
-                class={cn(
-                  buttonVariants({ size: "lg", variant: "secondary" }),
-                  "max-xs:w-full",
-                )}
-              >
-                Call for Paper
-              </div>
-            </a>
+              Call for Paper
+            </div>
+          </a>
+        </TiltedCard>
+        <div class="flex flex-col items-center gap-4 md:gap-2">
+          <p class="opacity-70">
+            Deadline: {dayjs(event.data.cfp.endDate).format("MMMM D, YYYY")}
+          </p>
+          <div class="flex flex-col items-center md:flex-row md:gap-2">
+            <div class="flex items-center gap-2">
+              <CiCircleQuestion />
+              <p class="text-base tracking-wide opacity-60"> Need help? </p>
+            </div>
             <a
-              class="flex flex-col items-start gap-6 md:flex-row md:items-center"
+              class="text-base tracking-wide underline opacity-60"
               href={lunalink(ROUTES["call-for-papers"].guidelines.__path, {})}
               target="_blank"
               rel="noreferrer"
             >
-              <p class="text-balance text-base tracking-wide opacity-60">
-                Need help to prepare and submit your CFP ?
-              </p>
-              <div
-                class={cn(
-                  buttonVariants({ size: "xs", variant: "secondary" }),
-                  "max-xs:w-full",
-                )}
-              >
-                Check our guidelines
-              </div>
+              Check our guidelines on how to apply
             </a>
           </div>
-        </TiltedCard>
+        </div>
       </div>
     )
   }
