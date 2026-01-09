@@ -19,7 +19,6 @@ import {
   shouldShowCFP,
   getEventDisplayDate,
   shouldShowProspectus,
-  getEventDisplayType,
 } from "@/lib/events";
 import { cn } from "@/lib/utils-client";
 import { Image } from "astro:assets";
@@ -43,6 +42,7 @@ import { ROUTES } from "@/routes.gen";
 import { isEmpty } from "remeda";
 import RelatedEvents from "@/components/RelatedEvents/index.astro";
 import CustomBlockEventSlot from "@/components/CustomBlockEventSlot/index.astro";
+import { match } from "ts-pattern";
 
 export async function getStaticPaths() {
   const allEvents = await getEventsCollection();
@@ -202,11 +202,28 @@ const ctaEventMetadata = {
             }
           </span>
 
-          <span
-            class="p-2 text-xs uppercase tracking-widest opacity-60 md:text-sm"
-          >
-            {getEventDisplayType(event.data.type)}
-          </span>
+          <div class="flex flex-col gap-1 p-2">
+            {
+              match(event.data.type)
+                .with("event", () => (
+                  <span class="text-xs uppercase tracking-widest opacity-60 md:text-sm">
+                    One <strong class="font-medium">full-day event</strong> to
+                    learn, practice, and exchange with developers who build real
+                    products.
+                  </span>
+                ))
+                .with("meetup", () => (
+                  <span class="text-xs uppercase tracking-widest opacity-60 md:text-sm">
+                    <strong class="font-medium">Community Meetup</strong>: a
+                    place to gather, learn, and network with like-minded people.
+                  </span>
+                ))
+                .exhaustive()
+            }
+            <span class="text-xs uppercase italic tracking-widest md:text-sm">
+              Training humans, not machines
+            </span>
+          </div>
         </h1>
       </div>
 
