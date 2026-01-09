@@ -399,14 +399,9 @@ export function getEventDisplayDate(
 }
 export function getEventDisplayType(
   eventType: CollectionEntry<"events">["data"]["type"],
-  withFullEventText?: boolean,
 ) {
   return match(eventType)
-    .with("event", () =>
-      withFullEventText
-        ? "One full day to learn, practice, and exchange with developers who build real products. Training humans, not machines."
-        : "Full Day Event",
-    )
+    .with("event", () => "Full Day Event")
     .with("meetup", () => "Community Meetup")
     .exhaustive();
 }
