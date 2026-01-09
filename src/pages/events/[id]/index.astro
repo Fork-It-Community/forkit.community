@@ -43,7 +43,6 @@ import { ROUTES } from "@/routes.gen";
 import { isEmpty } from "remeda";
 import RelatedEvents from "@/components/RelatedEvents/index.astro";
 import CustomBlockEventSlot from "@/components/CustomBlockEventSlot/index.astro";
-import { CiCircleQuestion } from "react-icons/ci";
 
 export async function getStaticPaths() {
   const allEvents = await getEventsCollection();
@@ -479,48 +478,41 @@ const ctaEventMetadata = {
   <!-- CFP -->
   {
     shouldShowCFP(event) && (
-      <div class="relative flex w-full flex-col gap-6 px-6 py-12">
-        <TiltedCard client:visible className="max-w-screen-md mx-auto">
-          <a
-            href={event.data.cfp.href}
-            target="_blank"
-            rel="noreferrer"
-            class="group flex w-full flex-col items-start gap-6 rounded-lg bg-white/5 p-8 backdrop-blur-md transition hover:bg-white/10 md:flex-row md:items-center md:px-12 md:py-10"
-          >
-            <div class="flex flex-1 flex-col">
-              <h2 class="text-balance font-heading text-xl font-medium uppercase tracking-widest transition group-hover:text-primary">
-                Submit your talk
-              </h2>
-              <p class="text-balance text-base tracking-wide opacity-60">
-                Propose your subject, we accept speakers of all levels.
-              </p>
-            </div>
-            <div
+      <div class="relative mx-auto flex w-full max-w-screen-xl flex-col gap-6 px-6 py-12">
+        <div class="group flex w-full flex-col items-start gap-6 rounded-lg bg-white/5 p-8 backdrop-blur-md transition hover:bg-white/10 md:flex-row md:items-center md:px-12 md:py-10">
+          <div class="flex flex-1 flex-col">
+            <h2 class="text-balance font-heading text-xl font-medium uppercase tracking-widest transition group-hover:text-primary">
+              Submit your talk
+            </h2>
+            <p class="text-balance text-base tracking-wide opacity-60">
+              Propose your subject, we accept speakers of all levels.{" "}
+              {event.data._computed.name} Call for Paper will close on{" "}
+              {dayjs(event.data.cfp.endDate).format("MMMM D, YYYY")}
+            </p>
+          </div>
+          <div class="flex flex-col gap-4 xs:flex-row">
+            <a
+              href={event.data.cfp.href}
+              target="_blank"
+              rel="noreferrer"
               class={cn(
                 buttonVariants({ size: "lg", variant: "secondary" }),
                 "max-xs:w-full",
               )}
             >
               Call for Paper
-            </div>
-          </a>
-        </TiltedCard>
-        <div class="flex flex-col items-center gap-4 md:gap-2">
-          <p class="opacity-70">
-            Deadline: {dayjs(event.data.cfp.endDate).format("MMMM D, YYYY")}
-          </p>
-          <div class="flex flex-col items-center md:flex-row md:gap-2">
-            <div class="flex items-center gap-2">
-              <CiCircleQuestion />
-              <p class="text-base tracking-wide opacity-60"> Need help? </p>
-            </div>
+            </a>
             <a
-              class="text-base tracking-wide underline opacity-60"
               href={lunalink(ROUTES["call-for-papers"].guidelines.__path, {})}
-              target="_blank"
-              rel="noreferrer"
+              class={cn(
+                buttonVariants({ size: "lg", variant: "ghost" }),
+                "max-xs:w-full",
+              )}
             >
-              Check our guidelines on how to apply
+              CFP How to & Guidelines
+              <span aria-hidden="true" class="ps-2">
+                →
+              </span>
             </a>
           </div>
         </div>
