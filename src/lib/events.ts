@@ -604,3 +604,36 @@ export async function getUpcomingEventsWithOpenCfp(limit?: number) {
       ) ?? [];
   return cfpEvents.slice(0, limit);
 }
+
+export async function getRelatedEvents(event: EventComputed) {
+  const allEvents = await getEventsCollection();
+
+  return allEvents
+    .filter(
+      (e) =>
+        e.id !== event.id &&
+        e.data._computed.country?.id === event.data._computed.country?.id,
+    )
+    .sort((a, b) => {
+      const aIsEvent = a.data.type === "event";
+      const bIsEvent = b.data.type === "event";
+      const aSameCity =
+        a.data._computed.city?.id === event.data._computed.city?.id;
+      const bSameCity =
+        b.data._computed.city?.id === event.data._computed.city?.id;
+      if (aIsEvent && !bIsEvent) {
+        return -1;
+      }
+      if (!aIsEvent && bIsEvent) {
+        return 1;
+      }
+      if (aSameCity && !bSameCity) {
+        return -1;
+      }
+      if (!aSameCity && bSameCity) {
+        return 1;
+      }
+      return dayjs(a.data.date).diff(dayjs(b.data.date));
+    })
+    .slice(0, 2);
+}
