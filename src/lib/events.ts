@@ -635,7 +635,7 @@ export async function getRelatedEvents(event: EventComputed) {
       if (!aSameCity && bSameCity) {
         return 1;
       }
-      return dayjs(a.data.date).diff(dayjs(b.data.date));
+      return dayjs(b.data.date).diff(dayjs(a.data.date));
     })
     .slice(0, 2);
 }
