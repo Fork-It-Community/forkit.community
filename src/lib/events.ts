@@ -612,7 +612,8 @@ export async function getRelatedEvents(event: EventComputed) {
     .filter(
       (e) =>
         e.id !== event.id &&
-        e.data._computed.country?.id === event.data._computed.country?.id,
+        e.data._computed.country?.id === event.data._computed.country?.id &&
+        e.data.status !== "cancelled",
     )
     .sort((a, b) => {
       const aIsEvent = a.data.type === "event";
