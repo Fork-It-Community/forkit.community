@@ -606,14 +606,15 @@ export async function getUpcomingEventsWithOpenCfp(limit?: number) {
 }
 
 export async function getRelatedEvents(event: EventComputed) {
-  const allEvents = await getEventsCollection();
+  const allEvents = await getEventsCollection({
+    without: ["cancelled"],
+  });
 
   return allEvents
     .filter(
       (e) =>
         e.id !== event.id &&
-        e.data._computed.country?.id === event.data._computed.country?.id &&
-        e.data.status !== "cancelled",
+        e.data._computed.country?.id === event.data._computed.country?.id,
     )
     .sort((a, b) => {
       const aIsEvent = a.data.type === "event";
