@@ -1,3 +1,4 @@
+import { ASSET_CATEGORIES, EXCLUDED_CATEGORIES_BY_TYPE } from "@/assets/consts";
 import { NotFoundAssetError } from "@/generated-assets/api";
 import { getImageNameFromTsxPath } from "@/generated-assets/image";
 import { eventWithComputed } from "@/lib/events";
@@ -7,6 +8,7 @@ import {
   getEntry,
   type CollectionEntry,
 } from "astro:content";
+import * as R from "remeda";
 
 export const getEventData = async (id: string) => {
   const event = await getEntry("events", id);
@@ -68,4 +70,24 @@ export const getEventAssetsSources = (event: CollectionEntry<"events">) => {
   ]
     .flat()
     .filter((x) => x !== undefined && x !== null);
+};
+
+export const categorize = (path: string) =>
+  ASSET_CATEGORIES.find(
+    (category) => category.id !== "other" && path.includes(category.id),
+  )?.id ?? "other";
+
+export const getGroupedAssets = (
+  imagesSrc: string[],
+  eventType: CollectionEntry<"events">["data"]["type"],
+) => {
+  const groups = R.groupBy(imagesSrc, categorize);
+
+  return ASSET_CATEGORIES.map((category) => ({
+    ...category,
+    images: groups[category.id] ?? [],
+  })).filter(
+    ({ id, images }) =>
+      images.length > 0 && !EXCLUDED_CATEGORIES_BY_TYPE[eventType].includes(id),
+  );
 };

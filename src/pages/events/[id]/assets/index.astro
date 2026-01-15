@@ -1,13 +1,13 @@
 ---
 import { getEventsCollection } from "@/lib/events";
-import { getEventAssetsSources } from "./_utils";
+import { getEventAssetsSources, getGroupedAssets } from "./_utils";
 import SEO from "@/components/SEO/index.astro";
 import dayjs from "dayjs";
 import { Image } from "astro:assets";
 import { buttonVariants } from "@/components/ui/button";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import { cn } from "@/lib/utils-client";
-import { MdDownload } from "react-icons/md";
+import { MdDownload, MdArrowUpward } from "react-icons/md";
 import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
@@ -25,6 +25,7 @@ if (!event) {
   return new Response(null, { status: 404 });
 }
 const imagesSrc = getEventAssetsSources(event);
+const groupedAssets = getGroupedAssets(imagesSrc, event.data.type);
 const marketinVideos = event.data.marketing?.videos;
 ---
 
@@ -39,7 +40,7 @@ const marketinVideos = event.data.marketing?.videos;
   <div
     class="mx-auto flex w-full max-w-screen-lg flex-col gap-8 px-4 pb-40 pt-6 md:flex-row"
   >
-    <div class="flex w-full flex-1 flex-col gap-4">
+    <div class="flex w-full flex-1 flex-col gap-4" id="top">
       <div class="flex flex-col gap-4 py-4 sm:flex-row sm:items-center sm:px-2">
         <h1 class="relative flex-1 font-heading text-xl">
           Assets · {event.data._computed.name}
@@ -95,29 +96,63 @@ const marketinVideos = event.data.marketing?.videos;
         ))
       }
 
-      {
-        imagesSrc.map((src) =>
-          import.meta.env.DEV ? (
-            <a href={src?.replace(/.jpg$/, ".debug")}>
-              <Image
-                alt=""
-                class="bg-background-blur w-full max-w-full rounded-md"
-                src={src}
-                width={9999}
-                height={9999}
-              />
-            </a>
-          ) : (
-            <Image
-              alt=""
-              class="bg-background-blur w-full max-w-full rounded-md"
-              src={src}
-              width={9999}
-              height={9999}
-            />
-          ),
-        )
-      }
+      <div class="flex flex-col gap-12">
+        <div class="flex flex-col gap-4 py-4">
+          <h2 class="text-md font-heading uppercase tracking-wider">
+            Quick access
+          </h2>
+          <div class="flex flex-wrap gap-x-6 gap-y-2">
+            {
+              groupedAssets.map((group) => (
+                <a
+                  href={`#${group.id}`}
+                  class="text-sm underline underline-offset-4 opacity-60 transition-opacity hover:opacity-100"
+                >
+                  {group.label}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+        {
+          groupedAssets.map((group) => (
+            <section id={group.id} class="flex flex-col gap-6">
+              <div class="flex items-center justify-between">
+                <h2 class="font-heading text-2xl font-bold">{group.label}</h2>
+                <a
+                  href="#top"
+                  class="text-md flex items-center gap-1 underline underline-offset-4"
+                >
+                  <MdArrowUpward /> Go to top
+                </a>
+              </div>
+              <div class="flex flex-col gap-4">
+                {group.images.map((src) =>
+                  import.meta.env.DEV ? (
+                    <a href={src?.replace(/.jpg$/, ".debug")}>
+                      <Image
+                        alt=""
+                        class="bg-background-blur w-full max-w-full rounded-md"
+                        src={src}
+                        width={9999}
+                        height={9999}
+                      />
+                    </a>
+                  ) : (
+                    <Image
+                      alt=""
+                      class="bg-background-blur w-full max-w-full rounded-md"
+                      src={src}
+                      width={9999}
+                      height={9999}
+                    />
+                  ),
+                )}
+              </div>
+            </section>
+          ))
+        }
+      </div>
     </div>
     <div class="w-56">
       <div
