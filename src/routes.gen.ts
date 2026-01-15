@@ -19,6 +19,8 @@ const ROUTES_CONFIG = {
     ":id": {
       "assets": {
         ":__image.:__type": {},
+        "_banner-linkedin": {},
+        "_banner-youtube": {},
         "_cfp-cover": {},
         "_cfp-open-insta": {},
         "_cfp-open": {},
