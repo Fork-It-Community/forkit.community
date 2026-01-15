@@ -15,8 +15,8 @@ export const ASSET_CATEGORIES = [
   { id: "/d-", label: "Announcements" },
   { id: "/talks/", label: "Talks" },
   { id: "/partners/", label: "Partners" },
-  { id: "banner", label: "Banners" },
-  { id: "qrcode", label: "QR Codes" },
+  { id: "/banner", label: "Banners" },
+  { id: "/qrcode", label: "QR Codes" },
   { id: "/cfp-", label: "CFP" },
   { id: "/schedule", label: "Schedule" },
   { id: "other", label: "Other" },
@@ -28,6 +28,6 @@ export const EXCLUDED_CATEGORIES_BY_TYPE: Record<
   CollectionEntry<"events">["data"]["type"],
   AssetCategoryId[]
 > = {
-  meetup: ["/d-", "/cfp-", "banner"],
+  meetup: ["/cfp-", "/banner"],
   event: ["/schedule"],
 };
