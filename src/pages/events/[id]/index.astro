@@ -76,6 +76,7 @@ const { event, relatedEvents } = Astro.props;
 
 const partners = await getEntries(event.data.partners ?? []);
 const speakers = await getEntries(event.data._computed.speakers ?? []);
+
 const coOrganizers = (await getEntries(event.data.coOrganizers ?? [])).filter(
   (p) => !!p,
 );
