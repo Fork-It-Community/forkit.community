@@ -82,7 +82,6 @@ export const getGroupedAssets = (
   eventType: CollectionEntry<"events">["data"]["type"],
 ) => {
   const groups = R.groupBy(imagesSrc, categorize);
-
   return ASSET_CATEGORIES.map((category) => ({
     ...category,
     images: groups[category.id] ?? [],
