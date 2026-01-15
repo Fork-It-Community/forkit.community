@@ -7,7 +7,7 @@ import {
   type CollectionKey,
 } from "astro:content";
 import { match } from "ts-pattern";
-import { entries, isEmpty, isNonNullish, isNullish } from "remeda";
+import { entries, isEmpty, isNonNullish, isNullish, uniqueBy } from "remeda";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import defaultImage from "@/assets/images/events.jpeg";
@@ -154,7 +154,7 @@ export async function eventWithComputed<
         city,
         country,
         talks,
-        speakers,
+        speakers: uniqueBy(speakers, (speaker) => speaker.id),
         organizers,
         volunteers,
       },
