@@ -1,5 +1,9 @@
 ---
-import { getEventsCollection } from "@/lib/events";
+import {
+  getEventsCollection,
+  getPastEvents,
+  getUpcomingEvents,
+} from "@/lib/events";
 import { getEventAssetsSources, getGroupedAssets } from "./_utils";
 import SEO from "@/components/SEO/index.astro";
 import dayjs from "dayjs";
@@ -11,15 +15,19 @@ import { MdDownload, MdArrowUpward } from "react-icons/md";
 import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
+import EventAssetsSelect from "@/components/EventAssetsSelect";
 
 export const prerender = false;
 
 const params = Astro.params;
 
-const allEvents = (await getEventsCollection()).sort((a, b) =>
-  dayjs(b.data.date).diff(a.data.date),
-);
+const [events, upcomingEvents, pastEvents] = await Promise.all([
+  getEventsCollection(),
+  getUpcomingEvents(),
+  getPastEvents(),
+]);
 
+const allEvents = events.sort((a, b) => dayjs(b.data.date).diff(a.data.date));
 const event = allEvents.find((e) => e.id === params.id);
 if (!event) {
   return new Response(null, { status: 404 });
@@ -156,23 +164,36 @@ const marketinVideos = event.data.marketing?.videos;
     </div>
     <div class="w-56">
       <div
-        class="hide-scrollbar sticky top-12 flex flex-col overflow-auto py-4 md:max-h-[80vh]"
+        class="hide-scrollbar sticky top-12 flex flex-col gap-6 overflow-auto py-4 md:max-h-[80vh]"
       >
-        <h2 class="p-1 font-heading text-sm uppercase tracking-wider">
-          All events
-        </h2>
-        {
-          allEvents.map((e) => (
-            <a
-              href={lunalink(ROUTES.events[":id"].assets.__path, {
-                id: e.id,
-              })}
-              class={cn("p-1", e.id === event.id && "opacity-60")}
-            >
-              {e.data._computed.name}
-            </a>
-          ))
-        }
+        <div class="flex flex-col">
+          <h2 class="p-1 font-heading text-sm uppercase tracking-wider">
+            Upcoming Events
+          </h2>
+          {
+            upcomingEvents.map((e) => (
+              <a
+                href={lunalink(ROUTES.events[":id"].assets.__path, {
+                  id: e.id,
+                })}
+                class={cn("p-1", e.id === event.id && "opacity-60")}
+              >
+                {e.data._computed.name}
+              </a>
+            ))
+          }
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <h2 class="p-1 font-heading text-sm uppercase tracking-wider">
+            Past Events
+          </h2>
+          <EventAssetsSelect
+            client:load
+            currentEvent={event.id}
+            pastEvents={pastEvents}
+          />
+        </div>
       </div>
     </div>
   </div>
