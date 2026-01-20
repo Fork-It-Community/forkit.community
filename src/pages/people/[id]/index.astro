@@ -15,6 +15,7 @@ import Prose from "@/components/Prose/index.astro";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import TiltedCard from "@/components/TiltedCard";
 import { BackButton } from "@/components/BackButton";
+import BadgeIcon from "@/components/CustomIcons/BadgeIcons.tsx";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { getPeopleWithComputed } from "@/lib/people";
@@ -44,8 +45,6 @@ const ogImage = new URL(
 const personComputed = await getPeopleWithComputed(person);
 
 const personAchievements = getPersonAchievements(personComputed);
-
-console.log(personAchievements);
 ---
 
 <MainLayout>
@@ -88,13 +87,16 @@ console.log(personAchievements);
             >
               {person.data.name}
             </h1>
-            <!-- {
-              personAchievements.map((achievement) => (
-                <p>
-                  {achievement.slug} : {achievement.level}
-                </p>
-              ))
-            } -->
+            <div class="flex gap-2">
+              {
+                personAchievements.map((achievement) => (
+                  <BadgeIcon
+                    level={achievement.level}
+                    slug={achievement.slug}
+                  />
+                ))
+              }
+            </div>
 
             <div class="flex flex-col gap-1">
               {
