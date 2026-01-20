@@ -43,7 +43,9 @@ export async function peopleWithComputed<
   ).length;
 
   const personEventsCountryCount = new Set(
-    personEvents.map((event) => event.data._computed.country?.id),
+    personEvents
+      .map((event) => event.data._computed.country?.id)
+      .filter((id) => !!id),
   ).size;
 
   const handle = getPeopleGithubHandle(people);
@@ -87,8 +89,8 @@ const getPeopleGithubHandle = (people: CollectionEntry<"people">) => {
 
 const getPersonGithubContributionsCountWithHandle = async (handle: string) => {
   try {
-    const contributors = await octokit.request(
-      "GET /repos/{owner}/{repo}/contributors",
+    const contributors = await octokit.paginate(
+      octokit.rest.repos.listContributors,
       {
         owner: "Fork-It-Community",
         repo: "forkit.community",
@@ -97,8 +99,10 @@ const getPersonGithubContributionsCountWithHandle = async (handle: string) => {
         },
       },
     );
-    return contributors.data.find((contributor) => contributor.login === handle)
-      ?.contributions;
+    return (
+      contributors.find((contributor) => contributor.login === handle)
+        ?.contributions ?? 0
+    );
   } catch {
     return 0;
   }
