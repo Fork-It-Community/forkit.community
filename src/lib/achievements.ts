@@ -1,8 +1,8 @@
 import type { PersonWithComputed } from "./people";
 
-type AchievementSlug = keyof PersonWithComputed["data"]["_computed"];
+export type AchievementSlug = keyof PersonWithComputed["data"]["_computed"];
 
-type AchievementLevel = {
+export type AchievementLevel = {
   label: string;
   limit: number;
 };
@@ -13,8 +13,8 @@ type Achievement = {
 };
 
 const DEFAULT_ACHIEVEMENT_LEVELS = [
-  { label: "stone", limit: 1 },
-  { label: "bronze", limit: 2 },
+  { label: "wood", limit: 1 },
+  { label: "stone", limit: 2 },
   { label: "silver", limit: 5 },
   { label: "gold", limit: 10 },
 ];
@@ -27,8 +27,8 @@ const ACHIEVEMENTS: Achievement[] = [
   {
     slug: "githubContributionCount",
     achievementLevels: [
-      { label: "stone", limit: 1 },
-      { label: "bronze", limit: 10 },
+      { label: "wood", limit: 1 },
+      { label: "stone", limit: 10 },
       { label: "silver", limit: 50 },
       { label: "gold", limit: 100 },
     ],
