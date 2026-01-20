@@ -8,7 +8,7 @@ import {
   getEntry,
   type CollectionEntry,
 } from "astro:content";
-import * as R from "remeda";
+import { groupBy } from "remeda";
 
 export const getEventData = async (id: string) => {
   const event = await getEntry("events", id);
@@ -95,7 +95,7 @@ export const getGroupedAssets = (
   eventType: CollectionEntry<"events">["data"]["type"],
 ) => {
   const oppositeSuffixes = getOppositeSuffixes(eventType);
-  const groups = R.groupBy(imagesSrc, categorize);
+  const groups = groupBy(imagesSrc, categorize);
 
   return ASSET_CATEGORIES.filter(
     ({ id }) => !EXCLUDED_CATEGORIES_BY_TYPE[eventType].includes(id),
