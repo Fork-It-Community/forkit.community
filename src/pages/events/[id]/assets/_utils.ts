@@ -77,16 +77,34 @@ export const categorize = (path: string) =>
     (category) => category.id !== "other" && path.includes(category.id),
   )?.id ?? "other";
 
+const getOppositeSuffixes = (
+  eventType: CollectionEntry<"events">["data"]["type"],
+) => {
+  // Added type in case a new type, so this will raise an error
+  const allTypes: CollectionEntry<"events">["data"]["type"][] = [
+    "meetup",
+    "event",
+  ];
+  return allTypes
+    .filter((type) => type !== eventType)
+    .map((type) => `-${type}.jpg`);
+};
+
 export const getGroupedAssets = (
   imagesSrc: string[],
   eventType: CollectionEntry<"events">["data"]["type"],
 ) => {
+  const oppositeSuffixes = getOppositeSuffixes(eventType);
   const groups = R.groupBy(imagesSrc, categorize);
-  return ASSET_CATEGORIES.map((category) => ({
-    ...category,
-    images: groups[category.id] ?? [],
-  })).filter(
-    ({ id, images }) =>
-      images.length > 0 && !EXCLUDED_CATEGORIES_BY_TYPE[eventType].includes(id),
-  );
+
+  return ASSET_CATEGORIES.filter(
+    ({ id }) => !EXCLUDED_CATEGORIES_BY_TYPE[eventType].includes(id),
+  )
+    .map((category) => ({
+      ...category,
+      images: (groups[category.id] ?? []).filter((src) => {
+        return !oppositeSuffixes.some((suffix) => src.endsWith(suffix));
+      }),
+    }))
+    .filter(({ images }) => !!images.length);
 };

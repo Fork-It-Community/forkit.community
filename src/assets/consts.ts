@@ -29,5 +29,5 @@ export const EXCLUDED_CATEGORIES_BY_TYPE: Record<
   AssetCategoryId[]
 > = {
   meetup: ["/cfp-", "/banner"],
-  event: ["/schedule"],
+  event: [],
 };
