@@ -15,7 +15,7 @@ import Prose from "@/components/Prose/index.astro";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import TiltedCard from "@/components/TiltedCard";
 import { BackButton } from "@/components/BackButton";
-import BadgeIcon from "@/components/CustomIcons/BadgeIcons.tsx";
+import { AchievementBadges } from "@/components/AchievementBadges";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { getPeopleWithComputed } from "@/lib/people";
@@ -87,16 +87,6 @@ const personAchievements = getPersonAchievements(personComputed);
             >
               {person.data.name}
             </h1>
-            <div class="flex gap-2">
-              {
-                personAchievements.map((achievement) => (
-                  <BadgeIcon
-                    level={achievement.level}
-                    slug={achievement.slug}
-                  />
-                ))
-              }
-            </div>
 
             <div class="flex flex-col gap-1">
               {
@@ -151,6 +141,9 @@ const personAchievements = getPersonAchievements(personComputed);
               </ul>
             )
           }
+          <div class="flex gap-2">
+            <AchievementBadges client:load achievements={personAchievements} />
+          </div>
         </section>
 
         <section class="flex w-full flex-1 flex-col gap-8 px-4">

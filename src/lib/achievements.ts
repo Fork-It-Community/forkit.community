@@ -12,6 +12,14 @@ type Achievement = {
   achievementLevels?: AchievementLevel[];
 };
 
+export const ACHIEVEMENT_DESCRIPTIONS: Record<AchievementSlug, string> = {
+  speakingCount: "Number of times you've spoken at events",
+  fullDayEventsOrganizingCount: "Number of full-day events you've organized",
+  meetupOrganizingCount: "Number of meetups you've organized",
+  visitedCountryCount: "Number of countries you've visited",
+  githubContributionCount: "Number of contributions made on GitHub",
+};
+
 const DEFAULT_ACHIEVEMENT_LEVELS = [
   { label: "wood", limit: 1 },
   { label: "stone", limit: 2 },
@@ -49,6 +57,7 @@ export const getPersonAchievements = (personComputed: PersonWithComputed) => {
     return {
       slug: achievement.slug,
       level: reachedLevel,
+      count: value,
     };
   });
 };
