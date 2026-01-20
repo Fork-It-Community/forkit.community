@@ -123,16 +123,18 @@ const marketinVideos = event.data.marketing?.videos;
           </div>
         </div>
         {
-          groupedAssets.map((group) => (
+          groupedAssets.map((group, index) => (
             <section id={group.id} class="flex flex-col gap-6">
               <div class="flex items-center justify-between">
                 <h2 class="font-heading text-2xl font-bold">{group.label}</h2>
-                <a
-                  href="#top"
-                  class="text-md flex items-center gap-1 underline underline-offset-4 opacity-80"
-                >
-                  <MdArrowUpward /> Go to top
-                </a>
+                {!!index && (
+                  <a
+                    href="#top"
+                    class="text-md flex items-center gap-1 underline underline-offset-4 opacity-80"
+                  >
+                    <MdArrowUpward /> Back to top
+                  </a>
+                )}
               </div>
               <div class="flex flex-col gap-4">
                 {group.images.map((src) =>

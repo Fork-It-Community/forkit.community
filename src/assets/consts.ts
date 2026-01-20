@@ -14,11 +14,11 @@ export const ASSET_CATEGORIES = [
   { id: "/tickets", label: "Tickets" },
   { id: "/d-", label: "Announcements" },
   { id: "/talks/", label: "Talks" },
-  { id: "/partners/", label: "Partners" },
+  { id: "/partners/", label: "Sponsors & Partners" },
   { id: "/banner", label: "Banners" },
-  { id: "/qrcode", label: "QR Codes" },
   { id: "/cfp-", label: "CFP" },
   { id: "/schedule", label: "Schedule" },
+  { id: "/qrcode", label: "QR Codes" },
   { id: "other", label: "Other" },
 ] as const;
 
