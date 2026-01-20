@@ -45,7 +45,7 @@ export default function EventAssetsSelect({
           className="w-full justify-between border border-input bg-transparent hover:bg-accent hover:text-accent-foreground"
         >
           <span className="flex-1 truncate text-left">
-            {selectedOption?.name ?? ""}
+            {selectedOption?.name ?? "Select an Event"}
           </span>
           <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
