@@ -40,7 +40,7 @@ const ROUTES_CONFIG = {
         "_save-the-date-insta": {},
         "_save-the-date-square": {},
         "_save-the-date": {},
-        "_schedule-short": {},
+        "_schedule-short-meetup": {},
         "_tickets-available-insta": {},
         "_tickets-available": {},
         "_utils": {},
