@@ -16,7 +16,7 @@ const BadgeIcon = ({ level, slug, className }: BadgeIconProps) => {
       <img
         src={`/badge-icons/${level}_${slug}.svg`}
         alt={`${level} ${slug} badge`}
-        className="h-8 w-8"
+        className="h-10 w-10"
       />
     </div>
   );
