@@ -26,6 +26,10 @@ export interface EventDetails {
   location: string | undefined;
 }
 
+type TalksWithVODParams = {
+  limit?: number;
+};
+
 function toGoogleCalendarDate(date: Date) {
   return date.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
 }
@@ -551,8 +555,17 @@ export function without<T extends CollectionEntry<"events">>(
   return events.filter((event) => event.data.status !== status);
 }
 
-export function getTalksWithVOD() {
-  return getCollection("talks", (talk) => talk.data.vod?.youtubeId);
+export async function getTalksWithVOD({
+  limit = undefined,
+}: TalksWithVODParams = {}) {
+  const talks = await getCollection(
+    "talks",
+    (talk) => talk.data.vod?.youtubeId,
+  );
+  if (limit) {
+    return talks.slice(0, limit);
+  }
+  return talks;
 }
 
 export const getCoverImage = async (
