@@ -13,11 +13,11 @@ type Achievement = {
 };
 
 export const ACHIEVEMENT_DESCRIPTIONS: Record<AchievementSlug, string> = {
-  speakingCount: "Number of times you've spoken at events",
-  fullDayEventsOrganizingCount: "Number of full-day events you've organized",
-  meetupOrganizingCount: "Number of meetups you've organized",
-  visitedCountryCount: "Number of countries you've visited",
-  githubContributionCount: "Number of contributions made on GitHub",
+  speakingCount: "Talks given",
+  fullDayEventsOrganizingCount: "Full day events organized",
+  meetupOrganizingCount: "Meetups organized",
+  visitedCountryCount: "Countries visited",
+  githubContributionCount: "GitHub contributions",
 };
 
 const DEFAULT_ACHIEVEMENT_LEVELS = [
