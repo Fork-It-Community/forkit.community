@@ -11,6 +11,8 @@ import dayjs from "dayjs";
 // While in development, there are some "rest" from one page to another.
 // This works well in production
 dayjs.locale(Astro.currentLocale);
+
+const pixelId = import.meta.env.PUBLIC_META_PIXEL_ID;
 ---
 
 <html lang={Astro.currentLocale} class="dark">
@@ -40,7 +42,7 @@ dayjs.locale(Astro.currentLocale);
     <slot name="ld+json" />
 
     <!-- Meta Pixel Code -->
-    <script is:inline>
+    <script is:inline define:vars={{ pixelId }}>
       !(function (f, b, e, v, n, t, s) {
         if (f.fbq) return;
         n = f.fbq = function () {
@@ -64,17 +66,17 @@ dayjs.locale(Astro.currentLocale);
         "script",
         "https://connect.facebook.net/en_US/fbevents.js",
       );
-      fbq("init", import.meta.env.META_PIXEL_ID);
+      fbq("init", pixelId);
       fbq("track", "PageView");
     </script>
-    <noscript
-      ><img
+    <noscript>
+      <img
         height="1"
         width="1"
         style="display:none"
-        src=`https://www.facebook.com/tr?id=${import.meta.env.META_PIXEL_ID}&ev=PageView&noscript=1`
-      /></noscript
-    >
+        src={`https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`}
+      />
+    </noscript>
     <!-- End Meta Pixel Code -->
   </head>
   <body
