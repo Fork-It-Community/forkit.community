@@ -53,48 +53,49 @@ const { event, displayStats } = Astro.props;
       <ComingSoon />
     ) : (
       <div class="flex flex-col">
-        {event.data.schedule.items
-          .toSorted(
-            (talk1, talk2) =>
-              // Infinity to set startTime=null at the end
-              (talk1.startTime?.valueOf() ?? Infinity) -
-              (talk2.startTime?.valueOf() ?? Infinity),
-          )
-          .map((activity) => {
-            return (
-              <div class="group flex gap-3">
-                <div class="flex flex-col items-center gap-1 pt-1">
-                  <div class="size-2.5 rounded-full border-2 border-white/40" />
-                  <div class="flex-1 border-l border-dashed border-white/20 group-last:hidden" />
+        {(event.data.schedule.status === "preview"
+          ? event.data.schedule.items
+          : event.data.schedule.items.toSorted(
+              (talk1, talk2) =>
+                // Infinity to set startTime=null at the end
+                (talk1.startTime?.valueOf() ?? Infinity) -
+                (talk2.startTime?.valueOf() ?? Infinity),
+            )
+        ).map((activity) => {
+          return (
+            <div class="group flex gap-3">
+              <div class="flex flex-col items-center gap-1 pt-1">
+                <div class="size-2.5 rounded-full border-2 border-white/40" />
+                <div class="flex-1 border-l border-dashed border-white/20 group-last:hidden" />
+              </div>
+              <div class="flex w-full flex-col gap-2 pb-6">
+                <div class="flex flex-1 flex-row flex-wrap items-center justify-between gap-x-3 gap-y-1">
+                  <TimeAndDuration
+                    startTime={activity.startTime}
+                    duration={activity.duration}
+                    class="font-heading text-sm tracking-wide opacity-80"
+                  />
+                  {!!activity.location && (
+                    <span class="flex items-center gap-1.5 text-xs uppercase tracking-wide opacity-60">
+                      <MdPlace className="text-base" />
+                      {activity.location}
+                    </span>
+                  )}
                 </div>
-                <div class="flex w-full flex-col gap-2 pb-6">
-                  <div class="flex flex-1 flex-row flex-wrap items-center justify-between gap-x-3 gap-y-1">
-                    <TimeAndDuration
-                      startTime={activity.startTime}
-                      duration={activity.duration}
-                      class="font-heading text-sm tracking-wide opacity-80"
-                    />
-                    {!!activity.location && (
-                      <span class="flex items-center gap-1.5 text-xs uppercase tracking-wide opacity-60">
-                        <MdPlace className="text-base" />
-                        {activity.location}
-                      </span>
-                    )}
-                  </div>
-                  <div class="">
-                    {match(activity.type)
-                      .with("conference", "roundtable", () => (
-                        <TiltedCard client:visible>
-                          <CardConference activity={activity} event={event} />
-                        </TiltedCard>
-                      ))
-                      .with("info", "lunch", () => <CardInfo info={activity} />)
-                      .exhaustive()}
-                  </div>
+                <div>
+                  {match(activity.type)
+                    .with("conference", "roundtable", () => (
+                      <TiltedCard client:visible>
+                        <CardConference activity={activity} event={event} />
+                      </TiltedCard>
+                    ))
+                    .with("info", "lunch", () => <CardInfo info={activity} />)
+                    .exhaustive()}
                 </div>
               </div>
-            );
-          })}
+            </div>
+          );
+        })}
       </div>
     )
   }
