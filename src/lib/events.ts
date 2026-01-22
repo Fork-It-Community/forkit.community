@@ -26,10 +26,6 @@ export interface EventDetails {
   location: string | undefined;
 }
 
-type TalksWithVODParams = {
-  limit?: number;
-};
-
 function toGoogleCalendarDate(date: Date) {
   return date.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
 }
@@ -557,7 +553,7 @@ export function without<T extends CollectionEntry<"events">>(
 
 export async function getTalksWithVOD({
   limit = undefined,
-}: TalksWithVODParams = {}) {
+}: GetEventsParams = {}) {
   const talks = await getCollection(
     "talks",
     (talk) => talk.data.vod?.youtubeId,

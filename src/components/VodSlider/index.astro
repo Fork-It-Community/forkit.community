@@ -7,16 +7,16 @@ import VideoCard from "@/components/VideoCard/index.astro";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
-  items: CollectionEntry<"talks">[];
+  talks: CollectionEntry<"talks">[];
 }
 
-const { items } = Astro.props;
+const { talks } = Astro.props;
 ---
 
 <div class="hide-scrollbar overflow-auto">
   <div class="mx-auto flex w-full max-w-screen-lg gap-4 px-6 py-8 md:gap-6">
     {
-      items.map((talk) => (
+      talks.map((talk) => (
         <TiltedCard client:visible>
           <VideoCard talk={talk} class="w-[20rem] max-w-[70vw]" />
         </TiltedCard>
