@@ -210,6 +210,29 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
           </div>
 
           <div class="flex flex-1 flex-col justify-center gap-4 md:flex-row">
+            {forKidsEvent.data.afterEventContent.afterMovie && (
+              <div class="relative aspect-[1134/640] w-full min-w-0 flex-1">
+                <a
+                  href={forKidsEvent.data.afterEventContent.afterMovie.href}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Image
+                    alt={
+                      forKidsEvent.data.afterEventContent.afterMovie.thumbnail
+                        .alt
+                    }
+                    class="rounded-lg object-cover"
+                    src={
+                      forKidsEvent.data.afterEventContent.afterMovie.thumbnail
+                        .image
+                    }
+                    width={1134}
+                    height={640}
+                  />
+                </a>
+              </div>
+            )}
             <div
               class={cn("flex flex-[0.7] flex-col gap-4 md:max-w-screen-sm")}
             >
