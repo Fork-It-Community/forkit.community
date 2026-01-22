@@ -562,10 +562,25 @@ export async function getTalksWithVOD({
     "talks",
     (talk) => talk.data.vod?.youtubeId,
   );
+  const events = await getEventsCollection();
+  const talksWithDate = talks
+    .map((talk) => {
+      const event = events.find((event) =>
+        event.data.schedule?.items?.some((item) => item.slug?.id === talk.id),
+      );
+      return {
+        talk,
+        eventDate: event?.data.date,
+      };
+    })
+    .sort(
+      (a, b) => (b.eventDate?.valueOf() ?? 0) - (a.eventDate?.valueOf() ?? 0),
+    )
+    .map((item) => item.talk);
   if (limit) {
-    return talks.slice(0, limit);
+    return talksWithDate.slice(0, limit);
   }
-  return talks;
+  return talksWithDate;
 }
 
 export const getCoverImage = async (
