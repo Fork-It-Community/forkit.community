@@ -38,7 +38,7 @@ const { afterMovie, href, title, description, buttonText } = Astro.props;
 
     <a
       href={href}
-      title="For kids page"
+      title={buttonText}
       class={cn(buttonVariants(), "group gap-2 xs:max-w-44 mt-4")}
     >
       {buttonText}
