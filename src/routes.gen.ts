@@ -36,6 +36,8 @@ const ROUTES_CONFIG = {
         "_og-image": {},
         "_qrcode-bg": {},
         "_qrcode": {},
+        "_registration-still-open-insta": {},
+        "_registration-still-open": {},
         "_save-the-date-insta": {},
         "_save-the-date-square": {},
         "_save-the-date": {},
