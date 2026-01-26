@@ -551,9 +551,7 @@ export function without<T extends CollectionEntry<"events">>(
   return events.filter((event) => event.data.status !== status);
 }
 
-export async function getTalksWithVOD({
-  limit = undefined,
-}: GetEventsParams = {}) {
+export async function getTalksWithVOD({ limit }: GetEventsParams = {}) {
   const talks = await getCollection(
     "talks",
     (talk) => talk.data.vod?.youtubeId,
