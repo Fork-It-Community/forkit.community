@@ -338,34 +338,34 @@ const forKidsAfterMovie = await getEntry("forKidsEvent", "2025-france-rouen-2");
   </div>
 
   <!-- ABOUT -->
-  <div
-    class="relative flex flex-col gap-16 overflow-hidden py-16 sm:py-40 md:gap-8"
-  >
-    <Image
-      alt=""
-      class="absolute inset-0 h-full w-full -scale-x-100 object-cover opacity-35 mix-blend-color-dodge grayscale md:opacity-100"
-      src={aboutBackground}
-      width={1200}
-    />
-    <div
-      class="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/0"
-    >
+  <div class="flex flex-col gap-32">
+    <div class="relative overflow-hidden py-16 sm:py-40">
+      <Image
+        alt=""
+        class="absolute inset-0 h-full w-full -scale-x-100 object-cover opacity-35 mix-blend-color-dodge grayscale md:opacity-100"
+        src={aboutBackground}
+        width={1200}
+      />
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/0"
+      >
+      </div>
+      <div
+        class="absolute inset-0 h-full w-full"
+        style={{
+          backdropFilter: "blur(64px)",
+          maskImage: "linear-gradient(90deg, black 30%, transparent 70%)",
+        }}
+      >
+      </div>
+      <About
+        afterMovie={afterMovie}
+        href={lunalink(ROUTES.about.__path, {})}
+        title={`What is Fork${"\u00A0"}it! Community?`}
+        description="Fork it! is a global tech community where real people share honest feedback, real-life experiences, and authentic stories."
+        buttonText="About Fork it!"
+      />
     </div>
-    <div
-      class="absolute inset-0 h-full w-full"
-      style={{
-        backdropFilter: "blur(64px)",
-        maskImage: "linear-gradient(90deg, black 30%, transparent 70%)",
-      }}
-    >
-    </div>
-    <About
-      afterMovie={afterMovie}
-      href={lunalink(ROUTES.about.__path, {})}
-      title={`What is Fork${"\u00A0"}it! Community?`}
-      description="Fork it! is a global tech community where real people share honest feedback, real-life experiences, and authentic stories."
-      buttonText="About Fork it!"
-    />
     <About
       afterMovie={forKidsAfterMovie}
       href={lunalink(ROUTES.fr.events["for-kids"].__path, {})}
