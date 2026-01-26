@@ -3,17 +3,13 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils-client";
 import { MdArrowForward } from "react-icons/md";
 import { Image } from "astro:assets";
-
-interface AfterMovie {
-  href: string;
-  thumbnail: {
-    image: ImageMetadata;
-    alt: string;
-  };
-}
+import type { CollectionEntry } from "astro:content";
 
 interface Props {
-  afterMovie: AfterMovie | undefined;
+  afterMovie:
+    | CollectionEntry<"events">
+    | CollectionEntry<"forKidsEvent">
+    | undefined;
   href: string;
   title: string;
   description: string;
@@ -46,13 +42,17 @@ const { afterMovie, href, title, description, buttonText } = Astro.props;
     </a>
   </div>
   {
-    afterMovie && (
+    afterMovie && afterMovie.data.afterEventContent?.afterMovie && (
       <div class="relative aspect-[1134/640] w-full min-w-0 flex-1">
-        <a href={afterMovie.href} target="_blank" rel="noreferrer">
+        <a
+          href={afterMovie.data.afterEventContent?.afterMovie?.href}
+          target="_blank"
+          rel="noreferrer"
+        >
           <Image
-            alt={afterMovie.thumbnail.alt}
+            alt={afterMovie.data.afterEventContent?.afterMovie?.thumbnail.alt}
             class="rounded-lg object-cover"
-            src={afterMovie.thumbnail.image}
+            src={afterMovie.data.afterEventContent?.afterMovie?.thumbnail.image}
             width={1134}
             height={640}
           />

@@ -54,11 +54,8 @@ const partners = await getEntries<"partners">(
     id: partner,
   })),
 );
-const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
-  .afterEventContent?.afterMovie;
-const forKidsAfterMovie = (
-  await getEntry("forKidsEvent", "2025-france-rouen-2")
-)?.data.afterEventContent?.afterMovie;
+const afterMovie = await getEntry("events", "2024-france-rouen");
+const forKidsAfterMovie = await getEntry("forKidsEvent", "2025-france-rouen-2");
 ---
 
 <MainLayout>
