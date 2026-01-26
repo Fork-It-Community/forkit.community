@@ -13,6 +13,7 @@ export const zSocialTypes = z.enum([
   "openstreetmap",
   "website",
   "tiktok",
+  "sessionize",
 ]);
 
 export const zMediaImage = ({ image }: SchemaContext) =>

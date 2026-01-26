@@ -16,7 +16,7 @@ import {
 } from "react-icons/fa6";
 import { IoGitBranch } from "react-icons/io5";
 import { LuMail, LuMessageCircle } from "react-icons/lu";
-import { SiOpenstreetmap } from "react-icons/si";
+import { SiOpenstreetmap, SiSessionize } from "react-icons/si";
 import { TbWorld } from "react-icons/tb";
 
 type SocialsLevel = "primary" | "secondary";
@@ -94,6 +94,7 @@ export const SOCIALS_TYPE_MAP = {
   openstreetmap: SiOpenstreetmap,
   website: TbWorld,
   tiktok: FaTiktok,
+  sessionize: SiSessionize,
 } satisfies Record<SocialType, FC>;
 
 export const GLOBAL_NEWSLETTER_LINK =
