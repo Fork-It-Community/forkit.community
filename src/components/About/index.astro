@@ -50,9 +50,14 @@ const { afterMovie, href, title, description, buttonText } = Astro.props;
           rel="noreferrer"
         >
           <Image
-            alt={afterMovie.data.afterEventContent?.afterMovie?.thumbnail.alt}
+            alt={
+              afterMovie.data.afterEventContent?.afterMovie?.thumbnail?.alt ??
+              "After movie preview"
+            }
             class="rounded-lg object-cover"
-            src={afterMovie.data.afterEventContent?.afterMovie?.thumbnail.image}
+            src={
+              afterMovie.data.afterEventContent?.afterMovie?.thumbnail?.image
+            }
             width={1134}
             height={640}
           />
