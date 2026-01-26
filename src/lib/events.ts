@@ -551,8 +551,30 @@ export function without<T extends CollectionEntry<"events">>(
   return events.filter((event) => event.data.status !== status);
 }
 
-export function getTalksWithVOD() {
-  return getCollection("talks", (talk) => talk.data.vod?.youtubeId);
+export async function getTalksWithVOD({ limit }: GetEventsParams = {}) {
+  const talks = await getCollection(
+    "talks",
+    (talk) => talk.data.vod?.youtubeId,
+  );
+  const events = await getEventsCollection();
+  const talksWithDate = talks
+    .map((talk) => {
+      const event = events.find((event) =>
+        event.data.schedule?.items?.some((item) => item.slug?.id === talk.id),
+      );
+      return {
+        talk,
+        eventDate: event?.data.date,
+      };
+    })
+    .sort(
+      (a, b) => (b.eventDate?.valueOf() ?? 0) - (a.eventDate?.valueOf() ?? 0),
+    )
+    .map((item) => item.talk);
+  if (limit) {
+    return talksWithDate.slice(0, limit);
+  }
+  return talksWithDate;
 }
 
 export const getCoverImage = async (

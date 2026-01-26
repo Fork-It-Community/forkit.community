@@ -4,18 +4,26 @@ import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import {
   getEventDisplayDate,
   getEventDisplayType,
+  getTalksWithVOD,
   getUpcomingMajorEvent,
 } from "@/lib/events";
 import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 import { Image } from "astro:assets";
 import defaultImage from "@/assets/images/events.jpeg";
 import aboutBackground from "@/assets/images/about.jpg";
-import { MdArrowForward, MdEvent, MdFeed, MdPodcasts } from "react-icons/md";
+import {
+  MdArrowForward,
+  MdEvent,
+  MdFeed,
+  MdOndemandVideo,
+  MdPodcasts,
+} from "react-icons/md";
 import { cn } from "@/lib/utils-client";
 import { buttonVariants } from "@/components/ui/button";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import JoinNewsletter from "@/components/JoinNewsletter/index.astro";
 import ArticleSlider from "@/components/ArticleSlider/index.astro";
+import VodSlider from "@/components/VodSlider/index.astro";
 
 import { getUpcomingEvents } from "@/lib/events";
 import SEO from "@/components/SEO/index.astro";
@@ -36,6 +44,7 @@ const upcomingEvents = (await getUpcomingEvents())
       event.id !== upcomingMajorEvent?.id && event.data.status !== "cancelled",
   )
   .slice(0, 3);
+const allTalks = await getTalksWithVOD({ limit: 4 });
 const podcasts = await getPodcastsEpisodesCollection({ limit: 5 });
 const news = await getNewsCollection({ limit: 3 });
 const partners = await getEntries<"partners">(
@@ -302,6 +311,28 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- VOD -->
+    <div class="flex flex-col py-6 md:py-12">
+      <div class="mx-auto flex w-full max-w-screen-lg flex-col gap-2 px-6">
+        <a
+          href={lunalink(ROUTES.resources.videos.__path, {})}
+          title="All the VODs"
+        >
+          <h2
+            class="flex items-center gap-2 text-balance font-heading text-3xl font-medium uppercase tracking-wide"
+          >
+            <MdOndemandVideo className="opacity-40" />
+            VODs
+          </h2>
+        </a>
+        <p class="bold max-w-[80ch] text-balance text-sm opacity-60">
+          Latest VODs about the global developer community. Watch different
+          videos in different languages. Learn from people around the world.
+        </p>
+      </div>
+      <VodSlider talks={allTalks} />
     </div>
   </div>
 

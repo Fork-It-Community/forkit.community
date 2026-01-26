@@ -1,0 +1,34 @@
+---
+import { MdArrowForward } from "react-icons/md";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
+import TiltedCard from "@/components/TiltedCard";
+import VideoCard from "@/components/VideoCard/index.astro";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  talks: CollectionEntry<"talks">[];
+}
+
+const { talks } = Astro.props;
+---
+
+<div class="hide-scrollbar overflow-auto">
+  <div class="mx-auto flex w-full max-w-screen-lg gap-4 px-6 py-8 md:gap-6">
+    {
+      talks.map((talk) => (
+        <TiltedCard client:visible>
+          <VideoCard talk={talk} class="w-[20rem] max-w-[70vw]" />
+        </TiltedCard>
+      ))
+    }
+    <a
+      href={lunalink(ROUTES.resources.videos.__path, {})}
+      class="relative flex aspect-square w-64 flex-none items-center justify-center gap-2 rounded-lg bg-white/5 text-xs uppercase tracking-widest text-white/50 transition duration-500 hover:bg-white/10"
+    >
+      All VODs
+      <MdArrowForward />
+    </a>
+    <div class="w-16 flex-none"></div>
+  </div>
+</div>
