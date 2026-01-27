@@ -8,6 +8,7 @@ export const zForKidsEvent = ({ image }: SchemaContext) =>
     ...zEventBasicInfo({ image }).shape,
     startTime: z.date(),
     endTime: z.date().optional(),
+    eventTypes: reference("eventTypes"),
     workshops: z.array(reference("forKidsWorkshop")).optional(),
     ageRange: zAgeRange(),
     tickets: z
@@ -26,5 +27,4 @@ export const zForKidsEvent = ({ image }: SchemaContext) =>
       .optional()
       .describe("Collection of people that organize the event"),
   });
-
 export type ForKidsEvent = z.infer<ReturnType<typeof zForKidsEvent>>;
