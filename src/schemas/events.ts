@@ -12,6 +12,7 @@ export const zEventBasicInfo = ({ image }: SchemaContext) =>
         image: image().optional(),
       })
       .optional(),
+    eventType: reference("eventTypes"),
     excerpt: z.string().optional(),
     image: zMediaImage({ image }).optional(),
     status: z.enum([
