@@ -18,6 +18,7 @@ import dayjs from "dayjs";
 const upcomingEvents = await getUpcomingEvents();
 const pastEvents = await getPastEvents();
 const allCountries = await getCollection("countries");
+const allEventTypes = await getCollection("eventTypes");
 const events = await getEventsCollection({ without: ["draft"] });
 
 const countriesLastEvents = allCountries
@@ -63,25 +64,48 @@ const countries = countriesLastEvents.sort((a, b) =>
     <div
       class="mx-auto flex w-full max-w-screen-lg flex-col gap-16 px-4 md:flex-row-reverse"
     >
-      <div class="flex w-full flex-1 flex-col gap-4">
-        <h2
-          class="font-heading text-sm font-medium uppercase tracking-widest opacity-60"
-        >
-          Events by Country
-        </h2>
-        <div class="flex flex-col">
-          {
-            countries.map((country) => (
-              <a
-                href={lunalink(ROUTES.events.locations[":countryId"].__path, {
-                  countryId: country.id,
-                })}
-                class="border-b border-white/10 px-5 py-3 transition duration-500 first:border-t hover:bg-white/5"
-              >
-                {country.data.name}
-              </a>
-            ))
-          }
+      <div class="flex flex-col gap-10">
+        <div class="flex w-full flex-col gap-4">
+          <h2
+            class="font-heading text-sm font-medium uppercase tracking-widest opacity-60"
+          >
+            Events by Country
+          </h2>
+          <div class="flex flex-col">
+            {
+              countries.map((country) => (
+                <a
+                  href={lunalink(ROUTES.events.locations[":countryId"].__path, {
+                    countryId: country.id,
+                  })}
+                  class="border-b border-white/10 px-5 py-3 transition duration-500 first:border-t hover:bg-white/5"
+                >
+                  {country.data.name}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+        <div class="flex w-full flex-col gap-4">
+          <h2
+            class="font-heading text-sm font-medium uppercase tracking-widest opacity-60"
+          >
+            Events by Types
+          </h2>
+          <div class="flex flex-col">
+            {
+              allEventTypes.map((eventType) => (
+                <a
+                  href={lunalink(ROUTES.events.types[":eventTypeId"].__path, {
+                    eventTypeId: eventType.id,
+                  })}
+                  class="border-b border-white/10 px-5 py-3 transition duration-500 first:border-t hover:bg-white/5"
+                >
+                  {eventType.data.label}
+                </a>
+              ))
+            }
+          </div>
         </div>
       </div>
       <EventsList events={pastEvents} title="Past Events" class="flex-[2]" />
