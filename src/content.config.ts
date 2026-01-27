@@ -46,7 +46,7 @@ export const collections = {
   }),
   eventTypes: defineCollection({
     loader: glob({
-      pattern: "**/index.mdx",
+      pattern: "**/*.mdx",
       base: "./src/content/eventTypes",
     }),
     schema: zEventTypes(),
