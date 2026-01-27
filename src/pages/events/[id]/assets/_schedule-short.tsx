@@ -217,6 +217,7 @@ export function scheduleShort(options: { width: number; height: number }) {
                         flexDirection: "column",
                         gap: 8,
                         minWidth: 0,
+                        flexShrink: 1,
                       }}
                     >
                       <div
