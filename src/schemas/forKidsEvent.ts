@@ -7,6 +7,7 @@ export const zForKidsEvent = ({ image }: SchemaContext) =>
     z.object({
       startTime: z.date(),
       endTime: z.date().optional(),
+      eventTypes: reference("eventTypes"),
       workshops: z.array(reference("forKidsWorkshop")).optional(),
       ageRange: zAgeRange(),
       tickets: z
