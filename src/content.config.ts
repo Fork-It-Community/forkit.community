@@ -12,6 +12,7 @@ import { zCity } from "@/schemas/city";
 import { zForKidsEvent } from "./schemas/forKidsEvent";
 import { zForKidsWorkshop } from "./schemas/forKidsWorkshop";
 import { zEventBlocks } from "./schemas/eventsBlocks";
+import { zEventTypes } from "@/schemas/eventTypes";
 
 export const collections = {
   partners: defineCollection({
@@ -42,6 +43,13 @@ export const collections = {
       base: "./src/content/events",
     }),
     schema: zEventBlocks,
+  }),
+  eventTypes: defineCollection({
+    loader: glob({
+      pattern: "**/index.mdx",
+      base: "./src/content/eventTypes",
+    }),
+    schema: zEventTypes(),
   }),
   talks: defineCollection({
     loader: glob({ pattern: "**/*.mdx", base: "./src/content/talks" }),
