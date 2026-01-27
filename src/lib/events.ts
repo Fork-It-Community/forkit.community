@@ -398,9 +398,9 @@ export function getEventDisplayDate(
   return dayjs(event.data.date).locale("en").format("MMMM DD, YYYY");
 }
 export function getEventDisplayType(
-  eventType: CollectionEntry<"events">["data"]["type"],
+  eventTypes: CollectionEntry<"events">["data"]["type"],
 ) {
-  return match(eventType)
+  return match(eventTypes)
     .with("event", () => "Full Day Event")
     .with("meetup", () => "Community Meetup")
     .exhaustive();
