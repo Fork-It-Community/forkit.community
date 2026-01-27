@@ -1,0 +1,44 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import SEO from "@/components/SEO/index.astro";
+import { getCollection } from "astro:content";
+import bgImage from "@/assets/images/kids.png";
+
+export async function getStaticPaths() {
+  const eventTypes = await getCollection("eventTypes");
+
+  return eventTypes.map((eventType) => ({
+    params: {
+      eventTypeId: eventType.id,
+    },
+  }));
+}
+
+const { eventTypeId } = Astro.params;
+
+const eventType = (await getCollection("eventTypes")).find(
+  (eventType) => eventType.id === eventTypeId,
+);
+
+if (!eventType) {
+  return Astro.redirect("/events");
+}
+if (eventType.id === "for-kids") {
+  return Astro.redirect("/fr/events/for-kids");
+}
+---
+
+<MainLayout>
+  <SEO
+    slot="seo"
+    title={`Top Upcoming ${eventType.data.label} Tech Events`}
+    description={eventType.data.description ??
+      `Find upcoming tech events in ${eventType.data.label}. Browse events by city, connect with Fork it! organizers, and discover new meetups and conferences.`}
+  />
+  <MainPageTitle
+    title={`Fork it! ${eventType.data.label}`}
+    subtitle={`All Fork it! ${eventType.data.label}`}
+    imageSrc={bgImage}
+  />
+</MainLayout>
