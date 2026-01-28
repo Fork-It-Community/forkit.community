@@ -20,6 +20,8 @@ const pastEvents = await getPastEvents();
 const allCountries = await getCollection("countries");
 const allEventTypes = await getCollection("eventTypes");
 const events = await getEventsCollection({ without: ["draft"] });
+const forKidsEvent = await getCollection("forKidsEvent");
+const allEvents = [...events, ...forKidsEvent];
 
 const countriesLastEvents = allCountries
   .filter((country) =>
@@ -38,6 +40,10 @@ const countriesLastEvents = allCountries
 
 const countries = countriesLastEvents.sort((a, b) =>
   b.lastDate.diff(a.lastDate),
+);
+
+const eventTypesWithEvents = allEventTypes.filter((eventType) =>
+  allEvents.some((event) => event.data.eventTypes.id === eventType.id),
 );
 ---
 
@@ -94,7 +100,7 @@ const countries = countriesLastEvents.sort((a, b) =>
           </h2>
           <div class="flex flex-col">
             {
-              allEventTypes.map((eventType) => (
+              eventTypesWithEvents.map((eventType) => (
                 <a
                   href={lunalink(ROUTES.events.types[":eventTypeId"].__path, {
                     eventTypeId: eventType.id,
