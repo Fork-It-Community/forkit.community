@@ -1,9 +1,14 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
 import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import EventsGrid from "@/components/EventsGrid/index.astro";
+import EventsList from "@/components/EventsList/index.astro";
 import SEO from "@/components/SEO/index.astro";
+import { getEventsCollection } from "@/lib/events";
 import { getCollection } from "astro:content";
-import bgImage from "@/assets/images/kids.png";
+import bgImage from "@/assets/images/events.jpeg";
+import dayjs from "dayjs";
+import { t } from "@/i18n";
 
 export async function getStaticPaths() {
   const eventTypes = await getCollection("eventTypes");
@@ -20,6 +25,18 @@ const { eventTypeId } = Astro.params;
 const eventType = (await getCollection("eventTypes")).find(
   (eventType) => eventType.id === eventTypeId,
 );
+const allEvents = await getEventsCollection({
+  without: ["draft"],
+});
+const eventsByType = allEvents.filter(
+  (event) => event.data.eventTypes.id === eventTypeId,
+);
+const upcomingEvents = eventsByType.filter((event) =>
+  dayjs(event.data.date).isAfter(dayjs()),
+);
+const pastEvents = eventsByType.filter((event) =>
+  dayjs(event.data.date).isBefore(dayjs()),
+);
 
 if (!eventType) {
   return Astro.redirect("/events");
@@ -34,11 +51,27 @@ if (eventType.id === "for-kids") {
     slot="seo"
     title={`Top Upcoming ${eventType.data.label} Tech Events`}
     description={eventType.data.description ??
-      `Find upcoming tech events in ${eventType.data.label}. Browse events by city, connect with Fork it! organizers, and discover new meetups and conferences.`}
+      `All Fork it! ${eventType.data.label}`}
   />
   <MainPageTitle
     title={`Fork it! ${eventType.data.label}`}
     subtitle={`All Fork it! ${eventType.data.label}`}
     imageSrc={bgImage}
   />
+  <div class="flex flex-col gap-16 pb-40">
+    {
+      !!upcomingEvents.length && (
+        <div class="mx-auto w-full max-w-screen-lg px-4">
+          <EventsGrid events={upcomingEvents} title={t("events:upcoming")} />
+        </div>
+      )
+    }
+    {
+      !!pastEvents.length && (
+        <div class="mx-auto w-full max-w-screen-lg px-4">
+          <EventsList events={pastEvents} title={t("events:past")} />
+        </div>
+      )
+    }
+  </div>
 </MainLayout>
