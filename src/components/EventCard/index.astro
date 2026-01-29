@@ -142,13 +142,13 @@ const isUpcomingEvent = dayjs(event.data.date).endOf("day").isAfter(dayjs());
     }
   </div>
   {
-    (event.data.type === "event" || isUpcomingEvent) &&
+    (event.data.type === "conference" || isUpcomingEvent) &&
       event.data.status !== "cancelled" && (
         <div
           class={cn(
             buttonVariants({
               variant:
-                isUpcomingEvent && event.data.type === "event"
+                isUpcomingEvent && event.data.type === "conference"
                   ? "default"
                   : "secondary-dark",
             }),
