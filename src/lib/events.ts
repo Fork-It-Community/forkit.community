@@ -268,8 +268,9 @@ export async function getUpcomingMajorEvent() {
   );
 
   return (
-    onlyScheduledEvents.find((event) => event.data.type === "event") ??
+    onlyScheduledEvents.find((event) => event.data.type === "conference") ??
     onlyScheduledEvents.find((event) => event.data.type === "meetup") ??
+    onlyScheduledEvents.find((event) => event.data.type === "hackathon") ??
     // In case we add another type later, like external events
     onlyScheduledEvents.at(0)
   );
@@ -398,11 +399,12 @@ export function getEventDisplayDate(
   return dayjs(event.data.date).locale("en").format("MMMM DD, YYYY");
 }
 export function getEventDisplayType(
-  eventTypes: CollectionEntry<"events">["data"]["type"],
+  eventType: CollectionEntry<"events">["data"]["type"],
 ) {
-  return match(eventTypes)
-    .with("event", () => "Full Day Event")
+  return match(eventType)
+    .with("conference", () => "Full Day Conference")
     .with("meetup", () => "Community Meetup")
+    .with("hackathon", () => "Hackathon")
     .exhaustive();
 }
 
