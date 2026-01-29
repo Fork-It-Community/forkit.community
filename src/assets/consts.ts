@@ -6,7 +6,8 @@ export const OG_IMAGE = {
 };
 export const DEFAULT_NUMBER_OF_GUESTS = {
   meetup: 30,
-  event: 100,
+  hackathon: 30,
+  conference: 100,
 } as const;
 
 export const ASSET_CATEGORIES = [

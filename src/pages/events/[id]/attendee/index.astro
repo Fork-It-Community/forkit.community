@@ -20,7 +20,7 @@ export async function getStaticPaths() {
 
 const { event } = Astro.props;
 
-if (!event || event.data.type !== "event") {
+if (!event || event.data.type !== "conference") {
   return new Response(null, {
     status: 404,
     statusText: "Not found",

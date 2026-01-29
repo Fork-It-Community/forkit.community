@@ -26,7 +26,7 @@ if (!eventId) {
 
 const eventEntry = await getEntry("events", eventId);
 
-if (!eventEntry || eventEntry.data.type !== "event") {
+if (!eventEntry || eventEntry.data.type !== "conference") {
   return new Response(null, {
     status: 404,
     statusText: "Not found",
