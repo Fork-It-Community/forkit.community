@@ -16,6 +16,7 @@ const ROUTES_CONFIG = {
     ":page": {}
   },
   "events": {
+    "": {},
     ":id": {
       "assets": {
         ":__image.:__type": {},
