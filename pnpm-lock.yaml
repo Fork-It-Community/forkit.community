@@ -33,8 +33,8 @@ importers:
         specifier: 9.0.4
         version: 9.0.4(astro@5.17.1(@types/node@24.7.2)(@vercel/functions@2.2.13)(jiti@2.4.2)(lightningcss@1.29.1)(rollup@4.52.4)(tsx@4.20.5)(typescript@5.9.2)(yaml@2.8.1))(react@18.3.1)(rollup@4.52.4)
       '@bearstudio/astro-typed-routes':
-        specifier: 0.1.3
-        version: 0.1.3
+        specifier: 0.1.6
+        version: 0.1.6
       '@bearstudio/lunalink':
         specifier: 0.3.1
         version: 0.3.1
@@ -438,8 +438,8 @@ packages:
     resolution: {integrity: sha512-qQ5m48eI/MFLQ5PxQj4PFaprjyCTLI37ElWMmNs0K8Lk3dVeOdNpB3ks8jc7yM5CDmVC73eMVk/trk3fgmrUpA==}
     engines: {node: '>=6.9.0'}
 
-  '@bearstudio/astro-typed-routes@0.1.3':
-    resolution: {integrity: sha512-6g6SJmhPF6OPHSLAXrvxD7RqQEE1Cys++LwXejeYQDf4+rtSjNPuFxUD3rT5Wxe4s2C9cux6z74vd5Vu6OT4RQ==}
+  '@bearstudio/astro-typed-routes@0.1.6':
+    resolution: {integrity: sha512-clUBfvz34xJJCG3jXx+4Pn0MVo9Ax0ebk/mvHcoKZsTAXxNqUhf74qplvBYmyy2iIT42UTZ1ovZ4R46HLhzs/g==}
 
   '@bearstudio/lunalink@0.3.1':
     resolution: {integrity: sha512-e5fODEV6t1Xva4o3KIbhIIuHDtm+A06l61brHIry7af1z/FpbPZ+5ck4OdyWnWgp+OqPtmtr/NWvYPomXZj2pA==}
@@ -4513,7 +4513,7 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
 
-  '@bearstudio/astro-typed-routes@0.1.3': {}
+  '@bearstudio/astro-typed-routes@0.1.6': {}
 
   '@bearstudio/lunalink@0.3.1':
     dependencies:
