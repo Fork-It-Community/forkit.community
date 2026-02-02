@@ -19,41 +19,12 @@ const ROUTES_CONFIG = {
     ":id": {
       "assets": {
         ":__image.:__type": {},
-        "_cfp-cover": {},
-        "_cfp-open-insta": {},
-        "_cfp-open": {},
-        "_cfp-still-open-insta": {},
-        "_cfp-still-open": {},
-        "_d-1-announcement-insta": {},
-        "_d-1-announcement": {},
-        "_d-10-announcement-insta": {},
-        "_d-10-announcement": {},
-        "_d-30-announcement-insta": {},
-        "_d-30-announcement": {},
-        "_d-7-announcement-insta": {},
-        "_d-7-announcement": {},
-        "_linkedin-banner": {},
-        "_og-image": {},
-        "_qrcode-bg": {},
-        "_qrcode": {},
-        "_save-the-date-insta": {},
-        "_save-the-date-square": {},
-        "_save-the-date": {},
-        "_schedule-short": {},
-        "_tickets-available-insta": {},
-        "_tickets-available": {},
-        "_utils": {},
-        "_youtube-banner": {},
         "download": {}
       },
       "attendee": {
         ":name": {
-          ":__image.:__type": {},
-          "_social": {},
-          "_ticket": {},
-          "_utils": {}
-        },
-        "_form": {}
+          ":__image.:__type": {}
+        }
       },
       "dashboard": {},
       "pages": {
@@ -62,9 +33,7 @@ const ROUTES_CONFIG = {
       "partners": {
         ":partnerId": {
           "assets": {
-            ":__image.:__type": {},
-            "_instagram": {},
-            "_large": {}
+            ":__image.:__type": {}
           }
         }
       },
@@ -73,10 +42,7 @@ const ROUTES_CONFIG = {
       "talks": {
         ":talkId": {
           "assets": {
-            ":__image.:__type": {},
-            "_instagram": {},
-            "_og-image": {},
-            "_utils": {}
+            ":__image.:__type": {}
           }
         }
       }
@@ -86,21 +52,15 @@ const ROUTES_CONFIG = {
       ":countryId": {
         ":cityId": {
           "assets": {
-            ":__image.:__type": {},
-            "_og-image": {},
-            "_utils": {}
+            ":__image.:__type": {}
           }
         },
         "assets": {
-          ":__image.:__type": {},
-          "_og-image": {},
-          "_utils": {}
+          ":__image.:__type": {}
         },
         "organizers": {
           "assets": {
-            ":__image.:__type": {},
-            "_og-image": {},
-            "_utils": {}
+            ":__image.:__type": {}
           }
         }
       }
@@ -112,9 +72,7 @@ const ROUTES_CONFIG = {
       "for-kids": {
         ":id": {
           "assets": {
-            ":__image.:__type": {},
-            "_og-image": {},
-            "_utils": {}
+            ":__image.:__type": {}
           },
           "schedule": {}
         }
@@ -127,8 +85,7 @@ const ROUTES_CONFIG = {
     "article": {
       ":id": {
         "assets": {
-          ":__image.:__type": {},
-          "_og-image": {}
+          ":__image.:__type": {}
         }
       },
       ":id.html.md": {}
@@ -138,9 +95,7 @@ const ROUTES_CONFIG = {
   "people": {
     ":id": {
       "assets": {
-        ":__image.:__type": {},
-        "_og-image": {},
-        "_utils": {}
+        ":__image.:__type": {}
       }
     },
     ":id.html.md": {}
@@ -150,8 +105,7 @@ const ROUTES_CONFIG = {
       "episodes": {
         ":episode": {
           "assets": {
-            ":__image.:__type": {},
-            "_og-image": {}
+            ":__image.:__type": {}
           }
         },
         ":episodes.html.md": {}
