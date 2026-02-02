@@ -18,10 +18,8 @@ import dayjs from "dayjs";
 const upcomingEvents = await getUpcomingEvents();
 const pastEvents = await getPastEvents();
 const allCountries = await getCollection("countries");
-const allEventTypes = await getCollection("eventTypes");
 const events = await getEventsCollection({ without: ["draft"] });
 const forKidsEvent = await getCollection("forKidsEvent");
-const allEvents = [...events, ...forKidsEvent];
 
 const countriesLastEvents = allCountries
   .filter((country) =>
@@ -42,9 +40,27 @@ const countries = countriesLastEvents.sort((a, b) =>
   b.lastDate.diff(a.lastDate),
 );
 
-const eventTypesWithEvents = allEventTypes.filter((eventType) =>
-  allEvents.some((event) => event.data.eventTypes.id === eventType.id),
-);
+const eventTypes = [
+  ...events
+    .map((event) => event.data.type)
+    .filter((type, index, self) => type && self.indexOf(type) === index)
+    .map((typeId) => ({
+      id: typeId,
+      data: {
+        type: typeId,
+      },
+    })),
+  ...(forKidsEvent.length > 0
+    ? [
+        {
+          id: "for-kids",
+          data: {
+            type: "For Kids",
+          },
+        },
+      ]
+    : []),
+];
 ---
 
 <MainLayout>
@@ -100,14 +116,14 @@ const eventTypesWithEvents = allEventTypes.filter((eventType) =>
           </h2>
           <div class="flex flex-col">
             {
-              eventTypesWithEvents.map((eventType) => (
+              eventTypes.map((eventType) => (
                 <a
                   href={lunalink(ROUTES.events.types[":eventTypeId"].__path, {
                     eventTypeId: eventType.id,
                   })}
-                  class="border-b border-white/10 px-5 py-3 transition duration-500 first:border-t hover:bg-white/5"
+                  class="border-b border-white/10 px-5 py-3 capitalize transition duration-500 first:border-t hover:bg-white/5"
                 >
-                  {eventType.data.label}
+                  {eventType.data.type}
                 </a>
               ))
             }
