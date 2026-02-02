@@ -11,25 +11,26 @@ import dayjs from "dayjs";
 import { t } from "@/i18n";
 
 export async function getStaticPaths() {
-  const eventTypes = await getCollection("eventTypes");
+  const events = await getEventsCollection({ without: ["draft"] });
+  const forKidsEvent = await getCollection("forKidsEvent");
 
-  return eventTypes.map((eventType) => ({
-    params: {
-      eventTypeId: eventType.id,
-    },
+  const allTypes = [
+    ...events.map((event) => event.data.type),
+    ...(forKidsEvent.length ? ["for-kids"] : []),
+  ];
+
+  return allTypes.map((type) => ({
+    params: { eventTypeId: type },
   }));
 }
 
 const { eventTypeId } = Astro.params;
 
-const eventType = (await getCollection("eventTypes")).find(
-  (eventType) => eventType.id === eventTypeId,
-);
 const allEvents = await getEventsCollection({
   without: ["draft"],
 });
 const eventsByType = allEvents.filter(
-  (event) => event.data.eventTypes.id === eventTypeId,
+  (event) => event.data.type === eventTypeId,
 );
 const upcomingEvents = eventsByType.filter((event) =>
   dayjs(event.data.date).isAfter(dayjs()),
@@ -38,10 +39,7 @@ const pastEvents = eventsByType.filter((event) =>
   dayjs(event.data.date).isBefore(dayjs()),
 );
 
-if (!eventType) {
-  return Astro.redirect("/events");
-}
-if (eventType.id === "for-kids") {
+if (eventTypeId === "for-kids") {
   return Astro.redirect("/fr/events/for-kids");
 }
 ---
@@ -49,13 +47,12 @@ if (eventType.id === "for-kids") {
 <MainLayout>
   <SEO
     slot="seo"
-    title={`Top Upcoming ${eventType.data.label} Tech Events`}
-    description={eventType.data.description ??
-      `All Fork it! ${eventType.data.label}`}
+    title={`Top Upcoming ${eventTypeId} Tech Events`}
+    description={`All Fork it! ${eventTypeId}`}
   />
   <MainPageTitle
-    title={`Fork it! ${eventType.data.label}`}
-    subtitle={`All Fork it! ${eventType.data.label}`}
+    title={`Fork it! ${eventTypeId}`}
+    subtitle={`All Fork it! ${eventTypeId}`}
     imageSrc={bgImage}
   />
   <div class="flex flex-col gap-16 pb-40">
