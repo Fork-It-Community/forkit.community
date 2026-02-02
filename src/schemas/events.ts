@@ -12,7 +12,6 @@ export const zEventBasicInfo = ({ image }: SchemaContext) =>
         image: image().optional(),
       })
       .optional(),
-    eventTypes: reference("eventTypes"),
     excerpt: z.string().optional(),
     image: zMediaImage({ image }).optional(),
     status: z.enum([
@@ -226,7 +225,7 @@ const zEventBase = ({ image }: SchemaContext) =>
 const zMeetup = () => z.object({ type: z.literal("meetup") });
 const zEventClassic = () =>
   z.object({
-    type: z.literal("conference"),
+    type: z.literal("event"),
   });
 const zHackathon = () => z.object({ type: z.literal("hackathon") });
 
