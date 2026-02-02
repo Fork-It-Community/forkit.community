@@ -16,13 +16,6 @@ export const zSocialTypes = z.enum([
   "sessionize",
 ]);
 
-export const zEventTypeEnum = z.enum([
-  "conference",
-  "meetup",
-  "for-kids",
-  "hackathon",
-]);
-
 export const zMediaImage = ({ image }: SchemaContext) =>
   z.object({
     media: image(),
