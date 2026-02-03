@@ -14,6 +14,7 @@ export const zSocialTypes = z.enum([
   "website",
   "tiktok",
   "sessionize",
+  "youtube",
 ]);
 
 export const zMediaImage = ({ image }: SchemaContext) =>
