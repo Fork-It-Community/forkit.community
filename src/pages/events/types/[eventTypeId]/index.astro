@@ -6,6 +6,7 @@ import EventsList from "@/components/EventsList/index.astro";
 import SEO from "@/components/SEO/index.astro";
 import { getEventsCollection } from "@/lib/events";
 import { getCollection } from "astro:content";
+import { EVENT_TYPES } from "@/assets/consts";
 import bgImage from "@/assets/images/events.jpeg";
 import dayjs from "dayjs";
 import { t } from "@/i18n";
@@ -14,17 +15,23 @@ export async function getStaticPaths() {
   const events = await getEventsCollection({ without: ["draft"] });
   const forKidsEvent = await getCollection("forKidsEvent");
 
+  const eventTypes = events.map((event) => event.data.type);
   const allTypes = [
-    ...events.map((event) => event.data.type),
-    ...(forKidsEvent.length ? ["for-kids"] : []),
+    ...eventTypes,
+    ...(forKidsEvent.length ? [EVENT_TYPES.FOR_KIDS] : []),
   ];
+  const uniqueTypes = [...new Set(allTypes)];
 
-  return allTypes.map((type) => ({
+  return uniqueTypes.map((type) => ({
     params: { eventTypeId: type },
   }));
 }
 
 const { eventTypeId } = Astro.params;
+
+if (eventTypeId === "for-kids") {
+  return Astro.redirect("/fr/events/for-kids");
+}
 
 const allEvents = await getEventsCollection({
   without: ["draft"],
@@ -38,10 +45,6 @@ const upcomingEvents = eventsByType.filter((event) =>
 const pastEvents = eventsByType.filter((event) =>
   dayjs(event.data.date).isBefore(dayjs()),
 );
-
-if (eventTypeId === "for-kids") {
-  return Astro.redirect("/fr/events/for-kids");
-}
 ---
 
 <MainLayout>
