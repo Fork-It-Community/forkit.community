@@ -227,12 +227,10 @@ const zEventClassic = () =>
   z.object({
     type: z.literal("event"),
   });
-const zHackathon = () => z.object({ type: z.literal("hackathon") });
 
 export type Event = z.infer<ReturnType<typeof zEvent>>;
 export const zEvent = ({ image }: SchemaContext) =>
   z.discriminatedUnion("type", [
     zEventBase({ image }).merge(zMeetup()),
     zEventBase({ image }).merge(zEventClassic()),
-    zEventBase({ image }).merge(zHackathon()),
   ]);
