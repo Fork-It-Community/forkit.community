@@ -11,3 +11,4 @@ export const EVENT_TYPES = {
   EVENT: "event",
   FOR_KIDS: "for-kids",
 };
+export type EventType = (typeof EVENT_TYPES)[keyof typeof EVENT_TYPES];
