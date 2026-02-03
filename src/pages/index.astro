@@ -54,8 +54,11 @@ const partners = await getEntries<"partners">(
     id: partner,
   })),
 );
-const afterMovie = await getEntry("events", "2024-france-rouen");
-const forKidsAfterMovie = await getEntry("forKidsEvent", "2025-france-rouen-2");
+const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
+  .afterEventContent?.afterMovie;
+const forKidsAfterMovie = (
+  await getEntry("forKidsEvent", "2025-france-rouen-2")
+)?.data.afterEventContent?.afterMovie;
 ---
 
 <MainLayout>
@@ -372,6 +375,7 @@ const forKidsAfterMovie = await getEntry("forKidsEvent", "2025-france-rouen-2");
       title="What is Fork it! For Kids?"
       description="Fork it! For Kids is a series of events that introduces children to the world of technology and computer science through fun and engaging activities."
       buttonText="About Fork it! For Kids"
+      reverse
     />
   </div>
 

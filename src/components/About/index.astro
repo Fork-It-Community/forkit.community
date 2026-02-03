@@ -3,24 +3,41 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils-client";
 import { MdArrowForward } from "react-icons/md";
 import { Image } from "astro:assets";
-import type { CollectionEntry } from "astro:content";
+import type { ImageMetadata } from "astro";
+
+interface AfterMovieProps {
+  href: string;
+  thumbnail: {
+    image: ImageMetadata;
+    alt: string;
+  };
+}
 
 interface Props {
-  afterMovie:
-    | CollectionEntry<"events">
-    | CollectionEntry<"forKidsEvent">
-    | undefined;
+  afterMovie: AfterMovieProps | undefined;
   href: string;
   title: string;
   description: string;
   buttonText: string;
+  reverse?: boolean;
 }
 
-const { afterMovie, href, title, description, buttonText } = Astro.props;
+const {
+  afterMovie,
+  href,
+  title,
+  description,
+  buttonText,
+  reverse = false,
+} = Astro.props;
 ---
 
 <div
-  class=`relative mx-auto flex max-w-screen-lg flex-col items-center justify-center gap-8 px-4  ${title === "What is Fork it! For Kids?" ? "md:flex-row-reverse" : "md:flex-row"} xl:justify-normal`
+  class={cn(
+    "relative mx-auto flex max-w-screen-lg flex-col items-center justify-center gap-8 px-4 xl:justify-normal",
+    "md:flex-row",
+    reverse && "md:flex-row-reverse",
+  )}
 >
   <div class="relative flex w-full flex-1 flex-col gap-4 px-6 md:px-0">
     <h2
@@ -42,22 +59,13 @@ const { afterMovie, href, title, description, buttonText } = Astro.props;
     </a>
   </div>
   {
-    afterMovie && afterMovie.data.afterEventContent?.afterMovie && (
+    afterMovie && (
       <div class="relative aspect-[1134/640] w-full min-w-0 flex-1">
-        <a
-          href={afterMovie.data.afterEventContent?.afterMovie?.href}
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a href={afterMovie.href} target="_blank" rel="noreferrer">
           <Image
-            alt={
-              afterMovie.data.afterEventContent?.afterMovie?.thumbnail?.alt ??
-              "After movie preview"
-            }
+            alt={afterMovie.thumbnail?.alt ?? "After movie preview"}
             class="rounded-lg object-cover"
-            src={
-              afterMovie.data.afterEventContent?.afterMovie?.thumbnail?.image
-            }
+            src={afterMovie.thumbnail?.image}
             width={1134}
             height={640}
           />
