@@ -3,18 +3,14 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils-client";
 import { MdArrowForward } from "react-icons/md";
 import { Image } from "astro:assets";
-import type { ImageMetadata } from "astro";
+import type { CollectionEntry } from "astro:content";
 
-interface AfterMovieProps {
-  href: string;
-  thumbnail: {
-    image: ImageMetadata;
-    alt: string;
-  };
-}
+type AfterEventContent = NonNullable<
+  CollectionEntry<"events" | "forKidsEvent">["data"]["afterEventContent"]
+>["afterMovie"];
 
 interface Props {
-  afterMovie: AfterMovieProps | undefined;
+  afterMovie: AfterEventContent;
   href: string;
   title: string;
   description: string;
@@ -63,9 +59,9 @@ const {
       <div class="relative aspect-[1134/640] w-full min-w-0 flex-1">
         <a href={afterMovie.href} target="_blank" rel="noreferrer">
           <Image
-            alt={afterMovie.thumbnail?.alt ?? "After movie preview"}
+            alt={afterMovie.thumbnail.alt ?? "After movie preview"}
             class="rounded-lg object-cover"
-            src={afterMovie.thumbnail?.image}
+            src={afterMovie.thumbnail.image}
             width={1134}
             height={640}
           />
