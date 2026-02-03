@@ -1,0 +1,59 @@
+---
+title: "One dissatisfied customer led me to redesign web design!"
+speakers:
+  - id: michel-boretti
+language: english
+---
+
+As web development started in the late 90s, monitors:
+- had a 4:3-ratio
+- were less than 15-inch wide
+
+INITIAL web design was designed to fit into these devices.
+
+The advent of the smartphone forced the EXISTING INITIAL web design to become “responsive”; the “mobile first” approach was not a new design, but only a new process to achieve the responsiveness of the EXISTING INITIAL web design.
+
+With the advent of large and even over-sized screen displays (large meeting room's TV, 57-inch 32:9-ratio gamer curved monitors): nothing happened!
+
+No evolution of the existing initial web design was made to fit into these large devices either. But could such an evolution be made? Or is a brand new web design long overdue?
+
+The very simple answer to these questions came from a dissatisfied customer: yes, a brand new design has long been overdue!
+
+The EXISTING INITIAL web design fits into smartphones and monitors with a 4:3-ratio: already on screens with a 16:9-ratio, people are already artificially limiting the width of the page to around 1,200 pixels. And this is exactly the solution provided by CSS libraries such as Tailwind or Bootstrap!
+
+Have you already seen how such websites look like on screens with 21:9 and even 32:9-ratios?
+
+And how would these websites look like in the future on hypothetical Quadri, Penta or HexaFold phones? Already on conventional folded fold phones in landscape orientation, for which the screen ratio is greater than 21:9, these websites have the same design issue.
+
+Now, back to the dissatisfied customer; the word “dissatisfied” I am using about him is a little bit exaggerated: “disappointed” would be more accurate.
+
+After working with him and his own customers on several projects, he entrusted me with the complete redesign of his own company website!
+
+At that time, I was leading the company I had founded, and I had a graphic designer in my team: as a software developer with over 10 years experience in full-stack web development myself, I have the advantage that I can work hand in hand with a graphic designer, check that his/her design is technically implementable, and directly show the website in its demo version to the customer, instead of just a Figma concept.
+
+And, the customer simply reacted: “Michel, what you did looks simply awful!”.
+
+And, he took his phone, and he took a picture of his 57-inch 32:9-ratio gamer curved monitor on which the demo website was displayed, and he sent the picture to me!
+
+And, only at this point I discovered that over-sized screen displays existed.
+
+And, only at this point, I had become aware of exactly the problematic I am exposing in this present paper!
+
+First observation: the “mobile first” approach led to the “one size fits all”, or rather the “one content fits all sizes” mentality. And this cannot be the answer anymore...
+
+ONE answer, mine, is: for ONE range of screen ratios, there shall be ONE specific layout and content:
+- screen ratio less than 1:1, ie any device in portrait orientation
+- screen ratio greater than or equal to 1:1, but less than or equal to 21:9, ie any device in landscape orientation
+- screen ratio greater than 21:9
+
+And, here is the result: [https://www.michel-boretti.com/](https://www.michel-boretti.com/)
+
+Second observation: I have been mentioning the different screen RATIOS, but the web development industry is still thinking in FIX SIZES! Including Bootstrap or Tailwind: mr-2, py-4, space-x-1,...
+
+My answer is being made thinking in RATIOS.
+
+More exactly: in RATIO (singular).
+
+Which ONE? Which value?
+
+This is exactly in the presentation I really hope to give on March 2026 in Hanoi!
