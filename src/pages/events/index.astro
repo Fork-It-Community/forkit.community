@@ -14,16 +14,12 @@ import { getCollection } from "astro:content";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import dayjs from "dayjs";
-import { EVENT_TYPES, type EventType } from "@/assets/consts";
+import { EVENT_TYPES } from "@/assets/consts";
 
 const upcomingEvents = await getUpcomingEvents();
 const pastEvents = await getPastEvents();
 const allCountries = await getCollection("countries");
 const events = await getEventsCollection({ without: ["draft"] });
-
-const availableEventTypes = new Set<EventType>(
-  events.map((event) => event.data.type).filter(Boolean),
-);
 
 const countriesLastEvents = allCountries
   .filter((country) =>
@@ -98,18 +94,16 @@ const countries = countriesLastEvents.sort((a, b) =>
           </h2>
           <div class="flex flex-col">
             {
-              Object.values(EVENT_TYPES)
-                .filter((type) => availableEventTypes.has(type))
-                .map((type) => (
-                  <a
-                    href={lunalink(ROUTES.events.types[":eventTypeId"].__path, {
-                      eventTypeId: type,
-                    })}
-                    class="border-b border-white/10 px-5 py-3 capitalize transition duration-500 first:border-t hover:bg-white/5"
-                  >
-                    {type === EVENT_TYPES.FOR_KIDS ? "For Kids" : type}
-                  </a>
-                ))
+              Object.values(EVENT_TYPES).map((type) => (
+                <a
+                  href={lunalink(ROUTES.events.types[":eventTypeId"].__path, {
+                    eventTypeId: type,
+                  })}
+                  class="border-b border-white/10 px-5 py-3 capitalize transition duration-500 first:border-t hover:bg-white/5"
+                >
+                  {type === EVENT_TYPES.FOR_KIDS ? "For Kids" : type}
+                </a>
+              ))
             }
           </div>
         </div>
