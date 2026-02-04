@@ -1,0 +1,72 @@
+---
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils-client";
+import { MdArrowForward } from "react-icons/md";
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+type AfterEventContent = NonNullable<
+  CollectionEntry<"events" | "forKidsEvent">["data"]["afterEventContent"]
+>["afterMovie"];
+
+interface Props {
+  afterMovie: AfterEventContent;
+  href: string;
+  title: string;
+  description: string;
+  buttonText: string;
+  reverse?: boolean;
+}
+
+const {
+  afterMovie,
+  href,
+  title,
+  description,
+  buttonText,
+  reverse = false,
+} = Astro.props;
+---
+
+<div
+  class={cn(
+    "relative mx-auto flex max-w-screen-lg flex-col items-center justify-center gap-8 px-4 xl:justify-normal",
+    "md:flex-row",
+    reverse && "md:flex-row-reverse",
+  )}
+>
+  <div class="relative flex w-full flex-1 flex-col gap-4 px-6 md:px-0">
+    <h2
+      class="text-balance font-heading text-3xl font-medium uppercase tracking-wide"
+    >
+      {title}
+    </h2>
+    <p class="max-w-[50ch] text-balance text-sm opacity-60">
+      {description}
+    </p>
+
+    <a
+      href={href}
+      title={buttonText}
+      class={cn(buttonVariants(), "group gap-2 xs:max-w-52 mt-4")}
+    >
+      {buttonText}
+      <MdArrowForward className="transition group-hover:translate-x-1" />
+    </a>
+  </div>
+  {
+    afterMovie && (
+      <div class="relative aspect-[1134/640] w-full min-w-0 flex-1">
+        <a href={afterMovie.href} target="_blank" rel="noreferrer">
+          <Image
+            alt={afterMovie.thumbnail.alt ?? "After movie preview"}
+            class="rounded-lg object-cover"
+            src={afterMovie.thumbnail.image}
+            width={1134}
+            height={640}
+          />
+        </a>
+      </div>
+    )
+  }
+</div>
