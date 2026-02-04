@@ -33,8 +33,8 @@ const eventsByType = allEvents.filter(
 const upcomingEvents = eventsByType.filter((event) =>
   dayjs(event.data.date).endOf("day").isAfter(dayjs()),
 );
-const pastEvents = eventsByType.filter((event) =>
-  dayjs(event.data.date).startOf("day").isBefore(dayjs()),
+const pastEvents = eventsByType.filter(
+  (event) => !dayjs(event.data.date).endOf("day").isAfter(dayjs()),
 );
 ---
 
