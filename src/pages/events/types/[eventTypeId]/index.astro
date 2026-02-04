@@ -20,10 +20,6 @@ export async function getStaticPaths() {
 
 const { eventTypeId } = Astro.params;
 
-if (eventTypeId === "for-kids") {
-  return Astro.redirect("/fr/events/for-kids");
-}
-
 const allEvents = await getEventsCollection({
   without: ["draft"],
 });
