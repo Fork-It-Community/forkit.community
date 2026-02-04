@@ -90,15 +90,19 @@ const countries = countriesLastEvents.sort((a, b) =>
           <h2
             class="font-heading text-sm font-medium uppercase tracking-widest opacity-60"
           >
-            Events by Types
+            Events by Type
           </h2>
           <div class="flex flex-col">
             {
               Object.values(EVENT_TYPES).map((type) => (
                 <a
-                  href={lunalink(ROUTES.events.types[":eventTypeId"].__path, {
-                    eventTypeId: type,
-                  })}
+                  href={
+                    type === EVENT_TYPES.FOR_KIDS
+                      ? lunalink(ROUTES.fr.events["for-kids"].__path, {})
+                      : lunalink(ROUTES.events.types[":eventTypeId"].__path, {
+                          eventTypeId: type,
+                        })
+                  }
                   class="border-b border-white/10 px-5 py-3 capitalize transition duration-500 first:border-t hover:bg-white/5"
                 >
                   {type === EVENT_TYPES.FOR_KIDS ? "For Kids" : type}
