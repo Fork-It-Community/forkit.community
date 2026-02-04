@@ -64,7 +64,7 @@ export function registrationStillOpen(options: {
                 letterSpacing: 4,
               }}
             >
-              Registration are still open
+              Registrations are still open
             </div>
 
             <div
