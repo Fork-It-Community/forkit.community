@@ -95,6 +95,7 @@ export const SOCIALS_TYPE_MAP = {
   website: TbWorld,
   tiktok: FaTiktok,
   sessionize: SiSessionize,
+  youtube: FaYoutube,
 } satisfies Record<SocialType, FC>;
 
 export const GLOBAL_NEWSLETTER_LINK =
