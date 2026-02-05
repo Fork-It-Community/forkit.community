@@ -4,8 +4,10 @@ import "@fontsource/tomorrow/400.css";
 import "@fontsource/tomorrow/500.css";
 import "@fontsource-variable/inter";
 import "@/styles/globals.css";
+import "@/styles/orejime-custom.css";
 import EnvHint from "@/components/EnvHint/EnvHint.astro";
 import { Toaster } from "@/components/ui/sonner";
+import { getOrejimeConfig } from "@/lib/orejime/config";
 import dayjs from "dayjs";
 
 // While in development, there are some "rest" from one page to another.
@@ -13,6 +15,7 @@ import dayjs from "dayjs";
 dayjs.locale(Astro.currentLocale);
 
 const pixelId = import.meta.env.PUBLIC_META_PIXEL_ID;
+const orejimeConfig = getOrejimeConfig();
 ---
 
 <html lang={Astro.currentLocale} class="dark">
@@ -41,50 +44,121 @@ const pixelId = import.meta.env.PUBLIC_META_PIXEL_ID;
     <slot name="seo" />
     <slot name="ld+json" />
 
-    <!-- Meta Pixel Code -->
-    <script is:inline define:vars={{ pixelId }}>
-      !(function (f, b, e, v, n, t, s) {
-        if (f.fbq) return;
-        n = f.fbq = function () {
-          n.callMethod
-            ? n.callMethod.apply(n, arguments)
-            : n.queue.push(arguments);
-        };
-        if (!f._fbq) f._fbq = n;
-        n.push = n;
-        n.loaded = !0;
-        n.version = "2.0";
-        n.queue = [];
-        t = b.createElement(e);
-        t.async = !0;
-        t.src = v;
-        s = b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t, s);
-      })(
-        window,
-        document,
-        "script",
-        "https://connect.facebook.net/en_US/fbevents.js",
-      );
-      fbq("init", pixelId);
-      fbq("track", "PageView");
+    <!-- Orejime CSS from CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/orejime@2/dist/orejime.css"
+    />
+    <!-- Custom CSS is imported in frontmatter -->
+
+    <!-- Orejime Config - Must be set before Orejime loads -->
+    <script is:inline define:vars={{ orejimeConfig }}>
+      window.orejimeConfig = orejimeConfig;
+      console.log("[Config] Set window.orejimeConfig:", window.orejimeConfig);
     </script>
-    <noscript>
-      <img
-        height="1"
-        width="1"
-        style="display:none"
-        src={`https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`}
-      />
-    </noscript>
-    <!-- End Meta Pixel Code -->
+
+    <!-- Load Orejime from CDN -->
+    <script
+      is:inline
+      src="https://cdn.jsdelivr.net/npm/orejime@2/dist/orejime.js"></script>
   </head>
-  <body
-    class="flex min-h-svh flex-col overflow-x-hidden overflow-y-scroll bg-black text-foreground"
-  >
+
+  <body>
     <EnvHint />
     <slot />
-    <Toaster client:load position="top-center" />
-    <Analytics />
+    <Toaster client:idle />
+
+    <!-- Meta Pixel -->
+    <template data-name="meta-pixel" data-type="text/plain">
+      <script is:inline define:vars={{ pixelId }}>
+        !(function (f, b, e, v, n, t, s) {
+          if (f.fbq) return;
+          n = f.fbq = function () {
+            n.callMethod
+              ? n.callMethod.apply(n, arguments)
+              : n.queue.push(arguments);
+          };
+          if (!f._fbq) f._fbq = n;
+          n.push = n;
+          n.loaded = !0;
+          n.version = "2.0";
+          n.queue = [];
+          t = b.createElement(e);
+          t.async = !0;
+          t.src = v;
+          s = b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t, s);
+        })(
+          window,
+          document,
+          "script",
+          "https://connect.facebook.net/en_US/fbevents.js",
+        );
+        fbq("init", pixelId);
+        fbq("track", "PageView");
+      </script>
+    </template>
+
+    <template data-name="meta-pixel" data-type="text/plain">
+      <noscript>
+        <img
+          height="1"
+          width="1"
+          style="display:none"
+          src={`https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`}
+        />
+      </noscript>
+    </template>
+
+    <!-- Vercel Analytics -->
+    <template data-name="vercel-analytics" data-type="text/plain">
+      <Analytics />
+    </template>
+
+    <!-- Initialize Orejime -->
+    <script is:inline>
+      (function initOrejime() {
+        function waitForOrejime(callback, maxAttempts = 50) {
+          let attempts = 0;
+          const checkInterval = setInterval(() => {
+            attempts++;
+
+            if (window.Orejime && typeof window.Orejime.init === "function") {
+              clearInterval(checkInterval);
+              console.log("[Orejime] Found after", attempts, "attempts");
+              callback();
+            } else if (attempts >= maxAttempts) {
+              clearInterval(checkInterval);
+              console.error(
+                "[Orejime] Not found after",
+                maxAttempts,
+                "attempts",
+              );
+            }
+          }, 100);
+        }
+
+        waitForOrejime(() => {
+          if (window.orejimeConfig) {
+            console.log(
+              "[Orejime] Initializing with config:",
+              window.orejimeConfig,
+            );
+
+            try {
+              const manager = window.Orejime.init(window.orejimeConfig);
+              window.orejime = manager;
+
+              console.log("[Orejime] Initialized successfully!", manager);
+              window.dispatchEvent(new CustomEvent("orejime:ready"));
+            } catch (e) {
+              console.error("[Orejime] Initialization error:", e);
+            }
+          } else {
+            console.error("[Orejime] Config not found on window!");
+          }
+        });
+      })();
+    </script>
   </body>
 </html>

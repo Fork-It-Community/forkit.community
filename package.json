@@ -10,7 +10,8 @@
     "lint": "astro check",
     "preview": "astro preview --node",
     "astro": "astro",
-    "prepare": "husky"
+    "prepare": "husky && node scripts/copy-orejime.js",
+    "postinstall": "node scripts/copy-orejime.js"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,json,astro}": "prettier --write src/"
@@ -55,6 +56,7 @@
     "mdast-util-to-string": "4.0.0",
     "minisearch": "7.2.0",
     "motion": "12.23.16",
+    "orejime": "3.1.0",
     "qrcode": "1.5.4",
     "react": "18.3.1",
     "react-dom": "18.3.1",

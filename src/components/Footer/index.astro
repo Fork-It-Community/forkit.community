@@ -92,6 +92,14 @@ const menuItems = getMainMenuItems();
           >
             Call For Paper Guidelines
           </a>
+          <span class="opacity-20">⋅</span>
+          <button
+            type="button"
+            id="orejime-settings-trigger"
+            class="cursor-pointer opacity-60 transition hover:opacity-100"
+          >
+            Cookie Settings
+          </button>
         </div>
         <p class="text-center text-xs opacity-50 sm:text-left">
           © {dayjs().format("YYYY")}
@@ -101,3 +109,34 @@ const menuItems = getMainMenuItems();
     </div>
   </div>
 </footer>
+
+<script>
+  // Attendre que Orejime soit initialisé
+  function setupCookieSettings() {
+    const button = document.getElementById("orejime-settings-trigger");
+
+    if (!button) return;
+
+    button.addEventListener("click", () => {
+      // Méthode 1 : Via l'API Orejime (si window.orejime existe)
+      if (window.orejime && typeof window.orejime.show === "function") {
+        window.orejime.show();
+        return;
+      }
+
+      console.error("[Cookie Settings] Orejime not found");
+    });
+  }
+
+  // Attendre que Orejime soit prêt
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(setupCookieSettings, 500);
+    });
+  } else {
+    setTimeout(setupCookieSettings, 500);
+  }
+
+  // Écouter aussi l'événement custom d'Orejime
+  window.addEventListener("orejime:ready", setupCookieSettings);
+</script>
