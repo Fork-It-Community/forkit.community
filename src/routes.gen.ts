@@ -113,6 +113,7 @@ const ROUTES_CONFIG = {
     },
     "rss.xml": {}
   },
+  "privacy-policy": {},
   "resources": {
     "videos": {
       ":page": {}

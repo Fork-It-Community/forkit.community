@@ -1,0 +1,125 @@
+/* Orejime Custom Theming for Fork it! Community */
+
+.orejime-Env {
+  /* === COLOR SCHEME === */
+  /* Background and text colors matching site's dark theme */
+  --orejime-color-background: hsl(0 0% 9%); /* --background from globals.css */
+  --orejime-color-text: hsl(0 0% 100%); /* --foreground */
+
+  /* Interactive elements (buttons, links) - lime green accent */
+  --orejime-color-interactive: hsl(65 100% 53%); /* --primary */
+  --orejime-color-on-interactive: hsl(
+    0 0% 0%
+  ); /* --primary-foreground (black text on lime) */
+
+  /* Subdued text for descriptions */
+  --orejime-color-subdued: hsl(0 0% 45.1%); /* --muted-foreground */
+
+  /* Backdrop for modal overlay */
+  --orejime-color-backdrop: rgba(0, 0, 0, 0.8);
+
+  /* Shadow color */
+  --orejime-color-shadow: 0, 0, 0;
+
+  /* === TYPOGRAPHY === */
+  --orejime-font-family: Inter, sans-serif; /* Match site font */
+  --orejime-font-size-small: 0.8rem;
+
+  /* === SPACING === */
+  --orejime-space-m: 1.4em;
+  --orejime-space-l: calc(2 * var(--orejime-space-m));
+  --orejime-space-s: calc(var(--orejime-space-m) / 2);
+  --orejime-space-xs: calc(var(--orejime-space-m) / 4);
+
+  /* === BORDER RADIUS === */
+  --orejime-radius: 0.5rem; /* Match --radius from globals.css */
+
+  /* === SHADOWS === */
+  --orejime-shadow:
+    0.1em 0.2em 0.4em rgba(var(--orejime-color-shadow), 0.5),
+    0.2em 0.6em 1.5em rgba(var(--orejime-color-shadow), 0.4);
+
+  /* === MODAL & BANNER SIZING === */
+  --orejime-banner-max-width: 45ch;
+  --orejime-modal-max-width: 65ch;
+}
+
+/* === CUSTOM ENHANCEMENTS === */
+
+/* Position banner to not clash with site footer/nav */
+.orejime-Banner {
+  bottom: 1rem;
+  right: 1rem;
+  padding: var(--orejime-space-m);
+}
+
+/* Use site's heading font for modal title */
+.orejime-Modal-title {
+  font-family: Tomorrow, sans-serif; /* Match headings */
+}
+
+/* Improve button hover states for accessibility */
+.orejime-Button:not([disabled]):not([aria-disabled="true"]):hover,
+.orejime-Button:not([disabled]):not([aria-disabled="true"]):focus {
+  outline: 2px solid var(--orejime-color-interactive);
+  outline-offset: 2px;
+  /* Add subtle transform for better feedback */
+  transform: translateY(-1px);
+  transition: transform 0.15s ease;
+}
+
+.orejime-Button:not([disabled]):not([aria-disabled="true"]):active {
+  transform: translateY(0);
+}
+
+/* Ensure good contrast for links */
+.orejime-Env a {
+  color: var(--orejime-color-interactive);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.orejime-Env a:hover,
+.orejime-Env a:focus {
+  text-decoration-thickness: 2px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .orejime-Banner {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: var(--orejime-space-s);
+  }
+
+  .orejime-Banner-body {
+    max-width: 100%;
+  }
+}
+
+/* High contrast mode support for accessibility */
+@media (prefers-contrast: high) {
+  .orejime-Env {
+    --orejime-color-interactive: hsl(65 100% 60%); /* Slightly brighter lime */
+    --orejime-shadow:
+      0.1em 0.2em 0.4em rgba(0, 0, 0, 0.8), 0.2em 0.6em 1.5em rgba(0, 0, 0, 0.6);
+  }
+
+  .orejime-Button:not([disabled]):not([aria-disabled="true"]) {
+    outline: 2px solid var(--orejime-color-text);
+  }
+}
+
+/* Reduced motion support for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .orejime-Button {
+    transition: none;
+  }
+
+  .orejime-Button:hover,
+  .orejime-Button:focus {
+    transform: none;
+  }
+}
