@@ -7,8 +7,7 @@ export const DEFAULT_NUMBER_OF_GUESTS = {
   event: 100,
 } as const;
 export const EVENT_TYPES = {
-  MEETUP: "meetup",
-  EVENT: "event",
-  FOR_KIDS: "for-kids",
+  meetup: "Meetups",
+  event: "Full Day Events",
 } as const;
 export type EventType = (typeof EVENT_TYPES)[keyof typeof EVENT_TYPES];
