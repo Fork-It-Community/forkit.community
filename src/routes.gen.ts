@@ -67,7 +67,7 @@ const ROUTES_CONFIG = {
     },
     "rss.xml": {},
     "types": {
-      ":eventTypeId": {}
+      ":eventType": {}
     }
   },
   "fr": {
