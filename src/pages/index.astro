@@ -227,7 +227,6 @@ const forKidsAfterMovie = (
   <div class="flex flex-col gap-8 py-12">
     <JoinTheCommunity />
     <JoinNewsletter />
-    <GlobalCFP />
   </div>
 
   <div class="flex flex-col pb-24 pt-16 md:py-32 md:pt-12">
@@ -339,6 +338,23 @@ const forKidsAfterMovie = (
         </p>
       </div>
       <VodSlider talks={allTalks} />
+    </div>
+
+    <div
+      class="mx-auto flex w-full max-w-screen-lg flex-col gap-4 px-6 md:gap-6 md:py-12"
+    >
+      <h2
+        class="flex items-center gap-2 font-heading text-3xl font-medium uppercase tracking-wide"
+      >
+        Interested in speaking at a Fork It! Meetup?
+      </h2>
+      <p class="bold max-w-[80ch] text-sm opacity-60">
+        Propose your talk, and we’ll get in touch when there’s an event near
+        you. By submitting your idea, you might even inspire us to bring the
+        meetup to your area!
+      </p>
+
+      <GlobalCFP />
     </div>
   </div>
 
