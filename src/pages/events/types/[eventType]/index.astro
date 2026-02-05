@@ -11,21 +11,19 @@ import dayjs from "dayjs";
 import { t } from "@/i18n";
 
 export async function getStaticPaths() {
-  const allTypes = Object.values(EVENT_TYPES);
+  const allTypes = Object.keys(EVENT_TYPES);
 
   return allTypes.map((type) => ({
-    params: { eventTypeId: type },
+    params: { eventType: type },
   }));
 }
 
-const { eventTypeId } = Astro.params;
+const { eventType } = Astro.params;
 
 const allEvents = await getEventsCollection({
   without: ["draft"],
 });
-const eventsByType = allEvents.filter(
-  (event) => event.data.type === eventTypeId,
-);
+const eventsByType = allEvents.filter((event) => event.data.type === eventType);
 const upcomingEvents = eventsByType.filter((event) =>
   dayjs(event.data.date).endOf("day").isAfter(dayjs()),
 );
@@ -37,12 +35,12 @@ const pastEvents = eventsByType.filter(
 <MainLayout>
   <SEO
     slot="seo"
-    title={`Top Upcoming ${eventTypeId} Tech Events`}
-    description={`All Fork it! ${eventTypeId}`}
+    title={`Top Upcoming ${eventType} Tech Events`}
+    description={`All Fork it! ${eventType}`}
   />
   <MainPageTitle
-    title={`Fork it! ${eventTypeId}`}
-    subtitle={`All Fork it! ${eventTypeId}`}
+    title={`Fork it! ${eventType}`}
+    subtitle={`All Fork it! ${eventType}`}
     imageSrc={bgImage}
   />
   <div class="flex flex-col gap-16 pb-40">
