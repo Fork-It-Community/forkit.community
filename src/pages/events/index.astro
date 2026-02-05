@@ -94,16 +94,18 @@ const countries = countriesLastEvents.sort((a, b) =>
           </h2>
           <div class="flex flex-col">
             {
-              Object.keys(EVENT_TYPES).map((type) => (
-                <a
-                  href={lunalink(ROUTES.events.types[":eventType"].__path, {
-                    eventType: type,
-                  })}
-                  class="border-b border-white/10 px-5 py-3 capitalize transition duration-500 first:border-t hover:bg-white/5"
-                >
-                  {type}
-                </a>
-              ))
+              (Object.keys(EVENT_TYPES) as (keyof typeof EVENT_TYPES)[]).map(
+                (type) => (
+                  <a
+                    href={lunalink(ROUTES.events.types[":eventType"].__path, {
+                      eventType: type,
+                    })}
+                    class="border-b border-white/10 px-5 py-3 capitalize transition duration-500 first:border-t hover:bg-white/5"
+                  >
+                    {EVENT_TYPES[type]}
+                  </a>
+                ),
+              )
             }
           </div>
         </div>
