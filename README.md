@@ -24,8 +24,14 @@ pnpm install
 pnpm dev
 ```
 
-> [!WARNING]
-> Because of Vercel integration, building the website locally will fail. We are using Vercel previews to check the build of the website.
+### 🛠️ Local Build & Preview
+
+To test the production build locally, run the following commands:
+
+```bash
+pnpm run build:node
+pnpm run preview
+```
 
 ## 🚀 Project Structure
 
