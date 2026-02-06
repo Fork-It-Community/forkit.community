@@ -957,7 +957,12 @@ function MapRoute({
       type: "geojson",
       data: {
         type: "Feature",
-        properties: {},
+        properties: {
+          clusterProperties: {
+            // Sum of all eventCount values in the cluster
+            totalEvents: ["+", ["get", "eventCount"]],
+          },
+        },
         geometry: { type: "LineString", coordinates: [] },
       },
     });
@@ -1113,6 +1118,10 @@ function MapClusterLayer<
       cluster: true,
       clusterMaxZoom,
       clusterRadius,
+      clusterProperties: {
+        // Sum of all eventCount values in the cluster
+        totalEvents: ["+", ["get", "eventCount"]],
+      },
     });
 
     // Add cluster circles layer
@@ -1122,27 +1131,20 @@ function MapClusterLayer<
       source: sourceId,
       filter: ["has", "point_count"],
       paint: {
-        "circle-color": [
-          "step",
-          ["get", "point_count"],
-          clusterColors[0],
-          clusterThresholds[0],
-          clusterColors[1],
-          clusterThresholds[1],
-          clusterColors[2],
-        ],
+        "circle-color": "#EBFF11", // Your yellow color
         "circle-radius": [
           "step",
           ["get", "point_count"],
-          20,
+          12, // Same size as unclustered
           clusterThresholds[0],
-          30,
+          16, // Slightly bigger for medium clusters
           clusterThresholds[1],
-          40,
+          20, // Bigger for large clusters
         ],
+        "circle-stroke-width": 2,
+        "circle-stroke-color": "#fff",
       },
     });
-
     // Add cluster count text layer
     map.addLayer({
       id: clusterCountLayerId,
@@ -1150,11 +1152,12 @@ function MapClusterLayer<
       source: sourceId,
       filter: ["has", "point_count"],
       layout: {
-        "text-field": "{point_count_abbreviated}",
+        "text-field": ["get", "totalEvents"], // Changed from {point_count_abbreviated}
         "text-size": 12,
+        "text-font": ["Open Sans Bold", "Arial Unicode MS Bold"],
       },
       paint: {
-        "text-color": "#fff",
+        "text-color": "#000", // Black text on yellow background
       },
     });
 
@@ -1166,7 +1169,25 @@ function MapClusterLayer<
       filter: ["!", ["has", "point_count"]],
       paint: {
         "circle-color": pointColor,
-        "circle-radius": 6,
+        "circle-radius": 12, // Bigger to fit number
+        "circle-stroke-width": 2,
+        "circle-stroke-color": "#fff",
+      },
+    });
+
+    // Add text on top
+    map.addLayer({
+      id: `${unclusteredLayerId}-label`,
+      type: "symbol",
+      source: sourceId,
+      filter: ["!", ["has", "point_count"]],
+      layout: {
+        "text-field": ["get", "eventCount"], // Your property from GeoJSON
+        "text-size": 10,
+        "text-font": ["Open Sans Bold", "Arial Unicode MS Bold"],
+      },
+      paint: {
+        "text-color": "black",
       },
     });
 
