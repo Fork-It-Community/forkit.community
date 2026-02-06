@@ -121,24 +121,36 @@ export function GlobalMap({ events, className }: GlobalMapProps) {
                 </h3>
               </div>
               <div className="flex max-h-[160px] flex-col gap-1 overflow-y-auto pr-1">
-                {selectedCity.events.map((event) => (
-                  <a
-                    key={event.id}
-                    href={lunalink(ROUTES.events[":id"].__path, {
-                      id: event.id,
-                    })}
-                    className="group flex flex-col rounded-md p-1.5 transition-colors hover:bg-white/5"
-                  >
-                    <div className="flex items-baseline justify-between gap-2">
-                      <span className="text-sm font-medium text-white group-hover:text-[#EBFF11]">
-                        {event.name}
-                      </span>
-                      <span className="shrink-0 text-[10px] text-white/40">
-                        {dayjs(event.date).format("DD MMM YYYY")}
-                      </span>
-                    </div>
-                  </a>
-                ))}
+                {selectedCity.events.map((event) => {
+                  const isPast = dayjs(event.date).isBefore(dayjs(), "day");
+                  return (
+                    <a
+                      key={event.id}
+                      href={lunalink(ROUTES.events[":id"].__path, {
+                        id: event.id,
+                      })}
+                      className="group flex flex-col rounded-md p-1.5 transition-colors hover:bg-white/5"
+                    >
+                      <div className="flex items-baseline justify-between gap-2">
+                        <div className="flex items-center gap-2 overflow-hidden">
+                          <div
+                            className={cn(
+                              "h-1.5 w-1.5 shrink-0 rounded-full",
+                              isPast ? "bg-white/20" : "bg-[#EBFF11]",
+                            )}
+                            title={isPast ? "Past event" : "Upcoming event"}
+                          />
+                          <span className="truncate text-sm font-medium text-white group-hover:text-[#EBFF11]">
+                            {event.name}
+                          </span>
+                        </div>
+                        <span className="shrink-0 text-[10px] text-white/40">
+                          {dayjs(event.date).format("DD MMM YYYY")}
+                        </span>
+                      </div>
+                    </a>
+                  );
+                })}
               </div>
             </div>
           </MapPopup>
