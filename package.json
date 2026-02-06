@@ -52,6 +52,8 @@
     "dayjs": "1.11.18",
     "hast-util-to-text": "4.0.2",
     "i18next": "25.5.2",
+    "lucide-react": "0.563.0",
+    "maplibre-gl": "5.17.0",
     "mdast-util-to-string": "4.0.0",
     "minisearch": "7.2.0",
     "motion": "12.23.16",

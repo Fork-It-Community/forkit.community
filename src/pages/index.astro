@@ -6,6 +6,7 @@ import {
   getEventDisplayType,
   getTalksWithVOD,
   getUpcomingMajorEvent,
+  eventsGroupedByCities,
 } from "@/lib/events";
 import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 import { Image } from "astro:assets";
@@ -37,7 +38,8 @@ import { getNewsCollection } from "@/lib/news";
 import TiltedCard from "@/components/TiltedCard";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
-
+import { GlobalMap } from "@/components/GlobalMap/GlobalMap";
+import { MdPublic } from "react-icons/md";
 const upcomingMajorEvent = await getUpcomingMajorEvent();
 const upcomingEvents = (await getUpcomingEvents())
   .filter(
@@ -59,6 +61,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
 const forKidsAfterMovie = (
   await getEntry("forKidsEvent", "2025-france-rouen-2")
 )?.data.afterEventContent?.afterMovie;
+const eventsByCities = await eventsGroupedByCities();
 ---
 
 <MainLayout>
@@ -219,6 +222,31 @@ const forKidsAfterMovie = (
           width={960}
           height={640}
         />
+      </div>
+    </div>
+  </div>
+
+  <!-- GLOBAL MAP SECTION -->
+  <div class="relative overflow-hidden py-16 md:py-24">
+    <div
+      class="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent"
+    >
+    </div>
+    <div class="mx-auto w-full max-w-screen-xl px-4">
+      <div class="mb-8 flex flex-col gap-2 px-2 md:px-6">
+        <h2
+          class="flex items-center gap-2 text-balance font-heading text-3xl font-medium uppercase tracking-wide"
+        >
+          <MdPublic className="opacity-40" />
+          Global Community
+        </h2>
+        <p class="max-w-[60ch] text-sm opacity-60">
+          Fork it! brings developers together worldwide. Explore our events and
+          meetups across the globe.
+        </p>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2">
+        <GlobalMap events={eventsByCities} client:load />
       </div>
     </div>
   </div>
