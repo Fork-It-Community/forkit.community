@@ -1,16 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import {
-  Map,
-  MapMarker,
-  MarkerContent,
-  MarkerPopup,
-  MapControls,
-  MapClusterLayer,
-} from "@/components/ui/map";
+import { Map, MapControls, MapClusterLayer } from "@/components/ui/map";
 import { cn } from "@/lib/utils-client";
-import { MdEvent, MdPeople } from "react-icons/md";
 import type { EventsByCities } from "@/lib/events";
 
 type GlobalMapProps = {
