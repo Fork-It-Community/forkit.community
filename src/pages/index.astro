@@ -6,6 +6,7 @@ import {
   getEventDisplayType,
   getTalksWithVOD,
   getUpcomingMajorEvent,
+  eventsGroupedByCities,
 } from "@/lib/events";
 import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 import { Image } from "astro:assets";
@@ -37,7 +38,8 @@ import { getNewsCollection } from "@/lib/news";
 import TiltedCard from "@/components/TiltedCard";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
-
+import { GlobalMap } from "@/components/GlobalMap/GlobalMap";
+import { MdPublic } from "react-icons/md";
 const upcomingMajorEvent = await getUpcomingMajorEvent();
 const upcomingEvents = (await getUpcomingEvents())
   .filter(
@@ -59,6 +61,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
 const forKidsAfterMovie = (
   await getEntry("forKidsEvent", "2025-france-rouen-2")
 )?.data.afterEventContent?.afterMovie;
+const eventsByCities = await eventsGroupedByCities();
 ---
 
 <MainLayout>
@@ -337,6 +340,35 @@ const forKidsAfterMovie = (
         </p>
       </div>
       <VodSlider talks={allTalks} />
+    </div>
+
+    <!-- GLOBAL MAP -->
+    <div class="mx-auto w-full max-w-screen-xl px-6 py-12 md:py-24">
+      <div class="grid items-center gap-12 lg:grid-cols-[1fr_2fr]">
+        <div class="flex flex-col gap-4">
+          <h2
+            class="flex items-center gap-2 text-balance font-heading text-3xl font-medium uppercase tracking-wide"
+          >
+            <MdPublic className="opacity-40" />
+            Global Community
+          </h2>
+          <p class="bold text-balance text-sm opacity-60">
+            Fork it! brings developers together worldwide. Explore our events
+            and meetups across the globe. Join the movement and be part of a
+            thriving ecosystem of developers.
+          </p>
+          <div class="pt-4">
+            <a
+              href={lunalink(ROUTES.events.__path, {})}
+              class={cn(buttonVariants({ variant: "default" }), "gap-2")}
+            >
+              View all events
+              <MdArrowForward />
+            </a>
+          </div>
+        </div>
+        <GlobalMap events={eventsByCities} client:load />
+      </div>
     </div>
   </div>
 
