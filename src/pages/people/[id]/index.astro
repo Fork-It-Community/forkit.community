@@ -18,20 +18,20 @@ import { BackButton } from "@/components/BackButton";
 import { AchievementBadges } from "@/components/AchievementBadges";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
-import { getPeopleWithComputed } from "@/lib/people";
+import { getPeopleListWithComputed } from "@/lib/people";
 import { getPersonAchievements } from "@/lib/achievements";
 
 export const getStaticPaths = (async () => {
   const people = await getCollection("people");
 
-  return Promise.all(
-    people.map(async (person) => ({
-      params: { id: person.id },
-      props: {
-        person,
-      },
-    })),
-  );
+  const peopleWithComputed = await getPeopleListWithComputed(people);
+
+  return peopleWithComputed.map((person) => ({
+    params: { id: person.id },
+    props: {
+      person,
+    },
+  }));
 }) satisfies GetStaticPaths;
 
 const { person } = Astro.props;
@@ -42,9 +42,7 @@ const ogImage = new URL(
   Astro.site,
 );
 
-const personComputed = await getPeopleWithComputed(person);
-
-const personAchievements = getPersonAchievements(personComputed);
+const personAchievements = getPersonAchievements(person);
 ---
 
 <MainLayout>
