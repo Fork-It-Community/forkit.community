@@ -11,6 +11,41 @@ const octokit = new Octokit({
   auth: GITHUB_ACCESS_TOKEN,
 });
 
+type Contributors = {
+  login: string;
+  contributions: number;
+}[];
+
+let contributorsCache: Contributors | null;
+
+async function getAllGithubContributors() {
+  if (contributorsCache) {
+    return contributorsCache;
+  }
+
+  try {
+    const contributors = await octokit.paginate(
+      octokit.rest.repos.listContributors,
+      {
+        owner: "Fork-It-Community",
+        repo: "forkit.community",
+        headers: {
+          "X-GitHub-Api-Version": "2022-11-28",
+        },
+      },
+    );
+
+    contributorsCache = contributors.map((c) => ({
+      login: c.login ?? "",
+      contributions: c.contributions ?? 0,
+    }));
+
+    return contributorsCache;
+  } catch {
+    return [];
+  }
+}
+
 export async function getPeopleFromReference(
   people: Array<ReferenceDataEntry<"people">>,
 ) {
@@ -21,7 +56,7 @@ export async function getPeopleFromReference(
 
 export async function peopleWithComputed<
   People extends CollectionEntry<"people">,
->(people: People) {
+>(people: People, contributors?: Contributors) {
   const personEvents = await getPersonEvents(people);
 
   const personEventsAsSpeakerCount = personEvents.filter((event) =>
@@ -50,8 +85,10 @@ export async function peopleWithComputed<
 
   const handle = getPeopleGithubHandle(people);
 
+  const allContributors = contributors ?? (await getAllGithubContributors());
+
   const personGithubContributionsCount = handle
-    ? await getPersonGithubContributionsCountWithHandle(handle)
+    ? getPersonGithubContributionsCountWithHandle(handle, allContributors)
     : 0;
 
   return {
@@ -75,6 +112,16 @@ export const getPeopleWithComputed = async (
   return await peopleWithComputed(people);
 };
 
+export const getPeopleListWithComputed = async (
+  peopleList: Array<CollectionEntry<"people">>,
+) => {
+  const contributors = await getAllGithubContributors();
+
+  return Promise.all(
+    peopleList.map((person) => peopleWithComputed(person, contributors)),
+  );
+};
+
 const getPeopleGithubHandle = (people: CollectionEntry<"people">) => {
   const href = people.data.socials?.find((s) => s.type === "github")?.href;
   if (!href) return;
@@ -87,25 +134,14 @@ const getPeopleGithubHandle = (people: CollectionEntry<"people">) => {
   }
 };
 
-const getPersonGithubContributionsCountWithHandle = async (handle: string) => {
-  try {
-    const contributors = await octokit.paginate(
-      octokit.rest.repos.listContributors,
-      {
-        owner: "Fork-It-Community",
-        repo: "forkit.community",
-        headers: {
-          "X-GitHub-Api-Version": "2022-11-28",
-        },
-      },
-    );
-    return (
-      contributors.find((contributor) => contributor.login === handle)
-        ?.contributions ?? 0
-    );
-  } catch {
-    return 0;
-  }
+const getPersonGithubContributionsCountWithHandle = (
+  handle: string,
+  contributors: Contributors,
+) => {
+  return (
+    contributors.find((contributor) => contributor.login === handle)
+      ?.contributions ?? 0
+  );
 };
 
 export type PersonWithComputed = Awaited<
