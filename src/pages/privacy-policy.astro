@@ -19,7 +19,7 @@ import Prose from "@/components/Prose/index.astro";
   />
   <section class="m-auto max-w-7xl px-4 py-16">
     <Prose>
-      <p class="text-sm opacity-60">Last updated: February 5, 2026</p>
+      <p class="text-sm opacity-60">Last updated: February 9, 2026</p>
 
       <h2 id="introduction">Introduction</h2>
       <p>
@@ -27,25 +27,40 @@ import Prose from "@/components/Prose/index.astro";
         your privacy. This Privacy Policy explains how we collect, use,
         disclose, and safeguard your information when you visit our website.
       </p>
+      <p>
+        <strong>Privacy-First Approach:</strong> Our website does not maintain its
+        own user database. We partner with trusted third-party services (Luma for
+        events, Brevo for newsletters) to handle personal data collection and storage.
+        Analytics and marketing tools require your explicit consent before activation.
+      </p>
 
-      <h2 id="information-we-collect">Information We Collect</h2>
+      <h2 id="information-we-collect">Information we collect</h2>
       <p>
         We collect information that you provide directly to us and information
         that is automatically collected when you use our website.
       </p>
 
-      <h3>Information You Provide</h3>
+      <h3>Information you provide</h3>
       <ul>
-        <li>Name and email address (when you register for events)</li>
-        <li>Profile information (when you create an account)</li>
+        <li>
+          <strong>Event Registration:</strong> When you register for events through
+          Luma, you may provide: name, email address, phone number, cryptocurrency
+          wallet addresses (Ethereum/Solana), and responses to custom registration
+          questions
+        </li>
+        <li>
+          <strong>Newsletter Subscription:</strong> Email address when you subscribe
+          to our newsletter through Brevo
+        </li>
         <li>Communication preferences</li>
         <li>Any other information you choose to provide</li>
       </ul>
 
-      <h3>Automatically Collected Information</h3>
+      <h3>Automatically collected information</h3>
       <p>
         When you visit our website, we may automatically collect certain
-        information through cookies and similar tracking technologies:
+        information through cookies and similar tracking technologies (only with
+        your consent for analytics and marketing):
       </p>
       <ul>
         <li>Device and browser information</li>
@@ -55,27 +70,56 @@ import Prose from "@/components/Prose/index.astro";
         <li>Interaction with website features</li>
       </ul>
 
+      <h3>Information we don't collect</h3>
+      <p>For transparency, we want to be clear about what we don't collect:</p>
+      <ul>
+        <li>
+          <strong>Search Queries:</strong> Our website search functionality is client-side
+          only and does not track or store your search queries
+        </li>
+        <li>
+          <strong>User Accounts:</strong> We do not maintain user accounts or authentication
+          systems on our website
+        </li>
+        <li>
+          <strong>First-Party Database:</strong> We do not store personal data in
+          our own database; all personal data is managed by our third-party partners
+        </li>
+      </ul>
+
       <h2 id="how-we-use-your-information">How We Use Your Information</h2>
       <p>We use the information we collect to:</p>
       <ul>
-        <li>Provide, maintain, and improve our services</li>
-        <li>Send you event updates and community news</li>
+        <li>Manage event registrations and display attendee counts</li>
+        <li>Send you event updates and community news via our newsletter</li>
         <li>Respond to your comments and questions</li>
-        <li>Analyze usage patterns to improve user experience</li>
+        <li>
+          Analyze usage patterns to improve user experience (with your consent)
+        </li>
+        <li>
+          Measure marketing campaign effectiveness on Meta platforms (with your
+          consent)
+        </li>
         <li>
           Detect, prevent, and address technical issues and security threats
         </li>
         <li>Comply with legal obligations</li>
       </ul>
+      <p>
+        <strong>Important:</strong> Fork it! Community does not maintain its own
+        user database. All personal data collection (event registrations, newsletter
+        subscriptions) is managed by trusted third-party services (Luma and Brevo)
+        on our behalf.
+      </p>
 
-      <h2 id="cookies-and-tracking">Cookies and Tracking Technologies</h2>
+      <h2 id="cookies-and-tracking">Cookies and tracking technologies</h2>
       <p>
         We use cookies and similar tracking technologies to enhance your
         experience on our website. You can manage your cookie preferences using
         our Cookie Settings tool available in the footer of this page.
       </p>
 
-      <h3>Types of Cookies We Use</h3>
+      <h3>Types of Cookies we use</h3>
 
       <h4>Essential Cookies</h4>
       <p>
@@ -83,11 +127,18 @@ import Prose from "@/components/Prose/index.astro";
         enable core functionality such as security, consent management, and
         accessibility features.
       </p>
+      <ul>
+        <li>
+          <strong>forkit-consent:</strong> Stores your cookie consent preferences
+          for 365 days
+        </li>
+      </ul>
 
       <h4>Analytics Cookies</h4>
       <p>
         We use analytics services to understand how visitors use our website.
-        This helps us improve content and user experience.
+        This helps us improve content and user experience. These cookies require
+        your explicit consent.
       </p>
       <ul>
         <li>
@@ -99,7 +150,8 @@ import Prose from "@/components/Prose/index.astro";
       <h4>Marketing Cookies</h4>
       <p>
         These cookies track your activity to deliver personalized advertisements
-        and measure campaign effectiveness.
+        and measure campaign effectiveness. These cookies require your explicit
+        consent.
       </p>
       <ul>
         <li>
@@ -115,12 +167,49 @@ import Prose from "@/components/Prose/index.astro";
         about you:
       </p>
 
+      <h3>Luma (Event Management)</h3>
+      <p>
+        We use Luma to manage event registrations and attendee information. When
+        you register for our events through Luma, your information is collected
+        and processed by Luma in accordance with their privacy policy. This may
+        include:
+      </p>
+      <ul>
+        <li>Name, email address, and phone number</li>
+        <li>Cryptocurrency wallet addresses (if provided)</li>
+        <li>Registration form responses</li>
+        <li>Event check-in and attendance data</li>
+        <li>Payment and ticket information</li>
+      </ul>
+      <p>
+        Learn more: <a
+          href="https://lu.ma/privacy"
+          target="_blank"
+          rel="noopener noreferrer">Luma Privacy Policy</a
+        >
+      </p>
+
+      <h3>Brevo (Email Marketing)</h3>
+      <p>
+        We use Brevo to manage our newsletter subscriptions. When you subscribe
+        to our newsletter, your email address and any additional information you
+        provide is stored and processed by Brevo in accordance with their
+        privacy policy.
+      </p>
+      <p>
+        Learn more: <a
+          href="https://www.brevo.com/legal/privacypolicy/"
+          target="_blank"
+          rel="noopener noreferrer">Brevo Privacy Policy</a
+        >
+      </p>
+
       <h3>Meta Pixel</h3>
       <p>
         Meta Pixel is a tracking code provided by Meta (Facebook) that allows us
         to measure the effectiveness of our advertising campaigns and understand
         user behavior. Meta may use this data for its own purposes in accordance
-        with Meta's Data Policy.
+        with Meta's Data Policy. This service requires your explicit consent.
       </p>
       <p>
         Learn more: <a
@@ -133,7 +222,8 @@ import Prose from "@/components/Prose/index.astro";
       <h3>Vercel Analytics</h3>
       <p>
         Vercel Analytics helps us understand how visitors navigate our website
-        and identify areas for improvement. Vercel does not sell your data.
+        and identify areas for improvement. Vercel does not sell your data. This
+        service requires your explicit consent.
       </p>
       <p>
         Learn more: <a
@@ -201,10 +291,24 @@ import Prose from "@/components/Prose/index.astro";
         fulfill the purposes outlined in this Privacy Policy, unless a longer
         retention period is required or permitted by law.
       </p>
-      <p>
-        Cookie consent preferences are stored for 365 days. You can change your
-        preferences at any time using the Cookie Settings tool.
-      </p>
+      <ul>
+        <li>
+          <strong>Cookie Consent:</strong> Your cookie preferences are stored for
+          365 days. You can change them at any time using the Cookie Settings tool.
+        </li>
+        <li>
+          <strong>Event Registration:</strong> Event attendee data is managed by
+          Luma and retained according to their data retention policies.
+        </li>
+        <li>
+          <strong>Newsletter Subscriptions:</strong> Email addresses are stored by
+          Brevo until you unsubscribe from our newsletter.
+        </li>
+        <li>
+          <strong>Analytics Data:</strong> Anonymous analytics data is retained by
+          Vercel and Meta according to their respective retention policies.
+        </li>
+      </ul>
 
       <h2 id="data-security">Data Security</h2>
       <p>

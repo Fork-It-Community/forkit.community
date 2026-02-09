@@ -75,6 +75,15 @@ export function getOrejimeConfig(): OrejimeConfig {
         consentModal: {
           description: consentEn.modal.description,
         },
+        consentNotice: {
+          learnMore: consentEn.consentNotice?.learnMore || "Learn more",
+        },
+        privacyPolicy: {
+          name: consentEn.privacyPolicy?.name || "privacy policy",
+          text:
+            consentEn.privacyPolicy?.text ||
+            "To learn more, please read our {privacyPolicy}.",
+        },
         purposes: {
           analytics: "Analytics",
           marketing: "Marketing",

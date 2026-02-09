@@ -11,5 +11,12 @@
   },
   "modal": {
     "description": "We respect your privacy. Choose which cookies you're comfortable with. You can change your preferences at any time."
+  },
+  "consentNotice": {
+    "learnMore": "Learn more"
+  },
+  "privacyPolicy": {
+    "name": "privacy policy",
+    "text": "To learn more, please read our {privacyPolicy}."
   }
 }
