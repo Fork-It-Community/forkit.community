@@ -33,6 +33,10 @@ type PopupInfo = {
 export function GlobalMap({ events, className }: GlobalMapProps) {
   const mapRef = useRef<maplibregl.Map | null>(null);
   const [selectedCity, setSelectedCity] = useState<PopupInfo | null>(null);
+  const totalEvents = Object.values(events).reduce(
+    (total, cityEvents) => total + cityEvents.length,
+    0,
+  );
 
   const geoJsonData = {
     type: "FeatureCollection" as const,
@@ -66,9 +70,7 @@ export function GlobalMap({ events, className }: GlobalMapProps) {
           },
         };
       })
-      .filter(
-        (feature): feature is NonNullable<typeof feature> => feature !== null,
-      ),
+      .filter((feature) => !!feature),
   };
   return (
     <div
@@ -92,10 +94,7 @@ export function GlobalMap({ events, className }: GlobalMapProps) {
           pointColor="#EBFF11"
           onPointClick={(feature, coordinates) => {
             const properties = feature.properties;
-            const cityEvents =
-              typeof properties?.events === "string"
-                ? JSON.parse(properties.events)
-                : properties?.events;
+            const cityEvents = JSON.parse(properties.events);
 
             setSelectedCity({
               cityName: properties?.cityName,
@@ -162,6 +161,19 @@ export function GlobalMap({ events, className }: GlobalMapProps) {
           showCompass
           showFullscreen
         />
+        <div className="absolute bottom-4 left-4 rounded-lg border border-white/10 bg-black/60 px-3 py-2 backdrop-blur-md">
+          <div className="flex items-center gap-2">
+            <div className="h-2 w-2 rounded-full bg-primary" />
+            <span className="text-sm font-medium text-white">
+              {totalEvents} Total Events
+            </span>
+          </div>
+        </div>
+        <div className="absolute left-1/2 top-4 -translate-x-1/2 rounded-lg border-2 bg-black px-4 py-2">
+          <span className="text-sm font-medium text-white/80">
+            🌍 Drag to explore
+          </span>
+        </div>
       </Map>
     </div>
   );
