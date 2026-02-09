@@ -19,11 +19,12 @@ export const getEventData = async (id: string) => {
       ?.map((activity) => activity.slug?.id)
       .includes(item.id),
   );
-
+  const sponsorsIds = event.data.sponsors?.map((sponsor) => sponsor.slug) ?? [];
   return eventWithComputed({
     ...event,
     __talks: talksForEvent,
     __coOrganizers: await getEntries(event.data.coOrganizers ?? []),
+    __sponsors: await getEntries(sponsorsIds),
   });
 };
 

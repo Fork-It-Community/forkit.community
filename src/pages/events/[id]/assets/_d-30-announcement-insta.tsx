@@ -8,6 +8,7 @@ import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate } from "@/lib/events";
 import { getEventData } from "./_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
+import { SponsorLogos } from "@/generated-assets/components/SponsorLogos";
 
 export const config: AssetImageConfig = {
   width: 1080,
@@ -28,8 +29,22 @@ export function d30announcementInsta(options: {
       ),
     );
 
+    const sponsorLogos = await Promise.all(
+      event.__sponsors.map(
+        async (sponsor) => await getAstroImageBase64(sponsor.data.logos.noBg),
+      ),
+    );
+
     return (
-      <Frame {...options} style={{ padding: 96 }}>
+      <Frame
+        {...options}
+        style={{
+          paddingTop: 96,
+          paddingLeft: 96,
+          paddingRight: 96,
+          paddingBottom: 0,
+        }}
+      >
         <BgImage
           src={postCover}
           width={options.width}
@@ -218,6 +233,7 @@ export function d30announcementInsta(options: {
             </div>
           </div>
         </div>
+        <SponsorLogos logos={sponsorLogos} height={100} />
       </Frame>
     );
   };
