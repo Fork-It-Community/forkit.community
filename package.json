@@ -10,8 +10,7 @@
     "lint": "astro check",
     "preview": "astro preview --node",
     "astro": "astro",
-    "prepare": "husky && node scripts/copy-orejime.js",
-    "postinstall": "node scripts/copy-orejime.js"
+    "prepare": "husky"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,json,astro}": "prettier --write src/"

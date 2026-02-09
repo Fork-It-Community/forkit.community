@@ -1,7 +1,7 @@
 import consentEn from "@/i18n/en/consent.json";
 
 export interface OrejimeConfig {
-  privacyPolicy: string; // Changed from privacyPolicyUrl
+  privacyPolicy: string;
   purposes: Array<{
     name: string;
     title: string;
@@ -26,12 +26,11 @@ export interface OrejimeConfig {
 
 export function getOrejimeConfig(): OrejimeConfig {
   return {
-    privacyPolicy: "/privacy-policy", // Changed from privacyPolicyUrl
+    privacyPolicy: "/privacy-policy",
     cookieName: "forkit-consent",
     cookieExpiresAfterDays: 365,
     mustConsent: false,
 
-    // Define purposes (categories) - Orejime requires this structure
     purposes: [
       {
         name: "analytics",
@@ -46,7 +45,6 @@ export function getOrejimeConfig(): OrejimeConfig {
       },
     ],
 
-    // Define tracking apps/services - using your consent.json strings
     apps: [
       {
         name: "meta-pixel",
@@ -72,7 +70,6 @@ export function getOrejimeConfig(): OrejimeConfig {
       },
     ],
 
-    // Custom translations for the modal
     translations: {
       en: {
         consentModal: {
