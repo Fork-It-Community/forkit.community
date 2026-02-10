@@ -5,18 +5,17 @@ import {
 } from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
-import { getEventDisplayDate } from "@/lib/events";
-import { getEventData } from "./_utils";
+import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
+import { getEventData } from "../_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 import { SponsorLogos } from "@/generated-assets/components/SponsorLogos";
-import { EventBanner } from "@/generated-assets/components/EventBanner";
 
 export const config: AssetImageConfig = {
   width: 1920,
   height: 1080,
 };
 
-export function d10announcement(options: { width: number; height: number }) {
+export function saveTheDate(options: { width: number; height: number }) {
   return async ({ params }: { params: { id: string } }) => {
     const event = await getEventData(params.id);
     const postCover = await getAstroImageBase64(event.data.image.media);
@@ -55,7 +54,6 @@ export function d10announcement(options: { width: number; height: number }) {
           width={options.width}
           height={options.height}
         />
-        <EventBanner event={event} width={options.width} />
 
         <div
           style={{
@@ -73,79 +71,49 @@ export function d10announcement(options: { width: number; height: number }) {
             style={{
               display: "flex",
               flexDirection: "column",
+              gap: 20,
             }}
           >
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 24,
+                fontSize: 32,
+                fontWeight: 500,
+                textTransform: "uppercase",
+                letterSpacing: 4,
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  fontSize: 256,
-                  fontWeight: 500,
-                  lineHeight: 1,
-                  color: COLORS.primary,
-                }}
-              >
-                10
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    fontSize: 112,
-                    fontWeight: 500,
-                    lineHeight: 1,
-                    color: COLORS.primary,
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Days left
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    fontSize: 112,
-                    fontWeight: 500,
-                    lineHeight: 1,
-                    color: COLORS.white,
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Until the event
-                </div>
-              </div>
+              Save the date
             </div>
+
             <div
               style={{
                 display: "flex",
-                fontSize: 54,
+                fontSize: 124,
                 fontWeight: 500,
                 lineHeight: 1,
+                color: COLORS.primary,
+                marginTop: -16,
+                marginLeft: -6, // Visual alignment
                 textTransform: "uppercase",
-                opacity: 0.8,
               }}
             >
-              Secure your spot now!
+              {event.data._computed.city?.data.name}
             </div>
-          </div>
+            <div
+              style={{
+                display: "flex",
+                fontSize: 60,
+                fontWeight: 500,
+                lineHeight: 1,
+                marginBottom: 48,
+                marginTop: -8,
+                color: COLORS.primary,
+                textTransform: "uppercase",
+              }}
+            >
+              {getEventDisplayType(event.data.type)}
+            </div>
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "flex-end",
-            }}
-          >
             <div
               style={{
                 display: "flex",
@@ -160,7 +128,7 @@ export function d10announcement(options: { width: number; height: number }) {
                   display: "flex",
                   alignItems: "center",
                   gap: 12,
-                  fontSize: 36,
+                  fontSize: 48,
                   fontWeight: 500,
                   lineHeight: 1,
                 }}
@@ -188,7 +156,7 @@ export function d10announcement(options: { width: number; height: number }) {
                     display: "flex",
                     gap: 12,
                     alignItems: "center",
-                    fontSize: 36,
+                    fontSize: 48,
                     fontWeight: 500,
                     lineHeight: 1.2,
                     textWrap: "balance",
@@ -212,6 +180,28 @@ export function d10announcement(options: { width: number; height: number }) {
                 </div>
               )}
             </div>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "flex-end",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                fontSize: 32,
+                fontWeight: 500,
+                lineHeight: 1.2,
+                textTransform: "uppercase",
+                opacity: 0.6,
+              }}
+            >
+              {event.data._computed.city?.data.name},{" "}
+              {event.data._computed.country?.data.name}
+            </div>
             <div
               style={{
                 display: "flex",
@@ -232,4 +222,4 @@ export function d10announcement(options: { width: number; height: number }) {
   };
 }
 
-export default d10announcement(config);
+export default saveTheDate(config);

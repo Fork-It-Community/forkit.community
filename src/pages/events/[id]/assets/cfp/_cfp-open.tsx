@@ -6,7 +6,7 @@ import {
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate } from "@/lib/events";
-import { getEventData } from "./_utils";
+import { getEventData } from "../_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 import { SponsorLogos } from "@/generated-assets/components/SponsorLogos";
 import { EventBanner } from "@/generated-assets/components/EventBanner";
@@ -16,7 +16,7 @@ export const config: AssetImageConfig = {
   height: 1080,
 };
 
-export function cfpStillOpen(options: {
+export function cfpOpen(options: {
   width: number;
   height: number;
   fontScaling: number;
@@ -110,7 +110,7 @@ export function cfpStillOpen(options: {
                   textTransform: "uppercase",
                 }}
               >
-                Still Open
+                Now Open
               </div>
             </div>
 
@@ -213,4 +213,4 @@ export function cfpStillOpen(options: {
   };
 }
 
-export default cfpStillOpen({ ...config, fontScaling: 1 });
+export default cfpOpen({ ...config, fontScaling: 1 });

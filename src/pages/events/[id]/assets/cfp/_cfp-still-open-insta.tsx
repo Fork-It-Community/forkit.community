@@ -1,3 +1,4 @@
+<<<<<<< HEAD:src/pages/events/[id]/assets/_cfp-still-open-insta.tsx
 import { Frame } from "@/generated-assets/components/Frame";
 import {
   getAstroImageBase64,
@@ -8,15 +9,19 @@ import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate } from "@/lib/events";
 import { getEventData } from "./_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
-import { SponsorLogos } from "@/generated-assets/components/SponsorLogos";
+import { SponsorLogosInsta } from "@/generated-assets/components/SponsorLogos";
 import { EventBanner } from "@/generated-assets/components/EventBanner";
+=======
+import type { AssetImageConfig } from "@/generated-assets/image";
+import { cfpStillOpen } from "@/pages/events/[id]/assets/cfp/_cfp-still-open";
+>>>>>>> 52688f34 (feat: regroup assets into folders):src/pages/events/[id]/assets/cfp/_cfp-still-open-insta.tsx
 
 export const config: AssetImageConfig = {
-  width: 1920,
-  height: 1080,
+  width: 1080,
+  height: 1350,
 };
 
-export function d7announcement(options: { width: number; height: number }) {
+export function cfpStillOpenInsta(options: { width: number; height: number }) {
   return async ({ params }: { params: { id: string } }) => {
     const event = await getEventData(params.id);
     const postCover = await getAstroImageBase64(event.data.image.media);
@@ -63,79 +68,61 @@ export function d7announcement(options: { width: number; height: number }) {
             flex: 1,
             display: "flex",
             flexDirection: "column",
-            gap: 40,
             width: "100%",
             justifyContent: "space-between",
           }}
         >
           <LogoWithFriends logos={coOrganizersLogos} />
+
           <div
             style={{
               display: "flex",
               flexDirection: "column",
+              gap: 32,
+              justifyContent: "center",
             }}
           >
             <div
               style={{
                 display: "flex",
-                alignItems: "center",
+                flexDirection: "column",
                 gap: 24,
               }}
             >
               <div
                 style={{
-                  display: "flex",
-                  fontSize: 256,
+                  fontSize: 50.4,
                   fontWeight: 500,
-                  lineHeight: 1,
-                  color: COLORS.primary,
+                  textTransform: "uppercase",
+                  letterSpacing: 6,
+                  opacity: 0.9,
                 }}
               >
-                07
+                Call for Papers
               </div>
+
               <div
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
+                  fontSize: 126,
+                  fontWeight: 500,
+                  lineHeight: 0.95,
+                  color: COLORS.primary,
+                  marginLeft: -6,
+                  textTransform: "uppercase",
                 }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    fontSize: 112,
-                    fontWeight: 500,
-                    lineHeight: 1,
-                    color: COLORS.primary,
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Days left
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    fontSize: 112,
-                    fontWeight: 500,
-                    lineHeight: 1,
-                    color: COLORS.white,
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Until the event
-                </div>
+                Still Open
               </div>
             </div>
+
             <div
               style={{
-                display: "flex",
-                fontSize: 54,
-                fontWeight: 500,
-                lineHeight: 1,
-                textTransform: "uppercase",
-                opacity: 0.8,
+                fontSize: 39.2,
+                fontWeight: 400,
+                opacity: 0.95,
               }}
             >
-              Secure your spot now!
+              Submit your talk proposals
             </div>
           </div>
 
@@ -143,16 +130,15 @@ export function d7announcement(options: { width: number; height: number }) {
             style={{
               display: "flex",
               justifyContent: "space-between",
-              alignItems: "flex-end",
+              alignItems: "center",
+              width: "100%",
             }}
           >
             <div
               style={{
                 display: "flex",
-                flexWrap: "wrap",
-                alignItems: "center",
-                columnGap: 48,
-                rowGap: 24,
+                flexDirection: "column",
+                gap: 16,
               }}
             >
               <div
@@ -160,15 +146,14 @@ export function d7announcement(options: { width: number; height: number }) {
                   display: "flex",
                   alignItems: "center",
                   gap: 12,
-                  fontSize: 36,
+                  fontSize: 33.6,
                   fontWeight: 500,
-                  lineHeight: 1,
+                  opacity: 0.6,
                 }}
               >
                 <svg
                   viewBox="0 0 24 24"
                   style={{
-                    flex: "none",
                     opacity: 0.6,
                     width: "1em",
                     height: "1em",
@@ -182,54 +167,51 @@ export function d7announcement(options: { width: number; height: number }) {
                 {getEventDisplayDate(event)}
               </div>
 
-              {!!event.data.location?.name && (
-                <div
+              <div
+                style={{
+                  display: "flex",
+                  gap: 12,
+                  alignItems: "center",
+                  fontSize: 33.6,
+                  fontWeight: 500,
+                  opacity: 0.6,
+                }}
+              >
+                <svg
+                  viewBox="0 0 24 24"
                   style={{
-                    display: "flex",
-                    gap: 12,
-                    alignItems: "center",
-                    fontSize: 36,
-                    fontWeight: 500,
-                    lineHeight: 1.2,
-                    textWrap: "balance",
+                    flex: "none",
+                    opacity: 0.6,
+                    width: "1em",
+                    height: "1em",
                   }}
                 >
-                  <svg
-                    viewBox="0 0 24 24"
-                    style={{
-                      flex: "none",
-                      opacity: 0.6,
-                      width: "1em",
-                      height: "1em",
-                    }}
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7"
-                    />
-                  </svg>
-                  {event.data.location.name}
-                </div>
-              )}
+                  <path
+                    fill="currentColor"
+                    d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7"
+                  />
+                </svg>
+                {event.data._computed.city?.data.name},{" "}
+                {event.data._computed.country?.data.name}
+              </div>
             </div>
+
             <div
               style={{
-                display: "flex",
-                fontSize: 32,
+                fontSize: 26.6,
                 fontWeight: 500,
-                lineHeight: 1.2,
                 textTransform: "uppercase",
-                opacity: 0.6,
+                opacity: 0.5,
               }}
             >
               www.forkit.community
             </div>
           </div>
         </div>
-        {displaySponsors && <SponsorLogos logos={sponsorLogos} />}
+        {displaySponsors && <SponsorLogosInsta logos={sponsorLogos} />}
       </Frame>
     );
   };
 }
 
-export default d7announcement(config);
+export default cfpStillOpenInsta(config);
