@@ -9,5 +9,5 @@ export const config: AssetImageConfig = {
 export default ticketsAvailable({
   ...config,
   fontScaling: 0.7,
-  sponsorLogosHeight: 100,
+  sponsorLogosHeight: 70,
 });

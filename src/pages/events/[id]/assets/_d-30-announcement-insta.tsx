@@ -233,7 +233,7 @@ export function d30announcementInsta(options: {
             </div>
           </div>
         </div>
-        <SponsorLogos logos={sponsorLogos} height={100} />
+        <SponsorLogos logos={sponsorLogos} height={70} />
       </Frame>
     );
   };
