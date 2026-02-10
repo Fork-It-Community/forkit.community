@@ -4,7 +4,7 @@ import {
   type AssetImageConfig,
 } from "@/generated-assets/image";
 import { COLORS } from "@/generated-assets/theme";
-import { getEventData } from "./_utils";
+import { getEventData } from "../_utils";
 import { LogoIcon } from "@/components/LogoIcon";
 import { CfpCoverNoFlag } from "@/generated-assets/components/CfpCoverNoFlag";
 import { getCoverImage } from "@/lib/events";

@@ -5,8 +5,8 @@ import {
 } from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
-import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
-import { getEventData } from "./_utils";
+import { getEventDisplayDate } from "@/lib/events";
+import { getEventData } from "../_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 
 export const config: AssetImageConfig = {
@@ -14,7 +14,7 @@ export const config: AssetImageConfig = {
   height: 1080,
 };
 
-export function ticketsAvailable(options: {
+export function cfpStillOpen(options: {
   width: number;
   height: number;
   fontScaling: number;
@@ -43,94 +43,77 @@ export function ticketsAvailable(options: {
             flex: 1,
             display: "flex",
             flexDirection: "column",
-            gap: 40,
             width: "100%",
             justifyContent: "space-between",
           }}
         >
           <LogoWithFriends logos={coOrganizersLogos} />
+
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: 20,
+              gap: 32,
+              justifyContent: "center",
             }}
           >
             <div
               style={{
-                fontSize: 54 * options.fontScaling,
-                fontWeight: 500,
-                textTransform: "uppercase",
-                letterSpacing: 4,
-              }}
-            >
-              Tickets Are Available
-            </div>
-
-            <div
-              style={{
                 display: "flex",
-                fontSize: 160 * options.fontScaling,
-                fontWeight: 500,
-                lineHeight: 1,
-                color: COLORS.primary,
-                marginTop: -16,
-                marginLeft: -6, // Visual alignment
-                textTransform: "uppercase",
-              }}
-            >
-              Register Now
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-start",
-                marginBottom: 24,
-                marginTop: -12,
+                flexDirection: "column",
+                gap: 24,
               }}
             >
               <div
                 style={{
-                  display: "flex",
-                  color: COLORS.primary,
-                  fontSize: 64 * options.fontScaling,
+                  fontSize: 72 * options.fontScaling,
                   fontWeight: 500,
+                  textTransform: "uppercase",
+                  letterSpacing: 6,
+                  opacity: 0.9,
+                }}
+              >
+                Call for Papers
+              </div>
+
+              <div
+                style={{
+                  fontSize: 180 * options.fontScaling,
+                  fontWeight: 500,
+                  lineHeight: 0.95,
+                  color: COLORS.primary,
+                  marginLeft: -6,
                   textTransform: "uppercase",
                 }}
               >
-                www.forkit.community
+                Still Open
               </div>
             </div>
+
+            <div
+              style={{
+                fontSize: 56 * options.fontScaling,
+                fontWeight: 400,
+                opacity: 0.95,
+              }}
+            >
+              Submit your talk proposals
+            </div>
           </div>
+
           <div
             style={{
               display: "flex",
-              flexWrap: "wrap",
+              justifyContent: "space-between",
               alignItems: "center",
-              columnGap: 48,
-              rowGap: 24,
+              width: "100%",
             }}
           >
             <div
               style={{
                 display: "flex",
-                alignItems: "center",
-                gap: 12,
-                fontSize: 48,
-                fontWeight: 500,
-                lineHeight: 1,
-                textTransform: "uppercase",
-              }}
-            >
-              {getEventDisplayType(event.data.type)}
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                alignItems: "center",
-                columnGap: 48,
-                rowGap: 24,
+                flexDirection: "column",
+                gap: 16,
               }}
             >
               <div
@@ -138,15 +121,14 @@ export function ticketsAvailable(options: {
                   display: "flex",
                   alignItems: "center",
                   gap: 12,
-                  fontSize: 48,
+                  fontSize: 48 * options.fontScaling,
                   fontWeight: 500,
-                  lineHeight: 1,
+                  opacity: 0.6,
                 }}
               >
                 <svg
                   viewBox="0 0 24 24"
                   style={{
-                    flex: "none",
                     opacity: 0.6,
                     width: "1em",
                     height: "1em",
@@ -165,10 +147,9 @@ export function ticketsAvailable(options: {
                   display: "flex",
                   gap: 12,
                   alignItems: "center",
-                  fontSize: 48,
+                  fontSize: 48 * options.fontScaling,
                   fontWeight: 500,
-                  lineHeight: 1.2,
-                  textWrap: "balance",
+                  opacity: 0.6,
                 }}
               >
                 <svg
@@ -189,6 +170,17 @@ export function ticketsAvailable(options: {
                 {event.data._computed.country?.data.name}
               </div>
             </div>
+
+            <div
+              style={{
+                fontSize: 38 * options.fontScaling,
+                fontWeight: 500,
+                textTransform: "uppercase",
+                opacity: 0.5,
+              }}
+            >
+              www.forkit.community
+            </div>
           </div>
         </div>
       </Frame>
@@ -196,4 +188,4 @@ export function ticketsAvailable(options: {
   };
 }
 
-export default ticketsAvailable({ ...config, fontScaling: 1 });
+export default cfpStillOpen({ ...config, fontScaling: 1 });
