@@ -15,6 +15,7 @@ export const SponsorLogos = ({
         flexWrap: "wrap",
         position: "relative",
         zIndex: 10,
+        justifyContent: "center",
       }}
     >
       {logos.map((logo, index) => (
@@ -24,6 +25,7 @@ export const SponsorLogos = ({
               display: "flex",
               alignItems: "center",
               height,
+              overflow: "hidden",
             }}
           >
             <img
