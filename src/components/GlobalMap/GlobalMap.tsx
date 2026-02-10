@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import dayjs from "dayjs";
 import {
   Map,
@@ -38,40 +38,44 @@ export function GlobalMap({ events, className }: GlobalMapProps) {
     0,
   );
 
-  const geoJsonData = {
-    type: "FeatureCollection" as const,
-    features: Object.entries(events)
-      .map(([cityId, cityEvents]) => {
-        const city = cityEvents[0]?.data._computed.city?.data;
-        if (!city) return null;
+  const geoJsonData = useMemo(
+    () => ({
+      type: "FeatureCollection" as const,
+      features: Object.entries(events)
+        .map(([cityId, cityEvents]) => {
+          const city = cityEvents[0]?.data._computed.city?.data;
+          if (!city) return null;
 
-        return {
-          type: "Feature" as const,
-          geometry: {
-            type: "Point" as const,
-            coordinates: [city.location.lng, city.location.lat] as [
-              number,
-              number,
-            ],
-          },
-          properties: {
-            cityId: cityId,
-            cityName: city.name,
-            countryName: cityEvents[0].data._computed.country?.data.name ?? "",
-            eventCount: cityEvents.length,
-            events: JSON.stringify(
-              cityEvents.map((event) => ({
-                id: event.id,
-                name: event.data._computed.name,
-                type: event.data.type,
-                date: event.data.date,
-              })),
-            ),
-          },
-        };
-      })
-      .filter((feature) => !!feature),
-  };
+          return {
+            type: "Feature" as const,
+            geometry: {
+              type: "Point" as const,
+              coordinates: [city.location.lng, city.location.lat] as [
+                number,
+                number,
+              ],
+            },
+            properties: {
+              cityId: cityId,
+              cityName: city.name,
+              countryName:
+                cityEvents[0].data._computed.country?.data.name ?? "",
+              eventCount: cityEvents.length,
+              events: JSON.stringify(
+                cityEvents.map((event) => ({
+                  id: event.id,
+                  name: event.data._computed.name,
+                  type: event.data.type,
+                  date: event.data.date,
+                })),
+              ),
+            },
+          };
+        })
+        .filter((feature) => !!feature),
+    }),
+    [events],
+  );
   return (
     <div
       className={cn(
