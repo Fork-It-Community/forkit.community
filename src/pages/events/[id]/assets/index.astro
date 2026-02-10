@@ -34,7 +34,7 @@ if (!event) {
 }
 const imagesSrc = getEventAssetsSources(event);
 const groupedAssets = getGroupedAssets(imagesSrc, event.data.type);
-const marketinVideos = event.data.marketing?.videos;
+const marketingVideos = event.data.marketing?.videos;
 ---
 
 <EventSubPageLayout event={event}>
@@ -79,7 +79,7 @@ const marketinVideos = event.data.marketing?.videos;
         so we can prioritize its development.
       </p>
       {
-        marketinVideos?.map((video) => (
+        marketingVideos?.map((video) => (
           <div class={cn("flex flex-col", video.thumbnail && "gap-2")}>
             {video.thumbnail ? (
               <a href={video.href} target="_blank" rel="noopener noreferrer">
