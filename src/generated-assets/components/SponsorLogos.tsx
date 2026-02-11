@@ -60,7 +60,7 @@ export const SponsorLogosInsta = ({ logos }: { logos: string[] }) => {
         zIndex: 10,
         flexWrap: "wrap",
         paddingBottom: 4,
-        marginLeft: logos.length > 6 ? -24 : 0,
+        justifyContent: "center",
       }}
     >
       {logos.map((logo, index) => (
