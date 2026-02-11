@@ -26,10 +26,16 @@ export function d30announcement(options: { width: number; height: number }) {
       ),
     );
 
+    const coOrganizersIds = event.__coOrganizers.map(
+      (coOrganiser) => coOrganiser.id,
+    );
+
     const sponsorLogos = await Promise.all(
-      event.__sponsors.map(
-        async (sponsor) => await getAstroImageBase64(sponsor.data.logos.noBg),
-      ),
+      event.__sponsors
+        .filter((sponsor) => !coOrganizersIds.includes(sponsor.id))
+        .map(
+          async (sponsor) => await getAstroImageBase64(sponsor.data.logos.noBg),
+        ),
     );
     const displaySponsors =
       event.data.type === "event" && !!sponsorLogos.length;
