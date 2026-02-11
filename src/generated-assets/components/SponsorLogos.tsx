@@ -36,7 +36,7 @@ export const SponsorLogos = ({ logos }: { logos: string[] }) => {
             <div
               style={{
                 fontSize: 28,
-                opacity: 1,
+                opacity: 0.3,
                 paddingLeft: 40,
                 paddingRight: 40,
               }}
