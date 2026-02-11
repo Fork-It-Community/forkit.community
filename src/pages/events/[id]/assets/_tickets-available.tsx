@@ -40,6 +40,8 @@ export function ticketsAvailable(options: {
           async (sponsor) => await getAstroImageBase64(sponsor.data.logos.noBg),
         ),
     );
+    const displaySponsors =
+      event.data.type === "event" && !!sponsorLogos.length;
 
     return (
       <Frame
@@ -48,7 +50,7 @@ export function ticketsAvailable(options: {
           paddingTop: 96,
           paddingLeft: 96,
           paddingRight: 96,
-          paddingBottom: 0,
+          paddingBottom: displaySponsors ? 0 : 96,
         }}
       >
         <BgImage
@@ -211,7 +213,7 @@ export function ticketsAvailable(options: {
             </div>
           </div>
         </div>
-        <SponsorLogos logos={sponsorLogos} />
+        {displaySponsors && <SponsorLogos logos={sponsorLogos} />}
       </Frame>
     );
   };

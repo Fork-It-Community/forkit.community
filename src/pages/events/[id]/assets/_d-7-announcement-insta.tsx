@@ -39,6 +39,8 @@ export function d7announcementInsta(options: {
           async (sponsor) => await getAstroImageBase64(sponsor.data.logos.noBg),
         ),
     );
+    const displaySponsors =
+      event.data.type === "event" && !!sponsorLogos.length;
 
     return (
       <Frame
@@ -47,7 +49,7 @@ export function d7announcementInsta(options: {
           paddingTop: 96,
           paddingLeft: 96,
           paddingRight: 96,
-          paddingBottom: 0,
+          paddingBottom: displaySponsors ? 0 : 96,
         }}
       >
         <BgImage
@@ -238,7 +240,7 @@ export function d7announcementInsta(options: {
             </div>
           </div>
         </div>
-        <SponsorLogosInsta logos={sponsorLogos} />
+        {displaySponsors && <SponsorLogosInsta logos={sponsorLogos} />}
       </Frame>
     );
   };

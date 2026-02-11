@@ -50,6 +50,8 @@ export function d1announcement(options: { width: number; height: number }) {
           async (sponsor) => await getAstroImageBase64(sponsor.data.logos.noBg),
         ),
     );
+    const displaySponsors =
+      event.data.type === "event" && !!sponsorLogos.length;
 
     return (
       <Frame
@@ -58,7 +60,7 @@ export function d1announcement(options: { width: number; height: number }) {
           paddingTop: 96,
           paddingLeft: 96,
           paddingRight: 96,
-          paddingBottom: 0,
+          paddingBottom: displaySponsors ? 0 : 96,
         }}
       >
         <BgImage
@@ -66,7 +68,6 @@ export function d1announcement(options: { width: number; height: number }) {
           width={options.width}
           height={options.height}
         />
-
         <div
           style={{
             zIndex: 100,
@@ -246,7 +247,7 @@ export function d1announcement(options: { width: number; height: number }) {
             </div>
           </div>
         </div>
-        <SponsorLogos logos={sponsorLogos} />
+        {displaySponsors && <SponsorLogos logos={sponsorLogos} />}
       </Frame>
     );
   };
