@@ -19,7 +19,6 @@ export function ticketsAvailable(options: {
   width: number;
   height: number;
   fontScaling: number;
-  sponsorLogosHeight?: number;
 }) {
   return async ({ params }: { params: { id: string } }) => {
     const event = await getEventData(params.id);
@@ -31,10 +30,15 @@ export function ticketsAvailable(options: {
       ),
     );
 
+    const coOrganizersIds = event.__coOrganizers.map(
+      (coOrganiser) => coOrganiser.id,
+    );
     const sponsorLogos = await Promise.all(
-      event.__sponsors.map(
-        async (sponsor) => await getAstroImageBase64(sponsor.data.logos.noBg),
-      ),
+      event.__sponsors
+        .filter((sponsor) => !coOrganizersIds.includes(sponsor.id))
+        .map(
+          async (sponsor) => await getAstroImageBase64(sponsor.data.logos.noBg),
+        ),
     );
 
     return (
@@ -207,10 +211,7 @@ export function ticketsAvailable(options: {
             </div>
           </div>
         </div>
-        <SponsorLogos
-          logos={sponsorLogos}
-          height={options.sponsorLogosHeight}
-        />
+        <SponsorLogos logos={sponsorLogos} />
       </Frame>
     );
   };

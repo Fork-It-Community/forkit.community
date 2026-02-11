@@ -9,7 +9,7 @@ import { getEventDisplayDate } from "@/lib/events";
 import { getEventData } from "./_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 import { RoundedSpeakers } from "@/generated-assets/components/RoundedSpeakers";
-import { SponsorLogos } from "@/generated-assets/components/SponsorLogos";
+import { SponsorLogosInsta } from "@/generated-assets/components/SponsorLogos";
 import type { ImageMetadata } from "astro";
 import { getNumberOfApprovedGuests } from "@/lib/luma/utils";
 
@@ -44,10 +44,15 @@ export function d1announcementInsta(options: {
 
     const approvedGuestsNumber = await getNumberOfApprovedGuests(event);
 
+    const coOrganizersIds = event.__coOrganizers.map(
+      (coOrganiser) => coOrganiser.id,
+    );
     const sponsorLogos = await Promise.all(
-      event.__sponsors.map(
-        async (sponsor) => await getAstroImageBase64(sponsor.data.logos.noBg),
-      ),
+      event.__sponsors
+        .filter((sponsor) => !coOrganizersIds.includes(sponsor.id))
+        .map(
+          async (sponsor) => await getAstroImageBase64(sponsor.data.logos.noBg),
+        ),
     );
     return (
       <Frame
@@ -256,7 +261,7 @@ export function d1announcementInsta(options: {
             </div>
           </div>
         </div>
-        <SponsorLogos logos={sponsorLogos} height={70} />
+        <SponsorLogosInsta logos={sponsorLogos} />
       </Frame>
     );
   };
