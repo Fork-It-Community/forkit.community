@@ -57,7 +57,11 @@ export default function EventAssetsSelect({
           <CommandList>
             <CommandGroup>
               {events.map((event) => (
-                <CommandItem key={event.id} value={event.name} asChild>
+                <CommandItem
+                  key={event.id}
+                  value={event.name}
+                  onSelect={() => window.location.assign(event.href)}
+                >
                   <a
                     href={event.href}
                     className="flex w-full items-center gap-2"
