@@ -73,6 +73,10 @@ const displaySchedule = async (event: EventWithComputed) => {
     );
     return scheduleTalk?.status !== "cancelled";
   });
+
+  // Return empty string if all talks were filtered out
+  if (talks.length === 0) return "";
+
   const itemsWithTime =
     event.data.schedule?.items?.filter(
       (item) =>
@@ -90,11 +94,21 @@ const displaySchedule = async (event: EventWithComputed) => {
 ${(
   await Promise.all(
     talks.map(async (item, index) => {
-      const timeStart = formattedItems[index];
+      const timeStart = formattedItems[index] ?? "";
+      const speakerNames = (
+        await Promise.all(
+          item.data.speakers.map(async (speaker) => {
+            const speakerEntry = await getEntry(speaker.id);
+            return speakerEntry?.data?.name ?? "";
+          }),
+        )
+      ).filter((name) => name !== "");
+      const speakersText =
+        speakerNames.length > 0 ? ` by ${speakerNames.join(", ")}` : "";
       return `- [${item.data.title}](${lunalink(
         ROUTES.events[":id"].talks[":talkId"].__path,
         { id: event.id, talkId: item.id },
-      )}): ${timeStart} by ${(await Promise.all(item.data.speakers.map(async (speaker) => (await getEntry(speaker.id)).data.name))).join(", ")}`;
+      )}): ${timeStart}${speakersText}`;
     }),
   )
 ).join("\n")}`;
@@ -136,24 +150,46 @@ const displayAfterEvent = (event: EventWithComputed) => {
   return `## After event
 
 Fork it! Community provide multiple resources for this events.
-${afterMovie ? `You can check out our [after movie](${afterMovie.href}). ` : ""}
-${photos ? `Our photographs took really [cool pictures](${photos.href}).` : ""}
-${vods ? `We also have [video on demand](${vods.href}) available.` : ""}`;
+${afterMovie?.href ? `You can check out our [after movie](${afterMovie.href}). ` : ""}
+${photos?.href ? `Our photographs took really [cool pictures](${photos.href}).` : ""}
+${vods?.href ? `We also have [video on demand](${vods.href}) available.` : ""}`;
 };
 
 const displaySponsors = async (event: EventWithComputed) => {
   if (!event.data.sponsors) return "";
   if (!event.data.sponsoringLevels) return "";
 
+  const sponsorLevels = (
+    await Promise.all(
+      event.data.sponsoringLevels.map(async (level) => {
+        const sponsorsForLevel = await getEntries(
+          (event.data.sponsors ?? [])
+            .filter((sponsor) => sponsor.level === level)
+            .map((sponsor) => sponsor.slug),
+        );
+
+        // Only return the level string if there are sponsors for this level
+        if (sponsorsForLevel.length === 0) return null;
+
+        const sponsorNames = sponsorsForLevel
+          .map((sponsor) =>
+            sponsor.data.href
+              ? `[${sponsor.data.name}](${sponsor.data.href})`
+              : sponsor.data.name,
+          )
+          .join(", ");
+
+        return `As ${capitalize(toLowerCase(level))}: ${sponsorNames}`;
+      }),
+    )
+  ).filter((sponsorLevel) => sponsorLevel !== null);
+
+  // Return empty string if no sponsor levels remain after filtering
+  if (sponsorLevels.length === 0) return "";
+
   return `## Sponsors
 
-Thanks a lot to our sponsors for their trust. ${(
-    await Promise.all(
-      event.data.sponsoringLevels.map(
-        async (level) =>
-          `As ${capitalize(toLowerCase(level))}: ${(await getEntries((event.data.sponsors ?? []).filter((sponsor) => sponsor.level === level).map((sponsor) => sponsor.slug))).map((sponsor) => (sponsor.data.href ? `[${sponsor.data.name}](${sponsor.data.href})` : sponsor.data.name)).join(", ")}`,
-      ),
-    )
-  ).join(". ")}
+Thanks a lot to our sponsors for their trust.
+${sponsorLevels.join(". ")}
 `;
 };
