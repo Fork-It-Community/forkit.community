@@ -9,6 +9,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { getOrejimeConfig } from "@/lib/orejime/config";
 import dayjs from "dayjs";
 
+// While in development, there are some "rest" from one page to another.
+// This works well in production
 dayjs.locale(Astro.currentLocale);
 
 const pixelId = import.meta.env.PUBLIC_META_PIXEL_ID;
@@ -68,7 +70,9 @@ const orejimeConfig = getOrejimeConfig();
       onload="window.orejime = Orejime.init(window.orejimeConfig);"></script>
   </head>
 
-  <body>
+  <body
+    class="flex min-h-svh flex-col overflow-x-hidden overflow-y-scroll bg-black text-foreground"
+  >
     <EnvHint />
     <slot />
     <Toaster client:idle />
