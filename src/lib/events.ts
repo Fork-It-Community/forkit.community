@@ -7,7 +7,14 @@ import {
   type CollectionKey,
 } from "astro:content";
 import { match } from "ts-pattern";
-import { entries, isEmpty, isNonNullish, isNullish, uniqueBy } from "remeda";
+import {
+  entries,
+  groupBy,
+  isEmpty,
+  isNonNullish,
+  isNullish,
+  uniqueBy,
+} from "remeda";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import defaultImage from "@/assets/images/events.jpeg";
@@ -626,3 +633,12 @@ export async function getUpcomingEventsWithOpenCfp(limit?: number) {
       ) ?? [];
   return cfpEvents.slice(0, limit);
 }
+
+export const eventsGroupedByCities = async () => {
+  const events = await getEventsCollection({
+    without: ["cancelled"],
+  });
+
+  return groupBy(events, (event) => event.data.city.id);
+};
+export type EventsByCities = Awaited<ReturnType<typeof eventsGroupedByCities>>;
