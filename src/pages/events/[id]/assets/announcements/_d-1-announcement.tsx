@@ -5,16 +5,19 @@ import {
 } from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
-import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
-import { getEventData } from "./_utils";
+import { getEventDisplayDate } from "@/lib/events";
+import { getEventData } from "../_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
+import { RoundedSpeakers } from "@/generated-assets/components/RoundedSpeakers";
+import type { ImageMetadata } from "astro";
+import { getNumberOfApprovedGuests } from "@/lib/luma/utils";
 
 export const config: AssetImageConfig = {
   width: 1920,
   height: 1080,
 };
 
-export function saveTheDate(options: { width: number; height: number }) {
+export function d1announcement(options: { width: number; height: number }) {
   return async ({ params }: { params: { id: string } }) => {
     const event = await getEventData(params.id);
     const postCover = await getAstroImageBase64(event.data.image.media);
@@ -24,6 +27,17 @@ export function saveTheDate(options: { width: number; height: number }) {
           await getAstroImageBase64(coOrganiser.data.logos.noBgSquare),
       ),
     );
+
+    const speakerImages = await Promise.all(
+      event.data._computed.speakers
+        .filter(
+          (s): s is typeof s & { data: { avatar: ImageMetadata } } =>
+            s.data.avatar != null,
+        )
+        .slice(0, 3)
+        .map((s) => getAstroImageBase64(s.data.avatar)),
+    );
+    const approvedGuestsNumber = await getNumberOfApprovedGuests(event);
 
     return (
       <Frame {...options} style={{ padding: 96 }}>
@@ -49,49 +63,89 @@ export function saveTheDate(options: { width: number; height: number }) {
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: 20,
+              gap: 24,
             }}
           >
             <div
               style={{
-                fontSize: 32,
-                fontWeight: 500,
-                textTransform: "uppercase",
-                letterSpacing: 4,
+                display: "flex",
+                alignItems: "center",
+                gap: 24,
               }}
             >
-              Save the date
+              <div
+                style={{
+                  display: "flex",
+                  fontSize: 256,
+                  fontWeight: 500,
+                  lineHeight: 1,
+                  color: COLORS.primary,
+                }}
+              >
+                01
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    fontSize: 112,
+                    fontWeight: 500,
+                    lineHeight: 1,
+                    color: COLORS.primary,
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Days left
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    fontSize: 112,
+                    fontWeight: 500,
+                    lineHeight: 1,
+                    color: COLORS.white,
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Until the event
+                </div>
+              </div>
             </div>
-
             <div
               style={{
                 display: "flex",
-                fontSize: 124,
+                flexDirection: "column",
+                fontSize: 54,
                 fontWeight: 500,
                 lineHeight: 1,
-                color: COLORS.primary,
-                marginTop: -16,
-                marginLeft: -6, // Visual alignment
                 textTransform: "uppercase",
+                opacity: 0.8,
               }}
             >
-              {event.data._computed.city?.data.name}
+              <div style={{ display: "flex", gap: 12 }}>
+                <RoundedSpeakers speakerImages={speakerImages} />
+                <div style={{ display: "flex" }}>
+                  Join us to meet {approvedGuestsNumber} people
+                </div>
+              </div>
+              <div style={{ display: "flex" }}>
+                sharing real-life experiences
+              </div>
             </div>
-            <div
-              style={{
-                display: "flex",
-                fontSize: 60,
-                fontWeight: 500,
-                lineHeight: 1,
-                marginBottom: 48,
-                marginTop: -8,
-                color: COLORS.primary,
-                textTransform: "uppercase",
-              }}
-            >
-              {getEventDisplayType(event.data.type)}
-            </div>
+          </div>
 
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "flex-end",
+            }}
+          >
             <div
               style={{
                 display: "flex",
@@ -106,7 +160,7 @@ export function saveTheDate(options: { width: number; height: number }) {
                   display: "flex",
                   alignItems: "center",
                   gap: 12,
-                  fontSize: 48,
+                  fontSize: 36,
                   fontWeight: 500,
                   lineHeight: 1,
                 }}
@@ -134,7 +188,7 @@ export function saveTheDate(options: { width: number; height: number }) {
                     display: "flex",
                     gap: 12,
                     alignItems: "center",
-                    fontSize: 48,
+                    fontSize: 36,
                     fontWeight: 500,
                     lineHeight: 1.2,
                     textWrap: "balance",
@@ -158,28 +212,6 @@ export function saveTheDate(options: { width: number; height: number }) {
                 </div>
               )}
             </div>
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "flex-end",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                fontSize: 32,
-                fontWeight: 500,
-                lineHeight: 1.2,
-                textTransform: "uppercase",
-                opacity: 0.6,
-              }}
-            >
-              {event.data._computed.city?.data.name},{" "}
-              {event.data._computed.country?.data.name}
-            </div>
             <div
               style={{
                 display: "flex",
@@ -199,4 +231,4 @@ export function saveTheDate(options: { width: number; height: number }) {
   };
 }
 
-export default saveTheDate(config);
+export default d1announcement(config);

@@ -6,18 +6,17 @@ import {
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate } from "@/lib/events";
-import { getEventData } from "./_utils";
+import { getEventData } from "../_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 
 export const config: AssetImageConfig = {
-  width: 1920,
-  height: 1080,
+  width: 1080,
+  height: 1350,
 };
 
-export function cfpOpen(options: {
+export function d10announcementInsta(options: {
   width: number;
   height: number;
-  fontScaling: number;
 }) {
   return async ({ params }: { params: { id: string } }) => {
     const event = await getEventData(params.id);
@@ -43,113 +42,127 @@ export function cfpOpen(options: {
             flex: 1,
             display: "flex",
             flexDirection: "column",
+            gap: 40,
             width: "100%",
             justifyContent: "space-between",
           }}
         >
           <LogoWithFriends logos={coOrganizersLogos} />
-
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: 32,
-              justifyContent: "center",
             }}
           >
             <div
               style={{
                 display: "flex",
-                flexDirection: "column",
+                alignItems: "center",
                 gap: 24,
               }}
             >
               <div
                 style={{
-                  fontSize: 72 * options.fontScaling,
+                  display: "flex",
+                  fontSize: 192,
                   fontWeight: 500,
-                  textTransform: "uppercase",
-                  letterSpacing: 6,
-                  opacity: 0.9,
+                  lineHeight: 1,
+                  color: COLORS.primary,
                 }}
               >
-                Call for Papers
+                10
               </div>
-
               <div
                 style={{
-                  fontSize: 180 * options.fontScaling,
-                  fontWeight: 500,
-                  lineHeight: 0.95,
-                  color: COLORS.primary,
-                  marginLeft: -6,
-                  textTransform: "uppercase",
+                  display: "flex",
+                  flexDirection: "column",
                 }}
               >
-                Now Open
+                <div
+                  style={{
+                    display: "flex",
+                    fontSize: 76,
+                    fontWeight: 500,
+                    lineHeight: 1,
+                    color: COLORS.primary,
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Days left
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    fontSize: 76,
+                    fontWeight: 500,
+                    lineHeight: 1,
+                    color: COLORS.white,
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Until the event
+                </div>
               </div>
             </div>
-
             <div
               style={{
-                fontSize: 56 * options.fontScaling,
-                fontWeight: 400,
-                opacity: 0.95,
+                display: "flex",
+                flexDirection: "column",
+                fontSize: 44,
+                fontWeight: 500,
+                lineHeight: 1,
+                textTransform: "uppercase",
+                opacity: 0.8,
               }}
             >
-              Submit your talk proposals
+              Secure your spot now!
             </div>
           </div>
-
           <div
             style={{
               display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              width: "100%",
+              flexDirection: "column",
+              flexWrap: "wrap",
+              gap: 12,
             }}
           >
             <div
               style={{
                 display: "flex",
-                flexDirection: "column",
-                gap: 16,
+                alignItems: "center",
+                gap: 12,
+                fontSize: 40,
+                fontWeight: 500,
+                lineHeight: 1,
               }}
             >
-              <div
+              <svg
+                viewBox="0 0 24 24"
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                  fontSize: 48 * options.fontScaling,
-                  fontWeight: 500,
+                  flex: "none",
                   opacity: 0.6,
+                  width: "1em",
+                  height: "1em",
                 }}
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  style={{
-                    opacity: 0.6,
-                    width: "1em",
-                    height: "1em",
-                  }}
-                >
-                  <path
-                    fill="currentColor"
-                    d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"
-                  />
-                </svg>
-                {getEventDisplayDate(event)}
-              </div>
+                <path
+                  fill="currentColor"
+                  d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"
+                />
+              </svg>
+              {getEventDisplayDate(event)}
+            </div>
 
+            {!!event.data.location?.name && (
               <div
                 style={{
                   display: "flex",
                   gap: 12,
                   alignItems: "center",
-                  fontSize: 48 * options.fontScaling,
+                  fontSize: 40,
                   fontWeight: 500,
-                  opacity: 0.6,
+                  lineHeight: 1.2,
+                  textWrap: "balance",
                 }}
               >
                 <svg
@@ -166,17 +179,39 @@ export function cfpOpen(options: {
                     d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7"
                   />
                 </svg>
-                {event.data._computed.city?.data.name},{" "}
-                {event.data._computed.country?.data.name}
+                {event.data.location.name}
               </div>
-            </div>
+            )}
+          </div>
 
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "flex-end",
+            }}
+          >
             <div
               style={{
-                fontSize: 38 * options.fontScaling,
+                display: "flex",
+                fontSize: 26,
                 fontWeight: 500,
+                lineHeight: 1.2,
                 textTransform: "uppercase",
-                opacity: 0.5,
+                opacity: 0.6,
+              }}
+            >
+              {event.data._computed.city?.data.name},{" "}
+              {event.data._computed.country?.data.name}
+            </div>
+            <div
+              style={{
+                display: "flex",
+                fontSize: 26,
+                fontWeight: 500,
+                lineHeight: 1.2,
+                textTransform: "uppercase",
+                opacity: 0.6,
               }}
             >
               www.forkit.community
@@ -188,4 +223,4 @@ export function cfpOpen(options: {
   };
 }
 
-export default cfpOpen({ ...config, fontScaling: 1 });
+export default d10announcementInsta(config);
