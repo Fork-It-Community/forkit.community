@@ -1,31 +1,40 @@
 ---
-import { getEventsCollection } from "@/lib/events";
-import { getEventAssetsSources } from "./_utils";
+import {
+  getEventsCollection,
+  getPastEvents,
+  getUpcomingEvents,
+} from "@/lib/events";
+import { getEventAssetsSources, getGroupedAssets } from "./_utils";
 import SEO from "@/components/SEO/index.astro";
 import dayjs from "dayjs";
 import { Image } from "astro:assets";
 import { buttonVariants } from "@/components/ui/button";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
 import { cn } from "@/lib/utils-client";
-import { MdDownload } from "react-icons/md";
+import { MdDownload, MdArrowUpward } from "react-icons/md";
 import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
+import EventAssetsSelect from "@/components/EventAssetsSelect/index";
 
 export const prerender = false;
 
 const params = Astro.params;
 
-const allEvents = (await getEventsCollection()).sort((a, b) =>
-  dayjs(b.data.date).diff(a.data.date),
-);
+const [allEvents, upcomingEvents, pastEvents] = await Promise.all([
+  getEventsCollection(),
+  getUpcomingEvents(),
+  getPastEvents(),
+]);
 
+allEvents.sort((a, b) => dayjs(b.data.date).diff(a.data.date));
 const event = allEvents.find((e) => e.id === params.id);
 if (!event) {
   return new Response(null, { status: 404 });
 }
 const imagesSrc = getEventAssetsSources(event);
-const marketinVideos = event.data.marketing?.videos;
+const groupedAssets = getGroupedAssets(imagesSrc, event.data.type);
+const marketingVideos = event.data.marketing?.videos;
 ---
 
 <EventSubPageLayout event={event}>
@@ -39,7 +48,7 @@ const marketinVideos = event.data.marketing?.videos;
   <div
     class="mx-auto flex w-full max-w-screen-lg flex-col gap-8 px-4 pb-40 pt-6 md:flex-row"
   >
-    <div class="flex w-full flex-1 flex-col gap-4">
+    <div class="flex w-full flex-1 flex-col gap-4" id="top">
       <div class="flex flex-col gap-4 py-4 sm:flex-row sm:items-center sm:px-2">
         <h1 class="relative flex-1 font-heading text-xl">
           Assets · {event.data._computed.name}
@@ -70,7 +79,7 @@ const marketinVideos = event.data.marketing?.videos;
         so we can prioritize its development.
       </p>
       {
-        marketinVideos?.map((video) => (
+        marketingVideos?.map((video) => (
           <div class={cn("flex flex-col", video.thumbnail && "gap-2")}>
             {video.thumbnail ? (
               <a href={video.href} target="_blank" rel="noopener noreferrer">
@@ -95,49 +104,98 @@ const marketinVideos = event.data.marketing?.videos;
         ))
       }
 
-      {
-        imagesSrc.map((src) =>
-          import.meta.env.DEV ? (
-            <a href={src?.replace(/.jpg$/, ".debug")}>
-              <Image
-                alt=""
-                class="bg-background-blur w-full max-w-full rounded-md"
-                src={src}
-                width={9999}
-                height={9999}
-              />
-            </a>
-          ) : (
-            <Image
-              alt=""
-              class="bg-background-blur w-full max-w-full rounded-md"
-              src={src}
-              width={9999}
-              height={9999}
-            />
-          ),
-        )
-      }
+      <div class="flex flex-col gap-12">
+        <div class="flex flex-col gap-4 py-4">
+          <h2 class="text-md font-heading uppercase tracking-wider">
+            Quick access
+          </h2>
+          <div class="flex flex-wrap gap-x-6 gap-y-2">
+            {
+              groupedAssets.map((group) => (
+                <a
+                  href={`#${group.id}`}
+                  class="text-sm underline underline-offset-4 opacity-60 transition-opacity hover:opacity-100"
+                >
+                  {group.label}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+        {
+          groupedAssets.map((group, index) => (
+            <section id={group.id} class="flex flex-col gap-6">
+              <div class="flex items-center justify-between">
+                <h2 class="font-heading text-2xl font-bold">{group.label}</h2>
+                {!!index && (
+                  <a
+                    href="#top"
+                    class="text-md flex items-center gap-1 underline underline-offset-4 opacity-80"
+                  >
+                    <MdArrowUpward /> Back to top
+                  </a>
+                )}
+              </div>
+              <div class="flex flex-col gap-4">
+                {group.images.map((src) =>
+                  import.meta.env.DEV ? (
+                    <a href={src?.replace(/.jpg$/, ".debug")}>
+                      <Image
+                        alt=""
+                        class="bg-background-blur w-full max-w-full rounded-md"
+                        src={src}
+                        width={9999}
+                        height={9999}
+                      />
+                    </a>
+                  ) : (
+                    <Image
+                      alt=""
+                      class="bg-background-blur w-full max-w-full rounded-md"
+                      src={src}
+                      width={9999}
+                      height={9999}
+                    />
+                  ),
+                )}
+              </div>
+            </section>
+          ))
+        }
+      </div>
     </div>
     <div class="w-56">
       <div
-        class="hide-scrollbar sticky top-12 flex flex-col overflow-auto py-4 md:max-h-[80vh]"
+        class="hide-scrollbar sticky top-12 flex flex-col gap-6 overflow-auto py-4 md:max-h-[80vh]"
       >
-        <h2 class="p-1 font-heading text-sm uppercase tracking-wider">
-          All events
-        </h2>
-        {
-          allEvents.map((e) => (
-            <a
-              href={lunalink(ROUTES.events[":id"].assets.__path, {
-                id: e.id,
-              })}
-              class={cn("p-1", e.id === event.id && "opacity-60")}
-            >
-              {e.data._computed.name}
-            </a>
-          ))
-        }
+        <div class="flex flex-col">
+          <h2 class="p-1 font-heading text-sm uppercase tracking-wider">
+            Upcoming Events
+          </h2>
+          {
+            upcomingEvents.map((e) => (
+              <a
+                href={lunalink(ROUTES.events[":id"].assets.__path, {
+                  id: e.id,
+                })}
+                class={cn("p-1", e.id === event.id && "opacity-60")}
+              >
+                {e.data._computed.name}
+              </a>
+            ))
+          }
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <h2 class="p-1 font-heading text-sm uppercase tracking-wider">
+            Past Events
+          </h2>
+          <EventAssetsSelect
+            client:load
+            currentEvent={event.id}
+            pastEvents={pastEvents}
+          />
+        </div>
       </div>
     </div>
   </div>
