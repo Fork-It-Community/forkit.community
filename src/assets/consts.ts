@@ -10,15 +10,15 @@ export const DEFAULT_NUMBER_OF_GUESTS = {
 } as const;
 
 export const ASSET_CATEGORIES = [
-  { id: "/save-the-date", label: "Save the Date" },
-  { id: "/tickets", label: "Tickets" },
-  { id: "/d-", label: "Announcements" },
-  { id: "/talks/", label: "Talks" },
-  { id: "/partners/", label: "Sponsors & Partners" },
-  { id: "/banner", label: "Banners" },
-  { id: "/cfp-", label: "CFP" },
-  { id: "/schedule", label: "Schedule" },
-  { id: "/qrcode", label: "QR Codes" },
+  { id: "save-the-date", label: "Save the Date" },
+  { id: "tickets", label: "Tickets" },
+  { id: "d-", label: "Announcements" },
+  { id: "talks", label: "Talks" },
+  { id: "partners", label: "Sponsors & Partners" },
+  { id: "banner", label: "Banners" },
+  { id: "cfp-", label: "CFP" },
+  { id: "schedule", label: "Schedule" },
+  { id: "qrcode", label: "QR Codes" },
   { id: "other", label: "Other" },
 ] as const;
 
@@ -28,6 +28,6 @@ export const EXCLUDED_CATEGORIES_BY_TYPE: Record<
   CollectionEntry<"events">["data"]["type"],
   AssetCategoryId[]
 > = {
-  meetup: ["/cfp-", "/banner"],
+  meetup: ["cfp-", "banner"],
   event: [],
 };
