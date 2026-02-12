@@ -80,11 +80,7 @@ export const categorize = (path: string) =>
 const getOppositeSuffixes = (
   eventType: CollectionEntry<"events">["data"]["type"],
 ) => {
-  // Added type in case a new type, so this will raise an error
-  const allTypes: CollectionEntry<"events">["data"]["type"][] = [
-    "meetup",
-    "event",
-  ];
+  const allTypes = ["meetup", "event"];
   return allTypes
     .filter((type) => type !== eventType)
     .map((type) => `-${type}.jpg`);
