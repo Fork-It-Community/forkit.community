@@ -14,6 +14,7 @@ import { getCollection } from "astro:content";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import dayjs from "dayjs";
+import { EVENT_TYPES } from "@/assets/consts";
 
 const upcomingEvents = await getUpcomingEvents();
 const pastEvents = await getPastEvents();
@@ -63,25 +64,50 @@ const countries = countriesLastEvents.sort((a, b) =>
     <div
       class="mx-auto flex w-full max-w-screen-lg flex-col gap-16 px-4 md:flex-row-reverse"
     >
-      <div class="flex w-full flex-1 flex-col gap-4">
-        <h2
-          class="font-heading text-sm font-medium uppercase tracking-widest opacity-60"
-        >
-          Events by Country
-        </h2>
-        <div class="flex flex-col">
-          {
-            countries.map((country) => (
-              <a
-                href={lunalink(ROUTES.events.locations[":countryId"].__path, {
-                  countryId: country.id,
-                })}
-                class="border-b border-white/10 px-5 py-3 transition duration-500 first:border-t hover:bg-white/5"
-              >
-                {country.data.name}
-              </a>
-            ))
-          }
+      <div class="flex flex-1 flex-col gap-10">
+        <div class="flex w-full flex-col gap-4">
+          <h2
+            class="font-heading text-sm font-medium uppercase tracking-widest opacity-60"
+          >
+            Events by Country
+          </h2>
+          <div class="flex flex-col">
+            {
+              countries.map((country) => (
+                <a
+                  href={lunalink(ROUTES.events.locations[":countryId"].__path, {
+                    countryId: country.id,
+                  })}
+                  class="border-b border-white/10 px-5 py-3 transition duration-500 first:border-t hover:bg-white/5"
+                >
+                  {country.data.name}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+        <div class="flex w-full flex-col gap-4">
+          <h2
+            class="font-heading text-sm font-medium uppercase tracking-widest opacity-60"
+          >
+            Events by Type
+          </h2>
+          <div class="flex flex-col">
+            {
+              (Object.keys(EVENT_TYPES) as (keyof typeof EVENT_TYPES)[]).map(
+                (type) => (
+                  <a
+                    href={lunalink(ROUTES.events.types[":eventType"].__path, {
+                      eventType: type,
+                    })}
+                    class="border-b border-white/10 px-5 py-3 capitalize transition duration-500 first:border-t hover:bg-white/5"
+                  >
+                    {EVENT_TYPES[type]}
+                  </a>
+                ),
+              )
+            }
+          </div>
         </div>
       </div>
       <EventsList events={pastEvents} title="Past Events" class="flex-[2]" />
