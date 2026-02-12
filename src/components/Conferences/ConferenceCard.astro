@@ -37,18 +37,22 @@ const people = [...hosts, ...speakers];
 const { Content } = await render(conference);
 ---
 
-<a
-  href={lunalink(ROUTES.events[":id"].talks[":talkId"].__path, {
-    id: event.id,
-    talkId: conference.id,
-  })}
-  class="group flex w-full flex-col gap-4 rounded-lg bg-white/5 p-4 backdrop-blur-md transition hover:bg-white/10 sm:px-6 sm:py-5"
+<div
+  class="group relative flex w-full flex-col gap-4 rounded-lg bg-white/5 p-4 backdrop-blur-md transition hover:bg-white/10 sm:px-6 sm:py-5"
 >
-  <p
-    class="text-balance font-heading text-base font-medium leading-tight tracking-wider text-white transition group-hover:text-primary"
+  <a
+    href={lunalink(ROUTES.events[":id"].talks[":talkId"].__path, {
+      id: event.id,
+      talkId: conference.id,
+    })}
+    class="before:absolute before:inset-0"
   >
-    {conference.data.title}
-  </p>
+    <p
+      class="text-balance font-heading text-base font-medium leading-tight tracking-wider text-white transition group-hover:text-primary"
+    >
+      {conference.data.title}
+    </p>
+  </a>
   {
     !!people.length && (
       <div class="grid grid-cols-2 gap-3 md:grid-cols-3">
@@ -62,7 +66,9 @@ const { Content } = await render(conference);
       </div>
     )
   }
-  <div class="line-clamp-3 text-ellipsis">
+  <div
+    class="line-clamp-3 text-ellipsis [&_a]:pointer-events-none [&_a]:text-current [&_a]:no-underline"
+  >
     <Content />
   </div>
 
@@ -82,4 +88,4 @@ const { Content } = await render(conference);
       )
     }
   </div>
-</a>
+</div>
