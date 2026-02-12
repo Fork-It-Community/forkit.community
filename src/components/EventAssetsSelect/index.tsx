@@ -62,20 +62,15 @@ export default function EventAssetsSelect({
                   value={event.name}
                   onSelect={() => window.location.assign(event.href)}
                 >
-                  <a
-                    href={event.href}
-                    className="flex w-full items-center gap-2"
-                  >
-                    <LuCheck
-                      className={cn(
-                        "h-4 w-4",
-                        selectedOption?.id === event.id
-                          ? "opacity-100"
-                          : "opacity-0",
-                      )}
-                    />
-                    {event.name}
-                  </a>
+                  <LuCheck
+                    className={cn(
+                      "h-4 w-4",
+                      selectedOption?.id === event.id
+                        ? "opacity-100"
+                        : "opacity-0",
+                    )}
+                  />
+                  {event.name}
                 </CommandItem>
               ))}
             </CommandGroup>
