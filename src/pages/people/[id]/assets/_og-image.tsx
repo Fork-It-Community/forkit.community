@@ -28,7 +28,13 @@ export default async function ({
       <BgImage src={avatar} width={config.width} height={config.height} />
 
       <div tw="z-[100] flex flex-1 flex-col w-full justify-between">
-        <Logo style={{ width: 169 * 3, height: 18 * 3 }} />
+        <Logo
+          style={{
+            width: 169 * 3,
+            height: 18 * 3,
+            color: "white",
+          }}
+        />
         <div tw="flex items-center pb-6" style={{ gap: 80 }}>
           <div tw="flex flex-1 flex-col" style={{ gap: 56 }}>
             <div
