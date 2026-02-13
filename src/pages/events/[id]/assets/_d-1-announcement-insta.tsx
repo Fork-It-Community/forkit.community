@@ -2,7 +2,7 @@ import { Frame } from "@/generated-assets/components/Frame";
 import {
   getAstroImageBase64,
   type AssetImageConfig,
-} from "@/generated-assets/image";
+} from "@bearstudio/astro-assets-generation";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate } from "@/lib/events";
@@ -60,12 +60,8 @@ export function d1announcementInsta(options: {
     return (
       <Frame
         {...options}
-        style={{
-          paddingTop: 96,
-          paddingLeft: 96,
-          paddingRight: 96,
-          paddingBottom: displaySponsors ? 0 : 96,
-        }}
+        tw="pt-24 px-24"
+        style={{ paddingBottom: displaySponsors ? 0 : 96 }}
       >
         <BgImage
           src={postCover}
@@ -73,126 +69,55 @@ export function d1announcementInsta(options: {
           height={options.height}
         />
 
-        <div
-          style={{
-            zIndex: 100,
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            gap: 40,
-            width: "100%",
-            justifyContent: "space-between",
-          }}
-        >
+        <div tw="z-[100] flex flex-1 flex-col gap-10 w-full justify-between">
           <LogoWithFriends logos={coOrganizersLogos} />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 24,
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 24,
-              }}
-            >
+          <div tw="flex flex-col gap-6">
+            <div tw="flex items-center gap-6">
               <div
-                style={{
-                  display: "flex",
-                  fontSize: 192,
-                  fontWeight: 500,
-                  lineHeight: 1,
-                  color: COLORS.primary,
-                }}
+                tw="flex font-medium leading-none"
+                style={{ fontSize: 192, color: COLORS.primary }}
               >
                 01
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
+              <div tw="flex flex-col">
                 <div
-                  style={{
-                    display: "flex",
-                    fontSize: 76,
-                    fontWeight: 500,
-                    lineHeight: 1,
-                    color: COLORS.primary,
-                    textTransform: "uppercase",
-                  }}
+                  tw="flex font-medium leading-none uppercase"
+                  style={{ fontSize: 76, color: COLORS.primary }}
                 >
                   Days left
                 </div>
                 <div
-                  style={{
-                    display: "flex",
-                    fontSize: 76,
-                    fontWeight: 500,
-                    lineHeight: 1,
-                    color: COLORS.white,
-                    textTransform: "uppercase",
-                  }}
+                  tw="flex font-medium leading-none uppercase"
+                  style={{ fontSize: 76, color: COLORS.white }}
                 >
                   Until the event
                 </div>
               </div>
             </div>
             <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                fontSize: 44,
-                fontWeight: 500,
-                lineHeight: 1,
-                textTransform: "uppercase",
-                opacity: 0.8,
-              }}
+              tw="flex flex-col font-medium leading-none uppercase opacity-80"
+              style={{ fontSize: 44 }}
             >
-              <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+              <div tw="flex gap-3 items-center">
                 <RoundedSpeakers speakerImages={speakerImages} />
-                <div style={{ display: "flex", height: "fit-content" }}>
+                <div tw="flex h-fit">
                   Join us to meet {approvedGuestsNumber} people
                 </div>
               </div>
-              <div style={{ display: "flex" }}>
-                sharing real-life experiences
-              </div>
+              <div tw="flex">sharing real-life experiences</div>
             </div>
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              flexWrap: "wrap",
-              gap: 12,
-            }}
-          >
+          <div tw="flex flex-col flex-wrap gap-3">
             <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 12,
-                fontSize: 40,
-                fontWeight: 500,
-                lineHeight: 1,
-              }}
+              tw="flex items-center gap-3 font-medium leading-none"
+              style={{ fontSize: 40 }}
             >
               <svg
                 viewBox="0 0 24 24"
-                style={{
-                  flex: "none",
-                  opacity: 0.6,
-                  width: "1em",
-                  height: "1em",
-                }}
+                tw="flex-none opacity-60 w-[1em] h-[1em]"
               >
                 <path
-                  fill="currentColor"
+                  fill="white"
                   d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"
                 />
               </svg>
@@ -201,27 +126,15 @@ export function d1announcementInsta(options: {
 
             {!!event.data.location?.name && (
               <div
-                style={{
-                  display: "flex",
-                  gap: 12,
-                  alignItems: "center",
-                  fontSize: 40,
-                  fontWeight: 500,
-                  lineHeight: 1.2,
-                  textWrap: "balance",
-                }}
+                tw="flex gap-3 items-center font-medium leading-tight text-balance"
+                style={{ fontSize: 40 }}
               >
                 <svg
                   viewBox="0 0 24 24"
-                  style={{
-                    flex: "none",
-                    opacity: 0.6,
-                    width: "1em",
-                    height: "1em",
-                  }}
+                  tw="flex-none opacity-60 w-[1em] h-[1em]"
                 >
                   <path
-                    fill="currentColor"
+                    fill="white"
                     d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7"
                   />
                 </svg>
@@ -230,35 +143,17 @@ export function d1announcementInsta(options: {
             )}
           </div>
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "flex-end",
-            }}
-          >
+          <div tw="flex justify-between items-end">
             <div
-              style={{
-                display: "flex",
-                fontSize: 26,
-                fontWeight: 500,
-                lineHeight: 1.2,
-                textTransform: "uppercase",
-                opacity: 0.6,
-              }}
+              tw="flex font-medium leading-tight uppercase opacity-60"
+              style={{ fontSize: 26 }}
             >
               {event.data._computed.city?.data.name},{" "}
               {event.data._computed.country?.data.name}
             </div>
             <div
-              style={{
-                display: "flex",
-                fontSize: 26,
-                fontWeight: 500,
-                lineHeight: 1.2,
-                textTransform: "uppercase",
-                opacity: 0.6,
-              }}
+              tw="flex font-medium leading-tight uppercase opacity-60"
+              style={{ fontSize: 26 }}
             >
               www.forkit.community
             </div>
