@@ -5,15 +5,18 @@ export const Frame = ({
   width,
   height,
   style,
+  tw,
   children,
 }: {
   children: ReactNode;
   width: number;
   height: number;
   style?: CSSProperties | undefined;
+  tw?: string;
 }) => {
   return (
     <div
+      {...(tw && { tw })}
       style={{
         display: "flex",
         flexDirection: "column",

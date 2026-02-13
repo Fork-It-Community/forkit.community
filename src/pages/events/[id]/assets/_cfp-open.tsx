@@ -2,7 +2,7 @@ import { Frame } from "@/generated-assets/components/Frame";
 import {
   getAstroImageBase64,
   type AssetImageConfig,
-} from "@/generated-assets/image";
+} from "@bearstudio/astro-assets-generation";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate } from "@/lib/events";
@@ -59,53 +59,23 @@ export function cfpOpen(options: {
           height={options.height}
         />
 
-        <div
-          style={{
-            zIndex: 100,
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            width: "100%",
-            justifyContent: "space-between",
-          }}
-        >
+        <div tw="z-[100] flex flex-1 flex-col w-full justify-between">
           <LogoWithFriends logos={coOrganizersLogos} />
 
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 32,
-              justifyContent: "center",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 24,
-              }}
-            >
+          <div tw="flex flex-col gap-8 justify-center">
+            <div tw="flex flex-col gap-6">
               <div
-                style={{
-                  fontSize: 72 * options.fontScaling,
-                  fontWeight: 500,
-                  textTransform: "uppercase",
-                  letterSpacing: 6,
-                  opacity: 0.9,
-                }}
+                tw="font-medium uppercase tracking-[6px] opacity-90"
+                style={{ fontSize: 72 * options.fontScaling }}
               >
                 Call for Papers
               </div>
 
               <div
+                tw="font-medium leading-[0.95] uppercase -ml-1.5"
                 style={{
                   fontSize: 180 * options.fontScaling,
-                  fontWeight: 500,
-                  lineHeight: 0.95,
                   color: COLORS.primary,
-                  marginLeft: -6,
-                  textTransform: "uppercase",
                 }}
               >
                 Now Open
@@ -113,51 +83,22 @@ export function cfpOpen(options: {
             </div>
 
             <div
-              style={{
-                fontSize: 56 * options.fontScaling,
-                fontWeight: 400,
-                opacity: 0.95,
-              }}
+              tw="font-normal opacity-95"
+              style={{ fontSize: 56 * options.fontScaling }}
             >
               Submit your talk proposals
             </div>
           </div>
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              width: "100%",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 16,
-              }}
-            >
+          <div tw="flex justify-between items-center w-full">
+            <div tw="flex flex-col gap-4">
               <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                  fontSize: 48 * options.fontScaling,
-                  fontWeight: 500,
-                  opacity: 0.6,
-                }}
+                tw="flex items-center gap-3 font-medium opacity-60"
+                style={{ fontSize: 48 * options.fontScaling }}
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  style={{
-                    opacity: 0.6,
-                    width: "1em",
-                    height: "1em",
-                  }}
-                >
+                <svg viewBox="0 0 24 24" tw="h-[1em] w-[1em] opacity-60">
                   <path
-                    fill="currentColor"
+                    fill="white"
                     d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"
                   />
                 </svg>
@@ -165,41 +106,28 @@ export function cfpOpen(options: {
               </div>
 
               <div
-                style={{
-                  display: "flex",
-                  gap: 12,
-                  alignItems: "center",
-                  fontSize: 48 * options.fontScaling,
-                  fontWeight: 500,
-                  opacity: 0.6,
-                }}
+                tw="flex gap-3 items-center font-medium opacity-60"
+                style={{ fontSize: 48 * options.fontScaling }}
               >
                 <svg
                   viewBox="0 0 24 24"
-                  style={{
-                    flex: "none",
-                    opacity: 0.6,
-                    width: "1em",
-                    height: "1em",
-                  }}
+                  tw="h-[1em] w-[1em] flex-none opacity-60"
                 >
                   <path
-                    fill="currentColor"
+                    fill="white"
                     d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7"
                   />
                 </svg>
-                {event.data._computed.city?.data.name},{" "}
-                {event.data._computed.country?.data.name}
+                <span>
+                  {event.data._computed.city?.data.name},{" "}
+                  {event.data._computed.country?.data.name}
+                </span>
               </div>
             </div>
 
             <div
-              style={{
-                fontSize: 38 * options.fontScaling,
-                fontWeight: 500,
-                textTransform: "uppercase",
-                opacity: 0.5,
-              }}
+              tw="font-medium uppercase opacity-50"
+              style={{ fontSize: 38 * options.fontScaling }}
             >
               www.forkit.community
             </div>
