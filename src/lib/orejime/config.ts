@@ -48,8 +48,8 @@ export function getOrejimeConfig(): OrejimeConfig {
     apps: [
       {
         name: "meta-pixel",
-        title: consentEn.purposes.metaPixel.title,
-        description: consentEn.purposes.metaPixel.description,
+        title: consentEn.purposes.metaPixel.title || "Meta Pixel",
+        description: consentEn.purposes.metaPixel.description || "",
         purposes: ["marketing", "analytics"],
         cookies: ["_fbp", "fr"],
         required: false,
@@ -59,8 +59,8 @@ export function getOrejimeConfig(): OrejimeConfig {
       },
       {
         name: "vercel-analytics",
-        title: consentEn.purposes.vercelAnalytics.title,
-        description: consentEn.purposes.vercelAnalytics.description,
+        title: consentEn.purposes.vercelAnalytics.title || "Vercel Analytics",
+        description: consentEn.purposes.vercelAnalytics.description || "",
         purposes: ["analytics"],
         cookies: ["__vercel_live_token", "_vercel_jwt", "__va"],
         required: false,

@@ -29,7 +29,7 @@ import Prose from "@/components/Prose/index.astro";
       </p>
 
       <h2 id="privacy-first-approach">Privacy-First Approach</h2>
-      <p>
+      <div>
         <p>Our website does not maintain its own user database.</p>
         <p>
           We rely on trusted third-party services to collect and store personal
@@ -43,7 +43,7 @@ import Prose from "@/components/Prose/index.astro";
           Analytics and marketing tools are enabled only after you have given
           your explicit consent.
         </p>
-      </p>
+      </div>
 
       <h2 id="data-controller">Data Controller</h2>
       <p>
@@ -117,7 +117,7 @@ import Prose from "@/components/Prose/index.astro";
         </li>
         <li>
           <strong>First-Party Database:</strong> We do not store personal data in
-          our own database
+          our own database.
         </li>
       </ul>
       <p>All personal data is managed by our third-party partners.</p>
@@ -133,7 +133,7 @@ import Prose from "@/components/Prose/index.astro";
         <li>
           <strong>Event registration management</strong><br />
           <ul>
-            <li>legal basis: performance of a service requested by the user</li>
+            <li>Legal basis: performance of a service requested by the user</li>
           </ul>
         </li>
         <li>
@@ -191,11 +191,15 @@ import Prose from "@/components/Prose/index.astro";
           <strong>forkit-consent:</strong> Stores your cookie consent preferences
           for 365 days.
         </li>
-        <li>
-          <strong>Analytics Cookies:</strong> We use analytics services to understand
-          how visitors use our website. This helps us improve content and user experience.
-          These cookies require your explicit consent.
-        </li>
+      </ul>
+
+      <h4>Analytics Cookies</h4>
+      <p>
+        We use analytics services to understand how visitors use our website.
+        This helps us improve content and user experience. These cookies require
+        your explicit consent.
+      </p>
+      <ul>
         <li>
           <strong>Vercel Analytics:</strong> Collects anonymous usage data to help
           us understand visitor behavior and improve website performance.

@@ -125,9 +125,6 @@ importers:
       motion:
         specifier: 12.23.16
         version: 12.23.16(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      orejime:
-        specifier: 3.1.0
-        version: 3.1.0
       qrcode:
         specifier: 1.5.4
         version: 1.5.4
@@ -2890,9 +2887,6 @@ packages:
 
   oniguruma-to-es@4.3.4:
     resolution: {integrity: sha512-3VhUGN3w2eYxnTzHn+ikMI+fp/96KoRSVK9/kMTcFqj1NRDh2IhQCKvYxDnWePKRXY/AqH+Fuiyb7VHSzBjHfA==}
-
-  orejime@3.1.0:
-    resolution: {integrity: sha512-W9N5LR/1KsrEw2CfpAs7N2uGdJYYQOvbpKU/79E8JFhdjrXt0MFuX6nQ3bUebGBvykZVWgNvitzwabdcK+YfNw==}
 
   p-limit@2.3.0:
     resolution: {integrity: sha512-//88mFWSJx8lxCzwdAABTJL2MyWB12+eIY7MDL2SqLmAkeKU9qxRvWuSyTjm3FUmpBEMuFfckAIqEaVGUDxb6w==}
@@ -7220,8 +7214,6 @@ snapshots:
       oniguruma-parser: 0.12.1
       regex: 6.0.1
       regex-recursion: 6.0.2
-
-  orejime@3.1.0: {}
 
   p-limit@2.3.0:
     dependencies:
