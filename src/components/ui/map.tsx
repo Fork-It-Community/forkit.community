@@ -90,9 +90,11 @@ function useMap() {
   return context;
 }
 
+import { MAPTILER_API_KEY } from "astro:env/client";
+
 const defaultStyles = {
-  dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
-  light: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
+  dark: `https://api.maptiler.com/maps/streets-v2-dark/style.json?key=${MAPTILER_API_KEY}`,
+  light: `https://api.maptiler.com/maps/streets-v2/style.json?key=${MAPTILER_API_KEY}`,
 };
 
 type MapStyleOption = string | MapLibreGL.StyleSpecification;
