@@ -48,6 +48,12 @@ export default defineConfig({
     },
   },
 
+  vite: {
+    optimizeDeps: {
+      exclude: ["@takumi-rs/image-response", "@takumi-rs/core"],
+    },
+  },
+
   integrations: [
     react(),
     tailwind({

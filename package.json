@@ -24,6 +24,7 @@
     "@astrojs/sitemap": "3.7.0",
     "@astrojs/tailwind": "6.0.2",
     "@astrojs/vercel": "9.0.4",
+    "@bearstudio/astro-assets-generation": "0.1.2",
     "@bearstudio/astro-typed-routes": "0.1.6",
     "@bearstudio/lunalink": "0.3.1",
     "@fontsource-variable/inter": "5.2.8",
