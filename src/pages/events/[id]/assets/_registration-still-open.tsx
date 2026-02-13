@@ -18,7 +18,6 @@ export const config: AssetImageConfig = {
 export function registrationStillOpen(options: {
   width: number;
   height: number;
-  fontScaling: number;
 }) {
   return async ({ params }: { params: { id: string } }) => {
     const event = await getEventData(params.id);
@@ -79,7 +78,7 @@ export function registrationStillOpen(options: {
           >
             <div
               style={{
-                fontSize: 54 * options.fontScaling,
+                fontSize: 54,
                 fontWeight: 500,
                 textTransform: "uppercase",
                 letterSpacing: 4,
@@ -91,7 +90,7 @@ export function registrationStillOpen(options: {
             <div
               style={{
                 display: "flex",
-                fontSize: 160 * options.fontScaling,
+                fontSize: 160,
                 fontWeight: 500,
                 lineHeight: 1,
                 color: COLORS.primary,
@@ -114,7 +113,7 @@ export function registrationStillOpen(options: {
                 style={{
                   display: "flex",
                   color: COLORS.primary,
-                  fontSize: 64 * options.fontScaling,
+                  fontSize: 64,
                   fontWeight: 500,
                   textTransform: "uppercase",
                 }}
@@ -218,4 +217,4 @@ export function registrationStillOpen(options: {
   };
 }
 
-export default registrationStillOpen({ ...config, fontScaling: 1 });
+export default registrationStillOpen(config);

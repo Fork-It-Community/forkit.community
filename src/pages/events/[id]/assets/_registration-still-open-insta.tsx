@@ -18,7 +18,6 @@ export const config: AssetImageConfig = {
 export function registrationStillOpenInsta(options: {
   width: number;
   height: number;
-  fontScaling?: number;
 }) {
   return async ({ params }: { params: { id: string } }) => {
     const event = await getEventData(params.id);
@@ -80,7 +79,7 @@ export function registrationStillOpenInsta(options: {
           >
             <div
               style={{
-                fontSize: 48,
+                fontSize: 38,
                 fontWeight: 500,
                 textTransform: "uppercase",
                 letterSpacing: 4,
@@ -92,14 +91,13 @@ export function registrationStillOpenInsta(options: {
             <div
               style={{
                 display: "flex",
-                fontSize: 140,
+                fontSize: 112,
                 fontWeight: 500,
                 lineHeight: 1,
                 color: COLORS.primary,
                 marginTop: -16,
                 marginLeft: -6, // Visual alignment
                 textTransform: "uppercase",
-                flexWrap: "wrap",
               }}
             >
               Join Us Now
@@ -116,7 +114,7 @@ export function registrationStillOpenInsta(options: {
                 style={{
                   display: "flex",
                   color: COLORS.primary,
-                  fontSize: 54,
+                  fontSize: 45,
                   fontWeight: 500,
                   textTransform: "uppercase",
                 }}
@@ -137,7 +135,7 @@ export function registrationStillOpenInsta(options: {
                 display: "flex",
                 alignItems: "center",
                 gap: 12,
-                fontSize: 40,
+                fontSize: 48,
                 fontWeight: 500,
                 lineHeight: 1,
                 textTransform: "uppercase",
@@ -145,13 +143,12 @@ export function registrationStillOpenInsta(options: {
             >
               {getEventDisplayType(event.data.type)}
             </div>
-
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
                 gap: 12,
-                fontSize: 40,
+                fontSize: 48,
                 fontWeight: 500,
                 lineHeight: 1,
               }}
@@ -178,7 +175,7 @@ export function registrationStillOpenInsta(options: {
                 display: "flex",
                 gap: 12,
                 alignItems: "center",
-                fontSize: 40,
+                fontSize: 48,
                 fontWeight: 500,
                 lineHeight: 1.2,
                 textWrap: "balance",
