@@ -1,0 +1,43 @@
+---
+interface Props {
+  className?: string;
+  label?: string;
+}
+
+const { className, label = "Cookie Settings" } = Astro.props;
+---
+
+<button
+  type="button"
+  class={className ??
+    "orejime-settings-trigger cursor-pointer underline-offset-4 underline text-white"}
+>
+  <slot>{label}</slot>
+</button>
+
+<script>
+  function setupCookieSettings() {
+    const buttons = document.querySelectorAll(".orejime-settings-trigger");
+
+    if (!buttons.length) return;
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        if (window.orejime && typeof window.orejime.show === "function") {
+          window.orejime.show();
+          return;
+        }
+      });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(setupCookieSettings, 500);
+    });
+  } else {
+    setTimeout(setupCookieSettings, 500);
+  }
+
+  window.addEventListener("orejime:ready", setupCookieSettings);
+</script>

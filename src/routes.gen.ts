@@ -79,6 +79,7 @@ const ROUTES_CONFIG = {
       }
     }
   },
+  "legal-notice": {},
   "llms.txt": {},
   "news": {
     ":page": {},

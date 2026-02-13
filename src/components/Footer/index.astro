@@ -6,6 +6,7 @@ import { MdArrowOutward } from "react-icons/md";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { t } from "@/i18n";
+import CookieSettingsButton from "@/components/CookieSettingsButton.astro";
 
 const menuItems = getMainMenuItems();
 ---
@@ -93,19 +94,22 @@ const menuItems = getMainMenuItems();
             Call For Paper Guidelines
           </a>
           <span class="opacity-20">⋅</span>
-          <button
-            type="button"
-            id="orejime-settings-trigger"
-            class="cursor-pointer opacity-60 transition hover:opacity-100"
-          >
-            Cookie Settings
-          </button>
+          <CookieSettingsButton
+            className="opacity-60 transition hover:opacity-100"
+          />
           <span class="opacity-20">⋅</span>
           <a
             class="opacity-60 transition hover:opacity-100"
             href={lunalink(ROUTES["privacy-policy"].__path, {})}
           >
             Privacy policy
+          </a>
+          <span class="opacity-20">⋅</span>
+          <a
+            class="opacity-60 transition hover:opacity-100"
+            href={lunalink(ROUTES["privacy-policy"].__path, {})}
+          >
+            Legal notice
           </a>
         </div>
         <p class="text-center text-xs opacity-50 sm:text-left">
@@ -116,28 +120,3 @@ const menuItems = getMainMenuItems();
     </div>
   </div>
 </footer>
-
-<script>
-  function setupCookieSettings() {
-    const button = document.getElementById("orejime-settings-trigger");
-
-    if (!button) return;
-
-    button.addEventListener("click", () => {
-      if (window.orejime && typeof window.orejime.show === "function") {
-        window.orejime.show();
-        return;
-      }
-    });
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => {
-      setTimeout(setupCookieSettings, 500);
-    });
-  } else {
-    setTimeout(setupCookieSettings, 500);
-  }
-
-  window.addEventListener("orejime:ready", setupCookieSettings);
-</script>
