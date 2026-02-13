@@ -8,6 +8,7 @@ import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate } from "@/lib/events";
 import { getEventData } from "./_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
+import { SponsorLogos } from "@/generated-assets/components/SponsorLogos";
 
 export const config: AssetImageConfig = {
   width: 1920,
@@ -25,8 +26,29 @@ export function d10announcement(options: { width: number; height: number }) {
       ),
     );
 
+    const coOrganizersIds = event.__coOrganizers.map(
+      (coOrganiser) => coOrganiser.id,
+    );
+    const sponsorLogos = await Promise.all(
+      event.__sponsors
+        .filter((sponsor) => !coOrganizersIds.includes(sponsor.id))
+        .map(
+          async (sponsor) => await getAstroImageBase64(sponsor.data.logos.noBg),
+        ),
+    );
+    const displaySponsors =
+      event.data.type === "event" && !!sponsorLogos.length;
+
     return (
-      <Frame {...options} style={{ padding: 96 }}>
+      <Frame
+        {...options}
+        style={{
+          paddingTop: 96,
+          paddingLeft: 96,
+          paddingRight: 96,
+          paddingBottom: displaySponsors ? 0 : 96,
+        }}
+      >
         <BgImage
           src={postCover}
           width={options.width}
@@ -202,6 +224,7 @@ export function d10announcement(options: { width: number; height: number }) {
             </div>
           </div>
         </div>
+        {displaySponsors && <SponsorLogos logos={sponsorLogos} />}
       </Frame>
     );
   };
