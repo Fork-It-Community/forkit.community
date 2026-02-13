@@ -19,6 +19,7 @@ import {
   shouldShowCFP,
   getEventDisplayDate,
   shouldShowProspectus,
+  getRelatedEvents,
 } from "@/lib/events";
 import { cn } from "@/lib/utils-client";
 import { Image } from "astro:assets";
@@ -49,18 +50,7 @@ export async function getStaticPaths() {
 
   return Promise.all(
     allEvents.map(async (event) => {
-      const relatedEvents = allEvents
-        .filter(
-          (e) =>
-            e.id !== event.id &&
-            event.data._computed.city?.id !== undefined &&
-            e.data._computed.city?.id === event.data._computed.city?.id &&
-            (dayjs(e.data.date).isAfter(dayjs()) ||
-              dayjs(e.data.date).isAfter(dayjs().subtract(30, "day"))),
-        )
-        .sort((a, b) => dayjs(a.data.date).diff(dayjs(b.data.date)))
-        .slice(0, 3);
-
+      const relatedEvents = await getRelatedEvents(event);
       return {
         params: { id: event.id },
         props: {
