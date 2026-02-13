@@ -1,0 +1,335 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import SEO from "@/components/SEO/index.astro";
+import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import bgImage from "@/assets/images/events.jpeg";
+import Prose from "@/components/Prose/index.astro";
+---
+
+<MainLayout>
+  <SEO
+    slot="seo"
+    title="Privacy Policy"
+    description="Learn about how Fork it! Community collects, uses, and protects your personal data. Understand your rights and our GDPR-compliant practices."
+  />
+  <MainPageTitle
+    title="Privacy Policy"
+    subtitle="Your privacy matters to us"
+    imageSrc={bgImage}
+  />
+  <section class="m-auto max-w-7xl px-4 py-16">
+    <Prose>
+      <p class="text-sm opacity-60">Last updated: February 12, 2026</p>
+
+      <h2 id="introduction">Introduction</h2>
+      <p>
+        Fork it! Community ("we", "our", or "us") is committed to protecting
+        your privacy. This Privacy Policy explains how we collect, use,
+        disclose, and safeguard your information when you visit our website.
+      </p>
+
+      <h2 id="privacy-first-approach">Privacy-First Approach</h2>
+      <div>
+        <p>Our website does not maintain its own user database.</p>
+        <p>
+          We rely on trusted third-party services to collect and store personal
+          data on our behalf:
+        </p>
+        <ul>
+          <li><strong>Luma</strong> for event management</li>
+          <li><strong>Brevo</strong> for newsletter subscriptions</li>
+        </ul>
+        <p>
+          Analytics and marketing tools are enabled only after you have given
+          your explicit consent.
+        </p>
+      </div>
+
+      <h2 id="data-controller">Data Controller</h2>
+      <p>
+        The data controller responsible for the processing of personal data is:
+      </p>
+      <p>
+        <strong>Fork it! Community</strong><br />
+        Email: <a href="mailto:contact@forkit.community"
+          >contact@forkit.community</a
+        >
+      </p>
+      <p>
+        Fork it! Community determines the purposes and means of processing
+        personal data described in this Privacy Policy.
+      </p>
+
+      <h2 id="information-we-collect">Information We Collect</h2>
+      <p>
+        We collect information that you provide directly to us and information
+        that is automatically collected when you use our website.
+      </p>
+
+      <h3>Information You Provide</h3>
+
+      <h4>Event Registration (via Luma)</h4>
+      <p>When you register for an event, you may provide:</p>
+      <ul>
+        <li>Name</li>
+        <li>Email address</li>
+        <li>Phone number</li>
+        <li>
+          Cryptocurrency wallet addresses (Ethereum / Solana, if provided)
+        </li>
+        <li>Responses to custom registration questions</li>
+        <li>Event attendance and check-in data</li>
+        <li>Payment and ticketing information (if applicable)</li>
+      </ul>
+
+      <h4>Newsletter Subscription (via Brevo)</h4>
+      <ul>
+        <li>Email address</li>
+        <li>Communication preferences</li>
+      </ul>
+
+      <h4>Communications</h4>
+      <p>Any other information you voluntarily choose to provide.</p>
+
+      <h3>Automatically Collected Information</h3>
+      <p>
+        When you visit our website, certain information may be collected through
+        cookies and similar tracking technologies, only with your consent for
+        analytics and marketing purposes:
+      </p>
+      <ul>
+        <li>Device and browser information</li>
+        <li>IP address and approximate location data</li>
+        <li>Pages visited and time spent on pages</li>
+        <li>Referring website addresses</li>
+        <li>Interaction with website features</li>
+      </ul>
+
+      <h3>Information We Do Not Collect</h3>
+      <ul>
+        <li>
+          <strong>Search Queries:</strong> Our website search functionality is client-side
+          only and does not track or store your search queries.
+        </li>
+        <li>
+          <strong>User Accounts:</strong> We do not maintain user accounts or authentication
+          systems on our website.
+        </li>
+        <li>
+          <strong>First-Party Database:</strong> We do not store personal data in
+          our own database.
+        </li>
+      </ul>
+      <p>All personal data is managed by our third-party partners.</p>
+
+      <h2 id="purposes-and-legal-bases">
+        Purposes and Legal Bases for Processing
+      </h2>
+      <p>
+        We process personal data only when a valid legal basis applies, in
+        accordance with the GDPR:
+      </p>
+      <ul>
+        <li>
+          <strong>Event registration management</strong><br />
+          <ul>
+            <li>Legal basis: performance of a service requested by the user</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Newsletter and community communications</strong><br />
+          <ul>
+            <li>Legal basis: consent</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Website analytics and user experience improvement</strong><br
+          />
+          <ul>
+            <li>Legal basis: consent</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Marketing performance measurement (Meta platforms)</strong><br
+          />
+          <ul>
+            <li>Legal basis: consent</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Website security and abuse prevention</strong><br />
+          <ul>
+            <li>Legal basis: legitimate interest</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Compliance with legal obligations</strong><br />
+          <ul>
+            <li>Legal basis: legal obligation</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h2 id="cookies-and-tracking">Cookies and Tracking Technologies</h2>
+      <p>
+        We use cookies and similar technologies to ensure proper website
+        functionality and, with your consent, for analytics and marketing
+        purposes. You can manage your cookie preferences using our Cookie
+        Settings tool available in the footer of this page.
+      </p>
+
+      <h3>Types of Cookies We Use</h3>
+
+      <h4>Essential Cookies</h4>
+      <p>
+        These cookies are necessary for the website to function properly. They
+        enable core functionality such as security, consent management, and
+        accessibility features.
+      </p>
+      <ul>
+        <li>
+          <strong>forkit-consent:</strong> Stores your cookie consent preferences
+          for 365 days.
+        </li>
+      </ul>
+
+      <h4>Analytics Cookies</h4>
+      <p>
+        We use analytics services to understand how visitors use our website.
+        This helps us improve content and user experience. These cookies require
+        your explicit consent.
+      </p>
+      <ul>
+        <li>
+          <strong>Vercel Analytics:</strong> Collects anonymous usage data to help
+          us understand visitor behavior and improve website performance.
+        </li>
+      </ul>
+
+      <h4>Marketing Cookies</h4>
+      <p>
+        These cookies track your activity to deliver personalized advertisements
+        and measure campaign effectiveness. These cookies require your explicit
+        consent.
+      </p>
+      <ul>
+        <li>
+          <strong>Meta Pixel:</strong> Used to measure advertising effectiveness,
+          understand which content resonates with our community, and improve our
+          marketing campaigns on Meta platforms (Facebook, Instagram).
+        </li>
+      </ul>
+
+      <h2 id="third-party-services">Third-Party Services</h2>
+      <p>
+        We use trusted third-party services that may process personal data in
+        accordance with their own privacy policies:
+      </p>
+      <ul>
+        <li><strong>Luma</strong> &ndash; event management</li>
+        <li><strong>Brevo</strong> &ndash; email marketing</li>
+        <li><strong>Meta</strong> &ndash; advertising and analytics</li>
+        <li><strong>Vercel</strong> &ndash; website analytics</li>
+      </ul>
+      <p>
+        These providers act as data processors or, where applicable, independent
+        data controllers, in compliance with applicable data protection laws.
+      </p>
+
+      <h2 id="data-retention">Data Retention</h2>
+      <p>
+        Personal data is retained only for as long as necessary to fulfill the
+        purposes described in this Privacy Policy:
+      </p>
+      <ul>
+        <li>
+          <strong>Cookie consent preferences:</strong> 365 days
+        </li>
+        <li>
+          <strong>Event registration data:</strong> retained according to Luma's
+          retention policies
+        </li>
+        <li>
+          <strong>Newsletter data:</strong> retained by Brevo until you unsubscribe
+        </li>
+        <li>
+          <strong>Analytics data:</strong> retained according to Vercel and Meta
+          retention policies
+        </li>
+      </ul>
+
+      <h2 id="data-security">Data Security</h2>
+      <p>
+        We implement appropriate technical and organizational measures to
+        protect your personal information against unauthorized access,
+        alteration, disclosure, or destruction. However, no method of
+        transmission over the internet is entirely secure.
+      </p>
+
+      <h2 id="international-transfers">International Data Transfers</h2>
+      <p>
+        Your information may be transferred to and processed in countries other
+        than your country of residence. When applicable, appropriate safeguards
+        are implemented in accordance with the GDPR.
+      </p>
+
+      <h2 id="your-rights">Your Rights Under GDPR</h2>
+      <p>
+        If you are located in the European Economic Area (EEA), you have the
+        right to:
+      </p>
+      <ul>
+        <li>Access your personal data</li>
+        <li>Request rectification of inaccurate data</li>
+        <li>Request erasure of your data</li>
+        <li>Restrict processing</li>
+        <li>Request data portability</li>
+        <li>Object to processing</li>
+        <li>Withdraw your consent at any time</li>
+      </ul>
+      <p>
+        You may exercise these rights by contacting us at: <a
+          href="mailto:contact@forkit.community">contact@forkit.community</a
+        >
+      </p>
+
+      <h2 id="right-to-lodge-complaint">Right to Lodge a Complaint</h2>
+      <p>
+        If you believe that your data protection rights have been violated, you
+        have the right to lodge a complaint with a supervisory authority.
+      </p>
+      <p>
+        For France, this authority is:<br />
+        <strong>CNIL</strong> &ndash; Commission Nationale de l'Informatique et des
+        Libertés: <a
+          href="https://www.cnil.fr"
+          target="_blank"
+          rel="noopener noreferrer">www.cnil.fr</a
+        >
+      </p>
+
+      <h2 id="changes-to-policy">Changes to This Privacy Policy</h2>
+      <p>
+        We may update this Privacy Policy from time to time. We will notify you
+        of any changes by posting the new Privacy Policy on this page and
+        updating the "Last updated" date.
+      </p>
+
+      <h2 id="contact-us">Contact Us</h2>
+      <p>
+        If you have any questions about this Privacy Policy or wish to exercise
+        your data protection rights, please contact us:
+      </p>
+      <ul>
+        <li>
+          Email: <a href="mailto:contact@forkit.community"
+            >contact@forkit.community</a
+          >
+        </li>
+        <li>
+          Website: <a href="https://forkit.community">forkit.community</a>
+        </li>
+      </ul>
+    </Prose>
+  </section>
+</MainLayout>
