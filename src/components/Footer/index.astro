@@ -6,7 +6,7 @@ import { MdArrowOutward } from "react-icons/md";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { t } from "@/i18n";
-import CookieSettingsButton from "@/components/CookieSettingsButton.astro";
+import CookieSettingsButton from "@/components/CookieSettingsButton/index.astro";
 
 const menuItems = getMainMenuItems();
 ---
@@ -107,7 +107,7 @@ const menuItems = getMainMenuItems();
           <span class="opacity-20">⋅</span>
           <a
             class="opacity-60 transition hover:opacity-100"
-            href={lunalink(ROUTES["privacy-policy"].__path, {})}
+            href={lunalink(ROUTES["legal-notice"].__path, {})}
           >
             Legal notice
           </a>

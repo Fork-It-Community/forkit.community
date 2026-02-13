@@ -1,4 +1,6 @@
 ---
+import { cn } from "@/lib/utils-client";
+
 interface Props {
   className?: string;
   label?: string;
@@ -9,8 +11,10 @@ const { className, label = "Cookie Settings" } = Astro.props;
 
 <button
   type="button"
-  class={className ??
-    "orejime-settings-trigger cursor-pointer underline-offset-4 underline text-white"}
+  class={cn(
+    "orejime-settings-trigger",
+    className ?? " cursor-pointer underline-offset-4 underline text-white",
+  )}
 >
   <slot>{label}</slot>
 </button>

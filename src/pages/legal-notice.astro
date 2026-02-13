@@ -6,7 +6,7 @@ import Prose from "@/components/Prose/index.astro";
 import bgImage from "@/assets/images/events.jpeg";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
-import CookieSettingsButton from "@/components/CookieSettingsButton.astro";
+import CookieSettingsButton from "@/components/CookieSettingsButton/index.astro";
 ---
 
 <MainLayout>
@@ -84,8 +84,7 @@ import CookieSettingsButton from "@/components/CookieSettingsButton.astro";
       <h2 id="cookies">Cookies</h2>
       <p>The website uses cookies to improve user experience.</p>
       <p>
-        By continuing to browse the website, you agree to the use of cookies.
-        For more information, please refer to our <CookieSettingsButton
+        You can manage your preferences by referring to our <CookieSettingsButton
           label="Cookie policy"
         />
       </p>
