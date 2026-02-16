@@ -1,3 +1,20 @@
+.orejime-Notice {
+  background: hsl(var(--background) / 0.8);
+  backdrop-filter: blur(12px);
+  z-index: 10;
+  max-width: 17.5rem;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  font-size: 0.8rem;
+}
+
+/* On mobile, make sure to add some bottom space when nav is here */
+@media (max-width: 767px) {
+  body:has(nav[data-id="main-nav-mobile"]) .orejime-Notice {
+    bottom: calc(4.5rem + env(safe-area-inset-bottom));
+  }
+}
+
 .orejime-Modal-title {
   font-family: Tomorrow, sans-serif;
   font-weight: 500;
