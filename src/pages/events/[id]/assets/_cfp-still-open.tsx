@@ -41,7 +41,7 @@ export function cfpStillOpen(options: {
         ),
     );
     const displaySponsors =
-      event.data.type === "event" && !!sponsorLogos.length;
+      event.data.type === "events" && !!sponsorLogos.length;
 
     return (
       <Frame
