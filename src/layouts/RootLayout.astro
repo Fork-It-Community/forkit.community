@@ -55,11 +55,11 @@ const orejimeConfig = getOrejimeConfig();
   >
     <EnvHint />
     <slot />
-    <Toaster client:idle />
+    <Toaster client:load position="top-center" />
 
     <!-- Meta Pixel — blocked until consent -->
     <template data-purpose="marketing">
-      <script is:inline type="opt-in" define:vars={{ pixelId }}>
+      <script is:inline define:vars={{ pixelId }}>
         !(function (f, b, e, v, n, t, s) {
           if (f.fbq) return;
           n = f.fbq = function () {
@@ -90,7 +90,7 @@ const orejimeConfig = getOrejimeConfig();
 
     <!-- Vercel Analytics — blocked until consent -->
     <template data-purpose="analytics">
-      <script is:inline type="opt-in">
+      <script is:inline>
         var s = document.createElement("script");
         s.src = "/_vercel/insights/script.js";
         s.defer = true;
