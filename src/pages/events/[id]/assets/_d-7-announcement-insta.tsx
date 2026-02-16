@@ -40,7 +40,7 @@ export function d7announcementInsta(options: {
         ),
     );
     const displaySponsors =
-      event.data.type === "events" && !!sponsorLogos.length;
+      event.data.type === "event" && !!sponsorLogos.length;
 
     return (
       <Frame
