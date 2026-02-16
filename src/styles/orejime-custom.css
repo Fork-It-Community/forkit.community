@@ -1,57 +1,45 @@
-.orejime-Notice {
-  background: hsl(var(--background) / 0.8);
+.orejime-Env {
+  --orejime-color-background: hsl(var(--background) / 0.8);
+  --orejime-color-text: hsl(var(--foreground));
+  --orejime-color-subdued: hsl(var(--foreground) / 0.8);
+  --orejime-color-interactive: hsl(var(--foreground) / 0.7);
+  --orejime-color-on-interactive: hsl(var(--primary-foreground));
+}
+
+.orejime-Banner-body {
   backdrop-filter: blur(12px);
-  z-index: 10;
   max-width: 17.5rem;
-  right: 0.5rem;
-  bottom: 0.5rem;
   font-size: 0.8rem;
 }
 
 /* On mobile, make sure to add some bottom space when nav is here */
 @media (max-width: 767px) {
-  body:has(nav[data-id="main-nav-mobile"]) .orejime-Notice {
+  body:has(nav[data-id="main-nav-mobile"]) .orejime-Banner {
     bottom: calc(4.5rem + env(safe-area-inset-bottom));
   }
 }
 
+.orejime-Modal {
+  backdrop-filter: blur(12px);
+}
+
 .orejime-Modal-title {
   font-family: Tomorrow, sans-serif;
-  font-weight: 500;
+}
+
+.orejime-Button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
 }
 
 .orejime-Button--save,
 .orejime-Button--accept,
-.orejime-Notice-button,
-button[type="submit"].orejime-Button {
+.orejime-Notice-button {
   background: white;
   color: hsl(0 0% 0%);
   font-weight: 500;
 }
 
-.orejime-Button--save:hover,
-.orejime-Button--accept:hover,
-.orejime-Notice-button:hover {
-  opacity: 0.9;
-}
-
-.orejime-Button--decline,
-.orejime-Button--info {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-}
-
-.orejime-Button--decline:hover,
-.orejime-Button--info:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.orejime-AppItem-input:checked
-  + .orejime-AppItem-label
-  .orejime-AppItem-slider {
-  background: white;
-}
-
-.orejime-AppItem-slider:before {
-  color: rgb(255, 255, 255) !important;
+.orejime-ModalOverlay {
+  backdrop-filter: blur(12px);
 }

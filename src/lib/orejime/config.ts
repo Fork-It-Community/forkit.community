@@ -1,93 +1,157 @@
-import consentEn from "@/i18n/en/consent.json";
+export type PurposeCookieProps = [
+  pattern: RegExp,
+  path: string,
+  domain: string,
+];
 
-interface OrejimeConfig {
-  privacyPolicy: string;
-  purposes: Array<{
-    name: string;
-    title: string;
-    description: string;
-  }>;
-  apps: Array<{
-    name: string;
-    title: string;
-    description?: string;
-    purposes: string[];
-    cookies: Array<string | [string, string, string]>;
-    required?: boolean;
-    optOut?: boolean;
-    default?: boolean;
-    onlyOnce?: boolean;
-  }>;
-  translations?: Record<string, any>;
-  cookieName?: string;
-  cookieExpiresAfterDays?: number;
-  mustConsent?: boolean;
+export type PurposeCookie = string | RegExp | PurposeCookieProps;
+
+export interface CorePurpose {
+  id: string;
+  isMandatory?: boolean;
+  isExempt?: boolean;
+  runsOnce?: boolean;
+  default?: boolean;
+  cookies: PurposeCookie[];
 }
 
-export function getOrejimeConfig(): OrejimeConfig {
+export type ConsentsMap = { [id: Purpose["id"]]: boolean };
+
+export type CookieOptions = {
+  name: string;
+  domain?: string;
+  duration: number;
+  sameSite?: CookieSameSite;
+  parse?: (consents: string) => ConsentsMap;
+  stringify?: (consents: ConsentsMap) => string;
+};
+
+export interface Purpose extends CorePurpose {
+  id: string;
+  title: string;
+  description?: string;
+}
+
+export interface PurposeGroup {
+  id: string;
+  title: string;
+  description?: string;
+  purposes: Purpose[];
+}
+
+export type PurposeList = Array<PurposeGroup | Purpose>;
+
+export interface BannerTranslations {
+  title?: string;
+  description?: string;
+  privacyPolicyLabel?: string;
+  accept?: string;
+  acceptTitle?: string;
+  decline?: string;
+  declineTitle?: string;
+  configure: string;
+  configureTitle?: string;
+}
+
+export interface ModalTranslations {
+  title?: string;
+  description: string;
+  privacyPolicyLabel: string;
+  close: string;
+  closeTitle: string;
+  globalPreferences: string;
+  acceptAll: string;
+  declineAll: string;
+  save?: string;
+  saveTitle?: string;
+}
+
+export interface ContextualNoticeTranslations {
+  title: string;
+  description: string;
+  privacyPolicyLabel: string;
+  accept: string;
+  acceptTitle?: string;
+  accepted: string;
+}
+
+export interface PurposeTranslations {
+  mandatory: string;
+  mandatoryTitle: string;
+  exempt: string;
+  exemptTitle: string;
+  showMore: string;
+  accept: string;
+  decline: string;
+  enabled: string;
+  disabled: string;
+  partial: string;
+}
+
+export interface MiscTranslations {
+  newWindowTitle: string;
+  updateNeeded: string;
+  poweredBy: string;
+}
+
+export interface Translations {
+  banner: BannerTranslations;
+  modal?: ModalTranslations;
+  contextual?: ContextualNoticeTranslations;
+  purpose?: PurposeTranslations;
+  misc?: MiscTranslations;
+}
+
+export type ElementReference = string | HTMLElement;
+
+export type ImageAttributes = {
+  src: string;
+  alt: string;
+};
+
+export type ImageDescriptor = string | ImageAttributes;
+
+export interface Config {
+  // theme: Theme;
+  orejimeElement?: ElementReference;
+  purposes: PurposeList;
+  cookie?: CookieOptions;
+  logo?: ImageDescriptor;
+  forceBanner?: boolean;
+  forceModal?: boolean;
+  privacyPolicyUrl: string;
+  translations: Translations;
+}
+
+export function getOrejimeConfig(): Config {
   return {
-    privacyPolicy: "/privacy-policy",
-    cookieName: "forkit-consent",
-    cookieExpiresAfterDays: 365,
-    mustConsent: false,
+    privacyPolicyUrl: "/privacy-policy",
+
+    cookie: {
+      name: "forkit-consent",
+      duration: 365,
+    },
 
     purposes: [
       {
-        name: "analytics",
+        id: "marketing",
+        title: "Marketing",
+        description:
+          "We use Meta Pixel to measure advertising effectiveness and improve our marketing campaigns. This helps us understand which content resonates with our community.",
+        cookies: ["_fbp", "fr"],
+      },
+      {
+        id: "analytics",
         title: "Analytics",
         description:
-          "Help us understand how visitors interact with our website.",
-      },
-      {
-        name: "marketing",
-        title: "Marketing",
-        description: "Marketing and advertising purposes.",
-      },
-    ],
-
-    apps: [
-      {
-        name: "meta-pixel",
-        title: consentEn.purposes.metaPixel.title || "Meta Pixel",
-        description: consentEn.purposes.metaPixel.description || "",
-        purposes: ["marketing", "analytics"],
-        cookies: ["_fbp", "fr"],
-        required: false,
-        optOut: false,
-        default: false,
-        onlyOnce: true,
-      },
-      {
-        name: "vercel-analytics",
-        title: consentEn.purposes.vercelAnalytics.title || "Vercel Analytics",
-        description: consentEn.purposes.vercelAnalytics.description || "",
-        purposes: ["analytics"],
+          "We use Vercel Analytics to understand how visitors navigate our website and identify areas for improvement. This helps us provide a better user experience.",
         cookies: ["__vercel_live_token", "_vercel_jwt", "__va"],
-        required: false,
-        optOut: false,
-        default: false,
-        onlyOnce: false,
       },
     ],
 
     translations: {
-      en: {
-        consentModal: {
-          description: consentEn.modal.description,
-        },
-        consentNotice: {
-          learnMore: consentEn.consentNotice?.learnMore || "Learn more",
-        },
-        privacyPolicy: {
-          name: consentEn.privacyPolicy?.name || "privacy policy",
-          text:
-            consentEn.privacyPolicy?.text ||
-            "To learn more, please read our {privacyPolicy}.",
-        },
-        purposes: {
-          analytics: "Analytics",
-          marketing: "Marketing",
-        },
+      banner: {
+        configure: "Learn more",
       },
     },
   };

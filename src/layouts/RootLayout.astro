@@ -43,15 +43,11 @@ const orejimeConfig = getOrejimeConfig();
     <slot name="seo" />
     <slot name="ld+json" />
 
+    <link rel="stylesheet" href="/orejime/orejime.css" />
+    <script is:inline async src="/orejime/orejime.js"></script>
     <script is:inline define:vars={{ orejimeConfig }}>
       window.orejimeConfig = orejimeConfig;
     </script>
-    <link rel="stylesheet" href="/orejime/orejime.css" />
-    <script
-      is:inline
-      async
-      src="/orejime/orejime.js"
-      onload="window.orejime = Orejime.init(window.orejimeConfig);"></script>
   </head>
 
   <body
@@ -62,51 +58,44 @@ const orejimeConfig = getOrejimeConfig();
     <Toaster client:idle />
 
     <!-- Meta Pixel — blocked until consent -->
-    <script
-      is:inline
-      type="opt-in"
-      data-type="application/javascript"
-      data-name="meta-pixel"
-      define:vars={{ pixelId }}
-    >
-      !(function (f, b, e, v, n, t, s) {
-        if (f.fbq) return;
-        n = f.fbq = function () {
-          n.callMethod
-            ? n.callMethod.apply(n, arguments)
-            : n.queue.push(arguments);
-        };
-        if (!f._fbq) f._fbq = n;
-        n.push = n;
-        n.loaded = !0;
-        n.version = "2.0";
-        n.queue = [];
-        t = b.createElement(e);
-        t.async = !0;
-        t.src = v;
-        s = b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t, s);
-      })(
-        window,
-        document,
-        "script",
-        "https://connect.facebook.net/en_US/fbevents.js",
-      );
-      fbq("init", pixelId);
-      fbq("track", "PageView");
-    </script>
+    <template data-purpose="marketing">
+      <script is:inline type="opt-in" define:vars={{ pixelId }}>
+        !(function (f, b, e, v, n, t, s) {
+          if (f.fbq) return;
+          n = f.fbq = function () {
+            n.callMethod
+              ? n.callMethod.apply(n, arguments)
+              : n.queue.push(arguments);
+          };
+          if (!f._fbq) f._fbq = n;
+          n.push = n;
+          n.loaded = !0;
+          n.version = "2.0";
+          n.queue = [];
+          t = b.createElement(e);
+          t.async = !0;
+          t.src = v;
+          s = b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t, s);
+        })(
+          window,
+          document,
+          "script",
+          "https://connect.facebook.net/en_US/fbevents.js",
+        );
+        fbq("init", pixelId);
+        fbq("track", "PageView");
+      </script>
+    </template>
 
     <!-- Vercel Analytics — blocked until consent -->
-    <script
-      is:inline
-      type="opt-in"
-      data-type="application/javascript"
-      data-name="vercel-analytics"
-    >
-      var s = document.createElement("script");
-      s.src = "/_vercel/insights/script.js";
-      s.defer = true;
-      document.head.appendChild(s);
-    </script>
+    <template data-purpose="analytics">
+      <script is:inline type="opt-in">
+        var s = document.createElement("script");
+        s.src = "/_vercel/insights/script.js";
+        s.defer = true;
+        document.head.appendChild(s);
+      </script>
+    </template>
   </body>
 </html>

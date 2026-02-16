@@ -1,17 +1,14 @@
 interface OrejimeManager {
-  show: () => void;
-  hide: () => void;
-  getConsents: () => Record<string, boolean>;
+  prompt: () => void;
 }
 
 declare global {
   interface Window {
-    // Orejime library (from CDN)
+    // Orejime library (from CDN), types not complete to avoid confusion, using
+    // only what's needed
     Orejime?: {
       init: (config: any) => OrejimeManager;
-      show: () => void;
-      hide: () => void;
-      getConsents: () => Record<string, boolean>;
+      prompt: () => void;
     };
     // Manager instance (lowercase, set in RootLayout)
     orejime?: OrejimeManager;

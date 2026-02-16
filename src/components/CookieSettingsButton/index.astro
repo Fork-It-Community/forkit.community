@@ -24,8 +24,8 @@ const { className, label = "Cookie Settings" } = Astro.props;
 
     buttons.forEach((button) => {
       button.addEventListener("click", () => {
-        if (window.orejime && typeof window.orejime.show === "function") {
-          window.orejime.show();
+        if (window.orejime && typeof window.orejime.prompt === "function") {
+          window.orejime.prompt();
           return;
         }
       });
