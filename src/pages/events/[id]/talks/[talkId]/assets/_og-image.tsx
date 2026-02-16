@@ -42,7 +42,7 @@ export default async function ({
         async (sponsor) => await getAstroImageBase64(sponsor.data.logos.noBg),
       ),
   );
-  const displaySponsors = event.data.type === "event" && !!sponsorLogos.length;
+  const displaySponsors = event.data.type === "events" && !!sponsorLogos.length;
   const speakersImages = (
     await Promise.all(
       talk.__speakers.map(async (speaker) => {
