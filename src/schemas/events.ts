@@ -222,10 +222,10 @@ const zEventBase = ({ image }: SchemaContext) =>
     }),
   );
 
-const zMeetup = () => z.object({ type: z.literal("meetup") });
+const zMeetup = () => z.object({ type: z.literal("meetups") });
 const zEventClassic = () =>
   z.object({
-    type: z.literal("event"),
+    type: z.literal("events"),
   });
 
 export type Event = z.infer<ReturnType<typeof zEvent>>;
