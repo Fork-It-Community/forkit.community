@@ -206,14 +206,14 @@ const ctaEventMetadata = {
           <div class="flex flex-col gap-1 p-2">
             {
               match(event.data.type)
-                .with("event", () => (
+                .with("events", () => (
                   <span class="max-w-[60ch] text-balance text-xs tracking-widest opacity-60 md:text-sm">
                     One <strong class="font-medium">full-day event</strong> to
                     learn, practice, and exchange with developers who build real
                     products.
                   </span>
                 ))
-                .with("meetup", () => (
+                .with("meetups", () => (
                   <span class="text-xs uppercase tracking-widest opacity-60 md:text-sm">
                     <strong class="font-medium">Community Meetup</strong>: a
                     place to gather, learn, and network with like-minded people.
