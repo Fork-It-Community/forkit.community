@@ -38,7 +38,7 @@ export function d30announcement(options: { width: number; height: number }) {
         ),
     );
     const displaySponsors =
-      event.data.type === "events" && !!sponsorLogos.length;
+      event.data.type === "event" && !!sponsorLogos.length;
 
     return (
       <Frame
