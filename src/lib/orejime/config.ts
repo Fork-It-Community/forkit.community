@@ -1,6 +1,6 @@
 import consentEn from "@/i18n/en/consent.json";
 
-export interface OrejimeConfig {
+interface OrejimeConfig {
   privacyPolicy: string;
   purposes: Array<{
     name: string;

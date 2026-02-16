@@ -11,10 +11,7 @@ const { className, label = "Cookie Settings" } = Astro.props;
 
 <button
   type="button"
-  class={cn(
-    "orejime-settings-trigger",
-    className ?? " cursor-pointer underline-offset-4 underline text-white",
-  )}
+  class={cn("orejime-settings-trigger", "cursor-pointer", className)}
 >
   <slot>{label}</slot>
 </button>

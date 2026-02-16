@@ -43,30 +43,14 @@ const orejimeConfig = getOrejimeConfig();
     <slot name="seo" />
     <slot name="ld+json" />
 
-    <link
-      rel="preload"
-      href="https://cdn.jsdelivr.net/npm/orejime@2/dist/orejime.css"
-      as="style"
-    />
-    <link
-      rel="preload"
-      href="https://cdn.jsdelivr.net/npm/orejime@2/dist/orejime.js"
-      as="script"
-    />
-
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/orejime@2/dist/orejime.css"
-    />
-
     <script is:inline define:vars={{ orejimeConfig }}>
       window.orejimeConfig = orejimeConfig;
     </script>
-
+    <link rel="stylesheet" href="/orejime/orejime.css" />
     <script
       is:inline
       async
-      src="https://cdn.jsdelivr.net/npm/orejime@2/dist/orejime.js"
+      src="/orejime/orejime.js"
       onload="window.orejime = Orejime.init(window.orejimeConfig);"></script>
   </head>
 
