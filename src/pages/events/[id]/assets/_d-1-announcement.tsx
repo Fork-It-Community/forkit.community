@@ -51,7 +51,7 @@ export function d1announcement(options: { width: number; height: number }) {
         ),
     );
     const displaySponsors =
-      event.data.type === "event" && !!sponsorLogos.length;
+      event.data.type === "events" && !!sponsorLogos.length;
 
     return (
       <Frame
