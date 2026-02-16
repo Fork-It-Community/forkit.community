@@ -268,8 +268,8 @@ export async function getUpcomingMajorEvent() {
   );
 
   return (
-    onlyScheduledEvents.find((event) => event.data.type === "events") ??
-    onlyScheduledEvents.find((event) => event.data.type === "meetups") ??
+    onlyScheduledEvents.find((event) => event.data.type === "event") ??
+    onlyScheduledEvents.find((event) => event.data.type === "meetup") ??
     // In case we add another type later, like external events
     onlyScheduledEvents.at(0)
   );
@@ -401,8 +401,8 @@ export function getEventDisplayType(
   eventType: CollectionEntry<"events">["data"]["type"],
 ) {
   return match(eventType)
-    .with("events", () => "Full Day Event")
-    .with("meetups", () => "Community Meetup")
+    .with("event", () => "Full Day Event")
+    .with("meetup", () => "Community Meetup")
     .exhaustive();
 }
 
