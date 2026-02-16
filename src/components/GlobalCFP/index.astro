@@ -2,36 +2,45 @@
 import TiltedCard from "@/components/TiltedCard";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils-client";
+import { ROUTES } from "@/routes.gen";
+import { lunalink } from "@bearstudio/lunalink";
 ---
 
 <div class="relative flex w-full flex-col gap-6 px-4">
-  <TiltedCard client:visible className="mx-auto w-full max-w-screen-sm">
-    <a
-      href="https://conference-hall.io/fork-it-meetup-worldwide"
-      target="_blank"
-      rel="noreferrer"
-      class="group flex w-full flex-col gap-4 rounded-lg bg-white/5 p-6 backdrop-blur-md transition hover:bg-white/10 sm:flex-row md:items-center md:px-8 md:py-6"
+  <TiltedCard client:visible className="mx-auto w-full max-w-screen-md">
+    <div
+      class="group flex w-full flex-col gap-8 rounded-lg bg-white/5 p-6 backdrop-blur-md transition hover:bg-white/10 sm:gap-10 md:flex-row md:items-center md:px-8 md:py-6"
     >
-      <div class="flex w-full flex-1 flex-col max-sm:text-center">
+      <div class="flex w-full flex-1 flex-col max-md:text-center">
         <h2
           class="text-balance font-heading text-base font-medium uppercase tracking-widest transition group-hover:text-primary"
         >
-          Fork it! global CFP
+          Submit your talk
         </h2>
         <p class="text-balance text-xs tracking-wider opacity-60">
-          Want to share with the community but no local event yet? Submit your
-          talk to the global CFP.
+          No local event? Submit to global CFP.
         </p>
       </div>
 
       <div
-        class={cn(
-          buttonVariants({ size: "lg", variant: "secondary" }),
-          "max-sm:w-full",
-        )}
+        class="mx-auto flex w-full max-w-max flex-col items-center gap-4 sm:flex-row"
       >
-        Apply for the global CFP
+        <a
+          href="https://conference-hall.io/fork-it-meetup-worldwide"
+          target="_blank"
+          rel="noreferrer"
+          class={cn(buttonVariants({ size: "lg", variant: "secondary" }))}
+        >
+          Fork it! global CFP
+        </a>
+        <a
+          href={lunalink(ROUTES["call-for-papers"].guidelines.__path, {})}
+          class={cn(buttonVariants({ size: "lg", variant: "ghost" }))}
+        >
+          CFP How to & Guidelines
+          <span aria-hidden="true" class="ps-2"> → </span>
+        </a>
       </div>
-    </a>
+    </div>
   </TiltedCard>
 </div>
