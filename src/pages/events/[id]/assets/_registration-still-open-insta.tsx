@@ -90,6 +90,7 @@ export function registrationStillOpenInsta(options: {
                   fontWeight: 500,
                   textTransform: "uppercase",
                   letterSpacing: 4,
+                  paddingTop: coOrganizersLogos.length ? 0 : 96,
                 }}
               >
                 Registrations are still open
