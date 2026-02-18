@@ -90,6 +90,7 @@ async function earlyBirdTicketsInsta({ params }: { params: { id: string } }) {
               fontWeight: 500,
               textTransform: "uppercase",
               letterSpacing: 4,
+              paddingTop: coOrganizersLogos.length ? 0 : 96,
             }}
           >
             Tickets Are Available
