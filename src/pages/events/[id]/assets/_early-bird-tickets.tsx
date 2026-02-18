@@ -80,7 +80,6 @@ async function earlyBirdTickets({ params }: { params: { id: string } }) {
             flexDirection: "column",
             justifyContent: "space-between",
             flex: 1,
-            paddingRight: 96,
             paddingBottom: 48,
           }}
         >
