@@ -86,6 +86,7 @@ async function earlyBirdTicketsInsta({ params }: { params: { id: string } }) {
 
           <div
             style={{
+              display: "flex",
               fontSize: 50,
               fontWeight: 500,
               textTransform: "uppercase",
