@@ -1,3 +1,7 @@
+:root {
+  --blur: 12px;
+}
+
 .orejime-Env {
   --orejime-color-background: hsl(var(--background) / 0.8);
   --orejime-color-text: hsl(var(--foreground));
@@ -7,8 +11,8 @@
 }
 
 .orejime-Banner-body {
-  backdrop-filter: blur(12px);
-  max-width: 17.5rem;
+  backdrop-filter: blur(var(--blur));
+  max-width: 20rem;
   font-size: 0.8rem;
 }
 
@@ -20,7 +24,7 @@
 }
 
 .orejime-Modal {
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(var(--blur));
 }
 
 .orejime-Modal-title {
@@ -28,7 +32,7 @@
 }
 
 .orejime-Button {
-  background: rgba(255, 255, 255, 0.2);
+  background: hsl(var(--foreground) / 0.2);
   color: white;
 }
 
@@ -36,10 +40,10 @@
 .orejime-Button--accept,
 .orejime-Notice-button {
   background: white;
-  color: hsl(0 0% 0%);
+  color: hsl(var(--background));
   font-weight: 500;
 }
 
 .orejime-ModalOverlay {
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(var(--blur));
 }
