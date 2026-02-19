@@ -1,0 +1,49 @@
+:root {
+  --blur: 12px;
+}
+
+.orejime-Env {
+  --orejime-color-background: hsl(var(--background) / 0.8);
+  --orejime-color-text: hsl(var(--foreground));
+  --orejime-color-subdued: hsl(var(--foreground) / 0.8);
+  --orejime-color-interactive: hsl(var(--foreground) / 0.7);
+  --orejime-color-on-interactive: hsl(var(--primary-foreground));
+}
+
+.orejime-Banner-body {
+  backdrop-filter: blur(var(--blur));
+  max-width: 20rem;
+  font-size: 0.8rem;
+}
+
+/* On mobile, make sure to add some bottom space when nav is here */
+@media (max-width: 767px) {
+  body:has(nav[data-id="main-nav-mobile"]) .orejime-Banner {
+    bottom: calc(4.5rem + env(safe-area-inset-bottom));
+  }
+}
+
+.orejime-Modal {
+  backdrop-filter: blur(var(--blur));
+}
+
+.orejime-Modal-title {
+  font-family: Tomorrow, sans-serif;
+}
+
+.orejime-Button {
+  background: hsl(var(--foreground) / 0.2);
+  color: white;
+}
+
+.orejime-Button--save,
+.orejime-Button--accept,
+.orejime-Notice-button {
+  background: white;
+  color: hsl(var(--background));
+  font-weight: 500;
+}
+
+.orejime-ModalOverlay {
+  backdrop-filter: blur(var(--blur));
+}

@@ -79,6 +79,7 @@ const ROUTES_CONFIG = {
       }
     }
   },
+  "legal-notice": {},
   "llms.txt": {},
   "news": {
     ":page": {},
@@ -113,6 +114,7 @@ const ROUTES_CONFIG = {
     },
     "rss.xml": {}
   },
+  "privacy-policy": {},
   "resources": {
     "videos": {
       ":page": {}
