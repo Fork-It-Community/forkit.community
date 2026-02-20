@@ -65,7 +65,10 @@ const ROUTES_CONFIG = {
         }
       }
     },
-    "rss.xml": {}
+    "rss.xml": {},
+    "types": {
+      ":eventType": {}
+    }
   },
   "fr": {
     "events": {
