@@ -144,8 +144,8 @@ export function getOrejimeConfig(): Config {
         id: "analytics",
         title: "Analytics",
         description:
-          "We use Vercel Analytics to understand how visitors navigate our website and identify areas for improvement. This helps us provide a better user experience.",
-        cookies: ["__vercel_live_token", "_vercel_jwt", "__va"],
+          "We use Vercel Analytics and Clarity to understand how visitors navigate our website and identify areas for improvement. This helps us provide a better user experience.",
+        cookies: ["__vercel_live_token", "_vercel_jwt", "__va", "_clck", "_clsk"],
       },
     ],
 
