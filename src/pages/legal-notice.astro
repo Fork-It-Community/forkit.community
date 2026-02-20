@@ -1,0 +1,110 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import SEO from "@/components/SEO/index.astro";
+import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import Prose from "@/components/Prose/index.astro";
+import bgImage from "@/assets/images/events.jpeg";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
+import CookieSettingsButton from "@/components/CookieSettingsButton/index.astro";
+---
+
+<MainLayout>
+  <SEO
+    slot="seo"
+    title="Legal Notice"
+    description="Legal notice and information about Fork it! Community - Company information, website hosting, intellectual property, and data protection"
+  />
+  <MainPageTitle
+    title="Legal Notice"
+    subtitle="Legal information and website publishing details"
+    imageSrc={bgImage}
+  />
+  <section class="m-auto max-w-7xl px-4 py-16">
+    <Prose>
+      <h2 id="website-publisher">Website Publisher</h2>
+      <p>The website Fork it! Community is published by:</p>
+      <ul>
+        <li><strong>Company name:</strong> FORK IT! COMMUNITY</li>
+        <li>
+          <strong>Legal form:</strong> SAS (Simplified Joint-Stock Company)
+        </li>
+        <li><strong>Share capital:</strong> 10,000.00 €</li>
+        <li><strong>SIREN number:</strong> 987 840 238</li>
+        <li><strong>SIRET number:</strong> 987 840 238 00016</li>
+        <li><strong>VAT number:</strong> FR06987840238</li>
+        <li>
+          <strong>Registered office address:</strong> 1900 Route de Cailly, 76690
+          Saint-André-sur-Cailly, France
+        </li>
+        <li>
+          <strong>Company Director (Managing Director):</strong> Mr. Rudy Baer
+        </li>
+        <li><strong>RCS number:</strong> 987 840 238 R.C.S. Rouen</li>
+        <li><strong>Publication Director:</strong> Mr. Yoann Fleury</li>
+      </ul>
+
+      <h2 id="website-hosting">Website Hosting</h2>
+      <p>
+        The website is hosted by: <a href="https://vercel.com/">Vercel Inc.</a>
+      </p>
+      <p>
+        <strong>Registered office address:</strong> 440 N Barranca Avenue #4133,
+        Covina, CA 91723, United States
+      </p>
+
+      <h2 id="intellectual-property">Intellectual Property</h2>
+      <p>
+        All content available on the Fork it! Community website, including but
+        not limited to texts, images, logos, graphics, videos, and other
+        materials, is protected by copyright and intellectual property laws.
+      </p>
+      <p>
+        Any reproduction, representation, modification, publication,
+        transmission, or exploitation of all or part of the website content,
+        without prior written authorization, is strictly prohibited.
+      </p>
+
+      <h2 id="personal-data-collection">Personal Data Collection</h2>
+      <p>
+        Fork it! Community is committed to respecting the confidentiality of
+        personal information provided by users of the website.
+      </p>
+      <p>
+        Personal data is collected and processed in compliance with applicable
+        regulations, including the General Data Protection Regulation (GDPR).
+      </p>
+      <p>
+        For more information, please refer to our <a
+          href={lunalink(ROUTES["privacy-policy"].__path, {})}
+          >Privacy Policy.</a
+        >
+      </p>
+
+      <h2 id="cookies">Cookies</h2>
+      <p>The website uses cookies to improve user experience.</p>
+      <p>
+        You can manage your preferences by referring to our <CookieSettingsButton
+          label="Cookie policy"
+        />
+      </p>
+
+      <h2 id="governing-law">Governing Law</h2>
+      <p>
+        The Fork it! Community website is governed by French law. In the event
+        of a dispute, French courts shall have exclusive jurisdiction.
+      </p>
+
+      <h2 id="data-protection">Data Protection</h2>
+      <p>
+        For any questions regarding the collection or processing of your
+        personal data, or to exercise your rights (access, rectification,
+        erasure, objection), you may contact our data protection contact at:
+      </p>
+      <p>
+        <strong>Email:</strong>
+        <a href="mailto:contact@forkit.community">contact@forkit.community</a>
+      </p>
+    </Prose>
+  </section>
+</MainLayout>

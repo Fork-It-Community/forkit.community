@@ -1,3 +1,5 @@
 *.mdx
 pnpm-lock.yaml
 routes.gen.ts
+orejime.js
+orejime.css

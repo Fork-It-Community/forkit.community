@@ -11,6 +11,7 @@ import { getEventData } from "@/pages/events/[id]/assets/_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 import { getTalkData } from "@/pages/events/[id]/talks/[talkId]/assets/_utils";
 import { OG_IMAGE } from "@/assets/consts";
+import { SponsorLogos } from "@/generated-assets/components/SponsorLogos";
 
 export const config: AssetImageConfig = OG_IMAGE;
 
@@ -29,6 +30,19 @@ export default async function ({
         await getAstroImageBase64(coOrganiser.data.logos.noBgSquare),
     ),
   );
+
+  const coOrganizersIds = event.__coOrganizers.map(
+    (coOrganiser) => coOrganiser.id,
+  );
+
+  const sponsorLogos = await Promise.all(
+    event.__sponsors
+      .filter((sponsor) => !coOrganizersIds.includes(sponsor.id))
+      .map(
+        async (sponsor) => await getAstroImageBase64(sponsor.data.logos.noBg),
+      ),
+  );
+  const displaySponsors = event.data.type === "event" && !!sponsorLogos.length;
   const speakersImages = (
     await Promise.all(
       talk.__speakers.map(async (speaker) => {
@@ -45,7 +59,15 @@ export default async function ({
     )
   ).slice(0, 4);
   return (
-    <Frame {...config} style={{ padding: 96 }}>
+    <Frame
+      {...config}
+      style={{
+        paddingTop: 96,
+        paddingLeft: 96,
+        paddingRight: 96,
+        paddingBottom: displaySponsors ? 0 : 96,
+      }}
+    >
       <BgImage src={postCover} width={config.width} height={config.height} />
 
       <div
@@ -273,6 +295,7 @@ export default async function ({
           </div>
         </div>
       </div>
+      {displaySponsors && <SponsorLogos logos={sponsorLogos} />}
     </Frame>
   );
 }
