@@ -1,3 +1,4 @@
+import { ASSET_CATEGORIES, EXCLUDED_CATEGORIES_BY_TYPE } from "@/assets/consts";
 import { NotFoundAssetError } from "@/generated-assets/api";
 import { getImageNameFromTsxPath } from "@/generated-assets/image";
 import { eventWithComputed } from "@/lib/events";
@@ -7,6 +8,7 @@ import {
   getEntry,
   type CollectionEntry,
 } from "astro:content";
+import { groupBy } from "remeda";
 
 export const getEventData = async (id: string) => {
   const event = await getEntry("events", id);
@@ -69,4 +71,37 @@ export const getEventAssetsSources = (event: CollectionEntry<"events">) => {
   ]
     .flat()
     .filter((x) => x !== undefined && x !== null);
+};
+
+export const categorize = (path: string) =>
+  ASSET_CATEGORIES.find(
+    (category) => category.id !== "other" && path.includes(category.id),
+  )?.id ?? "other";
+
+const getOppositeSuffixes = (
+  eventType: CollectionEntry<"events">["data"]["type"],
+) => {
+  const allTypes = ["meetup", "event"];
+  return allTypes
+    .filter((type) => type !== eventType)
+    .map((type) => `-${type}.jpg`);
+};
+
+export const getGroupedAssets = (
+  imagesSrc: string[],
+  eventType: CollectionEntry<"events">["data"]["type"],
+) => {
+  const oppositeSuffixes = getOppositeSuffixes(eventType);
+  const groups = groupBy(imagesSrc, categorize);
+
+  return ASSET_CATEGORIES.filter(
+    ({ id }) => !EXCLUDED_CATEGORIES_BY_TYPE[eventType].includes(id),
+  )
+    .map((category) => ({
+      ...category,
+      images: (groups[category.id] ?? []).filter((src) => {
+        return !oppositeSuffixes.some((suffix) => src.endsWith(suffix));
+      }),
+    }))
+    .filter(({ images }) => !!images.length);
 };
