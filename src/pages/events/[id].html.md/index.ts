@@ -77,24 +77,17 @@ const displaySchedule = async (event: EventWithComputed) => {
   // Return empty string if all talks were filtered out
   if (talks.length === 0) return "";
 
-  const itemsWithTime =
-    event.data.schedule?.items?.filter(
-      (item) =>
-        (item.type === "conference" || item.type === "roundtable") &&
-        item.startTime &&
-        item.status !== "cancelled",
-    ) ?? [];
-
-  const formattedItems = itemsWithTime.map((item) =>
-    dayjs(item.startTime).format("hh:mmA"),
-  );
-
   return `## Schedule
 
 ${(
   await Promise.all(
-    talks.map(async (item, index) => {
-      const timeStart = formattedItems[index] ?? "";
+    talks.map(async (item) => {
+      const scheduleItem = event.data.schedule?.items?.find(
+        (schedItem) => schedItem.slug?.id === item.id,
+      );
+      const timeStart = scheduleItem?.startTime
+        ? dayjs(scheduleItem.startTime).format("hh:mmA")
+        : "";
       const speakerNames = (
         await Promise.all(
           item.data.speakers.map(async (speaker) => {
