@@ -1,0 +1,48 @@
+---
+import TiltedCard from "@/components/TiltedCard";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils-client";
+import { ROUTES } from "@/routes.gen";
+import { lunalink } from "@bearstudio/lunalink";
+---
+
+<TiltedCard client:visible className="mx-auto w-full max-w-screen-md">
+  <div
+    class="group flex w-full flex-col gap-8 rounded-lg bg-white/5 p-6 backdrop-blur-md transition hover:bg-white/10 sm:gap-10 md:flex-row md:items-center md:px-8 md:py-6"
+  >
+    <div class="flex w-full flex-1 flex-col gap-1 max-md:text-center">
+      <h2
+        class="text-balance font-heading text-base font-medium uppercase tracking-widest transition group-hover:text-primary"
+      >
+        Interested in speaking?
+      </h2>
+      <p class="text-balance text-xs tracking-wider opacity-60">
+        Can't find a local event? Consider submitting to our global Call for
+        Proposals.
+      </p>
+    </div>
+
+    <div
+      class="mx-auto flex w-full max-w-max flex-col items-center gap-4 xs:flex-row"
+    >
+      <a
+        href="https://conference-hall.io/fork-it-meetup-worldwide"
+        target="_blank"
+        rel="noreferrer"
+        class={cn(
+          buttonVariants({ size: "lg", variant: "secondary" }),
+          "w-full sm:w-fit",
+        )}
+      >
+        Fork it! Global CFP
+      </a>
+      <a
+        href={lunalink(ROUTES["call-for-papers"].guidelines.__path, {})}
+        class={cn(buttonVariants({ size: "lg", variant: "ghost" }))}
+      >
+        How to & Guidelines
+        <span aria-hidden="true" class="ps-2"> → </span>
+      </a>
+    </div>
+  </div>
+</TiltedCard>

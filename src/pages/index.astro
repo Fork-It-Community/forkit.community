@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils-client";
 import { buttonVariants } from "@/components/ui/button";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import JoinNewsletter from "@/components/JoinNewsletter/index.astro";
+import GlobalCFP from "@/components/GlobalCFP/index.astro";
 import ArticleSlider from "@/components/ArticleSlider/index.astro";
 import VodSlider from "@/components/VodSlider/index.astro";
 import About from "@/components/About/index.astro";
@@ -337,6 +338,10 @@ const forKidsAfterMovie = (
         </p>
       </div>
       <VodSlider talks={allTalks} />
+    </div>
+
+    <div class="mx-auto w-full max-w-screen-lg gap-2 px-6 py-12">
+      <GlobalCFP />
     </div>
   </div>
 
