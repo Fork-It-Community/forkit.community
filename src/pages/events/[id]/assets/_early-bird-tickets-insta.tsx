@@ -85,7 +85,7 @@ async function earlyBirdTicketsInsta({ params }: { params: { id: string } }) {
             display: "flex",
             flexDirection: "column",
             gap: 16,
-            marginTop: coOrganizersLogos.length ? 80 : 96,
+            marginTop: coOrganizersLogos.length ? 80 : 163,
           }}
         >
           <div
