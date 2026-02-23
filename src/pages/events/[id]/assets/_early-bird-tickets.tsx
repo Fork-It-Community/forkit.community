@@ -40,9 +40,14 @@ async function earlyBirdTickets({ params }: { params: { id: string } }) {
   );
   const displaySponsors = event.data.type === "event" && !!sponsorLogos.length;
 
-  const ticketFullDayEvent = saveTheDate({ width: 1920, height: 1080 });
+  const ticketFullDayEvent = saveTheDate({
+    width: 1920,
+    height: 1080,
+    dateFontSize: 64,
+    locationFontSize: 44,
+  });
   const ticketJSX = await ticketFullDayEvent({
-    params: { id: event.id, name: "Full Day Event" },
+    params: { id: event.id, name: "FULL DAY EVENT" },
   });
 
   const ticketSVG = await SVG(ticketJSX, { width: 1920, height: 1080 });
@@ -129,6 +134,7 @@ async function earlyBirdTickets({ params }: { params: { id: string } }) {
               fontWeight: 500,
               lineHeight: 1,
               textTransform: "uppercase",
+              opacity: 0.6,
             }}
           >
             www.forkit.community
@@ -146,24 +152,24 @@ async function earlyBirdTickets({ params }: { params: { id: string } }) {
         >
           <img
             src={ticketImageBase64}
-            width={800}
-            height={500}
+            width={1120}
+            height={700}
             style={{
               position: "absolute",
-              left: 90,
-              top: 350,
+              left: -50,
+              top: 250,
               transform: "rotate(45deg)",
               zIndex: 1,
             }}
           />
           <img
             src={ticketImageBase64}
-            width={800}
-            height={484}
+            width={1120}
+            height={678}
             style={{
               position: "absolute",
-              left: 250,
-              top: 350,
+              left: 100,
+              top: 250,
               transform: "rotate(70deg)",
               zIndex: 2,
             }}

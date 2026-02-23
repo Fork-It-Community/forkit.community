@@ -40,9 +40,14 @@ async function earlyBirdTicketsInsta({ params }: { params: { id: string } }) {
   );
   const displaySponsors = event.data.type === "event" && !!sponsorLogos.length;
 
-  const ticketFullDayEvent = saveTheDate({ width: 1920, height: 1080 });
+  const ticketFullDayEvent = saveTheDate({
+    width: 1920,
+    height: 1080,
+    dateFontSize: 64,
+    locationFontSize: 44,
+  });
   const ticketJSX = await ticketFullDayEvent({
-    params: { id: event.id, name: "Full Day Event" },
+    params: { id: event.id, name: "FULL DAY EVENT" },
   });
 
   const ticketSVG = await SVG(ticketJSX, { width: 1920, height: 1080 });
@@ -70,20 +75,19 @@ async function earlyBirdTicketsInsta({ params }: { params: { id: string } }) {
           flex: 1,
           display: "flex",
           flexDirection: "column",
-          gap: 48,
           width: "100%",
-          justifyContent: "space-between",
         }}
       >
+        <LogoWithFriends logos={coOrganizersLogos} />
+
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: 24,
+            gap: 16,
+            marginTop: coOrganizersLogos.length ? 80 : 96,
           }}
         >
-          <LogoWithFriends logos={coOrganizersLogos} />
-
           <div
             style={{
               display: "flex",
@@ -91,7 +95,6 @@ async function earlyBirdTicketsInsta({ params }: { params: { id: string } }) {
               fontWeight: 500,
               textTransform: "uppercase",
               letterSpacing: 4,
-              paddingTop: coOrganizersLogos.length ? 0 : 96,
             }}
           >
             Tickets Are Available
@@ -121,6 +124,7 @@ async function earlyBirdTicketsInsta({ params }: { params: { id: string } }) {
             alignItems: "center",
             width: "100%",
             flex: 1,
+            marginTop: 32,
           }}
         >
           <img
@@ -133,6 +137,8 @@ async function earlyBirdTicketsInsta({ params }: { params: { id: string } }) {
           />
         </div>
 
+        <div style={{ height: 80 }} />
+
         <div
           style={{
             display: "flex",
@@ -142,6 +148,7 @@ async function earlyBirdTicketsInsta({ params }: { params: { id: string } }) {
             fontWeight: 500,
             lineHeight: 1,
             textTransform: "uppercase",
+            opacity: 0.6,
           }}
         >
           <div style={{ display: "flex" }}>
