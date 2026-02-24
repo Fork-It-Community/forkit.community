@@ -85,7 +85,6 @@ async function earlyBirdTickets({ params }: { params: { id: string } }) {
             flexDirection: "column",
             justifyContent: "space-between",
             flex: 1,
-            paddingBottom: 48,
           }}
         >
           <LogoWithFriends logos={coOrganizersLogos} />
@@ -145,31 +144,31 @@ async function earlyBirdTickets({ params }: { params: { id: string } }) {
           style={{
             display: "flex",
             position: "relative",
-            width: 920,
+            width: 740,
             flexShrink: 0,
             alignSelf: "stretch",
           }}
         >
           <img
             src={ticketImageBase64}
-            width={1120}
-            height={700}
+            width={900}
+            height={560}
             style={{
               position: "absolute",
-              left: -50,
-              top: 250,
+              left: -100,
+              top: 320,
               transform: "rotate(45deg)",
               zIndex: 1,
             }}
           />
           <img
             src={ticketImageBase64}
-            width={1120}
-            height={678}
+            width={900}
+            height={542}
             style={{
               position: "absolute",
-              left: 100,
-              top: 250,
+              left: 50,
+              top: 318,
               transform: "rotate(70deg)",
               zIndex: 2,
             }}
