@@ -124,7 +124,6 @@ async function earlyBirdTicketsInsta({ params }: { params: { id: string } }) {
             alignItems: "center",
             width: "100%",
             flex: 1,
-            marginTop: 32,
           }}
         >
           <img
@@ -136,8 +135,6 @@ async function earlyBirdTicketsInsta({ params }: { params: { id: string } }) {
             }}
           />
         </div>
-
-        <div style={{ height: 80 }} />
 
         <div
           style={{
