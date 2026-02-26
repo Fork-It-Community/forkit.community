@@ -3,10 +3,10 @@ import { Fragment } from "react";
 export const SponsorLogos = ({ logos }: { logos: string[] }) => {
   const height = 140;
   const chunkSize = logos.length <= 6 ? logos.length : 4;
-  const chunks = Array.from(
-    { length: Math.ceil(logos.length / chunkSize) },
-    (_, i) => logos.slice(i * chunkSize, i * chunkSize + chunkSize),
-  );
+  const chunks: string[][] = [];
+  for (let i = 0; i < logos.length; i += chunkSize) {
+    chunks.push(logos.slice(i, i + chunkSize));
+  }
   return (
     <div
       style={{
