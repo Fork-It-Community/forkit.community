@@ -151,24 +151,24 @@ async function earlyBirdTickets({ params }: { params: { id: string } }) {
         >
           <img
             src={ticketImageBase64}
-            width={900}
+            width={1050}
             height={560}
             style={{
               position: "absolute",
-              left: -100,
-              top: 320,
+              left: -170,
+              top: 340,
               transform: "rotate(45deg)",
               zIndex: 1,
             }}
           />
           <img
             src={ticketImageBase64}
-            width={900}
+            width={1050}
             height={542}
             style={{
               position: "absolute",
-              left: 50,
-              top: 318,
+              left: -20,
+              top: 253,
               transform: "rotate(70deg)",
               zIndex: 2,
             }}
@@ -178,7 +178,7 @@ async function earlyBirdTickets({ params }: { params: { id: string } }) {
 
       {displaySponsors && (
         <div style={{ display: "flex", width: "80%", alignSelf: "flex-start" }}>
-          <SponsorLogos logos={sponsorLogos} scale={0.5} />
+          <SponsorLogos logos={sponsorLogos} />
         </div>
       )}
     </Frame>
