@@ -101,7 +101,7 @@ export default async function ({
             <div
               style={{
                 display: "flex",
-                fontSize: 80,
+                fontSize: 76,
                 fontWeight: 500,
                 lineHeight: 1,
                 marginTop: -8,
