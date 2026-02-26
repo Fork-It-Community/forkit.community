@@ -2,48 +2,64 @@ import { Fragment } from "react";
 
 export const SponsorLogos = ({ logos }: { logos: string[] }) => {
   const height = 140;
+  const chunkSize = logos.length <= 6 ? logos.length : 4;
+  const chunks = Array.from(
+    { length: Math.ceil(logos.length / chunkSize) },
+    (_, i) => logos.slice(i * chunkSize, i * chunkSize + chunkSize),
+  );
   return (
     <div
       style={{
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
         position: "relative",
         zIndex: 10,
-        flexWrap: "wrap",
-        paddingBottom: 4,
-        justifyContent: "center",
+        paddingBottom: 60,
       }}
     >
-      {logos.map((logo, index) => (
+      {chunks.map((chunk, chunkIndex) => (
         <div
-          key={logo}
+          key={chunkIndex}
           style={{
             display: "flex",
             alignItems: "center",
-            height,
+            justifyContent: "center",
           }}
         >
-          <img
-            src={logo}
-            alt=""
-            style={{
-              height: 180,
-              width: 180,
-              objectFit: "contain",
-            }}
-          />
-          {index < logos.length - 1 && (
+          {chunk.map((logo, index) => (
             <div
+              key={logo}
               style={{
-                fontSize: 28,
-                opacity: 0.3,
-                paddingLeft: 40,
-                paddingRight: 40,
+                display: "flex",
+                alignItems: "center",
+                height,
+                marginBottom: -60,
               }}
             >
-              &times;
+              <img
+                src={logo}
+                alt=""
+                style={{
+                  height: 180,
+                  width: 180,
+                  objectFit: "contain",
+                }}
+              />
+              {index < chunk.length - 1 && (
+                <div
+                  style={{
+                    fontSize: 28,
+                    opacity: 0.3,
+                    paddingLeft: 40,
+                    paddingRight: 40,
+                  }}
+                >
+                  &times;
+                </div>
+              )}
             </div>
-          )}
+          ))}
         </div>
       ))}
     </div>
@@ -70,6 +86,7 @@ export const SponsorLogosInsta = ({ logos }: { logos: string[] }) => {
               display: "flex",
               alignItems: "center",
               height,
+              marginBottom: -20,
             }}
           >
             <img
