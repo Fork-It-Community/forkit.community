@@ -124,6 +124,7 @@ async function earlyBirdTicketsInsta({ params }: { params: { id: string } }) {
             alignItems: "center",
             width: "100%",
             flex: 1,
+            paddingTop: 20,
           }}
         >
           <img
@@ -146,6 +147,7 @@ async function earlyBirdTicketsInsta({ params }: { params: { id: string } }) {
             lineHeight: 1,
             textTransform: "uppercase",
             opacity: 0.6,
+            paddingTop: 60,
           }}
         >
           <div style={{ display: "flex" }}>
