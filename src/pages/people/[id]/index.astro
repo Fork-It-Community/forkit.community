@@ -15,20 +15,23 @@ import Prose from "@/components/Prose/index.astro";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import TiltedCard from "@/components/TiltedCard";
 import { BackButton } from "@/components/BackButton";
+import { AchievementBadges } from "@/components/AchievementBadges";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
+import { getPeopleListWithComputed } from "@/lib/people";
+import { getPersonAchievements } from "@/lib/achievements";
 
 export const getStaticPaths = (async () => {
   const people = await getCollection("people");
 
-  return Promise.all(
-    people.map(async (person) => ({
-      params: { id: person.id },
-      props: {
-        person,
-      },
-    })),
-  );
+  const peopleWithComputed = await getPeopleListWithComputed(people);
+
+  return peopleWithComputed.map((person) => ({
+    params: { id: person.id },
+    props: {
+      person,
+    },
+  }));
 }) satisfies GetStaticPaths;
 
 const { person } = Astro.props;
@@ -38,6 +41,8 @@ const ogImage = new URL(
   Astro.url.pathname + "/assets/og-image.jpg",
   Astro.site,
 );
+
+const personAchievements = getPersonAchievements(person);
 ---
 
 <MainLayout>
@@ -134,6 +139,9 @@ const ogImage = new URL(
               </ul>
             )
           }
+          <div class="flex gap-2">
+            <AchievementBadges client:load achievements={personAchievements} />
+          </div>
         </section>
 
         <section class="flex w-full flex-1 flex-col gap-8 px-4">
