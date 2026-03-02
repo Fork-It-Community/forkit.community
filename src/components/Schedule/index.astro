@@ -100,7 +100,22 @@ const { event, displayStats } = Astro.props;
                         <CardConference activity={activity} event={event} />
                       </TiltedCard>
                     ))
-                    .with("info", "lunch", () => <CardInfo info={activity} />)
+                    .with("info", "lunch", () =>
+                      activity.locationUrl ? (
+                        <TiltedCard client:visible>
+                          <a
+                            href={activity.locationUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="block"
+                          >
+                            <CardInfo info={activity} />
+                          </a>
+                        </TiltedCard>
+                      ) : (
+                        <CardInfo info={activity} />
+                      ),
+                    )
                     .exhaustive()}
                 </div>
               </div>
