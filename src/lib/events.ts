@@ -610,32 +610,22 @@ export async function getRelatedEvents(event: EventComputed) {
     without: ["cancelled"],
   });
 
+  const score = (candidate: (typeof allEvents)[number]) =>
+    (candidate.data.type === "event" ? 2 : 0) +
+    (candidate.data._computed.city?.id === event.data._computed.city?.id
+      ? 1
+      : 0);
+
   return allEvents
     .filter(
-      (e) =>
-        e.id !== event.id &&
-        e.data._computed.country?.id === event.data._computed.country?.id,
+      (candidate) =>
+        candidate.id !== event.id &&
+        candidate.data._computed.country?.id ===
+          event.data._computed.country?.id,
     )
-    .sort((a, b) => {
-      const aIsEvent = a.data.type === "event";
-      const bIsEvent = b.data.type === "event";
-      const aSameCity =
-        a.data._computed.city?.id === event.data._computed.city?.id;
-      const bSameCity =
-        b.data._computed.city?.id === event.data._computed.city?.id;
-      if (aIsEvent && !bIsEvent) {
-        return -1;
-      }
-      if (!aIsEvent && bIsEvent) {
-        return 1;
-      }
-      if (aSameCity && !bSameCity) {
-        return -1;
-      }
-      if (!aSameCity && bSameCity) {
-        return 1;
-      }
-      return dayjs(b.data.date).diff(dayjs(a.data.date));
-    })
+    .sort(
+      (a, b) =>
+        score(b) - score(a) || dayjs(b.data.date).diff(dayjs(a.data.date)),
+    )
     .slice(0, 2);
 }
