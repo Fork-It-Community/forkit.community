@@ -1,0 +1,177 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import SEO from "@/components/SEO/index.astro";
+import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import bgImage from "@/assets/images/events.jpeg";
+import Prose from "@/components/Prose/index.astro";
+---
+
+<MainLayout>
+  <SEO
+    slot="seo"
+    title="Thank You"
+    description="Fork it! Community is built on open source. Discover the amazing projects and technologies that power our community."
+  />
+  <MainPageTitle
+    title="Thank You"
+    subtitle="To the open source projects and tools that make Fork it! possible"
+    imageSrc={bgImage}
+  />
+  <section class="m-auto max-w-7xl px-4 py-16">
+    <Prose>
+      <p>
+        Fork it! Community wouldn't exist without the incredible open source
+        ecosystem. This page is our way of saying <strong>thank you</strong> to the
+        projects and tools we rely on every day.
+      </p>
+
+      <h2 id="community-tools">Community Tools</h2>
+      <p>
+        These open source platforms help us organize events and gather feedback
+        from our community.
+      </p>
+      <ul>
+        <li>
+          <a href="https://developers.events" target="_blank" rel="noreferrer">
+            developers.events
+          </a> &ndash; A collaborative platform to discover developer events worldwide.
+        </li>
+        <li>
+          <a
+            href="https://github.com/conference-hall/conference-hall"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Conference Hall
+          </a> &ndash; An open source speaker submission platform used for our Call
+          for Papers.
+        </li>
+        <li>
+          <a
+            href="https://github.com/HugoGresse/open-feedback"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Open Feedback
+          </a> &ndash; An open source tool to collect feedback from attendees during
+          events.
+        </li>
+      </ul>
+
+      <h2 id="website-technologies">Website Technologies</h2>
+      <p>
+        Our website is built with a modern open source stack. Here are the key
+        technologies that power it.
+      </p>
+      <ul>
+        <li>
+          <a href="https://astro.build" target="_blank" rel="noreferrer">
+            Astro
+          </a> &ndash; The web framework that powers this website.
+        </li>
+        <li>
+          <a href="https://react.dev" target="_blank" rel="noreferrer">
+            React
+          </a> &ndash; Used for interactive components across the site.
+        </li>
+        <li>
+          <a href="https://tailwindcss.com" target="_blank" rel="noreferrer">
+            Tailwind CSS
+          </a> &ndash; The utility-first CSS framework we use for styling.
+        </li>
+        <li>
+          <a
+            href="https://github.com/vercel/satori"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Satori
+          </a> &ndash; Generates our Open Graph images from HTML and CSS.
+        </li>
+        <li>
+          <a
+            href="https://www.typescriptlang.org"
+            target="_blank"
+            rel="noreferrer"
+          >
+            TypeScript
+          </a> &ndash; Adds type safety to our codebase.
+        </li>
+        <li>
+          <a
+            href="https://sharp.pixelplumbing.com"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Sharp
+          </a> &ndash; High-performance image processing.
+        </li>
+        <li>
+          <a href="https://www.i18next.com" target="_blank" rel="noreferrer">
+            i18next
+          </a> &ndash; The internationalization framework for our multilingual support.
+        </li>
+        <li>
+          <a href="https://mdxjs.com" target="_blank" rel="noreferrer"> MDX </a>
+          &ndash; Lets us write JSX in our Markdown content.
+        </li>
+      </ul>
+
+      <h2 id="ui-components">UI Components</h2>
+      <ul>
+        <li>
+          <a href="https://www.radix-ui.com" target="_blank" rel="noreferrer">
+            Radix UI
+          </a> &ndash; Accessible, unstyled UI primitives for our interactive components.
+        </li>
+        <li>
+          <a href="https://motion.dev" target="_blank" rel="noreferrer">
+            Motion
+          </a> &ndash; The animation library behind our smooth transitions.
+        </li>
+        <li>
+          <a
+            href="https://react-icons.github.io/react-icons"
+            target="_blank"
+            rel="noreferrer"
+          >
+            React Icons
+          </a> &ndash; A comprehensive icon library.
+        </li>
+        <li>
+          <a
+            href="https://sonner.emilkowal.ski"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Sonner
+          </a> &ndash; Toast notifications.
+        </li>
+        <li>
+          <a href="https://cmdk.paco.me" target="_blank" rel="noreferrer">
+            cmdk
+          </a> &ndash; The command palette component.
+        </li>
+      </ul>
+
+      <hr />
+
+      <p>
+        This list is not exhaustive &ndash; we rely on many more open source
+        packages and tools. If you're a maintainer of any of these projects,
+        <strong>thank you</strong> for your work. You make communities like ours
+        possible.
+      </p>
+      <p>
+        Want to see the full list? Check out our{" "}
+        <a
+          href="https://github.com/Fork-It-Community/forkit.community"
+          target="_blank"
+          rel="noreferrer"
+        >
+          source code on GitHub
+        </a>.
+      </p>
+    </Prose>
+  </section>
+</MainLayout>
