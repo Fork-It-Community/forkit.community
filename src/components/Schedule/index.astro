@@ -75,12 +75,23 @@ const { event, displayStats } = Astro.props;
                     duration={activity.duration}
                     class="font-heading text-sm tracking-wide opacity-80"
                   />
-                  {!!activity.location && (
-                    <span class="flex items-center gap-1.5 text-xs uppercase tracking-wide opacity-60">
-                      <MdPlace className="text-base" />
-                      {activity.location}
-                    </span>
-                  )}
+                  {!!activity.location &&
+                    (activity.locationUrl ? (
+                      <a
+                        href={activity.locationUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-center gap-1.5 text-xs uppercase tracking-wide opacity-60 hover:opacity-100"
+                      >
+                        <MdPlace className="text-base" />
+                        {activity.location}
+                      </a>
+                    ) : (
+                      <span class="flex items-center gap-1.5 text-xs uppercase tracking-wide opacity-60">
+                        <MdPlace className="text-base" />
+                        {activity.location}
+                      </span>
+                    ))}
                 </div>
                 <div>
                   {match(activity.type)
