@@ -4,11 +4,9 @@ import MainPageTitle from "@/components/MainPageTitle/index.astro";
 import EventsGrid from "@/components/EventsGrid/index.astro";
 import EventsList from "@/components/EventsList/index.astro";
 import SEO from "@/components/SEO/index.astro";
-import { getEventsCollection } from "@/lib/events";
+import { getUpcomingEvents, getPastEvents } from "@/lib/events";
 import { EVENT_TYPE_MAP, EVENT_TYPES } from "@/assets/consts";
 import bgImage from "@/assets/images/events.jpeg";
-import dayjs from "dayjs";
-import { t } from "@/i18n";
 
 export async function getStaticPaths() {
   const allTypes = Object.keys(EVENT_TYPES);
@@ -19,24 +17,19 @@ export async function getStaticPaths() {
 }
 
 const eventTypeParam = Astro.params.eventType;
-
-const allEvents = await getEventsCollection({
-  without: ["draft"],
-});
 const eventType = EVENT_TYPE_MAP[eventTypeParam];
-const eventsByType = allEvents.filter((event) => event.data.type === eventType);
-const upcomingEvents = eventsByType.filter((event) =>
-  dayjs(event.data.date).endOf("day").isAfter(dayjs()),
+const upcomingEvents = (await getUpcomingEvents()).filter(
+  (event) => event.data.type === eventType,
 );
-const pastEvents = eventsByType.filter(
-  (event) => !dayjs(event.data.date).endOf("day").isAfter(dayjs()),
+const pastEvents = (await getPastEvents()).filter(
+  (event) => event.data.type === eventType,
 );
 ---
 
 <MainLayout>
   <SEO
     slot="seo"
-    title={`Top Upcoming ${EVENT_TYPES[eventTypeParam as keyof typeof EVENT_TYPES]} Tech Events`}
+    title={`Top ${EVENT_TYPES[eventTypeParam as keyof typeof EVENT_TYPES]} Tech Events`}
     description={`All Fork it! ${EVENT_TYPES[eventTypeParam as keyof typeof EVENT_TYPES]}`}
   />
   <MainPageTitle
@@ -48,14 +41,14 @@ const pastEvents = eventsByType.filter(
     {
       !!upcomingEvents.length && (
         <div class="mx-auto w-full max-w-screen-lg px-4">
-          <EventsGrid events={upcomingEvents} title={t("events:upcoming")} />
+          <EventsGrid events={upcomingEvents} title="Upcoming events" />
         </div>
       )
     }
     {
       !!pastEvents.length && (
         <div class="mx-auto w-full max-w-screen-lg px-4">
-          <EventsList events={pastEvents} title={t("events:past")} />
+          <EventsList events={pastEvents} title="Past events" />
         </div>
       )
     }
