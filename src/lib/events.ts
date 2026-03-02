@@ -610,9 +610,13 @@ export async function getRelatedEvents(event: EventComputed) {
     without: ["cancelled"],
   });
 
+  const sourceCountryId = event.data._computed.country?.id;
+  const sourceCityId = event.data._computed.city?.id;
+  if (!sourceCountryId) return [];
+
   const score = (candidate: (typeof allEvents)[number]) =>
     (candidate.data.type === "event" ? 2 : 0) +
-    (candidate.data._computed.city?.id === event.data._computed.city?.id
+    (sourceCityId && candidate.data._computed.city?.id === sourceCityId
       ? 1
       : 0);
 
@@ -620,8 +624,7 @@ export async function getRelatedEvents(event: EventComputed) {
     .filter(
       (candidate) =>
         candidate.id !== event.id &&
-        candidate.data._computed.country?.id ===
-          event.data._computed.country?.id,
+        candidate.data._computed.country?.id === sourceCountryId,
     )
     .sort(
       (a, b) =>
