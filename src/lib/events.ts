@@ -626,3 +626,31 @@ export async function getUpcomingEventsWithOpenCfp(limit?: number) {
       ) ?? [];
   return cfpEvents.slice(0, limit);
 }
+
+export async function getRelatedEvents(event: EventComputed) {
+  const allEvents = await getEventsCollection({
+    without: ["cancelled"],
+  });
+
+  const sourceCountryId = event.data._computed.country?.id;
+  const sourceCityId = event.data._computed.city?.id;
+  if (!sourceCountryId) return [];
+
+  const score = (candidate: (typeof allEvents)[number]) =>
+    (candidate.data.type === "event" ? 2 : 0) +
+    (sourceCityId && candidate.data._computed.city?.id === sourceCityId
+      ? 1
+      : 0);
+
+  return allEvents
+    .filter(
+      (candidate) =>
+        candidate.id !== event.id &&
+        candidate.data._computed.country?.id === sourceCountryId,
+    )
+    .sort(
+      (a, b) =>
+        score(b) - score(a) || dayjs(b.data.date).diff(dayjs(a.data.date)),
+    )
+    .slice(0, 2);
+}
