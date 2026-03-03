@@ -5,7 +5,7 @@ import EventsGrid from "@/components/EventsGrid/index.astro";
 import EventsList from "@/components/EventsList/index.astro";
 import SEO from "@/components/SEO/index.astro";
 import { getUpcomingEvents, getPastEvents } from "@/lib/events";
-import { EVENT_TYPE_MAP, EVENT_TYPES } from "@/assets/consts";
+import { EVENT_TYPES, type EventTypeKey } from "@/assets/consts";
 import bgImage from "@/assets/images/events.jpeg";
 
 export async function getStaticPaths() {
@@ -16,8 +16,8 @@ export async function getStaticPaths() {
   }));
 }
 
-const eventTypeParam = Astro.params.eventType;
-const eventType = EVENT_TYPE_MAP[eventTypeParam];
+const eventTypeParam = Astro.params.eventType as EventTypeKey;
+const eventType = EVENT_TYPES[eventTypeParam].slug;
 const upcomingEvents = (await getUpcomingEvents()).filter(
   (event) => event.data.type === eventType,
 );
@@ -29,12 +29,12 @@ const pastEvents = (await getPastEvents()).filter(
 <MainLayout>
   <SEO
     slot="seo"
-    title={`Top ${EVENT_TYPES[eventTypeParam as keyof typeof EVENT_TYPES]} Tech Events`}
-    description={`All Fork it! ${EVENT_TYPES[eventTypeParam as keyof typeof EVENT_TYPES]}`}
+    title={`Top ${EVENT_TYPES[eventTypeParam].label} Tech Events`}
+    description={`All Fork it! ${EVENT_TYPES[eventTypeParam].label}`}
   />
   <MainPageTitle
-    title={`Fork it! ${EVENT_TYPES[eventTypeParam as keyof typeof EVENT_TYPES]}`}
-    subtitle={`All Fork it! ${EVENT_TYPES[eventTypeParam as keyof typeof EVENT_TYPES]}`}
+    title={`Fork it! ${EVENT_TYPES[eventTypeParam].label}`}
+    subtitle={`All Fork it! ${EVENT_TYPES[eventTypeParam].label}`}
     imageSrc={bgImage}
   />
   <div class="flex flex-col gap-16 pb-40">

@@ -33,11 +33,7 @@ export const EXCLUDED_CATEGORIES_BY_TYPE: Record<
 };
 
 export const EVENT_TYPES = {
-  meetups: "Meetups",
-  events: "Full Day Events",
+  events: { label: "Full Day Events", slug: "event" },
+  meetups: { label: "Meetups", slug: "meetup" },
 } as const;
-export const EVENT_TYPE_MAP: Record<string, "event" | "meetup"> = {
-  events: "event",
-  meetups: "meetup",
-};
-export type EventType = (typeof EVENT_TYPES)[keyof typeof EVENT_TYPES];
+export type EventTypeKey = keyof typeof EVENT_TYPES;
