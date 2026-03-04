@@ -6,9 +6,9 @@ type BadgeIconProps = {
   className?: string;
 };
 
-const BadgeIcon = ({ level, slug, className }: BadgeIconProps) => {
+export const BadgeIcon = ({ level, slug, className }: BadgeIconProps) => {
   if (!level) {
-    return;
+    return null;
   }
 
   return (
@@ -21,5 +21,3 @@ const BadgeIcon = ({ level, slug, className }: BadgeIconProps) => {
     </div>
   );
 };
-
-export default BadgeIcon;

@@ -9,7 +9,7 @@ import {
   type AchievementLevel,
   type AchievementSlug,
 } from "@/lib/achievements";
-import BadgeIcon from "@/components/CustomIcons/BadgeIcons";
+import { BadgeIcon } from "@/components/CustomIcons/BadgeIcons";
 
 type AchievementBadgesProps = {
   slug: AchievementSlug;
@@ -26,9 +26,9 @@ export const AchievementBadges = ({
     <TooltipProvider>
       <div className="flex gap-2">
         {achievements.map(
-          (achievement, index) =>
+          (achievement) =>
             achievement.level && (
-              <Tooltip key={`${achievement.slug}-${index}`}>
+              <Tooltip key={achievement.slug}>
                 <TooltipTrigger asChild>
                   <div className="relative">
                     <BadgeIcon
