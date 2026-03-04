@@ -25,18 +25,25 @@ export const AchievementBadges = ({
   return (
     <TooltipProvider>
       <div className="flex gap-2">
-        {achievements.map((achievement, index) => (
-          <Tooltip key={`${achievement.slug}-${index}`}>
-            <TooltipTrigger asChild>
-              <div className="relative">
-                <BadgeIcon level={achievement.level} slug={achievement.slug} />
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>
-              {ACHIEVEMENT_DESCRIPTIONS[achievement.slug]}: {achievement.count}
-            </TooltipContent>
-          </Tooltip>
-        ))}
+        {achievements.map(
+          (achievement, index) =>
+            achievement.level && (
+              <Tooltip key={`${achievement.slug}-${index}`}>
+                <TooltipTrigger asChild>
+                  <div className="relative">
+                    <BadgeIcon
+                      level={achievement.level}
+                      slug={achievement.slug}
+                    />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  {ACHIEVEMENT_DESCRIPTIONS[achievement.slug]}:{" "}
+                  {achievement.count}
+                </TooltipContent>
+              </Tooltip>
+            ),
+        )}
       </div>
     </TooltipProvider>
   );
