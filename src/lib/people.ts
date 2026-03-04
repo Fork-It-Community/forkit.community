@@ -16,9 +16,13 @@ type Contributors = {
   contributions: number;
 }[];
 
-let contributorsCache: Contributors | null;
+let contributorsCache: Contributors | undefined;
 
 async function getAllGithubContributors() {
+  if (!GITHUB_ACCESS_TOKEN) {
+    return [];
+  }
+
   if (contributorsCache) {
     return contributorsCache;
   }
@@ -106,12 +110,6 @@ export async function peopleWithComputed<
   };
 }
 
-export const getPeopleWithComputed = async (
-  people: CollectionEntry<"people">,
-) => {
-  return await peopleWithComputed(people);
-};
-
 export const getPeopleListWithComputed = async (
   peopleList: Array<CollectionEntry<"people">>,
 ) => {
@@ -128,7 +126,7 @@ const getPeopleGithubHandle = (people: CollectionEntry<"people">) => {
 
   try {
     const url = new URL(href);
-    return url.pathname.replace("/", "");
+    return url.pathname.split("/").filter(Boolean)[0];
   } catch {
     return undefined;
   }
