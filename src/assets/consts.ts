@@ -31,3 +31,8 @@ export const EXCLUDED_CATEGORIES_BY_TYPE: Record<
   meetup: ["cfp-", "banner"],
   event: [],
 };
+
+export const DOWNLOAD_EXCLUDED_CATEGORIES: AssetCategoryId[] = [
+  "banner",
+  "other",
+];

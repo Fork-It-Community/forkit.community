@@ -1,4 +1,5 @@
-import { getEventAssetsSources } from "./_utils";
+import { getEventAssetsSources, getGroupedAssets } from "./_utils";
+import { DOWNLOAD_EXCLUDED_CATEGORIES } from "@/assets/consts";
 import type { APIRoute } from "astro";
 import { getEntry } from "astro:content";
 import dayjs from "dayjs";
@@ -16,7 +17,11 @@ export const GET: APIRoute = async ({ params, site }) => {
   const event = await eventWithComputed(eventEntry);
 
   const zip = new AdmZip();
-  const imagesSrc = getEventAssetsSources(event);
+  const imagesSrc = getGroupedAssets(
+    getEventAssetsSources(event),
+    event.data.type,
+    DOWNLOAD_EXCLUDED_CATEGORIES,
+  ).flatMap((group) => group.images);
 
   await Promise.all(
     imagesSrc.map(async (src) => {
