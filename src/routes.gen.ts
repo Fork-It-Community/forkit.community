@@ -119,7 +119,8 @@ const ROUTES_CONFIG = {
     "videos": {
       ":page": {}
     }
-  }
+  },
+  "thank-you": {}
 } as const;
 
 export const ROUTES = assignPaths(ROUTES_CONFIG);
