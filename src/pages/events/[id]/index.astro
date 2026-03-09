@@ -437,7 +437,33 @@ const keynoteSection = await Promise.all(
       </div>
     )
   }
+
   <CustomBlockEventSlot eventId={event.id} slotName="afterAfterEvent" />
+
+  <!-- Keynote section  -->
+
+  {
+    keynoteSection.length > 0 && (
+      <div class="flex flex-col gap-24 px-6 py-24 md:py-32">
+        <h2 class="text-center font-heading text-2xl font-medium uppercase tracking-widest text-white md:text-3xl">
+          Keynotes
+        </h2>
+        {keynoteSection.map(
+          ({ item, talk, speakers }) =>
+            talk &&
+            item.period && (
+              <KeynoteSection
+                talk={talk}
+                speakers={speakers}
+                period={item.period}
+              />
+            ),
+        )}
+      </div>
+    )
+  }
+
+  <CustomBlockEventSlot eventId={event.id} slotName="afterKeynoteSection" />
 
   <!-- Venue -->
   {
