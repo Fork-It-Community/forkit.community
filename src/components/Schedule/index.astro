@@ -95,7 +95,7 @@ const { event, displayStats } = Astro.props;
                 </div>
                 <div>
                   {match(activity.type)
-                    .with("conference", "roundtable", "keynote", () => (
+                    .with("conference", "roundtable", () => (
                       <TiltedCard client:visible>
                         <CardConference activity={activity} event={event} />
                       </TiltedCard>
@@ -116,6 +116,7 @@ const { event, displayStats } = Astro.props;
                         <CardInfo info={activity} />
                       ),
                     )
+                    .with("keynote", () => null)
                     .exhaustive()}
                 </div>
               </div>
