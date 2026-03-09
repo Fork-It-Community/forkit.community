@@ -188,7 +188,6 @@ const zEventBase = ({ image }: SchemaContext) =>
                 description: z.string().optional(),
                 name: z.string().optional(),
                 slug: reference("talks").optional(),
-                speakers: z.array(reference("people")).optional(),
                 period: z.enum(["opening", "afternoon"]).optional(),
                 startTime: z.date().optional(),
                 duration: z.number().optional().describe("Number of minutes"),

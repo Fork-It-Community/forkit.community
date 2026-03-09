@@ -44,6 +44,8 @@ import { isEmpty } from "remeda";
 import RelatedEvents from "@/components/RelatedEvents/index.astro";
 import CustomBlockEventSlot from "@/components/CustomBlockEventSlot/index.astro";
 import { match } from "ts-pattern";
+import { getEntry } from "astro:content";
+import KeynoteSection from "@/components/KeynoteSection/index.astro";
 
 export async function getStaticPaths() {
   const allEvents = await getEventsCollection();
@@ -98,6 +100,22 @@ const ctaEventMetadata = {
   tickets: event.data.tickets,
   prospectus: event.data.prospectus,
 };
+
+const keynoteItems = (event.data.schedule?.items ?? []).filter(
+  (item) => item.type === "keynote",
+);
+
+const keynoteSection = await Promise.all(
+  keynoteItems.map(async (item) => {
+    const talk = item.slug ? await getEntry("talks", item.slug.id) : null;
+
+    const speakers = talk?.data.speakers
+      ? await getEntries(talk.data.speakers.map((s) => s.id))
+      : [];
+
+    return { item, talk, speakers };
+  }),
+);
 ---
 
 <EventLayout event={event} ogImage={ogImage}>
