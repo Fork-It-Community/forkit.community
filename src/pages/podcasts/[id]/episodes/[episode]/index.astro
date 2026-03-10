@@ -104,13 +104,17 @@ const url = new URL(Astro.url.pathname, Astro.site);
         (episode.data.urls ?? []).find(
           (url) => url.platform === "link-to-download",
         )?.url ?? "",
-      associatedMedia: (episode.data.urls ?? [])
-        .filter((item) => PLATFORMS[item.platform])
-        .map((item) => ({
-          "@type": "MediaObject" as const,
-          contentUrl: item.url,
-          name: PLATFORMS[item.platform]!.label,
-        })),
+      associatedMedia: (episode.data.urls ?? []).flatMap((item) => {
+        const platform = PLATFORMS[item.platform];
+        if (!platform) return [];
+        return [
+          {
+            "@type": "MediaObject" as const,
+            contentUrl: item.url,
+            name: platform.label,
+          },
+        ];
+      }),
       image: episode.data.cover.src,
       keywords: episode.data.tags ?? [],
       partOfSeries: {
