@@ -1,5 +1,6 @@
 import { zSocialTypes } from "@/schemas/utils";
-import { z, type SchemaContext } from "astro:content";
+import { z } from "astro/zod";
+import { type SchemaContext } from "astro:content";
 
 export type Partner = z.infer<ReturnType<typeof zPartner>>;
 export const zPartner = ({ image }: SchemaContext) =>

@@ -1,5 +1,6 @@
 import { zLanguage } from "@/schemas/language";
-import { reference, z } from "astro:content";
+import { z } from "astro/zod";
+import { reference } from "astro:content";
 
 export type Talk = z.infer<ReturnType<typeof zTalk>>;
 export const zTalk = () =>

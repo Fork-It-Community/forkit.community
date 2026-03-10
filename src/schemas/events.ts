@@ -1,5 +1,6 @@
 import { zMediaImage } from "@/schemas/utils";
-import { z, reference, type SchemaContext } from "astro:content";
+import { z } from "astro/zod";
+import { reference, type SchemaContext } from "astro:content";
 
 export const zEventBasicInfo = ({ image }: SchemaContext) =>
   z.object({
