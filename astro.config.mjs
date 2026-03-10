@@ -20,6 +20,7 @@ const adapter =
 
 // https://astro.build/config
 export default defineConfig({
+  output: "server",
   site: getSiteUrl(),
 
   i18n: {
