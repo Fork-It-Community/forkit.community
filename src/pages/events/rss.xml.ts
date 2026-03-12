@@ -10,13 +10,21 @@ export const GET: APIRoute = async function get(context) {
       "All the Fork it! events, from meetups to full day events, come take a look at what is happening near you!",
     site: context.site! + "/events",
     trailingSlash: false,
-    items: events.map((event) => ({
-      title: `${event.data._computed.name}, ${getEventDisplayType(event.data.type)}`,
-      description: event.data.excerpt,
-      link: `${context.site}events/${event.id}`,
-      pubDate: event.data.date,
-      categories: [event.data.type],
-    })),
+    items: events.map((event) => {
+      const location = event.data.location;
+      const venueCustomData = location
+        ? `<venue>${[location.name, location.address].filter(Boolean).join(" - ")}</venue>`
+        : "";
+
+      return {
+        title: `${event.data._computed.name}, ${getEventDisplayType(event.data.type)}`,
+        description: event.data.excerpt,
+        link: `${context.site}events/${event.id}`,
+        pubDate: event.data.date,
+        categories: [event.data.type],
+        customData: venueCustomData,
+      };
+    }),
     customData: `<language>en-EN</language>`,
   });
 };
