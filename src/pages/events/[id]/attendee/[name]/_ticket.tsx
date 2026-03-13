@@ -13,7 +13,12 @@ export const config: AssetImageConfig = {
   height: 1080,
 };
 
-export function saveTheDate(options: { width: number; height: number }) {
+export function saveTheDate(options: {
+  width: number;
+  height: number;
+  dateFontSize?: number;
+  locationFontSize?: number;
+}) {
   return async ({ params }: { params: { id: string; name: string } }) => {
     const event = await getEventData(params.id);
     const ticketImage = await getAstroImageBase64(ticketBg);
@@ -72,7 +77,7 @@ export function saveTheDate(options: { width: number; height: number }) {
                   display: "flex",
                   alignItems: "center",
                   gap: 12,
-                  fontSize: 52,
+                  fontSize: options.dateFontSize ?? 52,
                   fontWeight: 500,
                   lineHeight: 1,
                 }}
@@ -85,7 +90,7 @@ export function saveTheDate(options: { width: number; height: number }) {
                   display: "flex",
                   gap: 12,
                   alignItems: "center",
-                  fontSize: 48,
+                  fontSize: options.locationFontSize ?? 48,
                   fontWeight: 400,
                   lineHeight: 1.2,
                   textWrap: "balance",
