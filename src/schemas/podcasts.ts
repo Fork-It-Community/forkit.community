@@ -18,14 +18,14 @@ export const zPodcast = ({ image }: SchemaContext) =>
     title: z.string(),
     subtitle: z.string().optional(),
     cover: image(),
-    rssFeed: z.string().url().optional(),
+    rssFeed: z.url().optional(),
     language: zLanguage(),
     keywords: z.array(z.string()).optional(),
     urls: z
       .array(
         z.object({
           platform: zPlatform(),
-          url: z.string().url(),
+          url: z.url(),
         }),
       )
       .optional(),
@@ -41,7 +41,7 @@ export const zEpisode = ({ image }: SchemaContext) =>
       .array(
         z.object({
           platform: zPlatform(),
-          url: z.string().url(),
+          url: z.url(),
         }),
       )
       .optional(),
