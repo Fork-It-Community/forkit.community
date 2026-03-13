@@ -12,14 +12,14 @@ export const zPerson = ({ image }: SchemaContext) =>
       .array(
         z.object({
           type: zSocialTypes,
-          href: z.string().url(),
+          href: z.url(),
         }),
       )
       .optional(),
     company: z
       .object({
         title: z.string(),
-        href: z.string().url().optional(),
+        href: z.url().optional(),
       })
       .optional(),
     forkit: z

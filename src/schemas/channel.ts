@@ -8,6 +8,6 @@ export const zChannel = () =>
     type: z.enum(CHANNEL_TYPES),
     link: z.object({
       title: z.string(),
-      href: z.string().url(),
+      href: z.url(),
     }),
   });

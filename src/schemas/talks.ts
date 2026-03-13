@@ -12,7 +12,7 @@ export const zTalk = () =>
     language: zLanguage(),
     feedback: z
       .object({
-        link: z.string().url(),
+        link: z.url(),
       })
       .optional(),
     hosts: z
