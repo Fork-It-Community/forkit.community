@@ -15,12 +15,12 @@ type AchievementBadgesProps = {
   slug: AchievementSlug;
   level: AchievementLevel["label"] | null;
   count: number;
-}[];
+};
 
 export const AchievementBadges = ({
   achievements,
 }: {
-  achievements: AchievementBadgesProps;
+  achievements: Array<AchievementBadgesProps>;
 }) => {
   return (
     <TooltipProvider>

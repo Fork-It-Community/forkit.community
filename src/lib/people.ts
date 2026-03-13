@@ -100,11 +100,13 @@ export async function peopleWithComputed<
     data: {
       ...people.data,
       _computed: {
-        speakingCount: personEventsAsSpeakerCount,
-        fullDayEventsOrganizingCount: personFullDayEventsAsOrganizerCount,
-        meetupOrganizingCount: personMeetupsAsOrganizerCount,
-        visitedCountryCount: personEventsCountryCount,
-        githubContributionCount: personGithubContributionsCount,
+        achievements: {
+          speakingCount: personEventsAsSpeakerCount,
+          fullDayEventsOrganizingCount: personFullDayEventsAsOrganizerCount,
+          meetupOrganizingCount: personMeetupsAsOrganizerCount,
+          visitedCountryCount: personEventsCountryCount,
+          githubContributionCount: personGithubContributionsCount,
+        },
       },
     },
   };

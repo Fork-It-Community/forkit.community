@@ -1,6 +1,7 @@
 import type { PersonWithComputed } from "./people";
 
-export type AchievementSlug = keyof PersonWithComputed["data"]["_computed"];
+export type AchievementSlug =
+  keyof PersonWithComputed["data"]["_computed"]["achievements"];
 
 export type AchievementLevel = {
   label: string;
@@ -45,7 +46,8 @@ const ACHIEVEMENTS: Achievement[] = [
 
 export const getPersonAchievements = (personComputed: PersonWithComputed) => {
   return ACHIEVEMENTS.map((achievement) => {
-    const value = personComputed.data._computed[achievement.slug] ?? 0;
+    const value =
+      personComputed.data._computed.achievements[achievement.slug] ?? 0;
 
     const levels = achievement.achievementLevels ?? DEFAULT_ACHIEVEMENT_LEVELS;
 
