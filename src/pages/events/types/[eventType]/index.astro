@@ -1,0 +1,56 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import MainPageTitle from "@/components/MainPageTitle/index.astro";
+import EventsGrid from "@/components/EventsGrid/index.astro";
+import EventsList from "@/components/EventsList/index.astro";
+import SEO from "@/components/SEO/index.astro";
+import { getUpcomingEvents, getPastEvents } from "@/lib/events";
+import { EVENT_TYPES, type EventTypeKey } from "@/assets/consts";
+import bgImage from "@/assets/images/events.jpeg";
+
+export async function getStaticPaths() {
+  const allTypes = Object.keys(EVENT_TYPES);
+
+  return allTypes.map((type) => ({
+    params: { eventType: type },
+  }));
+}
+
+const eventTypeParam = Astro.params.eventType as EventTypeKey;
+const eventType = EVENT_TYPES[eventTypeParam].slug;
+const upcomingEvents = (await getUpcomingEvents()).filter(
+  (event) => event.data.type === eventType,
+);
+const pastEvents = (await getPastEvents()).filter(
+  (event) => event.data.type === eventType,
+);
+---
+
+<MainLayout>
+  <SEO
+    slot="seo"
+    title={`Top ${EVENT_TYPES[eventTypeParam].label} Tech Events`}
+    description={`All Fork it! ${EVENT_TYPES[eventTypeParam].label}`}
+  />
+  <MainPageTitle
+    title={`Fork it! ${EVENT_TYPES[eventTypeParam].label}`}
+    subtitle={`All Fork it! ${EVENT_TYPES[eventTypeParam].label}`}
+    imageSrc={bgImage}
+  />
+  <div class="flex flex-col gap-16 pb-40">
+    {
+      !!upcomingEvents.length && (
+        <div class="mx-auto w-full max-w-screen-lg px-4">
+          <EventsGrid events={upcomingEvents} title="Upcoming events" />
+        </div>
+      )
+    }
+    {
+      !!pastEvents.length && (
+        <div class="mx-auto w-full max-w-screen-lg px-4">
+          <EventsList events={pastEvents} title="Past events" />
+        </div>
+      )
+    }
+  </div>
+</MainLayout>
