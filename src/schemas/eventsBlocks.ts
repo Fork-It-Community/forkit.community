@@ -17,6 +17,7 @@ const SLOTS_ENUM = z.enum([
   "afterPartners",
   "afterAssets",
   "afterRelatedEvents",
+  "afterKeynoteSection",
 ]);
 
 export type EventBlocks = z.infer<ReturnType<typeof zEventBlocks>>;

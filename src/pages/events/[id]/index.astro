@@ -44,6 +44,8 @@ import { isEmpty } from "remeda";
 import RelatedEvents from "@/components/RelatedEvents/index.astro";
 import CustomBlockEventSlot from "@/components/CustomBlockEventSlot/index.astro";
 import { match } from "ts-pattern";
+import { getEntry } from "astro:content";
+import KeynoteSection from "@/components/KeynoteSection/index.astro";
 
 export async function getStaticPaths() {
   const allEvents = await getEventsCollection();
@@ -98,6 +100,26 @@ const ctaEventMetadata = {
   tickets: event.data.tickets,
   prospectus: event.data.prospectus,
 };
+
+const keynoteItems = (event.data.schedule?.items ?? []).filter(
+  (item) => item.type === "keynote",
+);
+
+const keynoteSection = await Promise.all(
+  keynoteItems.map(async (item) => {
+    const talk = item.slug ? await getEntry("talks", item.slug.id) : null;
+
+    const speakers = talk?.data.speakers
+      ? await getEntries(talk.data.speakers.map((s) => s.id))
+      : [];
+
+    return { item, talk, speakers };
+  }),
+);
+
+const validKeynotes = keynoteSection.filter(
+  ({ item, talk }) => talk && item.period,
+);
 ---
 
 <EventLayout event={event} ogImage={ogImage}>
@@ -419,7 +441,29 @@ const ctaEventMetadata = {
       </div>
     )
   }
+
   <CustomBlockEventSlot eventId={event.id} slotName="afterAfterEvent" />
+
+  <!-- Keynote section  -->
+
+  {
+    validKeynotes.length > 0 && (
+      <div class="flex flex-col gap-24 px-6 py-24 md:py-32">
+        <h2 class="text-center font-heading text-2xl font-medium uppercase tracking-widest text-white md:text-3xl">
+          Keynotes
+        </h2>
+        {validKeynotes.map(({ item, talk, speakers }) => (
+          <KeynoteSection
+            talk={talk!}
+            speakers={speakers}
+            period={item.period!}
+          />
+        ))}
+      </div>
+    )
+  }
+
+  <CustomBlockEventSlot eventId={event.id} slotName="afterKeynoteSection" />
 
   <!-- Venue -->
   {
