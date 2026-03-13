@@ -14,7 +14,9 @@ import astrobook from "astrobook";
 import bearstudiotypedRoutes from "@bearstudio/astro-typed-routes";
 
 const adapter =
-  process.argv[3] === "--node" || process.argv[4] === "--node"
+  process.argv[3] === "--node" ||
+  process.argv[4] === "--node" ||
+  import.meta.env.DEV
     ? node({ mode: "standalone" })
     : vercel({ isr: true });
 

@@ -1,4 +1,4 @@
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 
 const CHANNEL_TYPES = ["whatsapp", "newsletter"] as const;
 

@@ -1,4 +1,5 @@
-import { z, type SchemaContext } from "astro:content";
+import { z } from "astro/zod";
+import { type SchemaContext } from "astro:content";
 
 export type SocialType = z.infer<typeof zSocialTypes>;
 export const zSocialTypes = z.enum([

@@ -1,4 +1,4 @@
-import { z } from "astro:content";
+import { z } from "astro/zod";
 
 export type EventSubPage = z.infer<ReturnType<typeof zEventSubPage>>;
 export const zEventSubPage = () =>
