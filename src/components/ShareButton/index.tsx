@@ -183,7 +183,7 @@ function getTwitterShareUrl(params: {
   const encodedMessage = encodeURIComponent(
     params.message?.replace("Fork it!", "@ForkitCommunity") ?? "",
   );
-  return `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedMessage}`;
+  return `https://x.com/intent/tweet?url=${encodedUrl}&text=${encodedMessage}`;
 }
 
 function getBlueskyShareUrl(params: {
