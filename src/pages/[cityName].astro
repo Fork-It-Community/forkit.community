@@ -1,0 +1,29 @@
+---
+export const prerender = false;
+
+import { getCollection } from "astro:content";
+import { getUpcomingEvents, getUpcomingMajorEvent } from "@/lib/events";
+
+const { cityName } = Astro.params;
+
+//@ts-ignore - variables in astro redirect return are currently creating a typescript error
+let nextEvent;
+
+if (cityName === "next") {
+  nextEvent = await getUpcomingMajorEvent();
+} else {
+  const cities = await getCollection("cities");
+  const city = cities.find((c) => c.id === cityName);
+
+  if (!city) {
+    return Astro.redirect("/");
+  }
+
+  nextEvent = (await getUpcomingEvents()).find(
+    (e) =>
+      e.data._computed.city?.id === city.id && e.data.status === "published",
+  );
+}
+
+return Astro.redirect(nextEvent ? `/events/${nextEvent.id}` : "/", 302);
+---
