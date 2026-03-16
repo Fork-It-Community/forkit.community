@@ -1,12 +1,20 @@
 import { changeLanguage, init } from "@/i18n";
 import { defineMiddleware } from "astro:middleware";
 import { getCollection } from "astro:content";
-import { getUpcomingEvents } from "@/lib/events";
+import { getUpcomingEvents, getUpcomingMajorEvent } from "@/lib/events";
 
 export const onRequest = defineMiddleware(
   async ({ currentLocale, url }, next) => {
     await init();
     changeLanguage(currentLocale);
+
+    if (url.pathname === "/next") {
+      const nextEvent = await getUpcomingMajorEvent();
+      return Response.redirect(
+        new URL(nextEvent ? `/events/${nextEvent.id}` : "/", url),
+        302,
+      );
+    }
 
     const segments = url.pathname.split("/").filter(Boolean);
     if (segments.length === 1) {
