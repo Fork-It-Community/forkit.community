@@ -53,7 +53,7 @@ const SOCIALS: Array<{
   },
   {
     label: "X Twitter",
-    href: "https://twitter.com/ForkitCommunity",
+    href: "https://x.com/ForkitCommunity",
     icon: FaXTwitter,
     level: "secondary",
   },
