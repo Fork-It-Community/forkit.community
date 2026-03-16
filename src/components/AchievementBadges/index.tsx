@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Tooltip,
   TooltipContent,
@@ -17,6 +18,31 @@ type AchievementBadgesProps = {
   count: number;
 };
 
+const AchievementBadge = ({
+  achievement,
+}: {
+  achievement: AchievementBadgesProps;
+}) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Tooltip open={open} onOpenChange={setOpen}>
+      <TooltipTrigger asChild>
+        <button
+          type="button"
+          className="relative"
+          onClick={() => setOpen((prev) => !prev)}
+        >
+          <BadgeIcon level={achievement.level} slug={achievement.slug} />
+        </button>
+      </TooltipTrigger>
+      <TooltipContent>
+        {ACHIEVEMENT_DESCRIPTIONS[achievement.slug]}: {achievement.count}
+      </TooltipContent>
+    </Tooltip>
+  );
+};
+
 export const AchievementBadges = ({
   achievements,
 }: {
@@ -28,20 +54,10 @@ export const AchievementBadges = ({
         {achievements.map(
           (achievement) =>
             achievement.level && (
-              <Tooltip key={achievement.slug}>
-                <TooltipTrigger asChild>
-                  <div className="relative">
-                    <BadgeIcon
-                      level={achievement.level}
-                      slug={achievement.slug}
-                    />
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  {ACHIEVEMENT_DESCRIPTIONS[achievement.slug]}:{" "}
-                  {achievement.count}
-                </TooltipContent>
-              </Tooltip>
+              <AchievementBadge
+                key={achievement.slug}
+                achievement={achievement}
+              />
             ),
         )}
       </div>
