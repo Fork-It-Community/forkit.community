@@ -55,6 +55,13 @@ const scheduleItem = (event.data.schedule?.items ?? []).find(
         >
           {talk.data.title}
         </p>
+        <div>
+          {scheduleItem?.type === "keynote" && (
+            <span class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none opacity-60 transition group-hover:opacity-100">
+              {scheduleItem.type}
+            </span>
+          )}
+        </div>
         {scheduleItem?.status === "cancelled" && (
           <div class="h-full w-fit rounded-full bg-white/10 px-2 py-1 text-white">
             <div class="flex items-center gap-1">
