@@ -18,7 +18,13 @@ const adapter =
   process.argv[4] === "--node" ||
   import.meta.env.DEV
     ? node({ mode: "standalone" })
-    : vercel({ isr: true });
+    : vercel({
+        isr: true,
+        // TODO: Revert — exclude search action due to @astrojs/vercel ISR bug:
+        // POST body is reconstructed without `duplex: 'half'`, causing a TypeError.
+        // Remove this once the bug is fixed in Astro/Vercel adapter.
+        excludeFiles: ["./src/actions/search.ts"],
+      });
 
 // https://astro.build/config
 export default defineConfig({
