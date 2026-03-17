@@ -20,7 +20,7 @@ export const BadgeIcon = ({
   return (
     <div className={className}>
       <img
-        src={`/badge-icons/${level}_${slug}.svg`}
+        src={`/badge-icons/${level}_${slug}.png`}
         alt={`${level} ${slug} badge`}
         width={size}
         height={size}
