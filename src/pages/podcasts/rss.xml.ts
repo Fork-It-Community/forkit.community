@@ -19,7 +19,7 @@ export const GET: APIRoute = async function get(context) {
       categories: podcast.data.tags,
     })),
     customData: toXml({
-      language: "en-EN",
+      language: "en",
       "atom:link": {
         _attrs: {
           href: `${context.site}podcasts/rss.xml`,
