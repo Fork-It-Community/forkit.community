@@ -7,7 +7,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { getMainMenuDesktopItems } from "@/content/menus";
-import { actions } from "astro:actions";
+import type { SearchResponse } from "@/pages/api/search";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { capitalize, entries, groupBy } from "remeda";
 import MiniSearch, { type SearchResult } from "minisearch";
@@ -15,7 +15,7 @@ import { useSessionStorage } from "@uidotdev/usehooks";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { CommandLoading } from "cmdk";
 
-type Data = NonNullable<Awaited<ReturnType<typeof actions.search>>["data"]>;
+type Data = SearchResponse;
 type SearchResultWithStoreField = SearchResult &
   Pick<Data[number], "title" | "type" | "slug">;
 
@@ -53,18 +53,19 @@ export const Search = (props: { onOpenChange: (open: boolean) => void }) => {
 
   useEffect(() => {
     async function get() {
-      const { data, error } = await actions.search();
-
-      if (!error) {
+      try {
+        const res = await fetch("/api/search");
+        if (!res.ok) {
+          throw new Error(String(res.status));
+        }
+        const data: Data = await res.json();
         const toSet = [...MENUS, ...data];
         miniSearchRef.current.addAll(toSet);
         setItems(toSet);
-        return;
+      } catch {
+        miniSearchRef.current.addAll(MENUS);
+        setItems(MENUS);
       }
-
-      console.error("Failed to fetch search data:", error);
-      miniSearchRef.current.addAll(MENUS);
-      setItems(MENUS);
     }
 
     if (items?.length) {
