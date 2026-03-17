@@ -35,7 +35,7 @@ export const GET: APIRoute = async function get(context) {
       };
     }),
     customData: toXml({
-      language: "en-EN",
+      language: "en",
       "atom:link": {
         _attrs: {
           href: `${context.site}events/rss.xml`,
