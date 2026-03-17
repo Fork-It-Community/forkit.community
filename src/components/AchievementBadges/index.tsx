@@ -51,7 +51,7 @@ const AchievementBadge = ({
         type="button"
         aria-label={`${ACHIEVEMENT_DESCRIPTIONS[achievement.slug]}: ${achievement.count}`}
         className="relative"
-        onClick={() => setOpen(true)}
+        onClick={() => setOpen((prev) => !prev)}
       >
         <BadgeIcon level={achievement.level} slug={achievement.slug} />
       </ResponsiveDrawerTrigger>
