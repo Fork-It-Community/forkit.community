@@ -2,6 +2,7 @@
 import { type CollectionEntry, getEntries, getEntry } from "astro:content";
 import { IoLanguageSharp, IoSparklesSharp } from "react-icons/io5";
 import SpeakerForCard from "./SpeakerForCard.astro";
+import Badge from "@/components/Badge/index.astro";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { LuSquarePlay } from "react-icons/lu";
@@ -57,9 +58,7 @@ const scheduleItem = (event.data.schedule?.items ?? []).find(
             {talk.data.title}
           </p>
           {scheduleItem?.type === "keynote" && (
-            <span class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none opacity-60 transition group-hover:opacity-100">
-              {scheduleItem.type}
-            </span>
+            <Badge>{scheduleItem.type}</Badge>
           )}
         </div>
         <div class="flex items-center gap-2">
@@ -105,15 +104,15 @@ const scheduleItem = (event.data.schedule?.items ?? []).find(
           scheduleItem?.status === "cancelled" ? "grayscale" : "",
         )}
       >
-        <span class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none opacity-60 grayscale transition group-hover:opacity-100">
+        <Badge>
           <IoLanguageSharp className="text-base" />
           <span>Talk in {talk.data.language}</span>
-        </span>
+        </Badge>
         {talk.data.vod && talk.data.vod.youtubeId && (
-          <span class="flex w-fit items-center gap-1.5 rounded-full border border-black/60 bg-black/40 px-2 py-0.5 text-2xs font-bold uppercase leading-none opacity-60 transition group-hover:opacity-100">
+          <Badge>
             <LuSquarePlay className="text-base" />
             <span>VOD available</span>
-          </span>
+          </Badge>
         )}
       </div>
     </a>
