@@ -24,6 +24,12 @@ pnpm install
 pnpm dev
 ```
 
+To test directly on your phone, you can run the following command and scan the QR code:
+
+```bash
+pnpm dev --host
+```
+
 ### 🛠️ Local Build & Preview
 
 To test the production build locally, run the following commands:
