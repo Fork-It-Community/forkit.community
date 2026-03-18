@@ -24,7 +24,7 @@ pnpm install
 pnpm dev
 ```
 
-To test directly on your phone you can run the following command and scan the qrcode:
+To test directly on your phone, you can run the following command and scan the QR code:
 
 ```bash
 pnpm dev --host
