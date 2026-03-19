@@ -13,11 +13,10 @@ export async function getStaticPaths() {
 
 const { event } = Astro.props;
 
-const eventUrl = lunalink(ROUTES.events[":id"].__path, { id: event.id });
-
+// @ts-expect-error Astro does not recognize variable usage in Astro.redirect
 const redirectUrl = shouldShowProspectus(event)
   ? event.data.prospectus.href
-  : eventUrl;
+  : lunalink(ROUTES.events[":id"].__path, { id: event.id });
 
 return Astro.redirect(redirectUrl, 302);
 ---
