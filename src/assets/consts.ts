@@ -31,9 +31,3 @@ export const EXCLUDED_CATEGORIES_BY_TYPE: Record<
   meetup: ["cfp-", "banner"],
   event: [],
 };
-
-export const EVENT_TYPES = {
-  events: { label: "Full Day Events", slug: "event" },
-  meetups: { label: "Meetups", slug: "meetup" },
-} as const;
-export type EventTypeKey = keyof typeof EVENT_TYPES;

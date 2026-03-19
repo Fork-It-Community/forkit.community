@@ -6,6 +6,7 @@ import {
   getPastEvents,
   getUpcomingEvents,
   getEventsCollection,
+  EVENT_TYPES,
 } from "@/lib/events";
 import SEO from "@/components/SEO/index.astro";
 import EventsGrid from "@/components/EventsGrid/index.astro";
@@ -14,7 +15,6 @@ import { getCollection } from "astro:content";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import dayjs from "dayjs";
-import { EVENT_TYPES } from "@/assets/consts";
 
 const upcomingEvents = await getUpcomingEvents();
 const pastEvents = await getPastEvents();
