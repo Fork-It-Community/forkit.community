@@ -11,11 +11,10 @@ import {
   type EventTypeKey,
 } from "@/lib/events";
 import bgImage from "@/assets/images/events.jpeg";
+import { keys } from "remeda";
 
 export async function getStaticPaths() {
-  const allTypes = Object.keys(EVENT_TYPES);
-
-  return allTypes.map((type) => ({
+  return keys(EVENT_TYPES).map((type) => ({
     params: { eventType: type },
   }));
 }
