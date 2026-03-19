@@ -1,0 +1,23 @@
+---
+import { getEventsCollection, shouldShowProspectus } from "@/lib/events";
+import { ROUTES } from "@/routes.gen";
+import { lunalink } from "@bearstudio/lunalink";
+
+export async function getStaticPaths() {
+  const events = await getEventsCollection();
+  return events.map((event) => ({
+    params: { id: event.id },
+    props: { event },
+  }));
+}
+
+const { event } = Astro.props;
+
+const eventUrl = lunalink(ROUTES.events[":id"].__path, { id: event.id });
+
+const redirectUrl = shouldShowProspectus(event)
+  ? event.data.prospectus.href
+  : eventUrl;
+
+return Astro.redirect(redirectUrl, 302);
+---
