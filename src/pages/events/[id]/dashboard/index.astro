@@ -22,11 +22,13 @@ export async function getStaticPaths() {
 const { event } = Astro.props;
 
 const guests = isNonNullish(event.data.lumaEventId)
-  ? await getAllGuests({
-      event_api_id: event.data.lumaEventId,
-      sort_direction: "desc nulls last",
-      sort_column: "registered_at",
-    })
+  ? (
+      await getAllGuests({
+        event_api_id: event.data.lumaEventId,
+        sort_direction: "desc nulls last",
+        sort_column: "registered_at",
+      })
+    ).unwrapOr([])
   : [];
 ---
 

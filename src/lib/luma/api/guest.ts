@@ -3,6 +3,7 @@ import { zGuests, type Guest, type Guests } from "@/lib/luma/schemas/guest";
 import { getHeaders } from "@/lib/luma/utils";
 import { lunalink } from "@bearstudio/lunalink";
 import { z } from "astro/zod";
+import { Result } from "better-result";
 
 type Params = z.infer<ReturnType<typeof zParams>>;
 const zParams = () =>
@@ -28,14 +29,21 @@ const zParams = () =>
   });
 
 export async function getGuests(params: Params) {
+  const headersResult = getHeaders();
+  if (headersResult.isErr()) return Result.err(headersResult.error);
+
   const url = `${LUMA_BASE_URL}${lunalink("/v1/event/get-guests", params)}`;
-  const response = await fetch(url, {
-    headers: getHeaders(),
+
+  return Result.tryPromise({
+    try: async () => {
+      const response = await fetch(url, {
+        headers: headersResult.value,
+      });
+      const json = await response.json();
+      return zGuests().parse(json);
+    },
+    catch: (e) => (e instanceof Error ? e : new Error(String(e))),
   });
-
-  const json = await response.json();
-
-  return zGuests().parse(json);
 }
 
 export async function getAllGuests(params: Params) {
@@ -49,10 +57,12 @@ export async function getAllGuests(params: Params) {
       pagination_cursor: nextCursor,
     });
 
-    guests = [...guests, ...response.entries.map((entry) => entry.guest)];
-    hasMore = response.has_more;
-    nextCursor = response.next_cursor;
+    if (response.isErr()) return response;
+
+    guests = [...guests, ...response.value.entries.map((entry) => entry.guest)];
+    hasMore = response.value.has_more;
+    nextCursor = response.value.next_cursor;
   }
 
-  return guests;
+  return Result.ok(guests);
 }
