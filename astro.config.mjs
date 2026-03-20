@@ -46,7 +46,7 @@ export default defineConfig({
       LUMA_API_KEY: envField.string({
         context: "server",
         access: "secret",
-        optional: false,
+        optional: true,
       }),
       GITHUB_ACCESS_TOKEN: envField.string({
         context: "server",

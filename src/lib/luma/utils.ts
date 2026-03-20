@@ -5,6 +5,9 @@ import { LUMA_API_KEY } from "astro:env/server";
 import { isNullish } from "remeda";
 
 export function getHeaders(): HeadersInit {
+  if (!LUMA_API_KEY) {
+    throw new Error("LUMA_API_KEY is not set");
+  }
   return {
     accept: "application/json",
     "x-luma-api-key": LUMA_API_KEY,
@@ -12,7 +15,7 @@ export function getHeaders(): HeadersInit {
 }
 
 export async function getNumberOfApprovedGuests(event: EventComputed) {
-  if (isNullish(event.data.lumaEventId)) {
+  if (!LUMA_API_KEY || isNullish(event.data.lumaEventId)) {
     return DEFAULT_NUMBER_OF_GUESTS[event.data.type];
   }
   const guests = await getAllGuests({
