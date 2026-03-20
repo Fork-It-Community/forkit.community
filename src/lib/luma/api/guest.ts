@@ -33,13 +33,17 @@ export async function getGuests(params: Params) {
   if (headersResult.isErr()) return Result.err(headersResult.error);
 
   const url = `${LUMA_BASE_URL}${lunalink("/v1/event/get-guests", params)}`;
-  const response = await fetch(url, {
-    headers: headersResult.value,
+
+  return Result.tryPromise({
+    try: async () => {
+      const response = await fetch(url, {
+        headers: headersResult.value,
+      });
+      const json = await response.json();
+      return zGuests().parse(json);
+    },
+    catch: (e) => (e instanceof Error ? e : new Error(String(e))),
   });
-
-  const json = await response.json();
-
-  return Result.ok(zGuests().parse(json));
 }
 
 export async function getAllGuests(params: Params) {
