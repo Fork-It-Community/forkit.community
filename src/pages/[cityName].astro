@@ -11,19 +11,26 @@ let nextEvent;
 
 if (cityName === "next") {
   nextEvent = await getUpcomingMajorEvent();
+  return Astro.redirect(nextEvent ? `/events/${nextEvent.id}` : "/", 302);
 } else {
   const cities = await getCollection("cities");
   const city = cities.find((c) => c.id === cityName);
 
   if (!city) {
-    return Astro.redirect("/");
+    return Astro.redirect("/404", 302);
   }
 
   nextEvent = (await getUpcomingEvents()).find(
     (e) =>
       e.data._computed.city?.id === city.id && e.data.status === "published",
   );
-}
 
-return Astro.redirect(nextEvent ? `/events/${nextEvent.id}` : "/", 302);
+  if (nextEvent) {
+    return Astro.redirect(`/events/${nextEvent.id}`, 302);
+  }
+
+  //@ts-ignore - variables in astro redirect return are currently creating a typescript error
+  const countryId = city.data.country.id;
+  return Astro.redirect(`/events/locations/${countryId}/${city.id}`, 302);
+}
 ---
