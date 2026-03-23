@@ -1,5 +1,5 @@
 import { getEventAssetsSources } from "./_utils";
-import { getTalkAssetDownloadFileName } from "../talks/[talkId]/assets/_utils";
+import { getTalkAssetDownloadFileName } from "@/pages/events/[id]/talks/[talkId]/assets/_utils";
 import type { APIRoute } from "astro";
 import { getEntry } from "astro:content";
 import dayjs from "dayjs";
@@ -12,8 +12,10 @@ const getZipFileName = async (src: string) => {
   // If the asset is a talk, format the filename to have speaker name
   const talksIndex = parts.indexOf("talks");
   if (talksIndex !== -1) {
-    const talkId = parts[talksIndex + 1]!;
-    const assetName = parts.at(-1)!.replace(/\.jpg$/i, "");
+    const talkId = parts[talksIndex + 1];
+    const lastPart = parts.at(-1);
+    if (!talkId || !lastPart) return src;
+    const assetName = lastPart.replace(/\.jpg$/i, "");
     return getTalkAssetDownloadFileName(talkId, assetName);
   }
 
