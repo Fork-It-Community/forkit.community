@@ -11,6 +11,10 @@ const baseEndpoint = apiImageEndpoint(
 export const GET: APIRoute = async (context) => {
   const response = await baseEndpoint(context);
 
+  if (!response.ok || context.params.__type !== "jpg") {
+    return response;
+  }
+
   const fileName = await getTalkAssetDownloadFileName(
     context.params.talkId!,
     context.params.__image!,

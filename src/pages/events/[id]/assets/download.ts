@@ -14,7 +14,7 @@ const getZipFileName = async (src: string) => {
   const talksIndex = parts.indexOf("talks");
   if (talksIndex !== -1) {
     const talkId = parts[talksIndex + 1]!;
-    const assetName = parts.at(-1)!.replace(".jpg", "");
+    const assetName = parts.at(-1)!.replace(/\.jpg$/i, "");
     return getTalkAssetDownloadFileName(talkId, assetName);
   }
 
@@ -52,7 +52,6 @@ export const GET: APIRoute = async ({ params, site }) => {
       const blob = await response.blob();
 
       const fileName = await getZipFileName(src);
-
       zip.addFile(fileName, Buffer.from(await blob.arrayBuffer()));
     }),
   );
