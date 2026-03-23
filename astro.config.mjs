@@ -16,8 +16,8 @@ import bearstudiotypedRoutes from "@bearstudio/astro-typed-routes";
 
 const adapter =
   process.argv[3] === "--node" ||
-  process.argv[4] === "--node" ||
-  import.meta.env.DEV
+    process.argv[4] === "--node" ||
+    import.meta.env.DEV
     ? node({ mode: "standalone" })
     : vercel({
         isr: {
@@ -77,6 +77,7 @@ export default defineConfig({
       filter: (page) =>
         !page.endsWith("/attendee") &&
         !page.endsWith("/events/locations") &&
+        !page.endsWith('/propsectus') &&
         !page.includes("/branding/components") &&
         !page.includes("/dashboard"),
     }),
