@@ -13,11 +13,13 @@ const getZipFileName = async (src: string) => {
   // If the asset is a talk, format the filename to have speaker name
   const talksIndex = parts.indexOf("talks");
   if (talksIndex !== -1) {
+    const eventsIndex = parts.indexOf("events");
+    const eventId = parts[eventsIndex + 1];
     const talkId = parts[talksIndex + 1];
     const lastPart = parts.at(-1);
-    if (!talkId || !lastPart) return src;
+    if (!eventId || !talkId || !lastPart) return src;
     const assetName = lastPart.replace(/\.jpg$/i, "");
-    return getTalkAssetDownloadFileName(talkId, assetName);
+    return getTalkAssetDownloadFileName(eventId, talkId, assetName);
   }
 
   return src

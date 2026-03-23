@@ -16,6 +16,7 @@ export const GET: APIRoute = async (context) => {
   }
 
   const fileName = await getTalkAssetDownloadFileName(
+    context.params.id!,
     context.params.talkId!,
     context.params.__image!,
   );
