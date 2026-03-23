@@ -28,6 +28,7 @@ export const LogoWithFriends = (props: { logos?: string[] | undefined }) => {
           style={{
             width: 169 * 3,
             height: 18 * 3,
+            color: "white",
           }}
         />
       )}
