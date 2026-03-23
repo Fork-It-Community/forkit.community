@@ -5,7 +5,7 @@ import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { getEntries } from "astro:content";
 import SpeakerForCard from "../Schedule/SpeakerForCard.astro";
-import Badge from "@/components/Badge/index.astro";
+import { Badge } from "@/components/ui/badge";
 import { render } from "astro:content";
 import { LuSquarePlay } from "react-icons/lu";
 
@@ -83,7 +83,7 @@ const { Content } = await render(conference);
     </span>
     {
       conference.data.vod && conference.data.vod.youtubeId && (
-        <Badge>
+        <Badge variant="card">
           <LuSquarePlay className="text-base" />
           <span>VOD available</span>
         </Badge>
