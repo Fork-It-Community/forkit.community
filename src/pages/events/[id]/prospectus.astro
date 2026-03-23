@@ -1,22 +1,19 @@
 ---
 import { getEventsCollection, shouldShowProspectus } from "@/lib/events";
+// @ts-ignore - used in Astro.redirect, TS cannot detect usage in return statements
 import { ROUTES } from "@/routes.gen";
+// @ts-ignore - used in Astro.redirect, TS cannot detect usage in return statements
 import { lunalink } from "@bearstudio/lunalink";
 
-export async function getStaticPaths() {
-  const events = await getEventsCollection();
-  return events.map((event) => ({
-    params: { id: event.id },
-    props: { event },
-  }));
+export const prerender = false;
+
+const { id } = Astro.params;
+const events = await getEventsCollection();
+const event = events.find((e) => e.id === id);
+
+if (event && shouldShowProspectus(event)) {
+  return Astro.redirect(event.data.prospectus.href, 302);
 }
 
-const { event } = Astro.props;
-
-// @ts-expect-error Astro does not recognize variable usage in Astro.redirect
-const redirectUrl = shouldShowProspectus(event)
-  ? event.data.prospectus.href
-  : lunalink(ROUTES.events[":id"].__path, { id: event.id });
-
-return Astro.redirect(redirectUrl, 302);
+return Astro.redirect(lunalink(ROUTES.events[":id"].__path, { id: id! }), 302);
 ---
