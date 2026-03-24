@@ -88,7 +88,6 @@ export function GlobalMap({ events, className }: GlobalMapProps) {
         center={[10, 30]}
         zoom={2}
         projection={{ type: "globe" }}
-        attributionControl={false}
       >
         <MapClusterLayer
           data={geoJsonData}
@@ -126,31 +125,32 @@ export function GlobalMap({ events, className }: GlobalMapProps) {
               <div className="flex max-h-[160px] flex-col gap-1 overflow-y-auto pr-1">
                 {selectedCity.events.map((event) => {
                   const isPast = dayjs(event.date).isBefore(dayjs(), "day");
+                  const isMeetup = event.type === "meetup";
                   return (
                     <a
                       key={event.id}
                       href={lunalink(ROUTES.events[":id"].__path, {
                         id: event.id,
                       })}
-                      className="group flex flex-col rounded-md p-1.5 transition-colors hover:bg-white/5"
+                      className="group flex items-center gap-2 rounded-md p-1.5 transition-colors hover:bg-white/5"
                     >
-                      <div className="flex items-baseline justify-between gap-2">
-                        <div className="flex items-center gap-2 overflow-hidden">
-                          <div
-                            className={cn(
-                              "h-1.5 w-1.5 shrink-0 rounded-full",
-                              isPast ? "bg-white/20" : "bg-[#EBFF11]",
-                            )}
-                            title={isPast ? "Past event" : "Upcoming event"}
-                          />
-                          <span className="truncate text-sm font-medium text-white group-hover:text-[#EBFF11]">
-                            {event.name}
-                          </span>
-                        </div>
-                        <span className="shrink-0 text-[10px] text-white/40">
-                          {dayjs(event.date).format("DD MMM YYYY")}
+                      <div
+                        className={cn(
+                          "h-1.5 w-1.5 shrink-0 rounded-full",
+                          isMeetup ? "bg-white/60" : "bg-[#EBFF11]",
+                        )}
+                      />
+                      <span className="truncate text-sm font-medium text-white group-hover:text-[#EBFF11]">
+                        {event.name}
+                      </span>
+                      {!isPast && (
+                        <span className="shrink-0 rounded-full bg-[#EBFF11] px-1.5 py-0.5 text-[10px] font-semibold text-black">
+                          Upcoming
                         </span>
-                      </div>
+                      )}
+                      <span className="ml-auto shrink-0 text-[10px] text-white/40">
+                        {dayjs(event.date).format("DD MMM YYYY")}
+                      </span>
                     </a>
                   );
                 })}
@@ -165,12 +165,22 @@ export function GlobalMap({ events, className }: GlobalMapProps) {
           showCompass
           showFullscreen
         />
-        <div className="absolute bottom-4 left-4 rounded-lg border border-white/10 bg-black/60 px-3 py-2 backdrop-blur-md">
+        <div className="absolute bottom-4 left-4 flex flex-col gap-2 rounded-lg border border-white/10 bg-black/60 px-3 py-2 backdrop-blur-md">
           <div className="flex items-center gap-2">
             <div className="h-2 w-2 rounded-full bg-primary" />
             <span className="text-sm font-medium text-white">
               {totalEvents} Total Events
             </span>
+          </div>
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-1.5">
+              <div className="h-2 w-2 rounded-full bg-[#EBFF11]" />
+              <span className="text-sm text-white">Event</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <div className="h-2 w-2 rounded-full bg-white/60" />
+              <span className="text-sm text-white">Meetup</span>
+            </div>
           </div>
         </div>
         <div className="absolute left-1/2 top-4 -translate-x-1/2 rounded-lg border-2 bg-black px-4 py-2">
