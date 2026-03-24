@@ -26,5 +26,4 @@ export const zForKidsEvent = ({ image }: SchemaContext) =>
       .optional()
       .describe("Collection of people that organize the event"),
   });
-
 export type ForKidsEvent = z.infer<ReturnType<typeof zForKidsEvent>>;
