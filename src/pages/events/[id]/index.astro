@@ -46,6 +46,8 @@ import CustomBlockEventSlot from "@/components/CustomBlockEventSlot/index.astro"
 import { match } from "ts-pattern";
 import { getEntry } from "astro:content";
 import KeynoteSection from "@/components/KeynoteSection/index.astro";
+import EventRating from "@/components/EventRating/index.astro";
+import EventComment from "@/components/EventComment/index.astro";
 
 export async function getStaticPaths() {
   const allEvents = await getEventsCollection();
@@ -60,7 +62,7 @@ export async function getStaticPaths() {
           relatedEvents,
         },
       };
-    }),
+    })
   );
 }
 
@@ -70,10 +72,10 @@ const partners = await getEntries(event.data.partners ?? []);
 const speakers = await getEntries(event.data._computed.speakers ?? []);
 
 const coOrganizers = (await getEntries(event.data.coOrganizers ?? [])).filter(
-  (p) => !!p,
+  (p) => !!p
 );
 const sponsors = await getEntries(
-  (event.data.sponsors ?? []).map((s) => s.slug),
+  (event.data.sponsors ?? []).map((s) => s.slug)
 );
 
 const navItems = await getEventNavItems(event.id);
@@ -89,7 +91,7 @@ const location: Place | undefined = event.data.location
   : undefined;
 const ogImage = new URL(
   Astro.url.pathname + "/assets/og-image.jpg",
-  Astro.site,
+  Astro.site
 );
 
 const ctaTypes = getEventCtaTypes(event);
@@ -102,7 +104,7 @@ const ctaEventMetadata = {
 };
 
 const keynoteItems = (event.data.schedule?.items ?? []).filter(
-  (item) => item.type === "keynote",
+  (item) => item.type === "keynote"
 );
 
 const keynoteSection = await Promise.all(
@@ -114,11 +116,11 @@ const keynoteSection = await Promise.all(
       : [];
 
     return { item, talk, speakers };
-  }),
+  })
 );
 
 const validKeynotes = keynoteSection.filter(
-  ({ item, talk }) => talk && item.period,
+  ({ item, talk }) => talk && item.period
 );
 ---
 
@@ -156,6 +158,15 @@ const validKeynotes = keynoteSection.filter(
         name: speaker.data.name,
       })),
       ...(location && { location }),
+      ...(event.data.afterEventContent?.rating && {
+        aggregateRating: {
+          "@type": "AggregateRating" as const,
+          ratingValue: event.data.afterEventContent?.rating.score,
+          bestRating: 5,
+          worstRating: 1,
+          ratingCount: event.data.afterEventContent?.rating.count,
+        },
+      }),
     }}
   />
   <div
@@ -188,7 +199,7 @@ const validKeynotes = keynoteSection.filter(
                       class={cn(
                         coOrganizers.length === 1 && "w-32 md:w-52",
                         coOrganizers.length === 2 && "size-24 md:size-32",
-                        coOrganizers.length > 2 && "size-20 md:size-24",
+                        coOrganizers.length > 2 && "size-20 md:size-24"
                       )}
                       src={
                         coOrganizers.length === 1
@@ -285,7 +296,7 @@ const validKeynotes = keynoteSection.filter(
                 class={cn(
                   "w-24 max-w-none flex-none md:w-40",
                   sponsors.length <= 3 && "w-32 md:w-52",
-                  sponsors.length === 1 && "-my-8 w-48 md:w-64",
+                  sponsors.length === 1 && "-my-8 w-48 md:w-64"
                 )}
                 src={sponsor.data.logos.noBg}
                 alt={sponsor.data.name}
@@ -311,7 +322,7 @@ const validKeynotes = keynoteSection.filter(
         <div
           class={cn(
             "mx-auto flex w-full max-w-screen-lg flex-col gap-12",
-            event.data.afterEventContent.afterMovie && "max-w-screen-xl",
+            event.data.afterEventContent.afterMovie && "max-w-screen-xl"
           )}
         >
           <div class="text-center">
@@ -352,7 +363,7 @@ const validKeynotes = keynoteSection.filter(
                   class={cn(
                     "grid aspect-[640/426] gap-4",
                     (event.data.afterEventContent.photos.sources?.length ?? 0) >
-                      1 && "grid-cols-2",
+                      1 && "grid-cols-2"
                   )}
                 >
                   {event.data.afterEventContent.photos.sources?.map(
@@ -365,7 +376,7 @@ const validKeynotes = keynoteSection.filter(
                             (event.data.afterEventContent?.photos.sources
                               ?.length ?? 0) === 3 &&
                               index === 1 &&
-                              "row-span-2",
+                              "row-span-2"
                           )}
                           href={event.data.afterEventContent.photos.href}
                           target="_blank"
@@ -385,7 +396,7 @@ const validKeynotes = keynoteSection.filter(
                             (event.data.afterEventContent?.photos.sources
                               ?.length ?? 0) === 3 &&
                               index === 1 &&
-                              "row-span-2",
+                              "row-span-2"
                           )}
                         >
                           <Image
@@ -395,7 +406,7 @@ const validKeynotes = keynoteSection.filter(
                             width={800}
                           />
                         </div>
-                      ),
+                      )
                   )}
                 </div>
               )}
@@ -403,7 +414,7 @@ const validKeynotes = keynoteSection.filter(
               <div
                 class={cn(
                   "flex flex-col justify-center gap-4 sm:flex-row",
-                  event.data.afterEventContent.afterMovie && "md:justify-start",
+                  event.data.afterEventContent.afterMovie && "md:justify-start"
                 )}
               >
                 {event.data.afterEventContent.photos.href && (
@@ -413,7 +424,7 @@ const validKeynotes = keynoteSection.filter(
                     href={event.data.afterEventContent.photos.href}
                     class={cn(
                       buttonVariants({ size: "lg" }),
-                      "group gap-2 sm:max-w-48 md:flex-1",
+                      "group gap-2 sm:max-w-48 md:flex-1"
                     )}
                   >
                     Event Photos
@@ -427,7 +438,7 @@ const validKeynotes = keynoteSection.filter(
                     href={event.data.afterEventContent.vods.href}
                     class={cn(
                       buttonVariants({ size: "lg" }),
-                      "group gap-2 sm:max-w-48 md:flex-1",
+                      "group gap-2 sm:max-w-48 md:flex-1"
                     )}
                   >
                     All VODs
@@ -436,6 +447,24 @@ const validKeynotes = keynoteSection.filter(
                 )}
               </div>
             </div>
+          </div>
+          <div class="flex flex-col gap-4">
+            {event.data.afterEventContent?.rating && (
+              <EventRating
+                score={event.data.afterEventContent?.rating.score}
+                count={event.data.afterEventContent?.rating.count}
+                class="justify-center"
+              />
+            )}
+            {!!event.data.afterEventContent?.rating?.comments?.length && (
+              <div class="hide-scrollbar flex w-full gap-4 overflow-x-auto px-2 py-4 md:justify-center">
+                {event.data.afterEventContent.rating.comments
+                  .slice(0, 3)
+                  .map((comment) => (
+                    <EventComment comment={comment} />
+                  ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -549,7 +578,7 @@ const validKeynotes = keynoteSection.filter(
               rel="noreferrer"
               class={cn(
                 buttonVariants({ size: "lg", variant: "secondary" }),
-                "max-xs:w-full",
+                "max-xs:w-full"
               )}
             >
               Call for Paper
@@ -558,7 +587,7 @@ const validKeynotes = keynoteSection.filter(
               href={lunalink(ROUTES["call-for-papers"].guidelines.__path, {})}
               class={cn(
                 buttonVariants({ size: "lg", variant: "ghost" }),
-                "max-xs:w-full",
+                "max-xs:w-full"
               )}
             >
               CFP How to & Guidelines
@@ -589,7 +618,7 @@ const validKeynotes = keynoteSection.filter(
   <div
     class={cn(
       "relative mx-auto flex w-full max-w-screen-sm flex-col gap-24 px-4 py-16 lg:max-w-screen-lg lg:flex-row lg:gap-12",
-      !speakers.length && "lg:max-w-screen-sm",
+      !speakers.length && "lg:max-w-screen-sm"
     )}
   >
     <div class="flex w-full flex-[1.3] flex-col gap-8 pb-4">
@@ -779,7 +808,7 @@ const validKeynotes = keynoteSection.filter(
       <div
         class={cn(
           buttonVariants({ size: "lg", variant: "secondary" }),
-          "max-xs:w-full",
+          "max-xs:w-full"
         )}
       >
         View Event Assets
