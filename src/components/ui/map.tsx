@@ -169,8 +169,6 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
       renderWorldCopies: false,
       attributionControl: {
         compact: true,
-        customAttribution:
-          '<a href="https://openfreemap.org" target="_blank">OpenFreeMap</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> Data from <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
       },
       ...props,
     });
