@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 import {
   Map,
@@ -32,7 +32,6 @@ type PopupInfo = {
 };
 
 export function GlobalMap({ events, className }: GlobalMapProps) {
-  const mapRef = useRef<maplibregl.Map | null>(null);
   const [selectedCity, setSelectedCity] = useState<PopupInfo | null>(null);
 
   const { geoJsonData, totalEvents } = useMemo(() => {
@@ -45,10 +44,7 @@ export function GlobalMap({ events, className }: GlobalMapProps) {
           type: "Feature" as const,
           geometry: {
             type: "Point" as const,
-            coordinates: [city.location.lng, city.location.lat] as [
-              number,
-              number,
-            ],
+            coordinates: [city.location.lng, city.location.lat],
           },
           properties: {
             cityId: cityId,
@@ -83,12 +79,7 @@ export function GlobalMap({ events, className }: GlobalMapProps) {
         className,
       )}
     >
-      <Map
-        ref={mapRef}
-        center={[10, 30]}
-        zoom={2}
-        projection={{ type: "globe" }}
-      >
+      <Map center={[10, 30]} zoom={2} projection={{ type: "globe" }}>
         <MapClusterLayer
           data={geoJsonData}
           clusterRadius={30}
