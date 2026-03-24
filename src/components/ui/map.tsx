@@ -16,7 +16,14 @@ import {
   type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
-import { X, Minus, Plus, Locate, Maximize, Loader2 } from "lucide-react";
+import {
+  LuX,
+  LuMinus,
+  LuPlus,
+  LuLocate,
+  LuMaximize,
+  LuLoader2,
+} from "react-icons/lu";
 
 import { cn } from "@/lib/utils-client";
 
@@ -494,7 +501,7 @@ function MarkerPopup({
           className="absolute right-1 top-1 z-10 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
           aria-label="Close popup"
         >
-          <X className="h-4 w-4" />
+          <LuX className="h-4 w-4" />
           <span className="sr-only">Close</span>
         </button>
       )}
@@ -741,10 +748,10 @@ function MapControls({
       {showZoom && (
         <ControlGroup>
           <ControlButton onClick={handleZoomIn} label="Zoom in">
-            <Plus className="size-4" />
+            <LuPlus className="size-4" />
           </ControlButton>
           <ControlButton onClick={handleZoomOut} label="Zoom out">
-            <Minus className="size-4" />
+            <LuMinus className="size-4" />
           </ControlButton>
         </ControlGroup>
       )}
@@ -761,9 +768,9 @@ function MapControls({
             disabled={waitingForLocation}
           >
             {waitingForLocation ? (
-              <Loader2 className="size-4 animate-spin" />
+              <LuLoader2 className="size-4 animate-spin" />
             ) : (
-              <Locate className="size-4" />
+              <LuLocate className="size-4" />
             )}
           </ControlButton>
         </ControlGroup>
@@ -771,7 +778,7 @@ function MapControls({
       {showFullscreen && (
         <ControlGroup>
           <ControlButton onClick={handleFullscreen} label="Toggle fullscreen">
-            <Maximize className="size-4" />
+            <LuMaximize className="size-4" />
           </ControlButton>
         </ControlGroup>
       )}
@@ -918,7 +925,7 @@ function MapPopup({
           className="absolute right-1 top-1 z-10 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
           aria-label="Close popup"
         >
-          <X className="h-4 w-4" />
+          <LuX className="h-4 w-4" />
           <span className="sr-only">Close</span>
         </button>
       )}
