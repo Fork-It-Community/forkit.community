@@ -61,11 +61,6 @@ export default defineConfig({
         access: "secret",
         optional: true,
       }),
-      MAPTILER_API_KEY: envField.string({
-        context: "client",
-        access: "public",
-        optional: false,
-      }),
     },
   },
   vite: {

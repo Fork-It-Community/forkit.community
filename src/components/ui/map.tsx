@@ -90,11 +90,9 @@ function useMap() {
   return context;
 }
 
-import { MAPTILER_API_KEY } from "astro:env/client";
-
 const defaultStyles = {
-  dark: `https://api.maptiler.com/maps/streets-v2-dark/style.json?key=${MAPTILER_API_KEY}`,
-  light: `https://api.maptiler.com/maps/streets-v2/style.json?key=${MAPTILER_API_KEY}`,
+  dark: "https://tiles.openfreemap.org/styles/dark",
+  light: "https://tiles.openfreemap.org/styles/positron",
 };
 
 type MapStyleOption = string | MapLibreGL.StyleSpecification;
@@ -108,7 +106,7 @@ type MapProps = {
    * Pass your theme value here.
    */
   theme?: Theme;
-  /** Custom map styles for light and dark themes. Overrides the default Carto styles. */
+  /** Custom map styles for light and dark themes. Overrides the default OpenFreeMap styles. */
   styles?: {
     light?: MapStyleOption;
     dark?: MapStyleOption;
@@ -171,6 +169,8 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
       renderWorldCopies: false,
       attributionControl: {
         compact: true,
+        customAttribution:
+          '<a href="https://openfreemap.org" target="_blank">OpenFreeMap</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> Data from <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
       },
       ...props,
     });
@@ -189,7 +189,27 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
     };
     const loadHandler = () => setIsLoaded(true);
 
-    map.on("load", loadHandler);
+    map.on("load", () => {
+      loadHandler();
+      for (const layer of map.getStyle().layers) {
+        if (layer.type === "symbol") {
+          // Only keep country and city labels, hide everything else
+          const isCountry = layer.id.startsWith("place_country");
+          const isCity =
+            layer.id === "place_city" || layer.id === "place_city_large";
+          if (isCountry || isCity) {
+            // Force English-only labels
+            map.setLayoutProperty(layer.id, "text-field", [
+              "coalesce",
+              ["get", "name:latin"],
+              ["get", "name"],
+            ]);
+          } else {
+            map.setLayoutProperty(layer.id, "visibility", "none");
+          }
+        }
+      }
+    });
     map.on("styledata", styleDataHandler);
     setMapInstance(map);
 
