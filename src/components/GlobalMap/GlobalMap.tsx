@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils-client";
 import type { EventsByCities } from "@/lib/events";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
+import { Result } from "better-result";
 
 type GlobalMapProps = {
   events: EventsByCities;
@@ -33,49 +34,48 @@ type PopupInfo = {
 export function GlobalMap({ events, className }: GlobalMapProps) {
   const mapRef = useRef<maplibregl.Map | null>(null);
   const [selectedCity, setSelectedCity] = useState<PopupInfo | null>(null);
-  const totalEvents = Object.values(events).reduce(
-    (total, cityEvents) => total + cityEvents.length,
-    0,
-  );
 
-  const geoJsonData = useMemo(
-    () => ({
-      type: "FeatureCollection" as const,
-      features: Object.entries(events)
-        .map(([cityId, cityEvents]) => {
-          const city = cityEvents[0]?.data._computed.city?.data;
-          if (!city) return null;
+  const { geoJsonData, totalEvents } = useMemo(() => {
+    const features = Object.entries(events)
+      .map(([cityId, cityEvents]) => {
+        const city = cityEvents[0]?.data._computed.city?.data;
+        if (!city) return null;
 
-          return {
-            type: "Feature" as const,
-            geometry: {
-              type: "Point" as const,
-              coordinates: [city.location.lng, city.location.lat] as [
-                number,
-                number,
-              ],
-            },
-            properties: {
-              cityId: cityId,
-              cityName: city.name,
-              countryName:
-                cityEvents[0].data._computed.country?.data.name ?? "",
-              eventCount: cityEvents.length,
-              events: JSON.stringify(
-                cityEvents.map((event) => ({
-                  id: event.id,
-                  name: event.data._computed.name,
-                  type: event.data.type,
-                  date: event.data.date,
-                })),
-              ),
-            },
-          };
-        })
-        .filter((feature) => !!feature),
-    }),
-    [events],
-  );
+        return {
+          type: "Feature" as const,
+          geometry: {
+            type: "Point" as const,
+            coordinates: [city.location.lng, city.location.lat] as [
+              number,
+              number,
+            ],
+          },
+          properties: {
+            cityId: cityId,
+            cityName: city.name,
+            countryName: cityEvents[0].data._computed.country?.data.name ?? "",
+            eventCount: cityEvents.length,
+            events: JSON.stringify(
+              cityEvents.map((event) => ({
+                id: event.id,
+                name: event.data._computed.name,
+                type: event.data.type,
+                date: event.data.date,
+              })),
+            ),
+          },
+        };
+      })
+      .filter((feature) => !!feature);
+
+    return {
+      geoJsonData: { type: "FeatureCollection" as const, features },
+      totalEvents: features.reduce(
+        (sum, f) => sum + f.properties.eventCount,
+        0,
+      ),
+    };
+  }, [events]);
   return (
     <div
       className={cn(
@@ -97,12 +97,13 @@ export function GlobalMap({ events, className }: GlobalMapProps) {
           pointColor="#EBFF11"
           onPointClick={(feature, coordinates) => {
             const properties = feature.properties;
-            const cityEvents = JSON.parse(properties.events);
+            const parsed = Result.try(() => JSON.parse(properties.events));
+            if (parsed.isErr()) return;
 
             setSelectedCity({
               cityName: properties?.cityName,
               countryName: properties?.countryName,
-              events: cityEvents,
+              events: parsed.value,
               coordinates: coordinates,
             });
           }}
