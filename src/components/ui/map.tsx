@@ -22,7 +22,7 @@ import {
   LuPlus,
   LuLocate,
   LuMaximize,
-  LuLoader2,
+  LuLoader,
 } from "react-icons/lu";
 
 import { cn } from "@/lib/utils-client";
@@ -768,7 +768,7 @@ function MapControls({
             disabled={waitingForLocation}
           >
             {waitingForLocation ? (
-              <LuLoader2 className="size-4 animate-spin" />
+              <LuLoader className="size-4 animate-spin" />
             ) : (
               <LuLocate className="size-4" />
             )}
