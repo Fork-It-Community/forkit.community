@@ -74,7 +74,7 @@ export const zEventBasicInfo = ({ image }: SchemaContext) =>
         }),
         rating: z
           .object({
-            score: z.number().min(1).max(5),
+            averageScore: z.number().min(1).max(5),
             count: z.number().int().positive(),
             comments: z
               .array(
