@@ -2,35 +2,35 @@
 export const prerender = false;
 
 import { getCollection } from "astro:content";
-import { getUpcomingEvents, getUpcomingMajorEvent } from "@/lib/events";
+import { getUpcomingEventForCity, getUpcomingMajorEvent } from "@/lib/events";
 
 const { cityName } = Astro.params;
 
-//@ts-ignore - variables in astro redirect return are currently creating a typescript error
-let nextEvent;
-
 if (cityName === "next") {
-  nextEvent = await getUpcomingMajorEvent();
-  return Astro.redirect(nextEvent ? `/events/${nextEvent.id}` : "/", 302);
-} else {
-  const cities = await getCollection("cities");
-  const city = cities.find((c) => c.id === cityName);
-
-  if (!city) {
-    return Astro.redirect("/404", 302);
-  }
-
-  nextEvent = (await getUpcomingEvents()).find(
-    (e) =>
-      e.data._computed.city?.id === city.id && e.data.status === "published",
+  //@ts-ignore - variables in astro redirect return are currently creating a typescript error
+  const nextMajorEvent = await getUpcomingMajorEvent();
+  return Astro.redirect(
+    nextMajorEvent ? `/events/${nextMajorEvent.id}` : "/",
+    302,
   );
+}
+const cities = await getCollection("cities");
+const city = cities.find((c) => c.id === cityName);
 
-  if (nextEvent) {
-    return Astro.redirect(`/events/${nextEvent.id}`, 302);
-  }
+if (!city) {
+  return new Response(null, {
+    status: 404,
+    statusText: "Not found",
+  });
+}
 
+const nextEventInCity = await getUpcomingEventForCity(city.id);
+
+if (!nextEventInCity) {
   //@ts-ignore - variables in astro redirect return are currently creating a typescript error
   const countryId = city.data.country.id;
   return Astro.redirect(`/events/locations/${countryId}/${city.id}`, 302);
 }
+
+return Astro.redirect(`/events/${nextEventInCity.id}`, 302);
 ---
