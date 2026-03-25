@@ -77,6 +77,7 @@ export default defineConfig({
       filter: (page) =>
         !page.endsWith("/attendee") &&
         !page.endsWith("/events/locations") &&
+        !page.endsWith("/prospectus") &&
         !page.includes("/branding/components") &&
         !page.includes("/dashboard"),
     }),
@@ -85,7 +86,7 @@ export default defineConfig({
         {
           userAgent: "*",
           allow: "/",
-          disallow: ["/branding/components"],
+          disallow: ["/branding/components", "/events/*/prospectus"],
         },
       ],
     }),

@@ -37,6 +37,7 @@ const ROUTES_CONFIG = {
           }
         }
       },
+      "prospectus": {},
       "schedule": {},
       "sponsors": {},
       "talks": {
