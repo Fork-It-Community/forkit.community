@@ -79,7 +79,12 @@ export function GlobalMap({ events, className }: GlobalMapProps) {
         className,
       )}
     >
-      <Map center={[10, 30]} zoom={2} projection={{ type: "globe" }}>
+      <Map
+        center={[10, 30]}
+        zoom={2}
+        projection={{ type: "globe" }}
+        attributionControl={false}
+      >
         <MapClusterLayer
           data={geoJsonData}
           clusterRadius={30}
@@ -175,9 +180,14 @@ export function GlobalMap({ events, className }: GlobalMapProps) {
             </div>
           </div>
         </div>
-        <div className="absolute left-1/2 top-4 -translate-x-1/2 rounded-lg border-2 bg-black px-4 py-2">
+        <div className="absolute left-4 top-4 hidden rounded-lg border-2 bg-black px-4 py-2 md:block">
           <span className="text-sm font-medium text-white/80">
             🌍 Drag to explore
+          </span>
+        </div>
+        <div className="pointer-events-none absolute bottom-1 right-2">
+          <span className="text-[10px] text-white/40">
+            © OpenFreeMap © OpenStreetMap contributors
           </span>
         </div>
       </Map>
