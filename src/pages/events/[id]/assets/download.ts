@@ -1,9 +1,31 @@
 import { getEventAssetsSources } from "./_utils";
+import { getTalkAssetDownloadFileName } from "@/pages/events/[id]/talks/[talkId]/assets/_utils";
 import type { APIRoute } from "astro";
 import { getEntry } from "astro:content";
 import dayjs from "dayjs";
 import AdmZip from "adm-zip";
 import { eventWithComputed } from "@/lib/events";
+
+const getZipFileName = async (src: string) => {
+  const parts = src.split("/");
+
+  // If the asset is a talk, format the filename to have speaker name
+  const talksIndex = parts.indexOf("talks");
+  if (talksIndex !== -1) {
+    const eventsIndex = parts.indexOf("events");
+    const eventId = parts[eventsIndex + 1];
+    const talkId = parts[talksIndex + 1];
+    const lastPart = parts.at(-1);
+    if (!eventId || !talkId || !lastPart) return src;
+    const assetName = lastPart.replace(/\.jpg$/i, "");
+    return getTalkAssetDownloadFileName(eventId, talkId, assetName);
+  }
+
+  return src
+    .replaceAll("/events/", "")
+    .replaceAll("/assets", "")
+    .replaceAll("/", "_");
+};
 
 export const prerender = false;
 
@@ -27,10 +49,9 @@ export const GET: APIRoute = async ({ params, site }) => {
         return;
       }
       const blob = await response.blob();
-      zip.addFile(
-        `${src.replaceAll("/events/", "").replaceAll("/assets", "").replaceAll("/", "_")}`,
-        Buffer.from(await blob.arrayBuffer()),
-      );
+
+      const fileName = await getZipFileName(src);
+      zip.addFile(fileName, Buffer.from(await blob.arrayBuffer()));
     }),
   );
 

@@ -1,6 +1,17 @@
 import { NotFoundAssetError } from "@/generated-assets/api";
 import { getEntry } from "astro:content";
 
+export const getTalkAssetDownloadFileName = async (
+  eventId: string,
+  talkId: string,
+  assetName: string,
+) => {
+  const talk = await getEntry("talks", talkId);
+  if (!talk) return `${eventId}-${talkId}-${assetName}.jpg`;
+  const speakerNames = talk.data.speakers.map((s) => s.id.id).join("-");
+  return `${eventId}-${speakerNames}-${assetName}.jpg`;
+};
+
 export const getTalkData = async (talkId: string) => {
   const talk = await getEntry("talks", talkId);
 
