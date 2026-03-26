@@ -95,6 +95,6 @@ html body[data-scroll-locked] {
   margin-right: 0 !important;
 }
 
-.maplibregl-popup-content {
-  background: transparent !important;
+.maplibregl-popup .maplibregl-popup-content {
+  background: transparent;
 }
