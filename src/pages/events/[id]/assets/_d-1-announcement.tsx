@@ -10,6 +10,7 @@ import { getEventData } from "./_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 import { RoundedSpeakers } from "@/generated-assets/components/RoundedSpeakers";
 import { EventBanner } from "@/generated-assets/components/EventBanner";
+import { SponsorLogos } from "@/generated-assets/components/SponsorLogos";
 import type { ImageMetadata } from "astro";
 import { getNumberOfApprovedGuests } from "@/lib/luma/utils";
 
@@ -40,8 +41,29 @@ export function d1announcement(options: { width: number; height: number }) {
     );
     const approvedGuestsNumber = await getNumberOfApprovedGuests(event);
 
+    const coOrganizersIds = event.__coOrganizers.map(
+      (coOrganiser) => coOrganiser.id,
+    );
+    const sponsorLogos = await Promise.all(
+      event.__sponsors
+        .filter((sponsor) => !coOrganizersIds.includes(sponsor.id))
+        .map(
+          async (sponsor) => await getAstroImageBase64(sponsor.data.logos.noBg),
+        ),
+    );
+    const displaySponsors =
+      event.data.type === "event" && !!sponsorLogos.length;
+
     return (
-      <Frame {...options} tw="p-24">
+      <Frame
+        {...options}
+        style={{
+          paddingTop: 96,
+          paddingLeft: 96,
+          paddingRight: 96,
+          paddingBottom: displaySponsors ? 0 : 96,
+        }}
+      >
         <BgImage
           src={postCover}
           width={options.width}
@@ -60,52 +82,120 @@ export function d1announcement(options: { width: number; height: number }) {
           }}
         >
           <LogoWithFriends logos={coOrganizersLogos} />
-          <div tw="flex flex-col gap-6">
-            <div tw="flex items-center gap-6">
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 24,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 24,
+              }}
+            >
               <div
-                tw="flex font-medium leading-none"
-                style={{ fontSize: 256, color: COLORS.primary }}
+                style={{
+                  display: "flex",
+                  fontSize: 256,
+                  fontWeight: 500,
+                  lineHeight: 1,
+                  color: COLORS.primary,
+                }}
               >
                 01
               </div>
-              <div tw="flex flex-col">
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
                 <div
-                  tw="flex font-medium leading-none uppercase"
-                  style={{ fontSize: 112, color: COLORS.primary }}
+                  style={{
+                    display: "flex",
+                    fontSize: 112,
+                    fontWeight: 500,
+                    lineHeight: 1,
+                    color: COLORS.primary,
+                    textTransform: "uppercase",
+                  }}
                 >
                   Days left
                 </div>
                 <div
-                  tw="flex font-medium leading-none uppercase"
-                  style={{ fontSize: 112, color: COLORS.white }}
+                  style={{
+                    display: "flex",
+                    fontSize: 112,
+                    fontWeight: 500,
+                    lineHeight: 1,
+                    color: COLORS.white,
+                    textTransform: "uppercase",
+                  }}
                 >
                   Until the event
                 </div>
               </div>
             </div>
             <div
-              tw="flex flex-col font-medium leading-none uppercase opacity-80"
-              style={{ fontSize: 54 }}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                fontSize: 54,
+                fontWeight: 500,
+                lineHeight: 1,
+                textTransform: "uppercase",
+                opacity: 0.8,
+              }}
             >
-              <div tw="flex gap-3">
+              <div style={{ display: "flex", gap: 12 }}>
                 <RoundedSpeakers speakerImages={speakerImages} />
-                <div tw="flex">
+                <div style={{ display: "flex" }}>
                   Join us to meet {approvedGuestsNumber} people
                 </div>
               </div>
-              <div tw="flex">sharing real-life experiences</div>
+              <div style={{ display: "flex" }}>
+                sharing real-life experiences
+              </div>
             </div>
           </div>
 
-          <div tw="flex justify-between items-end">
-            <div tw="flex flex-wrap items-center gap-x-12 gap-y-6">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "flex-end",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "center",
+                columnGap: 48,
+                rowGap: 24,
+              }}
+            >
               <div
-                tw="flex items-center gap-3 font-medium leading-none"
-                style={{ fontSize: 36 }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 12,
+                  fontSize: 36,
+                  fontWeight: 500,
+                  lineHeight: 1,
+                }}
               >
                 <svg
                   viewBox="0 0 24 24"
-                  tw="flex-none opacity-60 w-[1em] h-[1em]"
+                  style={{
+                    flex: "none",
+                    opacity: 0.8,
+                    width: "1em",
+                    height: "1em",
+                  }}
                 >
                   <path
                     fill="white"
@@ -117,12 +207,24 @@ export function d1announcement(options: { width: number; height: number }) {
 
               {!!event.data.location?.name && (
                 <div
-                  tw="flex gap-3 items-center font-medium leading-tight text-balance"
-                  style={{ fontSize: 36 }}
+                  style={{
+                    display: "flex",
+                    gap: 12,
+                    alignItems: "center",
+                    fontSize: 36,
+                    fontWeight: 500,
+                    lineHeight: 1.2,
+                    textWrap: "balance",
+                  }}
                 >
                   <svg
                     viewBox="0 0 24 24"
-                    tw="flex-none opacity-60 w-[1em] h-[1em]"
+                    style={{
+                      flex: "none",
+                      opacity: 0.8,
+                      width: "1em",
+                      height: "1em",
+                    }}
                   >
                     <path
                       fill="white"
@@ -134,13 +236,20 @@ export function d1announcement(options: { width: number; height: number }) {
               )}
             </div>
             <div
-              tw="flex font-medium leading-tight uppercase opacity-60"
-              style={{ fontSize: 32 }}
+              style={{
+                display: "flex",
+                fontSize: 32,
+                fontWeight: 500,
+                lineHeight: 1.2,
+                textTransform: "uppercase",
+                opacity: 0.6,
+              }}
             >
               www.forkit.community
             </div>
           </div>
         </div>
+        {displaySponsors && <SponsorLogos logos={sponsorLogos} />}
       </Frame>
     );
   };
