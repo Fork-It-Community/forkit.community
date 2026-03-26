@@ -55,41 +55,103 @@ export function cfpOpenInsta(options: { width: number; height: number }) {
           height={options.height}
         />
 
-        <div tw="z-[100] flex flex-1 flex-col w-full justify-between">
+        <div
+          style={{
+            zIndex: 100,
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            justifyContent: "space-between",
+          }}
+        >
           <LogoWithFriends logos={coOrganizersLogos} />
 
-          <div tw="flex flex-col gap-8 justify-center">
-            <div tw="flex flex-col gap-6">
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 32,
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 24,
+              }}
+            >
               <div
-                tw="font-medium uppercase tracking-[6px] opacity-90"
-                style={{ fontSize: 50.4 }}
+                style={{
+                  fontSize: 50.4,
+                  fontWeight: 500,
+                  textTransform: "uppercase",
+                  letterSpacing: 6,
+                  opacity: 0.9,
+                }}
               >
                 Call for Papers
               </div>
 
               <div
-                tw="font-medium leading-[0.95] uppercase -ml-1.5"
                 style={{
                   fontSize: 126,
+                  fontWeight: 500,
+                  lineHeight: 0.95,
                   color: COLORS.primary,
+                  marginLeft: -6,
+                  textTransform: "uppercase",
                 }}
               >
                 Now Open
               </div>
             </div>
 
-            <div tw="font-normal opacity-95" style={{ fontSize: 39.2 }}>
+            <div
+              style={{
+                fontSize: 39.2,
+                fontWeight: 400,
+                opacity: 0.95,
+              }}
+            >
               Submit your talk proposals
             </div>
           </div>
 
-          <div tw="flex justify-between items-center w-full">
-            <div tw="flex flex-col gap-4">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 16,
+              }}
+            >
               <div
-                tw="flex items-center gap-3 font-medium opacity-60"
-                style={{ fontSize: 33.6 }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 12,
+                  fontSize: 33.6,
+                  fontWeight: 500,
+                  opacity: 0.6,
+                }}
               >
-                <svg viewBox="0 0 24 24" tw="h-[1em] w-[1em] opacity-60">
+                <svg
+                  viewBox="0 0 24 24"
+                  style={{
+                    opacity: 0.8,
+                    width: "1em",
+                    height: "1em",
+                  }}
+                >
                   <path
                     fill="white"
                     d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"
@@ -99,12 +161,23 @@ export function cfpOpenInsta(options: { width: number; height: number }) {
               </div>
 
               <div
-                tw="flex gap-3 items-center font-medium opacity-60"
-                style={{ fontSize: 33.6 }}
+                style={{
+                  display: "flex",
+                  gap: 12,
+                  alignItems: "center",
+                  fontSize: 33.6,
+                  fontWeight: 500,
+                  opacity: 0.6,
+                }}
               >
                 <svg
                   viewBox="0 0 24 24"
-                  tw="h-[1em] w-[1em] flex-none opacity-60"
+                  style={{
+                    flex: "none",
+                    opacity: 0.8,
+                    width: "1em",
+                    height: "1em",
+                  }}
                 >
                   <path
                     fill="white"
@@ -119,8 +192,12 @@ export function cfpOpenInsta(options: { width: number; height: number }) {
             </div>
 
             <div
-              tw="font-medium uppercase opacity-50"
-              style={{ fontSize: 26.6 }}
+              style={{
+                fontSize: 26.6,
+                fontWeight: 500,
+                textTransform: "uppercase",
+                opacity: 0.5,
+              }}
             >
               www.forkit.community
             </div>
