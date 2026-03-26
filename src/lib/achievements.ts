@@ -21,14 +21,14 @@ export const ACHIEVEMENT_DESCRIPTIONS: Record<AchievementSlug, string> = {
   githubContributionCount: "GitHub contributions",
 };
 
-const DEFAULT_ACHIEVEMENT_LEVELS = [
+export const DEFAULT_ACHIEVEMENT_LEVELS: AchievementLevel[] = [
   { label: "wood", limit: 1 },
   { label: "stone", limit: 2 },
   { label: "silver", limit: 5 },
   { label: "gold", limit: 10 },
 ];
 
-const ACHIEVEMENTS: Achievement[] = [
+export const ACHIEVEMENTS: Achievement[] = [
   { slug: "speakingCount" },
   { slug: "fullDayEventsOrganizingCount" },
   { slug: "meetupOrganizingCount" },
