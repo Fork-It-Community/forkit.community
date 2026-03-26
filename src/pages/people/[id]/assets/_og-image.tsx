@@ -27,20 +27,40 @@ export default async function ({
     <Frame {...config} style={{ padding: 96 }}>
       <BgImage src={avatar} width={config.width} height={config.height} />
 
-      <div tw="z-[100] flex flex-1 flex-col w-full justify-between">
-        <Logo
+      <div
+        style={{
+          zIndex: 100,
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+          justifyContent: "space-between",
+        }}
+      >
+        <Logo style={{ width: 169 * 3, height: 18 * 3 }} color="white" />
+        <div
           style={{
-            width: 169 * 3,
-            height: 18 * 3,
-            color: "white",
+            display: "flex",
+            alignItems: "center",
+            gap: 80,
+            paddingBottom: 24,
           }}
-        />
-        <div tw="flex items-center pb-6" style={{ gap: 80 }}>
-          <div tw="flex flex-1 flex-col" style={{ gap: 56 }}>
+        >
+          <div
+            style={{
+              display: "flex",
+              flex: 1,
+              flexDirection: "column",
+              gap: 56,
+            }}
+          >
             <div
-              tw="flex font-medium leading-none -mt-2"
               style={{
+                display: "flex",
                 fontSize: 80,
+                fontWeight: 500,
+                lineHeight: 1,
+                marginTop: -8,
                 color: COLORS.primary,
                 textWrap: "balance",
               }}
@@ -49,45 +69,80 @@ export default async function ({
             </div>
 
             <div
-              tw="flex flex-wrap flex-col items-start"
               style={{
+                display: "flex",
+                flexWrap: "wrap",
+                flexDirection: "column",
+                alignItems: "flex-start",
                 columnGap: 48,
                 rowGap: 24,
               }}
             >
               <div
-                tw="flex items-center gap-3 font-medium leading-none"
-                style={{ fontSize: 48 }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 12,
+                  fontSize: 48,
+                  fontWeight: 500,
+                  lineHeight: 1,
+                }}
               >
                 {person.data.job}
               </div>
               <div
-                tw="flex items-center gap-3 font-medium leading-none opacity-70"
-                style={{ fontSize: 40 }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 12,
+                  fontSize: 40,
+                  fontWeight: 500,
+                  lineHeight: 1,
+                  opacity: 0.7,
+                }}
               >
                 {person.data.company?.title}
               </div>
             </div>
           </div>
-          <div tw="relative flex flex-none gap-5 justify-end flex-wrap max-w-[50%]">
+          <div
+            style={{
+              position: "relative",
+              display: "flex",
+              flex: "none",
+              gap: 20,
+              justifyContent: "flex-end",
+              flexWrap: "wrap",
+              maxWidth: "50%",
+            }}
+          >
             <img
               src={avatar}
-              tw="rounded-lg"
               style={{
                 width: 768,
                 height: 768,
+                borderRadius: 8,
                 boxShadow: "0 10px 20px rgba(0,0,0,0.4)",
               }}
             />
           </div>
         </div>
 
-        <div tw="flex justify-between items-end">
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+          }}
+        >
           <div
-            tw="flex font-medium uppercase opacity-60"
             style={{
+              display: "flex",
               fontSize: 32,
+              fontWeight: 500,
               lineHeight: 1.2,
+              textTransform: "uppercase",
+              opacity: 0.6,
             }}
           >
             www.forkit.community
