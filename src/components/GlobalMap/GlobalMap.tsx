@@ -44,12 +44,7 @@ export function GlobalMap({
         className,
       )}
     >
-      <Map
-        center={[10, 30]}
-        zoom={2}
-        projection={{ type: "globe" }}
-        attributionControl={false}
-      >
+      <Map center={[10, 30]} zoom={2} projection={{ type: "globe" }}>
         <MapClusterLayer
           data={geoJsonData}
           clusterRadius={30}
