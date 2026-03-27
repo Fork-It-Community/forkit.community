@@ -209,6 +209,7 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
               ["get", "name:latin"],
               ["get", "name"],
             ]);
+            map.setPaintProperty(layer.id, "text-color", "#FFFFFF");
           } else {
             map.setLayoutProperty(layer.id, "visibility", "none");
           }
