@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import dayjs from "dayjs";
 import {
   Map,
@@ -9,13 +9,13 @@ import {
   MapPopup,
 } from "@/components/ui/map";
 import { cn } from "@/lib/utils-client";
-import type { EventsByCities } from "@/lib/events";
+import type { CitiesGeoJson } from "@/lib/events";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import { Result } from "better-result";
 
 type GlobalMapProps = {
-  events: EventsByCities;
+  citiesGeoJson: CitiesGeoJson;
   className?: string;
 };
 
@@ -31,47 +31,12 @@ type PopupInfo = {
   coordinates: [number, number];
 };
 
-export function GlobalMap({ events, className }: GlobalMapProps) {
+export function GlobalMap({
+  citiesGeoJson: { geoJsonData, totalEvents },
+  className,
+}: GlobalMapProps) {
   const [selectedCity, setSelectedCity] = useState<PopupInfo | null>(null);
 
-  const { geoJsonData, totalEvents } = useMemo(() => {
-    const features = Object.entries(events)
-      .map(([cityId, cityEvents]) => {
-        const city = cityEvents[0]?.data._computed.city?.data;
-        if (!city) return null;
-
-        return {
-          type: "Feature" as const,
-          geometry: {
-            type: "Point" as const,
-            coordinates: [city.location.lng, city.location.lat],
-          },
-          properties: {
-            cityId: cityId,
-            cityName: city.name,
-            countryName: cityEvents[0].data._computed.country?.data.name ?? "",
-            eventCount: cityEvents.length,
-            events: JSON.stringify(
-              cityEvents.map((event) => ({
-                id: event.id,
-                name: event.data._computed.name,
-                type: event.data.type,
-                date: event.data.date,
-              })),
-            ),
-          },
-        };
-      })
-      .filter((feature) => !!feature);
-
-    return {
-      geoJsonData: { type: "FeatureCollection" as const, features },
-      totalEvents: features.reduce(
-        (sum, f) => sum + f.properties.eventCount,
-        0,
-      ),
-    };
-  }, [events]);
   return (
     <div
       className={cn(
@@ -171,7 +136,7 @@ export function GlobalMap({ events, className }: GlobalMapProps) {
           </div>
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-1.5">
-              <div className="h-2 w-2 rounded-full bg-[#EBFF11]" />
+              <div className="h-2 w-2 rounded-full bg-primary" />
               <span className="text-sm text-white">Event</span>
             </div>
             <div className="flex items-center gap-1.5">

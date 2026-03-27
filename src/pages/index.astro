@@ -6,7 +6,7 @@ import {
   getEventDisplayType,
   getTalksWithVOD,
   getUpcomingMajorEvent,
-  eventsGroupedByCities,
+  getCitiesGeoJson,
 } from "@/lib/events";
 import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 import { Image } from "astro:assets";
@@ -62,7 +62,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
 const forKidsAfterMovie = (
   await getEntry("forKidsEvent", "2025-france-rouen-2")
 )?.data.afterEventContent?.afterMovie;
-const eventsByCities = await eventsGroupedByCities();
+const citiesGeoJson = await getCitiesGeoJson();
 ---
 
 <MainLayout>
@@ -372,7 +372,7 @@ const eventsByCities = await eventsGroupedByCities();
             </a>
           </div>
         </div>
-        <GlobalMap events={eventsByCities} client:load />
+        <GlobalMap citiesGeoJson={citiesGeoJson} client:load />
       </div>
     </div>
   </div>
