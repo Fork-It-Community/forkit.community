@@ -76,12 +76,15 @@ export function GlobalMap({
             latitude={selectedCity.coordinates[1]}
             onClose={() => setSelectedCity(null)}
             closeButton
-            className="z-20 min-w-[200px] border-white/10 bg-black/80 bg-none backdrop-blur-md"
+            className="z-20 min-w-[200px] border-white/10 bg-black/90"
           >
             <div className="flex flex-col gap-2">
               <div className="border-b border-white/10 pb-2">
-                <h3 className="font-bold text-white">
-                  {selectedCity.cityName}, {selectedCity.countryName}
+                <p className="font-heading text-2xs uppercase tracking-widest text-white/60">
+                  {selectedCity.countryName}
+                </p>
+                <h3 className="font-heading font-medium uppercase tracking-widest text-white">
+                  {selectedCity.cityName}
                 </h3>
               </div>
               <div className="flex max-h-[160px] flex-col gap-1 overflow-y-auto pr-1">
@@ -99,19 +102,19 @@ export function GlobalMap({
                       <div
                         className={cn(
                           "h-1.5 w-1.5 shrink-0 rounded-full",
-                          isMeetup ? "bg-white/60" : "bg-[#EBFF11]",
+                          isMeetup ? "bg-white/60" : "bg-primary",
                         )}
                       />
-                      <span className="truncate text-sm font-medium text-white group-hover:text-[#EBFF11]">
+                      <span className="truncate font-heading font-medium text-white transition group-hover:text-primary">
                         {event.name}
                       </span>
                       {!isPast && (
-                        <span className="shrink-0 rounded-full bg-[#EBFF11] px-1.5 py-0.5 text-[10px] font-semibold text-black">
-                          Upcoming
+                        <span className="shrink-0 font-heading text-2xs uppercase tracking-widest text-primary">
+                          Soon
                         </span>
                       )}
-                      <span className="ml-auto shrink-0 text-[10px] text-white/40">
-                        {dayjs(event.date).format("DD MMM YYYY")}
+                      <span className="ml-auto shrink-0 font-heading text-xs text-white/40">
+                        {dayjs(event.date).format("DD MMM YY")}
                       </span>
                     </a>
                   );
