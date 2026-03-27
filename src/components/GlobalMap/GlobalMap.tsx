@@ -119,12 +119,7 @@ export function GlobalMap({
           </MapPopup>
         )}
 
-        <MapControls
-          position="bottom-right"
-          showZoom
-          showCompass
-          showFullscreen
-        />
+        <MapControls position="bottom-right" showZoom />
         <div className="absolute bottom-4 left-4 flex flex-col gap-2 rounded-lg border border-white/10 bg-black/60 px-3 py-2 backdrop-blur-md">
           <div className="flex items-center gap-2">
             <div className="h-2 w-2 rounded-full bg-primary" />
