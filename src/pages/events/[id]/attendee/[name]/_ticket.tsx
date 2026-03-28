@@ -2,7 +2,7 @@ import { Frame } from "@/generated-assets/components/Frame";
 import {
   getAstroImageBase64,
   type AssetImageConfig,
-} from "@/generated-assets/image";
+} from "@bearstudio/astro-assets-generation";
 import ticketBg from "./_ticket.png";
 import { getEventData } from "./_utils";
 import { COLORS } from "@/generated-assets/theme";
@@ -24,7 +24,10 @@ export function saveTheDate(options: {
     const ticketImage = await getAstroImageBase64(ticketBg);
 
     return (
-      <Frame {...options} style={{ padding: 0, background: "transparent" }}>
+      <Frame
+        {...options}
+        style={{ padding: 0, backgroundColor: "transparent" }}
+      >
         <div
           style={{
             display: "flex",
@@ -34,9 +37,13 @@ export function saveTheDate(options: {
           }}
         >
           <img
-            style={{ zIndex: 10, position: "relative" }}
+            style={{
+              zIndex: 10,
+              position: "relative",
+              width: 1600,
+              height: 785,
+            }}
             src={ticketImage}
-            width={1600}
           />
           <div
             style={{
