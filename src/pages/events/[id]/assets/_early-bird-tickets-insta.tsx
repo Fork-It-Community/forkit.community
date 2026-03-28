@@ -1,10 +1,9 @@
 import { Frame } from "@/generated-assets/components/Frame";
 import {
   getAstroImageBase64,
+  jsxToBase64,
   type AssetImageConfig,
-  SVG,
-  imageBufferToBase64,
-} from "@/generated-assets/image";
+} from "@bearstudio/astro-assets-generation";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventData } from "./_utils";
@@ -50,11 +49,10 @@ async function earlyBirdTicketsInsta({ params }: { params: { id: string } }) {
     params: { id: event.id, name: "FULL DAY EVENT" },
   });
 
-  const ticketSVG = await SVG(ticketJSX, { width: 1920, height: 1080 });
-  const ticketImageBase64 = imageBufferToBase64(
-    Buffer.from(ticketSVG),
-    "svg+xml",
-  );
+  const ticketImageBase64 = await jsxToBase64(ticketJSX, {
+    width: 1920,
+    height: 1080,
+  });
 
   return (
     <Frame
