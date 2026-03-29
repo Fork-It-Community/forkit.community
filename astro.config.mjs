@@ -20,7 +20,13 @@ const adapter =
   import.meta.env.DEV
     ? node({ mode: "standalone" })
     : vercel({
-        isr: true,
+        isr: {
+          // TODO: Revert — exclude actions from ISR due to @astrojs/vercel bug:
+          // ISR entrypoint reconstructs POST body without `duplex: 'half'`, causing a TypeError.
+          // Excluding actions from ISR lets them go directly to the serverless function.
+          // Remove this once the bug is fixed in Astro/Vercel adapter.
+          exclude: [/^\/_actions\/.*/],
+        },
       });
 
 // https://astro.build/config
