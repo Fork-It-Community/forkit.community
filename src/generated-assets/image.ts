@@ -1,3 +1,4 @@
+import type React from "react";
 import fs from "fs/promises";
 import satori from "satori";
 import sharp from "sharp";
@@ -19,7 +20,7 @@ export type AssetImageConfig = {
 };
 
 export async function SVG(
-  component: JSX.Element,
+  component: React.JSX.Element,
   params: { width: number; height: number },
 ) {
   const fonts = await Promise.all(
@@ -46,7 +47,10 @@ export async function SVG(
   });
 }
 
-export async function JPG(component: JSX.Element, params: AssetImageConfig) {
+export async function JPG(
+  component: React.JSX.Element,
+  params: AssetImageConfig,
+) {
   const imgSharp = sharp(Buffer.from(await SVG(component, params)));
   if (!params.resizeConfig) {
     return await imgSharp.jpeg().toBuffer();
@@ -58,7 +62,7 @@ export async function JPG(component: JSX.Element, params: AssetImageConfig) {
 }
 
 export async function DEBUG_HTML(
-  component: JSX.Element,
+  component: React.JSX.Element,
   params: AssetImageConfig,
 ) {
   const html = renderToStaticMarkup(component);
