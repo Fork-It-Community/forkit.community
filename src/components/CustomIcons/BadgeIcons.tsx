@@ -4,9 +4,15 @@ type BadgeIconProps = {
   level: AchievementLevel["label"] | null;
   slug: AchievementSlug;
   className?: string;
+  size?: number;
 };
 
-export const BadgeIcon = ({ level, slug, className }: BadgeIconProps) => {
+export const BadgeIcon = ({
+  level,
+  slug,
+  className,
+  size = 40,
+}: BadgeIconProps) => {
   if (!level) {
     return null;
   }
@@ -14,9 +20,10 @@ export const BadgeIcon = ({ level, slug, className }: BadgeIconProps) => {
   return (
     <div className={className}>
       <img
-        src={`/badge-icons/${level}_${slug}.svg`}
+        src={`/badge-icons/${level}_${slug}.png`}
         alt={`${level} ${slug} badge`}
-        className="h-10 w-10"
+        width={size}
+        height={size}
       />
     </div>
   );
