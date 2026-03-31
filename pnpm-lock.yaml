@@ -223,8 +223,8 @@ importers:
         specifier: 4.21.0
         version: 4.21.0
       vite-plugin-qrcode:
-        specifier: 0.3.0
-        version: 0.3.0(vite@7.3.1(@types/node@24.12.0)(jiti@2.4.2)(lightningcss@1.29.1)(tsx@4.21.0)(yaml@2.8.3))
+        specifier: 0.4.1
+        version: 0.4.1(vite@7.3.1(@types/node@24.12.0)(jiti@2.4.2)(lightningcss@1.29.1)(tsx@4.21.0)(yaml@2.8.3))
 
 packages:
 
@@ -3263,10 +3263,6 @@ packages:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
-  qrcode-terminal@0.12.0:
-    resolution: {integrity: sha512-EXtzRZmC+YGmGlDFbXKxQiMZNwCLEO6BANKXG4iCtSIM0yqc/pappSx3RIKr4r0uh5JsBckOXeKrB3Iz7mdQpQ==}
-    hasBin: true
-
   qrcode@1.5.4:
     resolution: {integrity: sha512-1ca71Zgiu6ORjHqFBDpnSMTR2ReToX4l1Au1VFLyVeBTFavzQnv5JxMFr3ukHVKpSrSA2MCk0lNJSykjUfz7Zg==}
     engines: {node: '>=10.13.0'}
@@ -3878,6 +3874,9 @@ packages:
     peerDependencies:
       browserslist: '>= 4.21.0'
 
+  uqr@0.1.2:
+    resolution: {integrity: sha512-MJu7ypHq6QasgF5YRTjqscSzQp/W11zoUk6kvmlH+fmWEs63Y0Eib13hYFwAzagRJcVY8WVnlV+eBDUGMJ5IbA==}
+
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
@@ -3923,11 +3922,10 @@ packages:
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
 
-  vite-plugin-qrcode@0.3.0:
-    resolution: {integrity: sha512-tCsN3ckHmFs9vRyFwdNdmlMzzt8iX7hZQrMMOhIIpu8SchfHgA78TIGBfeRnXARBo71qBPC7+O2rgMqPsOdCzg==}
-    engines: {node: ^14.13.1 || ^16.0.0 || >=18}
+  vite-plugin-qrcode@0.4.1:
+    resolution: {integrity: sha512-t3gdCbn/a2HHLK3M8bUrQ+4c+I0YQGJ/STxAL9eI6TBnfdeM/CJr3HctvOb7UYhEtWxHs5xZWpz7kYnRd5w+rA==}
     peerDependencies:
-      vite: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
+      vite: '>=3'
 
   vite@7.3.1:
     resolution: {integrity: sha512-w+N7Hifpc3gRjZ63vYBXA56dvvRlNWRczTdmCBBa+CotUzAPf5b7YMdMR/8CQoeYE5LX3W4wj6RYTgonm1b9DA==}
@@ -7563,8 +7561,6 @@ snapshots:
   punycode@2.3.1:
     optional: true
 
-  qrcode-terminal@0.12.0: {}
-
   qrcode@1.5.4:
     dependencies:
       dijkstrajs: 1.0.3
@@ -8279,6 +8275,8 @@ snapshots:
       escalade: 3.2.0
       picocolors: 1.1.1
 
+  uqr@0.1.2: {}
+
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
@@ -8329,9 +8327,9 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite-plugin-qrcode@0.3.0(vite@7.3.1(@types/node@24.12.0)(jiti@2.4.2)(lightningcss@1.29.1)(tsx@4.21.0)(yaml@2.8.3)):
+  vite-plugin-qrcode@0.4.1(vite@7.3.1(@types/node@24.12.0)(jiti@2.4.2)(lightningcss@1.29.1)(tsx@4.21.0)(yaml@2.8.3)):
     dependencies:
-      qrcode-terminal: 0.12.0
+      uqr: 0.1.2
       vite: 7.3.1(@types/node@24.12.0)(jiti@2.4.2)(lightningcss@1.29.1)(tsx@4.21.0)(yaml@2.8.3)
 
   vite@7.3.1(@types/node@24.12.0)(jiti@2.4.2)(lightningcss@1.29.1)(tsx@4.21.0)(yaml@2.8.3):
