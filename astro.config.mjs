@@ -79,7 +79,8 @@ export default defineConfig({
         !page.endsWith("/events/locations") &&
         !page.endsWith("/prospectus") &&
         !page.includes("/branding/components") &&
-        !page.includes("/dashboard"),
+        !page.includes("/dashboard") &&
+        !page.endsWith("/events/types"),
     }),
     robotsTxt({
       policy: [
