@@ -1,4 +1,8 @@
-import { ASSET_CATEGORIES, EXCLUDED_CATEGORIES_BY_TYPE } from "@/assets/consts";
+import {
+  ASSET_CATEGORIES,
+  EXCLUDED_CATEGORIES_BY_TYPE,
+  type AssetCategoryId,
+} from "@/assets/consts";
 import { NotFoundAssetError } from "@/generated-assets/api";
 import { getImageNameFromTsxPath } from "@/generated-assets/image";
 import { eventWithComputed } from "@/lib/events";
@@ -90,13 +94,16 @@ const getOppositeSuffixes = (
 export const getGroupedAssets = (
   imagesSrc: string[],
   eventType: CollectionEntry<"events">["data"]["type"],
+  additionalExcludedCategories: AssetCategoryId[] = [],
 ) => {
   const oppositeSuffixes = getOppositeSuffixes(eventType);
   const groups = groupBy(imagesSrc, categorize);
+  const excluded = [
+    ...EXCLUDED_CATEGORIES_BY_TYPE[eventType],
+    ...additionalExcludedCategories,
+  ];
 
-  return ASSET_CATEGORIES.filter(
-    ({ id }) => !EXCLUDED_CATEGORIES_BY_TYPE[eventType].includes(id),
-  )
+  return ASSET_CATEGORIES.filter(({ id }) => !excluded.includes(id))
     .map((category) => ({
       ...category,
       images: (groups[category.id] ?? []).filter((src) => {
