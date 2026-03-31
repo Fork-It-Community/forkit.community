@@ -234,6 +234,12 @@ const zMeetup = () => z.object({ type: z.literal("meetup") });
 const zEventClassic = () =>
   z.object({
     type: z.literal("event"),
+    banner: z
+      .object({
+        color: z.string(),
+        textColor: z.string().default("#ffffff"),
+      })
+      .optional(),
   });
 
 export type Event = z.infer<ReturnType<typeof zEvent>>;

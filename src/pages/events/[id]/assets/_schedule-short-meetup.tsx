@@ -10,6 +10,7 @@ import { getEventData } from "./_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 import { getTalkData } from "../talks/[talkId]/assets/_utils";
 import peoplePlaceholder from "@/assets/images/people-placeholder.jpeg";
+import { EventBanner } from "@/generated-assets/components/EventBanner";
 
 export const config: AssetImageConfig = {
   width: 1920,
@@ -38,6 +39,7 @@ export function scheduleShort(options: { width: number; height: number }) {
           width={options.width}
           height={options.height}
         />
+        <EventBanner event={event} width={options.width} />
 
         <div
           style={{

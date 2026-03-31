@@ -10,6 +10,7 @@ import { getEventData } from "./_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 import { RoundedSpeakers } from "@/generated-assets/components/RoundedSpeakers";
 import { SponsorLogos } from "@/generated-assets/components/SponsorLogos";
+import { EventBanner } from "@/generated-assets/components/EventBanner";
 import type { ImageMetadata } from "astro";
 import { getNumberOfApprovedGuests } from "@/lib/luma/utils";
 
@@ -68,6 +69,7 @@ export function d1announcement(options: { width: number; height: number }) {
           width={options.width}
           height={options.height}
         />
+        <EventBanner event={event} width={options.width} />
         <div
           style={{
             zIndex: 100,

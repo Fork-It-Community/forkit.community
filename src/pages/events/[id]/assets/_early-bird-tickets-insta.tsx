@@ -11,6 +11,7 @@ import { getEventData } from "./_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 import { SponsorLogosInsta } from "@/generated-assets/components/SponsorLogos";
 import { saveTheDate } from "@/pages/events/[id]/attendee/[name]/_ticket";
+import { EventBanner } from "@/generated-assets/components/EventBanner";
 
 export const config: AssetImageConfig = {
   width: 1080,
@@ -68,6 +69,7 @@ async function earlyBirdTicketsInsta({ params }: { params: { id: string } }) {
       }}
     >
       <BgImage src={postCover} width={config.width} height={config.height} />
+      <EventBanner event={event} width={config.width} />
 
       <div
         style={{

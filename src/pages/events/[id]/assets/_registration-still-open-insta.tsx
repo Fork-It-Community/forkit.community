@@ -9,6 +9,7 @@ import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
 import { getEventData } from "./_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 import { SponsorLogosInsta } from "@/generated-assets/components/SponsorLogos";
+import { EventBanner } from "@/generated-assets/components/EventBanner";
 
 export const config: AssetImageConfig = {
   width: 1080,
@@ -57,6 +58,7 @@ export function registrationStillOpenInsta(options: {
           width={options.width}
           height={options.height}
         />
+        <EventBanner event={event} width={options.width} />
 
         <div
           style={{
