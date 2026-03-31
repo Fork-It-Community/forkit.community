@@ -21,8 +21,10 @@ export const EventBanner = ({
   const bannerHeight = isNarrow ? 85 : 80;
   const fontSize = isNarrow ? 40 : 42;
   const textTop = isNarrow ? 20 : 18;
-  const textPaddingTop = isNarrow ? 32 : 28;
+  const textPaddingTop = isNarrow ? 32 : 30;
 
+  // TODO: tabLeft should be computed dynamically from city name length so the notch
+  // always fits the text with consistent padding, regardless of which city is displayed
   const tabLeft = isNarrow ? 690 : 740; // left edge of the notch (SVG units, 0–1000)
   const tabRight = isNarrow ? 950 : 900; // right edge of the notch — keep ~100 units from right edge
   const r = 20; // top corner radius where notch meets the line
@@ -84,7 +86,7 @@ export const EventBanner = ({
           lineHeight: 0,
           letterSpacing: 2,
           whiteSpace: "nowrap",
-          paddingTop: isNarrow ? textPaddingTop : 30,
+          paddingTop: textPaddingTop,
           paddingLeft: 20,
           paddingRight: 20,
         }}
