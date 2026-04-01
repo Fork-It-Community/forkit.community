@@ -21,11 +21,17 @@ export const EventBanner = ({
   const bannerHeight = isNarrow ? 85 : 80;
   const fontSize = isNarrow ? 40 : 42;
   const textTop = isNarrow ? 30 : 32;
+  const letterSpacing = 2;
 
-  // TODO: tabLeft should be computed dynamically from city name length so the notch
-  // always fits the text with consistent padding, regardless of which city is displayed
-  const tabLeft = isNarrow ? 690 : 820; // left edge of the notch (SVG units, 0–1000)
-  const tabRight = isNarrow ? 900 : 940;
+  const text = `${cityName.toUpperCase()}'${year}`;
+  const avgCharWidth = 0.57 * fontSize;
+  const textContentWidth = text.length * (avgCharWidth + letterSpacing);
+  const notchWidthPx = textContentWidth + 2 * 40; // 20 CSS padding + 20 extra each side
+  const notchWidthSvg = (notchWidthPx / width) * 1000;
+
+  const tabRightEdge = isNarrow ? 910 : 950; // fixed right anchor (SVG units)
+  const tabLeft = Math.round(tabRightEdge - notchWidthSvg);
+  const tabRight = tabRightEdge - 10;
   const r = 20; // top corner radius where notch meets the line
   const bottomCornerR = isNarrow ? 30 : 21; // smaller on large to compensate for wider aspect ratio
   return (
@@ -82,7 +88,7 @@ export const EventBanner = ({
           fontWeight: 500,
           textTransform: "uppercase",
           lineHeight: 0,
-          letterSpacing: 2,
+          letterSpacing,
           whiteSpace: "nowrap",
           padding: 20,
         }}
