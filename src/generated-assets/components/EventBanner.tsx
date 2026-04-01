@@ -28,7 +28,7 @@ export const EventBanner = ({
   const tabLeft = isNarrow ? 690 : 760; // left edge of the notch (SVG units, 0–1000)
   const tabRight = isNarrow ? 920 : 900; // right edge of the notch — 80 units from right (instagram), 100 units (large)
   const r = 20; // top corner radius where notch meets the line
-  const bottomCornerR = isNarrow ? 30 : 25; // bottom corner radius of the notch
+  const bottomCornerR = isNarrow ? 30 : 21; // bottom corner radius of the notch
 
   return (
     <div
@@ -57,12 +57,12 @@ export const EventBanner = ({
             M0 0
             H1000
             V20
-            H${tabRight + 20}
+            H${tabRight + 10}
             Q${tabRight} 20 ${tabRight} ${20 + r}
             V${85 - bottomCornerR}
-            Q${tabRight - 6} 85 ${tabRight - bottomCornerR} 85
+            Q${tabRight - 1} 82 ${tabRight - bottomCornerR} 85
             H${tabLeft + bottomCornerR}
-            Q${tabLeft + 6} 85 ${tabLeft} ${85 - bottomCornerR}
+            Q${tabLeft + 1} 83 ${tabLeft} ${85 - bottomCornerR}
             V${20 + r}
             Q${tabLeft} 20 ${tabLeft - 20} 20
             H0
