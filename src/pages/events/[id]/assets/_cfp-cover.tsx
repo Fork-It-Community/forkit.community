@@ -35,7 +35,6 @@ export default async function cfpCover({ params }: { params: { id: string } }) {
 
   return (
     <Frame {...config} style={{ padding: 128 }}>
-      <EventBanner event={event} width={config.width} />
       <img
         src={postCover}
         alt=""
