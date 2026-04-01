@@ -20,13 +20,13 @@ export const EventBanner = ({
 
   const bannerHeight = isNarrow ? 85 : 80;
   const fontSize = isNarrow ? 40 : 42;
-  const textTop = isNarrow ? 20 : 18;
-  const textPaddingTop = isNarrow ? 32 : 30;
+  const textTop = isNarrow ? 30 : 32;
+  const textPadding = isNarrow ? 20 : 16;
 
   // TODO: tabLeft should be computed dynamically from city name length so the notch
   // always fits the text with consistent padding, regardless of which city is displayed
-  const tabLeft = isNarrow ? 690 : 740; // left edge of the notch (SVG units, 0–1000)
-  const tabRight = isNarrow ? 950 : 900; // right edge of the notch — keep ~100 units from right edge
+  const tabLeft = isNarrow ? 690 : 760; // left edge of the notch (SVG units, 0–1000)
+  const tabRight = isNarrow ? 920 : 900; // right edge of the notch — 80 units from right (instagram), 100 units (large)
   const r = 20; // top corner radius where notch meets the line
   const bottomCornerR = isNarrow ? 30 : 25; // bottom corner radius of the notch
 
@@ -52,19 +52,19 @@ export const EventBanner = ({
         }}
       >
         <path
-          shapeRendering="crispEdges"
+          shapeRendering="geometricPrecision"
           d={`
             M0 0
             H1000
             V20
-            H${tabRight + 10}
+            H${tabRight + 20}
             Q${tabRight} 20 ${tabRight} ${20 + r}
             V${85 - bottomCornerR}
-            Q${tabRight} 85 ${tabRight - bottomCornerR} 85
+            Q${tabRight - 6} 85 ${tabRight - bottomCornerR} 85
             H${tabLeft + bottomCornerR}
-            Q${tabLeft} 85 ${tabLeft} ${85 - bottomCornerR}
+            Q${tabLeft + 6} 85 ${tabLeft} ${85 - bottomCornerR}
             V${20 + r}
-            Q${tabLeft} 20 ${tabLeft - r} 20
+            Q${tabLeft} 20 ${tabLeft - 20} 20
             H0
             Z
           `}
@@ -86,9 +86,7 @@ export const EventBanner = ({
           lineHeight: 0,
           letterSpacing: 2,
           whiteSpace: "nowrap",
-          paddingTop: textPaddingTop,
-          paddingLeft: 20,
-          paddingRight: 20,
+          padding: textPadding,
         }}
       >
         {cityName.toUpperCase()}'{year}
