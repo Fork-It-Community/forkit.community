@@ -8,6 +8,7 @@ import { getEventData } from "./_utils";
 import { LogoIcon } from "@/components/LogoIcon";
 import { CfpCoverNoFlag } from "@/generated-assets/components/CfpCoverNoFlag";
 import { getCoverImage } from "@/lib/events";
+import { EventBanner } from "@/generated-assets/components/EventBanner";
 
 export const config: AssetImageConfig = {
   width: 1080,
@@ -116,6 +117,7 @@ export default async function cfpCover({ params }: { params: { id: string } }) {
           />
         </div>
       </div>
+      <EventBanner event={event} width={config.width} />
     </Frame>
   );
 }
