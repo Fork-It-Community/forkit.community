@@ -8,9 +8,9 @@ export const EventBanner = ({
   event: EventComputed;
   width: number;
 }) => {
-  if (event.data.type !== "event" || !event.data.banner) return null;
+  if (event.data.type !== "event" || !event.data.assets) return null;
 
-  const { color, textColor } = event.data.banner;
+  const { backgroundColor, color } = event.data.assets;
   const cityName = event.data._computed.city?.data.name;
   const year = dayjs(event.data.date).format("YY");
 
@@ -21,15 +21,13 @@ export const EventBanner = ({
   const bannerHeight = isNarrow ? 85 : 80;
   const fontSize = isNarrow ? 40 : 42;
   const textTop = isNarrow ? 30 : 32;
-  const textPadding = isNarrow ? 20 : 16;
 
   // TODO: tabLeft should be computed dynamically from city name length so the notch
   // always fits the text with consistent padding, regardless of which city is displayed
-  const tabLeft = isNarrow ? 690 : 760; // left edge of the notch (SVG units, 0–1000)
-  const tabRight = isNarrow ? 920 : 900; // right edge of the notch — 80 units from right (instagram), 100 units (large)
+  const tabLeft = isNarrow ? 690 : 820; // left edge of the notch (SVG units, 0–1000)
+  const tabRight = isNarrow ? 900 : 940;
   const r = 20; // top corner radius where notch meets the line
-  const bottomCornerR = isNarrow ? 30 : 21; // bottom corner radius of the notch
-
+  const bottomCornerR = isNarrow ? 30 : 21; // smaller on large to compensate for wider aspect ratio
   return (
     <div
       style={{
@@ -57,18 +55,18 @@ export const EventBanner = ({
             M0 0
             H1000
             V20
-            H${tabRight + 10}
-            Q${tabRight} 20 ${tabRight} ${20 + r}
+            H${tabRight + 36}
+            Q${tabRight + 8} 15 ${tabRight + 10} ${20 + r}
             V${85 - bottomCornerR}
-            Q${tabRight - 1} 82 ${tabRight - bottomCornerR} 85
+            Q${tabRight + 9} 82 ${tabRight + 10 - bottomCornerR} 85
             H${tabLeft + bottomCornerR}
-            Q${tabLeft + 1} 83 ${tabLeft} ${85 - bottomCornerR}
+            Q${tabLeft - 4} 87 ${tabLeft} ${85 - bottomCornerR}
             V${20 + r}
-            Q${tabLeft} 20 ${tabLeft - 20} 20
+            Q${tabLeft - 2} 15 ${tabLeft - 26} 20
             H0
             Z
           `}
-          fill={color}
+          fill={backgroundColor}
         />
       </svg>
 
@@ -77,16 +75,16 @@ export const EventBanner = ({
           position: "absolute",
           display: "flex",
           top: textTop,
-          left: `${((tabLeft + tabRight) / 2 / 1000) * 100}%`,
+          left: `${((tabLeft + tabRight + 10) / 2 / 1000) * 100}%`,
           transform: "translateX(-50%)",
-          color: textColor,
+          color: color,
           fontSize,
           fontWeight: 500,
           textTransform: "uppercase",
           lineHeight: 0,
           letterSpacing: 2,
           whiteSpace: "nowrap",
-          padding: textPadding,
+          padding: 20,
         }}
       >
         {cityName.toUpperCase()}'{year}

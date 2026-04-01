@@ -234,10 +234,10 @@ const zMeetup = () => z.object({ type: z.literal("meetup") });
 const zEventClassic = () =>
   z.object({
     type: z.literal("event"),
-    banner: z
+    assets: z
       .object({
-        color: z.string(),
-        textColor: z.string().default("#ffffff"),
+        backgroundColor: z.string(),
+        color: z.string().default("#ffffff"),
       })
       .optional(),
   });
