@@ -26,12 +26,11 @@ export const EventBanner = ({
   const text = `${cityName.toUpperCase()}'${year}`;
   const avgCharWidth = 0.57 * fontSize;
   const textContentWidth = text.length * (avgCharWidth + letterSpacing);
-  const notchWidthPx = textContentWidth + 2 * 40; // 20 CSS padding + 20 extra each side
+  const notchWidthPx = textContentWidth + 2 * 35; // 15 CSS padding + 20 extra each side
   const notchWidthSvg = (notchWidthPx / width) * 1000;
 
-  const tabRightEdge = isNarrow ? 910 : 950; // fixed right anchor (SVG units)
+  const tabRightEdge = isNarrow ? 910 : 950; // fixed right anchor (SVG units, = notch right edge)
   const tabLeft = Math.round(tabRightEdge - notchWidthSvg);
-  const tabRight = tabRightEdge - 10;
   const r = 20; // top corner radius where notch meets the line
   const bottomCornerR = isNarrow ? 30 : 21; // smaller on large to compensate for wider aspect ratio
   return (
@@ -61,10 +60,10 @@ export const EventBanner = ({
             M0 0
             H1000
             V20
-            H${tabRight + 36}
-            Q${tabRight + 8} 15 ${tabRight + 10} ${20 + r}
+            H${tabRightEdge + 26}
+            Q${tabRightEdge - 2} 15 ${tabRightEdge} ${20 + r}
             V${85 - bottomCornerR}
-            Q${tabRight + 9} 82 ${tabRight + 10 - bottomCornerR} 85
+            Q${tabRightEdge - 1} 82 ${tabRightEdge - bottomCornerR} 85
             H${tabLeft + bottomCornerR}
             Q${tabLeft - 4} 87 ${tabLeft} ${85 - bottomCornerR}
             V${20 + r}
@@ -81,7 +80,7 @@ export const EventBanner = ({
           position: "absolute",
           display: "flex",
           top: textTop,
-          left: `${((tabLeft + tabRight + 10) / 2 / 1000) * 100}%`,
+          left: `${((tabLeft + tabRightEdge) / 2 / 1000) * 100}%`,
           transform: "translateX(-50%)",
           color: color,
           fontSize,
@@ -90,7 +89,10 @@ export const EventBanner = ({
           lineHeight: 0,
           letterSpacing,
           whiteSpace: "nowrap",
-          padding: 20,
+          paddingLeft: 15,
+          paddingRight: 15,
+          paddingTop: 20,
+          paddingBottom: 20,
         }}
       >
         {cityName.toUpperCase()}'{year}
