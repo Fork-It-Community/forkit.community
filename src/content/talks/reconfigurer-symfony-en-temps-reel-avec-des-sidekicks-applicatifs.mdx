@@ -1,0 +1,14 @@
+---
+title: "Reconfigurer Symfony en temps réel avec des sidekicks applicatifs"
+speakers:
+  - id: nicolas-grekas
+language: french
+---
+
+PHP a longtemps été pensé comme un langage strictement stateless : une requête, un processus, puis tout recommence.
+FrankenPHP change profondément ce contrat en permettant de lancer des workers PHP long-running directement au sein d'une application Symfony. Pas pour transformer Symfony en serveur Node, mais pour lui donner des capacités qu'il n'a jamais pu avoir jusque-là.
+
+Dans cette conférence, je propose un nouveau pattern : les sidekicks applicatifs. Des workers PHP spécialisés, hors cycle HTTP, qui écoutent leur environnement et reconfigurent l'application en temps réel — sans polling, sans TTL approximatifs, sans redeploy.
+
+À travers des cas concrets (découverte Redis Sentinel, rotation de secrets et de clés JWT, feature flags dynamiques, invalidation ciblée de cache ou réactions de sécurité), nous verrons comment faire évoluer une application Symfony existante tout en restant fidèle à ses principes.
+L'objectif : montrer que PHP peut écouter, réagir et s'adapter en temps réel — sans renier sa simplicité ni ses patterns historiques.
