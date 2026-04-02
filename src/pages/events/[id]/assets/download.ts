@@ -43,6 +43,7 @@ export const GET: APIRoute = async ({ params, site }) => {
     headers: {
       "Content-Type": "application/zip",
       "Content-Disposition": `attachment; filename="${event.data.date.getFullYear()}-${event.data._computed.country?.id}-${event.data.city.id}-assets-${dayjs().format("YYYYMMDDHHmmss")}.zip"`,
+      "X-Robots-Tag": "noindex, nofollow",
     },
   });
 };
