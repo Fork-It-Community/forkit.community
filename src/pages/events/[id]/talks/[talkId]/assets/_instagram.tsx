@@ -11,6 +11,7 @@ import { getEventData } from "@/pages/events/[id]/assets/_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 import { getTalkData } from "@/pages/events/[id]/talks/[talkId]/assets/_utils";
 import { SponsorLogosInsta } from "@/generated-assets/components/SponsorLogos";
+import { EventBanner } from "@/generated-assets/components/EventBanner";
 
 export const config: AssetImageConfig = {
   width: 1080,
@@ -69,6 +70,7 @@ export default async function ({
       }}
     >
       <BgImage src={postCover} width={config.width} height={config.height} />
+      <EventBanner event={event} width={config.width} />
 
       <div
         style={{

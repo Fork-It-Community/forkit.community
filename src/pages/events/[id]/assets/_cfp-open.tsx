@@ -9,6 +9,7 @@ import { getEventDisplayDate } from "@/lib/events";
 import { getEventData } from "./_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 import { SponsorLogos } from "@/generated-assets/components/SponsorLogos";
+import { EventBanner } from "@/generated-assets/components/EventBanner";
 
 export const config: AssetImageConfig = {
   width: 1920,
@@ -58,6 +59,7 @@ export function cfpOpen(options: {
           width={options.width}
           height={options.height}
         />
+        <EventBanner event={event} width={options.width} />
 
         <div
           style={{

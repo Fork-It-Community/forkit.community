@@ -12,6 +12,7 @@ import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 import { getTalkData } from "@/pages/events/[id]/talks/[talkId]/assets/_utils";
 import { OG_IMAGE } from "@/assets/consts";
 import { SponsorLogos } from "@/generated-assets/components/SponsorLogos";
+import { EventBanner } from "@/generated-assets/components/EventBanner";
 
 export const config: AssetImageConfig = OG_IMAGE;
 
@@ -69,6 +70,7 @@ export default async function ({
       }}
     >
       <BgImage src={postCover} width={config.width} height={config.height} />
+      <EventBanner event={event} width={config.width} />
 
       <div
         style={{

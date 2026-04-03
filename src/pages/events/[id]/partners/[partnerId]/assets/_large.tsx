@@ -10,6 +10,7 @@ import { getEventData } from "@/pages/events/[id]/assets/_utils";
 import { getEntry } from "astro:content";
 import { NotFoundAssetError } from "@/generated-assets/api";
 import { Logo } from "@/components/Logo";
+import { EventBanner } from "@/generated-assets/components/EventBanner";
 
 export const config: AssetImageConfig = {
   width: 1920,
@@ -35,6 +36,7 @@ export default async function ({
   return (
     <Frame {...config} style={{ padding: 64 }}>
       <BgImage src={postCover} width={config.width} height={config.height} />
+      <EventBanner event={event} width={config.width} />
 
       <div
         style={{
