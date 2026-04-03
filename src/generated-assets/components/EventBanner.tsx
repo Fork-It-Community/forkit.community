@@ -20,7 +20,6 @@ export const EventBanner = ({
 
   const bannerHeight = isNarrow ? 85 : 80;
   const fontSize = isNarrow ? 40 : 42;
-  const textTop = isNarrow ? 30 : 32;
   const letterSpacing = 2;
 
   const text = `${cityName.toUpperCase()}'${year}`;
@@ -32,6 +31,7 @@ export const EventBanner = ({
   const tabRightEdge = isNarrow ? 910 : 950; // fixed right anchor (SVG units, = notch right edge)
   const tabLeft = Math.round(tabRightEdge - notchWidthSvg);
   const r = 20; // top corner radius where notch meets the line
+  // TODO: fix bottom roundiness — visually feels odd when city name is long (e.g. "Kuala Lumpur")
   const bottomCornerR = isNarrow ? 30 : 21; // smaller on large to compensate for wider aspect ratio
   return (
     <div
@@ -79,7 +79,7 @@ export const EventBanner = ({
         style={{
           position: "absolute",
           display: "flex",
-          top: textTop,
+          top: 30,
           left: `${((tabLeft + tabRightEdge) / 2 / 1000) * 100}%`,
           transform: "translateX(-50%)",
           color: color,
