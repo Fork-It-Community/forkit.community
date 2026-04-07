@@ -5,5 +5,6 @@ export const HOME_CONFIG = {
     "codeurs-en-seine",
     "dot-js",
     "tech-connection",
+    "react-advanced",
   ],
 };
