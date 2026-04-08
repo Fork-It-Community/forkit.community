@@ -1,6 +1,16 @@
 import type { EventComputed } from "@/lib/events";
 import dayjs from "dayjs";
 
+const BAR_HEIGHT = 16;
+const NOTCH_HEIGHT = 64;
+const FONT_SIZE = 42;
+const LETTER_SPACING = 2;
+const BORDER_RADIUS = 20;
+const INVERTED_BORDER_RADIUS = 16;
+const NOTCH_MARGIN_RIGHT = 96;
+const NOTCH_PADDING = 35;
+const TOTAL_HEIGHT = BAR_HEIGHT + NOTCH_HEIGHT;
+
 export const EventBanner = ({
   event,
   width,
@@ -16,25 +26,14 @@ export const EventBanner = ({
 
   if (!cityName) return null;
 
-  const barH = 16;
-  const notchH = 64;
-  const fontSize = 42;
-  const letterSpacing = 2;
-  const radius = 20; // bottom corners radius
-  const invertedRadius = 16; // inverted (concave) top corners radius
-  const notchMarginRight = 96;
-  const notchPadding = 35;
-  const totalH = barH + notchH;
-
   // Estimate notch width from text
   const text = `${cityName.toUpperCase()}'${year}`;
-  const avgCharWidth = 0.57 * fontSize;
-  const textWidth = text.length * (avgCharWidth + letterSpacing);
-  const notchW = textWidth + 2 * notchPadding;
+  const avgCharWidth = 0.57 * FONT_SIZE;
+  const textWidth = text.length * (avgCharWidth + LETTER_SPACING);
+  const notchW = textWidth + 2 * NOTCH_PADDING;
 
   // Notch position in pixels
-  const notchRight = notchMarginRight;
-  const notchLeft = Math.max(0, width - notchRight - notchW);
+  const notchLeft = Math.max(0, width - NOTCH_MARGIN_RIGHT - notchW);
 
   return (
     <div
@@ -44,34 +43,34 @@ export const EventBanner = ({
         top: 0,
         left: 0,
         width: width,
-        height: totalH,
+        height: TOTAL_HEIGHT,
         zIndex: 200,
       }}
     >
       {/* Shape: bar + notch with inverted top corners and rounded bottom corners */}
       <svg
-        viewBox={`0 0 ${width} ${totalH}`}
+        viewBox={`0 0 ${width} ${TOTAL_HEIGHT}`}
         style={{
           position: "absolute",
           top: 0,
           left: 0,
           width: width,
-          height: totalH,
+          height: TOTAL_HEIGHT,
         }}
       >
         <path
           d={`
             M0 0
             H${width}
-            V${barH}
-            H${notchLeft + notchW + invertedRadius}
-            Q${notchLeft + notchW} ${barH} ${notchLeft + notchW} ${barH + invertedRadius}
-            V${totalH - radius}
-            Q${notchLeft + notchW} ${totalH} ${notchLeft + notchW - radius} ${totalH}
-            H${notchLeft + radius}
-            Q${notchLeft} ${totalH} ${notchLeft} ${totalH - radius}
-            V${barH + invertedRadius}
-            Q${notchLeft} ${barH} ${notchLeft - invertedRadius} ${barH}
+            V${BAR_HEIGHT}
+            H${notchLeft + notchW + INVERTED_BORDER_RADIUS}
+            Q${notchLeft + notchW} ${BAR_HEIGHT} ${notchLeft + notchW} ${BAR_HEIGHT + INVERTED_BORDER_RADIUS}
+            V${TOTAL_HEIGHT - BORDER_RADIUS}
+            Q${notchLeft + notchW} ${TOTAL_HEIGHT} ${notchLeft + notchW - BORDER_RADIUS} ${TOTAL_HEIGHT}
+            H${notchLeft + BORDER_RADIUS}
+            Q${notchLeft} ${TOTAL_HEIGHT} ${notchLeft} ${TOTAL_HEIGHT - BORDER_RADIUS}
+            V${BAR_HEIGHT + INVERTED_BORDER_RADIUS}
+            Q${notchLeft} ${BAR_HEIGHT} ${notchLeft - INVERTED_BORDER_RADIUS} ${BAR_HEIGHT}
             H0
             Z
           `}
@@ -86,18 +85,18 @@ export const EventBanner = ({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          top: barH,
+          top: BAR_HEIGHT,
           left: notchLeft,
           width: notchW,
-          height: notchH,
+          height: NOTCH_HEIGHT,
           paddingBottom: 16,
           color: color,
           fontFamily: "Tomorrow",
-          fontSize,
+          fontSize: FONT_SIZE,
           fontWeight: 500,
           textTransform: "uppercase",
           lineHeight: 1,
-          letterSpacing,
+          letterSpacing: LETTER_SPACING,
           whiteSpace: "nowrap",
         }}
       >
