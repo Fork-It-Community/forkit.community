@@ -39,7 +39,7 @@ export default function DecryptedText({
   const containerRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: number | undefined;
     let currentIteration = 0;
 
     const getNextIndex = (revealedSet: Set<number>): number => {
@@ -124,7 +124,7 @@ export default function DecryptedText({
 
     if (isHovering) {
       setIsScrambling(true);
-      interval = setInterval(() => {
+      interval = window.setInterval(() => {
         setRevealedIndices((prevRevealed) => {
           if (sequential) {
             if (prevRevealed.size < text.length) {
@@ -134,7 +134,7 @@ export default function DecryptedText({
               setDisplayText(shuffleText(text, newRevealed));
               return newRevealed;
             } else {
-              clearInterval(interval);
+              window.clearInterval(interval);
               setIsScrambling(false);
               return prevRevealed;
             }
@@ -142,7 +142,7 @@ export default function DecryptedText({
             setDisplayText(shuffleText(text, prevRevealed));
             currentIteration++;
             if (currentIteration >= maxIterations) {
-              clearInterval(interval);
+              window.clearInterval(interval);
               setIsScrambling(false);
               setDisplayText(text);
             }
@@ -157,7 +157,7 @@ export default function DecryptedText({
     }
 
     return () => {
-      if (interval) clearInterval(interval);
+      if (interval) window.clearInterval(interval);
     };
   }, [
     isHovering,
