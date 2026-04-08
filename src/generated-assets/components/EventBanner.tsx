@@ -1,6 +1,16 @@
 import type { EventComputed } from "@/lib/events";
 import dayjs from "dayjs";
 
+const BAR_HEIGHT = 16;
+const NOTCH_HEIGHT = 64;
+const FONT_SIZE = 42;
+const LETTER_SPACING = 2;
+const BORDER_RADIUS = 20;
+const INVERTED_BORDER_RADIUS = 16;
+const NOTCH_MARGIN_RIGHT = 96;
+const NOTCH_PADDING = 35;
+const TOTAL_HEIGHT = BAR_HEIGHT + NOTCH_HEIGHT;
+
 export const EventBanner = ({
   event,
   width,
@@ -16,23 +26,15 @@ export const EventBanner = ({
 
   if (!cityName) return null;
 
-  const isNarrow = width < 1200;
-
-  const bannerHeight = isNarrow ? 85 : 80;
-  const fontSize = isNarrow ? 40 : 42;
-  const letterSpacing = 2;
-
+  // Estimate notch width from text
   const text = `${cityName.toUpperCase()}'${year}`;
-  const avgCharWidth = 0.57 * fontSize;
-  const textContentWidth = text.length * (avgCharWidth + letterSpacing);
-  const notchWidthPx = textContentWidth + 2 * 35; // 15 CSS padding + 20 extra each side
-  const notchWidthSvg = (notchWidthPx / width) * 1000;
+  const avgCharWidth = 0.57 * FONT_SIZE;
+  const textWidth = text.length * (avgCharWidth + LETTER_SPACING);
+  const notchW = textWidth + 2 * NOTCH_PADDING;
 
-  const tabRightEdge = isNarrow ? 910 : 950; // fixed right anchor (SVG units, = notch right edge)
-  const tabLeft = Math.round(tabRightEdge - notchWidthSvg);
-  const r = 20; // top corner radius where notch meets the line
-  // TODO: fix bottom roundiness — visually feels odd when city name is long (e.g. "Kuala Lumpur")
-  const bottomCornerR = isNarrow ? 30 : 21; // smaller on large to compensate for wider aspect ratio
+  // Notch position in pixels
+  const notchLeft = Math.max(0, width - NOTCH_MARGIN_RIGHT - notchW);
+
   return (
     <div
       style={{
@@ -40,34 +42,35 @@ export const EventBanner = ({
         display: "flex",
         top: 0,
         left: 0,
-        right: 0,
+        width: width,
+        height: TOTAL_HEIGHT,
         zIndex: 200,
-        height: bannerHeight,
       }}
     >
+      {/* Shape: bar + notch with inverted top corners and rounded bottom corners */}
       <svg
-        viewBox="0 0 1000 100"
-        preserveAspectRatio="none"
+        viewBox={`0 0 ${width} ${TOTAL_HEIGHT}`}
         style={{
-          width: "100%",
-          height: "100%",
-          display: "block",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: width,
+          height: TOTAL_HEIGHT,
         }}
       >
         <path
-          shapeRendering="geometricPrecision"
           d={`
             M0 0
-            H1000
-            V20
-            H${tabRightEdge + 26}
-            Q${tabRightEdge - 2} 15 ${tabRightEdge} ${20 + r}
-            V${85 - bottomCornerR}
-            Q${tabRightEdge - 1} 82 ${tabRightEdge - bottomCornerR} 85
-            H${tabLeft + bottomCornerR}
-            Q${tabLeft - 4} 87 ${tabLeft} ${85 - bottomCornerR}
-            V${20 + r}
-            Q${tabLeft - 2} 15 ${tabLeft - 26} 20
+            H${width}
+            V${BAR_HEIGHT}
+            H${notchLeft + notchW + INVERTED_BORDER_RADIUS}
+            Q${notchLeft + notchW} ${BAR_HEIGHT} ${notchLeft + notchW} ${BAR_HEIGHT + INVERTED_BORDER_RADIUS}
+            V${TOTAL_HEIGHT - BORDER_RADIUS}
+            Q${notchLeft + notchW} ${TOTAL_HEIGHT} ${notchLeft + notchW - BORDER_RADIUS} ${TOTAL_HEIGHT}
+            H${notchLeft + BORDER_RADIUS}
+            Q${notchLeft} ${TOTAL_HEIGHT} ${notchLeft} ${TOTAL_HEIGHT - BORDER_RADIUS}
+            V${BAR_HEIGHT + INVERTED_BORDER_RADIUS}
+            Q${notchLeft} ${BAR_HEIGHT} ${notchLeft - INVERTED_BORDER_RADIUS} ${BAR_HEIGHT}
             H0
             Z
           `}
@@ -75,24 +78,26 @@ export const EventBanner = ({
         />
       </svg>
 
+      {/* Text overlay */}
       <div
         style={{
           position: "absolute",
           display: "flex",
-          top: 30,
-          left: `${((tabLeft + tabRightEdge) / 2 / 1000) * 100}%`,
-          transform: "translateX(-50%)",
+          alignItems: "center",
+          justifyContent: "center",
+          top: BAR_HEIGHT,
+          left: notchLeft,
+          width: notchW,
+          height: NOTCH_HEIGHT,
+          paddingBottom: 16,
           color: color,
-          fontSize,
+          fontFamily: "Tomorrow",
+          fontSize: FONT_SIZE,
           fontWeight: 500,
           textTransform: "uppercase",
-          lineHeight: 0,
-          letterSpacing,
+          lineHeight: 1,
+          letterSpacing: LETTER_SPACING,
           whiteSpace: "nowrap",
-          paddingLeft: 15,
-          paddingRight: 15,
-          paddingTop: 20,
-          paddingBottom: 20,
         }}
       >
         {cityName.toUpperCase()}'{year}
