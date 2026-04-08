@@ -16,23 +16,26 @@ export const EventBanner = ({
 
   if (!cityName) return null;
 
-  const isNarrow = width < 1200;
-
-  const bannerHeight = isNarrow ? 85 : 80;
-  const fontSize = isNarrow ? 40 : 42;
+  const barH = 16;
+  const notchH = 64;
+  const fontSize = 42;
   const letterSpacing = 2;
+  const radius = 20; // bottom corners radius
+  const invertedRadius = 16; // inverted (concave) top corners radius
+  const notchMarginRight = 96;
+  const notchPadding = 35;
+  const totalH = barH + notchH;
 
+  // Estimate notch width from text
   const text = `${cityName.toUpperCase()}'${year}`;
   const avgCharWidth = 0.57 * fontSize;
-  const textContentWidth = text.length * (avgCharWidth + letterSpacing);
-  const notchWidthPx = textContentWidth + 2 * 35; // 15 CSS padding + 20 extra each side
-  const notchWidthSvg = (notchWidthPx / width) * 1000;
+  const textWidth = text.length * (avgCharWidth + letterSpacing);
+  const notchW = textWidth + 2 * notchPadding;
 
-  const tabRightEdge = isNarrow ? 910 : 950; // fixed right anchor (SVG units, = notch right edge)
-  const tabLeft = Math.round(tabRightEdge - notchWidthSvg);
-  const r = 20; // top corner radius where notch meets the line
-  // TODO: fix bottom roundiness — visually feels odd when city name is long (e.g. "Kuala Lumpur")
-  const bottomCornerR = isNarrow ? 30 : 21; // smaller on large to compensate for wider aspect ratio
+  // Notch position in pixels
+  const notchRight = notchMarginRight;
+  const notchLeft = width - notchRight - notchW;
+
   return (
     <div
       style={{
@@ -40,34 +43,35 @@ export const EventBanner = ({
         display: "flex",
         top: 0,
         left: 0,
-        right: 0,
+        width: width,
+        height: totalH,
         zIndex: 200,
-        height: bannerHeight,
       }}
     >
+      {/* Shape: bar + notch with inverted top corners and rounded bottom corners */}
       <svg
-        viewBox="0 0 1000 100"
-        preserveAspectRatio="none"
+        viewBox={`0 0 ${width} ${totalH}`}
         style={{
-          width: "100%",
-          height: "100%",
-          display: "block",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: width,
+          height: totalH,
         }}
       >
         <path
-          shapeRendering="geometricPrecision"
           d={`
             M0 0
-            H1000
-            V20
-            H${tabRightEdge + 26}
-            Q${tabRightEdge - 2} 15 ${tabRightEdge} ${20 + r}
-            V${85 - bottomCornerR}
-            Q${tabRightEdge - 1} 82 ${tabRightEdge - bottomCornerR} 85
-            H${tabLeft + bottomCornerR}
-            Q${tabLeft - 4} 87 ${tabLeft} ${85 - bottomCornerR}
-            V${20 + r}
-            Q${tabLeft - 2} 15 ${tabLeft - 26} 20
+            H${width}
+            V${barH}
+            H${notchLeft + notchW + invertedRadius}
+            Q${notchLeft + notchW} ${barH} ${notchLeft + notchW} ${barH + invertedRadius}
+            V${totalH - radius}
+            Q${notchLeft + notchW} ${totalH} ${notchLeft + notchW - radius} ${totalH}
+            H${notchLeft + radius}
+            Q${notchLeft} ${totalH} ${notchLeft} ${totalH - radius}
+            V${barH + invertedRadius}
+            Q${notchLeft} ${barH} ${notchLeft - invertedRadius} ${barH}
             H0
             Z
           `}
@@ -75,24 +79,28 @@ export const EventBanner = ({
         />
       </svg>
 
+      {/* Text overlay */}
       <div
         style={{
           position: "absolute",
           display: "flex",
-          top: 30,
-          left: `${((tabLeft + tabRightEdge) / 2 / 1000) * 100}%`,
-          transform: "translateX(-50%)",
+          alignItems: "center",
+          top: barH,
+          left: notchLeft,
+          width: notchW,
+          height: notchH,
+          paddingLeft: notchPadding,
+          paddingRight: notchPadding,
+          paddingBottom: 16,
+          boxSizing: "border-box",
           color: color,
+          fontFamily: "Tomorrow",
           fontSize,
           fontWeight: 500,
           textTransform: "uppercase",
-          lineHeight: 0,
+          lineHeight: 1,
           letterSpacing,
           whiteSpace: "nowrap",
-          paddingLeft: 15,
-          paddingRight: 15,
-          paddingTop: 20,
-          paddingBottom: 20,
         }}
       >
         {cityName.toUpperCase()}'{year}
