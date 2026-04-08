@@ -34,7 +34,7 @@ export const EventBanner = ({
 
   // Notch position in pixels
   const notchRight = notchMarginRight;
-  const notchLeft = width - notchRight - notchW;
+  const notchLeft = Math.max(0, width - notchRight - notchW);
 
   return (
     <div
@@ -85,14 +85,12 @@ export const EventBanner = ({
           position: "absolute",
           display: "flex",
           alignItems: "center",
+          justifyContent: "center",
           top: barH,
           left: notchLeft,
           width: notchW,
           height: notchH,
-          paddingLeft: notchPadding,
-          paddingRight: notchPadding,
           paddingBottom: 16,
-          boxSizing: "border-box",
           color: color,
           fontFamily: "Tomorrow",
           fontSize,
