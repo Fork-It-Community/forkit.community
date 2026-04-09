@@ -2,25 +2,12 @@ import { LogoIcon } from "@/components/LogoIcon";
 import {
   getAstroImageBase64,
   type AssetImageConfig,
-} from "@/generated-assets/image";
+} from "@bearstudio/astro-assets-generation";
 import { COLORS } from "@/generated-assets/theme";
 import worldImage from "@/assets/images/world.png";
-import { getImage } from "astro:assets";
 
 export const CfpCoverNoFlag = async (props: { config: AssetImageConfig }) => {
-  const worldImageResult = await getImage({
-    format: worldImage.format,
-    src: worldImage,
-  });
-
-  const defaultBackgroundImage = {
-    src: worldImageResult.src,
-    width: worldImage.width,
-    height: worldImage.height,
-    format: worldImage.format,
-  };
-
-  const noFlagImage = await getAstroImageBase64(defaultBackgroundImage);
+  const noFlagImage = await getAstroImageBase64(worldImage);
 
   return (
     <div
