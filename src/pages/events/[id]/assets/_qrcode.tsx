@@ -1,6 +1,5 @@
 import { Frame } from "@/generated-assets/components/Frame";
 import { type AssetImageConfig } from "@bearstudio/astro-assets-generation";
-import { imageBufferToBase64 } from "@/generated-assets/image";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventData } from "./_utils";
 import { lunalink } from "@bearstudio/lunalink";
@@ -24,7 +23,7 @@ export default async function ({
     site,
   ).toString();
 
-  const qrCodeBuffer = await QRCode.toBuffer(url, {
+  const qrCodeBase64 = await QRCode.toDataURL(url, {
     width: 880,
     margin: 1,
     color: {
@@ -32,8 +31,6 @@ export default async function ({
       dark: "#00000000",
     },
   });
-
-  const qrCodeBase64 = imageBufferToBase64(qrCodeBuffer, "png");
 
   return (
     <Frame {...config}>
