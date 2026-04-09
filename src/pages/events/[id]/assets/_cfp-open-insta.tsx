@@ -143,13 +143,12 @@ export function cfpOpenInsta(options: { width: number; height: number }) {
                   gap: 12,
                   fontSize: 33.6,
                   fontWeight: 500,
-                  opacity: 0.6,
                 }}
               >
                 <svg
                   viewBox="0 0 24 24"
                   style={{
-                    opacity: 0.8,
+                    opacity: 0.85,
                     width: "1em",
                     height: "1em",
                   }}
@@ -169,14 +168,13 @@ export function cfpOpenInsta(options: { width: number; height: number }) {
                   alignItems: "center",
                   fontSize: 33.6,
                   fontWeight: 500,
-                  opacity: 0.6,
                 }}
               >
                 <svg
                   viewBox="0 0 24 24"
                   style={{
                     flex: "none",
-                    opacity: 0.8,
+                    opacity: 0.85,
                     width: "1em",
                     height: "1em",
                   }}

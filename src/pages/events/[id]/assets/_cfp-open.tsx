@@ -136,8 +136,9 @@ export function cfpOpen(options: {
             <div
               style={{
                 display: "flex",
-                flexDirection: "column",
-                gap: 16,
+                flexWrap: "wrap",
+                alignItems: "center",
+                rowGap: 48,
               }}
             >
               <div
@@ -147,13 +148,14 @@ export function cfpOpen(options: {
                   gap: 12,
                   fontSize: 48 * options.fontScaling,
                   fontWeight: 500,
-                  opacity: 0.6,
+                  lineHeight: 1,
                 }}
               >
                 <svg
                   viewBox="0 0 24 24"
                   style={{
-                    opacity: 0.8,
+                    flex: "none",
+                    opacity: 0.85,
                     width: "1em",
                     height: "1em",
                   }}
@@ -173,14 +175,13 @@ export function cfpOpen(options: {
                   alignItems: "center",
                   fontSize: 48 * options.fontScaling,
                   fontWeight: 500,
-                  opacity: 0.6,
                 }}
               >
                 <svg
                   viewBox="0 0 24 24"
                   style={{
                     flex: "none",
-                    opacity: 0.8,
+                    opacity: 0.85,
                     width: "1em",
                     height: "1em",
                   }}
@@ -190,8 +191,10 @@ export function cfpOpen(options: {
                     d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7"
                   />
                 </svg>
-                {event.data._computed.city?.data.name},{" "}
-                {event.data._computed.country?.data.name}
+                <span>
+                  {event.data._computed.city?.data.name},{" "}
+                  {event.data._computed.country?.data.name}
+                </span>
               </div>
             </div>
 
