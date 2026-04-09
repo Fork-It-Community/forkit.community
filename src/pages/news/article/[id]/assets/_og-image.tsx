@@ -2,13 +2,13 @@ import { Frame } from "@/generated-assets/components/Frame";
 import {
   getAstroImageBase64,
   type AssetImageConfig,
-} from "@/generated-assets/image";
+} from "@bearstudio/astro-assets-generation";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { Logo } from "@/components/Logo";
 import { getNewsCollection } from "@/lib/news";
 import defaultBackgroundImage from "@/assets/images/news.jpeg";
 import dayjs from "dayjs";
-import { NotFoundAssetError } from "@/generated-assets/api";
+import { NotFoundAssetError } from "@bearstudio/astro-assets-generation";
 import { OG_IMAGE } from "@/assets/consts";
 
 export const config: AssetImageConfig = OG_IMAGE;
@@ -40,11 +40,11 @@ export default async function ({ params }: { params: { id: string } }) {
           gap: 96,
           flex: 1,
           width: "100%",
-          justifyContent: "center",
+          justifyContent: "end",
           zIndex: 100,
         }}
       >
-        <Logo style={{ width: 169 * 3, height: 18 * 3, marginTop: "auto" }} />
+        <Logo style={{ width: 169 * 3, height: 18 * 3 }} color="white" />
 
         <div
           style={{

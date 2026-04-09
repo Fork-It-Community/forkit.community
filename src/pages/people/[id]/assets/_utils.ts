@@ -1,4 +1,5 @@
-import { NotFoundAssetError } from "@/generated-assets/api";
+import { NotFoundAssetError } from "@bearstudio/astro-assets-generation";
+
 import { getEntry, type CollectionEntry } from "astro:content";
 
 export async function getPersonData(id: CollectionEntry<"people">["id"]) {

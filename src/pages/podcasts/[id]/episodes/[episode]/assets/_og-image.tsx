@@ -2,14 +2,14 @@ import { Frame } from "@/generated-assets/components/Frame";
 import {
   getAstroImageBase64,
   type AssetImageConfig,
-} from "@/generated-assets/image";
+} from "@bearstudio/astro-assets-generation";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { Logo } from "@/components/Logo";
 import dayjs from "dayjs";
 import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 import backgroundImage from "@/assets/images/podcasts.jpeg";
 import { COLORS } from "@/generated-assets/theme";
-import { NotFoundAssetError } from "@/generated-assets/api";
+import { NotFoundAssetError } from "@bearstudio/astro-assets-generation";
 import { OG_IMAGE } from "@/assets/consts";
 
 export const config: AssetImageConfig = OG_IMAGE;
@@ -47,7 +47,7 @@ export default async function ({
           paddingRight: 60,
         }}
       >
-        <Logo style={{ width: 169 * 3, height: 18 * 3 }} />
+        <Logo style={{ width: 169 * 3, height: 18 * 3 }} color="white" />
 
         <div
           style={{

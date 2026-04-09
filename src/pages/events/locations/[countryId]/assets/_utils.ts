@@ -1,4 +1,5 @@
-import { NotFoundAssetError } from "@/generated-assets/api";
+import { NotFoundAssetError } from "@bearstudio/astro-assets-generation";
+
 import { getEntry } from "astro:content";
 
 export const getCountryData = async (id: string) => {

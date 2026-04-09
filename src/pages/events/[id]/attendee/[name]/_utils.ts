@@ -1,4 +1,4 @@
-import { NotFoundAssetError } from "@/generated-assets/api";
+import { NotFoundAssetError } from "@bearstudio/astro-assets-generation";
 import { eventWithComputed } from "@/lib/events";
 import { getEntry } from "astro:content";
 
