@@ -1,8 +1,6 @@
 import { Frame } from "@/generated-assets/components/Frame";
-import {
-  imageBufferToBase64,
-  type AssetImageConfig,
-} from "@/generated-assets/image";
+import { type AssetImageConfig } from "@bearstudio/astro-assets-generation";
+import { imageBufferToBase64 } from "@/generated-assets/image";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventData } from "./_utils";
 import { lunalink } from "@bearstudio/lunalink";

@@ -4,7 +4,7 @@ import {
   EXCLUDED_CATEGORIES_BY_TYPE,
   type AssetCategoryId,
 } from "@/assets/consts";
-import { NotFoundAssetError } from "@/generated-assets/api";
+import { NotFoundAssetError } from "@bearstudio/astro-assets-generation";
 import { getImageNameFromTsxPath } from "@/generated-assets/image";
 import { eventWithComputed } from "@/lib/events";
 import {
