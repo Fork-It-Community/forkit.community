@@ -1,5 +1,6 @@
 import {
   ASSET_CATEGORIES,
+  CATEGORY_ALIASES,
   EXCLUDED_CATEGORIES_BY_TYPE,
   type AssetCategoryId,
 } from "@/assets/consts";
@@ -78,9 +79,11 @@ export const getEventAssetsSources = (event: CollectionEntry<"events">) => {
 };
 
 export const categorize = (path: string) =>
-  ASSET_CATEGORIES.find(
-    (category) => category.id !== "other" && path.includes(category.id),
-  )?.id ?? "other";
+  ASSET_CATEGORIES.find((category) => {
+    if (category.id === "other") return false;
+    const patterns = CATEGORY_ALIASES[category.id] ?? [category.id];
+    return patterns.some((pattern) => path.includes(pattern));
+  })?.id ?? "other";
 
 const getOppositeSuffixes = (
   eventType: CollectionEntry<"events">["data"]["type"],
