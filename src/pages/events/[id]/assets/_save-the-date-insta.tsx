@@ -2,7 +2,7 @@ import { Frame } from "@/generated-assets/components/Frame";
 import {
   getAstroImageBase64,
   type AssetImageConfig,
-} from "@/generated-assets/image";
+} from "@bearstudio/astro-assets-generation";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
@@ -119,8 +119,8 @@ export function saveTheDate(options: { width: number; height: number }) {
                 display: "flex",
                 flexWrap: "wrap",
                 alignItems: "center",
-                columnGap: 48,
-                rowGap: 24,
+                columnGap: 24,
+                rowGap: 48,
               }}
             >
               <div
