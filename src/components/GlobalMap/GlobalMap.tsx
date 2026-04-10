@@ -143,11 +143,6 @@ export function GlobalMap({
             🌍 Drag to explore
           </span>
         </div>
-        <div className="pointer-events-none absolute bottom-1 right-2">
-          <span className="text-[10px] text-white/40">
-            © OpenFreeMap © OpenStreetMap contributors
-          </span>
-        </div>
       </Map>
     </div>
   );
