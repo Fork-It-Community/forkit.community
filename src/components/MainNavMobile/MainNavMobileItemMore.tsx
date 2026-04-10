@@ -7,7 +7,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import type { FC, ReactNode } from "react";
+import type { ComponentType, ReactNode } from "react";
 import { getMainMenuMobileItems } from "@/content/menus";
 
 const MainNavMobileItemMore = (props: { currentPathname: string }) => {
@@ -50,7 +50,7 @@ const MainNavMobileItemMore = (props: { currentPathname: string }) => {
 
 const MoreNavItem = (props: {
   children: ReactNode;
-  icon: FC;
+  icon: ComponentType;
   href: string;
   exact?: boolean;
   currentPathname: string;
