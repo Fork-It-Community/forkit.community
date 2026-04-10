@@ -608,6 +608,15 @@ export const getCoverImage = async (
     .exhaustive();
 };
 
+export async function getUpcomingEventForCity(
+  cityId: CollectionEntry<"cities">["id"],
+) {
+  return (await getUpcomingEvents()).find(
+    (e) =>
+      e.data._computed.city?.id === cityId && e.data.status === "published",
+  );
+}
+
 export async function getUpcomingEventsWithOpenCfp(limit?: number) {
   const upcomingEvents = await getUpcomingEvents();
   const cfpEvents =
