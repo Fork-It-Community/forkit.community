@@ -3,11 +3,10 @@ import { OG_IMAGE } from "@/assets/consts";
 import { SEO } from "astro-seo";
 import type { ComponentProps } from "astro/types";
 
-interface Props
-  extends Pick<
-    ComponentProps<typeof SEO>,
-    "title" | "description" | "noindex" | "nofollow"
-  > {
+interface Props extends Pick<
+  ComponentProps<typeof SEO>,
+  "title" | "description" | "noindex" | "nofollow"
+> {
   image?: NonNullable<
     ComponentProps<typeof SEO>["openGraph"]
   >["basic"]["image"];
