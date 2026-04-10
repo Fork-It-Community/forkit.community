@@ -24,6 +24,10 @@ export const ASSET_CATEGORIES = [
 
 export type AssetCategoryId = (typeof ASSET_CATEGORIES)[number]["id"];
 
+export const CATEGORY_ALIASES: Partial<Record<AssetCategoryId, string[]>> = {
+  tickets: ["registration"],
+};
+
 export const EXCLUDED_CATEGORIES_BY_TYPE: Record<
   CollectionEntry<"events">["data"]["type"],
   AssetCategoryId[]
