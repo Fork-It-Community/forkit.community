@@ -7,7 +7,14 @@ import {
   type CollectionKey,
 } from "astro:content";
 import { match } from "ts-pattern";
-import { entries, isEmpty, isNonNullish, isNullish, uniqueBy } from "remeda";
+import {
+  entries,
+  groupBy,
+  isEmpty,
+  isNonNullish,
+  isNullish,
+  uniqueBy,
+} from "remeda";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import defaultImage from "@/assets/images/events.jpeg";
@@ -626,6 +633,49 @@ export async function getUpcomingEventsWithOpenCfp(limit?: number) {
       ) ?? [];
   return cfpEvents.slice(0, limit);
 }
+
+export const getCitiesGeoJson = async () => {
+  const allEvents = await getEventsCollection({
+    without: ["cancelled"],
+  });
+
+  const events = groupBy(allEvents, (event) => event.data.city.id);
+
+  const features = Object.entries(events)
+    .map(([cityId, cityEvents]) => {
+      const city = cityEvents[0]?.data._computed.city?.data;
+      if (!city) return null;
+
+      return {
+        type: "Feature" as const,
+        geometry: {
+          type: "Point" as const,
+          coordinates: [city.location.lng, city.location.lat],
+        },
+        properties: {
+          cityId: cityId,
+          cityName: city.name,
+          countryName: cityEvents[0].data._computed.country?.data.name ?? "",
+          eventCount: cityEvents.length,
+          events: JSON.stringify(
+            cityEvents.map((event) => ({
+              id: event.id,
+              name: event.data._computed.name,
+              type: event.data.type,
+              date: event.data.date,
+            })),
+          ),
+        },
+      };
+    })
+    .filter((feature) => !!feature);
+
+  return {
+    geoJsonData: { type: "FeatureCollection" as const, features },
+    totalEvents: allEvents.length,
+  };
+};
+export type CitiesGeoJson = Awaited<ReturnType<typeof getCitiesGeoJson>>;
 
 export async function getRelatedEvents(event: EventComputed) {
   const allEvents = await getEventsCollection({
