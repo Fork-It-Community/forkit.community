@@ -7,18 +7,18 @@ import {
 } from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
-import { getEventData } from "./_utils";
+import { getEventData } from "../_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
-import { SponsorLogosInsta } from "@/generated-assets/components/SponsorLogos";
+import { SponsorLogos } from "@/generated-assets/components/SponsorLogos";
 import { saveTheDate } from "@/pages/events/[id]/attendee/[name]/_ticket";
 import { EventBanner } from "@/generated-assets/components/EventBanner";
 
 export const config: AssetImageConfig = {
-  width: 1080,
-  height: 1350,
+  width: 1920,
+  height: 1080,
 };
 
-async function earlyBirdTicketsInsta({ params }: { params: { id: string } }) {
+async function earlyBirdTickets({ params }: { params: { id: string } }) {
   const event = await getEventData(params.id);
   const postCover = await getAstroImageBase64(event.data.image.media);
 
@@ -64,8 +64,8 @@ async function earlyBirdTicketsInsta({ params }: { params: { id: string } }) {
       style={{
         paddingTop: 96,
         paddingLeft: 96,
-        paddingRight: 96,
-        paddingBottom: 0,
+        paddingRight: 0,
+        paddingBottom: displaySponsors ? 0 : 96,
       }}
     >
       <BgImage src={postCover} width={config.width} height={config.height} />
@@ -76,99 +76,115 @@ async function earlyBirdTicketsInsta({ params }: { params: { id: string } }) {
           zIndex: 100,
           flex: 1,
           display: "flex",
-          flexDirection: "column",
+          flexDirection: "row",
           width: "100%",
+          minHeight: 0,
         }}
       >
-        <LogoWithFriends logos={coOrganizersLogos} />
-
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: 16,
-            marginTop: coOrganizersLogos.length ? 80 : 163,
+            justifyContent: "space-between",
+            flex: 1,
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              fontSize: 50,
-              fontWeight: 500,
-              textTransform: "uppercase",
-              letterSpacing: 4,
-            }}
-          >
-            Tickets Are Available
-          </div>
+          <LogoWithFriends logos={coOrganizersLogos} />
 
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              fontSize: 98,
-              fontWeight: 500,
-              lineHeight: 1,
-              color: COLORS.primary,
-              marginLeft: -6,
-              textTransform: "uppercase",
+              gap: 16,
             }}
           >
-            <div>EARLY BIRD</div>
-            <div>TICKETS ONLY</div>
-          </div>
-        </div>
+            <div
+              style={{
+                display: "flex",
+                fontSize: 64,
+                fontWeight: 500,
+                textTransform: "uppercase",
+                letterSpacing: 4,
+                paddingTop: coOrganizersLogos.length ? 0 : 60,
+              }}
+            >
+              Tickets Are Available
+            </div>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-            flex: 1,
-            paddingTop: 20,
-          }}
-        >
-          <img
-            src={ticketImageBase64}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "contain",
-            }}
-          />
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            fontSize: 34,
-            fontWeight: 500,
-            lineHeight: 1,
-            textTransform: "uppercase",
-            opacity: 0.6,
-            paddingTop: 60,
-          }}
-        >
-          <div style={{ display: "flex" }}>
-            {event.data._computed.city?.data.name},{" "}
-            {event.data._computed.country?.data.name}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                fontSize: 96,
+                fontWeight: 500,
+                lineHeight: 1,
+                color: COLORS.primary,
+                marginLeft: -6,
+                textTransform: "uppercase",
+              }}
+            >
+              <div>EARLY BIRD</div>
+              <div>TICKETS ONLY</div>
+            </div>
           </div>
+
           <div
             style={{
               display: "flex",
+              fontSize: 34,
+              fontWeight: 500,
+              lineHeight: 1,
+              textTransform: "uppercase",
+              opacity: 0.6,
             }}
           >
             www.forkit.community
           </div>
         </div>
+
+        <div
+          style={{
+            display: "flex",
+            position: "relative",
+            width: 740,
+            flexShrink: 0,
+            alignSelf: "stretch",
+          }}
+        >
+          <img
+            src={ticketImageBase64}
+            width={1050}
+            height={560}
+            style={{
+              position: "absolute",
+              left: -170,
+              top: 340,
+              transform: "rotate(45deg)",
+              zIndex: 1,
+            }}
+          />
+          <img
+            src={ticketImageBase64}
+            width={1050}
+            height={542}
+            style={{
+              position: "absolute",
+              left: -20,
+              top: 253,
+              transform: "rotate(70deg)",
+              zIndex: 2,
+            }}
+          />
+        </div>
       </div>
 
-      {displaySponsors && <SponsorLogosInsta logos={sponsorLogos} />}
+      {displaySponsors && (
+        <div style={{ display: "flex", width: "80%", alignSelf: "flex-start" }}>
+          <SponsorLogos logos={sponsorLogos} />
+        </div>
+      )}
     </Frame>
   );
 }
 
-export default earlyBirdTicketsInsta;
+export default earlyBirdTickets;
