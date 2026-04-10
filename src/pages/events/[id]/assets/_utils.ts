@@ -81,7 +81,7 @@ export const getEventAssetsSources = (event: CollectionEntry<"events">) => {
 export const categorize = (path: string) =>
   ASSET_CATEGORIES.find((category) => {
     if (category.id === "other") return false;
-    const patterns = CATEGORY_ALIASES[category.id] ?? [category.id];
+    const patterns = [category.id, ...(CATEGORY_ALIASES[category.id] ?? [])];
     return patterns.some((pattern) => path.includes(pattern));
   })?.id ?? "other";
 
