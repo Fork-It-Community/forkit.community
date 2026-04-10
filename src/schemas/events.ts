@@ -72,6 +72,21 @@ export const zEventBasicInfo = ({ image }: SchemaContext) =>
             .max(4)
             .optional(),
         }),
+        rating: z
+          .object({
+            averageScore: z.number().min(1).max(5),
+            count: z.number().int().positive(),
+            comments: z
+              .array(
+                z.object({
+                  author: z.string(),
+                  text: z.string(),
+                  score: z.number().min(1).max(5),
+                }),
+              )
+              .optional(),
+          })
+          .optional(),
       })
       .optional(),
   });

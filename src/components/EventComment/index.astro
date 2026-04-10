@@ -1,0 +1,23 @@
+---
+import StarRating from "@/components/StarRating/index.astro";
+
+interface Props {
+  comment: {
+    author: string;
+    text: string;
+    score: number;
+  };
+}
+
+const { comment } = Astro.props;
+---
+
+<div
+  class="flex w-72 flex-none flex-col gap-3 rounded-lg bg-white/5 p-6 backdrop-blur-md"
+>
+  <StarRating score={comment.score} size="sm" />
+  <p class="flex-1 text-sm italic leading-relaxed opacity-80">
+    &ldquo;{comment.text}&rdquo;
+  </p>
+  <p class="text-xs font-medium opacity-60">&mdash; {comment.author}</p>
+</div>
