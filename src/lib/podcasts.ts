@@ -1,7 +1,7 @@
 import type { Platform } from "@/schemas/podcasts";
 import { getCollection, type CollectionEntry } from "astro:content";
 import dayjs from "dayjs";
-import type { FC } from "react";
+import type { ComponentType } from "react";
 import {
   FaDeezer,
   FaDownload,
@@ -34,7 +34,7 @@ export async function getPodcastsEpisodesCollection({
 export const PLATFORMS: Record<
   Platform,
   {
-    icon: FC;
+    icon: ComponentType;
     label: string;
   }
 > = {
