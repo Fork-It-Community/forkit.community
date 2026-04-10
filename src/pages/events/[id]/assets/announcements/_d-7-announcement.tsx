@@ -6,7 +6,7 @@ import {
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate } from "@/lib/events";
-import { getEventData } from "./_utils";
+import { getEventData } from "../_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 import { SponsorLogos } from "@/generated-assets/components/SponsorLogos";
 import { EventBanner } from "@/generated-assets/components/EventBanner";
@@ -16,7 +16,7 @@ export const config: AssetImageConfig = {
   height: 1080,
 };
 
-export function d30announcement(options: { width: number; height: number }) {
+export function d7announcement(options: { width: number; height: number }) {
   return async ({ params }: { params: { id: string } }) => {
     const event = await getEventData(params.id);
     const postCover = await getAstroImageBase64(event.data.image.media);
@@ -30,7 +30,6 @@ export function d30announcement(options: { width: number; height: number }) {
     const coOrganizersIds = event.__coOrganizers.map(
       (coOrganiser) => coOrganiser.id,
     );
-
     const sponsorLogos = await Promise.all(
       event.__sponsors
         .filter((sponsor) => !coOrganizersIds.includes(sponsor.id))
@@ -92,7 +91,7 @@ export function d30announcement(options: { width: number; height: number }) {
                   color: COLORS.primary,
                 }}
               >
-                30
+                07
               </div>
               <div
                 style={{
@@ -233,4 +232,4 @@ export function d30announcement(options: { width: number; height: number }) {
   };
 }
 
-export default d30announcement(config);
+export default d7announcement(config);
