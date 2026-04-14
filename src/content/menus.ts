@@ -1,6 +1,6 @@
 import { ROUTES } from "@/routes.gen";
 import { lunalink } from "@bearstudio/lunalink";
-import type { FC } from "react";
+import type { ComponentType } from "react";
 import {
   MdHomeFilled,
   MdEvent,
@@ -20,7 +20,7 @@ type MainMenuScope = "all" | "mobile" | "desktop";
 type MainMenuLevel = "primary" | "secondary";
 
 const MAIN_MENU: Array<{
-  icon: FC;
+  icon: ComponentType;
   label: string;
   href: string;
   exact?: boolean;
