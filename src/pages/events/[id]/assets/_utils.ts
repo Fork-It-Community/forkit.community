@@ -78,12 +78,20 @@ export const getEventAssetsSources = (event: CollectionEntry<"events">) => {
     .filter((x) => x !== undefined && x !== null);
 };
 
-export const categorize = (path: string) =>
-  ASSET_CATEGORIES.find((category) => {
-    if (category.id === "other") return false;
-    const patterns = [category.id, ...(CATEGORY_ALIASES[category.id] ?? [])];
-    return patterns.some((pattern) => path.includes(pattern));
-  })?.id ?? "other";
+export const categorize = (path: string): AssetCategoryId => {
+  if (path.includes("/talks/")) return "talks";
+  if (path.includes("/partners/")) return "partners";
+
+  const fileName = path.split("/").pop() ?? "";
+
+  return (
+    ASSET_CATEGORIES.find((category) => {
+      if (category.id === "other") return false;
+      const patterns = [category.id, ...(CATEGORY_ALIASES[category.id] ?? [])];
+      return patterns.some((pattern) => fileName.includes(pattern));
+    })?.id ?? "other"
+  );
+};
 
 const getOppositeSuffixes = (
   eventType: CollectionEntry<"events">["data"]["type"],
