@@ -7,7 +7,7 @@ export type Person = z.infer<ReturnType<typeof zPerson>>;
 export const zPerson = ({ image }: SchemaContext) =>
   z.object({
     name: z.string(),
-    lang: zLanguage(),
+    bioLang: zLanguage(),
     avatar: image().optional(),
     job: z.string().optional(),
     socials: z
