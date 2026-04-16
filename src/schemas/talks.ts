@@ -25,5 +25,5 @@ export const zTalk = () =>
         youtubeId: z.string(),
       })
       .optional(),
-    contentLanguage: zLanguage().optional().default("english"),
+    contentLanguage: zLanguage(),
   });
