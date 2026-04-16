@@ -3,11 +3,13 @@ import { cn } from "@/lib/utils-client";
 
 interface Props {
   class?: string;
+  lang?: string;
 }
-const { class: className } = Astro.props;
+const { class: className, lang } = Astro.props;
 ---
 
 <div
+  lang={lang}
   class={cn(
     // Base
     "prose prose-invert w-full",
