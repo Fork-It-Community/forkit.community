@@ -7,6 +7,7 @@ import { ROUTES } from "@/routes.gen";
 import { SOCIALS_TYPE_MAP } from "@/content/socials";
 import { render } from "astro:content";
 import Prose from "@/components/Prose/index.astro";
+import { lang } from "@/lib/lang";
 
 interface Props {
   organizer: CollectionEntry<"people">;
@@ -75,7 +76,7 @@ const { Content } = await render(organizer);
         </ul>
       )
     }
-    <Prose class="prose-sm hidden md:block">
+    <Prose class="prose-sm hidden md:block" lang={lang(organizer.data.bioLang)}>
       <Content />
     </Prose>
   </div>

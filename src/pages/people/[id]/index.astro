@@ -12,6 +12,7 @@ import ContributionCard from "@/components/ContributionCard/index.astro";
 import { render } from "astro:content";
 import { SOCIALS_TYPE_MAP } from "@/content/socials";
 import Prose from "@/components/Prose/index.astro";
+import { lang } from "@/lib/lang";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import TiltedCard from "@/components/TiltedCard";
 import { BackButton } from "@/components/BackButton";
@@ -151,7 +152,7 @@ const personAchievements = getPersonAchievements(person);
                 <h2 class="w-full font-heading text-xl uppercase tracking-wider">
                   About {person.data.name}
                 </h2>
-                <Prose class="prose-sm">
+                <Prose class="prose-sm" lang={lang(person.data.bioLang)}>
                   <Content />
                 </Prose>
               </div>

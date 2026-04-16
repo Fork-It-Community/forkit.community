@@ -1,3 +1,4 @@
+import { zLanguage } from "@/schemas/language";
 import { zSocialTypes } from "@/schemas/utils";
 import { z } from "astro/zod";
 import { reference, type SchemaContext } from "astro:content";
@@ -6,6 +7,7 @@ export type Person = z.infer<ReturnType<typeof zPerson>>;
 export const zPerson = ({ image }: SchemaContext) =>
   z.object({
     name: z.string(),
+    bioLang: zLanguage(),
     avatar: image().optional(),
     job: z.string().optional(),
     socials: z
