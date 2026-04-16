@@ -19,7 +19,11 @@ const emptyStars = 5 - filledStars - (hasHalf ? 1 : 0);
 const iconSize = size === "sm" ? "size-4" : "size-5";
 ---
 
-<div class={cn("flex text-primary", className)}>
+<div
+  role="img"
+  aria-label={`${score} out of 5 stars`}
+  class={cn("flex text-primary", className)}
+>
   {
     Array.from({ length: filledStars }).map(() => (
       <MdStar className={iconSize} />
