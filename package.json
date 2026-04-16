@@ -53,6 +53,7 @@
     "dayjs": "1.11.20",
     "hast-util-to-text": "4.0.2",
     "i18next": "26.0.3",
+    "maplibre-gl": "5.17.0",
     "mdast-util-to-string": "4.0.0",
     "minisearch": "7.2.0",
     "motion": "12.38.0",
