@@ -5,20 +5,21 @@ import {
 } from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
-import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
-import { getEventData } from "./_utils";
+import { getEventDisplayDate } from "@/lib/events";
+import { getEventData } from "../_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
-import { SponsorLogosInsta } from "@/generated-assets/components/SponsorLogos";
+import { SponsorLogos } from "@/generated-assets/components/SponsorLogos";
 import { EventBanner } from "@/generated-assets/components/EventBanner";
 
 export const config: AssetImageConfig = {
-  width: 1080,
-  height: 1350,
+  width: 1920,
+  height: 1080,
 };
 
-export function registrationStillOpenInsta(options: {
+export function cfpOpen(options: {
   width: number;
   height: number;
+  fontScaling: number;
 }) {
   return async ({ params }: { params: { id: string } }) => {
     const event = await getEventData(params.id);
@@ -66,63 +67,20 @@ export function registrationStillOpenInsta(options: {
             flex: 1,
             display: "flex",
             flexDirection: "column",
-            gap: 40,
             width: "100%",
             justifyContent: "space-between",
           }}
         >
+          <LogoWithFriends logos={coOrganizersLogos} />
+
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: 80,
+              gap: 32,
+              justifyContent: "center",
             }}
           >
-            <LogoWithFriends logos={coOrganizersLogos} />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 20,
-              }}
-            >
-              <div
-                style={{
-                  fontSize: 35,
-                  fontWeight: 500,
-                  textTransform: "uppercase",
-                  letterSpacing: 4,
-                  paddingTop: coOrganizersLogos.length ? 0 : 96,
-                }}
-              >
-                Registrations are still open
-              </div>
-
-              <div
-                style={{
-                  display: "flex",
-                  fontSize: 120,
-                  fontWeight: 500,
-                  lineHeight: 1,
-                  color: COLORS.primary,
-                  marginLeft: -6, // Visual alignment
-                  textTransform: "uppercase",
-                }}
-              >
-                Join Us Now
-              </div>
-              <div
-                style={{
-                  fontSize: 38,
-                  fontWeight: 500,
-                  textTransform: "uppercase",
-                  letterSpacing: 4,
-                  opacity: 0.82,
-                }}
-              >
-                {getEventDisplayType(event.data.type)}
-              </div>
-            </div>
             <div
               style={{
                 display: "flex",
@@ -132,27 +90,78 @@ export function registrationStillOpenInsta(options: {
             >
               <div
                 style={{
+                  fontSize: 72 * options.fontScaling,
+                  fontWeight: 500,
+                  textTransform: "uppercase",
+                  letterSpacing: 6,
+                  opacity: 0.9,
+                }}
+              >
+                Call for Papers
+              </div>
+
+              <div
+                style={{
+                  fontSize: 180 * options.fontScaling,
+                  fontWeight: 500,
+                  lineHeight: 0.95,
+                  color: COLORS.primary,
+                  marginLeft: -6,
+                  textTransform: "uppercase",
+                }}
+              >
+                Now Open
+              </div>
+            </div>
+
+            <div
+              style={{
+                fontSize: 56 * options.fontScaling,
+                fontWeight: 400,
+                opacity: 0.95,
+              }}
+            >
+              Submit your talk proposals
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 16,
+              }}
+            >
+              <div
+                style={{
                   display: "flex",
                   alignItems: "center",
                   gap: 12,
-                  fontSize: 45,
+                  fontSize: 48 * options.fontScaling,
                   fontWeight: 500,
-                  lineHeight: 1,
+                  opacity: 0.6,
                 }}
               >
                 <svg
+                  viewBox="0 0 24 24"
                   style={{
-                    flex: "none",
                     opacity: 0.6,
                     width: "1em",
                     height: "1em",
                   }}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
                 >
-                  <path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" />
+                  <path
+                    fill="currentColor"
+                    d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"
+                  />
                 </svg>
                 {getEventDisplayDate(event)}
               </div>
@@ -162,69 +171,46 @@ export function registrationStillOpenInsta(options: {
                   display: "flex",
                   gap: 12,
                   alignItems: "center",
-                  fontSize: 48,
+                  fontSize: 48 * options.fontScaling,
                   fontWeight: 500,
-                  lineHeight: 1.2,
-                  textWrap: "balance",
+                  opacity: 0.6,
                 }}
               >
                 <svg
+                  viewBox="0 0 24 24"
                   style={{
                     flex: "none",
                     opacity: 0.6,
                     width: "1em",
                     height: "1em",
                   }}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
                 >
-                  <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
-                  <circle cx="12" cy="10" r="3" />
+                  <path
+                    fill="currentColor"
+                    d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7"
+                  />
                 </svg>
                 {event.data._computed.city?.data.name},{" "}
                 {event.data._computed.country?.data.name}
               </div>
             </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "flex-end",
-              marginTop: 32,
-            }}
-          >
+
             <div
               style={{
-                display: "flex",
-                fontSize: 32,
+                fontSize: 38 * options.fontScaling,
                 fontWeight: 500,
                 textTransform: "uppercase",
-                opacity: 0.6,
-              }}
-            >
-              {event.data._computed.city?.data.name},{" "}
-              {event.data._computed.country?.data.name}
-            </div>
-            <div
-              style={{
-                display: "flex",
-                fontSize: 32,
-                fontWeight: 500,
-                textTransform: "uppercase",
-                opacity: 0.6,
+                opacity: 0.5,
               }}
             >
               www.forkit.community
             </div>
           </div>
         </div>
-        {displaySponsors && <SponsorLogosInsta logos={sponsorLogos} />}
+        {displaySponsors && <SponsorLogos logos={sponsorLogos} />}
       </Frame>
     );
   };
 }
 
-export default registrationStillOpenInsta(config);
+export default cfpOpen({ ...config, fontScaling: 1 });
