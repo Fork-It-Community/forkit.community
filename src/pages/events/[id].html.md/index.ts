@@ -46,7 +46,7 @@ ${displayAfterEvent(event)}
 
 ${await displaySponsors(event)}`,
     {
-      headers: { "Content-Type": "text/plain; charset=utf-8" },
+      headers: { "Content-Type": "text/markdown; charset=utf-8" },
     },
   );
 };

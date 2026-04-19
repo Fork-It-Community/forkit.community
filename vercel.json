@@ -10,6 +10,52 @@
       ]
     }
   ],
+  "rewrites": [
+    {
+      "source": "/events/:id",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": ".*text/markdown.*"
+        }
+      ],
+      "destination": "/events/:id.html.md"
+    },
+    {
+      "source": "/people/:id",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": ".*text/markdown.*"
+        }
+      ],
+      "destination": "/people/:id.html.md"
+    },
+    {
+      "source": "/news/article/:id",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": ".*text/markdown.*"
+        }
+      ],
+      "destination": "/news/article/:id.html.md"
+    },
+    {
+      "source": "/podcasts/:id/episodes/:episode",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": ".*text/markdown.*"
+        }
+      ],
+      "destination": "/podcasts/:id/episodes/:episode.html.md"
+    }
+  ],
   "redirects": [
     {
       "source": "/meetups/2025-02-12-nabeul",
