@@ -90,6 +90,12 @@ export default defineConfig({
           disallow: ["/branding/components", "/events/*/prospectus"],
         },
       ],
+      transform(content) {
+        return content.replace(
+          /^User-agent: \*$/m,
+          "User-agent: *\nContent-Signal: ai-train=no, search=yes, ai-input=no",
+        );
+      },
     }),
     astrobook({
       subpath: "/branding/components",
