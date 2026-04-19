@@ -1,4 +1,15 @@
 {
+  "headers": [
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "</llms.txt>; rel=\"describedby\"; type=\"text/plain\""
+        }
+      ]
+    }
+  ],
   "redirects": [
     {
       "source": "/meetups/2025-02-12-nabeul",
