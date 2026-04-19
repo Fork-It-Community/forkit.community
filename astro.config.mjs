@@ -10,6 +10,7 @@ import { qrcode } from "vite-plugin-qrcode";
 import node from "@astrojs/node";
 import vercel from "@astrojs/vercel";
 import { getSiteUrl } from "./src/lib/getSiteURL";
+import { markdownNegotiation } from "./src/lib/astro/markdown-negotiation-integration";
 import astrobook from "astrobook";
 
 import bearstudiotypedRoutes from "@bearstudio/astro-typed-routes";
@@ -103,6 +104,7 @@ export default defineConfig({
       title: "Components | Fork it! Community",
     }),
     bearstudiotypedRoutes(),
+    markdownNegotiation(),
   ],
 
   adapter,
