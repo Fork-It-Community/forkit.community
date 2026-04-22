@@ -44,7 +44,7 @@
     "astro": "6.0.8",
     "astro-robots-txt": "1.0.0",
     "astro-seo": "1.1.0",
-    "astro-seo-schema": "5.1.0",
+    "astro-seo-schema": "6.0.0",
     "astrobook": "0.13.1",
     "better-result": "2.7.0",
     "class-variance-authority": "0.7.1",
