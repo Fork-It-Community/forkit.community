@@ -46,6 +46,8 @@ import CustomBlockEventSlot from "@/components/CustomBlockEventSlot/index.astro"
 import { match } from "ts-pattern";
 import { getEntry } from "astro:content";
 import KeynoteSection from "@/components/KeynoteSection/index.astro";
+import EventRating from "@/components/EventRating/index.astro";
+import EventComment from "@/components/EventComment/index.astro";
 
 export async function getStaticPaths() {
   const allEvents = await getEventsCollection();
@@ -156,6 +158,15 @@ const validKeynotes = keynoteSection.filter(
         name: speaker.data.name,
       })),
       ...(location && { location }),
+      ...(event.data.afterEventContent?.rating && {
+        aggregateRating: {
+          "@type": "AggregateRating" as const,
+          ratingValue: event.data.afterEventContent.rating.averageScore,
+          bestRating: 5,
+          worstRating: 1,
+          ratingCount: event.data.afterEventContent.rating.count,
+        },
+      }),
     }}
   />
   <div
@@ -436,6 +447,24 @@ const validKeynotes = keynoteSection.filter(
                 )}
               </div>
             </div>
+          </div>
+          <div class="flex flex-col gap-4">
+            {event.data.afterEventContent?.rating && (
+              <EventRating
+                averageScore={event.data.afterEventContent?.rating.averageScore}
+                count={event.data.afterEventContent?.rating.count}
+                class="justify-center"
+              />
+            )}
+            {!!event.data.afterEventContent?.rating?.comments?.length && (
+              <div class="hide-scrollbar flex w-full gap-4 overflow-x-auto px-2 py-4 md:justify-center">
+                {event.data.afterEventContent.rating.comments
+                  .slice(0, 3)
+                  .map((comment) => (
+                    <EventComment comment={comment} />
+                  ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

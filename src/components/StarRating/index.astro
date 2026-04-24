@@ -1,0 +1,38 @@
+---
+import { cn } from "@/lib/utils-client";
+import { MdStar, MdStarHalf, MdStarOutline } from "react-icons/md";
+
+interface Props {
+  score: number;
+  size?: "sm" | "md";
+  class?: string;
+}
+
+const { score, size = "md", class: className } = Astro.props;
+
+const fullStars = Math.floor(score);
+const hasHalf = score - fullStars >= 0.25 && score - fullStars < 0.75;
+const roundedUp = score - fullStars >= 0.75;
+const filledStars = fullStars + (roundedUp ? 1 : 0);
+const emptyStars = 5 - filledStars - (hasHalf ? 1 : 0);
+
+const iconSize = size === "sm" ? "size-4" : "size-5";
+---
+
+<div
+  role="img"
+  aria-label={`${score} out of 5 stars`}
+  class={cn("flex text-primary", className)}
+>
+  {
+    Array.from({ length: filledStars }).map(() => (
+      <MdStar className={iconSize} />
+    ))
+  }
+  {hasHalf && <MdStarHalf className={iconSize} />}
+  {
+    Array.from({ length: emptyStars }).map(() => (
+      <MdStarOutline className={iconSize} />
+    ))
+  }
+</div>
