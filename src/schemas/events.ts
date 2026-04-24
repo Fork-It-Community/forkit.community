@@ -79,8 +79,8 @@ export const zEventBasicInfo = ({ image }: SchemaContext) =>
             comments: z
               .array(
                 z.object({
-                  author: z.string(),
-                  text: z.string(),
+                  author: z.string().min(1),
+                  text: z.string().min(1),
                   score: z.number().min(1).max(5),
                 }),
               )
