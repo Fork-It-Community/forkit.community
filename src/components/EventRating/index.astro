@@ -14,5 +14,7 @@ const { averageScore, count, class: className } = Astro.props;
 <div class={cn("flex items-center gap-2", className)}>
   <StarRating score={averageScore} />
   <span class="text-sm font-medium">{averageScore.toFixed(1)}/5</span>
-  <span class="text-sm opacity-60">based on {count} ratings</span>
+  <span class="text-sm opacity-60"
+    >based on {count} {count === 1 ? "rating" : "ratings"}</span
+  >
 </div>

@@ -161,10 +161,10 @@ const validKeynotes = keynoteSection.filter(
       ...(event.data.afterEventContent?.rating && {
         aggregateRating: {
           "@type": "AggregateRating" as const,
-          ratingValue: event.data.afterEventContent?.rating.averageScore,
+          ratingValue: event.data.afterEventContent.rating.averageScore,
           bestRating: 5,
           worstRating: 1,
-          ratingCount: event.data.afterEventContent?.rating.count,
+          ratingCount: event.data.afterEventContent.rating.count,
         },
       }),
     }}
