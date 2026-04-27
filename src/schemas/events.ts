@@ -2,6 +2,9 @@ import { zMediaImage } from "@/schemas/utils";
 import { z } from "astro/zod";
 import { reference, type SchemaContext } from "astro:content";
 
+export type KeynotePeriod = z.infer<typeof zKeynotePeriod>;
+export const zKeynotePeriod = z.enum(["opening", "afternoon", "closing"]);
+
 export const zEventBasicInfo = ({ image }: SchemaContext) =>
   z.object({
     city: reference("cities"),
@@ -204,7 +207,7 @@ const zEventBase = ({ image }: SchemaContext) =>
               description: z.string().optional(),
               name: z.string().optional(),
               slug: reference("talks").optional(),
-              period: z.enum(["opening", "afternoon"]).optional(),
+              period: zKeynotePeriod.optional(),
               startTime: z.date().optional(),
               duration: z.number().optional().describe("Number of minutes"),
               location: z.string().optional(),

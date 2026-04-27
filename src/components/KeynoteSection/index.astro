@@ -2,14 +2,16 @@
 import Prose from "@/components/Prose/index.astro";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
+import { type KeynotePeriod } from "@/schemas/events";
 import { Image } from "astro:assets";
 import { render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
+import { match } from "ts-pattern";
 
 interface Props {
   talk: CollectionEntry<"talks">;
   speakers: CollectionEntry<"people">[];
-  period?: "opening" | "afternoon";
+  period?: KeynotePeriod;
 }
 
 const { talk, speakers, period } = Astro.props;
@@ -53,7 +55,13 @@ const hasContent = talk.body && talk.body.trim().length > 0;
     <div class="flex flex-col justify-center gap-6 md:flex-[1.5]">
       <div class="flex flex-col gap-2">
         <span class="text-sm font-bold uppercase tracking-widest text-primary">
-          {period === "afternoon" ? "Afternoon Keynote" : "Opening Keynote"}
+          {
+            match(period)
+              .with("afternoon", () => "Afternoon Keynote")
+              .with("closing", () => "Closing Keynote")
+              .with("opening", undefined, () => "Opening Keynote")
+              .exhaustive()
+          }
         </span>
         <h3 class="font-heading text-2xl font-bold leading-tight md:text-4xl">
           {talk.data.title}
