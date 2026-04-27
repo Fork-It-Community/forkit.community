@@ -57,7 +57,7 @@ export async function getAllGuests(params: Params) {
       pagination_cursor: nextCursor,
     });
 
-    if (response.isErr()) return response;
+    if (response.isErr()) return Result.err(response.error);
 
     guests = [...guests, ...response.value.entries.map((entry) => entry.guest)];
     hasMore = response.value.has_more;
