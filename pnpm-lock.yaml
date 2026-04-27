@@ -99,8 +99,8 @@ importers:
         specifier: 0.13.1
         version: 0.13.1(astro@6.1.8(@types/node@25.5.2)(@vercel/functions@3.4.3)(jiti@2.4.2)(lightningcss@1.29.1)(rollup@4.60.2)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.3))(typescript@5.9.3)
       better-result:
-        specifier: 2.7.0
-        version: 2.7.0
+        specifier: 2.8.2
+        version: 2.8.2
       class-variance-authority:
         specifier: 0.7.1
         version: 0.7.1
@@ -437,14 +437,8 @@ packages:
     resolution: {integrity: sha512-VERIM64vtTP1C4mxQ5thVT9fK0apjPFobqybMtA1UdUujWka24ERHbRHFGmpbbhp73MhV+KSsHQH9C6uOTdEQA==}
     engines: {node: '>=18'}
 
-  '@clack/core@0.5.0':
-    resolution: {integrity: sha512-p3y0FIOwaYRUPRcMO7+dlmLh8PSRcrjuTndsiA0WAFbWES0mLZlrjVoBRZ9DzkPFJZG6KGkJmoEAY0ZcVWTkow==}
-
   '@clack/core@1.2.0':
     resolution: {integrity: sha512-qfxof/3T3t9DPU/Rj3OmcFyZInceqj/NVtO9rwIuJqCUgh32gwPjpFQQp/ben07qKlhpwq7GzfWpST4qdJ5Drg==}
-
-  '@clack/prompts@0.11.0':
-    resolution: {integrity: sha512-pMN5FcrEw9hUkZA4f+zLlzivQSeQf5dRGJjSUbvVYDLvpKCdQx5OaknvKzgbtXOizhP+SJJJjqEbOe55uKKfAw==}
 
   '@clack/prompts@1.2.0':
     resolution: {integrity: sha512-4jmztR9fMqPMjz6H/UZXj0zEmE43ha1euENwkckKKel4XpSfokExPo5AiVStdHSAlHekz4d0CA/r45Ok1E4D3w==}
@@ -1999,9 +1993,8 @@ packages:
   before-after-hook@4.0.0:
     resolution: {integrity: sha512-q6tR3RPqIB1pMiTRMFcZwuG5T8vwp+vUvEG0vuI6B+Rikh5BfPp2fQ82c925FOs+b0lcFQ8CFrL+KbilfZFhOQ==}
 
-  better-result@2.7.0:
-    resolution: {integrity: sha512-7zrmXjAK8u8Z6SOe4R65XObOR5X+Y2I/VVku3t5cPOGQ8/WsBcfFmfnIPiEl5EBMDOzPHRwbiPbMtQBKYdw7RA==}
-    hasBin: true
+  better-result@2.8.2:
+    resolution: {integrity: sha512-YOf0VSj5nUPI27doTtXF+BBnsiRq3qY7avHqfIWnppxTLGyvkLq1QV2RTxkwoZwJ60ywLfZ0raFF4J/G886i7A==}
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -4735,20 +4728,9 @@ snapshots:
     dependencies:
       fontkitten: 1.0.3
 
-  '@clack/core@0.5.0':
-    dependencies:
-      picocolors: 1.1.1
-      sisteransi: 1.0.5
-
   '@clack/core@1.2.0':
     dependencies:
       fast-wrap-ansi: 0.1.6
-      sisteransi: 1.0.5
-
-  '@clack/prompts@0.11.0':
-    dependencies:
-      '@clack/core': 0.5.0
-      picocolors: 1.1.1
       sisteransi: 1.0.5
 
   '@clack/prompts@1.2.0':
@@ -6201,9 +6183,7 @@ snapshots:
 
   before-after-hook@4.0.0: {}
 
-  better-result@2.7.0:
-    dependencies:
-      '@clack/prompts': 0.11.0
+  better-result@2.8.2: {}
 
   binary-extensions@2.3.0: {}
 
