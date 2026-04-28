@@ -1,4 +1,5 @@
 ---
+import { KeynoteReadMoreButton } from "@/components/KeynoteReadMoreButton";
 import Prose from "@/components/Prose/index.astro";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
@@ -12,12 +13,19 @@ interface Props {
   talk: CollectionEntry<"talks">;
   speakers: CollectionEntry<"people">[];
   period?: KeynotePeriod;
+  eventId: string;
 }
 
-const { talk, speakers, period } = Astro.props;
+const { talk, speakers, period, eventId } = Astro.props;
 
 const { Content } = await render(talk);
 const hasContent = talk.body && talk.body.trim().length > 0;
+
+const talkHref = lunalink(ROUTES.events[":id"].talks[":talkId"].__path, {
+  id: eventId,
+  talkId: talk.id,
+});
+const clampId = `keynote-clamp-${talk.id}`;
 ---
 
 <div class="relative mx-auto flex w-full max-w-screen-lg flex-col gap-12 px-4">
@@ -70,9 +78,16 @@ const hasContent = talk.body && talk.body.trim().length > 0;
 
       {
         hasContent ? (
-          <Prose>
-            <Content />
-          </Prose>
+          <div class="flex flex-col gap-4">
+            <Prose class="line-clamp-[7]" id={clampId}>
+              <Content />
+            </Prose>
+            <KeynoteReadMoreButton
+              client:load
+              href={talkHref}
+              targetId={clampId}
+            />
+          </div>
         ) : (
           <p class="text-white">
             Keynote details coming soon! Stay tuned for updates.
