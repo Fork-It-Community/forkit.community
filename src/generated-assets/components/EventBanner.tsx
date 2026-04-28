@@ -84,25 +84,29 @@ export const EventBanner = ({
           position: "absolute",
           display: "flex",
           alignItems: "center",
-          top: BAR_HEIGHT,
           justifyContent: "center",
+          top: BAR_HEIGHT,
           left: notchLeft,
           width: notchW,
           height: NOTCH_HEIGHT,
-          paddingLeft: NOTCH_PADDING,
-          paddingRight: NOTCH_PADDING,
-          paddingBottom: 16,
-          color: color,
-          fontFamily: "Tomorrow",
-          fontSize: FONT_SIZE,
-          fontWeight: 500,
-          textTransform: "uppercase",
-          lineHeight: 1,
-          letterSpacing: LETTER_SPACING,
-          whiteSpace: "nowrap",
+          paddingBottom: 12,
         }}
       >
-        {cityName.toUpperCase()}'{year}
+        <div
+          style={{
+            color: color,
+            fontFamily: "Tomorrow",
+            fontSize: FONT_SIZE,
+            fontWeight: 500,
+            textTransform: "uppercase",
+            lineHeight: 1,
+            letterSpacing: LETTER_SPACING,
+            whiteSpace: "nowrap",
+            textAlign: "center",
+          }}
+        >
+          {cityName.toUpperCase()}'{year}
+        </div>
       </div>
     </div>
   );
