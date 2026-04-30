@@ -223,15 +223,17 @@ const talkDetails: EventDetails = {
         <div class="not-prose flex flex-wrap gap-2">
           {
             schedule?.type &&
-              match(schedule.type)
-                .with("conference", () => <Badge variant="card">Talk</Badge>)
-                .with("roundtable", () => (
-                  <Badge variant="card">Roundtable</Badge>
-                ))
-                .with("workshop", () => <Badge variant="card">Workshop</Badge>)
-                .with("keynote", () => <Badge variant="card">Keynote</Badge>)
-                .with("info", "lunch", () => null)
-                .exhaustive()
+              schedule.type !== "info" &&
+              schedule.type !== "lunch" && (
+                <Badge variant="card">
+                  {match(schedule.type)
+                    .with("conference", () => "Talk")
+                    .with("roundtable", () => "Roundtable")
+                    .with("workshop", () => "Workshop")
+                    .with("keynote", () => "Keynote")
+                    .otherwise(() => null)}
+                </Badge>
+              )
           }
           <Badge variant="card">
             <IoLanguageSharp className="text-base" />

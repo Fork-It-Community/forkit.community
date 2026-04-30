@@ -8,6 +8,7 @@ import { MdPlace } from "react-icons/md";
 import { match } from "ts-pattern";
 import TiltedCard from "@/components/TiltedCard";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils-client";
 
 interface Props {
   displayStats?: boolean;
@@ -56,12 +57,12 @@ const { event, displayStats } = Astro.props;
       <div class="flex flex-col">
         {(event.data.schedule.status === "preview"
           ? event.data.schedule.items
-          : event.data.schedule.items.toSorted((talk1, talk2) => {
-              // Infinity to set startTime=null at the end
-              const time1 = talk1.startTime?.valueOf() ?? Infinity;
-              const time2 = talk2.startTime?.valueOf() ?? Infinity;
-              return time1 - time2;
-            })
+          : event.data.schedule.items.toSorted(
+              (talk1, talk2) =>
+                // Infinity to set startTime=null at the end
+                (talk1.startTime?.valueOf() ?? Infinity) -
+                (talk2.startTime?.valueOf() ?? Infinity),
+            )
         ).map((activity) => {
           return (
             <div class="group flex gap-3">
@@ -76,56 +77,31 @@ const { event, displayStats } = Astro.props;
                       startTime={activity.startTime}
                       class="font-heading text-sm tracking-wide opacity-80"
                     />
-                    {match(activity.type)
-                      .with("conference", () => (
-                        <Badge variant="card" className="py-1">
-                          <span>Talk</span>
-                          {!!activity.duration && (
-                            <>
-                              <span class="opacity-60">·</span>
-                              <span>{activity.duration} min</span>
-                            </>
-                          )}
-                        </Badge>
-                      ))
-                      .with("roundtable", () => (
-                        <Badge variant="card" className="py-1">
-                          <span>Roundtable</span>
-                          {!!activity.duration && (
-                            <>
-                              <span class="opacity-60">·</span>
-                              <span>{activity.duration} min</span>
-                            </>
-                          )}
-                        </Badge>
-                      ))
-                      .with("workshop", () => (
-                        <Badge variant="card" className="py-1">
-                          <span>Workshop</span>
-                          {!!activity.duration && (
-                            <>
-                              <span class="opacity-60">·</span>
-                              <span>{activity.duration} min</span>
-                            </>
-                          )}
-                        </Badge>
-                      ))
-                      .with("keynote", () => (
-                        <Badge
-                          variant="card"
-                          className="border-white/40 bg-white/20 py-1 opacity-100"
-                        >
-                          <span>Keynote</span>
-                          {!!activity.duration && (
-                            <>
-                              <span class="opacity-60">·</span>
-                              <span>{activity.duration} min</span>
-                            </>
-                          )}
-                        </Badge>
-                      ))
-                      .with("info", "lunch", () => null)
-                      .exhaustive()}
+                    {activity.type !== "info" && activity.type !== "lunch" && (
+                      <Badge
+                        variant="card"
+                        className={cn(
+                          "py-1",
+                          activity.type === "keynote" &&
+                            "border-white/40 bg-white/20 opacity-100",
+                        )}
+                      >
+                        <span>
+                          {match(activity.type)
+                            .with("conference", () => "Talk")
+                            .with("roundtable", () => "Roundtable")
+                            .with("workshop", () => "Workshop")
+                            .with("keynote", () => "Keynote")
+                            .otherwise(() => null)}
+                        </span>
+                        {!!activity.duration && (
+                          <>
+                            <span class="opacity-60">·</span>
+                            <span>{activity.duration} min</span>
+                          </>
+                        )}
+                      </Badge>
+                    )}
                   </div>
                   {!!activity.location &&
                     (activity.locationUrl ? (
