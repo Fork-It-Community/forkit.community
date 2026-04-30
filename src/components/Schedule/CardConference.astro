@@ -45,7 +45,7 @@ const scheduleItem = (event.data.schedule?.items ?? []).find(
       class={cn(
         "group flex w-full flex-col gap-4 rounded-lg bg-white/5 p-4 backdrop-blur-md transition hover:bg-white/10 sm:px-6 sm:py-5",
         scheduleItem?.type === "workshop" &&
-          "border-l-2 border-primary/70 bg-primary/5 hover:bg-primary/10",
+          "bg-primary/10 hover:bg-primary/15",
         scheduleItem?.status === "cancelled" && "opacity-60",
       )}
     >
@@ -59,13 +59,9 @@ const scheduleItem = (event.data.schedule?.items ?? []).find(
           {talk.data.title}
         </p>
         <div class="flex items-center gap-2">
-          {scheduleItem?.type === "keynote" && (
+          {(scheduleItem?.type === "keynote" ||
+            scheduleItem?.type === "workshop") && (
             <Badge variant="card">{scheduleItem.type}</Badge>
-          )}
-          {scheduleItem?.type === "workshop" && (
-            <Badge variant="default">
-              <span>Workshop</span>
-            </Badge>
           )}
           {scheduleItem?.status === "cancelled" && (
             <div class="h-full w-fit rounded-full bg-white/10 px-2 py-1 text-white">
