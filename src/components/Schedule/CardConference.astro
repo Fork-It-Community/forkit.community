@@ -44,8 +44,6 @@ const scheduleItem = (event.data.schedule?.items ?? []).find(
       })}
       class={cn(
         "group flex w-full flex-col gap-4 rounded-lg bg-white/5 p-4 backdrop-blur-md transition hover:bg-white/10 sm:px-6 sm:py-5",
-        scheduleItem?.type === "workshop" &&
-          "bg-primary/10 hover:bg-primary/15",
         scheduleItem?.status === "cancelled" && "opacity-60",
       )}
     >
