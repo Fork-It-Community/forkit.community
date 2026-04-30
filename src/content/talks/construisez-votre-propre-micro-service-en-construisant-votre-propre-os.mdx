@@ -1,0 +1,22 @@
+---
+title: "Construisez votre propre micro-service en construisant votre propre OS"
+speakers:
+  - id: xavier-van-de-woestyne
+language: french
+contentLanguage: french
+---
+
+> Usuellement, des micro-services sont des processus isolés orchestrés sur un système d'exploitation complet. 
+> On nécéssite donc d'avoir une pile de composants et d'ingénérie pour décrire une petite API REST. Cette pratique, 
+> commune, bien que "relativement facile à mettre en place" augmente drastiquement la surface d'attaque potentielle et 
+> le temps de lancement de services, faisant du langage GO, un excellent candidat au développement de Microservices. 
+> Et si on poussait le vice en décidant de construire un système d'exploitation par services, en utilisant les capacité 
+> de virtualisation de notre processeur (son hyperviseur) pour construire des services isolés, tout petits et qui boot 
+> sacrément vite ?
+
+
+Dans cet atelier, nous allons apprendre à créer des images spécialisées, des Unikernels, pour construire, 
+à la demande, un système d'exploitation dont le rôle n'est que de faire tourner un seul service. 
+Au moyen du langage [OCaml](https://ocaml.org/) et de la toolchain [MirageOS](https://mirage.io/) nous construirons plusieurs petits services, simplement.
+
+Au programme, virtualisation, appels systèmes, programmation fonctionnelle et système d'exploitation !
