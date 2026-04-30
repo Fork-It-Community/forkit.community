@@ -1,11 +1,11 @@
 ---
 import { BackButton } from "@/components/BackButton";
 import People from "@/components/People/index.astro";
-import TimeAndDuration from "@/components/Schedule/TimeAndDuration.astro";
+import Time from "@/components/Schedule/Time.astro";
 import SEO from "@/components/SEO/index.astro";
 import { buttonVariants } from "@/components/ui/button";
 import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
-import { getEventsCollection } from "@/lib/events";
+import { getActivityTypeLabel, getEventsCollection } from "@/lib/events";
 import { lang } from "@/lib/lang";
 import { cn } from "@/lib/utils-client";
 import { Schema } from "astro-seo-schema";
@@ -23,7 +23,6 @@ import type { EventDetails } from "@/lib/events.ts";
 import { AddToGoogleCalendar } from "@/components/AddToGoogleCalendar";
 import { pastEvent } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { match } from "ts-pattern";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -194,9 +193,8 @@ const talkDetails: EventDetails = {
         <div
           class="not-prose -mb-1 flex flex-1 flex-wrap items-center gap-x-3 gap-y-1 pt-8 text-white"
         >
-          <TimeAndDuration
+          <Time
             startTime={talk.__schedule?.startTime}
-            duration={talk.__schedule?.duration}
             class="font-heading text-sm tracking-wide"
           />
           {
@@ -222,18 +220,11 @@ const talkDetails: EventDetails = {
         <h1 lang={lang(talk.data.contentLanguage)}>{talk.data.title}</h1>
         <div class="not-prose flex flex-wrap gap-2">
           {
-            schedule?.type &&
-              schedule.type !== "info" &&
-              schedule.type !== "lunch" && (
-                <Badge variant="card">
-                  {match(schedule.type)
-                    .with("conference", () => "Talk")
-                    .with("roundtable", () => "Roundtable")
-                    .with("workshop", () => "Workshop")
-                    .with("keynote", () => "Keynote")
-                    .otherwise(() => null)}
-                </Badge>
-              )
+            schedule?.type && getActivityTypeLabel(schedule.type) && (
+              <Badge variant="card">
+                {getActivityTypeLabel(schedule.type)}
+              </Badge>
+            )
           }
           <Badge variant="card">
             <IoLanguageSharp className="text-base" />
