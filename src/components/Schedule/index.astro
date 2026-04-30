@@ -95,11 +95,17 @@ const { event, displayStats } = Astro.props;
                 </div>
                 <div>
                   {match(activity.type)
-                    .with("conference", "roundtable", "keynote", () => (
-                      <TiltedCard client:visible>
-                        <CardConference activity={activity} event={event} />
-                      </TiltedCard>
-                    ))
+                    .with(
+                      "conference",
+                      "roundtable",
+                      "keynote",
+                      "workshop",
+                      () => (
+                        <TiltedCard client:visible>
+                          <CardConference activity={activity} event={event} />
+                        </TiltedCard>
+                      ),
+                    )
                     .with("info", "lunch", () =>
                       activity.locationUrl ? (
                         <TiltedCard client:visible>
