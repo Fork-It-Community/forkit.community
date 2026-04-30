@@ -50,17 +50,13 @@ const scheduleItem = (event.data.schedule?.items ?? []).find(
       <div class="flex items-start justify-between gap-2">
         <p
           class={cn(
-            "text-balance font-heading text-base font-medium leading-tight tracking-wider text-white transition group-hover:text-primary",
+            "text-pretty font-heading text-base font-medium leading-tight tracking-wider text-white transition group-hover:text-primary",
             scheduleItem?.status === "cancelled" && "line-through",
           )}
         >
           {talk.data.title}
         </p>
-        <div class="flex items-center gap-2">
-          {(scheduleItem?.type === "keynote" ||
-            scheduleItem?.type === "workshop") && (
-            <Badge variant="card">{scheduleItem.type}</Badge>
-          )}
+        <div class="flex shrink-0 items-center gap-2">
           {scheduleItem?.status === "cancelled" && (
             <div class="h-full w-fit rounded-full bg-white/10 px-2 py-1 text-white">
               <div class="flex items-center gap-1">
@@ -105,10 +101,7 @@ const scheduleItem = (event.data.schedule?.items ?? []).find(
       >
         <Badge variant="card">
           <IoLanguageSharp className="text-base" />
-          <span>
-            {scheduleItem?.type === "workshop" ? "Workshop" : "Talk"} in{" "}
-            {talk.data.language}
-          </span>
+          <span>in {talk.data.language}</span>
         </Badge>
         {talk.data.vod && talk.data.vod.youtubeId && (
           <Badge variant="card">
