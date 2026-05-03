@@ -199,6 +199,7 @@ const zEventBase = ({ image }: SchemaContext) =>
               type: z.enum([
                 "conference",
                 "roundtable",
+                "workshop",
                 "info",
                 "lunch",
                 "keynote",

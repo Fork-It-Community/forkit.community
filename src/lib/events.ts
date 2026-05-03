@@ -406,6 +406,20 @@ export function getEventDisplayType(
     .exhaustive();
 }
 
+export type ActivityType = NonNullable<
+  NonNullable<CollectionEntry<"events">["data"]["schedule"]>["items"]
+>[number]["type"];
+
+export function getActivityTypeLabel(type: ActivityType) {
+  return match(type)
+    .with("conference", () => "Talk")
+    .with("roundtable", () => "Roundtable")
+    .with("workshop", () => "Workshop")
+    .with("keynote", () => "Keynote")
+    .with("info", "lunch", () => null)
+    .exhaustive();
+}
+
 function personWasInEvent(
   person: CollectionEntry<"people">,
   event: EventComputed,

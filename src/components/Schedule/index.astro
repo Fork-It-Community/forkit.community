@@ -1,12 +1,15 @@
 ---
 import CardInfo from "@/components/Schedule/CardInfo.astro";
 import CardConference from "@/components/Schedule/CardConference.astro";
-import TimeAndDuration from "@/components/Schedule/TimeAndDuration.astro";
+import Time from "@/components/Schedule/Time.astro";
 import ComingSoon from "./ComingSoon.astro";
 import type { CollectionEntry } from "astro:content";
 import { MdPlace } from "react-icons/md";
 import { match } from "ts-pattern";
 import TiltedCard from "@/components/TiltedCard";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils-client";
+import { getActivityTypeLabel } from "@/lib/events";
 
 interface Props {
   displayStats?: boolean;
@@ -62,6 +65,7 @@ const { event, displayStats } = Astro.props;
                 (talk2.startTime?.valueOf() ?? Infinity),
             )
         ).map((activity) => {
+          const label = getActivityTypeLabel(activity.type);
           return (
             <div class="group flex gap-3">
               <div class="flex flex-col items-center gap-1 pt-1">
@@ -70,11 +74,30 @@ const { event, displayStats } = Astro.props;
               </div>
               <div class="flex w-full flex-col gap-2 pb-6">
                 <div class="flex flex-1 flex-row flex-wrap items-center justify-between gap-x-3 gap-y-1">
-                  <TimeAndDuration
-                    startTime={activity.startTime}
-                    duration={activity.duration}
-                    class="font-heading text-sm tracking-wide opacity-80"
-                  />
+                  <div class="flex items-center gap-2">
+                    <Time
+                      startTime={activity.startTime}
+                      class="font-heading text-sm tracking-wide opacity-80"
+                    />
+                    {(label || !!activity.duration) && (
+                      <Badge
+                        variant="card"
+                        className={cn(
+                          "py-1",
+                          activity.type === "keynote" &&
+                            "border-white/40 bg-white/20 opacity-100",
+                        )}
+                      >
+                        {label && <span>{label}</span>}
+                        {label && !!activity.duration && (
+                          <span class="opacity-60">·</span>
+                        )}
+                        {!!activity.duration && (
+                          <span>{activity.duration} min</span>
+                        )}
+                      </Badge>
+                    )}
+                  </div>
                   {!!activity.location &&
                     (activity.locationUrl ? (
                       <a
@@ -95,11 +118,17 @@ const { event, displayStats } = Astro.props;
                 </div>
                 <div>
                   {match(activity.type)
-                    .with("conference", "roundtable", "keynote", () => (
-                      <TiltedCard client:visible>
-                        <CardConference activity={activity} event={event} />
-                      </TiltedCard>
-                    ))
+                    .with(
+                      "conference",
+                      "roundtable",
+                      "keynote",
+                      "workshop",
+                      () => (
+                        <TiltedCard client:visible>
+                          <CardConference activity={activity} event={event} />
+                        </TiltedCard>
+                      ),
+                    )
                     .with("info", "lunch", () =>
                       activity.locationUrl ? (
                         <TiltedCard client:visible>
