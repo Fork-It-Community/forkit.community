@@ -24,6 +24,8 @@ const { src, alt, className, blur } = Astro.props;
       <Image
         src={src}
         alt={alt}
+        loading="eager"
+        fetchpriority="high"
         class="absolute size-full bg-white/30 object-cover object-center"
       />
     </Client>
