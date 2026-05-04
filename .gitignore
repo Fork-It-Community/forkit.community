@@ -8,6 +8,9 @@ dist/
 # dependencies
 node_modules/
 
+# pnpm 11 auto-creates this with allowBuilds prompts; pnpm 9 (Vercel) rejects it as a monorepo config
+pnpm-workspace.yaml
+
 # logs
 npm-debug.log*
 yarn-debug.log*
