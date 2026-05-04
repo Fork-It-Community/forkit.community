@@ -9,10 +9,10 @@ import {
   getForKidsEventNavItems,
   type ForKidsEventComputed,
 } from "@/lib/forKidsEvents";
-import { motion } from "motion/react";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import forKidsEventImage from "@/assets/images/for-kids-event.jpg";
+import { MotionDiv } from "@/components/Motion/MotionDiv";
 
 interface Props {
   forKidsEvent: ForKidsEventComputed;
@@ -36,7 +36,7 @@ const title = `${forKidsEvent.data._computed.name}, For Kids`;
     image={ogImage.toString()}
   />
 
-  <motion.div
+  <MotionDiv
     client:load
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
@@ -46,7 +46,7 @@ const title = `${forKidsEvent.data._computed.name}, For Kids`;
       src={forKidsEventImage}
       alt="Kids during a Fork it for Kids event"
     />
-  </motion.div>
+  </MotionDiv>
 
   <div class="absolute inset-0 p-2">
     <ExploreTheCommunity

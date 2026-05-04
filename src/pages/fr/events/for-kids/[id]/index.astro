@@ -19,7 +19,7 @@ import { Schema } from "astro-seo-schema";
 import { Image } from "astro:assets";
 import { getEntries } from "astro:content";
 import dayjs from "dayjs";
-import { motion } from "motion/react";
+import { MotionDiv } from "@/components/Motion/MotionDiv";
 import {
   MdArrowForward,
   MdArrowOutward,
@@ -100,7 +100,7 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
   <div
     class="relative flex h-[100svh] min-h-[900px] flex-col items-center justify-center"
   >
-    <motion.div
+    <MotionDiv
       client:load
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
@@ -189,7 +189,7 @@ const navItems = await getForKidsEventNavItems(forKidsEvent.id);
           </Button>
         )
       }
-    </motion.div>
+    </MotionDiv>
 
     <QuickAccess navItems={navItems} />
   </div>

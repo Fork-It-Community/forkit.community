@@ -1,6 +1,6 @@
 ---
 import { t } from "@/i18n";
-import { motion } from "motion/react";
+import { MotionDiv } from "@/components/Motion/MotionDiv";
 
 interface Props {
   navItems: Array<{ label: string; href: string }>;
@@ -9,7 +9,7 @@ interface Props {
 const { navItems } = Astro.props;
 ---
 
-<motion.div
+<MotionDiv
   client:load
   initial={{ opacity: 0, y: -5 }}
   animate={{ opacity: 1, y: 0 }}
@@ -33,4 +33,4 @@ const { navItems } = Astro.props;
       ))
     }
   </nav>
-</motion.div>
+</MotionDiv>

@@ -30,7 +30,7 @@ import {
   MdEvent,
   MdArrowOutward,
 } from "react-icons/md";
-import { motion } from "motion/react";
+import { MotionDiv } from "@/components/Motion/MotionDiv";
 import { Schema } from "astro-seo-schema";
 import type { Place } from "schema-dts";
 import PartnersBlock from "@/components/PartnersBlock/index.astro";
@@ -172,7 +172,7 @@ const validKeynotes = keynoteSection.filter(
   <div
     class="relative flex h-[100svh] min-h-[600px] flex-col items-center justify-center md:min-h-[800px]"
   >
-    <motion.div
+    <MotionDiv
       client:load
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
@@ -273,7 +273,7 @@ const validKeynotes = keynoteSection.filter(
           client:load
         />
       </div>
-    </motion.div>
+    </MotionDiv>
 
     <QuickAccess navItems={navItems} />
   </div>

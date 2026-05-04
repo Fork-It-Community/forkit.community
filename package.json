@@ -41,7 +41,7 @@
     "@uidotdev/usehooks": "2.4.1",
     "@vercel/analytics": "2.0.1",
     "adm-zip": "0.5.17",
-    "astro": "6.1.8",
+    "astro": "6.1.9",
     "astro-robots-txt": "1.0.0",
     "astro-seo": "1.1.0",
     "astro-seo-schema": "6.0.0",
