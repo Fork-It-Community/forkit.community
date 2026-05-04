@@ -2,7 +2,7 @@ import { Frame } from "@/generated-assets/components/Frame";
 import {
   getAstroImageBase64,
   type AssetImageConfig,
-} from "@/generated-assets/image";
+} from "@bearstudio/astro-assets-generation";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import ticketBg from "./_ticket.png";
 import { getEventData } from "./_utils";

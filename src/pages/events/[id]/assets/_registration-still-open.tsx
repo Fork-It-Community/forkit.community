@@ -2,7 +2,7 @@ import { Frame } from "@/generated-assets/components/Frame";
 import {
   getAstroImageBase64,
   type AssetImageConfig,
-} from "@/generated-assets/image";
+} from "@bearstudio/astro-assets-generation";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
@@ -113,41 +113,86 @@ export function registrationStillOpen(options: {
               </div>
               <div
                 style={{
-                  fontSize: 46,
-                  fontWeight: 500,
-                  textTransform: "uppercase",
-                  letterSpacing: 4,
-                  opacity: 0.82,
-                }}
-              >
-                {getEventDisplayType(event.data.type)}
-              </div>
-              <div
-                style={{
                   display: "flex",
-                  alignItems: "center",
-                  gap: 20,
-                  fontSize: 42,
-                  fontWeight: 500,
-                  lineHeight: 1,
+                  flexDirection: "column",
+                  gap: 42,
                 }}
               >
-                <svg
+                <div
                   style={{
-                    flex: "none",
-                    opacity: 0.6,
-                    width: "1em",
-                    height: "1em",
+                    fontSize: 46,
+                    fontWeight: 500,
+                    textTransform: "uppercase",
+                    letterSpacing: 4,
+                    opacity: 0.82,
                   }}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
                 >
-                  <path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" />
-                </svg>
-
-                {getEventDisplayDate(event)}
+                  {getEventDisplayType(event.data.type)}
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    alignItems: "center",
+                    rowGap: 48,
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 12,
+                      fontSize: 48,
+                      fontWeight: 500,
+                      lineHeight: 1,
+                    }}
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      style={{
+                        flex: "none",
+                        opacity: 0.8,
+                        width: "1em",
+                        height: "1em",
+                      }}
+                    >
+                      <path
+                        fill="white"
+                        d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"
+                      />
+                    </svg>
+                    {getEventDisplayDate(event)}
+                  </div>
+                  {!!event.data.location?.name && (
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: 12,
+                        alignItems: "center",
+                        fontSize: 48,
+                        fontWeight: 500,
+                        lineHeight: 1.2,
+                        textWrap: "balance",
+                      }}
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        style={{
+                          flex: "none",
+                          opacity: 0.8,
+                          width: "1em",
+                          height: "1em",
+                        }}
+                      >
+                        <path
+                          fill="white"
+                          d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7"
+                        />
+                      </svg>
+                      {event.data.location.name}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

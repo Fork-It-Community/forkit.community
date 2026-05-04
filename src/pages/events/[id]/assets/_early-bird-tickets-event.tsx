@@ -1,10 +1,9 @@
 import { Frame } from "@/generated-assets/components/Frame";
 import {
   getAstroImageBase64,
+  jsxToBase64,
   type AssetImageConfig,
-  SVG,
-  imageBufferToBase64,
-} from "@/generated-assets/image";
+} from "@bearstudio/astro-assets-generation";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventData } from "./_utils";
@@ -47,15 +46,14 @@ async function earlyBirdTickets({ params }: { params: { id: string } }) {
     dateFontSize: 64,
     locationFontSize: 44,
   });
+
   const ticketJSX = await ticketFullDayEvent({
     params: { id: event.id, name: "FULL DAY EVENT" },
   });
-
-  const ticketSVG = await SVG(ticketJSX, { width: 1920, height: 1080 });
-  const ticketImageBase64 = imageBufferToBase64(
-    Buffer.from(ticketSVG),
-    "svg+xml",
-  );
+  const ticketImageBase64 = await jsxToBase64(ticketJSX, {
+    width: 1920,
+    height: 1080,
+  });
 
   return (
     <Frame
@@ -153,10 +151,10 @@ async function earlyBirdTickets({ params }: { params: { id: string } }) {
         >
           <img
             src={ticketImageBase64}
-            width={1050}
-            height={560}
             style={{
               position: "absolute",
+              width: 1050,
+              height: 560,
               left: -170,
               top: 340,
               transform: "rotate(45deg)",
@@ -165,10 +163,10 @@ async function earlyBirdTickets({ params }: { params: { id: string } }) {
           />
           <img
             src={ticketImageBase64}
-            width={1050}
-            height={542}
             style={{
               position: "absolute",
+              width: 1050,
+              height: 542,
               left: -20,
               top: 253,
               transform: "rotate(70deg)",

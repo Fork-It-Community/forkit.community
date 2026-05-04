@@ -2,7 +2,7 @@ import { Frame } from "@/generated-assets/components/Frame";
 import {
   getAstroImageBase64,
   type AssetImageConfig,
-} from "@/generated-assets/image";
+} from "@bearstudio/astro-assets-generation";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { Logo } from "@/components/Logo";
 import { getCountryData } from "@/pages/events/locations/[countryId]/[cityId]/assets/_utils";
@@ -36,7 +36,7 @@ export default async function ({
           zIndex: 100,
         }}
       >
-        <Logo style={{ width: 169 * 3, height: 18 * 3 }} />
+        <Logo style={{ width: 169 * 3, height: 18 * 3 }} color="white" />
 
         <div
           style={{

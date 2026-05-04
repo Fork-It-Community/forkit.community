@@ -2,7 +2,7 @@ import { Frame } from "@/generated-assets/components/Frame";
 import {
   getAstroImageBase64,
   type AssetImageConfig,
-} from "@/generated-assets/image";
+} from "@bearstudio/astro-assets-generation";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventData } from "./_utils";
 import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
@@ -12,10 +12,6 @@ import youtubeBannerCover from "@/assets/images/youtube.jpg";
 export const config: AssetImageConfig = {
   width: 1128 * 3,
   height: 191 * 3,
-  resizeConfig: {
-    height: 191,
-    width: 1128,
-  },
 };
 
 export function linkedinBanner(options: { width: number; height: number }) {

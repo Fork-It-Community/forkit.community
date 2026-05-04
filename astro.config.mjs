@@ -63,8 +63,12 @@ export default defineConfig({
       }),
     },
   },
+
   vite: {
     plugins: [qrcode()],
+    optimizeDeps: {
+      exclude: ["@takumi-rs/image-response", "@takumi-rs/core"],
+    },
   },
 
   integrations: [
