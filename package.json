@@ -21,7 +21,7 @@
     "@astrojs/node": "10.0.6",
     "@astrojs/react": "5.0.4",
     "@astrojs/rss": "4.0.18",
-    "@astrojs/sitemap": "3.7.1",
+    "@astrojs/sitemap": "3.7.2",
     "@astrojs/tailwind": "6.0.2",
     "@astrojs/vercel": "10.0.6",
     "@bearstudio/astro-typed-routes": "0.1.6",
