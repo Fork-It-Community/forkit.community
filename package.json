@@ -16,7 +16,7 @@
     "*.{ts,tsx,js,jsx,json,astro}": "prettier --write src/"
   },
   "dependencies": {
-    "@astrojs/check": "0.9.8",
+    "@astrojs/check": "0.9.9",
     "@astrojs/mdx": "5.0.4",
     "@astrojs/node": "10.0.6",
     "@astrojs/react": "5.0.4",
