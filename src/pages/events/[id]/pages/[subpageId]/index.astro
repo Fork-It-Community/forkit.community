@@ -41,6 +41,7 @@ const { subpage, event } = Astro.props;
 const { Content } = await render(subpage);
 const title = `${subpage.data.title} | ${event.data._computed.name}`;
 const description = `${subpage.data.title} page for the ${event.data._computed.city?.data.name}, ${event.data._computed.country?.data.name} event, taking place the ${dayjs(event.data.date).format("DD/MM/YYYY")}. Come enjoy content from the community.`;
+const isMarketingPage = subpage.data.pageType === "marketing";
 ---
 
 <EventSubPageLayout event={event}>
@@ -49,13 +50,27 @@ const description = `${subpage.data.title} page for the ${event.data._computed.c
     title={title}
     description={subpage.data.description ?? description}
   />
-  <div class="mx-auto p-4 pb-40 md:px-8 md:pt-8">
-    <BackButton
-      href={lunalink(ROUTES.events[":id"].__path, { id: event.id })}
-      client:load
-    />
-    <Prose>
-      <Content />
-    </Prose>
-  </div>
+  {
+    isMarketingPage ? (
+      <div class="w-full min-w-0 overflow-x-hidden pb-40">
+        <div class="p-4 md:px-8 md:pt-8">
+          <BackButton
+            href={lunalink(ROUTES.events[":id"].__path, { id: event.id })}
+            client:load
+          />
+        </div>
+        <Content />
+      </div>
+    ) : (
+      <div class="mx-auto p-4 pb-40 md:px-8 md:pt-8">
+        <BackButton
+          href={lunalink(ROUTES.events[":id"].__path, { id: event.id })}
+          client:load
+        />
+        <Prose>
+          <Content />
+        </Prose>
+      </div>
+    )
+  }
 </EventSubPageLayout>
