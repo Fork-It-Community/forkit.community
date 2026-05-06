@@ -16,6 +16,7 @@ import { Schema } from "astro-seo-schema";
 import { experimental_AstroContainer } from "astro/container";
 import { loadRenderers } from "astro:container";
 import { getContainerRenderer as mdxContainerRenderer } from "@astrojs/mdx";
+import { getContainerRenderer as reactContainerRenderer } from "@astrojs/react";
 import dayjs from "dayjs";
 import { getEntry } from "astro:content";
 import { ShareButton } from "@/components/ShareButton";
@@ -60,7 +61,10 @@ const relatedArticles = allArticles
   )
   .slice(0, 3);
 
-const renderers = await loadRenderers([mdxContainerRenderer()]);
+const renderers = await loadRenderers([
+  mdxContainerRenderer(),
+  reactContainerRenderer(),
+]);
 const container = await experimental_AstroContainer.create({ renderers });
 const articleBody = (await container.renderToString(Content))
   // strip html tags
