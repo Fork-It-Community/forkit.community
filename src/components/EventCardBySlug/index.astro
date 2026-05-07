@@ -1,0 +1,27 @@
+---
+import EventCard from "@/components/EventCard/index.astro";
+import TiltedCard from "@/components/TiltedCard";
+import { eventWithComputed } from "@/lib/events";
+import { getEntry } from "astro:content";
+
+interface Props {
+  slug: string;
+  class?: string;
+}
+
+const { slug, class: className } = Astro.props;
+
+const event = await getEntry("events", slug);
+
+if (!event) {
+  throw new Error(`EventCardBySlug: event "${slug}" not found`);
+}
+
+const computed = await eventWithComputed(event);
+---
+
+<div class:list={["not-prose my-6", className]}>
+  <TiltedCard client:visible scaleOnHover={1}>
+    <EventCard event={computed} />
+  </TiltedCard>
+</div>

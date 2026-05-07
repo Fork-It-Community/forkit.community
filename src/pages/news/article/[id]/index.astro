@@ -13,9 +13,7 @@ import { render } from "astro:content";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import SEO from "@/components/SEO/index.astro";
 import { Schema } from "astro-seo-schema";
-import { experimental_AstroContainer } from "astro/container";
-import { loadRenderers } from "astro:container";
-import { getContainerRenderer as mdxContainerRenderer } from "@astrojs/mdx";
+import { mdxToPlainText } from "@/lib/markdown-clean";
 import dayjs from "dayjs";
 import { getEntry } from "astro:content";
 import { ShareButton } from "@/components/ShareButton";
@@ -60,13 +58,8 @@ const relatedArticles = allArticles
   )
   .slice(0, 3);
 
-const renderers = await loadRenderers([mdxContainerRenderer()]);
-const container = await experimental_AstroContainer.create({ renderers });
-const articleBody = (await container.renderToString(Content))
-  // strip html tags
-  .replace(/<[^>]*>/g, "")
-  .trim();
-const wordCount = articleBody.split(" ").length;
+const articleBody = (await mdxToPlainText(article.body ?? "")).text.trim();
+const wordCount = articleBody.split(/\s+/).filter(Boolean).length;
 const authors = await Promise.all(
   (article.data.authors ?? []).map(async (author) => await getEntry(author)),
 );
