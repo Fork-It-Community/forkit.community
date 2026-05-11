@@ -6,12 +6,14 @@ pageType: marketing
 
 import Hero from "@/components/Reviews/Hero.astro";
 import BecomeASponsor from "@/components/Reviews/BecomeASponsor.astro";
+import KeyStats from "@/components/Reviews/KeyStats.astro";
 import { Image } from "astro:assets";
 import venue from "../le-village-by-ca.jpg";
 
 export const eventId = "2024-france-rouen";
 
 <Hero eventId={eventId} />
+
 <BecomeASponsor eventId={eventId} />
 
 <section class="mx-auto max-w-screen-lg px-6 py-8 md:py-12">
@@ -54,3 +56,10 @@ export const eventId = "2024-france-rouen";
     </div>
   </div>
 </section>
+
+<KeyStats stats={[
+  { value: "18", label: "Speakers" },
+  { value: "14", label: "Talks" },
+  { value: "6", label: "Sponsors" },
+  { value: "200+", label: "Visitors", highlighted: true },
+]} />
