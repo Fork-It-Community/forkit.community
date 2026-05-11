@@ -1,0 +1,45 @@
+---
+slot: afterScheduleAndSpeaker
+title: Les Fées Marraines Workshop
+order: 0
+---
+
+import { Image } from 'astro:assets'
+import { buttonVariants } from '@/components/ui/button'
+import workshopImage from './fees-marraines-workshop.png'
+
+<div className="mx-auto max-w-5xl flex flex-col px-4 gap-8 w-full">
+  <h2 className="font-heading text-2xl font-medium uppercase tracking-widest text-white md:text-3xl ">
+    Les Fées Marraines X Fork it! Rouen
+  </h2>
+  <div className="md:flex md:items-start md:gap-8 prose prose-invert w-full max-w-5xl">
+    <Image
+      src={workshopImage}
+      alt="Les Fées Marraines workshop"
+      className="mb-6 w-full rounded-md md:mb-0 md:w-72 md:flex-none"
+    />
+    <div>
+      <p>
+        AI-powered toys, ChatGPT as a homework companion, transformed apps and social networks — AI is
+        everywhere our children are. How should we react? How can we help them navigate it?
+      </p>
+      <p>
+        Les Fées Marraines are launching collective intelligence workshops for parents to find better
+        answers together. Results will be shared openly to keep growing our common knowledge on the subject.
+      </p>
+
+      **Free event — Workshop in French · Sessions at 2:00 PM and 4:00 PM**
+
+      In partnership with Fork it! Rouen and Village by CA.
+
+      <a
+        href="https://my.weezevent.com/survivre-a-lia-quand-on-est-parent"
+        target="_blank"
+        rel="noopener noreferrer"
+        class={`${buttonVariants({ variant: 'secondary' })} not-prose inline-flex`}
+      >
+        Register for free
+      </a>
+    </div>
+  </div>
+</div>
