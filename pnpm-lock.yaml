@@ -36,8 +36,8 @@ importers:
         specifier: 0.1.6
         version: 0.1.6
       '@bearstudio/lunalink':
-        specifier: 0.3.1
-        version: 0.3.1
+        specifier: 0.3.2
+        version: 0.3.2
       '@fontsource-variable/inter':
         specifier: 5.2.8
         version: 5.2.8
@@ -423,8 +423,8 @@ packages:
   '@bearstudio/astro-typed-routes@0.1.6':
     resolution: {integrity: sha512-clUBfvz34xJJCG3jXx+4Pn0MVo9Ax0ebk/mvHcoKZsTAXxNqUhf74qplvBYmyy2iIT42UTZ1ovZ4R46HLhzs/g==}
 
-  '@bearstudio/lunalink@0.3.1':
-    resolution: {integrity: sha512-e5fODEV6t1Xva4o3KIbhIIuHDtm+A06l61brHIry7af1z/FpbPZ+5ck4OdyWnWgp+OqPtmtr/NWvYPomXZj2pA==}
+  '@bearstudio/lunalink@0.3.2':
+    resolution: {integrity: sha512-bNXzdBQypsSF8YxLJF6uAS4ZU0EafdHrO2NOKe9xMJR1+01WKebL8eEXn2NYQPJpnA5Cjb5fM8plKx0B1xNW3A==}
 
   '@capsizecss/unpack@4.0.0':
     resolution: {integrity: sha512-VERIM64vtTP1C4mxQ5thVT9fK0apjPFobqybMtA1UdUujWka24ERHbRHFGmpbbhp73MhV+KSsHQH9C6uOTdEQA==}
@@ -4666,7 +4666,7 @@ snapshots:
 
   '@bearstudio/astro-typed-routes@0.1.6': {}
 
-  '@bearstudio/lunalink@0.3.1':
+  '@bearstudio/lunalink@0.3.2':
     dependencies:
       query-string: 9.1.1
 
