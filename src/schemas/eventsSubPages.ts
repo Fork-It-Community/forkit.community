@@ -5,4 +5,5 @@ export const zEventSubPage = () =>
   z.object({
     title: z.string(),
     description: z.string().optional(),
+    pageType: z.enum(["base", "marketing"]).default("base"),
   });

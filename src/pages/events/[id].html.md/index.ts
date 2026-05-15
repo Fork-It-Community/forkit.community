@@ -136,15 +136,16 @@ ${event.data._computed.organizers
 const displayAfterEvent = (event: EventWithComputed) => {
   if (!event.data.afterEventContent) return "";
 
-  const { afterMovie, photos, vods } = event.data.afterEventContent;
+  const { afterMovie, photos, review, vods } = event.data.afterEventContent;
 
-  if (!afterMovie && !photos && !vods) return "";
+  if (!afterMovie && !photos && !review && !vods) return "";
 
   return `## After event
 
 Fork it! Community provide multiple resources for this events.
 ${afterMovie?.href ? `You can check out our [after movie](${afterMovie.href}). ` : ""}
 ${photos?.href ? `Our photographs took really [cool pictures](${photos.href}).` : ""}
+${review?.href ? `Read the [event review](${review.href}).` : ""}
 ${vods?.href ? `We also have [video on demand](${vods.href}) available.` : ""}`;
 };
 

@@ -445,6 +445,18 @@ const validKeynotes = keynoteSection.filter(
                     <MdArrowForward className="transition group-hover:translate-x-1" />
                   </a>
                 )}
+                {event.data.afterEventContent.review?.href && (
+                  <a
+                    href={event.data.afterEventContent.review.href}
+                    class={cn(
+                      buttonVariants({ size: "lg" }),
+                      "group gap-2 sm:max-w-48 md:flex-1",
+                    )}
+                  >
+                    Event Review
+                    <MdArrowForward className="transition group-hover:translate-x-1" />
+                  </a>
+                )}
               </div>
             </div>
           </div>

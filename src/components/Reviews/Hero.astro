@@ -1,0 +1,87 @@
+---
+import { Logo } from "@/components/Logo";
+import {
+  getEventDisplayDate,
+  getEventDisplayType,
+  getEventWithComputed,
+} from "@/lib/events";
+import { Image } from "astro:assets";
+import { getEntries } from "astro:content";
+import { MotionDiv } from "../Motion/MotionDiv";
+import { cn } from "@/lib/utils-client";
+
+interface Props {
+  eventId: string;
+}
+
+const { eventId } = Astro.props;
+
+const event = await getEventWithComputed(eventId);
+const sponsors = await getEntries(
+  (event.data.sponsors ?? []).map((sponsor) => sponsor.slug),
+);
+
+const cityName = event.data._computed.city?.data.name ?? "";
+const countryName = event.data._computed.country?.data.name ?? "";
+---
+
+<section
+  class="div flex h-[100svh] min-h-[600px] flex-col items-center justify-center md:min-h-[800px]"
+>
+  <MotionDiv
+    client:load
+    initial={{ opacity: 0, y: -10 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ type: "spring" }}
+    className="relative flex flex-1 flex-col items-center justify-center gap-8 p-4 md:gap-12"
+  >
+    <div class="flex flex-col items-center justify-center gap-4">
+      <Logo className="w-36 md:w-44" />
+      <h1 class="flex flex-col gap-2 text-balance text-center font-heading">
+        <span class="text-4xl font-medium text-white md:text-6xl">
+          {event.data.date.getFullYear()} Review
+        </span>
+        <span class="text-2xl text-primary md:text-4xl">
+          {cityName}, {countryName}
+        </span>
+      </h1>
+      <div class="flex flex-col gap-1 text-center">
+        <span class="font-heading text-lg font-medium text-white">
+          {getEventDisplayDate(event)}
+        </span>
+        <span class="text-xs uppercase tracking-widest text-white/60">
+          {getEventDisplayType(event.data.type)}
+        </span>
+      </div>
+    </div>
+  </MotionDiv>
+</section>
+{
+  !!sponsors.length && (
+    <div class="hide-scrollbar overflow-auto">
+      <div class="mx-auto flex w-fit items-center gap-6 px-8 py-8">
+        {sponsors.map((sponsor) => (
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href={sponsor.data.href}
+            class="opacity-60 brightness-200 grayscale transition duration-300 hover:opacity-100 hover:brightness-100 hover:grayscale-0"
+            title={sponsor.data.name}
+          >
+            <Image
+              class={cn(
+                "w-24 max-w-none flex-none md:w-40",
+                sponsors.length <= 3 && "w-32 md:w-52",
+                sponsors.length === 1 && "-my-8 w-48 md:w-64",
+              )}
+              src={sponsor.data.logos.noBg}
+              alt={sponsor.data.name}
+              width={384}
+              height={230}
+            />
+          </a>
+        ))}
+      </div>
+    </div>
+  )
+}
