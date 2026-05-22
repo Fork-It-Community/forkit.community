@@ -88,6 +88,16 @@ const url = new URL(Astro.url.pathname, Astro.site);
     description={episode.data.description ?? ""}
     image={ogImage.toString()}
   />
+  <link
+    slot="seo"
+    rel="alternate"
+    type="text/markdown"
+    title="Markdown version"
+    href={lunalink(
+      ROUTES.podcasts[":id"].episodes[":episodes.html.md"].__path,
+      { id: show.id, episodes: number ?? "" },
+    )}
+  />
   <Schema
     slot="ld+json"
     item={{

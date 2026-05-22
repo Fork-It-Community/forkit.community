@@ -73,6 +73,15 @@ const authors = await Promise.all(
     url={url}
     image={ogImage.toString()}
   />
+  <link
+    slot="seo"
+    rel="alternate"
+    type="text/markdown"
+    title="Markdown version"
+    href={lunalink(ROUTES.news.article[":id.html.md"].__path, {
+      id: article.id,
+    })}
+  />
   <Schema
     slot="ld+json"
     item={{
