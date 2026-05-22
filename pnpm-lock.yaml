@@ -96,8 +96,8 @@ importers:
         specifier: 6.0.0
         version: 6.0.0(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))(schema-dts@1.1.5)
       astrobook:
-        specifier: 0.13.1
-        version: 0.13.1(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))(typescript@5.9.3)
+        specifier: 0.13.2
+        version: 0.13.2(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))(typescript@5.9.3)
       better-result:
         specifier: 2.8.2
         version: 2.8.2
@@ -232,24 +232,24 @@ packages:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
 
-  '@astrobook/core@0.13.1':
-    resolution: {integrity: sha512-XBc2g2W8YhgBPweLx3HPUREGokgzoAuxcemJpCehNDyEJdA6g61k/DzKksAaVhhbnlpZhw6rn/VB93LQwr3eig==}
+  '@astrobook/core@0.13.2':
+    resolution: {integrity: sha512-Knd6ErJln5sLDayzeFo2pkMjTMThUodpnS1y5Z40/pmWxhKzZSeisQnQg26OMnMhlFdPT+2CryOIC61RTFfB8w==}
     peerDependencies:
       astro: '>=5.0.0'
     peerDependenciesMeta:
       astro:
         optional: true
 
-  '@astrobook/types@0.13.1':
-    resolution: {integrity: sha512-mh0+X+9iQS/TnkWwgsxCRYg5U05GGYH8irTY4PTu9wRBn3aR/UutdaH2oY+nzcFTRxYVwi7OswDyhOC7xo4kQA==}
+  '@astrobook/types@0.13.2':
+    resolution: {integrity: sha512-89M10IFVYfutB9qfPuklkuMk2dGNd+lU9CTTcqDo5itxp09bv8cYfERcvPRqAwT6ZO2Nq7A2q+oWbXiCUW83ow==}
     peerDependencies:
       astro: '>=5.0.0'
     peerDependenciesMeta:
       astro:
         optional: true
 
-  '@astrobook/ui@0.13.1':
-    resolution: {integrity: sha512-rZ+rMZVT6acY+/v6AK6CmirDs6/9Vpttbaf1yTJyaLof9rnmaUD+/zUkvmKSK1s9vnSvYPTkFgxMrFwC8Jit+w==}
+  '@astrobook/ui@0.13.2':
+    resolution: {integrity: sha512-JYYj82568IMhFVYnlkI+ulihSEbzjIR++7AMQmHN24qxuGtvviyWo/wdvdtCIXVpnTBaJzF1R0Ypvmyq3r47tw==}
     peerDependencies:
       astro: '>=5.0.0'
     peerDependenciesMeta:
@@ -1967,16 +1967,16 @@ packages:
   astro-seo@1.1.0:
     resolution: {integrity: sha512-G6LDNDyga30o+52v58jU7C35n3cORUzk7RSuY+xf/ZRbW6JiNplyaOO1VoYVKO+xzYNaBcxqNln2RFRR/wgJNQ==}
 
-  astro-theme-toggle@0.8.0:
-    resolution: {integrity: sha512-7ngEKDfCLKoVbxX4yxrggtBr8i6W8eT0un0TpNKHUeOG/Pq2g7BrjH+etP/l/XQYYSWQmeOIAI02LvLXDMvOWw==}
+  astro-theme-toggle@0.8.1:
+    resolution: {integrity: sha512-cUQDnMpRrGwWQ0C6dj1x3y3e3ULlikvoc6Tb6FkIQkL1Ropyd6jQ/IZ9GdhSogWEVpNodPckOKeItIh89EDwkg==}
 
   astro@6.2.2:
     resolution: {integrity: sha512-zkne2lZU+iTZPBK8F4gbMfrw5f11bT4VXiBxcdFHcPvYyH+Hox7V1sZu97RDpvwmHi+wQ0efKv89KY5744a0jQ==}
     engines: {node: '>=22.12.0', npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
-  astrobook@0.13.1:
-    resolution: {integrity: sha512-+j4d25+NGYgn30F49e1AwkvD4jl8L7TtToljUqsd2jbLQR7MvMgf+CQAdwdpsCxzCmN4mFe+p0ont7a2w44Ujw==}
+  astrobook@0.13.2:
+    resolution: {integrity: sha512-2FpAtXI1bypKubKzskR+DpiHBOkV35tB30QsfzetYXv+H/7avPdh1En/ceMzzFz51Ok1mdcrEpG4g6NkSvR1eA==}
     peerDependencies:
       astro: '>=5.0.0'
     peerDependenciesMeta:
@@ -4042,8 +4042,8 @@ packages:
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
-  valibot@1.3.1:
-    resolution: {integrity: sha512-sfdRir/QFM0JaF22hqTroPc5xy4DimuGQVKFrzF1YfGwaS1nJot3Y8VqMdLO2Lg27fMzat2yD3pY5PbAYO39Gg==}
+  valibot@1.4.0:
+    resolution: {integrity: sha512-iC/x7fVcSyOwlm/VSt7RlHnzNGLGvR9GnxdifUeWoCJo0q4ZZvrVkIHC6faTlkxG47I2Y4UrFquPuVHCrOnrLg==}
     peerDependencies:
       typescript: '>=5'
     peerDependenciesMeta:
@@ -4334,30 +4334,30 @@ snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
 
-  '@astrobook/core@0.13.1(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))(typescript@5.9.3)':
+  '@astrobook/core@0.13.2(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))(typescript@5.9.3)':
     dependencies:
-      '@astrobook/types': 0.13.1(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))
+      '@astrobook/types': 0.13.2(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))
       '@sveltejs/acorn-typescript': 1.0.9(acorn@8.16.0)
       acorn: 8.16.0
       fdir: 6.5.0(picomatch@4.0.4)
       picomatch: 4.0.4
       slash: 5.1.0
-      valibot: 1.3.1(typescript@5.9.3)
+      valibot: 1.4.0(typescript@5.9.3)
       yoctocolors: 2.1.2
     optionalDependencies:
       astro: 6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4)
     transitivePeerDependencies:
       - typescript
 
-  '@astrobook/types@0.13.1(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))':
+  '@astrobook/types@0.13.2(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))':
     optionalDependencies:
       astro: 6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4)
 
-  '@astrobook/ui@0.13.1(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))(typescript@5.9.3)':
+  '@astrobook/ui@0.13.2(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))(typescript@5.9.3)':
     dependencies:
-      '@astrobook/core': 0.13.1(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))(typescript@5.9.3)
-      '@astrobook/types': 0.13.1(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))
-      astro-theme-toggle: 0.8.0
+      '@astrobook/core': 0.13.2(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))(typescript@5.9.3)
+      '@astrobook/types': 0.13.2(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))
+      astro-theme-toggle: 0.8.1
       just-group-by: 2.2.0
     optionalDependencies:
       astro: 6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4)
@@ -5998,7 +5998,7 @@ snapshots:
       - prettier-plugin-astro
       - typescript
 
-  astro-theme-toggle@0.8.0: {}
+  astro-theme-toggle@0.8.1: {}
 
   astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4):
     dependencies:
@@ -6093,11 +6093,11 @@ snapshots:
       - uploadthing
       - yaml
 
-  astrobook@0.13.1(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))(typescript@5.9.3):
+  astrobook@0.13.2(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))(typescript@5.9.3):
     dependencies:
-      '@astrobook/core': 0.13.1(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))(typescript@5.9.3)
-      '@astrobook/types': 0.13.1(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))
-      '@astrobook/ui': 0.13.1(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))(typescript@5.9.3)
+      '@astrobook/core': 0.13.2(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))(typescript@5.9.3)
+      '@astrobook/types': 0.13.2(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))
+      '@astrobook/ui': 0.13.2(astro@6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))(typescript@5.9.3)
     optionalDependencies:
       astro: 6.2.2(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4)
     transitivePeerDependencies:
@@ -8562,7 +8562,7 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
-  valibot@1.3.1(typescript@5.9.3):
+  valibot@1.4.0(typescript@5.9.3):
     optionalDependencies:
       typescript: 5.9.3
 
