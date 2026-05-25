@@ -55,6 +55,13 @@ const personAchievements = getPersonAchievements(person);
   />
 
   <SEO slot="seo" title={person.data.name} image={ogImage.toString()} />
+  <link
+    slot="seo"
+    rel="alternate"
+    type="text/markdown"
+    title="Markdown version"
+    href={lunalink(ROUTES.people[":id.html.md"].__path, { id: person.id })}
+  />
   <div
     class="my-16 flex h-full flex-1 flex-col justify-between gap-32 md:my-16"
   >

@@ -26,6 +26,9 @@ const navItems = await getEventNavItems(event.id);
 
 const url = new URL(Astro.url.pathname, Astro.site);
 const title = `${event.data._computed.name}, ${getEventDisplayType(event.data.type)}`;
+const markdownHref = lunalink(ROUTES.events[":id.html.md"].__path, {
+  id: event.id,
+});
 ---
 
 <RootLayout>
@@ -36,6 +39,13 @@ const title = `${event.data._computed.name}, ${getEventDisplayType(event.data.ty
     description={event.data.excerpt ?? ""}
     url={url}
     image={ogImage.toString()}
+  />
+  <link
+    slot="seo"
+    rel="alternate"
+    type="text/markdown"
+    title="Markdown version"
+    href={markdownHref}
   />
   {
     !!event?.data.image?.media && (
