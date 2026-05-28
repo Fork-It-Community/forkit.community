@@ -74,6 +74,13 @@
   .h-nav-safe {
     height: calc(4rem + env(safe-area-inset-bottom));
   }
+
+  .shadow-photo-glow {
+    @apply ring-1 ring-white/25;
+    box-shadow:
+      0 0 12px 4px rgba(255, 255, 255, 0.25),
+      0 8px 32px rgba(0, 0, 0, 0.6);
+  }
 }
 
 /* Shadcn config */
