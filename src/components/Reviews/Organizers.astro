@@ -1,0 +1,69 @@
+---
+import { getEventWithComputed } from "@/lib/events";
+import { SOCIALS_TYPE_MAP } from "@/content/socials";
+import { Image } from "astro:assets";
+import PeoplePlaceholder from "@/assets/images/people-placeholder.jpeg";
+
+interface Props {
+  eventId: string;
+}
+
+const { eventId } = Astro.props;
+const event = await getEventWithComputed(eventId);
+const organizers = event.data._computed.organizers;
+---
+
+{
+  organizers.length > 0 && (
+    <section class="mx-auto max-w-screen-lg py-8 md:py-12">
+      <h2 class="px-6 font-heading text-xl font-bold uppercase leading-tight text-primary md:text-2xl">
+        Organizers
+      </h2>
+      <div class="hide-scrollbar relative mt-6 flex gap-4 overflow-x-auto px-6 md:gap-6">
+        {organizers.map((organizer) => (
+          <div class="flex w-40 flex-none flex-col gap-3">
+            <div class="aspect-square w-full overflow-hidden rounded-2xl bg-white/5">
+              <Image
+                src={organizer.data.avatar ?? PeoplePlaceholder}
+                alt={organizer.data.name}
+                width={320}
+                height={320}
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="flex flex-col gap-1">
+              <p class="font-heading text-lg font-bold leading-tight">
+                {organizer.data.name}
+              </p>
+              {organizer.data._computed.role && (
+                <p class="text-sm text-white/60">
+                  {organizer.data._computed.role}
+                </p>
+              )}
+              {!!organizer.data.socials?.length && (
+                <ul class="mt-1 flex flex-row gap-3">
+                  {organizer.data.socials.map((social) => {
+                    const Icon = SOCIALS_TYPE_MAP[social.type];
+                    return (
+                      <li>
+                        <a
+                          href={social.href}
+                          class="text-lg opacity-60 transition hover:text-primary hover:opacity-100"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <span class="sr-only">{social.type}</span>
+                          <Icon />
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
