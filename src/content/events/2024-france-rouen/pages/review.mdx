@@ -15,6 +15,7 @@ import { Image } from "astro:assets";
 import venue from "../le-village-by-ca.jpg";
 import speaker from "../images/ayoub-alouane-speaking.png";
 import audience from "../images/main-stage.jpg";
+import networking from "../images/place-du-village.jpg";
 
 export const eventId = "2024-france-rouen";
 
@@ -147,3 +148,28 @@ export const eventId = "2024-france-rouen";
 </section>
 
 <Organizers eventId={eventId} />
+
+<section class="mx-auto max-w-screen-lg px-6 py-8 md:py-12">
+  <div class="flex flex-col gap-4">
+    <h2 class="font-heading text-xl font-bold uppercase leading-tight text-primary md:text-2xl">
+      Networking & community
+    </h2>
+    <p>
+      A key highlight of Fork it! – Rouen 2024 was the opportunity to network
+      with both professionals and students. Informal conversations during breaks
+      encouraged new connections and made it easy to share experiences.
+    </p>
+    <Image
+      src={networking}
+      alt="Attendees networking during a break at Fork it! Rouen 2024"
+      class="h-72 w-full rounded-xl object-cover md:h-96"
+      width={1200}
+      height={675}
+    />
+    <p>
+      The quality of interactions was high, with participants engaging in
+      meaningful and insightful discussions, all within a friendly, open, and
+      collaborative atmosphere.
+    </p>
+  </div>
+</section>
