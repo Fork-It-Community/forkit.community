@@ -1,0 +1,39 @@
+---
+import EventCard from "@/components/EventCard/index.astro";
+import TiltedCard from "@/components/TiltedCard";
+import { getUpcomingEvents } from "@/lib/events";
+import { getEntry } from "astro:content";
+
+interface Props {
+  eventId: string;
+  limit?: number;
+}
+
+const { eventId, limit = 3 } = Astro.props;
+
+const currentEvent = await getEntry("events", eventId);
+const city = currentEvent
+  ? await getEntry("cities", currentEvent.data.city.id)
+  : undefined;
+
+const nextEvents = (await getUpcomingEvents())
+  .filter((event) => !!city && event.data._computed.city?.id === city.id)
+  .slice(0, limit);
+---
+
+{
+  nextEvents.length > 0 && city?.data.name && (
+    <section class="mx-auto max-w-screen-lg px-6 py-8 md:py-12">
+      <h2 class="mb-8 font-heading text-xl font-bold uppercase leading-tight text-primary md:text-2xl">
+        Next events in {city.data.name}
+      </h2>
+      <div class="flex flex-col gap-4">
+        {nextEvents.map((event) => (
+          <TiltedCard client:visible>
+            <EventCard event={event} />
+          </TiltedCard>
+        ))}
+      </div>
+    </section>
+  )
+}
