@@ -13,6 +13,7 @@ import Vods from "@/components/Reviews/Vods.astro";
 import { Image } from "astro:assets";
 import venue from "../le-village-by-ca.jpg";
 import speaker from "../images/ayoub-alouane-speaking.png";
+import audience from "../images/main-stage.jpg";
 
 export const eventId = "2024-france-rouen";
 
@@ -115,3 +116,31 @@ export const eventId = "2024-france-rouen";
 <Speakers eventId={eventId} />
 
 <Vods eventId={eventId} />
+
+<section class="mx-auto max-w-screen-lg px-6 py-8 md:py-12">
+  <div class="flex flex-col gap-4">
+    <h2 class="font-heading text-xl font-bold uppercase leading-tight text-primary md:text-2xl">
+      Organisation & logistics
+    </h2>
+    <p>
+      The event took place at a central and easily accessible venue in Rouen,
+      offering a comfortable and welcoming environment for attendees. The day
+      followed a well-structured schedule, with a clear sequence of talks,
+      breaks, and lunch, ensuring a smooth experience for around 200
+      participants.
+    </p>
+    <Image
+      src={audience}
+      alt="Attendees during a talk at Fork it! Rouen 2024"
+      class="h-72 w-full rounded-xl object-cover md:h-96"
+      width={1200}
+      height={675}
+    />
+    <p>
+      Registration and check-in were handled efficiently, sessions ran on time,
+      and the overall organization — from seating to break areas and catering — was
+      carefully managed. This created a professional yet relaxed atmosphere,
+      ideal for both learning and networking.
+    </p>
+  </div>
+</section>
