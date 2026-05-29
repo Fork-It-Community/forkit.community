@@ -1,0 +1,75 @@
+---
+import { getEventWithComputed } from "@/lib/events";
+import { buttonVariants } from "@/components/ui/button";
+import { MdChevronRight } from "react-icons/md";
+
+interface Props {
+  eventId: string;
+}
+
+const { eventId } = Astro.props;
+const event = await getEventWithComputed(eventId);
+const vodsHref = event.data.afterEventContent?.vods?.href;
+
+const talks = event.data._computed.talks
+  .filter((talk) => talk.data.vod?.youtubeId)
+  .slice(0, 2);
+
+const positions = [
+  { translateX: 44, translateY: 28, rotate: 6, zIndex: 1 },
+  { translateX: -44, translateY: -45, rotate: -6, zIndex: 2 },
+];
+---
+
+<section class="mx-auto max-w-screen-lg px-6 py-8 md:py-12">
+  <div class="flex flex-col gap-6 rounded-2xl bg-white/5 p-6">
+    <h2 class="font-heading text-xl font-bold text-primary">
+      WANT TO WATCH VODs?
+    </h2>
+
+    {
+      talks.length > 0 && (
+        <div class="relative flex h-52 items-center justify-center">
+          {talks.map((talk, i) => (
+            <div
+              class="absolute w-48 overflow-hidden rounded-xl"
+              style={`translate: ${positions[i]?.translateX}px ${positions[i]?.translateY}px; rotate: ${positions[i]?.rotate}deg; z-index: ${positions[i]?.zIndex};`}
+            >
+              <div class="relative aspect-video w-full">
+                <img
+                  src={`https://img.youtube.com/vi/${talk.data.vod?.youtubeId}/hqdefault.jpg`}
+                  alt={talk.data.title}
+                  class="h-full w-full object-cover"
+                />
+                <div class="absolute inset-0 flex items-center justify-center bg-black/20">
+                  <span class="flex h-5 w-8 items-center justify-center rounded-md bg-[#FF0000] shadow-md">
+                    <svg
+                      class="h-3 w-3 translate-x-px fill-white"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )
+    }
+
+    {
+      vodsHref && (
+        <a
+          href={vodsHref}
+          target="_blank"
+          rel="noreferrer"
+          class={buttonVariants({ variant: "secondary-dark", size: "lg" })}
+        >
+          View all VODs
+          <MdChevronRight />
+        </a>
+      )
+    }
+  </div>
+</section>

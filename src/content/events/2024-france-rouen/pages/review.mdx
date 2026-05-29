@@ -9,6 +9,7 @@ import BecomeASponsor from "@/components/Reviews/BecomeASponsor.astro";
 import KeyStats from "@/components/Reviews/KeyStats.astro";
 import EventVibes from "@/components/Reviews/EventVibes.astro";
 import Speakers from "@/components/Reviews/Speakers.astro";
+import Vods from "@/components/Reviews/Vods.astro";
 import { Image } from "astro:assets";
 import venue from "../le-village-by-ca.jpg";
 import speaker from "../images/ayoub-alouane-speaking.png";
@@ -112,3 +113,5 @@ export const eventId = "2024-france-rouen";
 </section>
 
 <Speakers eventId={eventId} />
+
+<Vods eventId={eventId} />
