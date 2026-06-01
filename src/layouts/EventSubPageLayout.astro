@@ -27,14 +27,16 @@ const { event } = Astro.props;
       />
     )
   }
-  <div class="p-2">
-    <ExploreTheCommunity
-      eventCity={event.data._computed.city?.data.name ?? ""}
-      eventCountry={event.data._computed.country?.data.name ?? ""}
-      eventDate={event.data.date}
-      logoUrl={lunalink(ROUTES.__path, {})}
-      pageUrl={new URL(Astro.url.pathname, Astro.site).toString()}
-    />
+  <div class="pointer-events-none absolute inset-0 p-2">
+    <div class="pointer-events-auto">
+      <ExploreTheCommunity
+        eventCity={event.data._computed.city?.data.name ?? ""}
+        eventCountry={event.data._computed.country?.data.name ?? ""}
+        eventDate={event.data.date}
+        logoUrl={lunalink(ROUTES.__path, {})}
+        pageUrl={new URL(Astro.url.pathname, Astro.site).toString()}
+      />
+    </div>
   </div>
   <div class="flex flex-1 flex-col">
     <slot />

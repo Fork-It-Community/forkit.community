@@ -52,8 +52,8 @@ const isMarketingPage = subpage.data.pageType === "marketing";
   />
   {
     isMarketingPage ? (
-      <div class="w-full min-w-0 overflow-x-hidden pb-40">
-        <div class="p-4 md:px-8 md:pt-8">
+      <div class="relative w-full min-w-0 overflow-x-hidden pb-40">
+        <div class="absolute left-0 right-0 top-16 z-20 p-4 md:px-8 md:pt-8">
           <BackButton
             href={lunalink(ROUTES.events[":id"].__path, { id: event.id })}
             client:load
@@ -62,7 +62,7 @@ const isMarketingPage = subpage.data.pageType === "marketing";
         <Content />
       </div>
     ) : (
-      <div class="mx-auto p-4 pb-40 md:px-8 md:pt-8">
+      <div class="mx-auto px-4 pb-40 pt-20 md:px-8 md:pt-24">
         <BackButton
           href={lunalink(ROUTES.events[":id"].__path, { id: event.id })}
           client:load
