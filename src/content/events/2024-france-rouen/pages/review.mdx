@@ -27,41 +27,40 @@ export const eventId = "2024-france-rouen";
 <BecomeASponsor eventId={eventId} />
 
 <section class="mx-auto max-w-screen-lg px-6 py-8 md:py-12">
-  <div class="grid gap-4 md:grid-cols-2 md:gap-x-8 md:gap-y-0">
-    <div class="flex flex-col gap-2 md:col-start-2 md:row-start-1">
+  <div class="grid gap-4 md:grid-cols-2 md:gap-x-12 md:gap-y-4">
+    <div class="flex flex-col gap-4 md:col-start-1 md:row-start-1">
       <h2 class="font-heading text-xl font-bold uppercase leading-tight text-primary md:text-4xl">
         Fork it! Rouen 2024 — event review
       </h2>
       <p>
         Fork it! – Rouen 2024 took place on June 7 at the Village by CA Rouen
         Vallée de Seine, marking the very first event of the community in its
-        hometown. Designed as a human-scale tech conference, it brought
-        together around 200 participants for a day focused on practical,
-        experience-driven content.
+        hometown. Designed as a human-scale tech conference, it brought together
+        around 200 participants for a day focused on practical, experience-driven
+        content.
       </p>
     </div>
     <Image
       src={venue}
       alt="Le Village By CA - Venue for Fork it! Rouen 2024"
-      class="h-64 w-full rounded-lg object-cover md:col-start-1 md:row-span-2 md:row-start-1 md:h-full"
+      class="h-64 w-full rounded-lg object-cover md:col-start-2 md:row-span-2 md:row-start-1 md:h-full"
       width={800}
       height={600}
     />
-    <div class="flex flex-col gap-2  text-white md:col-start-2 md:row-start-2">
+    <div class="flex flex-col gap-4 md:col-start-1 md:row-start-2">
       <p>
-        Staying true to the Fork it! "no bullshit" mindset, the event
-        highlighted real-world insights from actual projects rather than
-        theoretical or promotional talks. Topics covered a wide range of
-        areas, including frontend and backend development, UX/UI, data, AI,
-        DevOps, mobile, and open source.
+        Staying true to the Fork it! "no bullshit" mindset, the event highlighted
+        real-world insights from actual projects rather than theoretical or
+        promotional talks. Topics covered a wide range of areas, including
+        frontend and backend development, UX/UI, data, AI, DevOps, mobile, and
+        open source.
       </p>
       <p>
-        With a mix of short and long sessions, the conference balanced
-        technical talks with hands-on feedback and open discussions. It also
-        placed strong emphasis on networking, creating opportunities for
-        developers, designers, and tech enthusiasts to connect, exchange
-        ideas, and learn from each other in a collaborative and inclusive
-        environment.
+        With a mix of short and long sessions, the conference balanced technical
+        talks with hands-on feedback and open discussions. It also placed strong
+        emphasis on networking, creating opportunities for developers, designers,
+        and tech enthusiasts to connect, exchange ideas, and learn from each
+        other in a collaborative and inclusive environment.
       </p>
     </div>
   </div>
@@ -78,44 +77,43 @@ export const eventId = "2024-france-rouen";
 
 
 <section class="mx-auto max-w-screen-lg px-6 py-8 md:py-12">
-  <div class="grid gap-8 md:grid-cols-2 md:gap-12">
-    <div class="flex flex-col gap-4">
+  <div class="grid gap-4 md:grid-cols-2 md:gap-x-12 md:gap-y-4">
+    <div class="flex flex-col gap-4 md:col-start-1 md:row-start-1">
       <h2 class="font-heading text-xl font-bold uppercase leading-tight text-primary md:text-2xl">
         Content & quality of talks
       </h2>
-      <div class="flex flex-col gap-3">
-        <p>
-          Fork it! – Rouen 2024 offered an immersive dive into the tech
-          ecosystem, covering a wide range of topics including frontend and
-          backend development, UI/UX, AI, data, DevOps, and agile practices.
-          True to the community's spirit, the event focused on real-world
-          experiences rather than marketing talks, with sessions delivered in
-          both French and English.
-        </p>
-        <p>
-          The short, dynamic formats (from quick talks to longer sessions)
-          encouraged practical knowledge sharing, allowing participants to walk
-          away with insights they could immediately apply. The event also
-          highlighted the diversity of its community — ambitious beginners,
-          experts, and curious learners — and fostered meaningful exchanges
-          across different roles within the tech industry.
-        </p>
-      </div>
+      <p>
+        Fork it! – Rouen 2024 offered an immersive dive into the tech ecosystem,
+        covering a wide range of topics including frontend and backend
+        development, UI/UX, AI, data, DevOps, and agile practices. True to the
+        community's spirit, the event focused on real-world experiences rather
+        than marketing talks, with sessions delivered in both French and English.
+      </p>
+      <p>
+        The short, dynamic formats (from quick talks to longer sessions)
+        encouraged practical knowledge sharing, allowing participants to walk
+        away with insights they could immediately apply. The event also
+        highlighted the diversity of its community — ambitious beginners,
+        experts, and curious learners — and fostered meaningful exchanges across
+        different roles within the tech industry.
+      </p>
     </div>
     <Image
       src={speaker}
       alt="Speaker at Fork it! Rouen 2024"
-      class="h-72 w-full rounded-xl object-cover md:h-full"
+      class="h-72 w-full rounded-xl object-cover md:col-start-2 md:row-span-2 md:row-start-1 md:h-full"
       width={600}
       height={800}
     />
+    <div class="flex flex-col gap-4 md:col-start-1 md:row-start-2">
+      <p>
+        Bringing together around 200 participants in Rouen, this edition laid the
+        foundation for the Fork it! spirit: a community driven by real-life
+        feedback, hands-on experiences, and a strong desire to build concrete
+        answers around concrete challenges.
+      </p>
+    </div>
   </div>
-  <p class="mt-8">
-    Bringing together around 200 participants in Rouen, this edition laid the
-    foundation for the Fork it! spirit: a community driven by real-life
-    feedback, hands-on experiences, and a strong desire to build concrete
-    answers around concrete challenges.
-  </p>
 </section>
 
 <Speakers eventId={eventId} />
@@ -123,57 +121,65 @@ export const eventId = "2024-france-rouen";
 <Vods eventId={eventId} />
 
 <section class="mx-auto max-w-screen-lg px-6 py-8 md:py-12">
-  <div class="flex flex-col gap-4">
-    <h2 class="font-heading text-xl font-bold uppercase leading-tight text-primary md:text-2xl">
-      Organisation & logistics
-    </h2>
-    <p>
-      The event took place at a central and easily accessible venue in Rouen,
-      offering a comfortable and welcoming environment for attendees. The day
-      followed a well-structured schedule, with a clear sequence of talks,
-      breaks, and lunch, ensuring a smooth experience for around 200
-      participants.
-    </p>
+  <div class="grid gap-4 md:grid-cols-2 md:gap-x-12 md:gap-y-4">
+    <div class="flex flex-col gap-4 md:col-start-1 md:row-start-1">
+      <h2 class="font-heading text-xl font-bold uppercase leading-tight text-primary md:text-2xl">
+        Organisation & logistics
+      </h2>
+      <p>
+        The event took place at a central and easily accessible venue in Rouen,
+        offering a comfortable and welcoming environment for attendees. The day
+        followed a well-structured schedule, with a clear sequence of talks,
+        breaks, and lunch, ensuring a smooth experience for around 200
+        participants.
+      </p>
+    </div>
     <Image
       src={audience}
       alt="Attendees during a talk at Fork it! Rouen 2024"
-      class="h-72 w-full rounded-xl object-cover md:h-96"
+      class="h-72 w-full rounded-xl object-cover md:col-start-2 md:row-span-2 md:row-start-1 md:h-full"
       width={1200}
       height={675}
     />
-    <p>
-      Registration and check-in were handled efficiently, sessions ran on time,
-      and the overall organization — from seating to break areas and catering — was
-      carefully managed. This created a professional yet relaxed atmosphere,
-      ideal for both learning and networking.
-    </p>
+    <div class="flex flex-col gap-4 md:col-start-1 md:row-start-2">
+      <p>
+        Registration and check-in were handled efficiently, sessions ran on
+        time, and the overall organization — from seating to break areas and
+        catering — was carefully managed. This created a professional yet relaxed
+        atmosphere, ideal for both learning and networking.
+      </p>
+    </div>
   </div>
 </section>
 
 <Organizers eventId={eventId} />
 
 <section class="mx-auto max-w-screen-lg px-6 py-8 md:py-12">
-  <div class="flex flex-col gap-4">
-    <h2 class="font-heading text-xl font-bold uppercase leading-tight text-primary md:text-2xl">
-      Networking & community
-    </h2>
-    <p>
-      A key highlight of Fork it! – Rouen 2024 was the opportunity to network
-      with both professionals and students. Informal conversations during breaks
-      encouraged new connections and made it easy to share experiences.
-    </p>
+  <div class="grid gap-4 md:grid-cols-2 md:gap-x-12 md:gap-y-4">
+    <div class="flex flex-col gap-4 md:col-start-1 md:row-start-1">
+      <h2 class="font-heading text-xl font-bold uppercase leading-tight text-primary md:text-2xl">
+        Networking & community
+      </h2>
+      <p>
+        A key highlight of Fork it! – Rouen 2024 was the opportunity to network
+        with both professionals and students. Informal conversations during
+        breaks encouraged new connections and made it easy to share experiences.
+      </p>
+    </div>
     <Image
       src={networking}
       alt="Attendees networking during a break at Fork it! Rouen 2024"
-      class="h-72 w-full rounded-xl object-cover md:h-96"
+      class="h-72 w-full rounded-xl object-cover md:col-start-2 md:row-span-2 md:row-start-1 md:h-full"
       width={1200}
       height={675}
     />
-    <p>
-      The quality of interactions was high, with participants engaging in
-      meaningful and insightful discussions, all within a friendly, open, and
-      collaborative atmosphere.
-    </p>
+    <div class="flex flex-col gap-4 md:col-start-1 md:row-start-2">
+      <p>
+        The quality of interactions was high, with participants engaging in
+        meaningful and insightful discussions, all within a friendly, open, and
+        collaborative atmosphere.
+      </p>
+    </div>
   </div>
 </section>
 
