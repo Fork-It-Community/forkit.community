@@ -27,44 +27,44 @@ const positions = sources.map((_, i) => {
 });
 ---
 
-<section class="mx-auto max-w-screen-lg px-6 py-8 md:py-12">
-  <div class="flex flex-col gap-6 overflow-hidden rounded-2xl bg-white/5 p-6">
-    <div>
-      <h2 class="font-heading text-xl font-bold uppercase text-primary">
-        Event Vibes
-      </h2>
-      <p class="text-sm text-white/80">Some pictures of our events</p>
-    </div>
-
-    {
-      sources.length > 0 && (
-        <div class="relative flex h-52 items-center justify-center">
-          {sources.map((source, i) => (
-            <Image
-              src={source!.image}
-              alt={source!.alt ?? ""}
-              width={300}
-              height={400}
-              class="shadow-photo-glow absolute h-40 w-28 rounded-xl object-cover"
-              style={`translate: ${positions[i]?.translateX}px 0; scale: ${positions[i]?.scale}; z-index: ${positions[i]?.zIndex};`}
-            />
-          ))}
-        </div>
-      )
-    }
-
-    {
-      photos?.href && (
-        <a
-          href={photos.href}
-          target="_blank"
-          rel="noreferrer"
-          class={buttonVariants({ variant: "secondary-dark", size: "lg" })}
-        >
-          Event Photos
-          <MdChevronRight />
-        </a>
-      )
-    }
+<div
+  class="flex h-full flex-col gap-6 overflow-hidden rounded-2xl bg-white/5 p-6"
+>
+  <div>
+    <h2 class="font-heading text-xl font-bold uppercase text-primary">
+      Event Vibes
+    </h2>
+    <p class="text-sm text-white/80">Some pictures of our events</p>
   </div>
-</section>
+
+  {
+    sources.length > 0 && (
+      <div class="relative flex h-52 items-center justify-center">
+        {sources.map((source, i) => (
+          <Image
+            src={source!.image}
+            alt={source!.alt ?? ""}
+            width={300}
+            height={400}
+            class="shadow-photo-glow absolute h-40 w-28 rounded-xl object-cover"
+            style={`translate: ${positions[i]?.translateX}px 0; scale: ${positions[i]?.scale}; z-index: ${positions[i]?.zIndex};`}
+          />
+        ))}
+      </div>
+    )
+  }
+
+  {
+    photos?.href && (
+      <a
+        href={photos.href}
+        target="_blank"
+        rel="noreferrer"
+        class={`${buttonVariants({ variant: "secondary-dark", size: "lg" })} mt-auto`}
+      >
+        Event Photos
+        <MdChevronRight />
+      </a>
+    )
+  }
+</div>
