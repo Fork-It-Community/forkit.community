@@ -16,8 +16,8 @@ const talks = event.data._computed.talks
   .slice(0, 2);
 
 const positions = [
-  { translateX: 58, translateY: 36, rotate: 6, zIndex: 1 },
-  { translateX: -58, translateY: -50, rotate: -6, zIndex: 2 },
+  { translateX: 52, translateY: 32, rotate: 6, zIndex: 1 },
+  { translateX: -52, translateY: -48, rotate: -6, zIndex: 2 },
 ];
 ---
 
@@ -31,10 +31,10 @@ const positions = [
 
   {
     talks.length > 0 && (
-      <div class="relative flex h-60 items-center justify-center">
+      <div class="relative flex h-52 items-center justify-center md:h-60">
         {talks.map((talk, i) => (
           <div
-            class="absolute w-60 overflow-hidden rounded-xl"
+            class="absolute w-52 overflow-hidden rounded-xl md:w-60"
             style={`translate: ${positions[i]?.translateX}px ${positions[i]?.translateY}px; rotate: ${positions[i]?.rotate}deg; z-index: ${positions[i]?.zIndex};`}
           >
             <div class="relative aspect-video w-full">
