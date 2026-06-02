@@ -14,6 +14,7 @@ import Organizers from "@/components/Reviews/Organizers.astro";
 import Sponsors from "@/components/Reviews/Sponsors.astro";
 import NextEvents from "@/components/Reviews/NextEvents.astro";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
+import StayTuned from "@/components/StayTuned/index.astro";
 import { Image } from "astro:assets";
 import venue from "../le-village-by-ca.jpg";
 import speaker from "../images/ayoub-alouane-speaking.png";
@@ -196,5 +197,8 @@ export const eventId = "2024-france-rouen";
 <NextEvents eventId={eventId} />
 
 <div class="pt-8 md:pt-12">
-  <JoinTheCommunity />
+  <div class="md:hidden">
+    <JoinTheCommunity />
+  </div>
+  <StayTuned class="hidden md:block" />
 </div>
