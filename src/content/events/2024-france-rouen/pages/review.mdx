@@ -29,10 +29,10 @@ export const eventId = "2024-france-rouen";
 
 <section class="mx-auto max-w-screen-lg px-6 py-8 md:py-12">
   <div class="grid gap-4 md:grid-cols-2 md:gap-x-12 md:gap-y-4">
-    <div class="flex flex-col gap-4 md:col-start-1 md:row-start-1">
-      <h2 class="font-heading text-xl font-medium uppercase leading-tight text-primary md:text-4xl">
-        Fork it! Rouen 2024 — event review
-      </h2>
+    <h2 class="font-heading text-xl font-medium uppercase leading-tight text-primary md:col-start-1 md:text-4xl">
+      Fork it! Rouen 2024 — event review
+    </h2>
+    <div class="flex flex-col gap-4 md:col-start-1 md:row-start-2">
       <p>
         Fork it! – Rouen 2024 took place on June 7 at the Village by CA Rouen
         Vallée de Seine, marking the very first event of the community in its
@@ -40,15 +40,15 @@ export const eventId = "2024-france-rouen";
         around 200 participants for a day focused on practical, experience-driven
         content.
       </p>
-    </div>
-    <Image
-      src={venue}
-      alt="Le Village By CA - Venue for Fork it! Rouen 2024"
-      class="h-64 w-full rounded-lg object-cover md:col-start-2 md:row-span-2 md:row-start-1 md:h-full"
-      width={800}
-      height={600}
-    />
-    <div class="flex flex-col gap-4 md:col-start-1 md:row-start-2">
+      <div class="md:hidden">
+        <Image
+          src={venue}
+          alt="Le Village By CA - Venue for Fork it! Rouen 2024"
+          class="w-full rounded-lg"
+          width={800}
+          height={600}
+        />
+      </div>
       <p>
         Staying true to the Fork it! "no bullshit" mindset, the event highlighted
         real-world insights from actual projects rather than theoretical or
@@ -63,6 +63,15 @@ export const eventId = "2024-france-rouen";
         and tech enthusiasts to connect, exchange ideas, and learn from each
         other in a collaborative and inclusive environment.
       </p>
+    </div>
+    <div class="hidden items-center md:col-start-2 md:row-start-2 md:flex">
+      <Image
+        src={venue}
+        alt="Le Village By CA - Venue for Fork it! Rouen 2024"
+        class="w-full rounded-lg"
+        width={800}
+        height={600}
+      />
     </div>
   </div>
 </section>
