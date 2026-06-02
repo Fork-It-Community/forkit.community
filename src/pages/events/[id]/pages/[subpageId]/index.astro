@@ -1,13 +1,10 @@
 ---
-import { BackButton } from "@/components/BackButton";
 import EventSubPageLayout from "@/layouts/EventSubPageLayout.astro";
 import { getEventsCollection, getEventSubPagesCollection } from "@/lib/events";
 import SEO from "@/components/SEO/index.astro";
 import { render } from "astro:content";
 import dayjs from "dayjs";
 import Prose from "@/components/Prose/index.astro";
-import { lunalink } from "@bearstudio/lunalink";
-import { ROUTES } from "@/routes.gen";
 
 export async function getStaticPaths() {
   const events = await getEventsCollection();
@@ -52,21 +49,11 @@ const isMarketingPage = subpage.data.pageType === "marketing";
   />
   {
     isMarketingPage ? (
-      <div class="relative w-full min-w-0 overflow-x-hidden pb-40">
-        <div class="absolute left-0 right-0 top-16 z-20 p-4 md:px-8 md:pt-8">
-          <BackButton
-            href={lunalink(ROUTES.events[":id"].__path, { id: event.id })}
-            client:load
-          />
-        </div>
+      <div class="w-full min-w-0 overflow-x-hidden pb-40">
         <Content />
       </div>
     ) : (
-      <div class="mx-auto px-4 pb-40 pt-20 md:px-8 md:pt-24">
-        <BackButton
-          href={lunalink(ROUTES.events[":id"].__path, { id: event.id })}
-          client:load
-        />
+      <div class="mx-auto px-4 pb-40 pt-28 md:px-8">
         <Prose>
           <Content />
         </Prose>
