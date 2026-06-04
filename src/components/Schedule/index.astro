@@ -1,7 +1,7 @@
 ---
 import CardInfo from "@/components/Schedule/CardInfo.astro";
 import CardConference from "@/components/Schedule/CardConference.astro";
-import FilterGroup from "@/components/Schedule/FilterGroup.astro";
+import { ScheduleFilters } from "@/components/Schedule/ScheduleFilters";
 import Time from "@/components/Schedule/Time.astro";
 import ComingSoon from "./ComingSoon.astro";
 import type { CollectionEntry } from "astro:content";
@@ -94,18 +94,13 @@ const hasFilters = hasRoomFilter || hasTypeFilter;
     ) : (
       <>
         {hasFilters && (
-          <div class="flex flex-col gap-2">
-            {hasRoomFilter && (
-              <FilterGroup
-                label="Room"
-                name="room"
-                options={rooms.map((room) => ({ value: room, label: room }))}
-              />
-            )}
-            {hasTypeFilter && (
-              <FilterGroup label="Type" name="type" options={typeOptions} />
-            )}
-          </div>
+          <ScheduleFilters
+            client:load
+            showRoom={hasRoomFilter}
+            showType={hasTypeFilter}
+            rooms={rooms.map((room) => ({ value: room, label: room }))}
+            typeOptions={typeOptions}
+          />
         )}
 
         <p
@@ -220,73 +215,3 @@ const hasFilters = hasRoomFilter || hasTypeFilter;
     )
   }
 </div>
-
-<script>
-  function initScheduleFilters() {
-    document
-      .querySelectorAll<HTMLElement>("[data-schedule]")
-      .forEach((scope) => {
-        if (scope.dataset.filterBound === "1") return;
-        const groups = scope.querySelectorAll<HTMLElement>(
-          "[data-filter-group]",
-        );
-        if (!groups.length) return;
-        scope.dataset.filterBound = "1";
-
-        const rows = scope.querySelectorAll<HTMLElement>(".schedule-row");
-        const empty = scope.querySelector<HTMLElement>("[data-schedule-empty]");
-        const selected: Record<string, string> = {
-          room: "__all",
-          type: "__all",
-        };
-
-        const apply = () => {
-          const visibleRows: HTMLElement[] = [];
-          rows.forEach((row) => {
-            const roomPass =
-              selected.room === "__all" || row.dataset.room === selected.room;
-            const typePass =
-              selected.type === "__all" || row.dataset.type === selected.type;
-            const visible = roomPass && typePass;
-            row.style.display = visible ? "" : "none";
-            const connector = row.querySelector<HTMLElement>(
-              ".schedule-connector",
-            );
-            if (connector) connector.style.display = "";
-            if (visible) visibleRows.push(row);
-          });
-
-          const last = visibleRows[visibleRows.length - 1];
-          const lastConnector = last?.querySelector<HTMLElement>(
-            ".schedule-connector",
-          );
-          if (lastConnector) lastConnector.style.display = "none";
-
-          if (empty) empty.classList.toggle("hidden", visibleRows.length > 0);
-        };
-
-        groups.forEach((group) => {
-          const dimension = group.dataset.filterGroup;
-          if (!dimension) return;
-          const buttons = group.querySelectorAll<HTMLButtonElement>(
-            "[data-filter-value]",
-          );
-          buttons.forEach((button) => {
-            button.addEventListener("click", () => {
-              selected[dimension] = button.dataset.filterValue ?? "__all";
-              buttons.forEach((other) =>
-                other.setAttribute(
-                  "aria-pressed",
-                  String(other.dataset.filterValue === selected[dimension]),
-                ),
-              );
-              apply();
-            });
-          });
-        });
-      });
-  }
-
-  initScheduleFilters();
-  document.addEventListener("astro:after-swap", initScheduleFilters);
-</script>
