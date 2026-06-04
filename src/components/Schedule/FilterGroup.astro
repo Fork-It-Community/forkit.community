@@ -38,9 +38,10 @@ const buttons = [{ value: "__all", label: "All" }, ...options];
 
 <style>
   /* Gate hover to real pointers. On touch devices :hover sticks after a tap,
-     which would keep a tapped filter highlighted as if it were selected. The
-     selected state comes from aria-pressed, not hover. */
-  @media (hover: hover) {
+     which would keep a tapped filter highlighted as if it were selected. Some
+     phones report `hover: hover` anyway, so also require a fine pointer (a
+     finger is `pointer: coarse`). The selected state comes from aria-pressed. */
+  @media (hover: hover) and (pointer: fine) {
     .filter-btn:not([aria-pressed="true"]):hover {
       background-color: rgb(0 0 0 / 0.3);
       opacity: 1;
