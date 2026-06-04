@@ -32,9 +32,9 @@ export function FilterGroup({
             key={button.value}
             type="button"
             variant="ghost"
-            aria-pressed={value === button.value}
+            aria-pressed={button.value === value}
             onClick={() => onChange(button.value)}
-            className="h-auto rounded-md px-3 py-1.5 font-heading text-xs font-normal uppercase tracking-wider aria-pressed:bg-white/15 aria-pressed:opacity-100"
+            className="h-auto rounded-md px-3 py-1.5 font-heading text-xs font-normal uppercase tracking-wider transition-none aria-pressed:bg-white/15 aria-pressed:opacity-100"
           >
             {button.label}
           </Button>
