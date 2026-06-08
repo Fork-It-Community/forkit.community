@@ -267,12 +267,21 @@ export async function getUpcomingMajorEvent() {
       event.data.status !== "published-without-date",
   );
 
-  return (
-    onlyScheduledEvents.find((event) => event.data.type === "event") ??
-    onlyScheduledEvents.find((event) => event.data.type === "meetup") ??
-    // In case we add another type later, like external events
-    onlyScheduledEvents.at(0)
-  );
+  return onlyScheduledEvents
+    .sort((a, b) => {
+      const dateA = a.data.date?.valueOf() ?? 0;
+      const dateB = b.data.date?.valueOf() ?? 0;
+
+      if (dateA !== dateB) {
+        return dateA - dateB;
+      }
+
+      if (a.data.type === "event" && b.data.type === "meetup") return -1;
+      if (a.data.type === "meetup" && b.data.type === "event") return 1;
+
+      return 0;
+    })
+    .at(0);
 }
 
 export async function getEvent(id: CollectionEntry<"events">["id"]) {
