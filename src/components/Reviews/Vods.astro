@@ -21,12 +21,17 @@ const positions = [
 ];
 ---
 
-<div class="flex h-full flex-col gap-6 rounded-2xl bg-white/5 p-6">
+<a
+  href={vodsHref}
+  target="_blank"
+  rel="noreferrer"
+  class="group flex h-full flex-col gap-6 rounded-2xl bg-white/5 p-6 transition hover:bg-white/10"
+>
   <div>
     <h2 class="font-heading text-xl font-bold text-primary">
       WANT TO WATCH VODs?
     </h2>
-    <p class="text-sm text-white/80">Some VOD of our events</p>
+    <p class="text-sm text-white/80">Some VODs of our events</p>
   </div>
 
   {
@@ -60,17 +65,10 @@ const positions = [
     )
   }
 
-  {
-    vodsHref && (
-      <a
-        href={vodsHref}
-        target="_blank"
-        rel="noreferrer"
-        class={`${buttonVariants({ variant: "secondary-dark", size: "lg" })} mt-auto`}
-      >
-        View all VODs
-        <MdChevronRight />
-      </a>
-    )
-  }
-</div>
+  <span
+    class={`${buttonVariants({ variant: "secondary-dark", size: "lg" })} pointer-events-none mt-auto group-hover:bg-black group-hover:text-foreground`}
+  >
+    View all VODs
+    <MdChevronRight />
+  </span>
+</a>

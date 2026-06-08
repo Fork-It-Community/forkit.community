@@ -27,8 +27,11 @@ const positions = sources.map((_, i) => {
 });
 ---
 
-<div
-  class="flex h-full flex-col gap-6 overflow-hidden rounded-2xl bg-white/5 p-6"
+<a
+  href={photos?.href}
+  target="_blank"
+  rel="noreferrer"
+  class="group flex h-full flex-col gap-6 overflow-hidden rounded-2xl bg-white/5 p-6 transition hover:bg-white/10"
 >
   <div>
     <h2 class="font-heading text-xl font-bold uppercase text-primary">
@@ -54,17 +57,10 @@ const positions = sources.map((_, i) => {
     )
   }
 
-  {
-    photos?.href && (
-      <a
-        href={photos.href}
-        target="_blank"
-        rel="noreferrer"
-        class={`${buttonVariants({ variant: "secondary-dark", size: "lg" })} mt-auto`}
-      >
-        Event Photos
-        <MdChevronRight />
-      </a>
-    )
-  }
-</div>
+  <span
+    class={`${buttonVariants({ variant: "secondary-dark", size: "lg" })} pointer-events-none mt-auto group-hover:bg-black group-hover:text-foreground`}
+  >
+    Event Photos
+    <MdChevronRight />
+  </span>
+</a>

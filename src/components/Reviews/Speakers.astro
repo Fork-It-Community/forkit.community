@@ -2,6 +2,8 @@
 import { getEventWithComputed } from "@/lib/events";
 import { Image } from "astro:assets";
 import SpeakerPlaceholder from "@/assets/images/people-placeholder.jpeg";
+import { lunalink } from "@bearstudio/lunalink";
+import { ROUTES } from "@/routes.gen";
 
 interface Props {
   eventId: string;
@@ -21,7 +23,10 @@ const speakers = event.data._computed.speakers;
   <div class="grid grid-cols-3 gap-x-4 gap-y-6 sm:grid-cols-4 md:grid-cols-6">
     {
       speakers.map((speaker) => (
-        <div class="flex flex-col items-center gap-2">
+        <a
+          href={lunalink(ROUTES.people[":id"].__path, { id: speaker.id })}
+          class="group flex flex-col items-center gap-2"
+        >
           <div class="aspect-square w-full overflow-hidden rounded-lg">
             <Image
               src={speaker.data.avatar ?? SpeakerPlaceholder}
@@ -31,10 +36,10 @@ const speakers = event.data._computed.speakers;
               class="h-full w-full object-cover"
             />
           </div>
-          <p class="text-center font-heading text-sm font-medium tracking-wide">
+          <p class="text-center font-heading text-sm font-medium tracking-wide transition group-hover:text-primary">
             {speaker.data.name}
           </p>
-        </div>
+        </a>
       ))
     }
   </div>

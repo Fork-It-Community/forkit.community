@@ -1,7 +1,11 @@
 ---
 import TiltedCard from "@/components/TiltedCard";
 import { buttonVariants } from "@/components/ui/button";
-import { getEventWithComputed } from "@/lib/events";
+import {
+  getEventWithComputed,
+  getUpcomingEvents,
+  shouldShowProspectus,
+} from "@/lib/events";
 import { cn } from "@/lib/utils-client";
 
 interface Props {
@@ -10,7 +14,19 @@ interface Props {
 const { eventId } = Astro.props;
 
 const event = await getEventWithComputed(eventId);
-const prospectusHref = event.data.prospectus?.href;
+const cityId = event.data._computed.city?.id;
+
+const nextEventInSameCity = (await getUpcomingEvents()).find(
+  (candidate) =>
+    candidate.data._computed.city?.id === cityId &&
+    shouldShowProspectus(candidate),
+);
+
+const sponsorHref =
+  nextEventInSameCity?.data.prospectus?.href ??
+  "mailto:contact@forkit.community?subject=Fork%20it!%20sponsoring";
+const sponsorCityName =
+  nextEventInSameCity && event.data._computed.city?.data.name;
 ---
 
 <div class="px-6 py-12">
@@ -23,24 +39,24 @@ const prospectusHref = event.data.prospectus?.href;
           Want to support the next event?
         </h2>
         <p class="text-sm text-white/80">
-          Support the community and make your company shine
+          {
+            sponsorCityName
+              ? `Support the next ${sponsorCityName} event and make your company shine`
+              : "Support a future Fork it! event and make your company shine"
+          }
         </p>
       </div>
-      {
-        prospectusHref && (
-          <a
-            href={prospectusHref}
-            target="_blank"
-            rel="noreferrer"
-            class={cn(
-              buttonVariants({ variant: "default" }),
-              "w-full md:w-auto md:min-w-48",
-            )}
-          >
-            Become a Sponsor
-          </a>
-        )
-      }
+      <a
+        href={sponsorHref}
+        target="_blank"
+        rel="noreferrer"
+        class={cn(
+          buttonVariants({ variant: "default" }),
+          "w-full md:w-auto md:min-w-48",
+        )}
+      >
+        Become a Sponsor
+      </a>
     </div>
   </TiltedCard>
 </div>
