@@ -71,8 +71,6 @@ export const zEventBasicInfo = ({ image }: SchemaContext) =>
                 })
                 .optional(),
             )
-
-            .max(4)
             .optional(),
         }),
         rating: z
