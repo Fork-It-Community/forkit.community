@@ -1,20 +1,13 @@
 ---
-title: "Fork it! Rouen 2024 Review"
-description: "Review of Fork it! Rouen 2024, the first Fork it! Community full-day event in Rouen, with highlights from the talks, organization, networking, speakers, sponsors, photos, and VODs."
-pageType: marketing
+slot: afterProspectus
+title: Fork it! Rouen 2024 Review
+order: 0
 ---
 
-import Hero from "@/components/Reviews/Hero.astro";
-import BecomeASponsor from "@/components/Reviews/BecomeASponsor.astro";
 import KeyStats from "@/components/Reviews/KeyStats.astro";
+import BecomeASponsor from "@/components/Reviews/BecomeASponsor.astro";
 import EventVibes from "@/components/Reviews/EventVibes.astro";
-import Speakers from "@/components/Reviews/Speakers.astro";
 import Vods from "@/components/Reviews/Vods.astro";
-import Organizers from "@/components/Reviews/Organizers.astro";
-import Sponsors from "@/components/Reviews/Sponsors.astro";
-import NextEvents from "@/components/Reviews/NextEvents.astro";
-import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
-import StayTuned from "@/components/StayTuned/index.astro";
 import { Image } from "astro:assets";
 import venue from "../le-village-by-ca.jpg";
 import speaker from "../images/ayoub-alouane-speaking.png";
@@ -23,11 +16,8 @@ import networking from "../images/place-du-village.jpg";
 
 export const eventId = "2024-france-rouen";
 
-<Hero eventId={eventId} />
-
-<BecomeASponsor eventId={eventId} />
-
-<section class="mx-auto max-w-screen-lg px-6 py-8 md:py-12">
+<div class="flex w-full flex-col gap-12 md:gap-16">
+<section class="mx-auto max-w-screen-lg px-6">
   <div class="grid gap-4 md:grid-cols-2 md:gap-x-12 md:gap-y-4">
     <h2 class="font-heading text-xl font-medium uppercase leading-tight text-primary md:col-start-1 md:text-4xl">
       Fork it! Rouen 2024 — event review
@@ -83,16 +73,7 @@ export const eventId = "2024-france-rouen";
   { value: "200+", label: "Visitors", highlighted: true },
 ]} />
 
-<section class="mx-auto max-w-screen-lg px-6 py-8 md:py-12">
-  <div class="grid gap-6 md:grid-cols-2">
-    <EventVibes eventId={eventId} />
-    <div class="hidden h-full md:block">
-      <Vods eventId={eventId} />
-    </div>
-  </div>
-</section>
-
-<section class="mx-auto max-w-screen-lg px-6 py-8 md:py-12">
+<section class="mx-auto max-w-screen-lg px-6">
   <div class="grid gap-4 md:grid-cols-2 md:gap-x-12 md:gap-y-4">
     <div class="flex flex-col gap-4 md:col-start-1 md:row-start-1">
       <h2 class="font-heading text-xl font-medium uppercase leading-tight text-primary md:text-2xl">
@@ -132,13 +113,14 @@ export const eventId = "2024-france-rouen";
   </div>
 </section>
 
-<Speakers eventId={eventId} />
-
-<section class="mx-auto max-w-screen-lg px-6 py-8 md:hidden">
-  <Vods eventId={eventId} />
+<section class="mx-auto w-full max-w-screen-lg px-6">
+  <div class="grid w-full gap-6 md:grid-cols-2 md:gap-8">
+    <EventVibes eventId={eventId} />
+    <Vods eventId={eventId} />
+  </div>
 </section>
 
-<section class="mx-auto max-w-screen-lg px-6 py-8 md:py-12">
+<section class="mx-auto max-w-screen-lg px-6">
   <div class="grid gap-4 md:grid-cols-2 md:gap-x-12 md:gap-y-4">
     <div class="flex flex-col gap-4 md:col-start-1 md:row-start-1">
       <h2 class="font-heading text-xl font-medium uppercase leading-tight text-primary md:text-2xl">
@@ -170,9 +152,7 @@ export const eventId = "2024-france-rouen";
   </div>
 </section>
 
-<Organizers eventId={eventId} />
-
-<section class="mx-auto max-w-screen-lg px-6 py-8 md:py-12">
+<section class="mx-auto max-w-screen-lg px-6">
   <div class="grid gap-4 md:grid-cols-2 md:gap-x-12 md:gap-y-4">
     <div class="flex flex-col gap-4 md:col-start-1 md:row-start-1">
       <h2 class="font-heading text-xl font-medium uppercase leading-tight text-primary md:text-2xl">
@@ -201,13 +181,5 @@ export const eventId = "2024-france-rouen";
   </div>
 </section>
 
-<Sponsors eventId={eventId} />
-
-<NextEvents eventId={eventId} />
-
-<div class="pt-8 md:pt-12">
-  <div class="md:hidden">
-    <JoinTheCommunity />
-  </div>
-  <StayTuned class="hidden md:block" />
+<BecomeASponsor eventId={eventId} />
 </div>

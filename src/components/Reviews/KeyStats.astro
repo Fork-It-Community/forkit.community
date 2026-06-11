@@ -16,13 +16,13 @@ interface Props {
 const { stats } = Astro.props;
 ---
 
-<section class="mx-auto max-w-screen-lg px-6 py-8 md:py-12">
-  <div class="grid grid-cols-2 gap-2 md:auto-cols-fr md:grid-flow-col md:gap-1">
+<section class="mx-auto max-w-screen-xl px-6 py-8 md:py-12">
+  <div class="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-1">
     {
       stats.map((stat, index) => (
         <div
           class={cn(
-            "flex flex-col items-center justify-center gap-1 rounded-xl px-6 py-8 md:rounded-none",
+            "flex flex-col items-center justify-center gap-1 rounded-xl px-6 py-8 md:rounded-none md:px-10",
             stat.highlighted ? "bg-primary" : "bg-white/5",
             index === 0 && "md:rounded-l-xl",
             index === stats.length - 1 && "md:rounded-r-xl",

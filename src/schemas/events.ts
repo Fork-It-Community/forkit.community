@@ -60,11 +60,6 @@ export const zEventBasicInfo = ({ image }: SchemaContext) =>
             href: z.url().describe("The playlist of the VODs"),
           })
           .optional(),
-        review: z
-          .object({
-            href: z.string().describe("The event review page URL"),
-          })
-          .optional(),
         photos: z.object({
           href: z.url().optional(),
           sources: z

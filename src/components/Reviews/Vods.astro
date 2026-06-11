@@ -16,8 +16,8 @@ const talks = event.data._computed.talks
   .slice(0, 2);
 
 const positions = [
-  { translateX: 52, translateY: 32, rotate: 6, zIndex: 1 },
-  { translateX: -52, translateY: -48, rotate: -6, zIndex: 2 },
+  { translateX: 52, translateY: 34, rotate: 6, zIndex: 1 },
+  { translateX: -52, translateY: -42, rotate: -6, zIndex: 2 },
 ];
 ---
 
@@ -25,7 +25,7 @@ const positions = [
   href={vodsHref}
   target="_blank"
   rel="noreferrer"
-  class="group flex h-full flex-col gap-6 rounded-2xl bg-white/5 p-6 transition hover:bg-white/10"
+  class="group flex h-full flex-col gap-6 overflow-hidden rounded-2xl bg-white/5 p-6 transition hover:bg-white/10"
 >
   <div>
     <h2 class="font-heading text-xl font-bold text-primary">
@@ -39,7 +39,7 @@ const positions = [
       <div class="relative flex h-52 items-center justify-center md:h-60">
         {talks.map((talk, i) => (
           <div
-            class="absolute w-52 overflow-hidden rounded-xl md:w-60"
+            class="absolute w-48 overflow-hidden rounded-xl md:w-64"
             style={`translate: ${positions[i]?.translateX}px ${positions[i]?.translateY}px; rotate: ${positions[i]?.rotate}deg; z-index: ${positions[i]?.zIndex};`}
           >
             <div class="relative aspect-video w-full">
