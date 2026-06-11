@@ -22,6 +22,12 @@ const adapter =
     ? node({ mode: "standalone" })
     : vercel({
         isr: {
+          // 30 days: ISR cache survives deploys; for sooner refresh on a
+          // content change, send a HEAD with `x-prerender-revalidate: <token>`.
+          expiration: 60 * 60 * 24 * 30,
+          ...(process.env.VERCEL_BYPASS_TOKEN
+            ? { bypassToken: process.env.VERCEL_BYPASS_TOKEN }
+            : {}),
           // TODO: Revert — exclude actions from ISR due to @astrojs/vercel bug:
           // ISR entrypoint reconstructs POST body without `duplex: 'half'`, causing a TypeError.
           // Excluding actions from ISR lets them go directly to the serverless function.
