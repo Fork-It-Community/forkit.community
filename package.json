@@ -40,7 +40,7 @@
     "@types/unist": "3.0.3",
     "@uidotdev/usehooks": "2.4.1",
     "@vercel/analytics": "2.0.1",
-    "adm-zip": "0.5.17",
+    "adm-zip": "0.5.18",
     "astro": "7.0.3",
     "astro-robots-txt": "1.0.0",
     "astro-seo": "1.1.0",
