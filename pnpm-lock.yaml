@@ -93,8 +93,8 @@ importers:
         specifier: 1.1.0
         version: 1.1.0(prettier-plugin-astro@0.14.1)(prettier@3.8.3)(typescript@5.9.3)
       astro-seo-schema:
-        specifier: 6.0.0
-        version: 6.0.0(astro@7.0.3(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(tsx@4.21.0)(yaml@2.9.0))(schema-dts@1.1.5)
+        specifier: 7.0.0
+        version: 7.0.0(astro@7.0.3(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(tsx@4.21.0)(yaml@2.9.0))(schema-dts@1.1.5)
       astrobook:
         specifier: 0.13.2
         version: 0.13.2(astro@7.0.3(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(tsx@4.21.0)(yaml@2.9.0))(typescript@5.9.3)
@@ -2257,10 +2257,10 @@ packages:
   astro-robots-txt@1.0.0:
     resolution: {integrity: sha512-6JQSLid4gMhoWjOm85UHLkgrw0+hHIjnJVIUqxjU2D6feKlVyYukMNYjH44ZDZBK1P8hNxd33PgWlHzCASvedA==}
 
-  astro-seo-schema@6.0.0:
-    resolution: {integrity: sha512-6Etg+9zu7XdlUa40BIZrZP3vd+lReeJ1rNgT8Jer+1bPyGdrA/itQwJOhIkX+t5PadVwTmpt6xZouDycrZys6w==}
+  astro-seo-schema@7.0.0:
+    resolution: {integrity: sha512-icG6vL2pKNf7WBI03JxZYn6gQiLASxq/U3JVv27roaPJ+WH0p3sats9mMInzp6x40G1mVdLLoAEUObmKY1If+A==}
     peerDependencies:
-      astro: ^6.0.0
+      astro: ^7.0.0
       schema-dts: ^1.1.0
 
   astro-seo@1.1.0:
@@ -6639,7 +6639,7 @@ snapshots:
       valid-filename: 4.0.0
       zod: 3.23.8
 
-  astro-seo-schema@6.0.0(astro@7.0.3(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(tsx@4.21.0)(yaml@2.9.0))(schema-dts@1.1.5):
+  astro-seo-schema@7.0.0(astro@7.0.3(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(tsx@4.21.0)(yaml@2.9.0))(schema-dts@1.1.5):
     dependencies:
       astro: 7.0.3(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@25.5.2)(@vercel/functions@3.5.0)(jiti@1.21.6)(tsx@4.21.0)(yaml@2.9.0)
       schema-dts: 1.1.5
