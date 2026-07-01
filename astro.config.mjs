@@ -21,6 +21,7 @@ const adapter =
   import.meta.env.DEV
     ? node({ mode: "standalone" })
     : vercel({
+        imageService: true,
         isr: {
           // TODO: Revert — exclude actions from ISR due to @astrojs/vercel bug:
           // ISR entrypoint reconstructs POST body without `duplex: 'half'`, causing a TypeError.
