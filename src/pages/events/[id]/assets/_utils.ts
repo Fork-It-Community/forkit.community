@@ -40,12 +40,12 @@ export const getEventAssetsSources = (event: CollectionEntry<"events">) => {
     import.meta.glob("./_*.tsx", { eager: true }),
   ).map(getImageNameFromTsxPath);
   const talkFilesNames = Object.keys(
-    import.meta.glob("../talks/[talkId]/assets/_*.tsx", {
+    import.meta.glob("../talks/*/assets/_*.tsx", {
       eager: true,
     }),
   ).map(getImageNameFromTsxPath);
   const partnersFilesNames = Object.keys(
-    import.meta.glob("../partners/[partnerId]/assets/_*.tsx", {
+    import.meta.glob("../partners/*/assets/_*.tsx", {
       eager: true,
     }),
   ).map(getImageNameFromTsxPath);
