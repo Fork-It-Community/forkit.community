@@ -141,21 +141,21 @@ const marketingVideos = event.data.marketing?.videos;
                 {group.images.map((src) =>
                   import.meta.env.DEV ? (
                     <a href={src?.replace(/.jpg$/, ".debug")}>
-                      <Image
+                      <img
                         alt=""
                         class="bg-background-blur w-full max-w-full rounded-md"
                         src={src}
-                        width={9999}
-                        height={9999}
+                        loading="lazy"
+                        decoding="async"
                       />
                     </a>
                   ) : (
-                    <Image
+                    <img
                       alt=""
                       class="bg-background-blur w-full max-w-full rounded-md"
                       src={src}
-                      width={9999}
-                      height={9999}
+                      loading="lazy"
+                      decoding="async"
                     />
                   ),
                 )}
