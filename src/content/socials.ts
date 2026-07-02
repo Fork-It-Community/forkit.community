@@ -1,7 +1,7 @@
 import { IconLuma } from "@/components/CustomIcons/IconLuma";
 import type { Channel } from "@/schemas/channel";
 import type { SocialType } from "@/schemas/utils";
-import type { FC } from "react";
+import type { ComponentType } from "react";
 import {
   FaBluesky,
   FaGithub,
@@ -22,7 +22,7 @@ import { TbWorld } from "react-icons/tb";
 type SocialsLevel = "primary" | "secondary";
 
 const SOCIALS: Array<{
-  icon: FC;
+  icon: ComponentType;
   label: string;
   href: string;
   level: SocialsLevel;
@@ -96,7 +96,7 @@ export const SOCIALS_TYPE_MAP = {
   tiktok: FaTiktok,
   sessionize: SiSessionize,
   youtube: FaYoutube,
-} satisfies Record<SocialType, FC>;
+} satisfies Record<SocialType, ComponentType>;
 
 export const GLOBAL_NEWSLETTER_LINK =
   "https://7dca2c80.sibforms.com/serve/MUIFACNrQwiH7V08ltOYZJGzrh-InrxkJyIqX--5MK_ju3OUx4e9obvACfjo6B1h3HciGVkC6ksErKgvwQHrdLfLpLCq73srDU5vUrCPubh3UaD10lTNebVYU7Dv-8X6QBUM5V9qgLyEcz8EKgYqd3zSCINpfcymQJcI7KwNAVZsoIKEtlEuLqwc0zOdNs-AdoFZemFS7ZS0HplO";
@@ -110,4 +110,4 @@ export const FOR_KIDS_WHATSAPP_LINK =
 export const CHANNELS_TYPE_MAP = {
   newsletter: LuMail,
   whatsapp: LuMessageCircle,
-} satisfies Record<Channel["type"], FC>;
+} satisfies Record<Channel["type"], ComponentType>;
