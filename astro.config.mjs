@@ -35,6 +35,10 @@ const adapter =
 export default defineConfig({
   site: getSiteUrl(),
 
+  image: {
+    remotePatterns: [{ hostname: "img.youtube.com" }],
+  },
+
   i18n: {
     locales: ["en", "fr"],
     defaultLocale: "en",
