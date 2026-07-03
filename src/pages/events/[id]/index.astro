@@ -622,7 +622,7 @@ const validKeynotes = keynoteSection.filter(
       !speakers.length && "lg:max-w-screen-sm",
     )}
   >
-    <div class="flex w-full flex-[1.3] flex-col gap-8 pb-4">
+    <div class="flex w-full min-w-0 flex-[1.3] flex-col gap-8 pb-4">
       <div class="flex items-center gap-2">
         <h2
           id="schedule"
@@ -648,7 +648,7 @@ const validKeynotes = keynoteSection.filter(
 
     {
       !!speakers.length && (
-        <div class="flex w-full flex-1 flex-col gap-8">
+        <div class="flex w-full min-w-0 flex-1 flex-col gap-8">
           <h2
             id="speakers"
             class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
