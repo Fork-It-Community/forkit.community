@@ -1,0 +1,74 @@
+---
+import { getEventWithComputed } from "@/lib/events";
+import { buttonVariants } from "@/components/ui/button";
+import { MdChevronRight } from "react-icons/md";
+
+interface Props {
+  eventId: string;
+}
+
+const { eventId } = Astro.props;
+const event = await getEventWithComputed(eventId);
+const vodsHref = event.data.afterEventContent?.vods?.href;
+
+const talks = event.data._computed.talks
+  .filter((talk) => talk.data.vod?.youtubeId)
+  .slice(0, 2);
+
+const positions = [
+  { translateX: 52, translateY: 34, rotate: 6, zIndex: 1 },
+  { translateX: -52, translateY: -42, rotate: -6, zIndex: 2 },
+];
+---
+
+<a
+  href={vodsHref}
+  target="_blank"
+  rel="noreferrer"
+  class="group flex h-full flex-col gap-6 overflow-hidden rounded-2xl bg-white/5 p-6 transition hover:bg-white/10"
+>
+  <div>
+    <h2 class="font-heading text-xl font-bold text-primary">
+      WANT TO WATCH VODs?
+    </h2>
+    <p class="text-sm text-white/80">Some VODs of our events</p>
+  </div>
+
+  {
+    talks.length > 0 && (
+      <div class="relative flex h-52 items-center justify-center md:h-60">
+        {talks.map((talk, i) => (
+          <div
+            class="absolute w-48 overflow-hidden rounded-xl md:w-64"
+            style={`translate: ${positions[i]?.translateX}px ${positions[i]?.translateY}px; rotate: ${positions[i]?.rotate}deg; z-index: ${positions[i]?.zIndex};`}
+          >
+            <div class="relative aspect-video w-full">
+              <img
+                src={`https://img.youtube.com/vi/${talk.data.vod?.youtubeId}/hqdefault.jpg`}
+                alt={talk.data.title}
+                class="h-full w-full object-cover"
+              />
+              <div class="absolute inset-0 flex items-center justify-center bg-black/20">
+                <span class="flex h-5 w-8 items-center justify-center rounded-md bg-[#FF0000] shadow-md">
+                  <svg
+                    class="h-3 w-3 translate-x-px fill-white"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  <span
+    class={`${buttonVariants({ variant: "secondary-dark", size: "lg" })} pointer-events-none mt-auto group-hover:bg-black group-hover:text-foreground`}
+  >
+    View all VODs
+    <MdChevronRight />
+  </span>
+</a>
