@@ -10,10 +10,12 @@
     "lint": "astro check",
     "preview": "astro preview --node",
     "astro": "astro",
-    "prepare": "husky"
+    "prepare": "husky",
+    "check:images": "tsx scripts/check-image-size.ts"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx,json,astro}": "prettier --write src/"
+    "*.{ts,tsx,js,jsx,json,astro}": "prettier --write src/",
+    "*.{jpg,jpeg,png,webp,avif}": "tsx scripts/check-image-size.ts"
   },
   "dependencies": {
     "@astrojs/check": "0.9.9",
