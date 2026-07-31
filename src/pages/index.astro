@@ -36,6 +36,7 @@ import { Schema } from "astro-seo-schema";
 import { getEntry } from "astro:content";
 import { getNewsCollection } from "@/lib/news";
 import TiltedCard from "@/components/TiltedCard";
+import { GlobalFaq } from "@/components/GlobalFaq";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 
@@ -392,4 +393,9 @@ const forKidsAfterMovie = (
       </div>
     )
   }
+
+  <!-- FAQ -->
+  <div class="mx-auto w-full max-w-screen-lg">
+    <GlobalFaq client:visible faq={HOME_CONFIG.faq} />
+  </div>
 </MainLayout>
