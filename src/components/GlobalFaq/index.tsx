@@ -23,26 +23,20 @@ export const GlobalFaq = (
         >
           Frequently Asked Questions
         </h2>
-        <Accordion type="single" collapsible className="w-full">
-          <dl className="mt-10">
-            {props.faq.map((item) => (
-              <AccordionItem key={item.question} value={item.question}>
-                <dt>
-                  <AccordionTrigger className="hover:text-neutral-400 text-left font-heading text-lg font-semibold tracking-wide transition hover:no-underline">
-                    {item.question}
-                  </AccordionTrigger>
-                </dt>
-                <dd>
-                  <AccordionContent>
-                    <div
-                      className="text-base text-gray-300"
-                      dangerouslySetInnerHTML={{ __html: item.answer }}
-                    />
-                  </AccordionContent>
-                </dd>
-              </AccordionItem>
-            ))}
-          </dl>
+        <Accordion type="single" collapsible className="mt-10 w-full">
+          {props.faq.map((item) => (
+            <AccordionItem key={item.question} value={item.question}>
+              <AccordionTrigger className="hover:text-neutral-400 text-left font-heading text-lg font-semibold tracking-wide transition hover:no-underline">
+                {item.question}
+              </AccordionTrigger>
+              <AccordionContent>
+                <div
+                  className="text-base text-gray-300"
+                  dangerouslySetInnerHTML={{ __html: item.answer }}
+                />
+              </AccordionContent>
+            </AccordionItem>
+          ))}
         </Accordion>
       </article>
     </div>
