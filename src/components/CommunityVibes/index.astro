@@ -1,0 +1,77 @@
+---
+import { Image } from "astro:assets";
+import { COMMUNITY_VIBES_IMAGES } from "@/content/communityVibes";
+
+const images = COMMUNITY_VIBES_IMAGES;
+---
+
+<div class="relative flex flex-col gap-8 py-24">
+  <div class="mx-auto w-full max-w-screen-md px-6">
+    <div class="text-center">
+      <h2
+        class="font-heading text-2xl font-medium uppercase tracking-widest text-white md:text-3xl"
+      >
+        Community vibes
+      </h2>
+      <p class="text-balance text-base tracking-wide opacity-60">
+        Snapshots from our events and meetups around the world
+      </p>
+    </div>
+  </div>
+  <div class="grid w-full grid-cols-3 gap-1 md:grid-cols-5">
+    <div class="col-span-2 row-span-2 aspect-square bg-background">
+      <Image
+        src={images[0].src}
+        alt={images[0].alt}
+        width={1200}
+        height={1200}
+        class="h-full w-full object-cover"
+      />
+    </div>
+    <div class="aspect-square bg-background">
+      <Image
+        src={images[1].src}
+        alt={images[1].alt}
+        width={600}
+        height={600}
+        class="h-full w-full object-cover"
+      />
+    </div>
+    <div class="aspect-square bg-background">
+      <Image
+        src={images[2].src}
+        alt={images[2].alt}
+        width={600}
+        height={600}
+        class="h-full w-full object-cover"
+      />
+    </div>
+    <div class="bg-background max-md:aspect-square md:row-span-2">
+      <Image
+        src={images[3].src}
+        alt={images[3].alt}
+        width={1200}
+        height={1200}
+        class="h-full w-full object-cover"
+      />
+    </div>
+    <div class="aspect-square bg-background">
+      <Image
+        src={images[4].src}
+        alt={images[4].alt}
+        width={600}
+        height={600}
+        class="h-full w-full object-cover"
+      />
+    </div>
+    <div class="aspect-square bg-background">
+      <Image
+        src={images[5].src}
+        alt={images[5].alt}
+        width={600}
+        height={600}
+        class="h-full w-full object-cover"
+      />
+    </div>
+  </div>
+</div>
