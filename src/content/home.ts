@@ -24,11 +24,6 @@ export const HOME_CONFIG = {
         'We love welcoming new speakers! Submit a talk to our <a class="underline hover:text-primary" href="https://conference-hall.io/fork-it-meetup-worldwide" target="_blank" rel="noreferrer">global Call for Proposals</a>, or check the Call for Papers on a specific event page. Take a look at our <a class="underline hover:text-primary" href="/call-for-papers/guidelines">guidelines</a> to help you get started.',
     },
     {
-      question: "How can I get involved or volunteer?",
-      answer:
-        "Our events are powered by volunteers. Join the community and reach out to us — we are always happy to welcome new people who want to help make Fork it! happen.",
-    },
-    {
       question: "How can my company sponsor or partner with Fork it!?",
       answer:
         "We partner with companies that want to support the developer community. Get in touch with us to learn more about the different sponsorship and partnership opportunities.",
