@@ -1,5 +1,5 @@
 import { MdMoreHoriz } from "react-icons/md";
-import type { FC, ReactNode } from "react";
+import type { ComponentType, ReactNode } from "react";
 import {
   Popover,
   PopoverContent,
@@ -46,7 +46,7 @@ const MainNavMobileItemMore = (props: { currentPathname: string }) => {
 
 const MoreNavItem = (props: {
   children: ReactNode;
-  icon: FC;
+  icon: ComponentType;
   href: string;
   exact?: boolean;
   currentPathname: string;
