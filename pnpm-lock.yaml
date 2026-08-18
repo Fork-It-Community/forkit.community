@@ -156,8 +156,8 @@ importers:
         specifier: 11.1.2
         version: 11.1.2
       remeda:
-        specifier: 2.34.0
-        version: 2.34.0
+        specifier: 2.40.0
+        version: 2.40.0
       satori:
         specifier: 0.26.0
         version: 0.26.0
@@ -4219,8 +4219,9 @@ packages:
   remark-stringify@11.0.0:
     resolution: {integrity: sha512-1OSmLd3awB/t8qdoEOMazZkNsfVTeY4fTsgzcQFdXNq8ToTN4ZGwrMnlda4K6smTFKD+GRV6O48i6Z4iKgPPpw==}
 
-  remeda@2.34.0:
-    resolution: {integrity: sha512-zL4cEPkLHxwmlDRPyvJZjojpG5M5HXrDiABNKof+dq7kkuyQttP6NrF2uJB0DKIU09K8cTq+sQDlbo2r7mdR5Q==}
+  remeda@2.40.0:
+    resolution: {integrity: sha512-Y8yxrbK8SbTao2+mTqJcjre3/eBH641nr88aAgYfOdbW5p4FH+1Jk3mMypnA+SoktEXBVA8id0o3XPbgHYvQ9Q==}
+    engines: {node: '>=18.0.0'}
 
   request-light@0.5.8:
     resolution: {integrity: sha512-3Zjgh+8b5fhRJBQZoy+zbVKpAQGLyka0MPgW3zruTF4dFFJ8Fqcfu9YsAvi/rvdcaTeWG3MkbZv4WKxAn/84Lg==}
@@ -9243,7 +9244,7 @@ snapshots:
       mdast-util-to-markdown: 2.1.0
       unified: 11.0.5
 
-  remeda@2.34.0: {}
+  remeda@2.40.0: {}
 
   request-light@0.5.8: {}
 
