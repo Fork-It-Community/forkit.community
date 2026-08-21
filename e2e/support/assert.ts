@@ -88,3 +88,48 @@ export const statusProblems = (checks: readonly PageCheck[]): string[] =>
   checks.flatMap((check) =>
     check.status === 200 ? [] : [`${check.path} → HTTP ${check.status}`],
   );
+
+export type BinaryCheck = {
+  path: string;
+  status: number;
+  contentType: string;
+  bytes: number;
+};
+
+export const checkBinaries = (
+  request: APIRequestContext,
+  paths: readonly string[],
+): Promise<BinaryCheck[]> =>
+  mapWithConcurrency(paths, CONCURRENCY, async (path) => {
+    const response = await request.get(path);
+    const body = await response.body();
+    return {
+      path,
+      status: response.status(),
+      contentType: response.headers()["content-type"] ?? "",
+      bytes: body.length,
+    };
+  });
+
+/**
+ * Satori's realistic failure modes are throwing outright — a bumped
+ * dependency, a font it can no longer load, CSS it no longer supports — or
+ * emitting a near-empty image. Status, content type and a size floor catch
+ * both without decoding anything, which keeps this out of visual-regression
+ * territory.
+ */
+export const binaryProblems = (
+  checks: readonly BinaryCheck[],
+  expectedType: RegExp,
+  minBytes: number,
+): string[] =>
+  checks.flatMap((check) => {
+    if (check.status !== 200) return [`${check.path} → HTTP ${check.status}`];
+    if (!expectedType.test(check.contentType)) {
+      return [`${check.path} → content-type ${check.contentType}`];
+    }
+    if (check.bytes < minBytes) {
+      return [`${check.path} → only ${check.bytes} bytes`];
+    }
+    return [];
+  });
