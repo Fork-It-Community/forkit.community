@@ -4,7 +4,8 @@
  * empty, a link points somewhere — and that does not need a parse tree.
  */
 
-const H1 = /<h1\b[^>]*>([\s\S]*?)<\/h1>/i;
+const TITLE = /<title[^>]*>([\s\S]*?)<\/title>/i;
+const SCRIPT_OR_STYLE = /<(script|style)\b[\s\S]*?<\/\1>/gi;
 const TAG = /<[^>]*>/g;
 const HREF = /<a\b[^>]*\shref=["']([^"']*)["']/gi;
 
@@ -15,11 +16,22 @@ const stripTags = (html: string): string =>
     .replace(/\s+/g, " ")
     .trim();
 
-/** Text of the first <h1>, tags stripped. `null` when there is no <h1> at all. */
-export const headingText = (html: string): string | null => {
-  const match = H1.exec(html);
+/** Contents of <title>, or `null` when the document has none. */
+export const pageTitle = (html: string): string | null => {
+  const match = TITLE.exec(html);
   return match?.[1] === undefined ? null : stripTags(match[1]);
 };
+
+/**
+ * Rendered text, with script and style contents removed.
+ *
+ * Used as a volume signal rather than for its content: an empty shell, a
+ * meta-refresh stub or a page whose data failed to load all collapse to
+ * almost nothing, while any real page on this site clears several hundred
+ * characters comfortably.
+ */
+export const visibleText = (html: string): string =>
+  stripTags(html.replace(SCRIPT_OR_STYLE, " "));
 
 const SKIPPED_PROTOCOLS = ["mailto:", "tel:", "javascript:", "data:"];
 

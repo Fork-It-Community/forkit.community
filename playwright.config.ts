@@ -10,7 +10,16 @@ import { defineConfig, devices } from "@playwright/test";
  * target hostname rather than from a second variable, so contributors only
  * ever have one thing to know about.
  */
-const baseURL = process.env.E2E_BASE_URL ?? "http://localhost:4321";
+/**
+ * A dedicated port, not Astro's default 4321. Sharing it means a dev server
+ * someone left running gets picked up instead — and a dev server serves pages
+ * but generates no sitemap and no robots.txt, so the suite would quietly test
+ * something other than what ships.
+ */
+const LOCAL_PORT = 4329;
+const localURL = `http://localhost:${LOCAL_PORT}`;
+
+const baseURL = process.env.E2E_BASE_URL ?? localURL;
 
 /**
  * Vercel preview deployments are protected by default. Without this header
@@ -49,10 +58,12 @@ export default defineConfig({
     ? {}
     : {
         webServer: {
-          command: "pnpm build:node && pnpm preview",
-          url: "http://localhost:4321",
-          reuseExistingServer: !process.env.CI,
-          // A cold build renders every satori asset template; not fast.
+          command: `pnpm build:node && pnpm preview --port ${LOCAL_PORT}`,
+          url: localURL,
+          // Never reuse: a server left over from an earlier run would serve a
+          // stale build. To iterate without rebuilding, start a server by hand
+          // and point E2E_BASE_URL at it.
+          reuseExistingServer: false,
           timeout: 300_000,
         },
       }),
