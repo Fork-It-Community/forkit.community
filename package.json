@@ -10,10 +10,12 @@
     "lint": "astro check",
     "preview": "astro preview --node",
     "astro": "astro",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test:e2e": "playwright install chromium && playwright test",
+    "test:e2e:ui": "playwright install chromium && playwright test --ui"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx,json,astro}": "prettier --write src/"
+    "*.{ts,tsx,js,jsx,json,astro}": "prettier --write"
   },
   "dependencies": {
     "@astrojs/check": "0.9.9",
@@ -80,6 +82,7 @@
     "vaul": "1.1.2"
   },
   "devDependencies": {
+    "@playwright/test": "1.62.1",
     "@tailwindcss/typography": "0.5.19",
     "@types/adm-zip": "0.5.8",
     "@types/qrcode": "1.5.6",
