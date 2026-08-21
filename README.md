@@ -92,9 +92,13 @@ request, because the preview URL is only known once Vercel has finished — and
 because a `deployment_status` workflow can read secrets on Dependabot pull
 requests, which is exactly where this suite earns its keep.
 
-It needs one repository secret, `VERCEL_AUTOMATION_BYPASS_SECRET`. Preview
-deployments are protection-enabled by default, and without it every request
-returns 401.
+No secret is needed as things stand: preview deployments on this project are
+publicly reachable. If Deployment Protection is ever switched on, every
+request will start returning 401 — at that point generate a bypass token in
+Vercel (Settings → Deployment Protection → Protection Bypass for Automation)
+and add it as a repository secret named `VERCEL_AUTOMATION_BYPASS_SECRET`.
+The workflow already passes it through and the suite already sends it as a
+header when it is present, so nothing else needs changing.
 
 One consequence worth knowing: because the run is tied to a deployment, it
 reports nothing at all when Vercel does not deploy. If this is ever made a
