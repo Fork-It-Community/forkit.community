@@ -99,8 +99,8 @@ importers:
         specifier: 0.13.3
         version: 0.13.3(astro@7.0.3(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(typescript@5.9.3)
       better-result:
-        specifier: 2.9.2
-        version: 2.9.2
+        specifier: 3.0.1
+        version: 3.0.1
       class-variance-authority:
         specifier: 0.7.1
         version: 0.7.1
@@ -2582,8 +2582,8 @@ packages:
   before-after-hook@4.0.0:
     resolution: {integrity: sha512-q6tR3RPqIB1pMiTRMFcZwuG5T8vwp+vUvEG0vuI6B+Rikh5BfPp2fQ82c925FOs+b0lcFQ8CFrL+KbilfZFhOQ==}
 
-  better-result@2.9.2:
-    resolution: {integrity: sha512-WIFoBPCdnTOdk9inkE1ZRvCZ4P0CpSkAiLlchC65N7n9DcjZ3NhqkBOlafzpOVnO8ixyi37kicmSJ3ENhPZl7Q==}
+  better-result@3.0.1:
+    resolution: {integrity: sha512-rnCeqEXkKPHmz5MO5ZroPRDyHe4YvlNPyy7qj8cVcWs/GnvSvC3086G74/220W+wWcIWlXgzvcjskFV0A4blUQ==}
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -7265,7 +7265,7 @@ snapshots:
 
   before-after-hook@4.0.0: {}
 
-  better-result@2.9.2: {}
+  better-result@3.0.1: {}
 
   binary-extensions@2.3.0: {}
 
