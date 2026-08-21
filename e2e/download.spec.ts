@@ -1,5 +1,5 @@
+import AdmZip from "adm-zip";
 import { expect, test } from "@playwright/test";
-import { binaryProblems, checkBinaries } from "./support/assert";
 import { fetchSitemapPaths } from "./support/sitemap";
 import { newestEvents } from "./support/select";
 
@@ -8,11 +8,10 @@ import { newestEvents } from "./support/select";
  * image sweep: this is the one asset endpoint built on adm-zip rather than
  * satori, so it breaks for entirely different reasons.
  *
- * Size only — parsing the archive would mean adding adm-zip as a test
- * dependency to learn very little more than "it is not empty".
+ * Fetched once — it is a ~10MB response and the slowest request in the suite
+ * — and every assertion is made against that one body.
  */
 
-const ARCHIVE_TYPE = /zip/;
 const MIN_ARCHIVE_BYTES = 100_000;
 
 test("the event asset bundle downloads", async ({ request }) => {
@@ -20,9 +19,17 @@ test("the event asset bundle downloads", async ({ request }) => {
   const [event] = newestEvents(paths, 1);
   expect(event, "no event found in the sitemap").toBeTruthy();
 
-  const checks = await checkBinaries(request, [`${event}/assets/download`]);
-  expect(
-    binaryProblems(checks, ARCHIVE_TYPE, MIN_ARCHIVE_BYTES),
-    "asset bundle",
-  ).toEqual([]);
+  const response = await request.get(`${event}/assets/download`);
+  expect(response.status(), "asset bundle status").toBe(200);
+  expect(response.headers()["content-type"] ?? "").toMatch(/zip/);
+
+  const body = await response.body();
+  expect(body.length, "asset bundle size").toBeGreaterThan(MIN_ARCHIVE_BYTES);
+
+  // adm-zip is what builds this response, so it is also what a bad bump of
+  // adm-zip would break — and it would break it into something with the right
+  // status, the right content-type and roughly the right size. Reading the
+  // entries back is the only assertion here that would notice.
+  const entries = new AdmZip(body).getEntries();
+  expect(entries.length, "entries in the asset bundle").toBeGreaterThan(0);
 });

@@ -55,10 +55,23 @@ test("the search palette finds and opens a result", async ({
     timeout: 45_000,
   });
 
-  await input.fill(query);
-  await expect(results.first(), `no result for "${query}"`).toBeVisible();
+  // With an empty query the palette lists the entire index — 157 entries at
+  // the time of writing, four of which already match the term below. So
+  // neither "an option is visible" nor "an option matches the query" proves
+  // anything on its own: both hold before a single key is pressed. Waiting
+  // for the count to change is what actually proves the search ran.
+  const unfilteredCount = await results.count();
+  expect(unfilteredCount, "palette should list the index").toBeGreaterThan(1);
 
-  await results.first().click();
+  await input.fill(query);
+  await expect(results, "typing should narrow the list").not.toHaveCount(
+    unfilteredCount,
+  );
+
+  const match = results.filter({ hasText: query }).first();
+  await expect(match, `no result matching "${query}"`).toBeVisible();
+
+  await match.click();
   await page.waitForURL((url) => url.pathname !== "/");
   await expect(page.locator("body")).not.toBeEmpty();
 });

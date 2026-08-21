@@ -31,6 +31,11 @@ jobs:
           # suite reads vercel.json from the checkout and it has to match
           # what is actually running at the preview URL.
           ref: ${{ github.event.deployment.sha }}
+          # This checkout is attacker-influenced: on a pull request the
+          # deployed sha is contributor code, and `pnpm install` runs the
+          # repository's own `prepare` script from it. Nothing after this
+          # step needs git auth, so don't leave the token in .git/config.
+          persist-credentials: false
 
       - uses: pnpm/action-setup@v4
 

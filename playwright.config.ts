@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
+import { isVercelTarget } from "./e2e/support/target";
 
 /**
  * A single environment switch: `E2E_BASE_URL`.
@@ -22,10 +23,17 @@ const localURL = `http://localhost:${LOCAL_PORT}`;
 const baseURL = process.env.E2E_BASE_URL ?? localURL;
 
 /**
- * Vercel preview deployments are protected by default. Without this header
- * every single request comes back as a 401 from Vercel's auth wall.
+ * Sent only when Deployment Protection is on, and only to Vercel hosts.
+ *
+ * The host check matters: `E2E_BASE_URL` is free-form, so without it a
+ * mistyped or hostile target would receive a credential that bypasses
+ * protection on every deployment of this project. Same predicate the
+ * redirect spec gates on, so the config and the suite agree on what
+ * "a Vercel target" means.
  */
-const bypassSecret = process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
+const bypassSecret = isVercelTarget(baseURL)
+  ? process.env.VERCEL_AUTOMATION_BYPASS_SECRET
+  : undefined;
 
 export default defineConfig({
   testDir: "./e2e",
