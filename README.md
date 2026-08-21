@@ -39,6 +39,68 @@ pnpm run build:node
 pnpm run preview
 ```
 
+## ✅ End-to-end tests
+
+```bash
+pnpm test:e2e
+```
+
+That is the whole thing. It builds the site with the node adapter, serves it
+on port 4329, runs the suite against it, and shuts down. The first run
+downloads Chromium (~150MB); later runs do not. No environment variables and
+no secrets are needed.
+
+To run against something already deployed instead of building locally:
+
+```bash
+E2E_BASE_URL=https://your-preview.vercel.app pnpm test:e2e
+```
+
+`E2E_BASE_URL` is the only switch. When it is set, nothing is built and
+nothing is served — the suite just points at that target.
+
+### What it covers
+
+Eleven specs, deliberately thin. Eight run over plain HTTP with no browser at
+all, which is sound here because the site has no client-side router: following
+a link over HTTP is equivalent to clicking it. The three that do launch a
+browser cover the only things that are not — the search palette, the attendee
+form, and the nav menus, whose links do not exist until their island hydrates.
+
+Assertions are structural — status codes, content types, a non-empty title, a
+floor on rendered text or image size. They never mention actual content, so
+adding an event or a person does not break them. URLs come from the sitemap
+rather than a hard-coded list, so new content is swept automatically and
+drafts are excluded for free.
+
+### Green locally is weaker than green in CI
+
+A local run serves the site through the **node** adapter. CI runs against a
+real **Vercel** preview. Vercel-only behaviour therefore cannot be covered
+locally and is skipped:
+
+- the ~20 redirects in `vercel.json`, which are applied at Vercel's edge
+- ISR, and Vercel's image service
+
+So a local pass means "nothing is broken in the app", not "nothing is broken
+in production". CI is the authority.
+
+### In CI
+
+The workflow is triggered by Vercel's `deployment_status`, not by the pull
+request, because the preview URL is only known once Vercel has finished — and
+because a `deployment_status` workflow can read secrets on Dependabot pull
+requests, which is exactly where this suite earns its keep.
+
+It needs one repository secret, `VERCEL_AUTOMATION_BYPASS_SECRET`. Preview
+deployments are protection-enabled by default, and without it every request
+returns 401.
+
+One consequence worth knowing: because the run is tied to a deployment, it
+reports nothing at all when Vercel does not deploy. If this is ever made a
+required status check, a pull request in that situation cannot be merged
+without an admin bypass.
+
 ## 🚀 Project Structure
 
 Inside the project, you'll see the following folders and files:
@@ -46,6 +108,7 @@ Inside the project, you'll see the following folders and files:
 ```text
 /
 ├── components.json          # Component registry/configuration
+├── e2e/                     # End-to-end tests (Playwright)
 ├── package.json
 ├── public/                  # Static assets (served at site root)
 ├── scripts/                 # Utility scripts for development

@@ -1,0 +1,58 @@
+name: E2E
+
+# Triggered by Vercel's deployment status rather than by the pull request.
+#
+# Two reasons. The preview URL is only known once Vercel has finished, and a
+# `deployment_status` workflow runs in the base repository's context — so it
+# has access to secrets on Dependabot pull requests, which a `pull_request`
+# workflow does not. Gating dependency bumps is the whole point of this suite,
+# so that difference decides the trigger.
+on:
+  deployment_status:
+
+concurrency:
+  group: e2e-${{ github.event.deployment.sha }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  e2e:
+    # Preview deployments only, and only once they have actually succeeded.
+    if: >-
+      github.event.deployment_status.state == 'success' &&
+      github.event.deployment.environment == 'Preview'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The commit that was deployed, not the tip of the branch — the
+          # suite reads vercel.json from the checkout and it has to match
+          # what is actually running at the preview URL.
+          ref: ${{ github.event.deployment.sha }}
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm exec playwright install --with-deps chromium
+
+      - run: pnpm exec playwright test
+        env:
+          E2E_BASE_URL: ${{ github.event.deployment_status.environment_url }}
+          # Preview deployments are protected by default; without this every
+          # request comes back 401 from Vercel's auth wall.
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
