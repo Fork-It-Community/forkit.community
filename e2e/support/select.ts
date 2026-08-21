@@ -43,7 +43,11 @@ export const personPaths = (paths: string[]): string[] =>
  * single group of people is a permanent blind spot.
  */
 export const evenlySpaced = <T>(items: T[], count: number): T[] => {
+  if (count <= 0) return [];
   if (items.length <= count) return [...items];
+  // The step below divides by count - 1, which is a division by zero for a
+  // sample of one.
+  if (count === 1) return items[0] === undefined ? [] : [items[0]];
   const step = (items.length - 1) / (count - 1);
   return Array.from({ length: count }, (_, index) => {
     const item = items[Math.round(index * step)];
