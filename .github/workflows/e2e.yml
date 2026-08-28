@@ -25,7 +25,7 @@ jobs:
       github.event.deployment.environment == 'Preview'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # The commit that was deployed, not the tip of the branch — the
           # suite reads vercel.json from the checkout and it has to match
@@ -37,14 +37,10 @@ jobs:
           # step needs git auth, so don't leave the token in .git/config.
           persist-credentials: false
 
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v4
+      - uses: pnpm/setup@v2
         with:
-          node-version: 24
-          cache: pnpm
-
-      - run: pnpm install --frozen-lockfile
+          cache: true
+          runtime: node@24
 
       - run: pnpm exec playwright install --with-deps chromium
 
