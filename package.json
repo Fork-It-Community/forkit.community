@@ -97,12 +97,5 @@
   "engines": {
     "node": ">=22.12.0"
   },
-  "devEngines": {
-    "runtime": {
-      "name": "node",
-      "version": "^24.20.0",
-      "onFail": "download"
-    }
-  },
   "packageManager": "pnpm@11.22.0"
 }
