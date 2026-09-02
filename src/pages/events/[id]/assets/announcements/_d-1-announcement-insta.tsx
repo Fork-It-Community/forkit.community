@@ -6,17 +6,20 @@ import {
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate } from "@/lib/events";
-import { getEventData } from "./_utils";
+import { getEventData } from "../_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
+import { RoundedSpeakers } from "@/generated-assets/components/RoundedSpeakers";
 import { SponsorLogosInsta } from "@/generated-assets/components/SponsorLogos";
 import { EventBanner } from "@/generated-assets/components/EventBanner";
+import type { ImageMetadata } from "astro";
+import { getNumberOfApprovedGuests } from "@/lib/luma/utils";
 
 export const config: AssetImageConfig = {
   width: 1080,
   height: 1350,
 };
 
-export function d30announcementInsta(options: {
+export function d1announcementInsta(options: {
   width: number;
   height: number;
 }) {
@@ -29,6 +32,18 @@ export function d30announcementInsta(options: {
           await getAstroImageBase64(coOrganiser.data.logos.noBgSquare),
       ),
     );
+
+    const speakerImages = await Promise.all(
+      event.data._computed.speakers
+        .filter(
+          (s): s is typeof s & { data: { avatar: ImageMetadata } } =>
+            s.data.avatar != null,
+        )
+        .slice(0, 3)
+        .map((s) => getAstroImageBase64(s.data.avatar)),
+    );
+
+    const approvedGuestsNumber = await getNumberOfApprovedGuests(event);
 
     const coOrganizersIds = event.__coOrganizers.map(
       (coOrganiser) => coOrganiser.id,
@@ -76,6 +91,7 @@ export function d30announcementInsta(options: {
             style={{
               display: "flex",
               flexDirection: "column",
+              gap: 24,
             }}
           >
             <div
@@ -88,13 +104,13 @@ export function d30announcementInsta(options: {
               <div
                 style={{
                   display: "flex",
-                  fontSize: 180,
+                  fontSize: 192,
                   fontWeight: 500,
                   lineHeight: 1,
                   color: COLORS.primary,
                 }}
               >
-                30
+                01
               </div>
               <div
                 style={{
@@ -105,7 +121,7 @@ export function d30announcementInsta(options: {
                 <div
                   style={{
                     display: "flex",
-                    fontSize: 72,
+                    fontSize: 76,
                     fontWeight: 500,
                     lineHeight: 1,
                     color: COLORS.primary,
@@ -117,7 +133,7 @@ export function d30announcementInsta(options: {
                 <div
                   style={{
                     display: "flex",
-                    fontSize: 72,
+                    fontSize: 76,
                     fontWeight: 500,
                     lineHeight: 1,
                     color: COLORS.white,
@@ -139,7 +155,15 @@ export function d30announcementInsta(options: {
                 opacity: 0.8,
               }}
             >
-              Secure your spot now!
+              <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+                <RoundedSpeakers speakerImages={speakerImages} />
+                <div style={{ display: "flex", height: "fit-content" }}>
+                  Join us to meet {approvedGuestsNumber} people
+                </div>
+              </div>
+              <div style={{ display: "flex" }}>
+                sharing real-life experiences
+              </div>
             </div>
           </div>
           <div
@@ -248,4 +272,4 @@ export function d30announcementInsta(options: {
   };
 }
 
-export default d30announcementInsta(config);
+export default d1announcementInsta(config);

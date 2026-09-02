@@ -6,20 +6,17 @@ import {
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate } from "@/lib/events";
-import { getEventData } from "./_utils";
+import { getEventData } from "../_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
-import { RoundedSpeakers } from "@/generated-assets/components/RoundedSpeakers";
 import { SponsorLogos } from "@/generated-assets/components/SponsorLogos";
 import { EventBanner } from "@/generated-assets/components/EventBanner";
-import type { ImageMetadata } from "astro";
-import { getNumberOfApprovedGuests } from "@/lib/luma/utils";
 
 export const config: AssetImageConfig = {
   width: 1920,
   height: 1080,
 };
 
-export function d1announcement(options: { width: number; height: number }) {
+export function d30announcement(options: { width: number; height: number }) {
   return async ({ params }: { params: { id: string } }) => {
     const event = await getEventData(params.id);
     const postCover = await getAstroImageBase64(event.data.image.media);
@@ -30,20 +27,10 @@ export function d1announcement(options: { width: number; height: number }) {
       ),
     );
 
-    const speakerImages = await Promise.all(
-      event.data._computed.speakers
-        .filter(
-          (s): s is typeof s & { data: { avatar: ImageMetadata } } =>
-            s.data.avatar != null,
-        )
-        .slice(0, 3)
-        .map((s) => getAstroImageBase64(s.data.avatar)),
-    );
-    const approvedGuestsNumber = await getNumberOfApprovedGuests(event);
-
     const coOrganizersIds = event.__coOrganizers.map(
       (coOrganiser) => coOrganiser.id,
     );
+
     const sponsorLogos = await Promise.all(
       event.__sponsors
         .filter((sponsor) => !coOrganizersIds.includes(sponsor.id))
@@ -70,6 +57,7 @@ export function d1announcement(options: { width: number; height: number }) {
           height={options.height}
         />
         <EventBanner event={event} width={options.width} />
+
         <div
           style={{
             zIndex: 100,
@@ -86,7 +74,6 @@ export function d1announcement(options: { width: number; height: number }) {
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: 24,
             }}
           >
             <div
@@ -105,7 +92,7 @@ export function d1announcement(options: { width: number; height: number }) {
                   color: COLORS.primary,
                 }}
               >
-                01
+                30
               </div>
               <div
                 style={{
@@ -142,7 +129,6 @@ export function d1announcement(options: { width: number; height: number }) {
             <div
               style={{
                 display: "flex",
-                flexDirection: "column",
                 fontSize: 54,
                 fontWeight: 500,
                 lineHeight: 1,
@@ -150,15 +136,7 @@ export function d1announcement(options: { width: number; height: number }) {
                 opacity: 0.8,
               }}
             >
-              <div style={{ display: "flex", gap: 12 }}>
-                <RoundedSpeakers speakerImages={speakerImages} />
-                <div style={{ display: "flex" }}>
-                  Join us to meet {approvedGuestsNumber} people
-                </div>
-              </div>
-              <div style={{ display: "flex" }}>
-                sharing real-life experiences
-              </div>
+              Secure your spot now!
             </div>
           </div>
 
@@ -255,4 +233,4 @@ export function d1announcement(options: { width: number; height: number }) {
   };
 }
 
-export default d1announcement(config);
+export default d30announcement(config);

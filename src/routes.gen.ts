@@ -19,7 +19,14 @@ const ROUTES_CONFIG = {
     ":id": {
       "assets": {
         ":__image.:__type": {},
-        "download": {}
+        "announcements": {},
+        "banners": {},
+        "cfp": {},
+        "download": {},
+        "qrcode": {},
+        "save-the-date": {},
+        "schedule": {},
+        "tickets": {}
       },
       "attendee": {
         ":name": {
