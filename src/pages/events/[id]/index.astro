@@ -366,8 +366,9 @@ const validKeynotes = keynoteSection.filter(
                       1 && "grid-cols-2",
                   )}
                 >
-                  {event.data.afterEventContent.photos.sources?.map(
-                    (item, index) =>
+                  {event.data.afterEventContent.photos.sources
+                    ?.slice(0, 4)
+                    .map((item, index) =>
                       !item ? null : event.data.afterEventContent?.photos
                           .href ? (
                         <a
@@ -407,7 +408,7 @@ const validKeynotes = keynoteSection.filter(
                           />
                         </div>
                       ),
-                  )}
+                    )}
                 </div>
               )}
 
