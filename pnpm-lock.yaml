@@ -39,8 +39,8 @@ importers:
         specifier: 0.3.1
         version: 0.3.1
       '@fontsource-variable/inter':
-        specifier: 5.2.8
-        version: 5.2.8
+        specifier: 5.3.0
+        version: 5.3.0
       '@fontsource/tomorrow':
         specifier: 5.2.8
         version: 5.2.8
@@ -922,8 +922,8 @@ packages:
   '@floating-ui/utils@0.2.8':
     resolution: {integrity: sha512-kym7SodPp8/wloecOpcmSnWJsK7M0E5Wg8UcFA+uO4B9s5d0ywXOEro/8HM9x0rW+TljRzul/14UYz3TleT3ig==}
 
-  '@fontsource-variable/inter@5.2.8':
-    resolution: {integrity: sha512-kOfP2D+ykbcX/P3IFnokOhVRNoTozo5/JxhAIVYLpea/UBmCQ/YWPBfWIDuBImXX/15KH+eKh4xpEUyS2sQQGQ==}
+  '@fontsource-variable/inter@5.3.0':
+    resolution: {integrity: sha512-OupL48va4JNofb97w6NYeF9S7W/kHNKM0Er8Dem5nqi4jeOLrVJDoE8tZEpnMJmtkvNbB1EIPPwHcdkF6b1oUA==}
 
   '@fontsource/tomorrow@5.2.8':
     resolution: {integrity: sha512-g3s6EpjhEXB1qW35LVmKLaHOruWEHBz7MomiJBVkLaW+IqLVavV9hI74g+c3DMnNJ7/09yw6odrhfpFIakJBoA==}
@@ -5670,7 +5670,7 @@ snapshots:
 
   '@floating-ui/utils@0.2.8': {}
 
-  '@fontsource-variable/inter@5.2.8': {}
+  '@fontsource-variable/inter@5.3.0': {}
 
   '@fontsource/tomorrow@5.2.8': {}
 
