@@ -4,7 +4,7 @@ import {
   type AssetImageConfig,
 } from "@/generated-assets/image";
 import { COLORS } from "@/generated-assets/theme";
-import { getEventData } from "./_utils";
+import { getEventData } from "../_utils";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import QRCode from "qrcode";
