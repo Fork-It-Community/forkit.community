@@ -1,0 +1,66 @@
+---
+import { getEventWithComputed } from "@/lib/events";
+import { buttonVariants } from "@/components/ui/button";
+import { Image } from "astro:assets";
+import { MdChevronRight } from "react-icons/md";
+
+interface Props {
+  eventId: string;
+}
+
+const { eventId } = Astro.props;
+const event = await getEventWithComputed(eventId);
+const photos = event.data.afterEventContent?.photos;
+const sources = (photos?.sources ?? []).filter(Boolean).slice(0, 5);
+
+const HALF_WIDTH_PX = 110; // max horizontal spread from center
+const SCALE_FALLOFF = 0.1; // scale reduction per unit distance from center
+
+const count = sources.length;
+const positions = sources.map((_, i) => {
+  const positionRatio = count > 1 ? (2 * i) / (count - 1) - 1 : 0; // -1 (left) → +1 (right)
+  return {
+    translateX: Math.round(positionRatio * HALF_WIDTH_PX),
+    scale: +(1 - Math.abs(positionRatio) * SCALE_FALLOFF).toFixed(2),
+    zIndex: Math.round((1 - Math.abs(positionRatio)) * count),
+  };
+});
+---
+
+<a
+  href={photos?.href}
+  target="_blank"
+  rel="noreferrer"
+  class="group flex h-full flex-col gap-6 overflow-hidden rounded-2xl bg-white/5 p-6 transition hover:bg-white/10"
+>
+  <div>
+    <h2 class="font-heading text-xl font-bold uppercase text-primary">
+      Event Vibes
+    </h2>
+    <p class="text-sm text-white/80">Some pictures of our events</p>
+  </div>
+
+  {
+    sources.length > 0 && (
+      <div class="relative flex h-52 items-center justify-center">
+        {sources.map((source, i) => (
+          <Image
+            src={source!.image}
+            alt={source!.alt ?? ""}
+            width={300}
+            height={400}
+            class="shadow-photo-glow absolute h-40 w-28 rounded-xl object-cover"
+            style={`translate: ${positions[i]?.translateX}px 0; scale: ${positions[i]?.scale}; z-index: ${positions[i]?.zIndex};`}
+          />
+        ))}
+      </div>
+    )
+  }
+
+  <span
+    class={`${buttonVariants({ variant: "secondary-dark", size: "lg" })} pointer-events-none mt-auto group-hover:bg-black group-hover:text-foreground`}
+  >
+    Event Photos
+    <MdChevronRight />
+  </span>
+</a>
