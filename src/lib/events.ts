@@ -392,7 +392,9 @@ export function getEventDisplayDate(
   ] as const;
 
   if (DRAFT_STATUSES.includes(event.data.status)) {
-    return `Coming in ${dayjs(event.data.date).locale("en").format("YYYY")}`;
+    const dateLabel =
+      "dateLabel" in event.data ? event.data.dateLabel : undefined;
+    return `Coming in ${dateLabel ?? dayjs(event.data.date).locale("en").format("YYYY")}`;
   }
 
   return dayjs(event.data.date).locale("en").format("MMMM DD, YYYY");
@@ -449,11 +451,7 @@ export async function getPersonEvents(
 }
 
 export type EventCtaType =
-  | "tickets"
-  | "after-event"
-  | "prospectus"
-  | "cfp"
-  | "stay-updated";
+  "tickets" | "after-event" | "prospectus" | "cfp" | "stay-updated";
 export type EventCtaTypes = ReturnType<typeof getEventCtaTypes>;
 
 export function getEventCtaTypes(event: CollectionEntry<"events">) {
@@ -666,7 +664,7 @@ export async function getRelatedEvents(event: EventComputed) {
       (a, b) =>
         score(b) - score(a) || dayjs(b.data.date).diff(dayjs(a.data.date)),
     )
-    .slice(0, 2);
+    .slice(0, 3);
 }
 export const EVENT_TYPES = {
   events: { label: "Full Day Events", slug: "event" },

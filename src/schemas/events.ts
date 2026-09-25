@@ -24,6 +24,7 @@ export const zEventBasicInfo = ({ image }: SchemaContext) =>
       "published",
       "cancelled",
     ]),
+    dateLabel: z.string().optional(),
     coOrganizers: z.array(reference("partners")).optional(),
     partners: z.array(reference("partners")).optional(),
     organizers: z
