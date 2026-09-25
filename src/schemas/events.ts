@@ -24,7 +24,12 @@ export const zEventBasicInfo = ({ image }: SchemaContext) =>
       "published",
       "cancelled",
     ]),
-    dateLabel: z.string().optional(),
+    dateLabelOverride: z
+      .string()
+      .optional()
+      .describe(
+        "Replaces the year in the 'Coming in …' label while the event has no confirmed date (status 'draft' or 'published-without-date'), e.g. 'April or May 2027'. Ignored once the event is 'published'.",
+      ),
     coOrganizers: z.array(reference("partners")).optional(),
     partners: z.array(reference("partners")).optional(),
     organizers: z

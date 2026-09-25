@@ -392,9 +392,11 @@ export function getEventDisplayDate(
   ] as const;
 
   if (DRAFT_STATUSES.includes(event.data.status)) {
-    const dateLabel =
-      "dateLabel" in event.data ? event.data.dateLabel : undefined;
-    return `Coming in ${dateLabel ?? dayjs(event.data.date).locale("en").format("YYYY")}`;
+    const dateLabelOverride =
+      "dateLabelOverride" in event.data
+        ? event.data.dateLabelOverride
+        : undefined;
+    return `Coming in ${dateLabelOverride ?? dayjs(event.data.date).locale("en").format("YYYY")}`;
   }
 
   return dayjs(event.data.date).locale("en").format("MMMM DD, YYYY");
