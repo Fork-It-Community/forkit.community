@@ -37,7 +37,7 @@ jobs:
           # step needs git auth, so don't leave the token in .git/config.
           persist-credentials: false
 
-      - uses: pnpm/setup@v2
+      - uses: pnpm/setup@v3
         with:
           cache: true
           runtime: node@24
