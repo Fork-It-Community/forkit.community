@@ -6,20 +6,17 @@ import {
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate } from "@/lib/events";
-import { getEventData } from "./_utils";
+import { getEventData } from "../_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
-import { RoundedSpeakers } from "@/generated-assets/components/RoundedSpeakers";
 import { SponsorLogosInsta } from "@/generated-assets/components/SponsorLogos";
 import { EventBanner } from "@/generated-assets/components/EventBanner";
-import type { ImageMetadata } from "astro";
-import { getNumberOfApprovedGuests } from "@/lib/luma/utils";
 
 export const config: AssetImageConfig = {
   width: 1080,
   height: 1350,
 };
 
-export function d1announcementInsta(options: {
+export function d10announcementInsta(options: {
   width: number;
   height: number;
 }) {
@@ -32,18 +29,6 @@ export function d1announcementInsta(options: {
           await getAstroImageBase64(coOrganiser.data.logos.noBgSquare),
       ),
     );
-
-    const speakerImages = await Promise.all(
-      event.data._computed.speakers
-        .filter(
-          (s): s is typeof s & { data: { avatar: ImageMetadata } } =>
-            s.data.avatar != null,
-        )
-        .slice(0, 3)
-        .map((s) => getAstroImageBase64(s.data.avatar)),
-    );
-
-    const approvedGuestsNumber = await getNumberOfApprovedGuests(event);
 
     const coOrganizersIds = event.__coOrganizers.map(
       (coOrganiser) => coOrganiser.id,
@@ -91,7 +76,6 @@ export function d1announcementInsta(options: {
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: 24,
             }}
           >
             <div
@@ -110,7 +94,7 @@ export function d1announcementInsta(options: {
                   color: COLORS.primary,
                 }}
               >
-                01
+                10
               </div>
               <div
                 style={{
@@ -155,15 +139,7 @@ export function d1announcementInsta(options: {
                 opacity: 0.8,
               }}
             >
-              <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-                <RoundedSpeakers speakerImages={speakerImages} />
-                <div style={{ display: "flex", height: "fit-content" }}>
-                  Join us to meet {approvedGuestsNumber} people
-                </div>
-              </div>
-              <div style={{ display: "flex" }}>
-                sharing real-life experiences
-              </div>
+              Secure your spot now!
             </div>
           </div>
           <div
@@ -272,4 +248,4 @@ export function d1announcementInsta(options: {
   };
 }
 
-export default d1announcementInsta(config);
+export default d10announcementInsta(config);
