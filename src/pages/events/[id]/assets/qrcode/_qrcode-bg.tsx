@@ -6,7 +6,7 @@ import {
 } from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
-import { getEventData } from "./_utils";
+import { getEventData } from "../_utils";
 import { lunalink } from "@bearstudio/lunalink";
 import { ROUTES } from "@/routes.gen";
 import QRCode from "qrcode";
