@@ -1,0 +1,52 @@
+---
+import StarRating from "@/components/StarRating/index.astro";
+import { cn } from "@/lib/utils-client";
+
+interface Stat {
+  value: string;
+  label: string;
+  highlighted?: boolean;
+  rating?: boolean;
+}
+
+interface Props {
+  stats: Stat[];
+}
+
+const { stats } = Astro.props;
+---
+
+<section class="mx-auto max-w-screen-xl px-6 py-8 md:py-12">
+  <div class="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-1">
+    {
+      stats.map((stat, index) => (
+        <div
+          class={cn(
+            "flex flex-col items-center justify-center gap-1 rounded-xl px-6 py-8 md:rounded-none md:px-10",
+            stat.highlighted ? "bg-primary" : "bg-white/5",
+            index === 0 && "md:rounded-l-xl",
+            index === stats.length - 1 && "md:rounded-r-xl",
+          )}
+        >
+          <span
+            class={`text-center font-heading text-3xl font-medium md:text-4xl ${stat.highlighted ? "text-black" : "text-primary"}`}
+          >
+            {stat.value}
+          </span>
+          {stat.rating && (
+            <StarRating
+              score={parseFloat(stat.value.replace(",", "."))}
+              size="sm"
+              class={stat.highlighted ? "text-black" : "text-white"}
+            />
+          )}
+          <span
+            class={`text-sm font-medium uppercase tracking-widest ${stat.highlighted ? "text-black" : "text-white"}`}
+          >
+            {stat.label}
+          </span>
+        </div>
+      ))
+    }
+  </div>
+</section>
