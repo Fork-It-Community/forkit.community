@@ -13,10 +13,10 @@ importers:
         version: 0.9.10(prettier-plugin-astro@0.14.1)(prettier@3.9.6)(typescript@5.9.3)
       '@astrojs/mdx':
         specifier: 7.0.8
-        version: 7.0.8(@astrojs/markdown-satteri@0.3.8)(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))
+        version: 7.0.8(@astrojs/markdown-satteri@0.3.8)(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))
       '@astrojs/node':
         specifier: 11.1.9
-        version: 11.1.9(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))
+        version: 11.1.9(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))
       '@astrojs/react':
         specifier: 6.0.4
         version: 6.0.4(@types/node@25.5.2)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(esbuild@0.28.2)(jiti@1.21.7)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(tsx@4.21.0)(yaml@2.9.0)
@@ -28,10 +28,10 @@ importers:
         version: 3.7.3
       '@astrojs/tailwind':
         specifier: 6.0.2
-        version: 6.0.2(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(tailwindcss@3.4.19(tsx@4.21.0)(yaml@2.9.0))
+        version: 6.0.2(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(tailwindcss@3.4.19(tsx@4.21.0)(yaml@2.9.0))
       '@astrojs/vercel':
-        specifier: 11.0.8
-        version: 11.0.8(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(react@19.2.4)
+        specifier: 11.0.16
+        version: 11.0.16(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(react@19.2.4)
       '@bearstudio/astro-typed-routes':
         specifier: 0.1.6
         version: 0.1.6
@@ -85,7 +85,7 @@ importers:
         version: 0.6.1
       astro:
         specifier: 7.2.9
-        version: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
+        version: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
       astro-robots-txt:
         specifier: 1.0.0
         version: 1.0.0
@@ -94,10 +94,10 @@ importers:
         version: 1.2.0
       astro-seo-schema:
         specifier: 7.0.0
-        version: 7.0.0(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(schema-dts@1.1.5)
+        version: 7.0.0(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(schema-dts@1.1.5)
       astrobook:
         specifier: 0.13.3
-        version: 0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(typescript@5.9.3)
+        version: 0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(typescript@5.9.3)
       better-result:
         specifier: 3.0.1
         version: 3.0.1
@@ -404,8 +404,8 @@ packages:
     resolution: {integrity: sha512-C1TLn5sPJr0x4vk56piHWKbnqlEB8BKyte5Y45V02U+D7BGO5eMqZDH5aPjnkXQWJggvmsTXxH03QMZ9NgWLzQ==}
     engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0}
 
-  '@astrojs/vercel@11.0.8':
-    resolution: {integrity: sha512-ZOlWI7qkt69BJI6b/upCOOSMGvzChvnRFRYdNhiky3fn4D6ecQXaTV2UTkJqAG6lc6ORY6mb+81bo5p3SL22Xg==}
+  '@astrojs/vercel@11.0.16':
+    resolution: {integrity: sha512-hqDyOlTkyoU8ib4EpNfDYmSN1NrBDKuEjLi6CUtUsMsb4NmvF+KrJaKH9/+VHaNNV7qpPpyuwSZGhk8GxUndig==}
     peerDependencies:
       astro: ^7.0.0
 
@@ -1253,6 +1253,9 @@ packages:
   '@oxc-project/types@0.137.0':
     resolution: {integrity: sha512-WT+Gb24i8hmvo85AIv2oEYouEXkRlKAlT9WaCa3TfLgNCN+GhrJOGZuIlMouAh38Qe4QOx26eUOVsq70qXrywA==}
 
+  '@oxc-project/types@0.155.0':
+    resolution: {integrity: sha512-SeE8JPwW1xs1tHeNycjUtUBdhorRa8o4jlvjwk49R7/Z291i+4DQa7JJIgOm/TaYQZx+QrPQbVJ/9c8dMIZN8Q==}
+
   '@playwright/test@1.62.1':
     resolution: {integrity: sha512-DTcUc8qii+cpHvtOwggMtBRMjKZHXYWdw8syRYu2vtzuq4Wxphqq4NfCs5Zt44L6mA8rfDfj+PHnxFc/FeK6mQ==}
     engines: {node: '>=20'}
@@ -1766,8 +1769,20 @@ packages:
   '@radix-ui/rect@1.1.3':
     resolution: {integrity: sha512-JtyZR+mqgBibTo8xea3B6ZRmzZiM/YeVBtUkas6zMuXjAlfIFIW2FgqeM9eLyvEaYX66vr6DJMK+4U6LV0KhNw==}
 
+  '@rolldown/binding-android-arm-eabi@1.2.15':
+    resolution: {integrity: sha512-aLcgK9gIJ3YRvrrtfSBbRa27F5WrpiTaPulnFpsHPxpUHgFlSgnU4854MHwoRGEBhfRJDWCS2WQ7lIjskE9Olw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm]
+    os: [android]
+
   '@rolldown/binding-android-arm64@1.1.3':
     resolution: {integrity: sha512-DT6Z3PhvioeHMvxo+xHc3KtqggrI7CCTXCmC2h/5zUlp5jVitv7XEy+9q5/7v8IolhlioawpMo8Kg0EEBy7J0g==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [android]
+
+  '@rolldown/binding-android-arm64@1.2.15':
+    resolution: {integrity: sha512-xD7DdZCrbThKuxNg7ooQmvp07ys4J/pnSEMTG3/OdOWl6daC67m/Q4fL78sRHMxTH/N4fGUbYhcPM0MF5WFHkg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [android]
@@ -1778,8 +1793,20 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
+  '@rolldown/binding-darwin-arm64@1.2.15':
+    resolution: {integrity: sha512-m2WuQ6r0B4OTYxyPpNLtXaMRbRDUbG8YQV2Q3KTdSSK8Th6KHCnC8jVCJt8bvYeSB5WivkkNbc85mKadaSdOxA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [darwin]
+
   '@rolldown/binding-darwin-x64@1.1.3':
     resolution: {integrity: sha512-YtiBp4disu6V560loT6PjMdiRaWmVvDNrUunAalbiFx2ggeJwxdAsgZMcoGP17uyAsTwAj5V1niksxlHnVQ1Sw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [darwin]
+
+  '@rolldown/binding-darwin-x64@1.2.15':
+    resolution: {integrity: sha512-5RtnsHM36nodM9WbMy+zip0LGS/G+y5wro5RHrpOlr4ac24+1zSi9kiV2MP1myZeZ/ifEHfulQcWjnAXzc2C2A==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [darwin]
@@ -1790,14 +1817,33 @@ packages:
     cpu: [x64]
     os: [freebsd]
 
+  '@rolldown/binding-freebsd-x64@1.2.15':
+    resolution: {integrity: sha512-g3l09pyFqhu+135JKkbkwiKGQmwU5hUMUPJ4VdBADvuqR8d33L6H578rh8m7rtxbdp+VmX/+nzI7nvhSZlzpUQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [freebsd]
+
   '@rolldown/binding-linux-arm-gnueabihf@1.1.3':
     resolution: {integrity: sha512-c+8vieQbsD7HNAHKIA34w0GJ9FedFFuJGD+7E6vz7Q3uqAIugL5p45fhlsj4UaAsHpcmlqugBWMhA0/j7o0sIg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm]
     os: [linux]
 
+  '@rolldown/binding-linux-arm-gnueabihf@1.2.15':
+    resolution: {integrity: sha512-nIe3VugI97nGQtspPxDqA4sXMUpeiocKIP/CqpY/u/vgbT+alX+cVxu1C/oVBPKg4feNTmYovE91v4DgXvXNwQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm]
+    os: [linux]
+
   '@rolldown/binding-linux-arm64-gnu@1.1.3':
     resolution: {integrity: sha512-50jD0uUwLvur7Zz9LHz17kaAdTPjn5wN93hEgjvmYFRZwiR7ZJYovTd5ipyWJDAnXKvZ+wgc+/Ika6dwSF5OcA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [linux]
+    libc: [glibc]
+
+  '@rolldown/binding-linux-arm64-gnu@1.2.15':
+    resolution: {integrity: sha512-iTBjXx+B5QSvgI89lJfmqh4wTh8NabR1YZIIN3hNx4zSG0EVfVqkOvLulNpG4251pbd6/IAmZ/LefVk1Y4rPhw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [linux]
@@ -1810,8 +1856,22 @@ packages:
     os: [linux]
     libc: [musl]
 
+  '@rolldown/binding-linux-arm64-musl@1.2.15':
+    resolution: {integrity: sha512-uN26XOnVR7rqQupG3V9oAG2EGGatWjcJHOeDOHUFCh4TBWmP2tHTFoVN13aYbwfm0aHqJAEmcwhAu6sooIjfqQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [linux]
+    libc: [musl]
+
   '@rolldown/binding-linux-ppc64-gnu@1.1.3':
     resolution: {integrity: sha512-f3VpLB1vQ0Eo6ecr/6cekLnvYMFF4YBFoVGkfkvPLq1bAkbAwHYQPZKoAmG6OJyTcxxoC+AvezGx/S1obNC0Mw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [ppc64]
+    os: [linux]
+    libc: [glibc]
+
+  '@rolldown/binding-linux-ppc64-gnu@1.2.15':
+    resolution: {integrity: sha512-9nWkcdd+H+XhaA3fQIwpHnKIrfx/PQ6rO0pivr78Og07tXlUlctBBJoEYLPfhTmCR/QxEVdn6uPjHV5SymPhdw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [ppc64]
     os: [linux]
@@ -1824,8 +1884,22 @@ packages:
     os: [linux]
     libc: [glibc]
 
+  '@rolldown/binding-linux-s390x-gnu@1.2.15':
+    resolution: {integrity: sha512-Ggh0ciFjLwIusLSLz7LZYEaGdxOAUJXI+Qu5JCbhPJJHEt8vP+IjRATTJheiJsdzzTYgUiHUiw3X1Ea3ZpMBdA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [s390x]
+    os: [linux]
+    libc: [glibc]
+
   '@rolldown/binding-linux-x64-gnu@1.1.3':
     resolution: {integrity: sha512-JJpqs8bRGITDOdbkNKnlojzBabbOHrqjSvDr0IVsZObE1lBcPjxItUEY9eWIDbxaJ3cGrXPWGfGkIxFijg/URg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [linux]
+    libc: [glibc]
+
+  '@rolldown/binding-linux-x64-gnu@1.2.15':
+    resolution: {integrity: sha512-FHg60rS6DBePAYZ9X9F67x+JObFdmgn6tupA1C/a3B+CufFmTD4mX+e8M75tCiAO3foR/6xwVBI0KQiI7sn/rw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [linux]
@@ -1838,8 +1912,21 @@ packages:
     os: [linux]
     libc: [musl]
 
+  '@rolldown/binding-linux-x64-musl@1.2.15':
+    resolution: {integrity: sha512-/cvV/7v5VGz/moiz0XKRj2dE8DzsKyhIu1KpOvJGPjRywg3yscON889UGvAe8zfiJLHup7VLjBduoGWi3HusWQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [linux]
+    libc: [musl]
+
   '@rolldown/binding-openharmony-arm64@1.1.3':
     resolution: {integrity: sha512-hQ3/PYkDJICgevvyNcVrihVeqq7k1Pp3VZ9lY+dauAYUJKO+auqApvANhvR1An9BhmqYKvW2Mu1F9u4DXSMLxQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [openharmony]
+
+  '@rolldown/binding-openharmony-arm64@1.2.15':
+    resolution: {integrity: sha512-MyzC5Hrv/sm+Z7TSGKP/j8001RO2xQm1zOpCNVL4j0cY/VhBZviludA2YFQ7i4lH6ZAXxQm0lcMdBzM+99mE7w==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [openharmony]
@@ -1855,8 +1942,20 @@ packages:
     cpu: [arm64]
     os: [win32]
 
+  '@rolldown/binding-win32-arm64-msvc@1.2.15':
+    resolution: {integrity: sha512-+PgYiS+AH5omy6L45ZLxybasauJaj3M8buoT83D+nzPmCayXlxUV9hydhciCKVyIg0B/v0BtXPDE1uGqNwCPpg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [win32]
+
   '@rolldown/binding-win32-x64-msvc@1.1.3':
     resolution: {integrity: sha512-OL4OMk7UPXOeVGGd3qo5zJyPIljf4AFgk5QAkPPS+OoLuOOozhuaQGC18MxVTnw/06q93gShAJzlwnSCY9YtqA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [win32]
+
+  '@rolldown/binding-win32-x64-msvc@1.2.15':
+    resolution: {integrity: sha512-HFZd2QNQYn1JbIi+Hpd7H+r/lkWxcfIu28nirZ6eCn2LafuvmExMlb/P96Sfx5tf7pPArw39IdhmCF8vmV+NhQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [win32]
@@ -2041,32 +2140,6 @@ packages:
   '@ungap/structured-clone@1.3.1':
     resolution: {integrity: sha512-mUFwbeTqrVgDQxFveS+df2yfap6iuP20NAKAsBt5jDEoOTDew+zwLAOilHCeQJOVSvmgCX4ogqIrA0mnyr08yQ==}
 
-  '@vercel/analytics@1.6.1':
-    resolution: {integrity: sha512-oH9He/bEM+6oKlv3chWuOOcp8Y6fo6/PSro8hEkgCW3pu9/OiCXiUpRUogDh3Fs3LH2sosDrx8CxeOLBEE+afg==}
-    peerDependencies:
-      '@remix-run/react': ^2
-      '@sveltejs/kit': ^1 || ^2
-      next: '>= 13'
-      react: ^18 || ^19 || ^19.0.0-rc
-      svelte: '>= 4'
-      vue: ^3
-      vue-router: ^4
-    peerDependenciesMeta:
-      '@remix-run/react':
-        optional: true
-      '@sveltejs/kit':
-        optional: true
-      next:
-        optional: true
-      react:
-        optional: true
-      svelte:
-        optional: true
-      vue:
-        optional: true
-      vue-router:
-        optional: true
-
   '@vercel/analytics@2.0.1':
     resolution: {integrity: sha512-MTQG6V9qQrt1tsDeF+2Uoo5aPjqbVPys1xvnIftXSJYG2SrwXRHnqEvVoYID7BTruDz4lCd2Z7rM1BdkUehk2g==}
     peerDependencies:
@@ -2096,15 +2169,15 @@ packages:
       vue-router:
         optional: true
 
-  '@vercel/cli-config@0.2.3':
-    resolution: {integrity: sha512-Ggh0Wmi92TUkUexmSUPkkDtvJmbjUr7IvF5T3FkSsWrXXs3GFzOujfxFpECdJZpux1JG4SWDv9BT4w++TDgD6A==}
+  '@vercel/cli-config@0.3.3':
+    resolution: {integrity: sha512-5T0ZtIFgcFHuPFuuoJKno5ZeKvLQGiS/JAFMI1zG1HBw2dklScoHdA0LDb/SoeRYD53N33iXFAqyRA0tHLhdnQ==}
 
   '@vercel/cli-exec@1.0.1':
     resolution: {integrity: sha512-g9XerViJ/paZujufXYcu5XYI2vU2rtB4sgdpjUHde5RnOkdmpu0ngH46LCFGHoPXO/C+qDPSczIHIRN+8Q2YKQ==}
     engines: {node: '>= 18'}
 
-  '@vercel/functions@3.9.2':
-    resolution: {integrity: sha512-yz1WkUftukJXPWAze3eEKwO72beNOYjukB3369zwyTHAc6klTZTY5MOB6UZKZEvAlCSyGFWo/uf/r0lEr/s6kQ==}
+  '@vercel/functions@3.10.3':
+    resolution: {integrity: sha512-EjMUf+myWckV9vj5FbzRG1wQP1IFRgmlOu2ho1FiFTjLs1mFnY4dxeI8Swk9pszj4jv/jGdvlmqRKHipuEt5bw==}
     engines: {node: '>= 20'}
     peerDependencies:
       '@aws-sdk/credential-provider-web-identity': '*'
@@ -2115,17 +2188,17 @@ packages:
       ws:
         optional: true
 
-  '@vercel/nft@1.10.2':
-    resolution: {integrity: sha512-w+WyX5Ulmj4dtTZrxaulqrjaLZHSbnPzx75SJsTNYmotKsqn1JlLnDJa+lz5hn90HJofhl/2MAtw0mCrgM3qYw==}
+  '@vercel/nft@1.11.0':
+    resolution: {integrity: sha512-m1QFg+U+3yPOnP1xSYJ73UIRxLOXdts1JOhiOiyPYqEsALgrXFFINvgUaD6R6iNvaBFAjHllBCbkfx4FuOdpaA==}
     engines: {node: '>=20'}
     hasBin: true
 
-  '@vercel/oidc@3.8.3':
-    resolution: {integrity: sha512-FmKJ7Fic8CnHvEagfOK1VRczvg83WHQYAJinUMMuxFw5VHpGXeZ9abfP1+5a8SxhTazsTtPFCMBSrjf/heAWBQ==}
+  '@vercel/oidc@4.0.3':
+    resolution: {integrity: sha512-0sljpA/leE1vLkY7DVOs/z/OH6x1hgKhrF+IY2YdbRYm/6UnQjeu0SMnzOKLtkJWp13srUFkWdir4iU3feFYfg==}
     engines: {node: '>= 20'}
 
-  '@vercel/routing-utils@5.3.3':
-    resolution: {integrity: sha512-KYm2sLNUD48gDScv8ob4ejc3Gww2jcJyW80hTdYlenAPz/5BQar1Gyh38xrUuZ532TUwSb5mV1uRbAuiykq0EQ==}
+  '@vercel/routing-utils@6.6.0':
+    resolution: {integrity: sha512-Z74zwk1ixcIsMN7Sp788SsZuOEqmJZ4N36WHusr6Vtck5eFAcjyD4oBpjDYRhkxovsh8t13s0L+uVbJYxUPa5w==}
 
   '@vitejs/plugin-react@5.2.0':
     resolution: {integrity: sha512-YmKkfhOAi3wsB1PhJq5Scj3GXMn3WvtQ/JC0xoopuHoXSdmtdStOpFrYaT1kie2YgFBcIe64ROzMYRjCrYOdYw==}
@@ -4024,6 +4097,11 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
+  rolldown@1.2.15:
+    resolution: {integrity: sha512-6odND+fel5zVw3I4Yc2e69gvguDnX0CAAGiNDZSq4ik5WUcaLrkD2GLuog0XcODbor31hZ5ayEMgVDno+KPV5g==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    hasBin: true
+
   run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
 
@@ -4777,9 +4855,9 @@ snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
 
-  '@astrobook/core@0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(typescript@5.9.3)':
+  '@astrobook/core@0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(typescript@5.9.3)':
     dependencies:
-      '@astrobook/types': 0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))
+      '@astrobook/types': 0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))
       '@sveltejs/acorn-typescript': 1.0.13(acorn@8.18.0)
       acorn: 8.18.0
       fdir: 6.5.0(picomatch@4.0.5)
@@ -4788,22 +4866,22 @@ snapshots:
       valibot: 1.4.2(typescript@5.9.3)
       yoctocolors: 2.2.0
     optionalDependencies:
-      astro: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
+      astro: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
     transitivePeerDependencies:
       - typescript
 
-  '@astrobook/types@0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))':
+  '@astrobook/types@0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))':
     optionalDependencies:
-      astro: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
+      astro: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
 
-  '@astrobook/ui@0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(typescript@5.9.3)':
+  '@astrobook/ui@0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(typescript@5.9.3)':
     dependencies:
-      '@astrobook/core': 0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(typescript@5.9.3)
-      '@astrobook/types': 0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))
+      '@astrobook/core': 0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(typescript@5.9.3)
+      '@astrobook/types': 0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))
       astro-theme-toggle: 0.8.1
       just-group-by: 2.2.0
     optionalDependencies:
-      astro: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
+      astro: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
     transitivePeerDependencies:
       - typescript
 
@@ -4953,13 +5031,13 @@ snapshots:
       github-slugger: 2.0.0
       satteri: 0.10.5
 
-  '@astrojs/mdx@7.0.8(@astrojs/markdown-satteri@0.3.8)(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))':
+  '@astrojs/mdx@7.0.8(@astrojs/markdown-satteri@0.3.8)(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))':
     dependencies:
       '@astrojs/internal-helpers': 0.10.4
       '@astrojs/markdown-remark': 7.2.4
       '@mdx-js/mdx': 3.1.1
       acorn: 8.18.0
-      astro: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
+      astro: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
       es-module-lexer: 2.1.0
       estree-util-visit: 2.0.0
       hast-util-to-html: 9.0.5
@@ -4975,10 +5053,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/node@11.1.9(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))':
+  '@astrojs/node@11.1.9(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))':
     dependencies:
       '@astrojs/internal-helpers': 0.13.0
-      astro: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
+      astro: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
       send: 1.2.1
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -5026,9 +5104,9 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 4.4.3
 
-  '@astrojs/tailwind@6.0.2(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(tailwindcss@3.4.19(tsx@4.21.0)(yaml@2.9.0))':
+  '@astrojs/tailwind@6.0.2(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(tailwindcss@3.4.19(tsx@4.21.0)(yaml@2.9.0))':
     dependencies:
-      astro: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
+      astro: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
       autoprefixer: 10.4.21(postcss@8.5.3)
       postcss: 8.5.3
       postcss-load-config: 4.0.2(postcss@8.5.3)
@@ -5043,15 +5121,15 @@ snapshots:
       is-docker: 4.0.0
       package-manager-detector: 1.6.0
 
-  '@astrojs/vercel@11.0.8(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(react@19.2.4)':
+  '@astrojs/vercel@11.0.16(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(react@19.2.4)':
     dependencies:
-      '@astrojs/internal-helpers': 0.10.4
-      '@vercel/analytics': 1.6.1(react@19.2.4)
-      '@vercel/functions': 3.9.2
-      '@vercel/nft': 1.10.2
-      '@vercel/routing-utils': 5.3.3
-      astro: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
-      esbuild: 0.28.2
+      '@astrojs/internal-helpers': 0.13.0
+      '@vercel/analytics': 2.0.1(react@19.2.4)
+      '@vercel/functions': 3.10.3
+      '@vercel/nft': 1.11.0
+      '@vercel/routing-utils': 6.6.0
+      astro: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
+      rolldown: 1.2.15
       tinyglobby: 0.2.17
     transitivePeerDependencies:
       - '@aws-sdk/credential-provider-web-identity'
@@ -5059,6 +5137,7 @@ snapshots:
       - '@sveltejs/kit'
       - encoding
       - next
+      - nuxt
       - react
       - rollup
       - supports-color
@@ -5808,6 +5887,8 @@ snapshots:
 
   '@oxc-project/types@0.137.0': {}
 
+  '@oxc-project/types@0.155.0': {}
+
   '@playwright/test@1.62.1':
     dependencies:
       playwright: 1.62.1
@@ -6270,40 +6351,79 @@ snapshots:
 
   '@radix-ui/rect@1.1.3': {}
 
+  '@rolldown/binding-android-arm-eabi@1.2.15':
+    optional: true
+
   '@rolldown/binding-android-arm64@1.1.3':
+    optional: true
+
+  '@rolldown/binding-android-arm64@1.2.15':
     optional: true
 
   '@rolldown/binding-darwin-arm64@1.1.3':
     optional: true
 
+  '@rolldown/binding-darwin-arm64@1.2.15':
+    optional: true
+
   '@rolldown/binding-darwin-x64@1.1.3':
+    optional: true
+
+  '@rolldown/binding-darwin-x64@1.2.15':
     optional: true
 
   '@rolldown/binding-freebsd-x64@1.1.3':
     optional: true
 
+  '@rolldown/binding-freebsd-x64@1.2.15':
+    optional: true
+
   '@rolldown/binding-linux-arm-gnueabihf@1.1.3':
+    optional: true
+
+  '@rolldown/binding-linux-arm-gnueabihf@1.2.15':
     optional: true
 
   '@rolldown/binding-linux-arm64-gnu@1.1.3':
     optional: true
 
+  '@rolldown/binding-linux-arm64-gnu@1.2.15':
+    optional: true
+
   '@rolldown/binding-linux-arm64-musl@1.1.3':
+    optional: true
+
+  '@rolldown/binding-linux-arm64-musl@1.2.15':
     optional: true
 
   '@rolldown/binding-linux-ppc64-gnu@1.1.3':
     optional: true
 
+  '@rolldown/binding-linux-ppc64-gnu@1.2.15':
+    optional: true
+
   '@rolldown/binding-linux-s390x-gnu@1.1.3':
+    optional: true
+
+  '@rolldown/binding-linux-s390x-gnu@1.2.15':
     optional: true
 
   '@rolldown/binding-linux-x64-gnu@1.1.3':
     optional: true
 
+  '@rolldown/binding-linux-x64-gnu@1.2.15':
+    optional: true
+
   '@rolldown/binding-linux-x64-musl@1.1.3':
     optional: true
 
+  '@rolldown/binding-linux-x64-musl@1.2.15':
+    optional: true
+
   '@rolldown/binding-openharmony-arm64@1.1.3':
+    optional: true
+
+  '@rolldown/binding-openharmony-arm64@1.2.15':
     optional: true
 
   '@rolldown/binding-wasm32-wasi@1.1.3':
@@ -6316,7 +6436,13 @@ snapshots:
   '@rolldown/binding-win32-arm64-msvc@1.1.3':
     optional: true
 
+  '@rolldown/binding-win32-arm64-msvc@1.2.15':
+    optional: true
+
   '@rolldown/binding-win32-x64-msvc@1.1.3':
+    optional: true
+
+  '@rolldown/binding-win32-x64-msvc@1.2.15':
     optional: true
 
   '@rolldown/pluginutils@1.0.0-rc.3': {}
@@ -6327,7 +6453,7 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.9
       estree-walker: 2.0.2
-      picomatch: 4.0.5
+      picomatch: 4.0.7
 
   '@shikijs/core@4.4.3':
     dependencies:
@@ -6524,15 +6650,11 @@ snapshots:
 
   '@ungap/structured-clone@1.3.1': {}
 
-  '@vercel/analytics@1.6.1(react@19.2.4)':
-    optionalDependencies:
-      react: 19.2.4
-
   '@vercel/analytics@2.0.1(react@19.2.4)':
     optionalDependencies:
       react: 19.2.4
 
-  '@vercel/cli-config@0.2.3':
+  '@vercel/cli-config@0.3.3':
     dependencies:
       xdg-app-paths: 5.5.1
       zod: 4.1.11
@@ -6541,11 +6663,11 @@ snapshots:
     dependencies:
       execa: 5.1.1
 
-  '@vercel/functions@3.9.2':
+  '@vercel/functions@3.10.3':
     dependencies:
-      '@vercel/oidc': 3.8.3
+      '@vercel/oidc': 4.0.3
 
-  '@vercel/nft@1.10.2':
+  '@vercel/nft@1.11.0':
     dependencies:
       '@mapbox/node-pre-gyp': 2.0.3
       '@rollup/pluginutils': 5.4.0
@@ -6557,20 +6679,20 @@ snapshots:
       glob: 13.0.6
       graceful-fs: 4.2.11
       node-gyp-build: 4.8.4
-      picomatch: 4.0.5
+      picomatch: 4.0.7
       resolve-from: 5.0.0
     transitivePeerDependencies:
       - encoding
       - rollup
       - supports-color
 
-  '@vercel/oidc@3.8.3':
+  '@vercel/oidc@4.0.3':
     dependencies:
-      '@vercel/cli-config': 0.2.3
+      '@vercel/cli-config': 0.3.3
       '@vercel/cli-exec': 1.0.1
       jose: 5.10.0
 
-  '@vercel/routing-utils@5.3.3':
+  '@vercel/routing-utils@6.6.0':
     dependencies:
       path-to-regexp: 6.1.0
       path-to-regexp-updated: path-to-regexp@6.3.0
@@ -6726,16 +6848,16 @@ snapshots:
       valid-filename: 4.0.0
       zod: 3.23.8
 
-  astro-seo-schema@7.0.0(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(schema-dts@1.1.5):
+  astro-seo-schema@7.0.0(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(schema-dts@1.1.5):
     dependencies:
-      astro: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
+      astro: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
       schema-dts: 1.1.5
 
   astro-seo@1.2.0: {}
 
   astro-theme-toggle@0.8.1: {}
 
-  astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0):
+  astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0):
     dependencies:
       '@astrojs/compiler-rs': 0.4.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)
       '@astrojs/internal-helpers': 0.10.4
@@ -6784,7 +6906,7 @@ snapshots:
       tinyglobby: 0.2.17
       ultrahtml: 1.6.0
       unifont: 0.7.5
-      unstorage: 1.17.5(@vercel/functions@3.9.2)
+      unstorage: 1.17.5(@vercel/functions@3.10.3)
       vite: 8.1.0(@types/node@25.5.2)(esbuild@0.28.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
       vitefu: 1.1.3(vite@8.1.0(@types/node@25.5.2)(esbuild@0.28.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.1))
       xxhash-wasm: 1.1.0
@@ -6827,13 +6949,13 @@ snapshots:
       - uploadthing
       - yaml
 
-  astrobook@0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(typescript@5.9.3):
+  astrobook@0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(typescript@5.9.3):
     dependencies:
-      '@astrobook/core': 0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(typescript@5.9.3)
-      '@astrobook/types': 0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))
-      '@astrobook/ui': 0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(typescript@5.9.3)
+      '@astrobook/core': 0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(typescript@5.9.3)
+      '@astrobook/types': 0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))
+      '@astrobook/ui': 0.13.3(astro@7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0))(typescript@5.9.3)
     optionalDependencies:
-      astro: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.9.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
+      astro: 7.2.9(@astrojs/markdown-remark@7.2.4)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.5.2)(@vercel/functions@3.10.3)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.0)
     transitivePeerDependencies:
       - typescript
 
@@ -7327,6 +7449,10 @@ snapshots:
   fdir@6.5.0(picomatch@4.0.5):
     optionalDependencies:
       picomatch: 4.0.5
+
+  fdir@6.5.0(picomatch@4.0.7):
+    optionalDependencies:
+      picomatch: 4.0.7
 
   fflate@0.7.4: {}
 
@@ -8871,6 +8997,27 @@ snapshots:
       '@rolldown/binding-win32-arm64-msvc': 1.1.3
       '@rolldown/binding-win32-x64-msvc': 1.1.3
 
+  rolldown@1.2.15:
+    dependencies:
+      '@oxc-project/types': 0.155.0
+      '@rolldown/pluginutils': 1.0.1
+    optionalDependencies:
+      '@rolldown/binding-android-arm-eabi': 1.2.15
+      '@rolldown/binding-android-arm64': 1.2.15
+      '@rolldown/binding-darwin-arm64': 1.2.15
+      '@rolldown/binding-darwin-x64': 1.2.15
+      '@rolldown/binding-freebsd-x64': 1.2.15
+      '@rolldown/binding-linux-arm-gnueabihf': 1.2.15
+      '@rolldown/binding-linux-arm64-gnu': 1.2.15
+      '@rolldown/binding-linux-arm64-musl': 1.2.15
+      '@rolldown/binding-linux-ppc64-gnu': 1.2.15
+      '@rolldown/binding-linux-s390x-gnu': 1.2.15
+      '@rolldown/binding-linux-x64-gnu': 1.2.15
+      '@rolldown/binding-linux-x64-musl': 1.2.15
+      '@rolldown/binding-openharmony-arm64': 1.2.15
+      '@rolldown/binding-win32-arm64-msvc': 1.2.15
+      '@rolldown/binding-win32-x64-msvc': 1.2.15
+
   run-parallel@1.2.0:
     dependencies:
       queue-microtask: 1.2.3
@@ -9185,8 +9332,8 @@ snapshots:
 
   tinyglobby@0.2.17:
     dependencies:
-      fdir: 6.5.0(picomatch@4.0.5)
-      picomatch: 4.0.5
+      fdir: 6.5.0(picomatch@4.0.7)
+      picomatch: 4.0.7
 
   to-regex-range@5.0.1:
     dependencies:
@@ -9306,7 +9453,7 @@ snapshots:
 
   universal-user-agent@7.0.3: {}
 
-  unstorage@1.17.5(@vercel/functions@3.9.2):
+  unstorage@1.17.5(@vercel/functions@3.10.3):
     dependencies:
       anymatch: 3.1.3
       chokidar: 5.0.0
@@ -9317,7 +9464,7 @@ snapshots:
       ofetch: 1.5.1
       ufo: 1.6.4
     optionalDependencies:
-      '@vercel/functions': 3.9.2
+      '@vercel/functions': 3.10.3
 
   update-browserslist-db@1.1.1(browserslist@4.24.4):
     dependencies:
