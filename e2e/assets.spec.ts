@@ -22,6 +22,12 @@ const IMAGE_TYPE = /^image\//;
 /** Well under the smallest real asset (~67KB), well over an empty render. */
 const MIN_IMAGE_BYTES = 5_000;
 
+const PARTNER_ASSET =
+  /\/events\/[^"'\s]+\/partners\/[^"'\s]+\/assets\/large\.jpg/;
+
+/** How far back to look for an event with sponsors, partners or co-organizers. */
+const MAX_EVENTS_FOR_PARTNER = 10;
+
 const firstMatch = (paths: string[], pattern: RegExp): string => {
   const match = paths.find((path) => pattern.test(path));
   if (!match) throw new Error(`no sitemap path matching ${String(pattern)}`);
@@ -34,13 +40,16 @@ test("one generated image per template family renders", async ({ request }) => {
   expect(event, "no event found in the sitemap").toBeTruthy();
 
   // Partners have no page of their own, so their ids are not in the sitemap.
-  // The event's asset index advertises them, which keeps this derived rather
-  // than pinned to a sponsor who may not be a sponsor next year.
-  const assetsIndex = await (await request.get(`${event}/assets`)).text();
-  const partnerAsset =
-    /\/events\/[^"'\s]+\/partners\/[^"'\s]+\/assets\/large\.jpg/.exec(
-      assetsIndex,
-    )?.[0];
+  // An event's asset index advertises them, which keeps this derived rather
+  // than pinned to a sponsor who may not be a sponsor next year. The newest
+  // event is often an announcement with no sponsors or partners yet, so walk
+  // back to the newest event that has at least one.
+  let partnerAsset: string | undefined;
+  for (const candidate of newestEvents(paths, MAX_EVENTS_FOR_PARTNER)) {
+    const assetsIndex = await (await request.get(`${candidate}/assets`)).text();
+    partnerAsset = PARTNER_ASSET.exec(assetsIndex)?.[0];
+    if (partnerAsset) break;
+  }
 
   const targets = [
     // Event: the OG image, plus one non-OG template as a canary for the ~25
@@ -57,7 +66,10 @@ test("one generated image per template family renders", async ({ request }) => {
     ...(partnerAsset ? [partnerAsset] : []),
   ];
 
-  expect(partnerAsset, "no partner asset advertised on the event").toBeTruthy();
+  expect(
+    partnerAsset,
+    `no partner asset advertised on the ${MAX_EVENTS_FOR_PARTNER} newest events`,
+  ).toBeTruthy();
 
   const checks = await checkBinaries(request, targets);
   expect(
