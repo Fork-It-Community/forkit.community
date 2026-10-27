@@ -74,6 +74,25 @@ const forKidsAfterMovie = (
       name: "Fork it! Community",
     }}
   />
+  {
+    !!HOME_CONFIG.faq.length && (
+      <Schema
+        slot="ld+json"
+        item={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: HOME_CONFIG.faq.map((item) => ({
+            "@type": "Question" as const,
+            name: item.question,
+            acceptedAnswer: {
+              "@type": "Answer" as const,
+              text: item.answer,
+            },
+          })),
+        }}
+      />
+    )
+  }
   <!-- HERO -->
   <ImageBackgroundHero
     src={upcomingMajorEvent?.data?.image?.media ?? defaultImage}
