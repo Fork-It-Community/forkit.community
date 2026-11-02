@@ -6,17 +6,21 @@ import {
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
 import { getEventDisplayDate } from "@/lib/events";
-import { getEventData } from "./_utils";
+import { getEventData } from "../_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
-import { SponsorLogosInsta } from "@/generated-assets/components/SponsorLogos";
+import { SponsorLogos } from "@/generated-assets/components/SponsorLogos";
 import { EventBanner } from "@/generated-assets/components/EventBanner";
 
 export const config: AssetImageConfig = {
-  width: 1080,
-  height: 1350,
+  width: 1920,
+  height: 1080,
 };
 
-export function cfpStillOpenInsta(options: { width: number; height: number }) {
+export function cfpStillOpen(options: {
+  width: number;
+  height: number;
+  fontScaling: number;
+}) {
   return async ({ params }: { params: { id: string } }) => {
     const event = await getEventData(params.id);
     const postCover = await getAstroImageBase64(event.data.image.media);
@@ -86,7 +90,7 @@ export function cfpStillOpenInsta(options: { width: number; height: number }) {
             >
               <div
                 style={{
-                  fontSize: 50.4,
+                  fontSize: 72 * options.fontScaling,
                   fontWeight: 500,
                   textTransform: "uppercase",
                   letterSpacing: 6,
@@ -98,7 +102,7 @@ export function cfpStillOpenInsta(options: { width: number; height: number }) {
 
               <div
                 style={{
-                  fontSize: 126,
+                  fontSize: 180 * options.fontScaling,
                   fontWeight: 500,
                   lineHeight: 0.95,
                   color: COLORS.primary,
@@ -112,7 +116,7 @@ export function cfpStillOpenInsta(options: { width: number; height: number }) {
 
             <div
               style={{
-                fontSize: 39.2,
+                fontSize: 56 * options.fontScaling,
                 fontWeight: 400,
                 opacity: 0.95,
               }}
@@ -141,7 +145,7 @@ export function cfpStillOpenInsta(options: { width: number; height: number }) {
                   display: "flex",
                   alignItems: "center",
                   gap: 12,
-                  fontSize: 33.6,
+                  fontSize: 48 * options.fontScaling,
                   fontWeight: 500,
                   opacity: 0.6,
                 }}
@@ -167,7 +171,7 @@ export function cfpStillOpenInsta(options: { width: number; height: number }) {
                   display: "flex",
                   gap: 12,
                   alignItems: "center",
-                  fontSize: 33.6,
+                  fontSize: 48 * options.fontScaling,
                   fontWeight: 500,
                   opacity: 0.6,
                 }}
@@ -193,7 +197,7 @@ export function cfpStillOpenInsta(options: { width: number; height: number }) {
 
             <div
               style={{
-                fontSize: 26.6,
+                fontSize: 38 * options.fontScaling,
                 fontWeight: 500,
                 textTransform: "uppercase",
                 opacity: 0.5,
@@ -203,10 +207,10 @@ export function cfpStillOpenInsta(options: { width: number; height: number }) {
             </div>
           </div>
         </div>
-        {displaySponsors && <SponsorLogosInsta logos={sponsorLogos} />}
+        {displaySponsors && <SponsorLogos logos={sponsorLogos} />}
       </Frame>
     );
   };
 }
 
-export default cfpStillOpenInsta(config);
+export default cfpStillOpen({ ...config, fontScaling: 1 });

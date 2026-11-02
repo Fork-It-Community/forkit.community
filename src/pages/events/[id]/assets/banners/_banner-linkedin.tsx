@@ -4,25 +4,28 @@ import {
   type AssetImageConfig,
 } from "@/generated-assets/image";
 import { COLORS } from "@/generated-assets/theme";
-import { getEventData } from "./_utils";
-import { Logo } from "@/components/Logo";
+import { getEventData } from "../_utils";
 import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import youtubeBannerCover from "@/assets/images/youtube.jpg";
+
 export const config: AssetImageConfig = {
-  width: 2560,
-  height: 1440,
+  width: 1128 * 3,
+  height: 191 * 3,
+  resizeConfig: {
+    height: 191,
+    width: 1128,
+  },
 };
 
-export function youtubeBanner(options: { width: number; height: number }) {
+export function linkedinBanner(options: { width: number; height: number }) {
   return async ({ params }: { params: { id: string } }) => {
     const event = await getEventData(params.id);
     const eventCover = await getAstroImageBase64(event.data.image.media);
-
     const postCover = await getAstroImageBase64(youtubeBannerCover);
 
     return (
-      <Frame {...options}>
+      <Frame {...options} style={{ paddingRight: 96 }}>
         <BgImage
           src={postCover}
           width={options.width}
@@ -34,30 +37,25 @@ export function youtubeBanner(options: { width: number; height: number }) {
             zIndex: 100,
             display: "flex",
             flexDirection: "row",
-            justifyContent: "center",
+            justifyContent: "flex-end",
             alignItems: "center",
+            width: "100%",
           }}
         >
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: 40,
+              gap: 24,
             }}
           >
-            <Logo
-              style={{
-                width: 507,
-                height: 54,
-              }}
-            />
-
             <div
               style={{
-                fontSize: 86,
+                fontSize: 105,
                 fontWeight: 500,
                 textTransform: "uppercase",
-                width: 1000,
+                width: 1200,
+                lineHeight: 1.1,
               }}
             >
               global developer conferences
@@ -66,10 +64,9 @@ export function youtubeBanner(options: { width: number; height: number }) {
             <div
               style={{
                 display: "flex",
-                fontSize: 40,
-                letterSpacing: "0.05rem",
-
-                gap: 8,
+                fontSize: 50,
+                letterSpacing: "0.03rem",
+                gap: 6,
               }}
             >
               <div
@@ -88,12 +85,12 @@ export function youtubeBanner(options: { width: number; height: number }) {
               </div>
             </div>
           </div>
+
           <div
             style={{
               position: "relative",
               display: "flex",
-              width: 800,
-              height: 400,
+              width: 340 * 3,
               overflow: "hidden",
               borderRadius: 16,
             }}
@@ -104,17 +101,15 @@ export function youtubeBanner(options: { width: number; height: number }) {
                 position: "absolute",
                 width: "100%",
                 height: "100%",
-                objectFit: "cover",
                 zIndex: 1,
                 borderRadius: 16,
-                border: "1px solid rgba(255, 255, 255, 1)",
               }}
             />
             <div
               style={{
                 position: "absolute",
                 background:
-                  "linear-gradient(45deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 70%)",
+                  "linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 80%)",
                 top: 0,
                 left: 0,
                 bottom: 0,
@@ -127,18 +122,18 @@ export function youtubeBanner(options: { width: number; height: number }) {
               style={{
                 position: "relative",
                 zIndex: 10,
-                padding: "32px",
+                padding: 54,
                 display: "flex",
                 flexDirection: "column",
                 height: "100%",
                 justifyContent: "flex-start", //  "flex-start" because Satori doesn't support "start"
-                borderRadius: "16px",
+                borderRadius: 16,
                 overflow: "hidden",
               }}
             >
               <div
                 style={{
-                  fontSize: 25,
+                  fontSize: 32,
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
                   opacity: 0.9,
@@ -149,18 +144,18 @@ export function youtubeBanner(options: { width: number; height: number }) {
               </div>
               <div
                 style={{
-                  fontSize: 60,
+                  fontSize: 72,
                   fontWeight: 500,
-                  marginTop: 8,
+                  marginTop: 0,
                 }}
               >
                 {getEventDisplayDate(event)}
               </div>
               <div
                 style={{
-                  fontSize: 40,
-                  fontWeight: 300,
-                  marginTop: 8,
+                  fontSize: 48,
+                  fontWeight: 500,
+                  marginTop: 0,
                   display: "flex",
                 }}
               >
@@ -170,11 +165,11 @@ export function youtubeBanner(options: { width: number; height: number }) {
               <div
                 style={{
                   backgroundColor: "rgba(0, 0, 0, 1)",
-                  fontSize: 25,
-                  padding: "8px 16px",
+                  fontSize: 36,
+                  padding: "16px 32px",
                   border: "1px solid rgba(0, 0, 0, 1)",
                   marginRight: "auto",
-                  marginTop: 120,
+                  marginTop: 70,
                   borderRadius: 16,
                 }}
               >
@@ -188,4 +183,4 @@ export function youtubeBanner(options: { width: number; height: number }) {
   };
 }
 
-export default youtubeBanner(config);
+export default linkedinBanner(config);

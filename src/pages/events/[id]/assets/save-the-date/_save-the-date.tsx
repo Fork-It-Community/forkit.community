@@ -5,22 +5,17 @@ import {
 } from "@/generated-assets/image";
 import { BgImage } from "@/generated-assets/components/BgImage";
 import { COLORS } from "@/generated-assets/theme";
-import { getEventDisplayDate } from "@/lib/events";
-import { getEventData } from "./_utils";
+import { getEventDisplayDate, getEventDisplayType } from "@/lib/events";
+import { getEventData } from "../_utils";
 import { LogoWithFriends } from "@/generated-assets/components/LogoWithFriends";
 import { SponsorLogos } from "@/generated-assets/components/SponsorLogos";
-import { EventBanner } from "@/generated-assets/components/EventBanner";
 
 export const config: AssetImageConfig = {
   width: 1920,
   height: 1080,
 };
 
-export function cfpOpen(options: {
-  width: number;
-  height: number;
-  fontScaling: number;
-}) {
+export function saveTheDate(options: { width: number; height: number }) {
   return async ({ params }: { params: { id: string } }) => {
     const event = await getEventData(params.id);
     const postCover = await getAstroImageBase64(event.data.image.media);
@@ -59,7 +54,6 @@ export function cfpOpen(options: {
           width={options.width}
           height={options.height}
         />
-        <EventBanner event={event} width={options.width} />
 
         <div
           style={{
@@ -67,77 +61,66 @@ export function cfpOpen(options: {
             flex: 1,
             display: "flex",
             flexDirection: "column",
+            gap: 40,
             width: "100%",
             justifyContent: "space-between",
           }}
         >
           <LogoWithFriends logos={coOrganizersLogos} />
-
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: 32,
-              justifyContent: "center",
+              gap: 20,
             }}
           >
             <div
               style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 24,
+                fontSize: 32,
+                fontWeight: 500,
+                textTransform: "uppercase",
+                letterSpacing: 4,
               }}
             >
-              <div
-                style={{
-                  fontSize: 72 * options.fontScaling,
-                  fontWeight: 500,
-                  textTransform: "uppercase",
-                  letterSpacing: 6,
-                  opacity: 0.9,
-                }}
-              >
-                Call for Papers
-              </div>
-
-              <div
-                style={{
-                  fontSize: 180 * options.fontScaling,
-                  fontWeight: 500,
-                  lineHeight: 0.95,
-                  color: COLORS.primary,
-                  marginLeft: -6,
-                  textTransform: "uppercase",
-                }}
-              >
-                Now Open
-              </div>
+              Save the date
             </div>
 
             <div
               style={{
-                fontSize: 56 * options.fontScaling,
-                fontWeight: 400,
-                opacity: 0.95,
+                display: "flex",
+                fontSize: 124,
+                fontWeight: 500,
+                lineHeight: 1,
+                color: COLORS.primary,
+                marginTop: -16,
+                marginLeft: -6, // Visual alignment
+                textTransform: "uppercase",
               }}
             >
-              Submit your talk proposals
+              {event.data._computed.city?.data.name}
             </div>
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              width: "100%",
-            }}
-          >
             <div
               style={{
                 display: "flex",
-                flexDirection: "column",
-                gap: 16,
+                fontSize: 60,
+                fontWeight: 500,
+                lineHeight: 1,
+                marginBottom: 48,
+                marginTop: -8,
+                color: COLORS.primary,
+                textTransform: "uppercase",
+              }}
+            >
+              {getEventDisplayType(event.data.type)}
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "center",
+                columnGap: 48,
+                rowGap: 24,
               }}
             >
               <div
@@ -145,35 +128,9 @@ export function cfpOpen(options: {
                   display: "flex",
                   alignItems: "center",
                   gap: 12,
-                  fontSize: 48 * options.fontScaling,
+                  fontSize: 48,
                   fontWeight: 500,
-                  opacity: 0.6,
-                }}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  style={{
-                    opacity: 0.6,
-                    width: "1em",
-                    height: "1em",
-                  }}
-                >
-                  <path
-                    fill="currentColor"
-                    d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"
-                  />
-                </svg>
-                {getEventDisplayDate(event)}
-              </div>
-
-              <div
-                style={{
-                  display: "flex",
-                  gap: 12,
-                  alignItems: "center",
-                  fontSize: 48 * options.fontScaling,
-                  fontWeight: 500,
-                  opacity: 0.6,
+                  lineHeight: 1,
                 }}
               >
                 <svg
@@ -187,20 +144,72 @@ export function cfpOpen(options: {
                 >
                   <path
                     fill="currentColor"
-                    d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7"
+                    d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"
                   />
                 </svg>
-                {event.data._computed.city?.data.name},{" "}
-                {event.data._computed.country?.data.name}
+                {getEventDisplayDate(event)}
               </div>
-            </div>
 
+              {!!event.data.location?.name && (
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 12,
+                    alignItems: "center",
+                    fontSize: 48,
+                    fontWeight: 500,
+                    lineHeight: 1.2,
+                    textWrap: "balance",
+                  }}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    style={{
+                      flex: "none",
+                      opacity: 0.6,
+                      width: "1em",
+                      height: "1em",
+                    }}
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7"
+                    />
+                  </svg>
+                  {event.data.location.name}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "flex-end",
+            }}
+          >
             <div
               style={{
-                fontSize: 38 * options.fontScaling,
+                display: "flex",
+                fontSize: 32,
                 fontWeight: 500,
+                lineHeight: 1.2,
                 textTransform: "uppercase",
-                opacity: 0.5,
+                opacity: 0.6,
+              }}
+            >
+              {event.data._computed.city?.data.name},{" "}
+              {event.data._computed.country?.data.name}
+            </div>
+            <div
+              style={{
+                display: "flex",
+                fontSize: 32,
+                fontWeight: 500,
+                lineHeight: 1.2,
+                textTransform: "uppercase",
+                opacity: 0.6,
               }}
             >
               www.forkit.community
@@ -213,4 +222,4 @@ export function cfpOpen(options: {
   };
 }
 
-export default cfpOpen({ ...config, fontScaling: 1 });
+export default saveTheDate(config);
