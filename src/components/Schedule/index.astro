@@ -1,6 +1,7 @@
 ---
 import CardInfo from "@/components/Schedule/CardInfo.astro";
 import CardConference from "@/components/Schedule/CardConference.astro";
+import { ScheduleFilters } from "@/components/Schedule/ScheduleFilters";
 import Time from "@/components/Schedule/Time.astro";
 import ComingSoon from "./ComingSoon.astro";
 import type { CollectionEntry } from "astro:content";
@@ -9,7 +10,7 @@ import { match } from "ts-pattern";
 import TiltedCard from "@/components/TiltedCard";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils-client";
-import { getActivityTypeLabel } from "@/lib/events";
+import { getActivityTypeLabel, type ActivityType } from "@/lib/events";
 
 interface Props {
   displayStats?: boolean;
@@ -17,9 +18,45 @@ interface Props {
 }
 
 const { event, displayStats } = Astro.props;
+
+const items = event.data.schedule?.items ?? [];
+
+// Only talks and workshops run in parallel rooms, so they define the room
+// filter options. Filtering itself is strict: a room shows only its own
+// sessions.
+const isParallelSession = (type: ActivityType) =>
+  type === "conference" || type === "workshop";
+
+// A keynote is a featured talk, so it shares the "Talk" filter rather than
+// getting its own option.
+const typeFilterValue = (type: ActivityType): ActivityType =>
+  type === "keynote" ? "conference" : type;
+
+// Filter dimensions, derived from the data so single-track events stay simple.
+const rooms = [
+  ...new Set(
+    items
+      .filter((item) => isParallelSession(item.type) && item.location)
+      .map((item) => item.location as string),
+  ),
+];
+const presentTypes = new Set(items.map((item) => typeFilterValue(item.type)));
+const typeOptions = (["conference", "workshop"] as ActivityType[])
+  .filter((value) => presentTypes.has(value))
+  .map((value) => ({ value, label: getActivityTypeLabel(value) }))
+  .filter(
+    (option): option is { value: ActivityType; label: string } =>
+      option.label !== null,
+  );
+
+// Filters are for full-day events only; meetups never show them.
+const isClassicEvent = event.data.type === "event";
+const hasRoomFilter = isClassicEvent && rooms.length > 1;
+const hasTypeFilter = isClassicEvent && typeOptions.length > 1;
+const hasFilters = hasRoomFilter || hasTypeFilter;
 ---
 
-<div class="flex flex-col gap-6">
+<div class="flex min-w-0 flex-col gap-6" data-schedule>
   {
     displayStats && !!event.data.schedule?.stats && (
       <div class="grid w-full grid-cols-2 flex-wrap gap-4 sm:grid-cols-4">
@@ -55,103 +92,126 @@ const { event, displayStats } = Astro.props;
     !event.data.schedule?.items ? (
       <ComingSoon />
     ) : (
-      <div class="flex flex-col">
-        {(event.data.schedule.status === "preview"
-          ? event.data.schedule.items
-          : event.data.schedule.items.toSorted(
-              (talk1, talk2) =>
-                // Infinity to set startTime=null at the end
-                (talk1.startTime?.valueOf() ?? Infinity) -
-                (talk2.startTime?.valueOf() ?? Infinity),
-            )
-        ).map((activity) => {
-          const label = getActivityTypeLabel(activity.type);
-          return (
-            <div class="group flex gap-3">
-              <div class="flex flex-col items-center gap-1 pt-1">
-                <div class="size-2.5 rounded-full border-2 border-white/40" />
-                <div class="flex-1 border-l border-dashed border-white/20 group-last:hidden" />
-              </div>
-              <div class="flex w-full flex-col gap-2 pb-6">
-                <div class="flex flex-1 flex-row flex-wrap items-center justify-between gap-x-3 gap-y-1">
-                  <div class="flex items-center gap-2">
-                    <Time
-                      startTime={activity.startTime}
-                      class="font-heading text-sm tracking-wide opacity-80"
-                    />
-                    {(label || !!activity.duration) && (
-                      <Badge
-                        variant="card"
-                        className={cn(
-                          "py-1",
-                          activity.type === "keynote" &&
-                            "border-white/40 bg-white/20 opacity-100",
-                        )}
-                      >
-                        {label && <span>{label}</span>}
-                        {label && !!activity.duration && (
-                          <span class="opacity-60">·</span>
-                        )}
-                        {!!activity.duration && (
-                          <span>{activity.duration} min</span>
-                        )}
-                      </Badge>
-                    )}
-                  </div>
-                  {!!activity.location &&
-                    (activity.locationUrl ? (
-                      <a
-                        href={activity.locationUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="flex items-center gap-1.5 text-xs uppercase tracking-wide opacity-60 hover:opacity-100"
-                      >
-                        <MdPlace className="text-base" />
-                        {activity.location}
-                      </a>
-                    ) : (
-                      <span class="flex items-center gap-1.5 text-xs uppercase tracking-wide opacity-60">
-                        <MdPlace className="text-base" />
-                        {activity.location}
-                      </span>
-                    ))}
+      <>
+        {hasFilters && (
+          <ScheduleFilters
+            client:load
+            showRoom={hasRoomFilter}
+            showType={hasTypeFilter}
+            rooms={rooms.map((room) => ({ value: room, label: room }))}
+            typeOptions={typeOptions}
+          />
+        )}
+
+        <p
+          class="hidden font-heading text-sm tracking-wide opacity-60"
+          data-schedule-empty
+        >
+          No sessions match these filters.
+        </p>
+
+        <div class="flex flex-col">
+          {(event.data.schedule.status === "preview"
+            ? event.data.schedule.items
+            : event.data.schedule.items.toSorted(
+                (talk1, talk2) =>
+                  // Infinity to set startTime=null at the end
+                  (talk1.startTime?.valueOf() ?? Infinity) -
+                  (talk2.startTime?.valueOf() ?? Infinity),
+              )
+          ).map((activity) => {
+            const label = getActivityTypeLabel(activity.type);
+            return (
+              <div
+                class="schedule-row group flex gap-3"
+                data-type={typeFilterValue(activity.type)}
+                data-room={activity.location ?? ""}
+              >
+                <div class="flex flex-col items-center gap-1 pt-1">
+                  <div class="size-2.5 rounded-full border-2 border-white/40" />
+                  <div class="schedule-connector flex-1 border-l border-dashed border-white/20 group-last:hidden" />
                 </div>
-                <div>
-                  {match(activity.type)
-                    .with(
-                      "conference",
-                      "roundtable",
-                      "keynote",
-                      "workshop",
-                      () => (
-                        <TiltedCard client:visible>
-                          <CardConference activity={activity} event={event} />
-                        </TiltedCard>
-                      ),
-                    )
-                    .with("info", "lunch", () =>
-                      activity.locationUrl ? (
-                        <TiltedCard client:visible>
-                          <a
-                            href={activity.locationUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="block"
-                          >
-                            <CardInfo info={activity} />
-                          </a>
-                        </TiltedCard>
+                <div class="flex w-full flex-col gap-2 pb-6">
+                  <div class="flex flex-1 flex-row flex-wrap items-center justify-between gap-x-3 gap-y-1">
+                    <div class="flex items-center gap-2">
+                      <Time
+                        startTime={activity.startTime}
+                        class="font-heading text-sm tracking-wide opacity-80"
+                      />
+                      {(label || !!activity.duration) && (
+                        <Badge
+                          variant="card"
+                          className={cn(
+                            "py-1",
+                            activity.type === "keynote" &&
+                              "border-white/40 bg-white/20 opacity-100",
+                          )}
+                        >
+                          {label && <span>{label}</span>}
+                          {label && !!activity.duration && (
+                            <span class="opacity-60">·</span>
+                          )}
+                          {!!activity.duration && (
+                            <span>{activity.duration} min</span>
+                          )}
+                        </Badge>
+                      )}
+                    </div>
+                    {!!activity.location &&
+                      (activity.locationUrl ? (
+                        <a
+                          href={activity.locationUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="flex items-center gap-1.5 text-xs uppercase tracking-wide opacity-60 hover:opacity-100"
+                        >
+                          <MdPlace className="text-base" />
+                          {activity.location}
+                        </a>
                       ) : (
-                        <CardInfo info={activity} />
-                      ),
-                    )
-                    .exhaustive()}
+                        <span class="flex items-center gap-1.5 text-xs uppercase tracking-wide opacity-60">
+                          <MdPlace className="text-base" />
+                          {activity.location}
+                        </span>
+                      ))}
+                  </div>
+                  <div>
+                    {match(activity.type)
+                      .with(
+                        "conference",
+                        "roundtable",
+                        "keynote",
+                        "workshop",
+                        () => (
+                          <TiltedCard client:visible>
+                            <CardConference activity={activity} event={event} />
+                          </TiltedCard>
+                        ),
+                      )
+                      .with("info", "lunch", () =>
+                        activity.locationUrl ? (
+                          <TiltedCard client:visible>
+                            <a
+                              href={activity.locationUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              class="block"
+                            >
+                              <CardInfo info={activity} />
+                            </a>
+                          </TiltedCard>
+                        ) : (
+                          <CardInfo info={activity} />
+                        ),
+                      )
+                      .exhaustive()}
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      </>
     )
   }
 </div>
