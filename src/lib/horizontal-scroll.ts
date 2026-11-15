@@ -24,9 +24,11 @@ function setup(el: HTMLElement) {
         return;
       }
       const delta =
-        event.deltaMode === WheelEvent.DOM_DELTA_LINE
-          ? event.deltaY * LINE_HEIGHT
-          : event.deltaY;
+        event.deltaMode === WheelEvent.DOM_DELTA_PAGE
+          ? event.deltaY * el.clientWidth
+          : event.deltaMode === WheelEvent.DOM_DELTA_LINE
+            ? event.deltaY * LINE_HEIGHT
+            : event.deltaY;
       if (!canScroll(el, delta)) return;
       event.preventDefault();
       el.scrollLeft += delta;
@@ -51,6 +53,12 @@ function setup(el: HTMLElement) {
 
   el.addEventListener("pointermove", (event) => {
     if (event.pointerId !== pointerId) return;
+    // Released outside the row before the drag started: stop following the mouse.
+    if ((event.buttons & 1) === 0) {
+      reset();
+      dragged = false;
+      return;
+    }
     const dx = event.clientX - startX;
     if (!dragged && Math.abs(dx) < DRAG_THRESHOLD) return;
     if (!dragged) {
@@ -62,17 +70,27 @@ function setup(el: HTMLElement) {
     el.scrollLeft = startScroll - dx;
   });
 
-  const end = (event: PointerEvent) => {
-    if (event.pointerId !== pointerId) return;
+  const reset = () => {
+    if (pointerId !== null && el.hasPointerCapture(pointerId)) {
+      el.releasePointerCapture(pointerId);
+    }
     pointerId = null;
     el.style.cursor = "";
     el.style.userSelect = "";
-    if (el.hasPointerCapture(event.pointerId)) {
-      el.releasePointerCapture(event.pointerId);
-    }
   };
-  el.addEventListener("pointerup", end);
-  el.addEventListener("pointercancel", end);
+
+  el.addEventListener("pointerup", (event) => {
+    if (event.pointerId !== pointerId) return;
+    reset();
+    // The click that ends a drag fires right after pointerup; after that,
+    // stop suppressing so later keyboard or touch clicks are never blocked.
+    if (dragged) setTimeout(() => (dragged = false), 0);
+  });
+  el.addEventListener("pointercancel", (event) => {
+    if (event.pointerId !== pointerId) return;
+    reset();
+    dragged = false;
+  });
 
   el.addEventListener(
     "click",
