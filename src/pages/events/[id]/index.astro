@@ -289,7 +289,7 @@ const validKeynotes = keynoteSection.filter(
 
   {
     !!sponsors.length && (
-      <div class="hide-scrollbar overflow-auto">
+      <div class="hide-scrollbar overflow-auto" data-horizontal-scroll>
         <div class="mx-auto flex w-fit items-center gap-6 px-8 py-8">
           {sponsors.map((sponsor) => (
             <a
@@ -464,7 +464,10 @@ const validKeynotes = keynoteSection.filter(
               />
             )}
             {!!event.data.afterEventContent?.rating?.comments?.length && (
-              <div class="hide-scrollbar flex w-full gap-4 overflow-x-auto px-2 py-4 md:justify-center">
+              <div
+                class="hide-scrollbar flex w-full gap-4 overflow-x-auto px-2 py-4 md:justify-center"
+                data-horizontal-scroll
+              >
                 {event.data.afterEventContent.rating.comments
                   .slice(0, 3)
                   .map((comment) => (
