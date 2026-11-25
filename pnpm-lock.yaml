@@ -117,8 +117,8 @@ importers:
         specifier: 4.0.2
         version: 4.0.2
       i18next:
-        specifier: 26.1.0
-        version: 26.1.0(typescript@5.9.3)
+        specifier: 26.3.4
+        version: 26.3.4(typescript@5.9.3)
       mdast-util-to-string:
         specifier: 4.0.0
         version: 4.0.0
@@ -2945,8 +2945,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  i18next@26.1.0:
-    resolution: {integrity: sha512-dIU6td04DvQuIqVst5S9g0GviTmhZ0DYD4b9ociVGJmuCa5vZ2de/t+Enf4olvj87mF8Y2lwjNQBwC9QZsvzKQ==}
+  i18next@26.3.4:
+    resolution: {integrity: sha512-pa7m0d7pBDqGHZxljT+WPFeyFgQ7P7SciPPo1tTqYuO0z4sqADYhwnBESmmGp/wEof1inwdls/k8ZgTg8rxFHA==}
     peerDependencies:
       typescript: ^5 || ^6
     peerDependenciesMeta:
@@ -7471,7 +7471,7 @@ snapshots:
 
   husky@9.1.7: {}
 
-  i18next@26.1.0(typescript@5.9.3):
+  i18next@26.3.4(typescript@5.9.3):
     optionalDependencies:
       typescript: 5.9.3
 
